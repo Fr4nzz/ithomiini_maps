@@ -19,6 +19,7 @@ import os
 import json
 import sys
 import time
+from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
@@ -32,8 +33,15 @@ SHEET_GIDS = {
 }
 OUTPUT_DIR = "public/data"
 
-# GBIF fetch limit (set to 0 to disable)
-GBIF_SPECIES_LIMIT = 5  # Number of species to fetch from GBIF (use 0 for none)
+# GBIF Configuration
+# Set to True to merge pre-downloaded GBIF data (from gbif_download.py)
+# Set to False to skip GBIF entirely
+USE_GBIF_BULK_DOWNLOAD = True
+GBIF_BULK_FILE = "public/data/gbif_occurrences.json"
+
+# Legacy: Search API (slower, rate-limited) - only used if bulk download not found
+GBIF_SEARCH_FALLBACK = False  # Set True to use search API as fallback
+GBIF_SPECIES_LIMIT = 5  # Number of species to fetch via search API
 GBIF_RECORDS_PER_SPECIES = 50
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -263,12 +271,13 @@ def load_sanger_data():
 
 
 def fetch_gbif_data(species_list):
-    """Fetch occurrence data from GBIF API for given species."""
+    """Fetch occurrence data from GBIF API for given species (LEGACY - use gbif_download.py instead)."""
     if GBIF_SPECIES_LIMIT == 0:
-        print(">> GBIF fetch disabled (GBIF_SPECIES_LIMIT = 0)")
+        print(">> GBIF search API disabled")
         return pd.DataFrame()
     
-    print(f">> Fetching GBIF Data for up to {GBIF_SPECIES_LIMIT} species...")
+    print(f">> Fetching GBIF Data via Search API for up to {GBIF_SPECIES_LIMIT} species...")
+    print("   ⚠️  Note: For bulk data, use gbif_download.py instead!")
     all_records = []
     
     # Get unique species, limit count
@@ -346,6 +355,43 @@ def fetch_gbif_data(species_list):
     return pd.DataFrame()
 
 
+def load_gbif_bulk_download():
+    """
+    Load pre-downloaded GBIF data from gbif_download.py.
+    This is MUCH faster than using the search API!
+    """
+    gbif_path = Path(GBIF_BULK_FILE)
+    
+    if not gbif_path.exists():
+        print(f">> GBIF bulk download not found: {gbif_path}")
+        print("   Run `python scripts/gbif_download.py` first to download GBIF data.")
+        return pd.DataFrame()
+    
+    print(f">> Loading GBIF bulk download: {gbif_path}")
+    
+    try:
+        with open(gbif_path) as f:
+            records = json.load(f)
+        
+        df = pd.DataFrame(records)
+        print(f"   Loaded {len(df):,} GBIF records")
+        
+        # Ensure required columns exist
+        required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
+                        'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
+                        'sequencing_status', 'source', 'image_url', 'country']
+        
+        for col in required_cols:
+            if col not in df.columns:
+                df[col] = None if col in ['subspecies', 'image_url'] else 'Unknown'
+        
+        return df[required_cols]
+        
+    except Exception as e:
+        print(f"   ERROR loading GBIF data: {e}")
+        return pd.DataFrame()
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # MAIN PIPELINE
 # ══════════════════════════════════════════════════════════════════════════════
@@ -372,13 +418,19 @@ def main():
     df_merged = pd.concat(all_dfs, ignore_index=True)
     print(f"\n>> Merged dataset: {len(df_merged)} records")
     
-    # Optional: Fetch GBIF data for enrichment
-    if GBIF_SPECIES_LIMIT > 0:
-        species_list = df_merged['scientific_name'].unique().tolist()
-        df_gbif = fetch_gbif_data(species_list)
+    # GBIF Data: Prefer bulk download over search API
+    if USE_GBIF_BULK_DOWNLOAD:
+        df_gbif = load_gbif_bulk_download()
         if not df_gbif.empty:
             df_merged = pd.concat([df_merged, df_gbif], ignore_index=True)
-            print(f">> After GBIF enrichment: {len(df_merged)} records")
+            print(f">> After GBIF bulk merge: {len(df_merged):,} records")
+        elif GBIF_SEARCH_FALLBACK:
+            print(">> Falling back to GBIF Search API...")
+            species_list = df_merged['scientific_name'].unique().tolist()
+            df_gbif = fetch_gbif_data(species_list)
+            if not df_gbif.empty:
+                df_merged = pd.concat([df_merged, df_gbif], ignore_index=True)
+                print(f">> After GBIF search merge: {len(df_merged):,} records")
     
     # ── Final Cleaning ──
     # Ensure all string fields are properly typed
