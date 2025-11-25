@@ -3,7 +3,8 @@ import { ref, computed, watch } from 'vue'
 
 export const useDataStore = defineStore('data', () => {
   // --- STATE ---
-  const allFeatures = ref([]) // Store raw array, not GeoJSON yet
+  // The MapEngine looks for "allFeatures"
+  const allFeatures = ref([]) 
   const loading = ref(true)
   
   // The Active Filters
@@ -12,7 +13,7 @@ export const useDataStore = defineStore('data', () => {
     subspecies: '',
     country: '',
     mimicry: '',
-    status: [], // Array for multiple selections
+    status: [], 
   })
 
   // --- ACTIONS ---
@@ -21,10 +22,10 @@ export const useDataStore = defineStore('data', () => {
     try {
       const response = await fetch('./data/map_points.json')
       const data = await response.json()
-      // Store raw data for fast filtering
+      // Store raw data
       allFeatures.value = data
       
-      // Initialize URL filters if present (Deep Linking)
+      // Initialize URL filters
       const params = new URLSearchParams(window.location.search)
       if (params.get('sp')) filters.value.species = params.get('sp')
       if (params.get('mim')) filters.value.mimicry = params.get('mim')
@@ -36,9 +37,7 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
-  // --- GETTERS (COMPUTED) ---
-
-  // 1. Get Unique Values for Dropdowns (Dynamic)
+  // --- GETTERS ---
   const uniqueSpecies = computed(() => {
     return [...new Set(allFeatures.value.map(i => i.scientific_name))].sort().filter(Boolean)
   })
@@ -47,46 +46,37 @@ export const useDataStore = defineStore('data', () => {
     return [...new Set(allFeatures.value.map(i => i.mimicry_ring))].sort().filter(Boolean)
   })
 
-  // 2. The Master Filter Logic
   const filteredGeoJSON = computed(() => {
     if (!allFeatures.value.length) return null
 
     const filtered = allFeatures.value.filter(item => {
-      // Species Filter
       if (filters.value.species && item.scientific_name !== filters.value.species) return false
-      
-      // Mimicry Filter
       if (filters.value.mimicry && item.mimicry_ring !== filters.value.mimicry) return false
-      
-      // Status Filter (Multi-select)
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
-
       return true
     })
 
-    // Return as GeoJSON for MapLibre
     return {
       type: 'FeatureCollection',
       features: filtered.map(item => ({
         type: 'Feature',
         geometry: { type: 'Point', coordinates: [item.lng, item.lat] },
-        properties: item // Pass all properties to map
+        properties: item 
       }))
     }
   })
 
-  // --- URL SYNC WATCHER ---
+  // --- WATCHER ---
   watch(filters, (newFilters) => {
     const params = new URLSearchParams()
     if (newFilters.species) params.set('sp', newFilters.species)
     if (newFilters.mimicry) params.set('mim', newFilters.mimicry)
-    
-    // Update URL without reloading
     window.history.replaceState({}, '', `${window.location.pathname}?${params}`)
   }, { deep: true })
 
   return { 
     loading, 
+    allFeatures, // <--- This was missing/named differently!
     filters, 
     uniqueSpecies, 
     uniqueMimicry,
