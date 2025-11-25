@@ -2,6 +2,15 @@
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
 
+const props = defineProps({
+  currentView: {
+    type: String,
+    default: 'map'
+  }
+})
+
+const emit = defineEmits(['open-export', 'set-view'])
+
 const store = useDataStore()
 
 // Local state for CAMID search with debounce
@@ -76,6 +85,33 @@ const showCopiedToast = ref(false)
     <!-- Scrollable Content -->
     <div class="sidebar-content">
       
+      <!-- View Toggle -->
+      <div class="view-toggle">
+        <button 
+          :class="{ active: currentView === 'map' }"
+          @click="emit('set-view', 'map')"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+            <line x1="8" y1="2" x2="8" y2="18"/>
+            <line x1="16" y1="6" x2="16" y2="22"/>
+          </svg>
+          Map
+        </button>
+        <button 
+          :class="{ active: currentView === 'table' }"
+          @click="emit('set-view', 'table')"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <line x1="3" y1="9" x2="21" y2="9"/>
+            <line x1="3" y1="15" x2="21" y2="15"/>
+            <line x1="9" y1="3" x2="9" y2="21"/>
+          </svg>
+          Table
+        </button>
+      </div>
+
       <!-- Record Count Banner -->
       <div class="record-count">
         <span class="count">{{ filteredRecords.toLocaleString() }}</span>
@@ -266,23 +302,34 @@ const showCopiedToast = ref(false)
 
     <!-- Footer Actions -->
     <footer class="sidebar-footer">
-      <button class="btn-reset" @click="store.resetAllFilters">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-        </svg>
-        Reset Filters
-      </button>
+      <div class="footer-row">
+        <button class="btn-reset" @click="store.resetAllFilters">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          Reset
+        </button>
 
-      <button class="btn-share" @click="copyShareUrl">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="18" cy="5" r="3"/>
-          <circle cx="6" cy="12" r="3"/>
-          <circle cx="18" cy="19" r="3"/>
-          <path d="m8.59 13.51 6.83 3.98m-.01-10.98-6.82 3.98"/>
-        </svg>
-        Share View
-      </button>
+        <button class="btn-share" @click="copyShareUrl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <path d="m8.59 13.51 6.83 3.98m-.01-10.98-6.82 3.98"/>
+          </svg>
+          Share
+        </button>
+
+        <button class="btn-export" @click="emit('open-export')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export
+        </button>
+      </div>
 
       <!-- Toast notification -->
       <Transition name="toast">
@@ -349,6 +396,48 @@ const showCopiedToast = ref(false)
   flex: 1;
   overflow-y: auto;
   padding: 16px;
+}
+
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 8px;
+}
+
+.view-toggle button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--color-text-muted, #666);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-toggle button:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-secondary, #aaa);
+}
+
+.view-toggle button.active {
+  background: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+}
+
+.view-toggle button svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Record Count */
@@ -560,21 +649,25 @@ const showCopiedToast = ref(false)
   padding: 16px;
   border-top: 1px solid var(--color-border, #3d3d5c);
   background: var(--color-bg-primary, #1a1a2e);
-  display: flex;
-  gap: 10px;
   position: relative;
 }
 
+.footer-row {
+  display: flex;
+  gap: 8px;
+}
+
 .btn-reset,
-.btn-share {
+.btn-share,
+.btn-export {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 12px;
+  gap: 4px;
+  padding: 10px 8px;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -592,17 +685,29 @@ const showCopiedToast = ref(false)
 }
 
 .btn-share {
+  background: transparent;
+  border: 1px solid var(--color-border, #3d3d5c);
+  color: var(--color-text-secondary, #aaa);
+}
+
+.btn-share:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.btn-export {
   background: var(--color-accent, #4ade80);
   border: none;
   color: var(--color-bg-primary, #1a1a2e);
 }
 
-.btn-share:hover {
+.btn-export:hover {
   background: #5eeb94;
 }
 
 .btn-reset svg,
-.btn-share svg {
+.btn-share svg,
+.btn-export svg {
   width: 14px;
   height: 14px;
 }
@@ -642,6 +747,10 @@ const showCopiedToast = ref(false)
     min-width: 100%;
     height: auto;
     max-height: 50vh;
+  }
+  
+  .view-toggle {
+    display: none;
   }
 }
 </style>

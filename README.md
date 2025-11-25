@@ -11,6 +11,13 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Clustered Points**: Efficient rendering of 30,000+ records
 - **Dynamic Filtering**: Real-time map updates as filters change
 - **Shareable URLs**: Filter state encoded in URL for easy sharing
+- **Point Popups**: Click to view specimen details and images
+
+### 📊 Data Table View
+- **Sortable Columns**: Click headers to sort by any field
+- **Pagination**: Navigate through large datasets efficiently
+- **Column Visibility**: Toggle columns to customize your view
+- **Status Badges**: Visual indicators for sequencing status
 
 ### 🔬 Filter System
 - **Taxonomic Cascade**: Family → Tribe → Genus → Species → Subspecies
@@ -18,6 +25,13 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Mimicry Rings**: 44 unique mimicry patterns from Dore et al. (2025)
 - **CAMID Search**: Instant lookup by specimen ID
 - **Data Source**: Filter by Dore, Sanger Institute, or GBIF
+
+### 📥 Export & Citation
+- **CSV Export**: Download filtered data as spreadsheet
+- **GeoJSON Export**: Download for GIS/mapping applications
+- **Scientific Citation**: Auto-generated citation with version hash
+- **BibTeX Format**: Ready-to-use citation for LaTeX documents
+- **Reproducibility**: Version-controlled data with Git commit hash
 
 ### 📊 Data Sources
 1. **Dore et al. (2025)**: 28,927 published occurrence records with mimicry data
@@ -88,15 +102,17 @@ ithomiini_maps/
 ├── public/data/
 │   └── map_points.json     # Processed occurrence data
 ├── scripts/
-│   ├── process_data.py     # ETL pipeline
+│   ├── process_data.py     # ETL pipeline with mimicry lookup
 │   └── requirements.txt    # Python dependencies
 ├── src/
 │   ├── components/
+│   │   ├── DataTable.vue   # Sortable, paginated data table
+│   │   ├── ExportPanel.vue # CSV/GeoJSON export & citations
 │   │   ├── MapEngine.vue   # MapLibre map component
-│   │   └── Sidebar.vue     # Filter controls
+│   │   └── Sidebar.vue     # Filter controls & view toggle
 │   ├── stores/
 │   │   └── data.js         # Pinia state management
-│   ├── App.vue             # Root component
+│   ├── App.vue             # Root component with view switching
 │   ├── main.js             # Entry point
 │   └── style.css           # Global styles
 ├── index.html              # HTML template
