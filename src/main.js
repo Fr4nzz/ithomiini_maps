@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia' // Import Pinia
-import './style.css'
+import { createPinia } from 'pinia'
 import App from './App.vue'
+import './style.css'
 
-const pinia = createPinia() // Create instance
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(pinia) // Use it
+app.use(pinia)
 app.mount('#app')
