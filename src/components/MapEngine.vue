@@ -9,16 +9,102 @@ const mapContainer = ref(null)
 let map = null
 let popup = null
 
-// Map style options
+// ═══════════════════════════════════════════════════════════════════════════
+// MAP STYLES - Free tile sources
+// ═══════════════════════════════════════════════════════════════════════════
+
 const MAP_STYLES = {
-  dark: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-  light: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-  satellite: 'https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_key'
+  dark: {
+    name: 'Dark',
+    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+  },
+  light: {
+    name: 'Light',
+    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
+  },
+  satellite: {
+    name: 'Satellite',
+    style: {
+      version: 8,
+      sources: {
+        'esri-satellite': {
+          type: 'raster',
+          tiles: [
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+          ],
+          tileSize: 256,
+          attribution: '&copy; Esri, Maxar, Earthstar Geographics'
+        }
+      },
+      layers: [
+        {
+          id: 'esri-satellite-layer',
+          type: 'raster',
+          source: 'esri-satellite',
+          minzoom: 0,
+          maxzoom: 19
+        }
+      ]
+    }
+  },
+  terrain: {
+    name: 'Terrain',
+    style: {
+      version: 8,
+      sources: {
+        'osm-terrain': {
+          type: 'raster',
+          tiles: [
+            'https://tile.opentopomap.org/{z}/{x}/{y}.png'
+          ],
+          tileSize: 256,
+          attribution: '&copy; OpenTopoMap contributors'
+        }
+      },
+      layers: [
+        {
+          id: 'osm-terrain-layer',
+          type: 'raster',
+          source: 'osm-terrain',
+          minzoom: 0,
+          maxzoom: 17
+        }
+      ]
+    }
+  },
+  streets: {
+    name: 'Streets',
+    style: {
+      version: 8,
+      sources: {
+        'osm-streets': {
+          type: 'raster',
+          tiles: [
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+          ],
+          tileSize: 256,
+          attribution: '&copy; OpenStreetMap contributors'
+        }
+      },
+      layers: [
+        {
+          id: 'osm-streets-layer',
+          type: 'raster',
+          source: 'osm-streets',
+          minzoom: 0,
+          maxzoom: 19
+        }
+      ]
+    }
+  }
 }
 
 const currentStyle = ref('dark')
 
-// Color mapping for sequencing status
+// ═══════════════════════════════════════════════════════════════════════════
+// STATUS COLORS
+// ═══════════════════════════════════════════════════════════════════════════
+
 const STATUS_COLORS = {
   'Sequenced': '#3b82f6',        // Blue
   'Tissue Available': '#10b981', // Green  
@@ -26,6 +112,10 @@ const STATUS_COLORS = {
   'Published': '#a855f7',        // Purple
   'GBIF Record': '#6b7280'       // Gray
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LIFECYCLE
+// ═══════════════════════════════════════════════════════════════════════════
 
 onMounted(() => {
   initMap()
@@ -38,30 +128,46 @@ onUnmounted(() => {
   }
 })
 
+// ═══════════════════════════════════════════════════════════════════════════
+// MAP INITIALIZATION
+// ═══════════════════════════════════════════════════════════════════════════
+
 const initMap = () => {
+  const styleConfig = MAP_STYLES[currentStyle.value]
+  
   map = new maplibregl.Map({
     container: mapContainer.value,
-    style: MAP_STYLES[currentStyle.value],
-    center: [-60, -5], // South America center
+    style: styleConfig.style,
+    center: [-60, -5], // South America center (Ithomiini range)
     zoom: 4,
-    attributionControl: false
+    attributionControl: false,
+    maxZoom: 18,
+    minZoom: 2
   })
 
   // Add controls
   map.addControl(new maplibregl.NavigationControl(), 'top-right')
-  map.addControl(new maplibregl.ScaleControl({ maxWidth: 200 }), 'bottom-right')
+  map.addControl(new maplibregl.ScaleControl({ maxWidth: 200, unit: 'metric' }), 'bottom-right')
   map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
+  
+  // Fullscreen control
+  map.addControl(new maplibregl.FullscreenControl(), 'top-right')
 
   map.on('load', () => {
     addDataLayer()
   })
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// DATA LAYER
+// ═══════════════════════════════════════════════════════════════════════════
+
 const addDataLayer = () => {
   if (!map) return
 
   // Remove existing layers/sources if they exist
   if (map.getLayer('points-layer')) map.removeLayer('points-layer')
+  if (map.getLayer('points-highlight')) map.removeLayer('points-highlight')
   if (map.getSource('points-source')) map.removeSource('points-source')
 
   const geojson = store.filteredGeoJSON
@@ -70,10 +176,11 @@ const addDataLayer = () => {
   // Add source
   map.addSource('points-source', {
     type: 'geojson',
-    data: geojson
+    data: geojson,
+    cluster: false // Disable clustering for now - can enable for large datasets
   })
 
-  // Add layer with data-driven styling
+  // Add main circle layer with data-driven styling
   map.addLayer({
     id: 'points-layer',
     type: 'circle',
@@ -82,8 +189,9 @@ const addDataLayer = () => {
       'circle-radius': [
         'interpolate', ['linear'], ['zoom'],
         3, 3,
-        8, 6,
-        12, 10
+        6, 5,
+        10, 8,
+        14, 12
       ],
       'circle-color': [
         'match',
@@ -96,10 +204,34 @@ const addDataLayer = () => {
         '#6b7280' // default gray
       ],
       'circle-opacity': 0.85,
-      'circle-stroke-width': 1,
+      'circle-stroke-width': [
+        'interpolate', ['linear'], ['zoom'],
+        3, 0.5,
+        10, 1.5
+      ],
       'circle-stroke-color': '#ffffff',
-      'circle-stroke-opacity': 0.5
+      'circle-stroke-opacity': 0.6
     }
+  })
+
+  // Add highlight layer (shows on hover)
+  map.addLayer({
+    id: 'points-highlight',
+    type: 'circle',
+    source: 'points-source',
+    paint: {
+      'circle-radius': [
+        'interpolate', ['linear'], ['zoom'],
+        3, 6,
+        6, 10,
+        10, 14,
+        14, 18
+      ],
+      'circle-color': 'transparent',
+      'circle-stroke-width': 2,
+      'circle-stroke-color': '#ffffff'
+    },
+    filter: ['==', ['get', 'id'], ''] // Initially no highlight
   })
 
   // Click handler for popups
@@ -119,24 +251,36 @@ const addDataLayer = () => {
     popup = new maplibregl.Popup({
       closeButton: true,
       closeOnClick: true,
-      maxWidth: '320px'
+      maxWidth: '340px',
+      className: 'custom-popup'
     })
       .setLngLat(coords)
       .setHTML(content)
       .addTo(map)
   })
 
-  // Cursor change on hover
-  map.on('mouseenter', 'points-layer', () => {
+  // Hover effects
+  map.on('mouseenter', 'points-layer', (e) => {
     map.getCanvas().style.cursor = 'pointer'
+    
+    if (e.features && e.features.length > 0) {
+      const id = e.features[0].properties.id
+      map.setFilter('points-highlight', ['==', ['get', 'id'], id])
+    }
   })
+  
   map.on('mouseleave', 'points-layer', () => {
     map.getCanvas().style.cursor = ''
+    map.setFilter('points-highlight', ['==', ['get', 'id'], ''])
   })
 
-  // Fit bounds to data
+  // Fit bounds to data (with padding)
   fitBoundsToData(geojson)
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// POPUP BUILDER
+// ═══════════════════════════════════════════════════════════════════════════
 
 const buildPopupContent = (props) => {
   // Parse props (MapLibre stringifies nested objects)
@@ -152,29 +296,38 @@ const buildPopupContent = (props) => {
       </div>
   `
 
-  if (p.subspecies && p.subspecies !== 'null') {
-    html += `<div class="popup-row"><span class="label">Subspecies:</span> ${p.subspecies}</div>`
+  // Subspecies
+  if (p.subspecies && p.subspecies !== 'null' && p.subspecies !== 'None') {
+    html += `<div class="popup-row"><span class="label">Subspecies:</span> <em>${p.subspecies}</em></div>`
   }
   
+  // Core info
   html += `
     <div class="popup-row"><span class="label">ID:</span> ${p.id || 'N/A'}</div>
-    <div class="popup-row"><span class="label">Status:</span> ${p.sequencing_status || 'Unknown'}</div>
+    <div class="popup-row"><span class="label">Status:</span> <span style="color: ${statusColor}">${p.sequencing_status || 'Unknown'}</span></div>
     <div class="popup-row"><span class="label">Source:</span> ${p.source || 'Unknown'}</div>
   `
 
-  if (p.mimicry_ring && p.mimicry_ring !== 'Unknown') {
-    html += `<div class="popup-row"><span class="label">Mimicry:</span> ${p.mimicry_ring}</div>`
+  // Mimicry ring
+  if (p.mimicry_ring && p.mimicry_ring !== 'Unknown' && p.mimicry_ring !== 'null') {
+    html += `<div class="popup-row"><span class="label">Mimicry Ring:</span> ${p.mimicry_ring}</div>`
   }
 
-  if (p.country && p.country !== 'null') {
+  // Country
+  if (p.country && p.country !== 'null' && p.country !== 'Unknown') {
     html += `<div class="popup-row"><span class="label">Country:</span> ${p.country}</div>`
   }
 
+  // Coordinates
+  if (p.lat && p.lng) {
+    html += `<div class="popup-row"><span class="label">Coordinates:</span> ${parseFloat(p.lat).toFixed(4)}, ${parseFloat(p.lng).toFixed(4)}</div>`
+  }
+
   // Image thumbnail if available
-  if (p.image_url && p.image_url !== 'null') {
+  if (p.image_url && p.image_url !== 'null' && p.image_url !== '') {
     html += `
       <div class="popup-image">
-        <img src="${p.image_url}" alt="Specimen" loading="lazy" />
+        <img src="${p.image_url}" alt="Specimen ${p.id}" loading="lazy" onerror="this.style.display='none'" />
       </div>
     `
   }
@@ -183,8 +336,23 @@ const buildPopupContent = (props) => {
   return html
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// MAP UTILITIES
+// ═══════════════════════════════════════════════════════════════════════════
+
 const fitBoundsToData = (geojson) => {
   if (!geojson || !geojson.features || geojson.features.length === 0) return
+
+  // If only one point, just center on it
+  if (geojson.features.length === 1) {
+    const coords = geojson.features[0].geometry.coordinates
+    map.flyTo({
+      center: coords,
+      zoom: 8,
+      duration: 1000
+    })
+    return
+  }
 
   const bounds = new maplibregl.LngLatBounds()
   
@@ -193,8 +361,8 @@ const fitBoundsToData = (geojson) => {
   })
 
   map.fitBounds(bounds, {
-    padding: 50,
-    maxZoom: 10,
+    padding: { top: 50, bottom: 50, left: 50, right: 50 },
+    maxZoom: 12,
     duration: 1000
   })
 }
@@ -208,6 +376,10 @@ watch(
     const source = map.getSource('points-source')
     if (source) {
       source.setData(newData || { type: 'FeatureCollection', features: [] })
+      
+      // Optionally fit bounds on filter change
+      // Uncomment if you want map to zoom to filtered data
+      // fitBoundsToData(newData)
     } else {
       addDataLayer()
     }
@@ -215,12 +387,17 @@ watch(
   { deep: true }
 )
 
-// Style switcher
+// ═══════════════════════════════════════════════════════════════════════════
+// STYLE SWITCHER
+// ═══════════════════════════════════════════════════════════════════════════
+
 const switchStyle = (styleName) => {
   if (!map || !MAP_STYLES[styleName]) return
-  currentStyle.value = styleName
   
-  map.setStyle(MAP_STYLES[styleName])
+  currentStyle.value = styleName
+  const styleConfig = MAP_STYLES[styleName]
+  
+  map.setStyle(styleConfig.style)
   
   // Re-add data layer after style loads
   map.once('style.load', () => {
@@ -236,14 +413,13 @@ const switchStyle = (styleName) => {
     <!-- Style Switcher -->
     <div class="style-switcher">
       <button 
-        v-for="(url, name) in MAP_STYLES" 
-        :key="name"
-        :class="{ active: currentStyle === name }"
-        @click="switchStyle(name)"
-        :disabled="name === 'satellite'"
-        :title="name === 'satellite' ? 'Requires API key' : ''"
+        v-for="(config, key) in MAP_STYLES" 
+        :key="key"
+        :class="{ active: currentStyle === key }"
+        @click="switchStyle(key)"
+        :title="config.name"
       >
-        {{ name }}
+        {{ config.name }}
       </button>
     </div>
 
@@ -274,17 +450,22 @@ const switchStyle = (styleName) => {
   height: 100%;
 }
 
-/* Style Switcher */
+/* ═══════════════════════════════════════════════════════════════════════════
+   STYLE SWITCHER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .style-switcher {
   position: absolute;
   top: 10px;
   left: 10px;
   display: flex;
   gap: 4px;
-  background: rgba(26, 26, 46, 0.9);
+  background: rgba(26, 26, 46, 0.95);
   padding: 6px;
   border-radius: 8px;
   z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
 }
 
 .style-switcher button {
@@ -294,12 +475,12 @@ const switchStyle = (styleName) => {
   color: #aaa;
   border-radius: 4px;
   font-size: 0.75em;
-  text-transform: capitalize;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.style-switcher button:hover:not(:disabled) {
+.style-switcher button:hover {
   background: #2d2d4a;
   color: #fff;
 }
@@ -310,12 +491,10 @@ const switchStyle = (styleName) => {
   border-color: #4ade80;
 }
 
-.style-switcher button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEGEND
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Legend */
 .legend {
   position: absolute;
   bottom: 30px;
@@ -324,11 +503,13 @@ const switchStyle = (styleName) => {
   padding: 12px 16px;
   border-radius: 8px;
   z-index: 10;
-  min-width: 150px;
+  min-width: 160px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
 }
 
 .legend-title {
-  font-size: 0.75em;
+  font-size: 0.7rem;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -355,22 +536,28 @@ const switchStyle = (styleName) => {
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
 }
 
-/* Popup Styles */
+/* ═══════════════════════════════════════════════════════════════════════════
+   POPUP STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 :deep(.maplibregl-popup-content) {
   background: #1a1a2e !important;
   color: #e0e0e0 !important;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   border: 1px solid #3d3d5c;
+  max-width: 340px;
 }
 
 :deep(.maplibregl-popup-close-button) {
   color: #888 !important;
-  font-size: 18px;
-  padding: 4px 8px;
+  font-size: 20px;
+  padding: 6px 10px;
+  line-height: 1;
 }
 
 :deep(.maplibregl-popup-close-button:hover) {
@@ -383,52 +570,80 @@ const switchStyle = (styleName) => {
 }
 
 :deep(.popup-content) {
-  padding: 12px 16px;
+  padding: 14px 18px;
 }
 
 :deep(.popup-header) {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 1.05em;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
+  gap: 10px;
+  font-size: 1.1em;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #3d3d5c;
 }
 
 :deep(.popup-header strong) {
   font-style: italic;
+  color: #fff;
 }
 
 :deep(.status-dot) {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
 }
 
 :deep(.popup-row) {
   font-size: 0.85em;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   color: #ccc;
+  line-height: 1.4;
 }
 
 :deep(.popup-row .label) {
   color: #888;
-  margin-right: 4px;
+  margin-right: 6px;
 }
 
 :deep(.popup-image) {
-  margin-top: 12px;
-  border-radius: 6px;
+  margin-top: 14px;
+  border-radius: 8px;
   overflow: hidden;
   background: #252540;
+  border: 1px solid #3d3d5c;
 }
 
 :deep(.popup-image img) {
   width: 100%;
-  max-height: 200px;
+  max-height: 220px;
   object-fit: contain;
   display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .style-switcher {
+    top: auto;
+    bottom: 100px;
+    left: 10px;
+    flex-wrap: wrap;
+    max-width: calc(100% - 20px);
+  }
+  
+  .style-switcher button {
+    padding: 8px 10px;
+    font-size: 0.7em;
+  }
+  
+  .legend {
+    bottom: 160px;
+    font-size: 0.9em;
+  }
 }
 </style>

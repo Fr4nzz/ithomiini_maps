@@ -1,7 +1,7 @@
 {
-  "name": "mapas_ithominii",
-  "private": true,
-  "version": "0.0.0",
+  "name": "ithomiini-maps",
+  "version": "1.0.0",
+  "description": "Interactive mapping tool for Ithomiini butterfly research",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,5 +16,19 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
     "vite": "^7.2.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fr4nzz/ithomiini_maps"
+  },
+  "author": "Franz Chandi",
+  "license": "MIT",
+  "keywords": [
+    "ithomiini",
+    "butterflies",
+    "biodiversity",
+    "mapping",
+    "vue3",
+    "maplibre"
+  ]
 }

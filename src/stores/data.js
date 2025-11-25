@@ -2,7 +2,10 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 
 export const useDataStore = defineStore('data', () => {
-  // --- STATE ---
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STATE
+  // ═══════════════════════════════════════════════════════════════════════════
+  
   const allFeatures = ref([])
   const loading = ref(true)
 
@@ -22,20 +25,36 @@ export const useDataStore = defineStore('data', () => {
     // Parallel filters
     mimicry: 'All',
     status: [],
+    source: 'All',
+    // Search
+    camidSearch: '',
   })
 
-  // --- ACTIONS ---
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+  
   const loadMapData = async () => {
     loading.value = true
     try {
-      const response = await fetch('./data/map_points.json')
+      // Determine base path (handles both dev and GitHub Pages)
+      const basePath = import.meta.env.BASE_URL || '/'
+      const response = await fetch(`${basePath}data/map_points.json`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
+      
       const data = await response.json()
       allFeatures.value = data
+      console.log(`Loaded ${data.length} records`)
 
       // Initialize filters from URL
       restoreFiltersFromURL()
     } catch (e) {
       console.error('Failed to load data:', e)
+      // Set empty array to prevent errors
+      allFeatures.value = []
     } finally {
       loading.value = false
     }
@@ -66,6 +85,12 @@ export const useDataStore = defineStore('data', () => {
     if (params.get('status')) {
       filters.value.status = params.get('status').split(',')
     }
+    if (params.get('source')) {
+      filters.value.source = params.get('source')
+    }
+    if (params.get('cam')) {
+      filters.value.camidSearch = params.get('cam')
+    }
   }
 
   const resetAllFilters = () => {
@@ -77,6 +102,8 @@ export const useDataStore = defineStore('data', () => {
       subspecies: 'All',
       mimicry: 'All',
       status: [],
+      source: 'All',
+      camidSearch: '',
     }
   }
 
@@ -98,7 +125,9 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
-  // --- CASCADING COMPUTED PROPERTIES ---
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CASCADING COMPUTED PROPERTIES
+  // ═══════════════════════════════════════════════════════════════════════════
   
   // Helper: filter data up to a certain level
   const getFilteredSubset = (upToLevel) => {
@@ -152,7 +181,11 @@ export const useDataStore = defineStore('data', () => {
 
   // Mimicry rings - always show ALL options (non-cascading)
   const uniqueMimicry = computed(() => {
-    const set = new Set(allFeatures.value.map(i => i.mimicry_ring).filter(Boolean))
+    const set = new Set(
+      allFeatures.value
+        .map(i => i.mimicry_ring)
+        .filter(v => v && v !== 'Unknown')
+    )
     return Array.from(set).sort()
   })
 
@@ -162,8 +195,15 @@ export const useDataStore = defineStore('data', () => {
     return Array.from(set).sort()
   })
 
-  // --- CASCADE RESET WATCHERS ---
-  // When parent changes, reset children to 'All'
+  // Unique data sources
+  const uniqueSources = computed(() => {
+    const set = new Set(allFeatures.value.map(i => i.source).filter(Boolean))
+    return Array.from(set).sort()
+  })
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CASCADE RESET WATCHERS
+  // ═══════════════════════════════════════════════════════════════════════════
   
   watch(() => filters.value.family, () => {
     filters.value.tribe = 'All'
@@ -187,11 +227,21 @@ export const useDataStore = defineStore('data', () => {
     filters.value.subspecies = 'All'
   })
 
-  // --- FINAL FILTERED DATA ---
+  // ═══════════════════════════════════════════════════════════════════════════
+  // FINAL FILTERED DATA
+  // ═══════════════════════════════════════════════════════════════════════════
+  
   const filteredGeoJSON = computed(() => {
     if (!allFeatures.value.length) return null
 
     const filtered = allFeatures.value.filter(item => {
+      // CAMID Search (takes priority - instant filter)
+      if (filters.value.camidSearch) {
+        const searchTerm = filters.value.camidSearch.toUpperCase()
+        const itemId = (item.id || '').toUpperCase()
+        if (!itemId.includes(searchTerm)) return false
+      }
+
       // Taxonomic cascade
       if (filters.value.family !== 'All' && item.family !== filters.value.family) return false
       if (filters.value.tribe !== 'All' && item.tribe !== filters.value.tribe) return false
@@ -202,6 +252,7 @@ export const useDataStore = defineStore('data', () => {
       // Parallel filters
       if (filters.value.mimicry !== 'All' && item.mimicry_ring !== filters.value.mimicry) return false
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
+      if (filters.value.source !== 'All' && item.source !== filters.value.source) return false
       
       return true
     })
@@ -216,7 +267,10 @@ export const useDataStore = defineStore('data', () => {
     }
   })
 
-  // --- URL SYNC WATCHER ---
+  // ═══════════════════════════════════════════════════════════════════════════
+  // URL SYNC WATCHER
+  // ═══════════════════════════════════════════════════════════════════════════
+  
   watch(
     filters,
     (newFilters) => {
@@ -229,6 +283,8 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.subspecies !== 'All') params.set('ssp', newFilters.subspecies)
       if (newFilters.mimicry !== 'All') params.set('mim', newFilters.mimicry)
       if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
+      if (newFilters.source !== 'All') params.set('source', newFilters.source)
+      if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
 
       const newURL = params.toString() 
         ? `${window.location.pathname}?${params}` 
@@ -238,6 +294,10 @@ export const useDataStore = defineStore('data', () => {
     { deep: true }
   )
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // EXPORT
+  // ═══════════════════════════════════════════════════════════════════════════
+  
   return {
     // State
     loading,
@@ -260,6 +320,7 @@ export const useDataStore = defineStore('data', () => {
     uniqueSubspecies,
     uniqueMimicry,
     uniqueStatuses,
+    uniqueSources,
     
     // Final output
     filteredGeoJSON,

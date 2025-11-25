@@ -1,468 +1,647 @@
 <script setup>
+import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
 
 const store = useDataStore()
 
+// Local state for CAMID search with debounce
+const camidInput = ref('')
+let debounceTimer = null
+
+const handleCamidSearch = (e) => {
+  const value = e.target.value
+  camidInput.value = value
+  
+  clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    store.filters.camidSearch = value.trim().toUpperCase()
+  }, 300)
+}
+
+// Computed: Record counts
+const totalRecords = computed(() => store.allFeatures.length)
+const filteredRecords = computed(() => {
+  const geo = store.filteredGeoJSON
+  return geo ? geo.features.length : 0
+})
+
+// Status filter helpers
+const isStatusSelected = (status) => store.filters.status.includes(status)
+
 const toggleStatus = (status) => {
-  const index = store.filters.status.indexOf(status)
-  if (index === -1) store.filters.status.push(status)
-  else store.filters.status.splice(index, 1)
+  const idx = store.filters.status.indexOf(status)
+  if (idx > -1) {
+    store.filters.status.splice(idx, 1)
+  } else {
+    store.filters.status.push(status)
+  }
 }
 
 // Status color mapping
 const statusColors = {
-  'Sequenced': { dot: 'blue', label: 'Sequenced' },
-  'Tissue Available': { dot: 'green', label: 'Tissue' },
-  'Preserved Specimen': { dot: 'orange', label: 'Preserved' },
-  'Published': { dot: 'purple', label: 'Published' }
+  'Sequenced': '#3b82f6',
+  'Tissue Available': '#10b981',
+  'Preserved Specimen': '#f59e0b',
+  'Published': '#a855f7',
+  'GBIF Record': '#6b7280'
 }
+
+// Share URL functionality
+const copyShareUrl = () => {
+  navigator.clipboard.writeText(window.location.href)
+  showCopiedToast.value = true
+  setTimeout(() => { showCopiedToast.value = false }, 2000)
+}
+
+const showCopiedToast = ref(false)
 </script>
 
 <template>
-  <div class="sidebar">
+  <aside class="sidebar">
     <!-- Header -->
-    <div class="header">
-      <h2>Ithomiini Map</h2>
-      <div class="record-count">
-        <span class="count">{{ store.filteredGeoJSON?.features.length || 0 }}</span>
-        <span class="label">records</span>
+    <header class="sidebar-header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
+          <path d="M12 6c-2 0-4 3-4 6s2 6 4 6 4-3 4-6-2-6-4-6z"/>
+          <path d="M2 12h20"/>
+        </svg>
+        <div class="logo-text">
+          <span class="title">Ithomiini</span>
+          <span class="subtitle">Distribution Maps</span>
+        </div>
       </div>
-    </div>
+    </header>
 
-    <!-- Filters Container -->
-    <div class="controls">
+    <!-- Scrollable Content -->
+    <div class="sidebar-content">
       
-      <!-- ═══════════════════════════════════════════════════════════════ -->
-      <!-- ADVANCED FILTERS (Expandable) -->
-      <!-- ═══════════════════════════════════════════════════════════════ -->
+      <!-- Record Count Banner -->
+      <div class="record-count">
+        <span class="count">{{ filteredRecords.toLocaleString() }}</span>
+        <span class="label">of {{ totalRecords.toLocaleString() }} records</span>
+      </div>
+
+      <!-- CAMID Search -->
       <div class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+          Quick Search (CAMID)
+        </label>
+        <input 
+          type="text" 
+          class="search-input"
+          placeholder="e.g. CAM012345"
+          :value="camidInput"
+          @input="handleCamidSearch"
+        />
+      </div>
+
+      <!-- Primary Filters: Species & Subspecies -->
+      <div class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3v18m-6-6 6 6 6-6"/>
+          </svg>
+          Taxonomy
+        </label>
+
+        <div class="filter-group">
+          <label class="filter-label">Species</label>
+          <select 
+            v-model="store.filters.species" 
+            class="filter-select"
+          >
+            <option value="All">All Species ({{ store.uniqueSpecies.length }})</option>
+            <option 
+              v-for="sp in store.uniqueSpecies" 
+              :key="sp" 
+              :value="sp"
+            >
+              {{ sp }}
+            </option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Subspecies</label>
+          <select 
+            v-model="store.filters.subspecies" 
+            class="filter-select"
+            :disabled="store.filters.species === 'All'"
+          >
+            <option value="All">All Subspecies ({{ store.uniqueSubspecies.length }})</option>
+            <option 
+              v-for="ssp in store.uniqueSubspecies" 
+              :key="ssp" 
+              :value="ssp"
+            >
+              {{ ssp }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Advanced Taxonomy (Collapsible) -->
+      <div class="filter-section collapsible">
         <button 
-          class="section-toggle"
-          :class="{ expanded: store.showAdvancedFilters }"
+          class="collapse-toggle"
           @click="store.toggleAdvancedFilters"
+          :class="{ expanded: store.showAdvancedFilters }"
         >
-          <span class="toggle-icon">{{ store.showAdvancedFilters ? '▼' : '▶' }}</span>
-          <span>Advanced Taxonomy</span>
-          <span class="hint" v-if="!store.showAdvancedFilters">Family, Tribe, Genus</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Advanced Taxonomy
         </button>
 
-        <div class="collapsible" :class="{ open: store.showAdvancedFilters }">
-          <!-- Family -->
-          <div class="group">
-            <label>Family</label>
-            <select v-model="store.filters.family">
+        <div v-show="store.showAdvancedFilters" class="collapse-content">
+          <div class="filter-group">
+            <label class="filter-label">Family</label>
+            <select v-model="store.filters.family" class="filter-select">
               <option value="All">All Families</option>
               <option v-for="f in store.uniqueFamilies" :key="f" :value="f">{{ f }}</option>
             </select>
           </div>
 
-          <!-- Tribe -->
-          <div class="group">
-            <label>Tribe</label>
-            <select v-model="store.filters.tribe">
+          <div class="filter-group">
+            <label class="filter-label">Tribe</label>
+            <select v-model="store.filters.tribe" class="filter-select">
               <option value="All">All Tribes</option>
               <option v-for="t in store.uniqueTribes" :key="t" :value="t">{{ t }}</option>
             </select>
           </div>
 
-          <!-- Genus -->
-          <div class="group">
-            <label>Genus</label>
-            <select v-model="store.filters.genus">
-              <option value="All">All Genera</option>
+          <div class="filter-group">
+            <label class="filter-label">Genus</label>
+            <select v-model="store.filters.genus" class="filter-select">
+              <option value="All">All Genera ({{ store.uniqueGenera.length }})</option>
               <option v-for="g in store.uniqueGenera" :key="g" :value="g">{{ g }}</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- ═══════════════════════════════════════════════════════════════ -->
-      <!-- PRIMARY FILTERS (Always Visible) -->
-      <!-- ═══════════════════════════════════════════════════════════════ -->
-      <div class="filter-section primary">
-        <div class="section-label">Species Filters</div>
-
-        <!-- Species -->
-        <div class="group">
-          <label>
-            Species
-            <span class="option-count">({{ store.uniqueSpecies.length }})</span>
-          </label>
-          <select v-model="store.filters.species">
-            <option value="All">All Species</option>
-            <option v-for="sp in store.uniqueSpecies" :key="sp" :value="sp">{{ sp }}</option>
-          </select>
-        </div>
-
-        <!-- Subspecies -->
-        <div class="group">
-          <label>
-            Subspecies
-            <span class="option-count">({{ store.uniqueSubspecies.length }})</span>
-          </label>
-          <select v-model="store.filters.subspecies" :disabled="store.uniqueSubspecies.length === 0">
-            <option value="All">All Subspecies</option>
-            <option v-for="ssp in store.uniqueSubspecies" :key="ssp" :value="ssp">{{ ssp }}</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- ═══════════════════════════════════════════════════════════════ -->
-      <!-- MIMICRY FILTER (Expandable) -->
-      <!-- ═══════════════════════════════════════════════════════════════ -->
-      <div class="filter-section">
+      <!-- Mimicry Ring Filter (Collapsible) -->
+      <div class="filter-section collapsible">
         <button 
-          class="section-toggle"
-          :class="{ expanded: store.showMimicryFilter }"
+          class="collapse-toggle"
           @click="store.toggleMimicryFilter"
+          :class="{ expanded: store.showMimicryFilter }"
         >
-          <span class="toggle-icon">{{ store.showMimicryFilter ? '▼' : '▶' }}</span>
-          <span>Mimicry Ring</span>
-          <span class="active-badge" v-if="store.filters.mimicry !== 'All'">
-            {{ store.filters.mimicry }}
-          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Mimicry Ring
         </button>
 
-        <div class="collapsible" :class="{ open: store.showMimicryFilter }">
-          <div class="group">
-            <label>
-              Pattern
-              <span class="option-count">({{ store.uniqueMimicry.length }})</span>
-            </label>
-            <select v-model="store.filters.mimicry">
-              <option value="All">All Patterns</option>
+        <div v-show="store.showMimicryFilter" class="collapse-content">
+          <div class="filter-group">
+            <select v-model="store.filters.mimicry" class="filter-select">
+              <option value="All">All Mimicry Rings ({{ store.uniqueMimicry.length }})</option>
               <option v-for="m in store.uniqueMimicry" :key="m" :value="m">{{ m }}</option>
             </select>
           </div>
+          <p class="filter-hint">
+            Mimicry data from Dore et al. (2025)
+          </p>
         </div>
       </div>
 
-      <!-- ═══════════════════════════════════════════════════════════════ -->
-      <!-- SEQUENCING STATUS (Always Visible) -->
-      <!-- ═══════════════════════════════════════════════════════════════ -->
+      <!-- Sequencing Status -->
       <div class="filter-section">
-        <div class="section-label">Sequencing Status</div>
-        <div class="status-toggles">
-          <button 
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          Sequencing Status
+        </label>
+
+        <div class="status-grid">
+          <button
             v-for="status in store.uniqueStatuses"
             :key="status"
+            class="status-btn"
+            :class="{ active: isStatusSelected(status) }"
+            :style="{ 
+              '--status-color': statusColors[status] || '#6b7280',
+              borderColor: isStatusSelected(status) ? statusColors[status] : 'transparent'
+            }"
             @click="toggleStatus(status)"
-            :class="{ active: store.filters.status.includes(status) }"
-            class="btn-status"
           >
             <span 
-              class="dot" 
-              :class="statusColors[status]?.dot || 'gray'"
+              class="status-dot" 
+              :style="{ background: statusColors[status] || '#6b7280' }"
             ></span>
-            {{ statusColors[status]?.label || status }}
+            <span class="status-label">{{ status }}</span>
           </button>
         </div>
-        <p class="status-hint" v-if="store.filters.status.length === 0">
-          Click to filter by status
+        <p class="filter-hint" v-if="store.filters.status.length > 0">
+          {{ store.filters.status.length }} status{{ store.filters.status.length > 1 ? 'es' : '' }} selected
         </p>
       </div>
 
+      <!-- Data Source -->
+      <div class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+          </svg>
+          Data Source
+        </label>
+        <div class="filter-group">
+          <select v-model="store.filters.source" class="filter-select">
+            <option value="All">All Sources</option>
+            <option v-for="s in store.uniqueSources" :key="s" :value="s">{{ s }}</option>
+          </select>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-      <button class="reset" @click="store.resetAllFilters">
-        ✕ Reset All Filters
+    <!-- Footer Actions -->
+    <footer class="sidebar-footer">
+      <button class="btn-reset" @click="store.resetAllFilters">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Reset Filters
       </button>
-    </div>
-  </div>
+
+      <button class="btn-share" @click="copyShareUrl">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <path d="m8.59 13.51 6.83 3.98m-.01-10.98-6.82 3.98"/>
+        </svg>
+        Share View
+      </button>
+
+      <!-- Toast notification -->
+      <Transition name="toast">
+        <div v-if="showCopiedToast" class="toast">
+          URL copied to clipboard!
+        </div>
+      </Transition>
+    </footer>
+  </aside>
 </template>
 
 <style scoped>
 .sidebar {
   width: 320px;
+  min-width: 320px;
   height: 100vh;
-  background: #1a1a2e;
-  color: #e0e0e0;
+  background: var(--color-bg-secondary, #252540);
+  border-right: 1px solid var(--color-border, #3d3d5c);
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #2d2d44;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
 }
 
 /* Header */
-.header {
+.sidebar-header {
   padding: 20px;
-  border-bottom: 1px solid #2d2d44;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-primary, #1a1a2e);
 }
 
-.header h2 {
-  margin: 0 0 8px 0;
-  font-size: 1.4em;
-  font-weight: 600;
-  color: #fff;
-}
-
-.record-count {
+.logo {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  gap: 12px;
 }
 
-.record-count .count {
-  font-size: 1.8em;
-  font-weight: 700;
-  color: #4ade80;
+.logo svg {
+  width: 36px;
+  height: 36px;
+  color: var(--color-accent, #4ade80);
 }
 
-.record-count .label {
-  font-size: 0.85em;
-  color: #888;
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-text .title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #e0e0e0);
+  letter-spacing: -0.5px;
+}
+
+.logo-text .subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #666);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Controls Container */
-.controls {
-  flex-grow: 1;
+/* Scrollable Content */
+.sidebar-content {
+  flex: 1;
   overflow-y: auto;
-  padding: 10px 0;
+  padding: 16px;
+}
+
+/* Record Count */
+.record-count {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.record-count .count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-accent, #4ade80);
+  font-variant-numeric: tabular-nums;
+}
+
+.record-count .label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #aaa);
+  margin-left: 6px;
 }
 
 /* Filter Sections */
 .filter-section {
-  border-bottom: 1px solid #2d2d44;
-  padding: 0;
-}
-
-.filter-section.primary {
-  background: rgba(74, 222, 128, 0.05);
+  margin-bottom: 20px;
 }
 
 .section-label {
-  padding: 12px 20px 8px;
-  font-size: 0.75em;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 600;
-}
-
-/* Section Toggle Button */
-.section-toggle {
-  width: 100%;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 20px;
-  background: transparent;
-  border: none;
-  color: #e0e0e0;
-  font-size: 0.95em;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.2s;
-}
-
-.section-toggle:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.section-toggle.expanded {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.toggle-icon {
-  font-size: 0.7em;
-  color: #666;
-  width: 12px;
-}
-
-.section-toggle .hint {
-  margin-left: auto;
-  font-size: 0.8em;
-  color: #555;
-}
-
-.active-badge {
-  margin-left: auto;
-  background: #4ade80;
-  color: #1a1a2e;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.75em;
+  gap: 8px;
+  font-size: 0.7rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary, #aaa);
+  margin-bottom: 10px;
 }
 
-/* Collapsible Content */
-.collapsible {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-  padding: 0 20px;
+.section-label svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
 }
 
-.collapsible.open {
-  max-height: 500px;
-  padding: 0 20px 15px;
+/* Search Input */
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+.search-input::placeholder {
+  color: var(--color-text-muted, #666);
 }
 
 /* Filter Groups */
-.group {
-  margin-bottom: 16px;
+.filter-group {
+  margin-bottom: 10px;
 }
 
-.group:last-child {
-  margin-bottom: 0;
+.filter-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #666);
+  margin-bottom: 4px;
 }
 
-.filter-section.primary .group {
-  padding: 0 20px;
-  margin-bottom: 16px;
-}
-
-.filter-section.primary .group:last-child {
-  padding-bottom: 15px;
-}
-
-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8em;
-  color: #aaa;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.option-count {
-  color: #666;
-  font-weight: normal;
-}
-
-/* Select Inputs */
-select {
+.filter-select {
   width: 100%;
-  padding: 10px 12px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
-  color: #e0e0e0;
+  padding: 8px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
-  font-size: 0.9em;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
 }
 
-select:hover {
+.filter-select:hover:not(:disabled) {
   border-color: #4d4d6d;
 }
 
-select:focus {
+.filter-select:focus {
   outline: none;
-  border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+  border-color: var(--color-accent, #4ade80);
 }
 
-select:disabled {
+.filter-select:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-select option {
-  background: #252540;
-  color: #e0e0e0;
+.filter-select option {
+  background: var(--color-bg-secondary, #252540);
+  color: var(--color-text-primary, #e0e0e0);
 }
 
-/* Status Toggles */
-.status-toggles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 0 20px 15px;
+/* Collapsible Sections */
+.collapsible {
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.btn-status {
+.collapse-toggle {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
-  color: #888;
-  border-radius: 20px;
-  font-size: 0.85em;
+  padding: 12px 14px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: none;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.btn-status:hover {
-  background: #2d2d4a;
-  border-color: #4d4d6d;
+.collapse-toggle:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
 }
 
-.btn-status.active {
-  background: #2d2d4a;
-  color: #fff;
-  border-color: #4ade80;
+.collapse-toggle svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
 }
 
-.dot {
-  width: 8px;
-  height: 8px;
+.collapse-toggle.expanded svg {
+  transform: rotate(90deg);
+}
+
+.collapse-content {
+  padding: 12px 14px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.filter-hint {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* Status Grid */
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.status-btn:hover {
+  background: #353558;
+}
+
+.status-btn.active {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.dot.blue { background: #3b82f6; }
-.dot.green { background: #10b981; }
-.dot.orange { background: #f59e0b; }
-.dot.purple { background: #a855f7; }
-.dot.gray { background: #6b7280; }
-
-.status-hint {
-  padding: 0 20px 15px;
-  margin: 0;
-  font-size: 0.75em;
-  color: #555;
-  font-style: italic;
+.status-label {
+  font-size: 0.8rem;
+  color: var(--color-text-primary, #e0e0e0);
 }
 
 /* Footer */
-.footer {
-  padding: 15px 20px;
-  border-top: 1px solid #2d2d44;
-  background: #16162a;
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-primary, #1a1a2e);
+  display: flex;
+  gap: 10px;
+  position: relative;
 }
 
-.reset {
-  width: 100%;
-  padding: 12px;
-  background: transparent;
-  border: 1px solid #ef4444;
-  color: #ef4444;
+.btn-reset,
+.btn-share {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
   border-radius: 6px;
-  font-size: 0.9em;
+  font-size: 0.8rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.reset:hover {
-  background: #ef4444;
-  color: white;
+.btn-reset {
+  background: transparent;
+  border: 1px solid var(--color-border, #3d3d5c);
+  color: var(--color-text-secondary, #aaa);
 }
 
-/* Scrollbar Styling */
-.controls::-webkit-scrollbar {
-  width: 6px;
+.btn-reset:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-primary, #e0e0e0);
 }
 
-.controls::-webkit-scrollbar-track {
-  background: #1a1a2e;
+.btn-share {
+  background: var(--color-accent, #4ade80);
+  border: none;
+  color: var(--color-bg-primary, #1a1a2e);
 }
 
-.controls::-webkit-scrollbar-thumb {
-  background: #3d3d5c;
-  border-radius: 3px;
+.btn-share:hover {
+  background: #5eeb94;
 }
 
-.controls::-webkit-scrollbar-thumb:hover {
-  background: #4d4d6d;
+.btn-reset svg,
+.btn-share svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Toast */
+.toast {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    max-height: 50vh;
+  }
 }
 </style>

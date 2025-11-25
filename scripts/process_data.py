@@ -4,9 +4,13 @@ Ithomiini Maps - Data Processing Pipeline
 Merges data from multiple sources into a unified JSON format.
 
 Sources:
-  1. Local Excel (Dore et al.) - Published occurrence data
+  1. Local Excel (Dore et al.) - Published occurrence data (source of mimicry ring data)
   2. Google Sheets (Sanger) - Live collection/sequencing data
   3. GBIF API - External occurrence enrichment
+
+Key Feature:
+  - Mimicry ring lookup table built from Dore database
+  - Applied to Sanger and GBIF records based on species/subspecies matching
 
 Output:
   - public/data/map_points.json (for map rendering)
@@ -34,15 +38,97 @@ SHEET_GIDS = {
 OUTPUT_DIR = "public/data"
 
 # GBIF Configuration
-# Set to True to merge pre-downloaded GBIF data (from gbif_download.py)
-# Set to False to skip GBIF entirely
 USE_GBIF_BULK_DOWNLOAD = True
 GBIF_BULK_FILE = "public/data/gbif_occurrences.json"
-
-# Legacy: Search API (slower, rate-limited) - only used if bulk download not found
-GBIF_SEARCH_FALLBACK = False  # Set True to use search API as fallback
-GBIF_SPECIES_LIMIT = 5  # Number of species to fetch via search API
+GBIF_SEARCH_FALLBACK = False
+GBIF_SPECIES_LIMIT = 5
 GBIF_RECORDS_PER_SPECIES = 50
+
+# ══════════════════════════════════════════════════════════════════════════════
+# MIMICRY RING LOOKUP TABLE
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Global lookup table: (scientific_name, subspecies) -> (male_mimicry, female_mimicry)
+MIMICRY_LOOKUP = {}
+
+
+def build_mimicry_lookup(dore_df):
+    """
+    Build a lookup table from Dore database for mimicry rings.
+    Creates mappings at multiple levels of specificity:
+    1. Full match: (scientific_name, subspecies) -> mimicry
+    2. Species-only fallback: (scientific_name, None) -> mimicry
+    
+    This allows matching even when subspecies data is missing.
+    """
+    global MIMICRY_LOOKUP
+    
+    print(">> Building Mimicry Ring Lookup Table...")
+    
+    for _, row in dore_df.iterrows():
+        sci_name = f"{row['Genus']} {row['Species']}".strip()
+        subspecies = row.get('Sub.species')
+        male_mim = row.get('M.mimicry')
+        female_mim = row.get('F.mimicry')
+        
+        # Clean subspecies
+        if pd.isna(subspecies) or str(subspecies).strip() in ['nan', '', 'None']:
+            subspecies = None
+        else:
+            subspecies = str(subspecies).strip()
+        
+        # Normalize mimicry values
+        male_mim = normalize_mimicry(male_mim)
+        female_mim = normalize_mimicry(female_mim)
+        
+        # Store with full key (species + subspecies)
+        if subspecies:
+            key = (sci_name.lower(), subspecies.lower())
+            if key not in MIMICRY_LOOKUP:
+                MIMICRY_LOOKUP[key] = (male_mim, female_mim)
+        
+        # Also store species-only key (for fallback matching)
+        species_key = (sci_name.lower(), None)
+        if species_key not in MIMICRY_LOOKUP:
+            MIMICRY_LOOKUP[species_key] = (male_mim, female_mim)
+    
+    print(f"   Built lookup with {len(MIMICRY_LOOKUP)} unique entries")
+    
+    # Statistics
+    unique_species = len(set(k[0] for k in MIMICRY_LOOKUP.keys()))
+    unique_mimicry = len(set(v[0] for v in MIMICRY_LOOKUP.values() if v[0] != 'Unknown'))
+    print(f"   Covers {unique_species} species, {unique_mimicry} mimicry rings")
+
+
+def lookup_mimicry(scientific_name, subspecies=None):
+    """
+    Look up mimicry ring for a given species/subspecies.
+    Returns (male_mimicry, female_mimicry) tuple.
+    
+    Matching priority:
+    1. Exact match (species + subspecies)
+    2. Species-only fallback
+    3. Return ('Unknown', 'Unknown') if no match
+    """
+    if not scientific_name:
+        return ('Unknown', 'Unknown')
+    
+    sci_name_lower = scientific_name.lower().strip()
+    
+    # Try exact match first (species + subspecies)
+    if subspecies:
+        ssp_lower = str(subspecies).lower().strip()
+        key = (sci_name_lower, ssp_lower)
+        if key in MIMICRY_LOOKUP:
+            return MIMICRY_LOOKUP[key]
+    
+    # Fallback to species-only match
+    species_key = (sci_name_lower, None)
+    if species_key in MIMICRY_LOOKUP:
+        return MIMICRY_LOOKUP[species_key]
+    
+    return ('Unknown', 'Unknown')
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # HELPER FUNCTIONS
@@ -57,7 +143,7 @@ def clean_id(series):
 
 def normalize_mimicry(value):
     """Convert mimicry ring to Title Case for consistency."""
-    if pd.isna(value) or value in ['', 'nan', 'NAN', 'Unknown']:
+    if pd.isna(value) or value in ['', 'nan', 'NAN', 'Unknown', 'UNKNOWN']:
         return 'Unknown'
     return str(value).strip().title()
 
@@ -106,7 +192,7 @@ def split_scientific_name(name):
 
 def load_local_data():
     """Load and process the Dore et al. Excel dataset."""
-    print(">> Loading Local Excel Data...")
+    print(">> Loading Local Excel Data (Dore et al.)...")
     
     try:
         df = pd.read_excel(LOCAL_EXCEL_PATH)
@@ -131,7 +217,9 @@ def load_local_data():
         df['lng'] = pd.to_numeric(df['Longitude'], errors='coerce')
         
         # Mimicry ring (use male mimicry, normalize to Title Case)
+        # Dore is the SOURCE of mimicry data
         df['mimicry_ring'] = df['M.mimicry'].apply(normalize_mimicry)
+        df['mimicry_ring_female'] = df['F.mimicry'].apply(normalize_mimicry)
         
         # Metadata
         df['source'] = "Dore et al. (2025)"
@@ -153,6 +241,9 @@ def load_local_data():
         result = result.dropna(subset=['lat', 'lng'])
         print(f"   Output: {len(result)} records with coordinates")
         
+        # Build mimicry lookup from this data BEFORE returning
+        build_mimicry_lookup(df)
+        
         return result
         
     except FileNotFoundError:
@@ -160,6 +251,8 @@ def load_local_data():
         return pd.DataFrame()
     except Exception as e:
         print(f"   ERROR loading local excel: {e}")
+        import traceback
+        traceback.print_exc()
         return pd.DataFrame()
 
 
@@ -204,7 +297,6 @@ def load_sanger_data():
         df_col['image_url'] = df_col['clean_id'].map(photo_map)
         
         # Taxonomy fields (from Google Sheets columns)
-        # Note: Sheet has ' Family' with leading space
         df_col['family'] = df_col.get(' Family', df_col.get('Family', pd.Series(['Nymphalidae'] * len(df_col))))
         df_col['family'] = df_col['family'].fillna('Nymphalidae').replace({'': 'Nymphalidae'})
         
@@ -240,8 +332,21 @@ def load_sanger_data():
             df_col['lat'] = None
             df_col['lng'] = None
         
-        # Mimicry (Sanger data doesn't have it, mark as Unknown)
-        df_col['mimicry_ring'] = 'Unknown'
+        # ═══════════════════════════════════════════════════════════════════
+        # MIMICRY RING LOOKUP (from Dore database)
+        # ═══════════════════════════════════════════════════════════════════
+        print("   Applying mimicry ring lookup from Dore database...")
+        
+        def get_mimicry_for_row(row):
+            sci_name = row.get('scientific_name', '')
+            subspecies = row.get('subspecies')
+            male_mim, _ = lookup_mimicry(sci_name, subspecies)
+            return male_mim
+        
+        df_col['mimicry_ring'] = df_col.apply(get_mimicry_for_row, axis=1)
+        
+        matched = (df_col['mimicry_ring'] != 'Unknown').sum()
+        print(f"   Mimicry ring matched for {matched}/{len(df_col)} records")
         
         # Metadata
         df_col['source'] = 'Sanger Institute'
@@ -258,7 +363,6 @@ def load_sanger_data():
         # Drop rows without coordinates or with empty IDs
         result = result.dropna(subset=['lat', 'lng'])
         result = result[result['id'] != '']
-        result.loc[result['id'] == '', 'id'] = 'NO_ID'
         
         print(f"   Output: {len(result)} records with coordinates")
         return result
@@ -267,6 +371,59 @@ def load_sanger_data():
         print(f"   ERROR loading Sanger data: {e}")
         import traceback
         traceback.print_exc()
+        return pd.DataFrame()
+
+
+def load_gbif_bulk_download():
+    """
+    Load pre-downloaded GBIF data from gbif_download.py.
+    Applies mimicry ring lookup from Dore database.
+    """
+    gbif_path = Path(GBIF_BULK_FILE)
+    
+    if not gbif_path.exists():
+        print(f">> GBIF bulk download not found: {gbif_path}")
+        print("   Run `python scripts/gbif_download.py` first to download GBIF data.")
+        return pd.DataFrame()
+    
+    print(f">> Loading GBIF bulk download: {gbif_path}")
+    
+    try:
+        with open(gbif_path) as f:
+            records = json.load(f)
+        
+        df = pd.DataFrame(records)
+        print(f"   Loaded {len(df):,} GBIF records")
+        
+        # Ensure required columns exist
+        required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
+                        'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
+                        'sequencing_status', 'source', 'image_url', 'country']
+        
+        for col in required_cols:
+            if col not in df.columns:
+                df[col] = None if col in ['subspecies', 'image_url'] else 'Unknown'
+        
+        # ═══════════════════════════════════════════════════════════════════
+        # MIMICRY RING LOOKUP (from Dore database)
+        # ═══════════════════════════════════════════════════════════════════
+        print("   Applying mimicry ring lookup from Dore database...")
+        
+        def get_mimicry_for_row(row):
+            sci_name = row.get('scientific_name', '')
+            subspecies = row.get('subspecies')
+            male_mim, _ = lookup_mimicry(sci_name, subspecies)
+            return male_mim
+        
+        df['mimicry_ring'] = df.apply(get_mimicry_for_row, axis=1)
+        
+        matched = (df['mimicry_ring'] != 'Unknown').sum()
+        print(f"   Mimicry ring matched for {matched:,}/{len(df):,} records")
+        
+        return df[required_cols]
+        
+    except Exception as e:
+        print(f"   ERROR loading GBIF data: {e}")
         return pd.DataFrame()
 
 
@@ -323,6 +480,9 @@ def fetch_gbif_data(species_list):
                 sci_name = rec.get('species', rec.get('scientificName', sp))
                 genus, species_epithet, subspecies = split_scientific_name(sci_name)
                 
+                # Lookup mimicry ring
+                male_mim, _ = lookup_mimicry(sci_name, subspecies)
+                
                 all_records.append({
                     'id': f"GBIF_{rec.get('key', '')}",
                     'scientific_name': sci_name,
@@ -330,10 +490,10 @@ def fetch_gbif_data(species_list):
                     'species': species_epithet,
                     'subspecies': subspecies,
                     'family': rec.get('family', 'Nymphalidae'),
-                    'tribe': 'Ithomiini',  # GBIF doesn't return tribe
+                    'tribe': 'Ithomiini',
                     'lat': rec.get('decimalLatitude'),
                     'lng': rec.get('decimalLongitude'),
-                    'mimicry_ring': 'Unknown',  # GBIF doesn't have mimicry data
+                    'mimicry_ring': male_mim,  # From Dore lookup
                     'sequencing_status': 'GBIF Record',
                     'source': 'GBIF',
                     'image_url': image_url,
@@ -355,57 +515,30 @@ def fetch_gbif_data(species_list):
     return pd.DataFrame()
 
 
-def load_gbif_bulk_download():
-    """
-    Load pre-downloaded GBIF data from gbif_download.py.
-    This is MUCH faster than using the search API!
-    """
-    gbif_path = Path(GBIF_BULK_FILE)
-    
-    if not gbif_path.exists():
-        print(f">> GBIF bulk download not found: {gbif_path}")
-        print("   Run `python scripts/gbif_download.py` first to download GBIF data.")
-        return pd.DataFrame()
-    
-    print(f">> Loading GBIF bulk download: {gbif_path}")
-    
-    try:
-        with open(gbif_path) as f:
-            records = json.load(f)
-        
-        df = pd.DataFrame(records)
-        print(f"   Loaded {len(df):,} GBIF records")
-        
-        # Ensure required columns exist
-        required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
-                        'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
-                        'sequencing_status', 'source', 'image_url', 'country']
-        
-        for col in required_cols:
-            if col not in df.columns:
-                df[col] = None if col in ['subspecies', 'image_url'] else 'Unknown'
-        
-        return df[required_cols]
-        
-    except Exception as e:
-        print(f"   ERROR loading GBIF data: {e}")
-        return pd.DataFrame()
-
-
 # ══════════════════════════════════════════════════════════════════════════════
 # MAIN PIPELINE
 # ══════════════════════════════════════════════════════════════════════════════
 
 def main():
-    print("=" * 60)
+    print("=" * 70)
     print("ITHOMIINI MAPS - DATA PROCESSING PIPELINE")
-    print("=" * 60)
+    print("=" * 70)
     
     # Ensure output directory exists
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    # Load all data sources
+    # ═══════════════════════════════════════════════════════════════════════
+    # STEP 1: Load Dore data FIRST (builds mimicry lookup table)
+    # ═══════════════════════════════════════════════════════════════════════
     df_local = load_local_data()
+    
+    if df_local.empty:
+        print("\n⚠️  WARNING: Dore data not loaded - mimicry lookup will be empty!")
+        print("   Other data sources will have 'Unknown' mimicry rings.")
+    
+    # ═══════════════════════════════════════════════════════════════════════
+    # STEP 2: Load other sources (uses mimicry lookup)
+    # ═══════════════════════════════════════════════════════════════════════
     df_sanger = load_sanger_data()
     
     # Merge local and sanger
@@ -416,9 +549,11 @@ def main():
         sys.exit(1)
     
     df_merged = pd.concat(all_dfs, ignore_index=True)
-    print(f"\n>> Merged dataset: {len(df_merged)} records")
+    print(f"\n>> Merged dataset: {len(df_merged):,} records")
     
-    # GBIF Data: Prefer bulk download over search API
+    # ═══════════════════════════════════════════════════════════════════════
+    # STEP 3: GBIF Data (uses mimicry lookup)
+    # ═══════════════════════════════════════════════════════════════════════
     if USE_GBIF_BULK_DOWNLOAD:
         df_gbif = load_gbif_bulk_download()
         if not df_gbif.empty:
@@ -432,7 +567,10 @@ def main():
                 df_merged = pd.concat([df_merged, df_gbif], ignore_index=True)
                 print(f">> After GBIF search merge: {len(df_merged):,} records")
     
-    # ── Final Cleaning ──
+    # ═══════════════════════════════════════════════════════════════════════
+    # FINAL CLEANING
+    # ═══════════════════════════════════════════════════════════════════════
+    
     # Ensure all string fields are properly typed
     str_cols = ['id', 'scientific_name', 'genus', 'species', 'family', 'tribe', 
                 'mimicry_ring', 'sequencing_status', 'source', 'country']
@@ -450,21 +588,34 @@ def main():
         lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
     )
     
-    # ── Output Statistics ──
-    print("\n" + "=" * 60)
+    # ═══════════════════════════════════════════════════════════════════════
+    # OUTPUT STATISTICS
+    # ═══════════════════════════════════════════════════════════════════════
+    
+    print("\n" + "=" * 70)
     print("OUTPUT STATISTICS")
-    print("=" * 60)
-    print(f"Total Records: {len(df_merged)}")
-    print(f"Unique Species: {df_merged['scientific_name'].nunique()}")
+    print("=" * 70)
+    print(f"Total Records: {len(df_merged):,}")
+    print(f"Unique Species: {df_merged['scientific_name'].nunique():,}")
     print(f"Unique Genera: {df_merged['genus'].nunique()}")
     print(f"Unique Mimicry Rings: {df_merged['mimicry_ring'].nunique()}")
-    print(f"Records with Images: {df_merged['image_url'].notna().sum()}")
+    print(f"Records with Known Mimicry: {(df_merged['mimicry_ring'] != 'Unknown').sum():,}")
+    print(f"Records with Images: {df_merged['image_url'].notna().sum():,}")
+    
     print("\nBy Source:")
     print(df_merged['source'].value_counts().to_string())
+    
     print("\nBy Sequencing Status:")
     print(df_merged['sequencing_status'].value_counts().to_string())
     
-    # ── Save Output ──
+    print("\nTop 10 Mimicry Rings:")
+    mim_counts = df_merged[df_merged['mimicry_ring'] != 'Unknown']['mimicry_ring'].value_counts().head(10)
+    print(mim_counts.to_string())
+    
+    # ═══════════════════════════════════════════════════════════════════════
+    # SAVE OUTPUT
+    # ═══════════════════════════════════════════════════════════════════════
+    
     output_path = os.path.join(OUTPUT_DIR, "map_points.json")
     
     # Convert to list of dicts for JSON
@@ -475,7 +626,7 @@ def main():
     
     print(f"\n>> Saved to: {output_path}")
     print(f">> File size: {os.path.getsize(output_path) / 1024:.1f} KB")
-    print("\nDone!")
+    print("\n✅ Done!")
 
 
 if __name__ == "__main__":
