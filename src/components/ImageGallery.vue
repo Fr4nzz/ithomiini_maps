@@ -232,6 +232,21 @@ watch(() => store.filteredGeoJSON, () => {
   currentIndex.value = 0
   resetView()
 })
+
+// Status color helper
+const getStatusColor = (status) => {
+  const colors = {
+    'Sequenced': '#3b82f6',
+    'Tissue Available': '#10b981',
+    'Preserved Specimen': '#f59e0b',
+    'Published': '#a855f7',
+    'GBIF Record': '#6b7280',
+    'Observation': '#6b7280',
+    'Museum Specimen': '#8b5cf6',
+    'Living Specimen': '#14b8a6'
+  }
+  return colors[status] || '#6b7280'
+}
 </script>
 
 <template>
@@ -302,26 +317,50 @@ watch(() => store.filteredGeoJSON, () => {
 
       <!-- Info panel -->
       <div class="info-panel">
-        <div class="specimen-info">
-          <h3 class="species-name">
-            <em>{{ currentSpecimen?.scientific_name }}</em>
-            <span v-if="currentSpecimen?.subspecies" class="subspecies">
-              {{ currentSpecimen.subspecies }}
-            </span>
-          </h3>
-          <div class="specimen-meta">
-            <span v-if="currentSpecimen?.id" class="meta-item">
-              <strong>ID:</strong> {{ currentSpecimen.id }}
-            </span>
-            <span v-if="currentSpecimen?.mimicry_ring" class="meta-item">
-              <strong>Mimicry:</strong> {{ currentSpecimen.mimicry_ring }}
-            </span>
-            <span v-if="currentSpecimen?.country" class="meta-item">
-              <strong>Country:</strong> {{ currentSpecimen.country }}
-            </span>
-            <span v-if="currentSpecimen?.source" class="meta-item">
-              <strong>Source:</strong> {{ currentSpecimen.source }}
-            </span>
+        <div class="info-content">
+          <!-- Thumbnail (if enabled) -->
+          <div v-if="store.showThumbnail && currentSpecimen?.image_url" class="info-thumbnail">
+            <img
+              :src="currentSpecimen.image_url"
+              :alt="currentSpecimen.scientific_name"
+            />
+          </div>
+
+          <!-- Specimen info -->
+          <div class="specimen-info">
+            <h3 class="species-name">
+              <em>{{ currentSpecimen?.scientific_name }}</em>
+              <span v-if="currentSpecimen?.subspecies" class="subspecies">
+                {{ currentSpecimen.subspecies }}
+              </span>
+            </h3>
+            <div class="specimen-meta">
+              <span v-if="currentSpecimen?.id" class="meta-item">
+                <strong>ID:</strong> {{ currentSpecimen.id }}
+              </span>
+              <span v-if="currentSpecimen?.sequencing_status" class="meta-item">
+                <strong>Sequencing Status:</strong>
+                <span class="status-badge" :style="{
+                  backgroundColor: getStatusColor(currentSpecimen.sequencing_status),
+                  color: '#fff',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  fontSize: '0.75rem',
+                  marginLeft: '4px'
+                }">
+                  {{ currentSpecimen.sequencing_status }}
+                </span>
+              </span>
+              <span v-if="currentSpecimen?.mimicry_ring" class="meta-item">
+                <strong>Mimicry:</strong> {{ currentSpecimen.mimicry_ring }}
+              </span>
+              <span v-if="currentSpecimen?.country" class="meta-item">
+                <strong>Country:</strong> {{ currentSpecimen.country }}
+              </span>
+              <span v-if="currentSpecimen?.source" class="meta-item">
+                <strong>Source:</strong> {{ currentSpecimen.source }}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -545,13 +584,38 @@ watch(() => store.filteredGeoJSON, () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding: 16px 24px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
 }
 
+.info-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1;
+}
+
+.info-thumbnail {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #333;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .specimen-info {
   flex: 1;
+  min-width: 0;
 }
 
 .species-name {
@@ -755,23 +819,33 @@ watch(() => store.filteredGeoJSON, () => {
   .info-panel {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
     padding: 12px 16px;
   }
-  
+
+  .info-content {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .info-thumbnail {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+  }
+
   .specimen-meta {
     gap: 10px;
   }
-  
+
   .nav-btn {
     width: 40px;
     height: 60px;
   }
-  
+
   .zoom-controls {
     bottom: 100px;
   }
-  
+
   .thumbnail {
     width: 50px;
     height: 38px;
