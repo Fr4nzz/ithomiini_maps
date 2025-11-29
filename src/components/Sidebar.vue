@@ -362,6 +362,14 @@ const showDateFilter = ref(false)
         />
       </div>
 
+      <!-- UI Preferences -->
+      <div class="filter-section">
+        <label class="thumbnail-toggle">
+          <input type="checkbox" v-model="store.showThumbnail" />
+          <span>Show thumbnails</span>
+        </label>
+      </div>
+
     </div>
 
     <!-- Footer Actions -->
@@ -602,6 +610,36 @@ const showDateFilter = ref(false)
   width: 14px;
   height: 14px;
   opacity: 0.7;
+}
+
+/* Thumbnail Toggle */
+.thumbnail-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.thumbnail-toggle:hover {
+  background: var(--color-bg-hover, #363653);
+}
+
+.thumbnail-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-accent, #4ade80);
+}
+
+.thumbnail-toggle span {
+  font-size: 0.9rem;
+  color: var(--color-text-primary, #e0e0e0);
+  font-weight: 500;
 }
 
 /* Search Input */

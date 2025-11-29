@@ -287,22 +287,39 @@ const addDataLayer = () => {
 const buildPopupContent = (props) => {
   // Parse props (MapLibre stringifies nested objects)
   const p = typeof props === 'string' ? JSON.parse(props) : props
-  
+
   const statusColor = STATUS_COLORS[p.sequencing_status] || '#6b7280'
-  
-  let html = `
-    <div class="popup-content">
-      <div class="popup-header">
-        <span class="status-dot" style="background: ${statusColor}"></span>
-        <strong>${p.scientific_name || 'Unknown'}</strong>
-      </div>
+  const showThumbnail = store.showThumbnail
+  const hasImage = p.image_url && p.image_url !== 'null' && p.image_url !== ''
+
+  let html = `<div class="popup-content">`
+
+  // Header with species name
+  html += `
+    <div class="popup-header">
+      <span class="status-dot" style="background: ${statusColor}"></span>
+      <strong>${p.scientific_name || 'Unknown'}</strong>
+    </div>
+    <div class="popup-body">
   `
+
+  // Thumbnail on the left (if enabled and available)
+  if (showThumbnail && hasImage) {
+    html += `
+      <div class="popup-thumbnail">
+        <img src="${p.image_url}" alt="Specimen ${p.id}" loading="lazy" onerror="this.style.display='none'" />
+      </div>
+    `
+  }
+
+  // Info section
+  html += `<div class="popup-info">`
 
   // Subspecies
   if (p.subspecies && p.subspecies !== 'null' && p.subspecies !== 'None') {
     html += `<div class="popup-row"><span class="label">Subspecies:</span> <em>${p.subspecies}</em></div>`
   }
-  
+
   // Core info
   html += `
     <div class="popup-row"><span class="label">ID:</span> ${p.id || 'N/A'}</div>
@@ -325,16 +342,9 @@ const buildPopupContent = (props) => {
     html += `<div class="popup-row"><span class="label">Coordinates:</span> ${parseFloat(p.lat).toFixed(4)}, ${parseFloat(p.lng).toFixed(4)}</div>`
   }
 
-  // Image thumbnail if available
-  if (p.image_url && p.image_url !== 'null' && p.image_url !== '') {
-    html += `
-      <div class="popup-image">
-        <img src="${p.image_url}" alt="Specimen ${p.id}" loading="lazy" onerror="this.style.display='none'" />
-      </div>
-    `
-  }
-
-  html += '</div>'
+  html += `</div>` // close popup-info
+  html += `</div>` // close popup-body
+  html += `</div>` // close popup-content
   return html
 }
 
@@ -610,19 +620,32 @@ const switchStyle = (styleName) => {
   margin-right: 6px;
 }
 
-:deep(.popup-image) {
-  margin-top: 14px;
-  border-radius: 8px;
+:deep(.popup-body) {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+:deep(.popup-thumbnail) {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 6px;
   overflow: hidden;
   background: #252540;
   border: 1px solid #3d3d5c;
 }
 
-:deep(.popup-image img) {
+:deep(.popup-thumbnail img) {
   width: 100%;
-  max-height: 220px;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   display: block;
+}
+
+:deep(.popup-info) {
+  flex: 1;
+  min-width: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

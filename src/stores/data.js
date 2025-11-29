@@ -13,6 +13,9 @@ export const useDataStore = defineStore('data', () => {
   const showAdvancedFilters = ref(false)
   const showMimicryFilter = ref(false)
 
+  // UI preferences
+  const showThumbnail = ref(true)
+
   // The Active Filters
   // NOTE: species is now an ARRAY for multi-select (like Wings Gallery)
   const filters = ref({
@@ -459,15 +462,16 @@ export const useDataStore = defineStore('data', () => {
     filters,
     showAdvancedFilters,
     showMimicryFilter,
+    showThumbnail,
     photoLookup,
-    
+
     // Actions
     loadMapData,
     resetAllFilters,
     toggleAdvancedFilters,
     toggleMimicryFilter,
     getPhotoForItem,
-    
+
     // Computed (cascading options)
     uniqueFamilies,
     uniqueTribes,
@@ -477,7 +481,7 @@ export const useDataStore = defineStore('data', () => {
     uniqueMimicry,
     uniqueStatuses,
     uniqueSources,
-    
+
     // Final output
     filteredGeoJSON,
   }

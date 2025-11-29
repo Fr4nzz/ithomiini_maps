@@ -13,7 +13,6 @@ const panX = ref(0)
 const panY = ref(0)
 const isLoading = ref(true)
 const loadError = ref(false)
-const showThumbnail = ref(true)
 
 // Image container ref
 const imageContainer = ref(null)
@@ -320,7 +319,7 @@ const getStatusColor = (status) => {
       <div class="info-panel">
         <div class="info-content">
           <!-- Thumbnail (if enabled) -->
-          <div v-if="showThumbnail && currentSpecimen?.image_url" class="info-thumbnail">
+          <div v-if="store.showThumbnail && currentSpecimen?.image_url" class="info-thumbnail">
             <img
               :src="currentSpecimen.image_url"
               :alt="currentSpecimen.scientific_name"
@@ -365,18 +364,9 @@ const getStatusColor = (status) => {
           </div>
         </div>
 
-        <!-- Controls -->
-        <div class="info-controls">
-          <!-- Thumbnail toggle -->
-          <label class="thumbnail-toggle">
-            <input type="checkbox" v-model="showThumbnail" />
-            <span>Show thumbnail</span>
-          </label>
-
-          <!-- Counter -->
-          <div class="image-counter">
-            {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
-          </div>
+        <!-- Counter -->
+        <div class="image-counter">
+          {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
         </div>
       </div>
 
@@ -592,8 +582,9 @@ const getStatusColor = (status) => {
 /* Info panel */
 .info-panel {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   padding: 16px 24px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
@@ -603,6 +594,7 @@ const getStatusColor = (status) => {
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  flex: 1;
 }
 
 .info-thumbnail {
@@ -624,13 +616,6 @@ const getStatusColor = (status) => {
 .specimen-info {
   flex: 1;
   min-width: 0;
-}
-
-.info-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
 }
 
 .species-name {
@@ -665,26 +650,6 @@ const getStatusColor = (status) => {
 .meta-item strong {
   color: #aaa;
   font-weight: 500;
-}
-
-.thumbnail-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.thumbnail-toggle input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.thumbnail-toggle span {
-  font-size: 0.85rem;
-  color: #aaa;
 }
 
 .image-counter {
@@ -852,23 +817,20 @@ const getStatusColor = (status) => {
 /* Responsive */
 @media (max-width: 768px) {
   .info-panel {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 12px 16px;
   }
 
   .info-content {
     flex-direction: column;
+    width: 100%;
   }
 
   .info-thumbnail {
     width: 100%;
     height: auto;
     aspect-ratio: 4/3;
-  }
-
-  .info-controls {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
   }
 
   .specimen-meta {
