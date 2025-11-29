@@ -458,6 +458,14 @@ export const useDataStore = defineStore('data', () => {
     return Array.from(set).sort()
   })
 
+  // Unique CAMIDs for autocomplete (sorted for binary search potential)
+  const uniqueCamids = computed(() => {
+    return allFeatures.value
+      .map(i => i.id)
+      .filter(id => id && typeof id === 'string')
+      .sort()
+  })
+
   // ═══════════════════════════════════════════════════════════════════════════
   // CASCADE RESET WATCHERS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -611,6 +619,7 @@ export const useDataStore = defineStore('data', () => {
     uniqueStatuses,
     uniqueSources,
     uniqueCountries,
+    uniqueCamids,
 
     // Final output
     filteredGeoJSON,

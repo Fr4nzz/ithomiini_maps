@@ -15,18 +15,72 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 
 const store = useDataStore()
 
-// Local state for CAMID search with debounce
+// Local state for CAMID search with autocomplete
 const camidInput = ref('')
+const showCamidDropdown = ref(false)
+const selectedSuggestionIndex = ref(-1)
 let debounceTimer = null
 
-const handleCamidSearch = (e) => {
+// Filtered CAMID suggestions (limited for performance)
+const camidSuggestions = computed(() => {
+  const query = camidInput.value.trim().toUpperCase()
+  if (!query || query.length < 2) return []
+
+  // Filter and limit to 15 suggestions for performance
+  const matches = []
+  for (const id of store.uniqueCamids) {
+    if (id.toUpperCase().includes(query)) {
+      matches.push(id)
+      if (matches.length >= 15) break
+    }
+  }
+  return matches
+})
+
+const handleCamidInput = (e) => {
   const value = e.target.value
   camidInput.value = value
-  
+  showCamidDropdown.value = true
+  selectedSuggestionIndex.value = -1
+
   clearTimeout(debounceTimer)
   debounceTimer = setTimeout(() => {
     store.filters.camidSearch = value.trim().toUpperCase()
   }, 300)
+}
+
+const selectCamid = (camid) => {
+  camidInput.value = camid
+  store.filters.camidSearch = camid
+  showCamidDropdown.value = false
+  selectedSuggestionIndex.value = -1
+}
+
+const handleCamidKeydown = (e) => {
+  if (!showCamidDropdown.value || camidSuggestions.value.length === 0) return
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault()
+    selectedSuggestionIndex.value = Math.min(
+      selectedSuggestionIndex.value + 1,
+      camidSuggestions.value.length - 1
+    )
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault()
+    selectedSuggestionIndex.value = Math.max(selectedSuggestionIndex.value - 1, -1)
+  } else if (e.key === 'Enter' && selectedSuggestionIndex.value >= 0) {
+    e.preventDefault()
+    selectCamid(camidSuggestions.value[selectedSuggestionIndex.value])
+  } else if (e.key === 'Escape') {
+    showCamidDropdown.value = false
+  }
+}
+
+const handleCamidBlur = () => {
+  // Delay to allow click on suggestion
+  setTimeout(() => {
+    showCamidDropdown.value = false
+  }, 150)
 }
 
 // Computed: Record counts
@@ -162,7 +216,7 @@ const showDateFilter = ref(false)
         </button>
       </div>
 
-      <!-- CAMID Search -->
+      <!-- CAMID Search with Autocomplete -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -171,13 +225,33 @@ const showDateFilter = ref(false)
           </svg>
           Quick Search (CAMID)
         </label>
-        <input 
-          type="text" 
-          class="search-input"
-          placeholder="e.g. CAM012345"
-          :value="camidInput"
-          @input="handleCamidSearch"
-        />
+        <div class="camid-autocomplete">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="e.g. CAM012345"
+            :value="camidInput"
+            @input="handleCamidInput"
+            @keydown="handleCamidKeydown"
+            @focus="showCamidDropdown = true"
+            @blur="handleCamidBlur"
+            autocomplete="off"
+          />
+          <div
+            v-if="showCamidDropdown && camidSuggestions.length > 0"
+            class="camid-dropdown"
+          >
+            <button
+              v-for="(suggestion, index) in camidSuggestions"
+              :key="suggestion"
+              class="camid-suggestion"
+              :class="{ selected: index === selectedSuggestionIndex }"
+              @mousedown.prevent="selectCamid(suggestion)"
+            >
+              {{ suggestion }}
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Primary Filters: Species & Subspecies with Multi-select -->
@@ -678,6 +752,48 @@ const showDateFilter = ref(false)
 .search-input:focus {
   outline: none;
   border-color: var(--color-accent, #4ade80);
+}
+
+/* CAMID Autocomplete */
+.camid-autocomplete {
+  position: relative;
+}
+
+.camid-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.camid-suggestion {
+  width: 100%;
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  font-family: monospace;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.camid-suggestion:hover,
+.camid-suggestion.selected {
+  background: var(--color-bg-hover, #363653);
+}
+
+.camid-suggestion.selected {
+  color: var(--color-accent, #4ade80);
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
 }
 
