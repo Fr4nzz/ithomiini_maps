@@ -14,14 +14,15 @@ export const useDataStore = defineStore('data', () => {
   const showMimicryFilter = ref(false)
 
   // The Active Filters
+  // NOTE: species is now an ARRAY for multi-select (like Wings Gallery)
   const filters = ref({
     // Advanced filters (hidden by default)
     family: 'All',
     tribe: 'All',
     genus: 'All',
-    // Primary filters (always visible)
-    species: 'All',
-    subspecies: 'All',
+    // Primary filters (multi-select arrays)
+    species: [],        // Array for multi-select
+    subspecies: [],     // Array for multi-select
     // Parallel filters
     mimicry: 'All',
     status: [],
@@ -32,6 +33,9 @@ export const useDataStore = defineStore('data', () => {
     dateStart: null,
     dateEnd: null,
   })
+
+  // Photo lookup cache: { 'Genus species subspecies': image_url }
+  const photoLookup = ref({})
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ACTIONS
@@ -51,6 +55,9 @@ export const useDataStore = defineStore('data', () => {
       const data = await response.json()
       allFeatures.value = data
       console.log(`Loaded ${data.length} records`)
+      
+      // Build photo lookup table
+      buildPhotoLookup(data)
 
       // Initialize filters from URL
       restoreFiltersFromURL()
@@ -61,6 +68,74 @@ export const useDataStore = defineStore('data', () => {
     } finally {
       loading.value = false
     }
+  }
+
+  /**
+   * Build photo lookup table for finding photos by species/subspecies
+   * Used when an individual doesn't have a photo but another individual
+   * of the same species does.
+   */
+  const buildPhotoLookup = (data) => {
+    const lookup = {}
+    
+    for (const item of data) {
+      if (!item.image_url) continue
+      
+      // Key: "genus species subspecies" (lowercase for matching)
+      const subspeciesKey = `${item.scientific_name || ''} ${item.subspecies || ''}`.toLowerCase().trim()
+      const speciesKey = (item.scientific_name || '').toLowerCase().trim()
+      
+      // Prioritize subspecies match, then species match
+      if (subspeciesKey && !lookup[subspeciesKey]) {
+        lookup[subspeciesKey] = {
+          url: item.image_url,
+          id: item.id,
+          exact: false
+        }
+      }
+      if (speciesKey && !lookup[speciesKey]) {
+        lookup[speciesKey] = {
+          url: item.image_url,
+          id: item.id,
+          exact: false
+        }
+      }
+    }
+    
+    photoLookup.value = lookup
+    console.log(`Built photo lookup with ${Object.keys(lookup).length} entries`)
+  }
+
+  /**
+   * Get photo for an item. Returns object with url and whether it's the same individual.
+   */
+  const getPhotoForItem = (item) => {
+    // If item has its own photo
+    if (item.image_url) {
+      return { url: item.image_url, sameIndividual: true }
+    }
+    
+    // Try subspecies match first
+    const subspeciesKey = `${item.scientific_name || ''} ${item.subspecies || ''}`.toLowerCase().trim()
+    if (subspeciesKey && photoLookup.value[subspeciesKey]) {
+      return { 
+        url: photoLookup.value[subspeciesKey].url, 
+        sameIndividual: false,
+        fromId: photoLookup.value[subspeciesKey].id
+      }
+    }
+    
+    // Try species match
+    const speciesKey = (item.scientific_name || '').toLowerCase().trim()
+    if (speciesKey && photoLookup.value[speciesKey]) {
+      return { 
+        url: photoLookup.value[speciesKey].url, 
+        sameIndividual: false,
+        fromId: photoLookup.value[speciesKey].id
+      }
+    }
+    
+    return null
   }
 
   const restoreFiltersFromURL = () => {
@@ -79,8 +154,14 @@ export const useDataStore = defineStore('data', () => {
       filters.value.genus = params.get('genus')
       showAdvancedFilters.value = true
     }
-    if (params.get('sp')) filters.value.species = params.get('sp')
-    if (params.get('ssp')) filters.value.subspecies = params.get('ssp')
+    // Species as array
+    if (params.get('sp')) {
+      filters.value.species = params.get('sp').split(',')
+    }
+    // Subspecies as array
+    if (params.get('ssp')) {
+      filters.value.subspecies = params.get('ssp').split(',')
+    }
     if (params.get('mim')) {
       filters.value.mimicry = params.get('mim')
       showMimicryFilter.value = true
@@ -108,8 +189,8 @@ export const useDataStore = defineStore('data', () => {
       family: 'All',
       tribe: 'All',
       genus: 'All',
-      species: 'All',
-      subspecies: 'All',
+      species: [],
+      subspecies: [],
       mimicry: 'All',
       status: [],
       source: 'All',
@@ -154,40 +235,74 @@ export const useDataStore = defineStore('data', () => {
     if (upToLevel >= 3 && filters.value.genus !== 'All') {
       data = data.filter(i => i.genus === filters.value.genus)
     }
-    if (upToLevel >= 4 && filters.value.species !== 'All') {
-      data = data.filter(i => i.scientific_name === filters.value.species)
+    // Level 4: species (now array-based)
+    if (upToLevel >= 4 && filters.value.species.length > 0) {
+      data = data.filter(i => filters.value.species.includes(i.scientific_name))
     }
 
     return data
   }
 
+  // Helper: clean and validate field values
+  const isValidValue = (val) => {
+    if (!val) return false
+    if (typeof val !== 'string') return false
+    const cleaned = val.trim().toLowerCase()
+    return cleaned && 
+           cleaned !== 'unknown' && 
+           cleaned !== 'na' && 
+           cleaned !== 'nan' &&
+           cleaned !== 'null' &&
+           cleaned !== 'none'
+  }
+
   // Unique values at each level (based on parent selections)
   const uniqueFamilies = computed(() => {
-    const set = new Set(allFeatures.value.map(i => i.family).filter(Boolean))
+    const set = new Set(
+      allFeatures.value
+        .map(i => i.family)
+        .filter(isValidValue)
+    )
     return Array.from(set).sort()
   })
 
   const uniqueTribes = computed(() => {
     const subset = getFilteredSubset(1) // After family filter
-    const set = new Set(subset.map(i => i.tribe).filter(Boolean))
+    const set = new Set(
+      subset
+        .map(i => i.tribe)
+        .filter(isValidValue)
+    )
     return Array.from(set).sort()
   })
 
   const uniqueGenera = computed(() => {
     const subset = getFilteredSubset(2) // After tribe filter
-    const set = new Set(subset.map(i => i.genus).filter(Boolean))
+    const set = new Set(
+      subset
+        .map(i => i.genus)
+        .filter(isValidValue)
+    )
     return Array.from(set).sort()
   })
 
   const uniqueSpecies = computed(() => {
     const subset = getFilteredSubset(3) // After genus filter
-    const set = new Set(subset.map(i => i.scientific_name).filter(Boolean))
+    const set = new Set(
+      subset
+        .map(i => i.scientific_name)
+        .filter(isValidValue)
+    )
     return Array.from(set).sort()
   })
 
   const uniqueSubspecies = computed(() => {
     const subset = getFilteredSubset(4) // After species filter
-    const set = new Set(subset.map(i => i.subspecies).filter(Boolean))
+    const set = new Set(
+      subset
+        .map(i => i.subspecies)
+        .filter(isValidValue)
+    )
     return Array.from(set).sort()
   })
 
@@ -196,20 +311,28 @@ export const useDataStore = defineStore('data', () => {
     const set = new Set(
       allFeatures.value
         .map(i => i.mimicry_ring)
-        .filter(v => v && v !== 'Unknown')
+        .filter(v => v && v !== 'Unknown' && isValidValue(v))
     )
     return Array.from(set).sort()
   })
 
   // Unique sequencing statuses
   const uniqueStatuses = computed(() => {
-    const set = new Set(allFeatures.value.map(i => i.sequencing_status).filter(Boolean))
+    const set = new Set(
+      allFeatures.value
+        .map(i => i.sequencing_status)
+        .filter(isValidValue)
+    )
     return Array.from(set).sort()
   })
 
   // Unique data sources
   const uniqueSources = computed(() => {
-    const set = new Set(allFeatures.value.map(i => i.source).filter(Boolean))
+    const set = new Set(
+      allFeatures.value
+        .map(i => i.source)
+        .filter(isValidValue)
+    )
     return Array.from(set).sort()
   })
 
@@ -220,24 +343,25 @@ export const useDataStore = defineStore('data', () => {
   watch(() => filters.value.family, () => {
     filters.value.tribe = 'All'
     filters.value.genus = 'All'
-    filters.value.species = 'All'
-    filters.value.subspecies = 'All'
+    filters.value.species = []
+    filters.value.subspecies = []
   })
 
   watch(() => filters.value.tribe, () => {
     filters.value.genus = 'All'
-    filters.value.species = 'All'
-    filters.value.subspecies = 'All'
+    filters.value.species = []
+    filters.value.subspecies = []
   })
 
   watch(() => filters.value.genus, () => {
-    filters.value.species = 'All'
-    filters.value.subspecies = 'All'
+    filters.value.species = []
+    filters.value.subspecies = []
   })
 
+  // When species changes, reset subspecies
   watch(() => filters.value.species, () => {
-    filters.value.subspecies = 'All'
-  })
+    filters.value.subspecies = []
+  }, { deep: true })
 
   // ═══════════════════════════════════════════════════════════════════════════
   // FINAL FILTERED DATA
@@ -258,8 +382,12 @@ export const useDataStore = defineStore('data', () => {
       if (filters.value.family !== 'All' && item.family !== filters.value.family) return false
       if (filters.value.tribe !== 'All' && item.tribe !== filters.value.tribe) return false
       if (filters.value.genus !== 'All' && item.genus !== filters.value.genus) return false
-      if (filters.value.species !== 'All' && item.scientific_name !== filters.value.species) return false
-      if (filters.value.subspecies !== 'All' && item.subspecies !== filters.value.subspecies) return false
+      
+      // Species filter (multi-select array)
+      if (filters.value.species.length > 0 && !filters.value.species.includes(item.scientific_name)) return false
+      
+      // Subspecies filter (multi-select array)
+      if (filters.value.subspecies.length > 0 && !filters.value.subspecies.includes(item.subspecies)) return false
       
       // Parallel filters
       if (filters.value.mimicry !== 'All' && item.mimicry_ring !== filters.value.mimicry) return false
@@ -301,8 +429,10 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.family !== 'All') params.set('family', newFilters.family)
       if (newFilters.tribe !== 'All') params.set('tribe', newFilters.tribe)
       if (newFilters.genus !== 'All') params.set('genus', newFilters.genus)
-      if (newFilters.species !== 'All') params.set('sp', newFilters.species)
-      if (newFilters.subspecies !== 'All') params.set('ssp', newFilters.subspecies)
+      // Species as comma-separated array
+      if (newFilters.species.length > 0) params.set('sp', newFilters.species.join(','))
+      // Subspecies as comma-separated array
+      if (newFilters.subspecies.length > 0) params.set('ssp', newFilters.subspecies.join(','))
       if (newFilters.mimicry !== 'All') params.set('mim', newFilters.mimicry)
       if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
       if (newFilters.source !== 'All') params.set('source', newFilters.source)
@@ -329,12 +459,14 @@ export const useDataStore = defineStore('data', () => {
     filters,
     showAdvancedFilters,
     showMimicryFilter,
+    photoLookup,
     
     // Actions
     loadMapData,
     resetAllFilters,
     toggleAdvancedFilters,
     toggleMimicryFilter,
+    getPhotoForItem,
     
     // Computed (cascading options)
     uniqueFamilies,

@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, inject } from 'vue'
+import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
+import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 
 const props = defineProps({
@@ -60,7 +61,9 @@ const statusColors = {
   'Tissue Available': '#10b981',
   'Preserved Specimen': '#f59e0b',
   'Published': '#a855f7',
-  'GBIF Record': '#6b7280'
+  'GBIF Record': '#6b7280',
+  'Observation': '#6b7280',
+  'Museum Specimen': '#8b5cf6'
 }
 
 // Share URL functionality
@@ -176,7 +179,7 @@ const showDateFilter = ref(false)
         />
       </div>
 
-      <!-- Primary Filters: Species & Subspecies -->
+      <!-- Primary Filters: Species & Subspecies with Multi-select -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -185,40 +188,24 @@ const showDateFilter = ref(false)
           Taxonomy
         </label>
 
-        <div class="filter-group">
-          <label class="filter-label">Species</label>
-          <select 
-            v-model="store.filters.species" 
-            class="filter-select"
-          >
-            <option value="All">All Species ({{ store.uniqueSpecies.length }})</option>
-            <option 
-              v-for="sp in store.uniqueSpecies" 
-              :key="sp" 
-              :value="sp"
-            >
-              {{ sp }}
-            </option>
-          </select>
-        </div>
+        <!-- Species Multi-select with Fuzzy Search -->
+        <FilterSelect
+          label="Species"
+          v-model="store.filters.species"
+          :options="store.uniqueSpecies"
+          placeholder="Search species..."
+          :multiple="true"
+        />
 
-        <div class="filter-group">
-          <label class="filter-label">Subspecies</label>
-          <select 
-            v-model="store.filters.subspecies" 
-            class="filter-select"
-            :disabled="store.filters.species === 'All'"
-          >
-            <option value="All">All Subspecies ({{ store.uniqueSubspecies.length }})</option>
-            <option 
-              v-for="ssp in store.uniqueSubspecies" 
-              :key="ssp" 
-              :value="ssp"
-            >
-              {{ ssp }}
-            </option>
-          </select>
-        </div>
+        <!-- Subspecies Multi-select -->
+        <FilterSelect
+          label="Subspecies"
+          v-model="store.filters.subspecies"
+          :options="store.uniqueSubspecies"
+          placeholder="Search subspecies..."
+          :multiple="true"
+          :disabled="store.filters.species.length === 0"
+        />
       </div>
 
       <!-- Advanced Taxonomy (Collapsible) -->
@@ -235,29 +222,31 @@ const showDateFilter = ref(false)
         </button>
 
         <div v-show="store.showAdvancedFilters" class="collapse-content">
-          <div class="filter-group">
-            <label class="filter-label">Family</label>
-            <select v-model="store.filters.family" class="filter-select">
-              <option value="All">All Families</option>
-              <option v-for="f in store.uniqueFamilies" :key="f" :value="f">{{ f }}</option>
-            </select>
-          </div>
+          <FilterSelect
+            label="Family"
+            v-model="store.filters.family"
+            :options="['All', ...store.uniqueFamilies]"
+            placeholder="All Families"
+            :multiple="false"
+            :show-count="false"
+          />
 
-          <div class="filter-group">
-            <label class="filter-label">Tribe</label>
-            <select v-model="store.filters.tribe" class="filter-select">
-              <option value="All">All Tribes</option>
-              <option v-for="t in store.uniqueTribes" :key="t" :value="t">{{ t }}</option>
-            </select>
-          </div>
+          <FilterSelect
+            label="Tribe"
+            v-model="store.filters.tribe"
+            :options="['All', ...store.uniqueTribes]"
+            placeholder="All Tribes"
+            :multiple="false"
+            :show-count="false"
+          />
 
-          <div class="filter-group">
-            <label class="filter-label">Genus</label>
-            <select v-model="store.filters.genus" class="filter-select">
-              <option value="All">All Genera ({{ store.uniqueGenera.length }})</option>
-              <option v-for="g in store.uniqueGenera" :key="g" :value="g">{{ g }}</option>
-            </select>
-          </div>
+          <FilterSelect
+            label="Genus"
+            v-model="store.filters.genus"
+            :options="['All', ...store.uniqueGenera]"
+            placeholder="All Genera"
+            :multiple="false"
+          />
         </div>
       </div>
 
@@ -278,12 +267,13 @@ const showDateFilter = ref(false)
         </button>
 
         <div v-show="store.showMimicryFilter" class="collapse-content">
-          <div class="filter-group">
-            <select v-model="store.filters.mimicry" class="filter-select">
-              <option value="All">All Mimicry Rings ({{ store.uniqueMimicry.length }})</option>
-              <option v-for="m in store.uniqueMimicry" :key="m" :value="m">{{ m }}</option>
-            </select>
-          </div>
+          <FilterSelect
+            label="Mimicry Ring"
+            v-model="store.filters.mimicry"
+            :options="['All', ...store.uniqueMimicry]"
+            placeholder="All Mimicry Rings"
+            :multiple="false"
+          />
           <button class="btn-visual-selector" @click="emit('open-mimicry')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="3" width="7" height="7"/>
@@ -363,12 +353,13 @@ const showDateFilter = ref(false)
           </svg>
           Data Source
         </label>
-        <div class="filter-group">
-          <select v-model="store.filters.source" class="filter-select">
-            <option value="All">All Sources</option>
-            <option v-for="s in store.uniqueSources" :key="s" :value="s">{{ s }}</option>
-          </select>
-        </div>
+        <FilterSelect
+          v-model="store.filters.source"
+          :options="['All', ...store.uniqueSources]"
+          placeholder="All Sources"
+          :multiple="false"
+          :show-count="false"
+        />
       </div>
 
     </div>
@@ -416,8 +407,8 @@ const showDateFilter = ref(false)
 
 <style scoped>
 .sidebar {
-  width: 320px;
-  min-width: 320px;
+  width: 340px;
+  min-width: 340px;
   height: 100vh;
   background: var(--color-bg-secondary, #252540);
   border-right: 1px solid var(--color-border, #3d3d5c);
@@ -633,54 +624,6 @@ const showDateFilter = ref(false)
 
 .search-input::placeholder {
   color: var(--color-text-muted, #666);
-}
-
-/* Filter Groups */
-.filter-group {
-  margin-bottom: 10px;
-}
-
-.filter-label {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
-  margin-bottom: 4px;
-}
-
-.filter-select {
-  width: 100%;
-  padding: 8px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 36px;
-}
-
-.filter-select:hover:not(:disabled) {
-  border-color: #4d4d6d;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
-.filter-select:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.filter-select option {
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
 }
 
 /* Collapsible Sections */

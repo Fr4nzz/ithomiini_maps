@@ -14,6 +14,7 @@ const sortDirection = ref('asc')
 
 // Column visibility
 const visibleColumns = ref({
+  photo: true,
   id: true,
   scientific_name: true,
   subspecies: true,
@@ -27,15 +28,16 @@ const visibleColumns = ref({
 
 // Column definitions
 const columns = [
+  { key: 'photo', label: 'Photo', width: '70px' },
   { key: 'id', label: 'ID', width: '120px' },
   { key: 'scientific_name', label: 'Species', width: '200px' },
-  { key: 'subspecies', label: 'Subspecies', width: '150px' },
+  { key: 'subspecies', label: 'Subspecies', width: '130px' },
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
-  { key: 'sequencing_status', label: 'Status', width: '140px' },
-  { key: 'source', label: 'Source', width: '140px' },
-  { key: 'country', label: 'Country', width: '120px' },
-  { key: 'lat', label: 'Latitude', width: '100px' },
-  { key: 'lng', label: 'Longitude', width: '100px' },
+  { key: 'sequencing_status', label: 'Status', width: '130px' },
+  { key: 'source', label: 'Source', width: '130px' },
+  { key: 'country', label: 'Country', width: '100px' },
+  { key: 'lat', label: 'Latitude', width: '90px' },
+  { key: 'lng', label: 'Longitude', width: '90px' },
 ]
 
 // Get raw data from filtered GeoJSON
@@ -115,6 +117,8 @@ watch(rawData, () => {
 
 // Sort handler
 const toggleSort = (column) => {
+  if (column === 'photo') return // Don't sort by photo
+  
   if (sortColumn.value === column) {
     sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
   } else {
@@ -127,14 +131,17 @@ const toggleSort = (column) => {
 // Column toggle panel
 const showColumnSettings = ref(false)
 
-// Status color helper
+// Status color helper - Updated with new GBIF statuses
 const getStatusColor = (status) => {
   const colors = {
     'Sequenced': '#3b82f6',
     'Tissue Available': '#10b981',
     'Preserved Specimen': '#f59e0b',
     'Published': '#a855f7',
-    'GBIF Record': '#6b7280'
+    'GBIF Record': '#6b7280',
+    'Observation': '#6b7280',
+    'Museum Specimen': '#8b5cf6',
+    'Living Specimen': '#14b8a6',
   }
   return colors[status] || '#6b7280'
 }
@@ -143,6 +150,29 @@ const getStatusColor = (status) => {
 const activeColumns = computed(() => {
   return columns.filter(col => visibleColumns.value[col.key])
 })
+
+// Photo helpers using store's getPhotoForItem
+const getPhotoInfo = (row) => {
+  return store.getPhotoForItem(row)
+}
+
+// Image proxy URL
+const getProxiedUrl = (url) => {
+  if (!url) return null
+  // Use wsrv.nl proxy for smaller thumbnails
+  return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=60&h=60&fit=cover&output=webp`
+}
+
+// Image load error handling
+const handleImageError = (e, originalUrl) => {
+  // Try original URL without proxy if proxy fails
+  if (originalUrl && !e.target.src.includes('drive.google.com')) {
+    e.target.src = originalUrl
+  } else {
+    // Hide broken image
+    e.target.style.display = 'none'
+  }
+}
 </script>
 
 <template>
@@ -212,12 +242,12 @@ const activeColumns = computed(() => {
               :style="{ width: col.width }"
               @click="toggleSort(col.key)"
               class="sortable"
-              :class="{ sorted: sortColumn === col.key }"
+              :class="{ sorted: sortColumn === col.key, 'no-sort': col.key === 'photo' }"
             >
               <div class="th-content">
                 <span>{{ col.label }}</span>
                 <svg 
-                  v-if="sortColumn === col.key"
+                  v-if="sortColumn === col.key && col.key !== 'photo'"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -233,6 +263,29 @@ const activeColumns = computed(() => {
         </thead>
         <tbody>
           <tr v-for="(row, idx) in paginatedData" :key="row.id || idx">
+            <!-- Photo Column -->
+            <td v-if="visibleColumns.photo" class="cell-photo">
+              <div class="photo-cell">
+                <template v-if="getPhotoInfo(row)">
+                  <div class="photo-wrapper" :class="{ 'other-individual': !getPhotoInfo(row).sameIndividual }">
+                    <img 
+                      :src="getProxiedUrl(getPhotoInfo(row).url)"
+                      @error="(e) => handleImageError(e, getPhotoInfo(row).url)"
+                      loading="lazy"
+                      :title="getPhotoInfo(row).sameIndividual ? 'Photo of this individual' : 'Photo from another individual of same species'"
+                    />
+                    <span 
+                      v-if="!getPhotoInfo(row).sameIndividual" 
+                      class="other-indicator"
+                      title="Photo from another individual"
+                    >
+                      ≠
+                    </span>
+                  </div>
+                </template>
+                <span v-else class="no-photo">—</span>
+              </div>
+            </td>
             <td v-if="visibleColumns.id" class="cell-id">
               {{ row.id }}
             </td>
@@ -353,18 +406,19 @@ const activeColumns = computed(() => {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-secondary, #252540);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 /* Header Bar */
 .table-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 12px 16px;
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-primary, #1a1a2e);
   border-bottom: 1px solid var(--color-border, #3d3d5c);
-  flex-shrink: 0;
 }
 
 .header-left {
@@ -390,7 +444,7 @@ const activeColumns = computed(() => {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   position: relative;
 }
 
@@ -398,7 +452,7 @@ const activeColumns = computed(() => {
   padding: 6px 10px;
   background: var(--color-bg-tertiary, #2d2d4a);
   border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--color-text-primary, #e0e0e0);
   font-size: 0.8rem;
   cursor: pointer;
@@ -411,7 +465,7 @@ const activeColumns = computed(() => {
   padding: 6px 12px;
   background: var(--color-bg-tertiary, #2d2d4a);
   border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--color-text-secondary, #aaa);
   font-size: 0.8rem;
   cursor: pointer;
@@ -429,19 +483,19 @@ const activeColumns = computed(() => {
   height: 14px;
 }
 
-/* Column Settings Dropdown */
+/* Column Dropdown */
 .column-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
-  margin-top: 8px;
+  margin-top: 4px;
+  padding: 8px;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  padding: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 100;
-  min-width: 160px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  min-width: 150px;
 }
 
 .column-toggle {
@@ -449,8 +503,8 @@ const activeColumns = computed(() => {
   align-items: center;
   gap: 8px;
   padding: 6px 8px;
-  cursor: pointer;
   border-radius: 4px;
+  cursor: pointer;
   font-size: 0.8rem;
   color: var(--color-text-secondary, #aaa);
   transition: background 0.2s;
@@ -458,51 +512,48 @@ const activeColumns = computed(() => {
 
 .column-toggle:hover {
   background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
 }
 
 .column-toggle input {
   accent-color: var(--color-accent, #4ade80);
 }
 
-/* Table Wrapper */
+/* Table */
 .table-wrapper {
   flex: 1;
   overflow: auto;
 }
 
-/* Table */
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
 }
 
-.data-table thead {
+.data-table th {
   position: sticky;
   top: 0;
-  z-index: 10;
-}
-
-.data-table th {
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-primary, #1a1a2e);
   padding: 10px 12px;
   text-align: left;
   font-weight: 600;
   color: var(--color-text-secondary, #aaa);
   border-bottom: 2px solid var(--color-border, #3d3d5c);
   white-space: nowrap;
-  user-select: none;
+  z-index: 10;
 }
 
 .data-table th.sortable {
   cursor: pointer;
-  transition: background 0.2s;
+  user-select: none;
 }
 
 .data-table th.sortable:hover {
-  background: #2d2d4a;
   color: var(--color-text-primary, #e0e0e0);
+}
+
+.data-table th.no-sort {
+  cursor: default;
 }
 
 .data-table th.sorted {
@@ -512,7 +563,7 @@ const activeColumns = computed(() => {
 .th-content {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .sort-icon {
@@ -526,20 +577,21 @@ const activeColumns = computed(() => {
 }
 
 .data-table td {
-  padding: 10px 12px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--color-border, #3d3d5c);
   color: var(--color-text-primary, #e0e0e0);
+  vertical-align: middle;
 }
 
 .data-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(74, 222, 128, 0.05);
 }
 
-/* Cell styles */
+/* Cell Types */
 .cell-id {
-  font-family: var(--font-family-mono, monospace);
+  font-family: monospace;
   font-size: 0.8rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted, #888);
 }
 
 .cell-species em {
@@ -547,16 +599,63 @@ const activeColumns = computed(() => {
 }
 
 .cell-subspecies {
+  font-style: italic;
   color: var(--color-text-secondary, #aaa);
 }
 
 .cell-coord {
-  font-family: var(--font-family-mono, monospace);
+  font-family: monospace;
   font-size: 0.8rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted, #888);
 }
 
-.text-muted {
+/* Photo Cell */
+.cell-photo {
+  padding: 4px 8px;
+}
+
+.photo-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--color-bg-tertiary, #2d2d4a);
+}
+
+.photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-wrapper.other-individual {
+  border: 2px dashed var(--color-text-muted, #666);
+}
+
+.other-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+.no-photo {
   color: var(--color-text-muted, #666);
 }
 
@@ -568,26 +667,29 @@ const activeColumns = computed(() => {
   color: #c084fc;
   border-radius: 4px;
   font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .status-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 3px 10px;
-  background: color-mix(in srgb, var(--status-color) 15%, transparent);
-  color: var(--status-color);
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 4px;
   font-size: 0.75rem;
-  font-weight: 500;
 }
 
 .status-badge::before {
   content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--status-color);
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
+  background: var(--status-color);
+}
+
+.text-muted {
+  color: var(--color-text-muted, #666);
 }
 
 /* Empty State */
@@ -613,13 +715,12 @@ const activeColumns = computed(() => {
 /* Pagination */
 .pagination {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 4px;
   padding: 12px 16px;
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-primary, #1a1a2e);
   border-top: 1px solid var(--color-border, #3d3d5c);
-  flex-shrink: 0;
 }
 
 .page-btn {
@@ -655,8 +756,8 @@ const activeColumns = computed(() => {
 }
 
 .page-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 
 .page-ellipsis {
@@ -667,26 +768,11 @@ const activeColumns = computed(() => {
 /* Transitions */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s, transform 0.2s;
+  transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateY(-4px);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .table-header {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
-  }
-  
-  .header-left,
-  .header-right {
-    justify-content: space-between;
-  }
 }
 </style>

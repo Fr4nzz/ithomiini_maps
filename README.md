@@ -14,12 +14,6 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Point Popups**: Click to view specimen details and images
 - **High-Resolution Export**: Export maps at 300 DPI for publications
 
-### 📊 Data Table View
-- **Sortable Columns**: Click headers to sort by any field
-- **Pagination**: Navigate through large datasets efficiently
-- **Column Visibility**: Toggle columns to customize your view
-- **Status Badges**: Visual indicators for sequencing status
-
 ### 🖼️ Image Gallery
 - **Full-Screen Viewer**: Browse specimen images in gallery mode
 - **Zoom & Pan**: Detailed examination of wing patterns
@@ -35,11 +29,21 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 
 ### 🔬 Filter System
 - **Taxonomic Cascade**: Family → Tribe → Genus → Species → Subspecies
-- **Sequencing Status**: Filter by Sequenced, Tissue Available, Preserved, Published, GBIF Record
+- **Multi-Select Filters**: Select multiple species/subspecies at once (fuzzy search)
+- **Sequencing Status**: Filter by Sequenced, Tissue Available, Preserved, Published, Observation, Museum Specimen
 - **Mimicry Rings**: 44 unique mimicry patterns from Dore et al. (2025)
+- **Mimicry Ring Propagation**: Automatically applied to Sanger and GBIF records based on species/subspecies matching
 - **Date Range Filter**: Filter by collection/preservation date
 - **CAMID Search**: Instant lookup by specimen ID
 - **Data Source**: Filter by Dore, Sanger Institute, or GBIF
+
+### 📊 Data Table with Photos
+- **Sortable Columns**: Click headers to sort by any field
+- **Photo Thumbnails**: See specimen photo in each row
+- **Species Photo Lookup**: If no photo for individual, shows photo from same species/subspecies
+- **Photo Indicator**: Distinguishes own photo vs. reference photo from another individual
+- **Pagination**: Navigate through large datasets efficiently
+- **Column Visibility**: Toggle columns to customize your view
 
 ### 📥 Export & Citation
 - **CSV Export**: Download filtered data as spreadsheet
@@ -89,11 +93,23 @@ npm run dev
 # Install Python dependencies
 pip install -r scripts/requirements.txt
 
+# Download GBIF data (run this first if you need GBIF records)
+cd scripts
+python gbif_download.py
+
 # Run data processing pipeline
 # (Requires Dore_Ithomiini_records.xlsx in scripts/ folder)
-cd scripts
 python process_data.py
 ```
+
+### GBIF Data Download
+
+The `gbif_download.py` script downloads ALL Ithomiini occurrences from GBIF:
+- Properly parses species names (removes author citations)
+- Extracts subspecies from `infraspecificEpithet` field
+- Filters out BOLD sequence IDs and invalid entries
+- Includes `basisOfRecord` for quality filtering (Research Grade equivalent)
+- Downloads images where available
 
 ## Deployment
 
@@ -116,22 +132,25 @@ ithomiini_maps/
 │   ├── deploy.yml          # Auto-deploy to GitHub Pages
 │   └── update_data.yml     # Manual data refresh
 ├── public/data/
-│   └── map_points.json     # Processed occurrence data
+│   ├── map_points.json     # Processed occurrence data
+│   └── gbif_occurrences.json  # Downloaded GBIF data (generated)
 ├── scripts/
+│   ├── gbif_download.py    # Download all GBIF Ithomiini records
 │   ├── process_data.py     # ETL pipeline with mimicry lookup
 │   └── requirements.txt    # Python dependencies
 ├── src/
 │   ├── components/
-│   │   ├── DataTable.vue       # Sortable, paginated data table
+│   │   ├── DataTable.vue       # Sortable table with photo thumbnails
 │   │   ├── DateFilter.vue      # Date range filter component
 │   │   ├── ExportPanel.vue     # CSV/GeoJSON export & citations
+│   │   ├── FilterSelect.vue    # Multi-select with fuzzy search
 │   │   ├── ImageGallery.vue    # Full-screen image viewer
 │   │   ├── MapEngine.vue       # MapLibre map component
 │   │   ├── MapExport.vue       # High-res map image export
 │   │   ├── MimicrySelector.vue # Visual mimicry ring picker
 │   │   └── Sidebar.vue         # Filter controls & view toggle
 │   ├── stores/
-│   │   └── data.js         # Pinia state management
+│   │   └── data.js         # Pinia state management with photo lookup
 │   ├── App.vue             # Root component with modals
 │   ├── main.js             # Entry point
 │   └── style.css           # Global styles

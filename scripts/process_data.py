@@ -378,6 +378,7 @@ def load_gbif_bulk_download():
     """
     Load pre-downloaded GBIF data from gbif_download.py.
     Applies mimicry ring lookup from Dore database.
+    Maps basisOfRecord to user-friendly sequencing_status.
     """
     gbif_path = Path(GBIF_BULK_FILE)
     
@@ -394,6 +395,62 @@ def load_gbif_bulk_download():
         
         df = pd.DataFrame(records)
         print(f"   Loaded {len(df):,} GBIF records")
+        
+        # ═══════════════════════════════════════════════════════════════════
+        # MAP BASIS OF RECORD TO STATUS
+        # ═══════════════════════════════════════════════════════════════════
+        # GBIF basisOfRecord values:
+        # - HUMAN_OBSERVATION: iNaturalist/citizen science (like "Research Grade")
+        # - PRESERVED_SPECIMEN: Museum specimens
+        # - MACHINE_OBSERVATION: Camera trap, etc.
+        # - OCCURRENCE: Generic occurrence
+        
+        status_map = {
+            'HUMAN_OBSERVATION': 'Observation',
+            'PRESERVED_SPECIMEN': 'Museum Specimen',
+            'MACHINE_OBSERVATION': 'Observation',
+            'OCCURRENCE': 'GBIF Record',
+            'MATERIAL_SAMPLE': 'Museum Specimen',
+            'LIVING_SPECIMEN': 'Living Specimen',
+        }
+        
+        if 'basis_of_record' in df.columns:
+            df['sequencing_status'] = df['basis_of_record'].map(status_map).fillna('GBIF Record')
+        else:
+            df['sequencing_status'] = 'GBIF Record'
+        
+        # ═══════════════════════════════════════════════════════════════════
+        # CLEAN SPECIES NAMES (remove any remaining author citations)
+        # ═══════════════════════════════════════════════════════════════════
+        def clean_species_name(name):
+            if not name or pd.isna(name):
+                return None
+            name = str(name).strip()
+            # Remove author citations
+            name = re.sub(r'\s*\([A-Z][a-zA-Z&\s\.\-]+,?\s*\d{4}\)', '', name)
+            name = re.sub(r'\s+[A-Z][a-zA-Z&\s\.\-]+,\s*\d{4}$', '', name)
+            name = ' '.join(name.split())
+            return name if name else None
+        
+        df['scientific_name'] = df['scientific_name'].apply(clean_species_name)
+        
+        # Remove rows with invalid species names
+        df = df[df['scientific_name'].notna()]
+        print(f"   After cleaning species names: {len(df):,} records")
+        
+        # ═══════════════════════════════════════════════════════════════════
+        # CLEAN SUBSPECIES (remove taxonomic status values)
+        # ═══════════════════════════════════════════════════════════════════
+        def clean_subspecies(ssp):
+            if not ssp or pd.isna(ssp):
+                return None
+            ssp = str(ssp).strip()
+            # Remove if it's a taxonomic status
+            if ssp.upper() in ['ACCEPTED', 'SYNONYM', 'DOUBTFUL', 'UNKNOWN', 'NA', 'NONE', '']:
+                return None
+            return ssp
+        
+        df['subspecies'] = df['subspecies'].apply(clean_subspecies)
         
         # Ensure required columns exist
         required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
