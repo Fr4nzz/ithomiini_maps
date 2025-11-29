@@ -416,12 +416,31 @@ const switchStyle = (styleName) => {
 
   map.setStyle(styleConfig.style)
 
-  // Re-add data layer after style loads
+  // Use a more robust approach: wait for style to be fully loaded
+  const waitForStyleAndAddLayer = () => {
+    if (map.isStyleLoaded()) {
+      // Restore view state
+      map.jumpTo({ center, zoom, bearing, pitch })
+      // Re-add the data layer with current filtered data
+      addDataLayer()
+    } else {
+      // Style not ready yet, try again
+      setTimeout(waitForStyleAndAddLayer, 50)
+    }
+  }
+
+  // Start checking after style.load event (or immediately for inline styles)
   map.once('style.load', () => {
-    // Restore view state
-    map.jumpTo({ center, zoom, bearing, pitch })
-    // Re-add the data layer with current filtered data
-    addDataLayer()
+    // Give it a small delay then check if truly ready
+    setTimeout(waitForStyleAndAddLayer, 100)
+  })
+
+  // Fallback: also try on idle event
+  map.once('idle', () => {
+    if (!map.getSource('points-source')) {
+      map.jumpTo({ center, zoom, bearing, pitch })
+      addDataLayer()
+    }
   })
 }
 </script>
