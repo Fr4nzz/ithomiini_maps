@@ -564,7 +564,7 @@ const showClusterSettings = ref(false)
           <div v-if="store.clusteringEnabled" class="cluster-settings">
             <!-- Cluster Radius -->
             <div class="setting-row">
-              <label>Cluster Radius</label>
+              <label>Cluster Radius <span class="setting-hint">(px)</span></label>
               <div class="slider-group">
                 <input
                   type="range"
@@ -573,13 +573,20 @@ const showClusterSettings = ref(false)
                   step="5"
                   v-model.number="store.clusterSettings.radius"
                 />
-                <span class="slider-value">{{ store.clusterSettings.radius }}px</span>
+                <input
+                  type="number"
+                  class="setting-input"
+                  min="10"
+                  max="200"
+                  v-model.number.lazy="store.clusterSettings.radius"
+                  @keydown.enter="$event.target.blur()"
+                />
               </div>
             </div>
 
             <!-- Max Zoom -->
             <div class="setting-row">
-              <label>Max Cluster Zoom</label>
+              <label>Max Cluster Zoom <span class="setting-hint">(zoom level where clusters stop)</span></label>
               <div class="slider-group">
                 <input
                   type="range"
@@ -588,7 +595,14 @@ const showClusterSettings = ref(false)
                   step="1"
                   v-model.number="store.clusterSettings.maxZoom"
                 />
-                <span class="slider-value">{{ store.clusterSettings.maxZoom }}</span>
+                <input
+                  type="number"
+                  class="setting-input"
+                  min="1"
+                  max="18"
+                  v-model.number.lazy="store.clusterSettings.maxZoom"
+                  @keydown.enter="$event.target.blur()"
+                />
               </div>
             </div>
 
@@ -603,7 +617,14 @@ const showClusterSettings = ref(false)
                   step="1"
                   v-model.number="store.clusterSettings.minPoints"
                 />
-                <span class="slider-value">{{ store.clusterSettings.minPoints }}</span>
+                <input
+                  type="number"
+                  class="setting-input"
+                  min="2"
+                  max="50"
+                  v-model.number.lazy="store.clusterSettings.minPoints"
+                  @keydown.enter="$event.target.blur()"
+                />
               </div>
             </div>
           </div>
@@ -1300,6 +1321,38 @@ const showClusterSettings = ref(false)
   color: var(--color-accent, #4ade80);
   text-align: right;
   font-variant-numeric: tabular-nums;
+}
+
+.setting-input {
+  width: 55px;
+  padding: 4px 6px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.setting-input::-webkit-outer-spin-button,
+.setting-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.setting-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
+.setting-hint {
+  font-weight: 400;
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #666);
 }
 
 /* Responsive */

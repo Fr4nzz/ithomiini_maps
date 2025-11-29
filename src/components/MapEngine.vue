@@ -170,7 +170,9 @@ const initMap = () => {
 // Hover popup for cluster preview
 let clusterHoverPopup = null
 
-const addDataLayer = () => {
+const addDataLayer = (options = {}) => {
+  const { skipZoom = false } = options
+
   if (!map) return
 
   // Remove existing layers/sources if they exist
@@ -518,8 +520,10 @@ const addDataLayer = () => {
     map.setFilter('points-highlight', filter)
   })
 
-  // Fit bounds to data (with padding)
-  fitBoundsToData(geojson)
+  // Fit bounds to data (with padding) - only if not skipping zoom
+  if (!skipZoom) {
+    fitBoundsToData(geojson)
+  }
 
   // Log clustering status
   console.log(`📍 ${pointCount} points loaded. Clustering: ${shouldCluster ? 'ON' : 'OFF'}`)
@@ -757,32 +761,33 @@ const fitBoundsToData = (geojson) => {
   })
 }
 
+// Track previous data length to detect actual data changes vs just settings changes
+let previousDataLength = 0
+
 // Watch for filter changes and update the map
 watch(
   () => store.filteredGeoJSON,
   (newData) => {
     if (!map || !map.isStyleLoaded()) return
 
-    const source = map.getSource('points-source')
-    if (source) {
-      source.setData(newData || { type: 'FeatureCollection', features: [] })
+    const newLength = newData?.features?.length || 0
+    const dataChanged = newLength !== previousDataLength
+    previousDataLength = newLength
 
-      // Auto-zoom to fit filtered data
-      fitBoundsToData(newData)
-    } else {
-      addDataLayer()
-    }
+    // Always rebuild to ensure clustering settings are applied correctly
+    // Only zoom if the actual data changed (not just clustering settings)
+    addDataLayer({ skipZoom: !dataChanged })
   },
   { deep: true }
 )
 
-// Watch for clustering settings changes - need to rebuild layers
+// Watch for clustering settings changes - rebuild layers without zoom
 watch(
   [() => store.clusteringEnabled, () => store.clusterSettings],
   () => {
     if (!map || !map.isStyleLoaded()) return
-    // Rebuild the data layer with new clustering settings
-    addDataLayer()
+    // Rebuild the data layer with new clustering settings - skip zoom
+    addDataLayer({ skipZoom: true })
   },
   { deep: true }
 )
