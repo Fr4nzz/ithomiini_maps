@@ -195,6 +195,12 @@ const showDateFilter = ref(false)
 
 // Show cluster settings section
 const showClusterSettings = ref(false)
+
+// Show map style settings section
+const showMapStyleSettings = ref(false)
+
+// Show legend settings section
+const showLegendSettings = ref(false)
 </script>
 
 <template>
@@ -626,6 +632,185 @@ const showClusterSettings = ref(false)
                   @keydown.enter="$event.target.blur()"
                 />
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Style Settings (Map View Only) -->
+      <div class="filter-section collapsible" v-if="currentView === 'map'">
+        <button
+          class="collapse-toggle"
+          @click="showMapStyleSettings = !showMapStyleSettings"
+          :class="{ expanded: showMapStyleSettings }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Map Style
+        </button>
+
+        <div v-show="showMapStyleSettings" class="collapse-content">
+          <!-- Color By -->
+          <div class="setting-row">
+            <label>Color Points By</label>
+            <select v-model="store.colorBy" class="style-select">
+              <option value="subspecies">Subspecies</option>
+              <option value="species">Species</option>
+              <option value="genus">Genus</option>
+              <option value="status">Sequencing Status</option>
+              <option value="mimicry">Mimicry Ring</option>
+              <option value="source">Data Source</option>
+            </select>
+          </div>
+
+          <!-- Point Size -->
+          <div class="setting-row">
+            <label>Point Size</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="4"
+                max="20"
+                step="1"
+                v-model.number="store.mapStyle.pointSize"
+              />
+              <input
+                type="number"
+                class="setting-input"
+                min="2"
+                max="30"
+                v-model.number.lazy="store.mapStyle.pointSize"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+
+          <!-- Border Width -->
+          <div class="setting-row">
+            <label>Border Width</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0"
+                max="5"
+                step="0.5"
+                v-model.number="store.mapStyle.borderWidth"
+              />
+              <input
+                type="number"
+                class="setting-input"
+                min="0"
+                max="10"
+                step="0.5"
+                v-model.number.lazy="store.mapStyle.borderWidth"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+
+          <!-- Fill Opacity -->
+          <div class="setting-row">
+            <label>Fill Opacity</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.1"
+                max="1"
+                step="0.05"
+                v-model.number="store.mapStyle.fillOpacity"
+              />
+              <span class="slider-value">{{ Math.round(store.mapStyle.fillOpacity * 100) }}%</span>
+            </div>
+          </div>
+
+          <!-- Border Color -->
+          <div class="setting-row">
+            <label>Border Color</label>
+            <div class="color-picker-row">
+              <input
+                type="color"
+                v-model="store.mapStyle.borderColor"
+                class="color-picker"
+              />
+              <input
+                type="text"
+                class="setting-input color-input"
+                v-model="store.mapStyle.borderColor"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legend Settings (Map View Only) -->
+      <div class="filter-section collapsible" v-if="currentView === 'map'">
+        <button
+          class="collapse-toggle"
+          @click="showLegendSettings = !showLegendSettings"
+          :class="{ expanded: showLegendSettings }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Legend Settings
+          <span
+            class="clustering-toggle-badge"
+            :class="{ active: store.legendSettings.showLegend }"
+            @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend"
+            title="Click to toggle legend"
+          >
+            {{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}
+          </span>
+        </button>
+
+        <div v-show="showLegendSettings" class="collapse-content">
+          <!-- Legend Position -->
+          <div class="setting-row">
+            <label>Position</label>
+            <select v-model="store.legendSettings.position" class="style-select">
+              <option value="bottom-left">Bottom Left</option>
+              <option value="bottom-right">Bottom Right</option>
+              <option value="top-left">Top Left</option>
+              <option value="top-right">Top Right</option>
+            </select>
+          </div>
+
+          <!-- Text Size -->
+          <div class="setting-row">
+            <label>Text Size</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.6"
+                max="1.2"
+                step="0.05"
+                v-model.number="store.legendSettings.textSize"
+              />
+              <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
+            </div>
+          </div>
+
+          <!-- Max Items -->
+          <div class="setting-row">
+            <label>Max Items Shown</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="5"
+                max="30"
+                step="1"
+                v-model.number="store.legendSettings.maxItems"
+              />
+              <input
+                type="number"
+                class="setting-input"
+                min="3"
+                max="50"
+                v-model.number.lazy="store.legendSettings.maxItems"
+                @keydown.enter="$event.target.blur()"
+              />
             </div>
           </div>
         </div>
@@ -1353,6 +1538,62 @@ const showClusterSettings = ref(false)
   font-weight: 400;
   font-size: 0.65rem;
   color: var(--color-text-muted, #666);
+}
+
+/* Style Select */
+.style-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.style-select:hover {
+  border-color: var(--color-text-muted, #666);
+}
+
+.style-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
+/* Color Picker */
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  cursor: pointer;
+  background: none;
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.color-picker::-webkit-color-swatch {
+  border-radius: 4px;
+  border: none;
+}
+
+.color-input {
+  flex: 1;
+  width: auto;
+  font-family: monospace;
+  text-transform: uppercase;
 }
 
 /* Responsive */

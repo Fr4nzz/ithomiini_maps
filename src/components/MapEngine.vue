@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
@@ -9,6 +9,29 @@ const emit = defineEmits(['map-ready'])
 const mapContainer = ref(null)
 let map = null
 let popup = null
+
+// Legend position class based on store settings
+const legendPositionClass = computed(() => {
+  return `legend-${store.legendSettings.position}`
+})
+
+// Limit color map items for legend display
+const limitedColorMap = computed(() => {
+  const colorMap = store.activeColorMap
+  const maxItems = store.legendSettings.maxItems
+  const entries = Object.entries(colorMap)
+
+  if (entries.length <= maxItems) {
+    return colorMap
+  }
+
+  // Return only the first maxItems entries
+  const limited = {}
+  entries.slice(0, maxItems).forEach(([key, value]) => {
+    limited[key] = value
+  })
+  return limited
+})
 
 // ═══════════════════════════════════════════════════════════════════════════
 // MAP STYLES - Free tile sources
@@ -263,46 +286,59 @@ const addDataLayer = (options = {}) => {
   // ─────────────────────────────────────────────────────────────────────────
   // INDIVIDUAL POINTS
   // ─────────────────────────────────────────────────────────────────────────
+
+  // Build dynamic color expression based on store settings
+  const colorMap = store.activeColorMap
+  const colorAttr = store.colorByAttribute
+  const style = store.mapStyle
+
+  // Build MapLibre match expression for colors
+  const colorExpression = ['match', ['get', colorAttr]]
+  Object.entries(colorMap).forEach(([value, color]) => {
+    colorExpression.push(value, color)
+  })
+  colorExpression.push('#6b7280') // default gray
+
+  // Calculate point sizes based on style settings
+  const baseSize = style.pointSize
+  const sizeExpression = [
+    'interpolate', ['linear'], ['zoom'],
+    3, baseSize * 0.375,
+    6, baseSize * 0.625,
+    10, baseSize,
+    14, baseSize * 1.5
+  ]
+
   map.addLayer({
     id: 'points-layer',
     type: 'circle',
     source: 'points-source',
     filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'], // All points if no clustering
     paint: {
-      'circle-radius': [
-        'interpolate', ['linear'], ['zoom'],
-        3, 3,
-        6, 5,
-        10, 8,
-        14, 12
-      ],
-      'circle-color': [
-        'match',
-        ['get', 'sequencing_status'],
-        'Sequenced', STATUS_COLORS['Sequenced'],
-        'Tissue Available', STATUS_COLORS['Tissue Available'],
-        'Preserved Specimen', STATUS_COLORS['Preserved Specimen'],
-        'Published', STATUS_COLORS['Published'],
-        'GBIF Record', STATUS_COLORS['GBIF Record'],
-        'Observation', STATUS_COLORS['Observation'],
-        'Museum Specimen', STATUS_COLORS['Museum Specimen'],
-        'Living Specimen', STATUS_COLORS['Living Specimen'],
-        '#6b7280' // default gray
-      ],
-      'circle-opacity': 0.85,
+      'circle-radius': sizeExpression,
+      'circle-color': colorExpression,
+      'circle-opacity': style.fillOpacity,
       'circle-stroke-width': [
         'interpolate', ['linear'], ['zoom'],
-        3, 0.5,
-        10, 1.5
+        3, style.borderWidth * 0.33,
+        10, style.borderWidth
       ],
-      'circle-stroke-color': '#ffffff',
-      'circle-stroke-opacity': 0.6
+      'circle-stroke-color': style.borderColor,
+      'circle-stroke-opacity': style.borderOpacity
     }
   })
 
   // ─────────────────────────────────────────────────────────────────────────
   // HIGHLIGHT LAYER (for hover on individual points)
   // ─────────────────────────────────────────────────────────────────────────
+  const highlightSizeExpression = [
+    'interpolate', ['linear'], ['zoom'],
+    3, baseSize * 0.75,
+    6, baseSize * 1.25,
+    10, baseSize * 1.75,
+    14, baseSize * 2.25
+  ]
+
   map.addLayer({
     id: 'points-highlight',
     type: 'circle',
@@ -311,13 +347,7 @@ const addDataLayer = (options = {}) => {
       ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
       : ['==', ['get', 'id'], ''],
     paint: {
-      'circle-radius': [
-        'interpolate', ['linear'], ['zoom'],
-        3, 6,
-        6, 10,
-        10, 14,
-        14, 18
-      ],
+      'circle-radius': highlightSizeExpression,
       'circle-color': 'transparent',
       'circle-stroke-width': 2,
       'circle-stroke-color': '#ffffff'
@@ -792,6 +822,17 @@ watch(
   { deep: true }
 )
 
+// Watch for color and style settings changes - rebuild layers without zoom
+watch(
+  [() => store.colorBy, () => store.mapStyle],
+  () => {
+    if (!map || !map.isStyleLoaded()) return
+    // Rebuild the data layer with new color/style settings - skip zoom
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
 // ═══════════════════════════════════════════════════════════════════════════
 // STYLE SWITCHER
 // ═══════════════════════════════════════════════════════════════════════════
@@ -857,15 +898,23 @@ const switchStyle = (styleName) => {
     </div>
 
     <!-- Legend -->
-    <div class="legend">
-      <div class="legend-title">Sequencing Status</div>
-      <div 
-        v-for="(color, status) in STATUS_COLORS" 
-        :key="status" 
+    <div
+      v-if="store.legendSettings.showLegend"
+      class="legend"
+      :class="legendPositionClass"
+      :style="{ fontSize: store.legendSettings.textSize + 'rem' }"
+    >
+      <div class="legend-title">{{ store.legendTitle }}</div>
+      <div
+        v-for="(color, label) in limitedColorMap"
+        :key="label"
         class="legend-item"
       >
         <span class="legend-dot" :style="{ backgroundColor: color }"></span>
-        <span>{{ status }}</span>
+        <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
+      </div>
+      <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
+        + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
       </div>
     </div>
   </div>
@@ -930,19 +979,41 @@ const switchStyle = (styleName) => {
 
 .legend {
   position: absolute;
-  bottom: 30px;
-  left: 10px;
   background: rgba(26, 26, 46, 0.95);
   padding: 12px 16px;
   border-radius: 8px;
   z-index: 10;
   min-width: 160px;
+  max-width: 220px;
+  max-height: 400px;
+  overflow-y: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(4px);
 }
 
+/* Legend positioning */
+.legend-bottom-left {
+  bottom: 30px;
+  left: 10px;
+}
+
+.legend-bottom-right {
+  bottom: 30px;
+  right: 10px;
+}
+
+.legend-top-left {
+  top: 60px;
+  left: 10px;
+}
+
+.legend-top-right {
+  top: 60px;
+  right: 10px;
+}
+
 .legend-title {
-  font-size: 0.7rem;
+  font-size: 0.875em;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -955,13 +1026,17 @@ const switchStyle = (styleName) => {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.8em;
+  font-size: 1em;
   color: #e0e0e0;
   margin-bottom: 6px;
 }
 
 .legend-item:last-child {
   margin-bottom: 0;
+}
+
+.legend-label-italic {
+  font-style: italic;
 }
 
 .legend-dot {
@@ -971,6 +1046,15 @@ const switchStyle = (styleName) => {
   border-radius: 50%;
   flex-shrink: 0;
   box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.legend-more {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #3d3d5c;
+  font-size: 0.85em;
+  color: #666;
+  font-style: italic;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

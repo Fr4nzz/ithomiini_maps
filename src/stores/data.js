@@ -24,6 +24,56 @@ export const useDataStore = defineStore('data', () => {
     minPoints: 5       // Minimum points to form a cluster
   })
 
+  // Map styling settings
+  const colorBy = ref('subspecies')  // What attribute to color points by: 'status', 'subspecies', 'species', 'genus', 'mimicry', 'source'
+
+  const mapStyle = ref({
+    pointSize: 8,           // Base point size in pixels
+    borderWidth: 1.5,       // Point border width
+    borderColor: '#ffffff', // Point border color
+    fillOpacity: 0.85,      // Point fill opacity (0-1)
+    borderOpacity: 0.6      // Point border opacity (0-1)
+  })
+
+  const legendSettings = ref({
+    position: 'bottom-left',  // 'top-left', 'top-right', 'bottom-left', 'bottom-right'
+    textSize: 0.8,            // Font size multiplier
+    showLegend: true,         // Whether to show legend
+    maxItems: 15              // Max items before "more" indicator
+  })
+
+  // Export settings
+  const exportSettings = ref({
+    enabled: false,           // Whether export preview mode is active
+    aspectRatio: '16:9',      // '16:9', '4:3', '1:1', '3:2', 'A4', 'custom'
+    customWidth: 1920,
+    customHeight: 1080,
+    showCoordinates: true,    // Show export area coordinates
+    includeLegend: true,
+    includeScaleBar: true
+  })
+
+  // Map view state (for URL sync)
+  const mapView = ref({
+    center: [-60, -5],        // [lng, lat]
+    zoom: 4,
+    bearing: 0,
+    pitch: 0
+  })
+
+  // URL sharing settings
+  const urlSettings = ref({
+    includeFilters: true,     // Include taxonomy, mimicry, status filters
+    includeMapView: false,    // Include center, zoom, bearing, pitch
+    includeExportSettings: false,
+    includeStyleSettings: false
+  })
+
+  // Custom color palettes for different colorBy modes
+  const customColors = ref({
+    // Users can customize these
+  })
+
   // The Active Filters
   // NOTE: species is now an ARRAY for multi-select (like Wings Gallery)
   const filters = ref({
@@ -576,9 +626,111 @@ export const useDataStore = defineStore('data', () => {
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // DYNAMIC COLOR PALETTE GENERATOR
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Predefined color palettes
+  const COLOR_PALETTES = {
+    status: {
+      'Sequenced': '#3b82f6',
+      'Tissue Available': '#10b981',
+      'Preserved Specimen': '#f59e0b',
+      'Published': '#a855f7',
+      'GBIF Record': '#6b7280',
+      'Observation': '#22c55e',
+      'Museum Specimen': '#8b5cf6',
+      'Living Specimen': '#14b8a6',
+    },
+    source: {
+      'Sanger Institute': '#3b82f6',
+      'GBIF': '#22c55e',
+    }
+  }
+
+  // Generate colors for dynamic categories
+  const generateColorPalette = (values) => {
+    const colors = [
+      '#3b82f6', '#10b981', '#f59e0b', '#a855f7', '#ef4444',
+      '#22d3ee', '#f97316', '#84cc16', '#ec4899', '#6366f1',
+      '#14b8a6', '#eab308', '#8b5cf6', '#06b6d4', '#f43f5e',
+      '#0ea5e9', '#22c55e', '#d946ef', '#64748b', '#fb923c'
+    ]
+    const palette = {}
+    values.forEach((val, idx) => {
+      palette[val] = colors[idx % colors.length]
+    })
+    return palette
+  }
+
+  // Get the color map based on current colorBy setting
+  const activeColorMap = computed(() => {
+    const mode = colorBy.value
+
+    // Check for custom colors first
+    if (customColors.value[mode]) {
+      return customColors.value[mode]
+    }
+
+    // Use predefined palettes for status and source
+    if (mode === 'status') {
+      return COLOR_PALETTES.status
+    }
+    if (mode === 'source') {
+      return COLOR_PALETTES.source
+    }
+
+    // Generate dynamic palette for taxonomy and mimicry
+    let uniqueValues = []
+    switch (mode) {
+      case 'subspecies':
+        uniqueValues = uniqueSubspecies.value
+        break
+      case 'species':
+        uniqueValues = uniqueSpecies.value
+        break
+      case 'genus':
+        uniqueValues = uniqueGenera.value
+        break
+      case 'mimicry':
+        uniqueValues = uniqueMimicry.value
+        break
+      default:
+        uniqueValues = uniqueStatuses.value
+    }
+
+    return generateColorPalette(uniqueValues)
+  })
+
+  // Get the attribute key for the current colorBy mode
+  const colorByAttribute = computed(() => {
+    const mapping = {
+      'status': 'sequencing_status',
+      'subspecies': 'subspecies',
+      'species': 'scientific_name',
+      'genus': 'genus',
+      'mimicry': 'mimicry_ring',
+      'source': 'source'
+    }
+    return mapping[colorBy.value] || 'sequencing_status'
+  })
+
+  // Get legend title based on colorBy
+  const legendTitle = computed(() => {
+    const titles = {
+      'status': 'Sequencing Status',
+      'subspecies': 'Subspecies',
+      'species': 'Species',
+      'genus': 'Genus',
+      'mimicry': 'Mimicry Ring',
+      'source': 'Data Source'
+    }
+    return titles[colorBy.value] || 'Legend'
+  })
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // URL SYNC WATCHER
   // ═══════════════════════════════════════════════════════════════════════════
-  
+
   watch(
     filters,
     (newFilters) => {
@@ -627,6 +779,15 @@ export const useDataStore = defineStore('data', () => {
     photoLookup,
     mimicryPhotoLookup,
 
+    // Map styling state
+    colorBy,
+    mapStyle,
+    legendSettings,
+    exportSettings,
+    mapView,
+    urlSettings,
+    customColors,
+
     // Actions
     loadMapData,
     resetAllFilters,
@@ -647,6 +808,11 @@ export const useDataStore = defineStore('data', () => {
     uniqueSources,
     uniqueCountries,
     uniqueCamids,
+
+    // Computed (color mapping)
+    activeColorMap,
+    colorByAttribute,
+    legendTitle,
 
     // Final output
     filteredGeoJSON,
