@@ -343,7 +343,7 @@ const showDateFilter = ref(false)
         </p>
       </div>
 
-      <!-- Data Source -->
+      <!-- Data Source (Multi-select, default Sanger) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -355,11 +355,13 @@ const showDateFilter = ref(false)
         </label>
         <FilterSelect
           v-model="store.filters.source"
-          :options="['All', ...store.uniqueSources]"
-          placeholder="All Sources"
-          :multiple="false"
-          :show-count="false"
+          :options="store.uniqueSources"
+          placeholder="Select sources..."
+          :multiple="true"
         />
+        <p class="filter-hint" v-if="store.filters.source.length === 0">
+          No sources selected - showing all data
+        </p>
       </div>
 
       <!-- UI Preferences -->
@@ -668,7 +670,7 @@ const showDateFilter = ref(false)
 .collapsible {
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: visible to allow dropdowns to extend outside */
 }
 
 .collapse-toggle {

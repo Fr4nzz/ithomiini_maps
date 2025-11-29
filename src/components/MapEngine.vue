@@ -384,14 +384,13 @@ watch(
   () => store.filteredGeoJSON,
   (newData) => {
     if (!map || !map.isStyleLoaded()) return
-    
+
     const source = map.getSource('points-source')
     if (source) {
       source.setData(newData || { type: 'FeatureCollection', features: [] })
-      
-      // Optionally fit bounds on filter change
-      // Uncomment if you want map to zoom to filtered data
-      // fitBoundsToData(newData)
+
+      // Auto-zoom to fit filtered data
+      fitBoundsToData(newData)
     } else {
       addDataLayer()
     }
@@ -405,14 +404,23 @@ watch(
 
 const switchStyle = (styleName) => {
   if (!map || !MAP_STYLES[styleName]) return
-  
+
+  // Save current view state before style change
+  const center = map.getCenter()
+  const zoom = map.getZoom()
+  const bearing = map.getBearing()
+  const pitch = map.getPitch()
+
   currentStyle.value = styleName
   const styleConfig = MAP_STYLES[styleName]
-  
+
   map.setStyle(styleConfig.style)
-  
+
   // Re-add data layer after style loads
   map.once('style.load', () => {
+    // Restore view state
+    map.jumpTo({ center, zoom, bearing, pitch })
+    // Re-add the data layer with current filtered data
     addDataLayer()
   })
 }

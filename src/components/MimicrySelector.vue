@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useDataStore } from '../stores/data'
 
 const store = useDataStore()
@@ -8,73 +8,81 @@ const emit = defineEmits(['close'])
 // Search within mimicry rings
 const searchQuery = ref('')
 
-// Mimicry ring color palette (based on common wing patterns)
-const mimicryColors = {
-  'Agnosia': { primary: '#8B4513', secondary: '#D2691E', pattern: 'spots' },
-  'Aureliana': { primary: '#FFD700', secondary: '#FFA500', pattern: 'bands' },
-  'Banjana': { primary: '#2F4F4F', secondary: '#708090', pattern: 'solid' },
-  'Clearwing': { primary: '#E0E0E0', secondary: '#FFFFFF', pattern: 'clear' },
-  'Confusa': { primary: '#8B0000', secondary: '#FF6347', pattern: 'stripes' },
-  'Derasa': { primary: '#4169E1', secondary: '#87CEEB', pattern: 'gradient' },
-  'Egena': { primary: '#228B22', secondary: '#90EE90', pattern: 'spots' },
-  'Eurimedia': { primary: '#FF4500', secondary: '#FFD700', pattern: 'bands' },
-  'Hermias': { primary: '#9932CC', secondary: '#DDA0DD', pattern: 'stripes' },
-  'Hewitsoni': { primary: '#DC143C', secondary: '#FF69B4', pattern: 'spots' },
-  'Lerida': { primary: '#006400', secondary: '#32CD32', pattern: 'gradient' },
-  'Mamercus': { primary: '#B8860B', secondary: '#F0E68C', pattern: 'bands' },
-  'Mantineus': { primary: '#4B0082', secondary: '#8A2BE2', pattern: 'solid' },
-  'Makrena': { primary: '#FF8C00', secondary: '#FFDAB9', pattern: 'stripes' },
-  'Mothone': { primary: '#2E8B57', secondary: '#98FB98', pattern: 'spots' },
-  'Orestilla': { primary: '#CD5C5C', secondary: '#FFC0CB', pattern: 'gradient' },
-  'Panthyale': { primary: '#483D8B', secondary: '#7B68EE', pattern: 'bands' },
-  'Philomela': { primary: '#556B2F', secondary: '#9ACD32', pattern: 'stripes' },
-  'Praxilla': { primary: '#8B008B', secondary: '#EE82EE', pattern: 'spots' },
-  'Salvinia': { primary: '#20B2AA', secondary: '#AFEEEE', pattern: 'solid' },
-  'Sarepta': { primary: '#A0522D', secondary: '#DEB887', pattern: 'bands' },
-  'Tiger': { primary: '#FF8C00', secondary: '#000000', pattern: 'tiger' },
-  'Unknown': { primary: '#808080', secondary: '#C0C0C0', pattern: 'unknown' },
+// Track current photo index for each ring
+const ringPhotoIndex = reactive({})
+
+// Get current photo index for a ring
+const getPhotoIndex = (ring) => {
+  return ringPhotoIndex[ring] || 0
 }
 
-// Get default colors for rings not in our palette
-const getColors = (ring) => {
-  if (mimicryColors[ring]) return mimicryColors[ring]
-  // Generate consistent colors from ring name
-  let hash = 0
-  for (let i = 0; i < ring.length; i++) {
-    hash = ring.charCodeAt(i) + ((hash << 5) - hash)
-  }
-  const hue = Math.abs(hash % 360)
-  return {
-    primary: `hsl(${hue}, 60%, 40%)`,
-    secondary: `hsl(${hue}, 60%, 70%)`,
-    pattern: 'default'
+// Navigate to next photo for a ring
+const nextPhoto = (ring, event) => {
+  event.stopPropagation()
+  const reps = store.mimicryPhotoLookup[ring]?.representatives || []
+  if (reps.length > 1) {
+    const current = getPhotoIndex(ring)
+    ringPhotoIndex[ring] = (current + 1) % reps.length
   }
 }
 
-// Filtered mimicry rings based on search
-const filteredRings = computed(() => {
-  const rings = store.uniqueMimicry || []
-  if (!searchQuery.value) return rings
-  const q = searchQuery.value.toLowerCase()
-  return rings.filter(r => r.toLowerCase().includes(q))
-})
+// Navigate to previous photo for a ring
+const prevPhoto = (ring, event) => {
+  event.stopPropagation()
+  const reps = store.mimicryPhotoLookup[ring]?.representatives || []
+  if (reps.length > 1) {
+    const current = getPhotoIndex(ring)
+    ringPhotoIndex[ring] = (current - 1 + reps.length) % reps.length
+  }
+}
+
+// Get current representative for a ring
+const getCurrentRep = (ring) => {
+  const lookup = store.mimicryPhotoLookup[ring]
+  if (!lookup || !lookup.representatives.length) return null
+  const idx = getPhotoIndex(ring)
+  return lookup.representatives[idx]
+}
 
 // Count records per mimicry ring
 const ringCounts = computed(() => {
   const counts = {}
   const features = store.allFeatures || []
   features.forEach(f => {
-    const ring = f.properties?.mimicry_ring || 'Unknown'
+    const ring = f.mimicry_ring || 'Unknown'
     counts[ring] = (counts[ring] || 0) + 1
   })
   return counts
+})
+
+// Available rings (would return results with current taxonomy filter)
+const availableRings = computed(() => {
+  const available = store.availableMimicryRings || []
+  if (!searchQuery.value) return available
+  const q = searchQuery.value.toLowerCase()
+  return available.filter(r => r.toLowerCase().includes(q))
+})
+
+// Unavailable rings (would return no results with current taxonomy filter)
+const unavailableRings = computed(() => {
+  const unavailable = store.unavailableMimicryRings || []
+  if (!searchQuery.value) return unavailable
+  const q = searchQuery.value.toLowerCase()
+  return unavailable.filter(r => r.toLowerCase().includes(q))
+})
+
+// Check if there's an active taxonomy filter
+const hasTaxonomyFilter = computed(() => {
+  return store.filters.genus !== 'All' ||
+         store.filters.species.length > 0 ||
+         store.filters.subspecies.length > 0
 })
 
 // Currently selected ring
 const selectedRing = computed(() => store.filters.mimicry)
 
 // Select a ring
-const selectRing = (ring) => {
+const selectRing = (ring, isAvailable = true) => {
   if (store.filters.mimicry === ring) {
     store.filters.mimicry = 'All'
   } else {
@@ -114,7 +122,7 @@ const clearSelection = () => {
         <circle cx="11" cy="11" r="8"/>
         <path d="m21 21-4.3-4.3"/>
       </svg>
-      <input 
+      <input
         type="text"
         v-model="searchQuery"
         placeholder="Search mimicry rings..."
@@ -125,10 +133,6 @@ const clearSelection = () => {
     <div v-if="selectedRing !== 'All'" class="current-selection">
       <span class="selection-label">Selected:</span>
       <button class="selection-tag" @click="clearSelection">
-        <span 
-          class="tag-icon"
-          :style="{ background: getColors(selectedRing).primary }"
-        ></span>
         {{ selectedRing }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 6 6 18M6 6l12 12"/>
@@ -136,93 +140,193 @@ const clearSelection = () => {
       </button>
     </div>
 
-    <!-- Ring Grid -->
-    <div class="ring-grid">
-      <button
-        v-for="ring in filteredRings"
-        :key="ring"
-        class="ring-card"
-        :class="{ selected: selectedRing === ring }"
-        @click="selectRing(ring)"
-      >
-        <!-- Wing Pattern Icon -->
-        <div class="wing-icon" :style="{ '--primary': getColors(ring).primary, '--secondary': getColors(ring).secondary }">
-          <svg viewBox="0 0 60 40" class="wing-svg">
-            <!-- Left wing -->
-            <ellipse 
-              cx="20" cy="20" rx="18" ry="16" 
-              :fill="getColors(ring).primary"
-              opacity="0.9"
-            />
-            <!-- Right wing -->
-            <ellipse 
-              cx="40" cy="20" rx="18" ry="16" 
-              :fill="getColors(ring).primary"
-              opacity="0.9"
-            />
-            <!-- Pattern overlay based on type -->
-            <template v-if="getColors(ring).pattern === 'tiger'">
-              <rect x="8" y="12" width="3" height="16" :fill="getColors(ring).secondary" rx="1"/>
-              <rect x="14" y="10" width="3" height="20" :fill="getColors(ring).secondary" rx="1"/>
-              <rect x="43" y="10" width="3" height="20" :fill="getColors(ring).secondary" rx="1"/>
-              <rect x="49" y="12" width="3" height="16" :fill="getColors(ring).secondary" rx="1"/>
-            </template>
-            <template v-else-if="getColors(ring).pattern === 'bands'">
-              <rect x="5" y="16" width="50" height="8" :fill="getColors(ring).secondary" opacity="0.7"/>
-            </template>
-            <template v-else-if="getColors(ring).pattern === 'spots'">
-              <circle cx="15" cy="18" r="4" :fill="getColors(ring).secondary"/>
-              <circle cx="45" cy="18" r="4" :fill="getColors(ring).secondary"/>
-              <circle cx="20" cy="26" r="3" :fill="getColors(ring).secondary"/>
-              <circle cx="40" cy="26" r="3" :fill="getColors(ring).secondary"/>
-            </template>
-            <template v-else-if="getColors(ring).pattern === 'stripes'">
-              <line x1="10" y1="10" x2="25" y2="30" :stroke="getColors(ring).secondary" stroke-width="2"/>
-              <line x1="15" y1="8" x2="28" y2="28" :stroke="getColors(ring).secondary" stroke-width="2"/>
-              <line x1="35" y1="30" x2="50" y2="10" :stroke="getColors(ring).secondary" stroke-width="2"/>
-              <line x1="32" y1="28" x2="45" y2="8" :stroke="getColors(ring).secondary" stroke-width="2"/>
-            </template>
-            <template v-else-if="getColors(ring).pattern === 'clear'">
-              <ellipse cx="20" cy="20" rx="12" ry="10" fill="rgba(255,255,255,0.6)"/>
-              <ellipse cx="40" cy="20" rx="12" ry="10" fill="rgba(255,255,255,0.6)"/>
-            </template>
-            <template v-else-if="getColors(ring).pattern === 'gradient'">
-              <defs>
-                <linearGradient :id="'grad-' + ring" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" :stop-color="getColors(ring).secondary"/>
-                  <stop offset="100%" :stop-color="getColors(ring).primary"/>
-                </linearGradient>
-              </defs>
-              <ellipse cx="20" cy="20" rx="14" ry="12" :fill="'url(#grad-' + ring + ')'" opacity="0.8"/>
-              <ellipse cx="40" cy="20" rx="14" ry="12" :fill="'url(#grad-' + ring + ')'" opacity="0.8"/>
-            </template>
-            <!-- Body -->
-            <ellipse cx="30" cy="20" rx="4" ry="12" fill="#1a1a2e"/>
-            <!-- Antennae -->
-            <line x1="28" y1="8" x2="24" y2="2" stroke="#1a1a2e" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="32" y1="8" x2="36" y2="2" stroke="#1a1a2e" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+    <!-- Ring Sections -->
+    <div class="ring-sections">
+      <!-- Available Rings Section -->
+      <div class="ring-section" v-if="availableRings.length > 0">
+        <div class="section-header" v-if="hasTaxonomyFilter">
+          <span class="section-title">Available for current filter</span>
+          <span class="section-count">{{ availableRings.length }}</span>
         </div>
 
-        <!-- Ring Info -->
-        <div class="ring-info">
-          <span class="ring-name">{{ ring }}</span>
-          <span class="ring-count">{{ ringCounts[ring] || 0 }} records</span>
+        <div class="ring-grid">
+          <button
+            v-for="ring in availableRings"
+            :key="ring"
+            class="ring-card"
+            :class="{ selected: selectedRing === ring }"
+            @click="selectRing(ring)"
+          >
+            <!-- Photo Display -->
+            <div class="ring-photo-container">
+              <div
+                v-if="getCurrentRep(ring)"
+                class="ring-photo"
+              >
+                <img
+                  :src="getCurrentRep(ring).image_url"
+                  :alt="getCurrentRep(ring).scientific_name"
+                  loading="lazy"
+                  @error="$event.target.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%232d2d4a%22 width=%2260%22 height=%2260%22/><text x=%2230%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2210%22>No image</text></svg>'"
+                />
+
+                <!-- Navigation arrows -->
+                <template v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
+                  <button
+                    class="nav-arrow nav-prev"
+                    @click="prevPhoto(ring, $event)"
+                    title="Previous species"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                  </button>
+                  <button
+                    class="nav-arrow nav-next"
+                    @click="nextPhoto(ring, $event)"
+                    title="Next species"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                  </button>
+                </template>
+
+                <!-- Source badge -->
+                <span
+                  class="source-badge"
+                  :class="getCurrentRep(ring)?.source === 'Sanger Institute' ? 'sanger' : 'gbif'"
+                >
+                  {{ getCurrentRep(ring)?.source === 'Sanger Institute' ? 'Sanger' : 'GBIF' }}
+                </span>
+              </div>
+
+              <!-- No photo placeholder -->
+              <div v-else class="ring-photo-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                <span>No photo</span>
+              </div>
+            </div>
+
+            <!-- Species name under photo -->
+            <div class="rep-name" v-if="getCurrentRep(ring)">
+              <em>{{ getCurrentRep(ring).scientific_name }}</em>
+              <span v-if="getCurrentRep(ring).subspecies" class="subspecies">
+                {{ getCurrentRep(ring).subspecies }}
+              </span>
+              <span
+                v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1"
+                class="rep-counter"
+              >
+                {{ getPhotoIndex(ring) + 1 }}/{{ store.mimicryPhotoLookup[ring].representatives.length }}
+              </span>
+            </div>
+
+            <!-- Ring Info -->
+            <div class="ring-info">
+              <span class="ring-name">{{ ring }}</span>
+              <span class="ring-count">{{ ringCounts[ring] || 0 }} records</span>
+            </div>
+
+            <!-- Selection indicator -->
+            <div class="select-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Unavailable Rings Section -->
+      <div class="ring-section unavailable-section" v-if="unavailableRings.length > 0 && hasTaxonomyFilter">
+        <div class="section-header">
+          <span class="section-title">Not in current filter</span>
+          <span class="section-count">{{ unavailableRings.length }}</span>
         </div>
 
-        <!-- Selection indicator -->
-        <div class="select-indicator">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
+        <div class="ring-grid unavailable">
+          <button
+            v-for="ring in unavailableRings"
+            :key="ring"
+            class="ring-card unavailable"
+            :class="{ selected: selectedRing === ring }"
+            @click="selectRing(ring, false)"
+          >
+            <!-- Photo Display -->
+            <div class="ring-photo-container">
+              <div
+                v-if="getCurrentRep(ring)"
+                class="ring-photo"
+              >
+                <img
+                  :src="getCurrentRep(ring).image_url"
+                  :alt="getCurrentRep(ring).scientific_name"
+                  loading="lazy"
+                />
+
+                <!-- Navigation arrows -->
+                <template v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
+                  <button
+                    class="nav-arrow nav-prev"
+                    @click="prevPhoto(ring, $event)"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                  </button>
+                  <button
+                    class="nav-arrow nav-next"
+                    @click="nextPhoto(ring, $event)"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                  </button>
+                </template>
+              </div>
+
+              <div v-else class="ring-photo-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Species name -->
+            <div class="rep-name" v-if="getCurrentRep(ring)">
+              <em>{{ getCurrentRep(ring).scientific_name }}</em>
+            </div>
+
+            <!-- Ring Info -->
+            <div class="ring-info">
+              <span class="ring-name">{{ ring }}</span>
+              <span class="ring-count unavailable-text">Not in filter</span>
+            </div>
+          </button>
         </div>
-      </button>
+      </div>
+
+      <!-- Empty state -->
+      <div v-if="availableRings.length === 0 && unavailableRings.length === 0" class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <p>No mimicry rings found</p>
+      </div>
     </div>
 
     <!-- Footer -->
     <div class="selector-footer">
       <p class="footer-note">
-        Mimicry ring data from Dore et al. (2025)
+        Mimicry ring data from Dore et al. (2025) • Photos prioritize Sanger Institute
       </p>
       <div class="footer-actions">
         <button class="btn-clear" @click="clearSelection" :disabled="selectedRing === 'All'">
@@ -241,7 +345,7 @@ const clearSelection = () => {
   background: var(--color-bg-secondary, #252540);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  width: 600px;
+  width: 700px;
   max-width: 95vw;
   max-height: 85vh;
   display: flex;
@@ -360,25 +464,64 @@ const clearSelection = () => {
   cursor: pointer;
 }
 
-.selection-tag .tag-icon {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
 .selection-tag svg {
   width: 14px;
   height: 14px;
 }
 
+/* Ring Sections */
+.ring-sections {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+.ring-section {
+  margin-bottom: 24px;
+}
+
+.ring-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border, #3d3d5c);
+}
+
+.section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-secondary, #aaa);
+}
+
+.section-count {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border-radius: 10px;
+  color: var(--color-text-muted, #666);
+}
+
+.unavailable-section .section-title {
+  color: var(--color-text-muted, #666);
+}
+
 /* Ring Grid */
 .ring-grid {
-  flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px;
-  padding: 16px 20px;
-  overflow-y: auto;
+}
+
+.ring-grid.unavailable {
+  opacity: 0.6;
 }
 
 .ring-card {
@@ -386,7 +529,7 @@ const clearSelection = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px 12px;
+  padding: 10px;
   background: var(--color-bg-tertiary, #2d2d4a);
   border: 2px solid transparent;
   border-radius: 10px;
@@ -404,28 +547,161 @@ const clearSelection = () => {
   background: rgba(74, 222, 128, 0.1);
 }
 
-/* Wing Icon */
-.wing-icon {
-  width: 70px;
-  height: 50px;
-  margin-bottom: 10px;
+.ring-card.unavailable {
+  opacity: 0.7;
 }
 
-.wing-svg {
+.ring-card.unavailable:hover {
+  opacity: 0.9;
+}
+
+/* Photo Container */
+.ring-photo-container {
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.ring-photo {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ring-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ring-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 6px;
+  color: var(--color-text-muted, #666);
+}
+
+.ring-photo-placeholder svg {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+
+.ring-photo-placeholder span {
+  font-size: 0.7rem;
+}
+
+/* Navigation Arrows */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.ring-photo:hover .nav-arrow {
+  opacity: 1;
+}
+
+.nav-arrow:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.nav-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nav-prev {
+  left: 4px;
+}
+
+.nav-next {
+  right: 4px;
+}
+
+/* Source Badge */
+.source-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.source-badge.sanger {
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+}
+
+.source-badge.gbif {
+  background: rgba(107, 114, 128, 0.9);
+  color: white;
+}
+
+/* Representative Name */
+.rep-name {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 0.7rem;
+  color: var(--color-text-secondary, #aaa);
+  line-height: 1.3;
+}
+
+.rep-name em {
+  display: block;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rep-name .subspecies {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #666);
+}
+
+.rep-name .rep-counter {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--color-accent, #4ade80);
+  margin-top: 2px;
 }
 
 /* Ring Info */
 .ring-info {
   text-align: center;
+  width: 100%;
 }
 
 .ring-name {
   display: block;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-text-primary, #e0e0e0);
   margin-bottom: 2px;
 }
@@ -433,6 +709,11 @@ const clearSelection = () => {
 .ring-count {
   font-size: 0.7rem;
   color: var(--color-text-muted, #666);
+}
+
+.ring-count.unavailable-text {
+  color: #ef4444;
+  font-style: italic;
 }
 
 /* Selection Indicator */
@@ -450,6 +731,7 @@ const clearSelection = () => {
   opacity: 0;
   transform: scale(0.5);
   transition: all 0.2s;
+  z-index: 10;
 }
 
 .ring-card.selected .select-indicator {
@@ -461,6 +743,27 @@ const clearSelection = () => {
   width: 12px;
   height: 12px;
   color: var(--color-bg-primary, #1a1a2e);
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: var(--color-text-muted, #666);
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  font-size: 0.9rem;
 }
 
 /* Footer */

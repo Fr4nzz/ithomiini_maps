@@ -29,7 +29,7 @@ export const useDataStore = defineStore('data', () => {
     // Parallel filters
     mimicry: 'All',
     status: [],
-    source: 'All',
+    source: ['Sanger Institute'],  // Multi-select array, default to Sanger
     // Search
     camidSearch: '',
     // Date range
@@ -39,6 +39,9 @@ export const useDataStore = defineStore('data', () => {
 
   // Photo lookup cache: { 'Genus species subspecies': image_url }
   const photoLookup = ref({})
+
+  // Mimicry ring photo lookup: { 'RingName': { representatives: [...], currentIndex: 0 } }
+  const mimicryPhotoLookup = ref({})
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ACTIONS
@@ -61,6 +64,9 @@ export const useDataStore = defineStore('data', () => {
       
       // Build photo lookup table
       buildPhotoLookup(data)
+
+      // Build mimicry ring photo lookup
+      buildMimicryPhotoLookup(data)
 
       // Initialize filters from URL
       restoreFiltersFromURL()
@@ -107,6 +113,62 @@ export const useDataStore = defineStore('data', () => {
     
     photoLookup.value = lookup
     console.log(`Built photo lookup with ${Object.keys(lookup).length} entries`)
+  }
+
+  /**
+   * Build mimicry ring photo lookup for the visual selector
+   * Groups individuals by mimicry ring, prioritizing Sanger photos then GBIF
+   */
+  const buildMimicryPhotoLookup = (data) => {
+    const lookup = {}
+
+    // First pass: collect all individuals with photos by mimicry ring
+    for (const item of data) {
+      const ring = item.mimicry_ring
+      if (!ring || ring === 'Unknown' || !item.image_url) continue
+
+      if (!lookup[ring]) {
+        lookup[ring] = {
+          representatives: [],
+          currentIndex: 0
+        }
+      }
+
+      // Add this individual as a potential representative
+      lookup[ring].representatives.push({
+        scientific_name: item.scientific_name,
+        subspecies: item.subspecies,
+        image_url: item.image_url,
+        source: item.source,
+        id: item.id
+      })
+    }
+
+    // Second pass: sort representatives - Sanger first, then GBIF, dedupe by subspecies
+    for (const ring of Object.keys(lookup)) {
+      const reps = lookup[ring].representatives
+
+      // Sort: Sanger Institute first, then by species name
+      reps.sort((a, b) => {
+        if (a.source === 'Sanger Institute' && b.source !== 'Sanger Institute') return -1
+        if (a.source !== 'Sanger Institute' && b.source === 'Sanger Institute') return 1
+        const nameA = `${a.scientific_name} ${a.subspecies || ''}`
+        const nameB = `${b.scientific_name} ${b.subspecies || ''}`
+        return nameA.localeCompare(nameB)
+      })
+
+      // Dedupe by subspecies (keep first = best source)
+      const seen = new Set()
+      lookup[ring].representatives = reps.filter(rep => {
+        const key = `${rep.scientific_name}|${rep.subspecies || ''}`
+        if (seen.has(key)) return false
+        seen.add(key)
+        return true
+      })
+    }
+
+    mimicryPhotoLookup.value = lookup
+    console.log(`Built mimicry photo lookup for ${Object.keys(lookup).length} rings`)
   }
 
   /**
@@ -173,7 +235,7 @@ export const useDataStore = defineStore('data', () => {
       filters.value.status = params.get('status').split(',')
     }
     if (params.get('source')) {
-      filters.value.source = params.get('source')
+      filters.value.source = params.get('source').split(',')
     }
     if (params.get('cam')) {
       filters.value.camidSearch = params.get('cam')
@@ -196,7 +258,7 @@ export const useDataStore = defineStore('data', () => {
       subspecies: [],
       mimicry: 'All',
       status: [],
-      source: 'All',
+      source: ['Sanger Institute'],  // Default to Sanger
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
@@ -319,6 +381,42 @@ export const useDataStore = defineStore('data', () => {
     return Array.from(set).sort()
   })
 
+  // Available mimicry rings based on current taxonomy filter (species/genus)
+  // These are rings that would return results if selected
+  const availableMimicryRings = computed(() => {
+    // Get data filtered by taxonomy only (not mimicry or source)
+    let data = allFeatures.value
+
+    if (filters.value.family !== 'All') {
+      data = data.filter(i => i.family === filters.value.family)
+    }
+    if (filters.value.tribe !== 'All') {
+      data = data.filter(i => i.tribe === filters.value.tribe)
+    }
+    if (filters.value.genus !== 'All') {
+      data = data.filter(i => i.genus === filters.value.genus)
+    }
+    if (filters.value.species.length > 0) {
+      data = data.filter(i => filters.value.species.includes(i.scientific_name))
+    }
+    if (filters.value.subspecies.length > 0) {
+      data = data.filter(i => filters.value.subspecies.includes(i.subspecies))
+    }
+
+    const set = new Set(
+      data
+        .map(i => i.mimicry_ring)
+        .filter(v => v && v !== 'Unknown' && isValidValue(v))
+    )
+    return Array.from(set).sort()
+  })
+
+  // Unavailable mimicry rings - rings that exist but would return no results
+  const unavailableMimicryRings = computed(() => {
+    const available = new Set(availableMimicryRings.value)
+    return uniqueMimicry.value.filter(ring => !available.has(ring))
+  })
+
   // Unique sequencing statuses
   const uniqueStatuses = computed(() => {
     const set = new Set(
@@ -395,7 +493,8 @@ export const useDataStore = defineStore('data', () => {
       // Parallel filters
       if (filters.value.mimicry !== 'All' && item.mimicry_ring !== filters.value.mimicry) return false
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
-      if (filters.value.source !== 'All' && item.source !== filters.value.source) return false
+      // Source filter (multi-select array)
+      if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false
       
       // Date filtering
       if (filters.value.dateStart || filters.value.dateEnd) {
@@ -438,7 +537,10 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.subspecies.length > 0) params.set('ssp', newFilters.subspecies.join(','))
       if (newFilters.mimicry !== 'All') params.set('mim', newFilters.mimicry)
       if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
-      if (newFilters.source !== 'All') params.set('source', newFilters.source)
+      // Source as comma-separated array (only if not default)
+      if (newFilters.source.length > 0 && !(newFilters.source.length === 1 && newFilters.source[0] === 'Sanger Institute')) {
+        params.set('source', newFilters.source.join(','))
+      }
       if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
       if (newFilters.dateStart) params.set('from', newFilters.dateStart)
       if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)
@@ -464,6 +566,7 @@ export const useDataStore = defineStore('data', () => {
     showMimicryFilter,
     showThumbnail,
     photoLookup,
+    mimicryPhotoLookup,
 
     // Actions
     loadMapData,
@@ -479,6 +582,8 @@ export const useDataStore = defineStore('data', () => {
     uniqueSpecies,
     uniqueSubspecies,
     uniqueMimicry,
+    availableMimicryRings,
+    unavailableMimicryRings,
     uniqueStatuses,
     uniqueSources,
 
