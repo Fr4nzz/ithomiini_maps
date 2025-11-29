@@ -501,11 +501,21 @@ export const useDataStore = defineStore('data', () => {
     if (!allFeatures.value.length) return null
 
     const filtered = allFeatures.value.filter(item => {
-      // CAMID Search (takes priority - instant filter)
+      // CAMID Search - supports multiple IDs separated by comma, space, or newline
       if (filters.value.camidSearch) {
-        const searchTerm = filters.value.camidSearch.toUpperCase()
-        const itemId = (item.id || '').toUpperCase()
-        if (!itemId.includes(searchTerm)) return false
+        // Parse multiple CAMIDs from input (split by comma, space, newline)
+        const searchTerms = filters.value.camidSearch
+          .toUpperCase()
+          .split(/[\s,\n]+/)
+          .map(s => s.trim())
+          .filter(s => s.length > 0)
+
+        if (searchTerms.length > 0) {
+          const itemId = (item.id || '').toUpperCase()
+          // Check if item ID matches ANY of the search terms (substring match)
+          const matches = searchTerms.some(term => itemId.includes(term))
+          if (!matches) return false
+        }
       }
 
       // Taxonomic cascade

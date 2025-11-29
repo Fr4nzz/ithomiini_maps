@@ -15,15 +15,35 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 
 const store = useDataStore()
 
-// Local state for CAMID search with autocomplete
+// Local state for CAMID search with autocomplete (multi-value textarea)
 const camidInput = ref('')
+const camidTextarea = ref(null)
 const showCamidDropdown = ref(false)
 const selectedSuggestionIndex = ref(-1)
+const currentWordInfo = ref({ word: '', start: 0, end: 0 })
 let debounceTimer = null
 
-// Filtered CAMID suggestions (limited for performance)
+// Get the current word at cursor position for autocomplete
+const getCurrentWord = (text, cursorPos) => {
+  // Find word boundaries (split by comma, space, newline)
+  const beforeCursor = text.slice(0, cursorPos)
+  const afterCursor = text.slice(cursorPos)
+
+  // Find start of current word (last separator before cursor)
+  const startMatch = beforeCursor.match(/[\s,\n]*([^\s,\n]*)$/)
+  const wordStart = startMatch ? cursorPos - startMatch[1].length : cursorPos
+
+  // Find end of current word (first separator after cursor)
+  const endMatch = afterCursor.match(/^([^\s,\n]*)/)
+  const wordEnd = cursorPos + (endMatch ? endMatch[1].length : 0)
+
+  const word = text.slice(wordStart, wordEnd)
+  return { word, start: wordStart, end: wordEnd }
+}
+
+// Filtered CAMID suggestions based on current word
 const camidSuggestions = computed(() => {
-  const query = camidInput.value.trim().toUpperCase()
+  const query = currentWordInfo.value.word.trim().toUpperCase()
   if (!query || query.length < 2) return []
 
   // Filter and limit to 15 suggestions for performance
@@ -38,9 +58,13 @@ const camidSuggestions = computed(() => {
 })
 
 const handleCamidInput = (e) => {
-  const value = e.target.value
+  const textarea = e.target
+  const value = textarea.value
+  const cursorPos = textarea.selectionStart
+
   camidInput.value = value
-  showCamidDropdown.value = true
+  currentWordInfo.value = getCurrentWord(value, cursorPos)
+  showCamidDropdown.value = currentWordInfo.value.word.length >= 2
   selectedSuggestionIndex.value = -1
 
   clearTimeout(debounceTimer)
@@ -50,27 +74,57 @@ const handleCamidInput = (e) => {
 }
 
 const selectCamid = (camid) => {
-  camidInput.value = camid
-  store.filters.camidSearch = camid
+  const { start, end } = currentWordInfo.value
+  const before = camidInput.value.slice(0, start)
+  const after = camidInput.value.slice(end)
+
+  // Insert selected CAMID, add separator if there's more text after
+  const separator = after.trim() ? '' : ' '
+  camidInput.value = before + camid + separator + after
+
+  // Update the store filter
+  store.filters.camidSearch = camidInput.value.trim().toUpperCase()
+
   showCamidDropdown.value = false
   selectedSuggestionIndex.value = -1
+
+  // Focus back and position cursor after inserted CAMID
+  if (camidTextarea.value) {
+    const newCursorPos = start + camid.length + separator.length
+    camidTextarea.value.focus()
+    camidTextarea.value.setSelectionRange(newCursorPos, newCursorPos)
+  }
 }
 
 const handleCamidKeydown = (e) => {
+  // Update current word on cursor movement
+  if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
+    setTimeout(() => {
+      const textarea = e.target
+      currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
+      showCamidDropdown.value = currentWordInfo.value.word.length >= 2
+    }, 0)
+    return
+  }
+
   if (!showCamidDropdown.value || camidSuggestions.value.length === 0) return
 
-  if (e.key === 'ArrowDown') {
+  if (e.key === 'ArrowDown' && !e.altKey) {
     e.preventDefault()
     selectedSuggestionIndex.value = Math.min(
       selectedSuggestionIndex.value + 1,
       camidSuggestions.value.length - 1
     )
-  } else if (e.key === 'ArrowUp') {
+  } else if (e.key === 'ArrowUp' && !e.altKey) {
     e.preventDefault()
     selectedSuggestionIndex.value = Math.max(selectedSuggestionIndex.value - 1, -1)
   } else if (e.key === 'Enter' && selectedSuggestionIndex.value >= 0) {
     e.preventDefault()
     selectCamid(camidSuggestions.value[selectedSuggestionIndex.value])
+  } else if (e.key === 'Tab' && camidSuggestions.value.length > 0) {
+    e.preventDefault()
+    const idx = selectedSuggestionIndex.value >= 0 ? selectedSuggestionIndex.value : 0
+    selectCamid(camidSuggestions.value[idx])
   } else if (e.key === 'Escape') {
     showCamidDropdown.value = false
   }
@@ -81,6 +135,12 @@ const handleCamidBlur = () => {
   setTimeout(() => {
     showCamidDropdown.value = false
   }, 150)
+}
+
+const handleCamidClick = (e) => {
+  const textarea = e.target
+  currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
+  showCamidDropdown.value = currentWordInfo.value.word.length >= 2
 }
 
 // Computed: Record counts
@@ -216,27 +276,33 @@ const showDateFilter = ref(false)
         </button>
       </div>
 
-      <!-- CAMID Search with Autocomplete -->
+      <!-- CAMID Search with Autocomplete (Multi-value) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/>
             <path d="m21 21-4.3-4.3"/>
           </svg>
-          Quick Search (CAMID)
+          Search CAMIDs
         </label>
+        <p class="filter-hint" style="margin-top: 0; margin-bottom: 6px;">
+          Enter or paste multiple IDs (comma/space/newline separated)
+        </p>
         <div class="camid-autocomplete">
-          <input
-            type="text"
-            class="search-input"
-            placeholder="e.g. CAM012345"
+          <textarea
+            ref="camidTextarea"
+            class="camid-textarea"
+            placeholder="e.g. CAM012345, CAM012346..."
             :value="camidInput"
             @input="handleCamidInput"
             @keydown="handleCamidKeydown"
-            @focus="showCamidDropdown = true"
+            @click="handleCamidClick"
+            @focus="handleCamidClick"
             @blur="handleCamidBlur"
             autocomplete="off"
-          />
+            spellcheck="false"
+            rows="1"
+          ></textarea>
           <div
             v-if="showCamidDropdown && camidSuggestions.length > 0"
             class="camid-dropdown"
@@ -757,6 +823,36 @@ const showDateFilter = ref(false)
 /* CAMID Autocomplete */
 .camid-autocomplete {
   position: relative;
+}
+
+.camid-textarea {
+  width: 100%;
+  min-height: 38px;
+  max-height: 120px; /* ~5 lines */
+  padding: 10px 14px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  font-family: monospace;
+  line-height: 1.4;
+  resize: vertical;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: border-color 0.2s;
+}
+
+.camid-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+.camid-textarea::placeholder {
+  color: var(--color-text-muted, #666);
+  font-family: inherit;
 }
 
 .camid-dropdown {
