@@ -167,8 +167,8 @@ const initMap = () => {
 // DATA LAYER WITH SMART CLUSTERING
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Threshold for enabling clustering (only cluster large datasets)
-const CLUSTER_THRESHOLD = 5000
+// Hover popup for cluster preview
+let clusterHoverPopup = null
 
 const addDataLayer = () => {
   if (!map) return
@@ -189,16 +189,17 @@ const addDataLayer = () => {
   if (!geojson) return
 
   const pointCount = geojson.features.length
-  const shouldCluster = pointCount > CLUSTER_THRESHOLD
+  const shouldCluster = store.clusteringEnabled
+  const settings = store.clusterSettings
 
-  // Add source - only cluster for large datasets
+  // Add source - use store settings for clustering
   map.addSource('points-source', {
     type: 'geojson',
     data: geojson,
     cluster: shouldCluster,
-    clusterMaxZoom: 12,     // Max zoom to cluster points (lower = clusters break apart sooner)
-    clusterRadius: 40,      // Smaller radius for tighter clusters
-    clusterMinPoints: 5     // Need at least 5 points to form a cluster
+    clusterMaxZoom: settings.maxZoom,
+    clusterRadius: settings.radius,
+    clusterMinPoints: settings.minPoints
   })
 
   // Only add cluster layers if clustering is enabled
@@ -416,12 +417,84 @@ const addDataLayer = () => {
   // HOVER EFFECTS
   // ─────────────────────────────────────────────────────────────────────────
   if (shouldCluster) {
-    map.on('mouseenter', 'clusters', () => {
+    // Cluster hover - show preview popup with clickable points
+    map.on('mouseenter', 'clusters', async (e) => {
       map.getCanvas().style.cursor = 'pointer'
+
+      if (!e.features || !e.features.length) return
+
+      const cluster = e.features[0]
+      const clusterId = cluster.properties.cluster_id
+      const pointCount = cluster.properties.point_count
+      const coords = cluster.geometry.coordinates
+
+      // Close existing hover popup
+      if (clusterHoverPopup) clusterHoverPopup.remove()
+
+      try {
+        const source = map.getSource('points-source')
+        // Get first 10 points for preview
+        const leaves = await new Promise((resolve, reject) => {
+          source.getClusterLeaves(clusterId, 10, 0, (err, features) => {
+            if (err) reject(err)
+            else resolve(features)
+          })
+        })
+
+        const content = buildClusterHoverContent(leaves, pointCount, clusterId)
+
+        clusterHoverPopup = new maplibregl.Popup({
+          closeButton: false,
+          closeOnClick: false,
+          maxWidth: '280px',
+          className: 'cluster-hover-popup',
+          offset: 15
+        })
+          .setLngLat(coords)
+          .setHTML(content)
+          .addTo(map)
+
+        // Add click handlers for individual points in the hover popup
+        setTimeout(() => {
+          leaves.forEach((leaf, idx) => {
+            const btn = document.getElementById(`cluster-point-${clusterId}-${idx}`)
+            if (btn) {
+              btn.addEventListener('click', (evt) => {
+                evt.stopPropagation()
+                if (clusterHoverPopup) clusterHoverPopup.remove()
+                if (popup) popup.remove()
+
+                const props = leaf.properties
+                const pointCoords = leaf.geometry.coordinates
+
+                popup = new maplibregl.Popup({
+                  closeButton: true,
+                  closeOnClick: true,
+                  maxWidth: '340px',
+                  className: 'custom-popup'
+                })
+                  .setLngLat(pointCoords)
+                  .setHTML(buildPopupContent(props))
+                  .addTo(map)
+              })
+            }
+          })
+        }, 0)
+
+      } catch (err) {
+        console.error('Error getting cluster preview:', err)
+      }
     })
 
     map.on('mouseleave', 'clusters', () => {
       map.getCanvas().style.cursor = ''
+      // Delay removal to allow clicking on popup items
+      setTimeout(() => {
+        if (clusterHoverPopup && !clusterHoverPopup.getElement()?.matches(':hover')) {
+          clusterHoverPopup.remove()
+          clusterHoverPopup = null
+        }
+      }, 100)
     })
   }
 
@@ -534,6 +607,52 @@ const buildClusterPopupContent = (leaves, totalCount, clusterId) => {
       Zoom to explore points
     </button>
   `
+
+  html += `</div>`
+  return html
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CLUSTER HOVER PREVIEW BUILDER
+// ═══════════════════════════════════════════════════════════════════════════
+
+const buildClusterHoverContent = (leaves, totalCount, clusterId) => {
+  let html = `<div class="cluster-hover-content">`
+
+  // Header
+  html += `
+    <div class="cluster-hover-header">
+      <span class="cluster-hover-count">${totalCount.toLocaleString()}</span>
+      <span class="cluster-hover-label">points</span>
+      <span class="cluster-hover-hint">Click cluster or point below</span>
+    </div>
+  `
+
+  // List of points (clickable)
+  html += `<div class="cluster-hover-list">`
+
+  leaves.forEach((leaf, idx) => {
+    const props = leaf.properties
+    const species = props.scientific_name || 'Unknown'
+    const status = props.sequencing_status || 'Unknown'
+    const statusColor = STATUS_COLORS[status] || '#6b7280'
+    const id = props.id || `#${idx + 1}`
+
+    html += `
+      <button id="cluster-point-${clusterId}-${idx}" class="cluster-hover-item">
+        <span class="status-dot" style="background: ${statusColor}"></span>
+        <span class="cluster-hover-species"><em>${species}</em></span>
+        <span class="cluster-hover-id">${id}</span>
+      </button>
+    `
+  })
+
+  html += `</div>`
+
+  // "More" indicator if there are more points
+  if (totalCount > leaves.length) {
+    html += `<div class="cluster-hover-more">+ ${totalCount - leaves.length} more points</div>`
+  }
 
   html += `</div>`
   return html
@@ -653,6 +772,17 @@ watch(
     } else {
       addDataLayer()
     }
+  },
+  { deep: true }
+)
+
+// Watch for clustering settings changes - need to rebuild layers
+watch(
+  [() => store.clusteringEnabled, () => store.clusterSettings],
+  () => {
+    if (!map || !map.isStyleLoaded()) return
+    // Rebuild the data layer with new clustering settings
+    addDataLayer()
   },
   { deep: true }
 )
@@ -1039,6 +1169,116 @@ const switchStyle = (styleName) => {
 :deep(.cluster-zoom-btn:hover) {
   background: rgba(74, 222, 128, 0.25);
   border-color: rgba(74, 222, 128, 0.5);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CLUSTER HOVER POPUP STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:deep(.cluster-hover-popup .maplibregl-popup-content) {
+  padding: 0;
+  background: rgba(26, 26, 46, 0.98) !important;
+  border: 1px solid #4ade80;
+  box-shadow: 0 4px 20px rgba(74, 222, 128, 0.2);
+}
+
+:deep(.cluster-hover-popup .maplibregl-popup-tip) {
+  border-top-color: rgba(26, 26, 46, 0.98) !important;
+}
+
+:deep(.cluster-hover-content) {
+  padding: 10px 12px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+:deep(.cluster-hover-header) {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #3d3d5c;
+  flex-wrap: wrap;
+}
+
+:deep(.cluster-hover-count) {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #4ade80;
+}
+
+:deep(.cluster-hover-label) {
+  font-size: 0.85em;
+  color: #888;
+}
+
+:deep(.cluster-hover-hint) {
+  font-size: 0.7em;
+  color: #666;
+  font-style: italic;
+  margin-left: auto;
+}
+
+:deep(.cluster-hover-list) {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:deep(.cluster-hover-item) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  width: 100%;
+}
+
+:deep(.cluster-hover-item:hover) {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+:deep(.cluster-hover-item .status-dot) {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+:deep(.cluster-hover-species) {
+  flex: 1;
+  font-size: 0.8em;
+  color: #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:deep(.cluster-hover-species em) {
+  color: #fff;
+}
+
+:deep(.cluster-hover-id) {
+  font-size: 0.7em;
+  color: #666;
+  font-family: monospace;
+}
+
+:deep(.cluster-hover-more) {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #3d3d5c;
+  font-size: 0.75em;
+  color: #666;
+  text-align: center;
+  font-style: italic;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

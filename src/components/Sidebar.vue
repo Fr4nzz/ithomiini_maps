@@ -192,6 +192,9 @@ const showCopiedToast = ref(false)
 
 // Show date filter section
 const showDateFilter = ref(false)
+
+// Show cluster settings section
+const showClusterSettings = ref(false)
 </script>
 
 <template>
@@ -529,6 +532,82 @@ const showDateFilter = ref(false)
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
+      </div>
+
+      <!-- Clustering Settings (Map View Only) -->
+      <div class="filter-section collapsible" v-if="currentView === 'map'">
+        <button
+          class="collapse-toggle"
+          @click="showClusterSettings = !showClusterSettings"
+          :class="{ expanded: showClusterSettings }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Point Clustering
+          <span v-if="store.clusteringEnabled" class="active-badge">
+            ON
+          </span>
+        </button>
+
+        <div v-show="showClusterSettings" class="collapse-content">
+          <!-- Clustering Toggle -->
+          <label class="clustering-toggle">
+            <input type="checkbox" v-model="store.clusteringEnabled" />
+            <span>Enable clustering</span>
+          </label>
+          <p class="filter-hint" style="margin-top: 4px; margin-bottom: 12px;">
+            Auto-enabled when GBIF data is included
+          </p>
+
+          <!-- Cluster Settings (only visible when clustering is enabled) -->
+          <div v-if="store.clusteringEnabled" class="cluster-settings">
+            <!-- Cluster Radius -->
+            <div class="setting-row">
+              <label>Cluster Radius</label>
+              <div class="slider-group">
+                <input
+                  type="range"
+                  min="20"
+                  max="100"
+                  step="5"
+                  v-model.number="store.clusterSettings.radius"
+                />
+                <span class="slider-value">{{ store.clusterSettings.radius }}px</span>
+              </div>
+            </div>
+
+            <!-- Max Zoom -->
+            <div class="setting-row">
+              <label>Max Cluster Zoom</label>
+              <div class="slider-group">
+                <input
+                  type="range"
+                  min="6"
+                  max="16"
+                  step="1"
+                  v-model.number="store.clusterSettings.maxZoom"
+                />
+                <span class="slider-value">{{ store.clusterSettings.maxZoom }}</span>
+              </div>
+            </div>
+
+            <!-- Min Points -->
+            <div class="setting-row">
+              <label>Min Points per Cluster</label>
+              <div class="slider-group">
+                <input
+                  type="range"
+                  min="2"
+                  max="20"
+                  step="1"
+                  v-model.number="store.clusterSettings.minPoints"
+                />
+                <span class="slider-value">{{ store.clusterSettings.minPoints }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -1122,6 +1201,107 @@ const showDateFilter = ref(false)
   transform: translateX(-50%) translateY(10px);
 }
 
+/* Clustering Toggle */
+.clustering-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.clustering-toggle:hover {
+  background: var(--color-bg-hover, #232340);
+}
+
+.clustering-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-accent, #4ade80);
+}
+
+.clustering-toggle span {
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #e0e0e0);
+  font-weight: 500;
+}
+
+/* Cluster Settings */
+.cluster-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 6px;
+}
+
+.setting-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setting-row label {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #aaa);
+  font-weight: 500;
+}
+
+.slider-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-group input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border-radius: 2px;
+  outline: none;
+}
+
+.slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent, #4ade80);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.slider-group input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.slider-group input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-accent, #4ade80);
+  cursor: pointer;
+}
+
+.slider-value {
+  min-width: 45px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent, #4ade80);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .sidebar {
@@ -1130,7 +1310,7 @@ const showDateFilter = ref(false)
     height: auto;
     max-height: 50vh;
   }
-  
+
   .view-toggle {
     display: none;
   }

@@ -16,6 +16,14 @@ export const useDataStore = defineStore('data', () => {
   // UI preferences
   const showThumbnail = ref(true)
 
+  // Clustering settings
+  const clusteringEnabled = ref(false)  // Will be auto-enabled when GBIF is included
+  const clusterSettings = ref({
+    radius: 40,        // Cluster radius in pixels
+    maxZoom: 12,       // Max zoom level for clustering
+    minPoints: 5       // Minimum points to form a cluster
+  })
+
   // The Active Filters
   // NOTE: species is now an ARRAY for multi-select (like Wings Gallery)
   const filters = ref({
@@ -493,6 +501,13 @@ export const useDataStore = defineStore('data', () => {
     filters.value.subspecies = []
   }, { deep: true })
 
+  // Auto-enable/disable clustering based on source selection
+  watch(() => filters.value.source, (newSources) => {
+    // Enable clustering when GBIF is included (large dataset)
+    const hasGBIF = newSources.includes('GBIF')
+    clusteringEnabled.value = hasGBIF
+  }, { deep: true })
+
   // ═══════════════════════════════════════════════════════════════════════════
   // FINAL FILTERED DATA
   // ═══════════════════════════════════════════════════════════════════════════
@@ -607,6 +622,8 @@ export const useDataStore = defineStore('data', () => {
     showAdvancedFilters,
     showMimicryFilter,
     showThumbnail,
+    clusteringEnabled,
+    clusterSettings,
     photoLookup,
     mimicryPhotoLookup,
 
