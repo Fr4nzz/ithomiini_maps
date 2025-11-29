@@ -545,19 +545,19 @@ const showClusterSettings = ref(false)
             <path d="m9 18 6-6-6-6"/>
           </svg>
           Point Clustering
-          <span v-if="store.clusteringEnabled" class="active-badge">
-            ON
+          <span
+            class="clustering-toggle-badge"
+            :class="{ active: store.clusteringEnabled }"
+            @click.stop="store.clusteringEnabled = !store.clusteringEnabled"
+            title="Click to toggle clustering"
+          >
+            {{ store.clusteringEnabled ? 'ON' : 'OFF' }}
           </span>
         </button>
 
         <div v-show="showClusterSettings" class="collapse-content">
-          <!-- Clustering Toggle -->
-          <label class="clustering-toggle">
-            <input type="checkbox" v-model="store.clusteringEnabled" />
-            <span>Enable clustering</span>
-          </label>
-          <p class="filter-hint" style="margin-top: 4px; margin-bottom: 12px;">
-            Auto-enabled when GBIF data is included
+          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
+            Auto-enabled when GBIF data is included. Click ON/OFF to toggle.
           </p>
 
           <!-- Cluster Settings (only visible when clustering is enabled) -->
@@ -1222,34 +1222,34 @@ const showClusterSettings = ref(false)
   transform: translateX(-50%) translateY(10px);
 }
 
-/* Clustering Toggle */
-.clustering-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 6px;
+/* Clustering Toggle Badge */
+.clustering-toggle-badge {
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
   cursor: pointer;
-  user-select: none;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  background: rgba(107, 114, 128, 0.2);
+  color: #888;
+  border: 1px solid transparent;
 }
 
-.clustering-toggle:hover {
-  background: var(--color-bg-hover, #232340);
+.clustering-toggle-badge:hover {
+  background: rgba(107, 114, 128, 0.3);
+  border-color: rgba(107, 114, 128, 0.4);
 }
 
-.clustering-toggle input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  accent-color: var(--color-accent, #4ade80);
+.clustering-toggle-badge.active {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-accent, #4ade80);
+  border-color: rgba(74, 222, 128, 0.3);
 }
 
-.clustering-toggle span {
-  font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
-  font-weight: 500;
+.clustering-toggle-badge.active:hover {
+  background: rgba(74, 222, 128, 0.25);
+  border-color: rgba(74, 222, 128, 0.5);
 }
 
 /* Cluster Settings */
