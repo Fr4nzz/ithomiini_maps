@@ -164,32 +164,100 @@ const initMap = () => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// DATA LAYER
+// DATA LAYER WITH CLUSTERING
 // ═══════════════════════════════════════════════════════════════════════════
 
 const addDataLayer = () => {
   if (!map) return
 
   // Remove existing layers/sources if they exist
-  if (map.getLayer('points-layer')) map.removeLayer('points-layer')
-  if (map.getLayer('points-highlight')) map.removeLayer('points-highlight')
+  const layersToRemove = [
+    'clusters',
+    'cluster-count',
+    'points-layer',
+    'points-highlight'
+  ]
+  layersToRemove.forEach(layer => {
+    if (map.getLayer(layer)) map.removeLayer(layer)
+  })
   if (map.getSource('points-source')) map.removeSource('points-source')
 
   const geojson = store.filteredGeoJSON
   if (!geojson) return
 
-  // Add source
+  // Add source with clustering enabled for performance
   map.addSource('points-source', {
     type: 'geojson',
     data: geojson,
-    cluster: false // Disable clustering for now - can enable for large datasets
+    cluster: true,
+    clusterMaxZoom: 14,    // Max zoom to cluster points
+    clusterRadius: 50,      // Radius of each cluster in pixels
+    clusterMinPoints: 3     // Minimum points to form a cluster
   })
 
-  // Add main circle layer with data-driven styling
+  // ─────────────────────────────────────────────────────────────────────────
+  // CLUSTER CIRCLES - sized by point count
+  // ─────────────────────────────────────────────────────────────────────────
+  map.addLayer({
+    id: 'clusters',
+    type: 'circle',
+    source: 'points-source',
+    filter: ['has', 'point_count'],
+    paint: {
+      // Size clusters based on point count
+      'circle-radius': [
+        'step',
+        ['get', 'point_count'],
+        15,      // 15px for count < 10
+        10, 20,  // 20px for count >= 10
+        50, 25,  // 25px for count >= 50
+        100, 30, // 30px for count >= 100
+        500, 40  // 40px for count >= 500
+      ],
+      // Color clusters based on count - gradient from green to orange to red
+      'circle-color': [
+        'step',
+        ['get', 'point_count'],
+        '#4ade80',   // Green for small clusters
+        10, '#22d3ee', // Cyan
+        50, '#facc15', // Yellow
+        100, '#fb923c', // Orange
+        500, '#ef4444'  // Red for large clusters
+      ],
+      'circle-opacity': 0.85,
+      'circle-stroke-width': 2,
+      'circle-stroke-color': '#ffffff',
+      'circle-stroke-opacity': 0.8
+    }
+  })
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // CLUSTER COUNT LABELS
+  // ─────────────────────────────────────────────────────────────────────────
+  map.addLayer({
+    id: 'cluster-count',
+    type: 'symbol',
+    source: 'points-source',
+    filter: ['has', 'point_count'],
+    layout: {
+      'text-field': '{point_count_abbreviated}',
+      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+      'text-size': 12,
+      'text-allow-overlap': true
+    },
+    paint: {
+      'text-color': '#1a1a2e'
+    }
+  })
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // INDIVIDUAL POINTS (unclustered)
+  // ─────────────────────────────────────────────────────────────────────────
   map.addLayer({
     id: 'points-layer',
     type: 'circle',
     source: 'points-source',
+    filter: ['!', ['has', 'point_count']], // Only unclustered points
     paint: {
       'circle-radius': [
         'interpolate', ['linear'], ['zoom'],
@@ -222,11 +290,17 @@ const addDataLayer = () => {
     }
   })
 
-  // Add highlight layer (shows on hover)
+  // ─────────────────────────────────────────────────────────────────────────
+  // HIGHLIGHT LAYER (for hover on individual points)
+  // ─────────────────────────────────────────────────────────────────────────
   map.addLayer({
     id: 'points-highlight',
     type: 'circle',
     source: 'points-source',
+    filter: ['all',
+      ['!', ['has', 'point_count']],
+      ['==', ['get', 'id'], '']
+    ],
     paint: {
       'circle-radius': [
         'interpolate', ['linear'], ['zoom'],
@@ -238,14 +312,35 @@ const addDataLayer = () => {
       'circle-color': 'transparent',
       'circle-stroke-width': 2,
       'circle-stroke-color': '#ffffff'
-    },
-    filter: ['==', ['get', 'id'], ''] // Initially no highlight
+    }
   })
 
-  // Click handler for popups
+  // ─────────────────────────────────────────────────────────────────────────
+  // CLUSTER CLICK - zoom into cluster
+  // ─────────────────────────────────────────────────────────────────────────
+  map.on('click', 'clusters', (e) => {
+    const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
+    if (!features.length) return
+
+    const clusterId = features[0].properties.cluster_id
+    const source = map.getSource('points-source')
+
+    source.getClusterExpansionZoom(clusterId, (err, zoom) => {
+      if (err) return
+
+      map.easeTo({
+        center: features[0].geometry.coordinates,
+        zoom: zoom + 0.5
+      })
+    })
+  })
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // INDIVIDUAL POINT CLICK - show popup
+  // ─────────────────────────────────────────────────────────────────────────
   map.on('click', 'points-layer', (e) => {
     if (!e.features || e.features.length === 0) return
-    
+
     const feature = e.features[0]
     const props = feature.properties
     const coords = feature.geometry.coordinates.slice()
@@ -267,19 +362,35 @@ const addDataLayer = () => {
       .addTo(map)
   })
 
-  // Hover effects
+  // ─────────────────────────────────────────────────────────────────────────
+  // HOVER EFFECTS
+  // ─────────────────────────────────────────────────────────────────────────
+  map.on('mouseenter', 'clusters', () => {
+    map.getCanvas().style.cursor = 'pointer'
+  })
+
+  map.on('mouseleave', 'clusters', () => {
+    map.getCanvas().style.cursor = ''
+  })
+
   map.on('mouseenter', 'points-layer', (e) => {
     map.getCanvas().style.cursor = 'pointer'
-    
+
     if (e.features && e.features.length > 0) {
       const id = e.features[0].properties.id
-      map.setFilter('points-highlight', ['==', ['get', 'id'], id])
+      map.setFilter('points-highlight', ['all',
+        ['!', ['has', 'point_count']],
+        ['==', ['get', 'id'], id]
+      ])
     }
   })
-  
+
   map.on('mouseleave', 'points-layer', () => {
     map.getCanvas().style.cursor = ''
-    map.setFilter('points-highlight', ['==', ['get', 'id'], ''])
+    map.setFilter('points-highlight', ['all',
+      ['!', ['has', 'point_count']],
+      ['==', ['get', 'id'], '']
+    ])
   })
 
   // Fit bounds to data (with padding)
