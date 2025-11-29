@@ -864,7 +864,7 @@ const switchStyle = (styleName) => {
         :key="status" 
         class="legend-item"
       >
-        <span class="legend-dot" :style="{ background: color }"></span>
+        <span class="legend-dot" :style="{ backgroundColor: color }"></span>
         <span>{{ status }}</span>
       </div>
     </div>
@@ -965,6 +965,7 @@ const switchStyle = (styleName) => {
 }
 
 .legend-dot {
+  display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 50%;
