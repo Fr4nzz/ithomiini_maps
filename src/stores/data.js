@@ -30,6 +30,7 @@ export const useDataStore = defineStore('data', () => {
     mimicry: 'All',
     status: [],
     source: ['Sanger Institute'],  // Multi-select array, default to Sanger
+    country: 'All',     // Country filter
     // Search
     camidSearch: '',
     // Date range
@@ -53,15 +54,21 @@ export const useDataStore = defineStore('data', () => {
       // Determine base path (handles both dev and GitHub Pages)
       const basePath = import.meta.env.BASE_URL || '/'
       const response = await fetch(`${basePath}data/map_points.json`)
-      
+
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        throw new Error(`Failed to load data: ${response.status} ${response.statusText}`)
       }
-      
+
       const data = await response.json()
+
+      // Validate data format
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid data format: expected array')
+      }
+
       allFeatures.value = data
-      console.log(`Loaded ${data.length} records`)
-      
+      console.log(`✓ Loaded ${data.length} records`)
+
       // Build photo lookup table
       buildPhotoLookup(data)
 
@@ -71,7 +78,7 @@ export const useDataStore = defineStore('data', () => {
       // Initialize filters from URL
       restoreFiltersFromURL()
     } catch (e) {
-      console.error('Failed to load data:', e)
+      console.error('❌ Failed to load data:', e)
       // Set empty array to prevent errors
       allFeatures.value = []
     } finally {
@@ -237,6 +244,9 @@ export const useDataStore = defineStore('data', () => {
     if (params.get('source')) {
       filters.value.source = params.get('source').split(',')
     }
+    if (params.get('country')) {
+      filters.value.country = params.get('country')
+    }
     if (params.get('cam')) {
       filters.value.camidSearch = params.get('cam')
     }
@@ -259,6 +269,7 @@ export const useDataStore = defineStore('data', () => {
       mimicry: 'All',
       status: [],
       source: ['Sanger Institute'],  // Default to Sanger
+      country: 'All',
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
@@ -437,6 +448,16 @@ export const useDataStore = defineStore('data', () => {
     return Array.from(set).sort()
   })
 
+  // Unique countries
+  const uniqueCountries = computed(() => {
+    const set = new Set(
+      allFeatures.value
+        .map(i => i.country)
+        .filter(isValidValue)
+    )
+    return Array.from(set).sort()
+  })
+
   // ═══════════════════════════════════════════════════════════════════════════
   // CASCADE RESET WATCHERS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -495,6 +516,8 @@ export const useDataStore = defineStore('data', () => {
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
       // Source filter (multi-select array)
       if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false
+      // Country filter
+      if (filters.value.country !== 'All' && item.country !== filters.value.country) return false
       
       // Date filtering
       if (filters.value.dateStart || filters.value.dateEnd) {
@@ -541,6 +564,7 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.source.length > 0 && !(newFilters.source.length === 1 && newFilters.source[0] === 'Sanger Institute')) {
         params.set('source', newFilters.source.join(','))
       }
+      if (newFilters.country !== 'All') params.set('country', newFilters.country)
       if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
       if (newFilters.dateStart) params.set('from', newFilters.dateStart)
       if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)
@@ -586,6 +610,7 @@ export const useDataStore = defineStore('data', () => {
     unavailableMimicryRings,
     uniqueStatuses,
     uniqueSources,
+    uniqueCountries,
 
     // Final output
     filteredGeoJSON,

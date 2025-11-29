@@ -62,8 +62,9 @@ const statusColors = {
   'Preserved Specimen': '#f59e0b',
   'Published': '#a855f7',
   'GBIF Record': '#6b7280',
-  'Observation': '#6b7280',
-  'Museum Specimen': '#8b5cf6'
+  'Observation': '#22c55e',        // Research Grade equivalent
+  'Museum Specimen': '#8b5cf6',
+  'Living Specimen': '#14b8a6',
 }
 
 // Share URL functionality
@@ -362,6 +363,24 @@ const showDateFilter = ref(false)
         <p class="filter-hint" v-if="store.filters.source.length === 0">
           No sources selected - showing all data
         </p>
+      </div>
+
+      <!-- Country Filter -->
+      <div class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          Country
+        </label>
+        <FilterSelect
+          v-model="store.filters.country"
+          :options="['All', ...store.uniqueCountries]"
+          placeholder="All Countries"
+          :multiple="false"
+          :show-count="false"
+        />
       </div>
 
       <!-- UI Preferences -->

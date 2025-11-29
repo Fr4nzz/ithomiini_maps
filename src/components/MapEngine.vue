@@ -108,10 +108,13 @@ const currentStyle = ref('dark')
 
 const STATUS_COLORS = {
   'Sequenced': '#3b82f6',        // Blue
-  'Tissue Available': '#10b981', // Green  
+  'Tissue Available': '#10b981', // Green
   'Preserved Specimen': '#f59e0b', // Orange
   'Published': '#a855f7',        // Purple
-  'GBIF Record': '#6b7280'       // Gray
+  'GBIF Record': '#6b7280',      // Gray
+  'Observation': '#22c55e',      // Green - Research Grade equivalent
+  'Museum Specimen': '#8b5cf6',  // Purple
+  'Living Specimen': '#14b8a6',  // Teal
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -203,6 +206,9 @@ const addDataLayer = () => {
         'Preserved Specimen', STATUS_COLORS['Preserved Specimen'],
         'Published', STATUS_COLORS['Published'],
         'GBIF Record', STATUS_COLORS['GBIF Record'],
+        'Observation', STATUS_COLORS['Observation'],
+        'Museum Specimen', STATUS_COLORS['Museum Specimen'],
+        'Living Specimen', STATUS_COLORS['Living Specimen'],
         '#6b7280' // default gray
       ],
       'circle-opacity': 0.85,

@@ -139,7 +139,7 @@ const getStatusColor = (status) => {
     'Preserved Specimen': '#f59e0b',
     'Published': '#a855f7',
     'GBIF Record': '#6b7280',
-    'Observation': '#6b7280',
+    'Observation': '#22c55e',      // Green - Research Grade equivalent
     'Museum Specimen': '#8b5cf6',
     'Living Specimen': '#14b8a6',
   }
