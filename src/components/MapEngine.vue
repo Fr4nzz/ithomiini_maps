@@ -164,8 +164,11 @@ const initMap = () => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// DATA LAYER WITH CLUSTERING
+// DATA LAYER WITH SMART CLUSTERING
 // ═══════════════════════════════════════════════════════════════════════════
+
+// Threshold for enabling clustering (only cluster large datasets)
+const CLUSTER_THRESHOLD = 5000
 
 const addDataLayer = () => {
   if (!map) return
@@ -185,79 +188,83 @@ const addDataLayer = () => {
   const geojson = store.filteredGeoJSON
   if (!geojson) return
 
-  // Add source with clustering enabled for performance
+  const pointCount = geojson.features.length
+  const shouldCluster = pointCount > CLUSTER_THRESHOLD
+
+  // Add source - only cluster for large datasets
   map.addSource('points-source', {
     type: 'geojson',
     data: geojson,
-    cluster: true,
-    clusterMaxZoom: 14,    // Max zoom to cluster points
-    clusterRadius: 50,      // Radius of each cluster in pixels
-    clusterMinPoints: 3     // Minimum points to form a cluster
+    cluster: shouldCluster,
+    clusterMaxZoom: 12,     // Max zoom to cluster points (lower = clusters break apart sooner)
+    clusterRadius: 40,      // Smaller radius for tighter clusters
+    clusterMinPoints: 5     // Need at least 5 points to form a cluster
   })
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER CIRCLES - sized by point count
-  // ─────────────────────────────────────────────────────────────────────────
-  map.addLayer({
-    id: 'clusters',
-    type: 'circle',
-    source: 'points-source',
-    filter: ['has', 'point_count'],
-    paint: {
-      // Size clusters based on point count
-      'circle-radius': [
-        'step',
-        ['get', 'point_count'],
-        15,      // 15px for count < 10
-        10, 20,  // 20px for count >= 10
-        50, 25,  // 25px for count >= 50
-        100, 30, // 30px for count >= 100
-        500, 40  // 40px for count >= 500
-      ],
-      // Color clusters based on count - gradient from green to orange to red
-      'circle-color': [
-        'step',
-        ['get', 'point_count'],
-        '#4ade80',   // Green for small clusters
-        10, '#22d3ee', // Cyan
-        50, '#facc15', // Yellow
-        100, '#fb923c', // Orange
-        500, '#ef4444'  // Red for large clusters
-      ],
-      'circle-opacity': 0.85,
-      'circle-stroke-width': 2,
-      'circle-stroke-color': '#ffffff',
-      'circle-stroke-opacity': 0.8
-    }
-  })
+  // Only add cluster layers if clustering is enabled
+  if (shouldCluster) {
+    // ─────────────────────────────────────────────────────────────────────────
+    // CLUSTER CIRCLES - sized by point count
+    // ─────────────────────────────────────────────────────────────────────────
+    map.addLayer({
+      id: 'clusters',
+      type: 'circle',
+      source: 'points-source',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          12,      // 12px for count < 20
+          20, 16,  // 16px for count >= 20
+          50, 20,  // 20px for count >= 50
+          100, 25, // 25px for count >= 100
+          500, 32  // 32px for count >= 500
+        ],
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          '#4ade80',   // Green for small clusters
+          20, '#22d3ee', // Cyan
+          50, '#facc15', // Yellow
+          100, '#fb923c', // Orange
+          500, '#ef4444'  // Red for large clusters
+        ],
+        'circle-opacity': 0.9,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-opacity': 0.9
+      }
+    })
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // CLUSTER COUNT LABELS
+    // ─────────────────────────────────────────────────────────────────────────
+    map.addLayer({
+      id: 'cluster-count',
+      type: 'symbol',
+      source: 'points-source',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': '{point_count_abbreviated}',
+        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+        'text-size': 11,
+        'text-allow-overlap': true
+      },
+      paint: {
+        'text-color': '#1a1a2e'
+      }
+    })
+  }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER COUNT LABELS
-  // ─────────────────────────────────────────────────────────────────────────
-  map.addLayer({
-    id: 'cluster-count',
-    type: 'symbol',
-    source: 'points-source',
-    filter: ['has', 'point_count'],
-    layout: {
-      'text-field': '{point_count_abbreviated}',
-      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-      'text-size': 12,
-      'text-allow-overlap': true
-    },
-    paint: {
-      'text-color': '#1a1a2e'
-    }
-  })
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // INDIVIDUAL POINTS (unclustered)
+  // INDIVIDUAL POINTS
   // ─────────────────────────────────────────────────────────────────────────
   map.addLayer({
     id: 'points-layer',
     type: 'circle',
     source: 'points-source',
-    filter: ['!', ['has', 'point_count']], // Only unclustered points
+    filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'], // All points if no clustering
     paint: {
       'circle-radius': [
         'interpolate', ['linear'], ['zoom'],
@@ -297,10 +304,9 @@ const addDataLayer = () => {
     id: 'points-highlight',
     type: 'circle',
     source: 'points-source',
-    filter: ['all',
-      ['!', ['has', 'point_count']],
-      ['==', ['get', 'id'], '']
-    ],
+    filter: shouldCluster
+      ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
+      : ['==', ['get', 'id'], ''],
     paint: {
       'circle-radius': [
         'interpolate', ['linear'], ['zoom'],
@@ -316,24 +322,68 @@ const addDataLayer = () => {
   })
 
   // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER CLICK - zoom into cluster
+  // CLUSTER CLICK - show cluster contents popup
   // ─────────────────────────────────────────────────────────────────────────
-  map.on('click', 'clusters', (e) => {
-    const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-    if (!features.length) return
+  if (shouldCluster) {
+    map.on('click', 'clusters', async (e) => {
+      const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
+      if (!features.length) return
 
-    const clusterId = features[0].properties.cluster_id
-    const source = map.getSource('points-source')
+      const cluster = features[0]
+      const clusterId = cluster.properties.cluster_id
+      const pointCount = cluster.properties.point_count
+      const coords = cluster.geometry.coordinates
 
-    source.getClusterExpansionZoom(clusterId, (err, zoom) => {
-      if (err) return
+      // Close existing popup
+      if (popup) popup.remove()
 
-      map.easeTo({
-        center: features[0].geometry.coordinates,
-        zoom: zoom + 0.5
-      })
+      // Get cluster leaves (individual points)
+      const source = map.getSource('points-source')
+
+      try {
+        // Get up to 100 points from the cluster for the preview
+        const leaves = await new Promise((resolve, reject) => {
+          source.getClusterLeaves(clusterId, 100, 0, (err, features) => {
+            if (err) reject(err)
+            else resolve(features)
+          })
+        })
+
+        // Build cluster popup content
+        const content = buildClusterPopupContent(leaves, pointCount, clusterId)
+
+        popup = new maplibregl.Popup({
+          closeButton: true,
+          closeOnClick: true,
+          maxWidth: '380px',
+          className: 'custom-popup cluster-popup'
+        })
+          .setLngLat(coords)
+          .setHTML(content)
+          .addTo(map)
+
+        // Add click handler for zoom button after popup is added
+        setTimeout(() => {
+          const zoomBtn = document.getElementById(`zoom-cluster-${clusterId}`)
+          if (zoomBtn) {
+            zoomBtn.addEventListener('click', () => {
+              source.getClusterExpansionZoom(clusterId, (err, zoom) => {
+                if (err) return
+                popup.remove()
+                map.easeTo({
+                  center: coords,
+                  zoom: Math.min(zoom + 1, 16)
+                })
+              })
+            })
+          }
+        }, 0)
+
+      } catch (err) {
+        console.error('Error getting cluster leaves:', err)
+      }
     })
-  })
+  }
 
   // ─────────────────────────────────────────────────────────────────────────
   // INDIVIDUAL POINT CLICK - show popup
@@ -365,36 +415,128 @@ const addDataLayer = () => {
   // ─────────────────────────────────────────────────────────────────────────
   // HOVER EFFECTS
   // ─────────────────────────────────────────────────────────────────────────
-  map.on('mouseenter', 'clusters', () => {
-    map.getCanvas().style.cursor = 'pointer'
-  })
+  if (shouldCluster) {
+    map.on('mouseenter', 'clusters', () => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
 
-  map.on('mouseleave', 'clusters', () => {
-    map.getCanvas().style.cursor = ''
-  })
+    map.on('mouseleave', 'clusters', () => {
+      map.getCanvas().style.cursor = ''
+    })
+  }
 
   map.on('mouseenter', 'points-layer', (e) => {
     map.getCanvas().style.cursor = 'pointer'
 
     if (e.features && e.features.length > 0) {
       const id = e.features[0].properties.id
-      map.setFilter('points-highlight', ['all',
-        ['!', ['has', 'point_count']],
-        ['==', ['get', 'id'], id]
-      ])
+      const filter = shouldCluster
+        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
+        : ['==', ['get', 'id'], id]
+      map.setFilter('points-highlight', filter)
     }
   })
 
   map.on('mouseleave', 'points-layer', () => {
     map.getCanvas().style.cursor = ''
-    map.setFilter('points-highlight', ['all',
-      ['!', ['has', 'point_count']],
-      ['==', ['get', 'id'], '']
-    ])
+    const filter = shouldCluster
+      ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
+      : ['==', ['get', 'id'], '']
+    map.setFilter('points-highlight', filter)
   })
 
   // Fit bounds to data (with padding)
   fitBoundsToData(geojson)
+
+  // Log clustering status
+  console.log(`📍 ${pointCount} points loaded. Clustering: ${shouldCluster ? 'ON' : 'OFF'}`)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CLUSTER POPUP BUILDER
+// ═══════════════════════════════════════════════════════════════════════════
+
+const buildClusterPopupContent = (leaves, totalCount, clusterId) => {
+  // Group by species
+  const speciesCounts = {}
+  const statusCounts = {}
+
+  leaves.forEach(leaf => {
+    const props = leaf.properties
+    const species = props.scientific_name || 'Unknown'
+    const status = props.sequencing_status || 'Unknown'
+
+    speciesCounts[species] = (speciesCounts[species] || 0) + 1
+    statusCounts[status] = (statusCounts[status] || 0) + 1
+  })
+
+  // Sort species by count
+  const sortedSpecies = Object.entries(speciesCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8) // Top 8 species
+
+  let html = `<div class="cluster-popup-content">`
+
+  // Header
+  html += `
+    <div class="cluster-header">
+      <span class="cluster-count">${totalCount.toLocaleString()}</span>
+      <span class="cluster-label">records in this area</span>
+    </div>
+  `
+
+  // Species breakdown
+  html += `<div class="cluster-section">
+    <div class="cluster-section-title">Top Species</div>
+    <div class="cluster-species-list">`
+
+  sortedSpecies.forEach(([species, count]) => {
+    const pct = Math.round((count / leaves.length) * 100)
+    html += `
+      <div class="cluster-species-item">
+        <em>${species}</em>
+        <span class="cluster-species-count">${count} (${pct}%)</span>
+      </div>
+    `
+  })
+
+  if (Object.keys(speciesCounts).length > 8) {
+    html += `<div class="cluster-more">+ ${Object.keys(speciesCounts).length - 8} more species</div>`
+  }
+
+  html += `</div></div>`
+
+  // Status breakdown
+  html += `<div class="cluster-section">
+    <div class="cluster-section-title">By Status</div>
+    <div class="cluster-status-grid">`
+
+  Object.entries(statusCounts).forEach(([status, count]) => {
+    const color = STATUS_COLORS[status] || '#6b7280'
+    html += `
+      <div class="cluster-status-item">
+        <span class="status-dot" style="background: ${color}"></span>
+        <span>${status}: ${count}</span>
+      </div>
+    `
+  })
+
+  html += `</div></div>`
+
+  // Zoom button
+  html += `
+    <button id="zoom-cluster-${clusterId}" class="cluster-zoom-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+        <path d="M11 8v6M8 11h6"/>
+      </svg>
+      Zoom to explore points
+    </button>
+  `
+
+  html += `</div>`
+  return html
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -790,6 +932,113 @@ const switchStyle = (styleName) => {
 :deep(.popup-info) {
   flex: 1;
   min-width: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CLUSTER POPUP STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:deep(.cluster-popup-content) {
+  padding: 14px 18px;
+}
+
+:deep(.cluster-header) {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3d3d5c;
+}
+
+:deep(.cluster-count) {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: #4ade80;
+}
+
+:deep(.cluster-label) {
+  font-size: 0.85em;
+  color: #888;
+}
+
+:deep(.cluster-section) {
+  margin-bottom: 12px;
+}
+
+:deep(.cluster-section-title) {
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+:deep(.cluster-species-list) {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:deep(.cluster-species-item) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+  color: #e0e0e0;
+}
+
+:deep(.cluster-species-item em) {
+  color: #fff;
+}
+
+:deep(.cluster-species-count) {
+  color: #888;
+  font-size: 0.9em;
+}
+
+:deep(.cluster-more) {
+  font-size: 0.8em;
+  color: #666;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+:deep(.cluster-status-grid) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
+:deep(.cluster-status-item) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8em;
+  color: #ccc;
+}
+
+:deep(.cluster-zoom-btn) {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 6px;
+  color: #4ade80;
+  font-size: 0.85em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+:deep(.cluster-zoom-btn:hover) {
+  background: rgba(74, 222, 128, 0.25);
+  border-color: rgba(74, 222, 128, 0.5);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
