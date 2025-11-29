@@ -12,6 +12,7 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Dynamic Filtering**: Real-time map updates as filters change
 - **Shareable URLs**: Filter state encoded in URL for easy sharing
 - **Point Popups**: Click to view specimen details and images
+- **High-Resolution Export**: Export maps at 300 DPI for publications
 
 ### 📊 Data Table View
 - **Sortable Columns**: Click headers to sort by any field
@@ -19,16 +20,31 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Column Visibility**: Toggle columns to customize your view
 - **Status Badges**: Visual indicators for sequencing status
 
+### 🖼️ Image Gallery
+- **Full-Screen Viewer**: Browse specimen images in gallery mode
+- **Zoom & Pan**: Detailed examination of wing patterns
+- **Keyboard Navigation**: Arrow keys and shortcuts for quick browsing
+- **Touch Support**: Pinch-to-zoom on mobile devices
+- **Thumbnail Strip**: Quick preview of all images
+
+### 🦋 Visual Mimicry Selector
+- **Wing Pattern Icons**: Visual representation of mimicry rings
+- **Color-Coded Display**: Distinctive colors for each ring
+- **Search Filter**: Find mimicry rings by name
+- **Record Counts**: See how many specimens per ring
+
 ### 🔬 Filter System
 - **Taxonomic Cascade**: Family → Tribe → Genus → Species → Subspecies
 - **Sequencing Status**: Filter by Sequenced, Tissue Available, Preserved, Published, GBIF Record
 - **Mimicry Rings**: 44 unique mimicry patterns from Dore et al. (2025)
+- **Date Range Filter**: Filter by collection/preservation date
 - **CAMID Search**: Instant lookup by specimen ID
 - **Data Source**: Filter by Dore, Sanger Institute, or GBIF
 
 ### 📥 Export & Citation
 - **CSV Export**: Download filtered data as spreadsheet
 - **GeoJSON Export**: Download for GIS/mapping applications
+- **Map Image Export**: High-resolution PNG/JPEG for publications
 - **Scientific Citation**: Auto-generated citation with version hash
 - **BibTeX Format**: Ready-to-use citation for LaTeX documents
 - **Reproducibility**: Version-controlled data with Git commit hash
@@ -106,13 +122,17 @@ ithomiini_maps/
 │   └── requirements.txt    # Python dependencies
 ├── src/
 │   ├── components/
-│   │   ├── DataTable.vue   # Sortable, paginated data table
-│   │   ├── ExportPanel.vue # CSV/GeoJSON export & citations
-│   │   ├── MapEngine.vue   # MapLibre map component
-│   │   └── Sidebar.vue     # Filter controls & view toggle
+│   │   ├── DataTable.vue       # Sortable, paginated data table
+│   │   ├── DateFilter.vue      # Date range filter component
+│   │   ├── ExportPanel.vue     # CSV/GeoJSON export & citations
+│   │   ├── ImageGallery.vue    # Full-screen image viewer
+│   │   ├── MapEngine.vue       # MapLibre map component
+│   │   ├── MapExport.vue       # High-res map image export
+│   │   ├── MimicrySelector.vue # Visual mimicry ring picker
+│   │   └── Sidebar.vue         # Filter controls & view toggle
 │   ├── stores/
 │   │   └── data.js         # Pinia state management
-│   ├── App.vue             # Root component with view switching
+│   ├── App.vue             # Root component with modals
 │   ├── main.js             # Entry point
 │   └── style.css           # Global styles
 ├── index.html              # HTML template
@@ -139,7 +159,8 @@ Each record in `map_points.json` contains:
   "sequencing_status": "Sequenced",
   "source": "Sanger Institute",
   "country": "Ecuador",
-  "image_url": "https://wsrv.nl/?url=..."
+  "image_url": "https://wsrv.nl/?url=...",
+  "date": "2023-05-15"
 }
 ```
 

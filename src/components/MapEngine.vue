@@ -5,6 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
 
 const store = useDataStore()
+const emit = defineEmits(['map-ready'])
 const mapContainer = ref(null)
 let map = null
 let popup = null
@@ -155,6 +156,7 @@ const initMap = () => {
 
   map.on('load', () => {
     addDataLayer()
+    emit('map-ready', map)
   })
 }
 

@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import { useDataStore } from '../stores/data'
+import DateFilter from './DateFilter.vue'
 
 const props = defineProps({
   currentView: {
@@ -9,7 +10,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['open-export', 'set-view'])
+const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'set-view'])
 
 const store = useDataStore()
 
@@ -32,6 +33,13 @@ const totalRecords = computed(() => store.allFeatures.length)
 const filteredRecords = computed(() => {
   const geo = store.filteredGeoJSON
   return geo ? geo.features.length : 0
+})
+
+// Image count
+const imageCount = computed(() => {
+  const geo = store.filteredGeoJSON
+  if (!geo || !geo.features) return 0
+  return geo.features.filter(f => f.properties?.image_url).length
 })
 
 // Status filter helpers
@@ -63,6 +71,9 @@ const copyShareUrl = () => {
 }
 
 const showCopiedToast = ref(false)
+
+// Show date filter section
+const showDateFilter = ref(false)
 </script>
 
 <template>
@@ -116,6 +127,35 @@ const showCopiedToast = ref(false)
       <div class="record-count">
         <span class="count">{{ filteredRecords.toLocaleString() }}</span>
         <span class="label">of {{ totalRecords.toLocaleString() }} records</span>
+      </div>
+
+      <!-- Quick Actions Row -->
+      <div class="quick-actions">
+        <button class="action-btn" @click="emit('open-gallery')" :disabled="imageCount === 0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Gallery</span>
+          <span class="badge" v-if="imageCount > 0">{{ imageCount }}</span>
+        </button>
+        <button class="action-btn" @click="emit('open-mimicry')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
+            <path d="M12 2c-2.5 0-5 4-5 10s2.5 10 5 10"/>
+            <path d="M12 2c2.5 0 5 4 5 10s-2.5 10-5 10"/>
+          </svg>
+          <span>Mimicry</span>
+        </button>
+        <button class="action-btn" @click="emit('open-map-export')" v-if="currentView === 'map'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Export Map</span>
+        </button>
       </div>
 
       <!-- CAMID Search -->
@@ -232,6 +272,9 @@ const showCopiedToast = ref(false)
             <path d="m9 18 6-6-6-6"/>
           </svg>
           Mimicry Ring
+          <span v-if="store.filters.mimicry !== 'All'" class="active-badge">
+            {{ store.filters.mimicry }}
+          </span>
         </button>
 
         <div v-show="store.showMimicryFilter" class="collapse-content">
@@ -241,9 +284,39 @@ const showCopiedToast = ref(false)
               <option v-for="m in store.uniqueMimicry" :key="m" :value="m">{{ m }}</option>
             </select>
           </div>
+          <button class="btn-visual-selector" @click="emit('open-mimicry')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Open Visual Selector
+          </button>
           <p class="filter-hint">
             Mimicry data from Dore et al. (2025)
           </p>
+        </div>
+      </div>
+
+      <!-- Date Filter (Collapsible) -->
+      <div class="filter-section collapsible">
+        <button 
+          class="collapse-toggle"
+          @click="showDateFilter = !showDateFilter"
+          :class="{ expanded: showDateFilter }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Date Range
+          <span v-if="store.filters.dateStart || store.filters.dateEnd" class="active-badge">
+            Active
+          </span>
+        </button>
+
+        <div v-show="showDateFilter" class="collapse-content no-padding">
+          <DateFilter />
         </div>
       </div>
 
@@ -446,7 +519,7 @@ const showCopiedToast = ref(false)
   border: 1px solid rgba(74, 222, 128, 0.2);
   border-radius: 8px;
   padding: 12px 16px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   text-align: center;
 }
 
@@ -461,6 +534,60 @@ const showCopiedToast = ref(false)
   font-size: 0.8rem;
   color: var(--color-text-secondary, #aaa);
   margin-left: 6px;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.action-btn:hover:not(:disabled) {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+  border-color: var(--color-accent, #4ade80);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.action-btn .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
 }
 
 /* Filter Sections */
@@ -593,9 +720,22 @@ const showCopiedToast = ref(false)
   transform: rotate(90deg);
 }
 
+.active-badge {
+  margin-left: auto;
+  padding: 2px 8px;
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-accent, #4ade80);
+  border-radius: 4px;
+  font-size: 0.7rem;
+}
+
 .collapse-content {
   padding: 12px 14px;
   border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.collapse-content.no-padding {
+  padding: 0;
 }
 
 .filter-hint {
@@ -603,6 +743,34 @@ const showCopiedToast = ref(false)
   color: var(--color-text-muted, #666);
   font-style: italic;
   margin-top: 8px;
+}
+
+/* Visual Selector Button */
+.btn-visual-selector {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px dashed rgba(74, 222, 128, 0.3);
+  border-radius: 6px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-visual-selector:hover {
+  background: rgba(74, 222, 128, 0.15);
+  border-style: solid;
+}
+
+.btn-visual-selector svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Status Grid */

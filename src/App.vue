@@ -1,29 +1,55 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { useDataStore } from './stores/data'
 import Sidebar from './components/Sidebar.vue'
 import MapEngine from './components/MapEngine.vue'
 import DataTable from './components/DataTable.vue'
 import ExportPanel from './components/ExportPanel.vue'
+import MimicrySelector from './components/MimicrySelector.vue'
+import ImageGallery from './components/ImageGallery.vue'
+import MapExport from './components/MapExport.vue'
 
 const store = useDataStore()
 
 // View state
 const currentView = ref('map') // 'map' or 'table'
-const showExportPanel = ref(false)
 
-// Provide to children
+// Modal states
+const showExportPanel = ref(false)
+const showMimicrySelector = ref(false)
+const showImageGallery = ref(false)
+const showMapExport = ref(false)
+
+// Map reference for export
+const mapRef = ref(null)
+
+// View control
 const setView = (view) => {
   currentView.value = view
 }
 
-const openExport = () => {
-  showExportPanel.value = true
+// Modal controls
+const openExport = () => { showExportPanel.value = true }
+const closeExport = () => { showExportPanel.value = false }
+
+const openMimicrySelector = () => { showMimicrySelector.value = true }
+const closeMimicrySelector = () => { showMimicrySelector.value = false }
+
+const openImageGallery = () => { showImageGallery.value = true }
+const closeImageGallery = () => { showImageGallery.value = false }
+
+const openMapExport = () => { showMapExport.value = true }
+const closeMapExport = () => { showMapExport.value = false }
+
+// Receive map instance from MapEngine
+const onMapReady = (map) => {
+  mapRef.value = map
 }
 
-const closeExport = () => {
-  showExportPanel.value = false
-}
+// Provide modal openers to children
+provide('openMimicrySelector', openMimicrySelector)
+provide('openImageGallery', openImageGallery)
+provide('openMapExport', openMapExport)
 
 onMounted(() => {
   store.loadMapData()
@@ -41,6 +67,9 @@ onMounted(() => {
     <!-- Sidebar with filters -->
     <Sidebar 
       @open-export="openExport"
+      @open-mimicry="openMimicrySelector"
+      @open-gallery="openImageGallery"
+      @open-map-export="openMapExport"
       :current-view="currentView"
       @set-view="setView"
     />
@@ -73,8 +102,20 @@ onMounted(() => {
           Table
         </button>
         <button 
+          class="btn-gallery-mobile"
+          @click="openImageGallery"
+          title="Open Gallery"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </button>
+        <button 
           class="btn-export-mobile"
           @click="openExport"
+          title="Export Data"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -97,6 +138,7 @@ onMounted(() => {
       <MapEngine 
         v-else-if="currentView === 'map'"
         class="view-container"
+        @map-ready="onMapReady"
       />
 
       <!-- Table View -->
@@ -106,6 +148,8 @@ onMounted(() => {
       />
     </main>
 
+    <!-- MODALS -->
+    
     <!-- Export Panel Modal -->
     <Teleport to="body">
       <Transition name="modal">
@@ -116,6 +160,42 @@ onMounted(() => {
         >
           <ExportPanel @close="closeExport" />
         </div>
+      </Transition>
+    </Teleport>
+
+    <!-- Mimicry Selector Modal -->
+    <Teleport to="body">
+      <Transition name="modal">
+        <div 
+          v-if="showMimicrySelector" 
+          class="modal-overlay"
+          @click.self="closeMimicrySelector"
+        >
+          <MimicrySelector @close="closeMimicrySelector" />
+        </div>
+      </Transition>
+    </Teleport>
+
+    <!-- Map Export Modal -->
+    <Teleport to="body">
+      <Transition name="modal">
+        <div 
+          v-if="showMapExport" 
+          class="modal-overlay"
+          @click.self="closeMapExport"
+        >
+          <MapExport :map="mapRef" @close="closeMapExport" />
+        </div>
+      </Transition>
+    </Teleport>
+
+    <!-- Image Gallery (Full screen) -->
+    <Teleport to="body">
+      <Transition name="fade">
+        <ImageGallery 
+          v-if="showImageGallery" 
+          @close="closeImageGallery" 
+        />
       </Transition>
     </Teleport>
   </div>
@@ -197,8 +277,17 @@ html, body, #app {
   height: 16px;
 }
 
+.btn-gallery-mobile,
 .btn-export-mobile {
   margin-left: auto;
+}
+
+.btn-gallery-mobile {
+  margin-left: auto;
+}
+
+.btn-export-mobile {
+  margin-left: 4px;
 }
 
 /* Loading Overlay */
@@ -266,8 +355,8 @@ html, body, #app {
   transition: opacity 0.3s ease;
 }
 
-.modal-enter-active .export-panel,
-.modal-leave-active .export-panel {
+.modal-enter-active > *,
+.modal-leave-active > * {
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
@@ -276,9 +365,20 @@ html, body, #app {
   opacity: 0;
 }
 
-.modal-enter-from .export-panel,
-.modal-leave-to .export-panel {
+.modal-enter-from > *,
+.modal-leave-to > * {
   transform: scale(0.95) translateY(20px);
+  opacity: 0;
+}
+
+/* Fade transition for gallery */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 

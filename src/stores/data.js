@@ -28,6 +28,9 @@ export const useDataStore = defineStore('data', () => {
     source: 'All',
     // Search
     camidSearch: '',
+    // Date range
+    dateStart: null,
+    dateEnd: null,
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -91,6 +94,13 @@ export const useDataStore = defineStore('data', () => {
     if (params.get('cam')) {
       filters.value.camidSearch = params.get('cam')
     }
+    // Date filters
+    if (params.get('from')) {
+      filters.value.dateStart = params.get('from')
+    }
+    if (params.get('to')) {
+      filters.value.dateEnd = params.get('to')
+    }
   }
 
   const resetAllFilters = () => {
@@ -104,6 +114,8 @@ export const useDataStore = defineStore('data', () => {
       status: [],
       source: 'All',
       camidSearch: '',
+      dateStart: null,
+      dateEnd: null,
     }
   }
 
@@ -254,6 +266,16 @@ export const useDataStore = defineStore('data', () => {
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
       if (filters.value.source !== 'All' && item.source !== filters.value.source) return false
       
+      // Date filtering
+      if (filters.value.dateStart || filters.value.dateEnd) {
+        const itemDate = item.date || item.preservation_date
+        if (!itemDate) return false // Exclude items without dates when filtering by date
+        
+        const d = new Date(itemDate)
+        if (filters.value.dateStart && d < new Date(filters.value.dateStart)) return false
+        if (filters.value.dateEnd && d > new Date(filters.value.dateEnd)) return false
+      }
+      
       return true
     })
 
@@ -285,6 +307,8 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
       if (newFilters.source !== 'All') params.set('source', newFilters.source)
       if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
+      if (newFilters.dateStart) params.set('from', newFilters.dateStart)
+      if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)
 
       const newURL = params.toString() 
         ? `${window.location.pathname}?${params}` 
