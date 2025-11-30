@@ -443,8 +443,8 @@ const roundRect = (ctx, x, y, w, h, r) => {
   return ctx
 }
 
-// Active tab
-const activeTab = ref('export')
+// Active tab - default to 'image' for Export Image tab
+const activeTab = ref('image')
 </script>
 
 <template>
@@ -462,16 +462,16 @@ const activeTab = ref('export')
     <!-- Tabs -->
     <div class="panel-tabs">
       <button
-        :class="{ active: activeTab === 'export' }"
-        @click="activeTab = 'export'"
-      >
-        Export Data
-      </button>
-      <button
         :class="{ active: activeTab === 'image' }"
         @click="activeTab = 'image'"
       >
         Export Image
+      </button>
+      <button
+        :class="{ active: activeTab === 'export' }"
+        @click="activeTab = 'export'"
+      >
+        Export Data
       </button>
       <button
         :class="{ active: activeTab === 'citation' }"

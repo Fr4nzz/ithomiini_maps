@@ -282,7 +282,8 @@ const initMap = () => {
     zoom: 4,
     attributionControl: false,
     maxZoom: 18,
-    minZoom: 2
+    minZoom: 2,
+    preserveDrawingBuffer: true // Required for canvas export after map interactions
   })
 
   // Add controls
