@@ -196,11 +196,40 @@ const showDateFilter = ref(false)
 // Show cluster settings section
 const showClusterSettings = ref(false)
 
-// Show map style settings section
-const showMapStyleSettings = ref(false)
+// Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
+const showAdvancedTaxonomy = ref(false)
 
-// Show legend settings section
-const showLegendSettings = ref(false)
+// Show additional legend settings (Position/Text Size/Max Items)
+const showAdvancedLegend = ref(false)
+
+// Show point style settings section
+const showPointStyle = ref(false)
+
+// Show export settings section
+const showExportSettings = ref(false)
+
+// Show URL share settings section
+const showUrlSettings = ref(false)
+
+// Aspect ratio options
+const aspectRatioOptions = [
+  { value: '16:9', label: '16:9 (Widescreen)', width: 1920, height: 1080 },
+  { value: '4:3', label: '4:3 (Standard)', width: 1600, height: 1200 },
+  { value: '1:1', label: '1:1 (Square)', width: 1200, height: 1200 },
+  { value: '3:2', label: '3:2 (Photo)', width: 1800, height: 1200 },
+  { value: 'A4', label: 'A4 Portrait', width: 2480, height: 3508 },
+  { value: 'A4L', label: 'A4 Landscape', width: 3508, height: 2480 },
+  { value: 'custom', label: 'Custom', width: null, height: null },
+]
+
+// Get current aspect ratio dimensions
+const currentExportDimensions = computed(() => {
+  const option = aspectRatioOptions.find(o => o.value === store.exportSettings.aspectRatio)
+  if (option && option.value !== 'custom') {
+    return { width: option.width, height: option.height }
+  }
+  return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
+})
 </script>
 
 <template>
@@ -329,7 +358,7 @@ const showLegendSettings = ref(false)
         </div>
       </div>
 
-      <!-- Primary Filters: Species & Subspecies with Multi-select -->
+      <!-- Taxonomy Section (Species/Subspecies visible, Family/Tribe/Genus expandable) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -356,22 +385,21 @@ const showLegendSettings = ref(false)
           :multiple="true"
           :disabled="store.filters.species.length === 0"
         />
-      </div>
 
-      <!-- Advanced Taxonomy (Collapsible) -->
-      <div class="filter-section collapsible">
-        <button 
-          class="collapse-toggle"
-          @click="store.toggleAdvancedFilters"
-          :class="{ expanded: store.showAdvancedFilters }"
+        <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->
+        <button
+          class="subsection-toggle"
+          @click="showAdvancedTaxonomy = !showAdvancedTaxonomy"
+          :class="{ expanded: showAdvancedTaxonomy }"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="m9 18 6-6-6-6"/>
           </svg>
-          Advanced Taxonomy
+          Family / Tribe / Genus
+          <span v-if="store.filters.family !== 'All' || store.filters.tribe !== 'All' || store.filters.genus !== 'All'" class="active-indicator"></span>
         </button>
 
-        <div v-show="store.showAdvancedFilters" class="collapse-content">
+        <div v-show="showAdvancedTaxonomy" class="subsection-content">
           <FilterSelect
             label="Family"
             v-model="store.filters.family"
@@ -460,7 +488,7 @@ const showLegendSettings = ref(false)
         </div>
       </div>
 
-      <!-- Sequencing Status -->
+      <!-- Sequencing Status (Dropdown with All default) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -469,25 +497,12 @@ const showLegendSettings = ref(false)
           Sequencing Status
         </label>
 
-        <div class="status-grid">
-          <button
-            v-for="status in store.uniqueStatuses"
-            :key="status"
-            class="status-btn"
-            :class="{ active: isStatusSelected(status) }"
-            :style="{ 
-              '--status-color': statusColors[status] || '#6b7280',
-              borderColor: isStatusSelected(status) ? statusColors[status] : 'transparent'
-            }"
-            @click="toggleStatus(status)"
-          >
-            <span 
-              class="status-dot" 
-              :style="{ background: statusColors[status] || '#6b7280' }"
-            ></span>
-            <span class="status-label">{{ status }}</span>
-          </button>
-        </div>
+        <FilterSelect
+          v-model="store.filters.status"
+          :options="store.uniqueStatuses"
+          placeholder="All Statuses"
+          :multiple="true"
+        />
         <p class="filter-hint" v-if="store.filters.status.length > 0">
           {{ store.filters.status.length }} status{{ store.filters.status.length > 1 ? 'es' : '' }} selected
         </p>
@@ -637,33 +652,119 @@ const showLegendSettings = ref(false)
         </div>
       </div>
 
-      <!-- Map Style Settings (Map View Only) -->
-      <div class="filter-section collapsible" v-if="currentView === 'map'">
+      <!-- Legend Settings (Map View Only) - Color by visible, Position/Text/Max expandable -->
+      <div class="filter-section" v-if="currentView === 'map'">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <line x1="8" y1="9" x2="8" y2="9.01"/>
+            <line x1="8" y1="13" x2="8" y2="13.01"/>
+            <line x1="8" y1="17" x2="8" y2="17.01"/>
+            <line x1="12" y1="9" x2="18" y2="9"/>
+            <line x1="12" y1="13" x2="18" y2="13"/>
+            <line x1="12" y1="17" x2="18" y2="17"/>
+          </svg>
+          Legend Settings
+          <span
+            class="toggle-badge-inline"
+            :class="{ active: store.legendSettings.showLegend }"
+            @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend"
+            title="Click to toggle legend"
+          >
+            {{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}
+          </span>
+        </label>
+
+        <!-- Color By (always visible) -->
+        <div class="setting-row">
+          <label>Color by</label>
+          <select v-model="store.colorBy" class="style-select">
+            <option value="subspecies">Subspecies</option>
+            <option value="species">Species</option>
+            <option value="genus">Genus</option>
+            <option value="status">Sequencing Status</option>
+            <option value="mimicry">Mimicry Ring</option>
+            <option value="source">Data Source</option>
+          </select>
+        </div>
+
+        <!-- Advanced Legend Settings Toggle -->
         <button
-          class="collapse-toggle"
-          @click="showMapStyleSettings = !showMapStyleSettings"
-          :class="{ expanded: showMapStyleSettings }"
+          class="subsection-toggle"
+          @click="showAdvancedLegend = !showAdvancedLegend"
+          :class="{ expanded: showAdvancedLegend }"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="m9 18 6-6-6-6"/>
           </svg>
-          Map Style
+          Position / Text Size / Max Items
         </button>
 
-        <div v-show="showMapStyleSettings" class="collapse-content">
-          <!-- Color By -->
+        <div v-show="showAdvancedLegend" class="subsection-content">
+          <!-- Legend Position -->
           <div class="setting-row">
-            <label>Color Points By</label>
-            <select v-model="store.colorBy" class="style-select">
-              <option value="subspecies">Subspecies</option>
-              <option value="species">Species</option>
-              <option value="genus">Genus</option>
-              <option value="status">Sequencing Status</option>
-              <option value="mimicry">Mimicry Ring</option>
-              <option value="source">Data Source</option>
+            <label>Position</label>
+            <select v-model="store.legendSettings.position" class="style-select">
+              <option value="bottom-left">Bottom Left</option>
+              <option value="bottom-right">Bottom Right</option>
+              <option value="top-left">Top Left</option>
+              <option value="top-right">Top Right</option>
             </select>
           </div>
 
+          <!-- Text Size -->
+          <div class="setting-row">
+            <label>Text Size</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.6"
+                max="1.2"
+                step="0.05"
+                v-model.number="store.legendSettings.textSize"
+              />
+              <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
+            </div>
+          </div>
+
+          <!-- Max Items -->
+          <div class="setting-row">
+            <label>Max Items Shown</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="5"
+                max="30"
+                step="1"
+                v-model.number="store.legendSettings.maxItems"
+              />
+              <input
+                type="number"
+                class="setting-input"
+                min="3"
+                max="50"
+                v-model.number.lazy="store.legendSettings.maxItems"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Point Style (Map View Only) - Separate section for point appearance -->
+      <div class="filter-section collapsible" v-if="currentView === 'map'">
+        <button
+          class="collapse-toggle"
+          @click="showPointStyle = !showPointStyle"
+          :class="{ expanded: showPointStyle }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Point Style
+        </button>
+
+        <div v-show="showPointStyle" class="collapse-content">
           <!-- Point Size -->
           <div class="setting-row">
             <label>Point Size</label>
@@ -744,74 +845,131 @@ const showLegendSettings = ref(false)
         </div>
       </div>
 
-      <!-- Legend Settings (Map View Only) -->
+      <!-- Export Settings (Map View Only) -->
       <div class="filter-section collapsible" v-if="currentView === 'map'">
         <button
           class="collapse-toggle"
-          @click="showLegendSettings = !showLegendSettings"
-          :class="{ expanded: showLegendSettings }"
+          @click="showExportSettings = !showExportSettings"
+          :class="{ expanded: showExportSettings }"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="m9 18 6-6-6-6"/>
           </svg>
-          Legend Settings
+          Export Settings
           <span
             class="clustering-toggle-badge"
-            :class="{ active: store.legendSettings.showLegend }"
-            @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend"
-            title="Click to toggle legend"
+            :class="{ active: store.exportSettings.enabled }"
+            @click.stop="store.exportSettings.enabled = !store.exportSettings.enabled"
+            title="Toggle export preview overlay"
           >
-            {{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}
+            {{ store.exportSettings.enabled ? 'ON' : 'OFF' }}
           </span>
         </button>
 
-        <div v-show="showLegendSettings" class="collapse-content">
-          <!-- Legend Position -->
+        <div v-show="showExportSettings" class="collapse-content">
+          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
+            Toggle ON to show export preview overlay on map
+          </p>
+
+          <!-- Aspect Ratio -->
           <div class="setting-row">
-            <label>Position</label>
-            <select v-model="store.legendSettings.position" class="style-select">
-              <option value="bottom-left">Bottom Left</option>
-              <option value="bottom-right">Bottom Right</option>
-              <option value="top-left">Top Left</option>
-              <option value="top-right">Top Right</option>
+            <label>Aspect Ratio</label>
+            <select v-model="store.exportSettings.aspectRatio" class="style-select">
+              <option v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
+                {{ opt.label }}
+              </option>
             </select>
           </div>
 
-          <!-- Text Size -->
-          <div class="setting-row">
-            <label>Text Size</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0.6"
-                max="1.2"
-                step="0.05"
-                v-model.number="store.legendSettings.textSize"
-              />
-              <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
+          <!-- Custom Dimensions (only when custom is selected) -->
+          <div v-if="store.exportSettings.aspectRatio === 'custom'" class="setting-row">
+            <label>Custom Dimensions</label>
+            <div class="dimension-inputs">
+              <div class="dimension-field">
+                <input
+                  type="number"
+                  class="setting-input dimension-input"
+                  v-model.number="store.exportSettings.customWidth"
+                  min="100"
+                  max="8000"
+                  @keydown.enter="$event.target.blur()"
+                />
+                <span class="dimension-label">W</span>
+              </div>
+              <span class="dimension-x">×</span>
+              <div class="dimension-field">
+                <input
+                  type="number"
+                  class="setting-input dimension-input"
+                  v-model.number="store.exportSettings.customHeight"
+                  min="100"
+                  max="8000"
+                  @keydown.enter="$event.target.blur()"
+                />
+                <span class="dimension-label">H</span>
+              </div>
             </div>
           </div>
 
-          <!-- Max Items -->
-          <div class="setting-row">
-            <label>Max Items Shown</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="5"
-                max="30"
-                step="1"
-                v-model.number="store.legendSettings.maxItems"
-              />
-              <input
-                type="number"
-                class="setting-input"
-                min="3"
-                max="50"
-                v-model.number.lazy="store.legendSettings.maxItems"
-                @keydown.enter="$event.target.blur()"
-              />
-            </div>
+          <!-- Export Dimensions Preview -->
+          <div class="export-dimensions-preview">
+            <span class="dimension-text">{{ currentExportDimensions.width }} × {{ currentExportDimensions.height }} px</span>
+          </div>
+
+          <!-- Include Options -->
+          <div class="setting-row checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.exportSettings.includeLegend" />
+              <span>Include Legend</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
+              <span>Include Scale Bar</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.exportSettings.showCoordinates" />
+              <span>Show Coordinates</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- URL Share Settings -->
+      <div class="filter-section collapsible">
+        <button
+          class="collapse-toggle"
+          @click="showUrlSettings = !showUrlSettings"
+          :class="{ expanded: showUrlSettings }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          URL Share Settings
+        </button>
+
+        <div v-show="showUrlSettings" class="collapse-content">
+          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
+            Choose which settings to include when sharing URLs
+          </p>
+
+          <div class="setting-row checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.urlSettings.includeFilters" />
+              <span>Include Filters</span>
+            </label>
+            <p class="checkbox-hint">Taxonomy, mimicry, status, source filters</p>
+
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.urlSettings.includeMapView" />
+              <span>Include Map View</span>
+            </label>
+            <p class="checkbox-hint">Map center, zoom, rotation</p>
+
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.urlSettings.includeStyleSettings" />
+              <span>Include Style Settings</span>
+            </label>
+            <p class="checkbox-hint">Color by, legend, point style</p>
           </div>
         </div>
       </div>
@@ -1237,6 +1395,87 @@ const showLegendSettings = ref(false)
   padding: 0;
 }
 
+/* Subsection Toggle (used within filter sections for nested expandable content) */
+.subsection-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  margin-top: 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-muted, #666);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subsection-toggle:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-secondary, #aaa);
+  border-color: var(--color-text-muted, #666);
+}
+
+.subsection-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.subsection-toggle.expanded svg {
+  transform: rotate(90deg);
+}
+
+.subsection-toggle .active-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent, #4ade80);
+  margin-left: auto;
+}
+
+.subsection-content {
+  padding: 12px;
+  margin-top: 8px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+}
+
+/* Toggle Badge Inline (used in section headers) */
+.toggle-badge-inline {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(107, 114, 128, 0.2);
+  color: #888;
+  border: 1px solid transparent;
+}
+
+.toggle-badge-inline:hover {
+  background: rgba(107, 114, 128, 0.3);
+  border-color: rgba(107, 114, 128, 0.4);
+}
+
+.toggle-badge-inline.active {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-accent, #4ade80);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.toggle-badge-inline.active:hover {
+  background: rgba(74, 222, 128, 0.25);
+  border-color: rgba(74, 222, 128, 0.5);
+}
+
 .filter-hint {
   font-size: 0.7rem;
   color: var(--color-text-muted, #666);
@@ -1594,6 +1833,82 @@ const showLegendSettings = ref(false)
   width: auto;
   font-family: monospace;
   text-transform: uppercase;
+}
+
+/* Export Settings */
+.dimension-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dimension-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dimension-input {
+  width: 70px !important;
+}
+
+.dimension-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+}
+
+.dimension-x {
+  color: var(--color-text-muted, #666);
+  font-size: 0.9rem;
+}
+
+.export-dimensions-preview {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.dimension-text {
+  font-size: 0.8rem;
+  color: var(--color-accent, #4ade80);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Checkbox Group */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-accent, #4ade80);
+}
+
+.checkbox-label span {
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.checkbox-hint {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+  margin: -4px 0 4px 26px;
+  font-style: italic;
 }
 
 /* Responsive */

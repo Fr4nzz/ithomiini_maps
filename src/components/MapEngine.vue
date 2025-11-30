@@ -34,6 +34,66 @@ const limitedColorMap = computed(() => {
 })
 
 // ═══════════════════════════════════════════════════════════════════════════
+// EXPORT PREVIEW OVERLAY
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Aspect ratio options mapping
+const ASPECT_RATIOS = {
+  '16:9': { width: 1920, height: 1080 },
+  '4:3': { width: 1600, height: 1200 },
+  '1:1': { width: 1200, height: 1200 },
+  '3:2': { width: 1800, height: 1200 },
+  'A4': { width: 2480, height: 3508 },
+  'A4L': { width: 3508, height: 2480 },
+  'custom': null
+}
+
+// Calculate export overlay dimensions based on container size and aspect ratio
+const exportOverlayStyle = computed(() => {
+  if (!store.exportSettings.enabled) return {}
+
+  const ratio = store.exportSettings.aspectRatio
+  let targetWidth, targetHeight
+
+  if (ratio === 'custom') {
+    targetWidth = store.exportSettings.customWidth
+    targetHeight = store.exportSettings.customHeight
+  } else if (ASPECT_RATIOS[ratio]) {
+    targetWidth = ASPECT_RATIOS[ratio].width
+    targetHeight = ASPECT_RATIOS[ratio].height
+  } else {
+    return {}
+  }
+
+  const aspectRatio = targetWidth / targetHeight
+
+  // Calculate the maximum size that fits within the map container
+  // while maintaining aspect ratio (using 80% of container)
+  return {
+    '--export-aspect-ratio': aspectRatio,
+    '--export-width': targetWidth,
+    '--export-height': targetHeight
+  }
+})
+
+// Get bounds of the export area for coordinates display
+const exportBoundsText = computed(() => {
+  if (!store.exportSettings.enabled || !store.exportSettings.showCoordinates || !map) return ''
+
+  try {
+    const bounds = map.getBounds()
+    if (!bounds) return ''
+
+    const sw = bounds.getSouthWest()
+    const ne = bounds.getNorthEast()
+
+    return `${sw.lat.toFixed(4)}°, ${sw.lng.toFixed(4)}° — ${ne.lat.toFixed(4)}°, ${ne.lng.toFixed(4)}°`
+  } catch (e) {
+    return ''
+  }
+})
+
+// ═══════════════════════════════════════════════════════════════════════════
 // MAP STYLES - Free tile sources
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -856,8 +916,8 @@ const switchStyle = (styleName) => {
     if (map.isStyleLoaded()) {
       // Restore view state
       map.jumpTo({ center, zoom, bearing, pitch })
-      // Re-add the data layer with current filtered data
-      addDataLayer()
+      // Re-add the data layer with current filtered data - skip zoom to preserve view
+      addDataLayer({ skipZoom: true })
     } else {
       // Style not ready yet, try again
       setTimeout(waitForStyleAndAddLayer, 50)
@@ -874,7 +934,7 @@ const switchStyle = (styleName) => {
   map.once('idle', () => {
     if (!map.getSource('points-source')) {
       map.jumpTo({ center, zoom, bearing, pitch })
-      addDataLayer()
+      addDataLayer({ skipZoom: true })
     }
   })
 }
@@ -915,6 +975,24 @@ const switchStyle = (styleName) => {
       </div>
       <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
         + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
+      </div>
+    </div>
+
+    <!-- Export Preview Overlay -->
+    <div v-if="store.exportSettings.enabled" class="export-overlay" :style="exportOverlayStyle">
+      <!-- Export region with surrounding dark mask -->
+      <div class="export-region">
+        <!-- Corner handles -->
+        <div class="export-corner export-corner-tl"></div>
+        <div class="export-corner export-corner-tr"></div>
+        <div class="export-corner export-corner-bl"></div>
+        <div class="export-corner export-corner-br"></div>
+
+        <!-- Export info -->
+        <div class="export-info">
+          <span class="export-ratio">{{ store.exportSettings.aspectRatio }}</span>
+          <span v-if="store.exportSettings.showCoordinates" class="export-coords">{{ exportBoundsText }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1393,5 +1471,94 @@ const switchStyle = (styleName) => {
     bottom: 160px;
     font-size: 0.9em;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXPORT PREVIEW OVERLAY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.export-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.export-region {
+  position: relative;
+  max-width: 85%;
+  max-height: 85%;
+  aspect-ratio: var(--export-aspect-ratio);
+  border: 2px dashed rgba(74, 222, 128, 0.9);
+  border-radius: 4px;
+  /* Use huge box-shadow to create dark overlay around the region */
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+/* Corner handles */
+.export-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #4ade80;
+  background: transparent;
+}
+
+.export-corner-tl {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.export-corner-tr {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.export-corner-bl {
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
+}
+
+.export-corner-br {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Export info display */
+.export-info {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(26, 26, 46, 0.95);
+  padding: 6px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.export-ratio {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #4ade80;
+}
+
+.export-coords {
+  font-size: 0.75em;
+  color: #aaa;
+  font-family: monospace;
 }
 </style>
