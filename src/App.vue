@@ -41,6 +41,271 @@ const closeImageGallery = () => { showImageGallery.value = false }
 const openMapExport = () => { showMapExport.value = true }
 const closeMapExport = () => { showMapExport.value = false }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// DIRECT MAP EXPORT (used by top Export Map button)
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Aspect ratio dimensions
+const ASPECT_RATIOS = {
+  '16:9': { width: 1920, height: 1080 },
+  '4:3': { width: 1600, height: 1200 },
+  '1:1': { width: 1200, height: 1200 },
+  '3:2': { width: 1800, height: 1200 },
+  'A4': { width: 2480, height: 3508 },
+  'A4L': { width: 3508, height: 2480 },
+}
+
+// Helper to load image from data URL
+const loadImage = (src) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve(img)
+    img.onerror = () => reject(new Error('Failed to load image'))
+    img.src = src
+  })
+}
+
+// RoundRect helper
+const roundRect = (ctx, x, y, w, h, r) => {
+  if (w < 2 * r) r = w / 2
+  if (h < 2 * r) r = h / 2
+  ctx.beginPath()
+  ctx.moveTo(x + r, y)
+  ctx.arcTo(x + w, y, x + w, y + h, r)
+  ctx.arcTo(x + w, y + h, x, y + h, r)
+  ctx.arcTo(x, y + h, x, y, r)
+  ctx.arcTo(x, y, x + w, y, r)
+  ctx.closePath()
+  return ctx
+}
+
+// Draw legend on canvas
+const drawLegendOnCanvas = (ctx, width, height) => {
+  const colorMap = store.activeColorMap
+  const entries = Object.entries(colorMap).slice(0, store.legendSettings.maxItems)
+  const uiScale = store.exportSettings.uiScale || 1
+
+  const padding = 20 * uiScale
+  const itemHeight = 24 * uiScale
+  const legendWidth = 200 * uiScale
+  const legendHeight = entries.length * itemHeight + 45 * uiScale
+
+  // Position based on settings
+  let x, y
+  const pos = store.legendSettings.position
+  if (pos === 'top-left') { x = padding; y = padding }
+  else if (pos === 'top-right') { x = width - legendWidth - padding; y = padding }
+  else if (pos === 'bottom-right') { x = width - legendWidth - padding; y = height - legendHeight - padding }
+  else { x = padding; y = height - legendHeight - padding } // bottom-left default
+
+  // Background
+  ctx.fillStyle = 'rgba(26, 26, 46, 0.95)'
+  roundRect(ctx, x, y, legendWidth, legendHeight, 8 * uiScale)
+  ctx.fill()
+
+  // Title
+  ctx.fillStyle = '#888'
+  ctx.font = `bold ${12 * uiScale}px system-ui, sans-serif`
+  ctx.textAlign = 'left'
+  ctx.fillText(store.legendTitle.toUpperCase(), x + 12 * uiScale, y + 22 * uiScale)
+
+  // Items
+  ctx.font = `${13 * uiScale}px system-ui, sans-serif`
+  entries.forEach(([label, color], i) => {
+    const itemY = y + 40 * uiScale + i * itemHeight
+
+    // Dot
+    ctx.beginPath()
+    ctx.arc(x + 18 * uiScale, itemY, 5 * uiScale, 0, Math.PI * 2)
+    ctx.fillStyle = color
+    ctx.fill()
+
+    // Label
+    ctx.fillStyle = '#e0e0e0'
+    const isItalic = ['species', 'subspecies', 'genus'].includes(store.colorBy)
+    ctx.font = isItalic
+      ? `italic ${13 * uiScale}px system-ui, sans-serif`
+      : `${13 * uiScale}px system-ui, sans-serif`
+    ctx.fillText(label, x + 32 * uiScale, itemY + 4 * uiScale)
+  })
+
+  // "More" indicator
+  if (Object.keys(colorMap).length > store.legendSettings.maxItems) {
+    const moreY = y + legendHeight - 12 * uiScale
+    ctx.fillStyle = '#666'
+    ctx.font = `italic ${11 * uiScale}px system-ui, sans-serif`
+    ctx.fillText(`+ ${Object.keys(colorMap).length - store.legendSettings.maxItems} more`, x + 12 * uiScale, moreY)
+  }
+}
+
+// Draw scale bar on canvas
+const drawScaleBarOnCanvas = (ctx, width, height) => {
+  const uiScale = store.exportSettings.uiScale || 1
+  const padding = 20 * uiScale
+  const barWidth = 100 * uiScale
+  const barHeight = 4 * uiScale
+
+  // Position: bottom-right, or bottom-left if legend is bottom-right
+  let x
+  if (store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend) {
+    x = padding
+  } else {
+    x = width - barWidth - padding
+  }
+  const y = height - padding - barHeight - 20 * uiScale
+
+  // Scale bar line
+  ctx.fillStyle = '#fff'
+  ctx.fillRect(x, y, barWidth, barHeight)
+
+  // End caps
+  ctx.fillRect(x, y - 4 * uiScale, 2 * uiScale, barHeight + 8 * uiScale)
+  ctx.fillRect(x + barWidth - 2 * uiScale, y - 4 * uiScale, 2 * uiScale, barHeight + 8 * uiScale)
+
+  // Text
+  ctx.fillStyle = '#fff'
+  ctx.font = `bold ${11 * uiScale}px system-ui, sans-serif`
+  ctx.textAlign = store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'left' : 'right'
+  ctx.textBaseline = 'top'
+  ctx.shadowColor = 'rgba(0,0,0,0.7)'
+  ctx.shadowBlur = 3
+  ctx.fillText('Scale varies with latitude', store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? x : x + barWidth, y + barHeight + 6 * uiScale)
+  ctx.shadowBlur = 0
+}
+
+// Draw attribution on canvas
+const drawAttributionOnCanvas = (ctx, width, height) => {
+  const uiScale = store.exportSettings.uiScale || 1
+  const text = 'Ithomiini Distribution Maps | Data: Dore et al., Sanger Institute, GBIF'
+  const padding = 15 * uiScale
+
+  ctx.font = `${11 * uiScale}px system-ui, sans-serif`
+  const textWidth = ctx.measureText(text).width
+
+  // Background
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
+  roundRect(ctx, width - textWidth - padding - 12 * uiScale, height - 28 * uiScale, textWidth + 12 * uiScale, 22 * uiScale, 4 * uiScale)
+  ctx.fill()
+
+  // Text
+  ctx.fillStyle = '#aaa'
+  ctx.textAlign = 'right'
+  ctx.textBaseline = 'middle'
+  ctx.fillText(text, width - padding, height - 17 * uiScale)
+}
+
+// Direct export function for Export Map button
+const directExportMap = async () => {
+  if (!mapRef.value) {
+    alert('Map not available. Please ensure you are on the Map view.')
+    return
+  }
+
+  try {
+    const map = mapRef.value
+
+    // Ensure map style is loaded
+    if (!map.isStyleLoaded()) {
+      await new Promise(resolve => map.once('style.load', resolve))
+    }
+
+    // Wait for map to be idle (all tiles loaded)
+    if (!map.areTilesLoaded()) {
+      await new Promise(resolve => map.once('idle', resolve))
+    }
+
+    // Force a fresh render
+    map.triggerRepaint()
+
+    // Wait for GPU to complete using double requestAnimationFrame
+    await new Promise(resolve => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resolve)
+      })
+    })
+
+    // Get the map canvas
+    const mapCanvas = map.getCanvas()
+
+    // Determine export dimensions
+    const ratio = store.exportSettings.aspectRatio
+    let exportWidth, exportHeight
+    if (ratio === 'custom') {
+      exportWidth = store.exportSettings.customWidth
+      exportHeight = store.exportSettings.customHeight
+    } else {
+      const dims = ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
+      exportWidth = dims.width
+      exportHeight = dims.height
+    }
+
+    // Create output canvas
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    canvas.width = exportWidth
+    canvas.height = exportHeight
+
+    // Fill with dark background
+    ctx.fillStyle = '#1a1a2e'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // Capture the map as image
+    const mapDataUrl = mapCanvas.toDataURL('image/png')
+    const mapImage = await loadImage(mapDataUrl)
+
+    // Calculate how to draw the map
+    if (store.exportSettings.enabled) {
+      // Draw the map scaled to fill the export canvas
+      const scale = Math.max(
+        canvas.width / mapImage.width,
+        canvas.height / mapImage.height
+      )
+      const scaledWidth = mapImage.width * scale
+      const scaledHeight = mapImage.height * scale
+      const offsetX = (canvas.width - scaledWidth) / 2
+      const offsetY = (canvas.height - scaledHeight) / 2
+
+      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
+    } else {
+      // Draw the map scaled to fit (letterboxed)
+      const scale = Math.min(
+        canvas.width / mapImage.width,
+        canvas.height / mapImage.height
+      )
+      const scaledWidth = mapImage.width * scale
+      const scaledHeight = mapImage.height * scale
+      const offsetX = (canvas.width - scaledWidth) / 2
+      const offsetY = (canvas.height - scaledHeight) / 2
+
+      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
+    }
+
+    // Draw legend if enabled
+    if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
+      drawLegendOnCanvas(ctx, canvas.width, canvas.height)
+    }
+
+    // Draw scale bar if enabled
+    if (store.exportSettings.includeScaleBar) {
+      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height)
+    }
+
+    // Draw attribution
+    drawAttributionOnCanvas(ctx, canvas.width, canvas.height)
+
+    // Download the image
+    const dataUrl = canvas.toDataURL('image/png', 1.0)
+    const link = document.createElement('a')
+    link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.png`
+    link.href = dataUrl
+    link.click()
+
+  } catch (e) {
+    console.error('Image export failed:', e)
+    alert('Export failed: ' + e.message)
+  }
+}
+
 // Receive map instance from MapEngine
 const onMapReady = (map) => {
   mapRef.value = map
@@ -65,11 +330,11 @@ onMounted(() => {
 <template>
   <div class="app-container">
     <!-- Sidebar with filters -->
-    <Sidebar 
+    <Sidebar
       @open-export="openExport"
       @open-mimicry="openMimicrySelector"
       @open-gallery="openImageGallery"
-      @open-map-export="openMapExport"
+      @open-map-export="directExportMap"
       :current-view="currentView"
       @set-view="setView"
     />
@@ -158,7 +423,7 @@ onMounted(() => {
           class="modal-overlay"
           @click.self="closeExport"
         >
-          <ExportPanel @close="closeExport" />
+          <ExportPanel :map="mapRef" @close="closeExport" />
         </div>
       </Transition>
     </Teleport>

@@ -16,6 +16,65 @@ export const useDataStore = defineStore('data', () => {
   // UI preferences
   const showThumbnail = ref(true)
 
+  // Clustering settings
+  const clusteringEnabled = ref(false)  // Will be auto-enabled when GBIF is included
+  const clusterSettings = ref({
+    radius: 40,        // Cluster radius in pixels
+    maxZoom: 12,       // Max zoom level for clustering
+    minPoints: 5       // Minimum points to form a cluster
+  })
+
+  // Map styling settings
+  const colorBy = ref('subspecies')  // What attribute to color points by: 'status', 'subspecies', 'species', 'genus', 'mimicry', 'source'
+
+  const mapStyle = ref({
+    pointSize: 8,           // Base point size in pixels
+    borderWidth: 1.5,       // Point border width
+    borderColor: '#ffffff', // Point border color
+    fillOpacity: 0.85,      // Point fill opacity (0-1)
+    borderOpacity: 0.6      // Point border opacity (0-1)
+  })
+
+  const legendSettings = ref({
+    position: 'bottom-left',  // 'top-left', 'top-right', 'bottom-left', 'bottom-right'
+    textSize: 0.8,            // Font size multiplier
+    showLegend: true,         // Whether to show legend
+    maxItems: 15              // Max items before "more" indicator
+  })
+
+  // Export settings
+  const exportSettings = ref({
+    enabled: false,           // Whether export preview mode is active
+    aspectRatio: '16:9',      // '16:9', '4:3', '1:1', '3:2', 'A4', 'custom'
+    customWidth: 1920,
+    customHeight: 1080,
+    showCoordinates: true,    // Show export area coordinates
+    includeLegend: true,
+    includeScaleBar: true,
+    uiScale: 1.0              // Scale factor for UI elements in export (0.5 to 2.0)
+  })
+
+  // Map view state (for URL sync)
+  const mapView = ref({
+    center: [-60, -5],        // [lng, lat]
+    zoom: 4,
+    bearing: 0,
+    pitch: 0
+  })
+
+  // URL sharing settings
+  const urlSettings = ref({
+    includeFilters: true,     // Include taxonomy, mimicry, status filters
+    includeMapView: false,    // Include center, zoom, bearing, pitch
+    includeExportSettings: false,
+    includeStyleSettings: false
+  })
+
+  // Custom color palettes for different colorBy modes
+  const customColors = ref({
+    // Users can customize these
+  })
+
   // The Active Filters
   // NOTE: species is now an ARRAY for multi-select (like Wings Gallery)
   const filters = ref({
@@ -29,7 +88,8 @@ export const useDataStore = defineStore('data', () => {
     // Parallel filters
     mimicry: 'All',
     status: [],
-    source: 'All',
+    source: ['Sanger Institute'],  // Multi-select array, default to Sanger
+    country: 'All',     // Country filter
     // Search
     camidSearch: '',
     // Date range
@@ -39,6 +99,9 @@ export const useDataStore = defineStore('data', () => {
 
   // Photo lookup cache: { 'Genus species subspecies': image_url }
   const photoLookup = ref({})
+
+  // Mimicry ring photo lookup: { 'RingName': { representatives: [...], currentIndex: 0 } }
+  const mimicryPhotoLookup = ref({})
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ACTIONS
@@ -50,22 +113,31 @@ export const useDataStore = defineStore('data', () => {
       // Determine base path (handles both dev and GitHub Pages)
       const basePath = import.meta.env.BASE_URL || '/'
       const response = await fetch(`${basePath}data/map_points.json`)
-      
+
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        throw new Error(`Failed to load data: ${response.status} ${response.statusText}`)
       }
-      
+
       const data = await response.json()
+
+      // Validate data format
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid data format: expected array')
+      }
+
       allFeatures.value = data
-      console.log(`Loaded ${data.length} records`)
-      
+      console.log(`✓ Loaded ${data.length} records`)
+
       // Build photo lookup table
       buildPhotoLookup(data)
+
+      // Build mimicry ring photo lookup
+      buildMimicryPhotoLookup(data)
 
       // Initialize filters from URL
       restoreFiltersFromURL()
     } catch (e) {
-      console.error('Failed to load data:', e)
+      console.error('❌ Failed to load data:', e)
       // Set empty array to prevent errors
       allFeatures.value = []
     } finally {
@@ -107,6 +179,62 @@ export const useDataStore = defineStore('data', () => {
     
     photoLookup.value = lookup
     console.log(`Built photo lookup with ${Object.keys(lookup).length} entries`)
+  }
+
+  /**
+   * Build mimicry ring photo lookup for the visual selector
+   * Groups individuals by mimicry ring, prioritizing Sanger photos then GBIF
+   */
+  const buildMimicryPhotoLookup = (data) => {
+    const lookup = {}
+
+    // First pass: collect all individuals with photos by mimicry ring
+    for (const item of data) {
+      const ring = item.mimicry_ring
+      if (!ring || ring === 'Unknown' || !item.image_url) continue
+
+      if (!lookup[ring]) {
+        lookup[ring] = {
+          representatives: [],
+          currentIndex: 0
+        }
+      }
+
+      // Add this individual as a potential representative
+      lookup[ring].representatives.push({
+        scientific_name: item.scientific_name,
+        subspecies: item.subspecies,
+        image_url: item.image_url,
+        source: item.source,
+        id: item.id
+      })
+    }
+
+    // Second pass: sort representatives - Sanger first, then GBIF, dedupe by subspecies
+    for (const ring of Object.keys(lookup)) {
+      const reps = lookup[ring].representatives
+
+      // Sort: Sanger Institute first, then by species name
+      reps.sort((a, b) => {
+        if (a.source === 'Sanger Institute' && b.source !== 'Sanger Institute') return -1
+        if (a.source !== 'Sanger Institute' && b.source === 'Sanger Institute') return 1
+        const nameA = `${a.scientific_name} ${a.subspecies || ''}`
+        const nameB = `${b.scientific_name} ${b.subspecies || ''}`
+        return nameA.localeCompare(nameB)
+      })
+
+      // Dedupe by subspecies (keep first = best source)
+      const seen = new Set()
+      lookup[ring].representatives = reps.filter(rep => {
+        const key = `${rep.scientific_name}|${rep.subspecies || ''}`
+        if (seen.has(key)) return false
+        seen.add(key)
+        return true
+      })
+    }
+
+    mimicryPhotoLookup.value = lookup
+    console.log(`Built mimicry photo lookup for ${Object.keys(lookup).length} rings`)
   }
 
   /**
@@ -173,7 +301,10 @@ export const useDataStore = defineStore('data', () => {
       filters.value.status = params.get('status').split(',')
     }
     if (params.get('source')) {
-      filters.value.source = params.get('source')
+      filters.value.source = params.get('source').split(',')
+    }
+    if (params.get('country')) {
+      filters.value.country = params.get('country')
     }
     if (params.get('cam')) {
       filters.value.camidSearch = params.get('cam')
@@ -196,7 +327,8 @@ export const useDataStore = defineStore('data', () => {
       subspecies: [],
       mimicry: 'All',
       status: [],
-      source: 'All',
+      source: ['Sanger Institute'],  // Default to Sanger
+      country: 'All',
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
@@ -319,6 +451,42 @@ export const useDataStore = defineStore('data', () => {
     return Array.from(set).sort()
   })
 
+  // Available mimicry rings based on current taxonomy filter (species/genus)
+  // These are rings that would return results if selected
+  const availableMimicryRings = computed(() => {
+    // Get data filtered by taxonomy only (not mimicry or source)
+    let data = allFeatures.value
+
+    if (filters.value.family !== 'All') {
+      data = data.filter(i => i.family === filters.value.family)
+    }
+    if (filters.value.tribe !== 'All') {
+      data = data.filter(i => i.tribe === filters.value.tribe)
+    }
+    if (filters.value.genus !== 'All') {
+      data = data.filter(i => i.genus === filters.value.genus)
+    }
+    if (filters.value.species.length > 0) {
+      data = data.filter(i => filters.value.species.includes(i.scientific_name))
+    }
+    if (filters.value.subspecies.length > 0) {
+      data = data.filter(i => filters.value.subspecies.includes(i.subspecies))
+    }
+
+    const set = new Set(
+      data
+        .map(i => i.mimicry_ring)
+        .filter(v => v && v !== 'Unknown' && isValidValue(v))
+    )
+    return Array.from(set).sort()
+  })
+
+  // Unavailable mimicry rings - rings that exist but would return no results
+  const unavailableMimicryRings = computed(() => {
+    const available = new Set(availableMimicryRings.value)
+    return uniqueMimicry.value.filter(ring => !available.has(ring))
+  })
+
   // Unique sequencing statuses
   const uniqueStatuses = computed(() => {
     const set = new Set(
@@ -337,6 +505,24 @@ export const useDataStore = defineStore('data', () => {
         .filter(isValidValue)
     )
     return Array.from(set).sort()
+  })
+
+  // Unique countries
+  const uniqueCountries = computed(() => {
+    const set = new Set(
+      allFeatures.value
+        .map(i => i.country)
+        .filter(isValidValue)
+    )
+    return Array.from(set).sort()
+  })
+
+  // Unique CAMIDs for autocomplete (sorted for binary search potential)
+  const uniqueCamids = computed(() => {
+    return allFeatures.value
+      .map(i => i.id)
+      .filter(id => id && typeof id === 'string')
+      .sort()
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -366,6 +552,13 @@ export const useDataStore = defineStore('data', () => {
     filters.value.subspecies = []
   }, { deep: true })
 
+  // Auto-enable/disable clustering based on source selection
+  watch(() => filters.value.source, (newSources) => {
+    // Enable clustering when GBIF is included (large dataset)
+    const hasGBIF = newSources.includes('GBIF')
+    clusteringEnabled.value = hasGBIF
+  }, { deep: true })
+
   // ═══════════════════════════════════════════════════════════════════════════
   // FINAL FILTERED DATA
   // ═══════════════════════════════════════════════════════════════════════════
@@ -374,11 +567,21 @@ export const useDataStore = defineStore('data', () => {
     if (!allFeatures.value.length) return null
 
     const filtered = allFeatures.value.filter(item => {
-      // CAMID Search (takes priority - instant filter)
+      // CAMID Search - supports multiple IDs separated by comma, space, or newline
       if (filters.value.camidSearch) {
-        const searchTerm = filters.value.camidSearch.toUpperCase()
-        const itemId = (item.id || '').toUpperCase()
-        if (!itemId.includes(searchTerm)) return false
+        // Parse multiple CAMIDs from input (split by comma, space, newline)
+        const searchTerms = filters.value.camidSearch
+          .toUpperCase()
+          .split(/[\s,\n]+/)
+          .map(s => s.trim())
+          .filter(s => s.length > 0)
+
+        if (searchTerms.length > 0) {
+          const itemId = (item.id || '').toUpperCase()
+          // Check if item ID matches ANY of the search terms (substring match)
+          const matches = searchTerms.some(term => itemId.includes(term))
+          if (!matches) return false
+        }
       }
 
       // Taxonomic cascade
@@ -395,7 +598,10 @@ export const useDataStore = defineStore('data', () => {
       // Parallel filters
       if (filters.value.mimicry !== 'All' && item.mimicry_ring !== filters.value.mimicry) return false
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
-      if (filters.value.source !== 'All' && item.source !== filters.value.source) return false
+      // Source filter (multi-select array)
+      if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false
+      // Country filter
+      if (filters.value.country !== 'All' && item.country !== filters.value.country) return false
       
       // Date filtering
       if (filters.value.dateStart || filters.value.dateEnd) {
@@ -421,9 +627,111 @@ export const useDataStore = defineStore('data', () => {
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // DYNAMIC COLOR PALETTE GENERATOR
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Predefined color palettes
+  const COLOR_PALETTES = {
+    status: {
+      'Sequenced': '#3b82f6',
+      'Tissue Available': '#10b981',
+      'Preserved Specimen': '#f59e0b',
+      'Published': '#a855f7',
+      'GBIF Record': '#6b7280',
+      'Observation': '#22c55e',
+      'Museum Specimen': '#8b5cf6',
+      'Living Specimen': '#14b8a6',
+    },
+    source: {
+      'Sanger Institute': '#3b82f6',
+      'GBIF': '#22c55e',
+    }
+  }
+
+  // Generate colors for dynamic categories
+  const generateColorPalette = (values) => {
+    const colors = [
+      '#3b82f6', '#10b981', '#f59e0b', '#a855f7', '#ef4444',
+      '#22d3ee', '#f97316', '#84cc16', '#ec4899', '#6366f1',
+      '#14b8a6', '#eab308', '#8b5cf6', '#06b6d4', '#f43f5e',
+      '#0ea5e9', '#22c55e', '#d946ef', '#64748b', '#fb923c'
+    ]
+    const palette = {}
+    values.forEach((val, idx) => {
+      palette[val] = colors[idx % colors.length]
+    })
+    return palette
+  }
+
+  // Get the color map based on current colorBy setting
+  const activeColorMap = computed(() => {
+    const mode = colorBy.value
+
+    // Check for custom colors first
+    if (customColors.value[mode]) {
+      return customColors.value[mode]
+    }
+
+    // Use predefined palettes for status and source
+    if (mode === 'status') {
+      return COLOR_PALETTES.status
+    }
+    if (mode === 'source') {
+      return COLOR_PALETTES.source
+    }
+
+    // Generate dynamic palette for taxonomy and mimicry
+    let uniqueValues = []
+    switch (mode) {
+      case 'subspecies':
+        uniqueValues = uniqueSubspecies.value
+        break
+      case 'species':
+        uniqueValues = uniqueSpecies.value
+        break
+      case 'genus':
+        uniqueValues = uniqueGenera.value
+        break
+      case 'mimicry':
+        uniqueValues = uniqueMimicry.value
+        break
+      default:
+        uniqueValues = uniqueStatuses.value
+    }
+
+    return generateColorPalette(uniqueValues)
+  })
+
+  // Get the attribute key for the current colorBy mode
+  const colorByAttribute = computed(() => {
+    const mapping = {
+      'status': 'sequencing_status',
+      'subspecies': 'subspecies',
+      'species': 'scientific_name',
+      'genus': 'genus',
+      'mimicry': 'mimicry_ring',
+      'source': 'source'
+    }
+    return mapping[colorBy.value] || 'sequencing_status'
+  })
+
+  // Get legend title based on colorBy
+  const legendTitle = computed(() => {
+    const titles = {
+      'status': 'Sequencing Status',
+      'subspecies': 'Subspecies',
+      'species': 'Species',
+      'genus': 'Genus',
+      'mimicry': 'Mimicry Ring',
+      'source': 'Data Source'
+    }
+    return titles[colorBy.value] || 'Legend'
+  })
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // URL SYNC WATCHER
   // ═══════════════════════════════════════════════════════════════════════════
-  
+
   watch(
     filters,
     (newFilters) => {
@@ -438,7 +746,11 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.subspecies.length > 0) params.set('ssp', newFilters.subspecies.join(','))
       if (newFilters.mimicry !== 'All') params.set('mim', newFilters.mimicry)
       if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
-      if (newFilters.source !== 'All') params.set('source', newFilters.source)
+      // Source as comma-separated array (only if not default)
+      if (newFilters.source.length > 0 && !(newFilters.source.length === 1 && newFilters.source[0] === 'Sanger Institute')) {
+        params.set('source', newFilters.source.join(','))
+      }
+      if (newFilters.country !== 'All') params.set('country', newFilters.country)
       if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
       if (newFilters.dateStart) params.set('from', newFilters.dateStart)
       if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)
@@ -463,7 +775,19 @@ export const useDataStore = defineStore('data', () => {
     showAdvancedFilters,
     showMimicryFilter,
     showThumbnail,
+    clusteringEnabled,
+    clusterSettings,
     photoLookup,
+    mimicryPhotoLookup,
+
+    // Map styling state
+    colorBy,
+    mapStyle,
+    legendSettings,
+    exportSettings,
+    mapView,
+    urlSettings,
+    customColors,
 
     // Actions
     loadMapData,
@@ -479,8 +803,17 @@ export const useDataStore = defineStore('data', () => {
     uniqueSpecies,
     uniqueSubspecies,
     uniqueMimicry,
+    availableMimicryRings,
+    unavailableMimicryRings,
     uniqueStatuses,
     uniqueSources,
+    uniqueCountries,
+    uniqueCamids,
+
+    // Computed (color mapping)
+    activeColorMap,
+    colorByAttribute,
+    legendTitle,
 
     // Final output
     filteredGeoJSON,

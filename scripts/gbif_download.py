@@ -27,15 +27,28 @@ import time
 from datetime import datetime
 
 # Configuration
-ITHOMIINI_TAXON_KEY = 5568  # GBIF taxonKey for tribe Ithomiini
 OUTPUT_FILE = "public/data/gbif_occurrences.json"
 BATCH_SIZE = 300  # GBIF max per request
-MAX_RECORDS = 50000  # Safety limit (adjust as needed)
+MAX_RECORDS_PER_GENUS = 5000  # Safety limit per genus
 REQUEST_DELAY = 0.3  # Seconds between requests to be polite
 
 # Quality filters
 REQUIRE_COORDINATES = True
 EXCLUDE_GEOSPATIAL_ISSUES = True
+
+# All Ithomiini genera (from Dore et al. database)
+# Note: The old taxonKey=5568 was WRONG - it pointed to Natalimyzidae (flies), not Ithomiini (butterflies)
+# GBIF doesn't have a single "tribe Ithomiini" key with occurrences, so we query by genus
+ITHOMIINI_GENERA = [
+    'Aeria', 'Athesis', 'Athyrtis', 'Brevioleria', 'Callithomia', 'Ceratinia',
+    'Dircenna', 'Elzunia', 'Episcada', 'Epityches', 'Eutresis', 'Forbestra',
+    'Godyris', 'Greta', 'Haenschia', 'Heterosais', 'Hyalenna', 'Hyalyris',
+    'Hypoleria', 'Hypomenitis', 'Hyposcada', 'Hypothyris', 'Ithomia',
+    'Mcclungia', 'Mechanitis', 'Megoleria', 'Melinaea', 'Methona',
+    'Napeogenes', 'Oleria', 'Ollantaya', 'Olyras', 'Pachacutia', 'Pagyris',
+    'Paititia', 'Patricia', 'Placidina', 'Pseudoscada', 'Pteronymia', 'Sais',
+    'Scada', 'Thyridia', 'Tithorea', 'Veladyris', 'Velamysta'
+]
 
 
 def clean_scientific_name(name):
@@ -140,74 +153,141 @@ def get_image_url(record):
     return None
 
 
-def fetch_all_ithomiini():
+def get_genus_taxon_key(genus_name):
     """
-    Fetch all Ithomiini occurrences from GBIF using pagination.
+    Look up the GBIF taxon key for a genus.
+    Returns the usageKey if found, None otherwise.
+    """
+    try:
+        match_url = "https://api.gbif.org/v1/species/match"
+        params = {
+            'name': genus_name,
+            'rank': 'GENUS',
+            'kingdom': 'Animalia',
+            'class': 'Insecta',
+            'order': 'Lepidoptera'
+        }
+        response = requests.get(match_url, params=params, timeout=30)
+        response.raise_for_status()
+        data = response.json()
+
+        # Verify it's actually in Nymphalidae (Ithomiini are all in this family)
+        if data.get('family') == 'Nymphalidae' and data.get('matchType') != 'NONE':
+            return data.get('usageKey')
+        return None
+    except Exception as e:
+        print(f"    Error looking up {genus_name}: {e}")
+        return None
+
+
+def fetch_genus_occurrences(genus_name, taxon_key):
+    """
+    Fetch all occurrences for a single genus from GBIF.
     """
     base_url = "https://api.gbif.org/v1/occurrence/search"
-    
+    records = []
+
     params = {
-        'taxonKey': ITHOMIINI_TAXON_KEY,
+        'taxonKey': taxon_key,
         'hasCoordinate': str(REQUIRE_COORDINATES).lower(),
         'hasGeospatialIssue': str(not EXCLUDE_GEOSPATIAL_ISSUES).lower(),
         'limit': BATCH_SIZE,
         'offset': 0,
     }
-    
-    all_records = []
-    
-    # First request to get total count
-    print(f"Querying GBIF for tribe Ithomiini (taxonKey={ITHOMIINI_TAXON_KEY})...")
-    
+
+    # Get total count
     try:
         response = requests.get(base_url, params={**params, 'limit': 0}, timeout=30)
         response.raise_for_status()
         total = response.json().get('count', 0)
-        print(f"Total records available: {total:,}")
-        
-        if total > MAX_RECORDS:
-            print(f"WARNING: Limiting download to {MAX_RECORDS:,} records")
-            total = MAX_RECORDS
-        
+
+        if total == 0:
+            return []
+
+        # Cap per genus
+        if total > MAX_RECORDS_PER_GENUS:
+            total = MAX_RECORDS_PER_GENUS
+
+        print(f"  {genus_name}: {total:,} records available")
+
     except Exception as e:
-        print(f"Error querying GBIF: {e}")
+        print(f"  {genus_name}: Error getting count - {e}")
         return []
-    
+
     # Paginate through results
     offset = 0
-    batch_num = 0
-    
+
     while offset < total:
-        batch_num += 1
         params['offset'] = offset
-        
+
         try:
-            print(f"  Batch {batch_num}: fetching records {offset+1:,} - {min(offset+BATCH_SIZE, total):,}...")
             response = requests.get(base_url, params=params, timeout=60)
             response.raise_for_status()
             data = response.json()
-            
+
             results = data.get('results', [])
             if not results:
                 break
-            
+
             # Process each record
             for rec in results:
                 processed = process_record(rec)
                 if processed:
-                    all_records.append(processed)
-            
+                    records.append(processed)
+
             offset += BATCH_SIZE
-            
-            # Rate limiting
             time.sleep(REQUEST_DELAY)
-            
+
         except Exception as e:
-            print(f"  Error fetching batch: {e}")
-            time.sleep(2)  # Longer wait on error
+            print(f"    Error fetching batch at offset {offset}: {e}")
+            time.sleep(2)
             continue
-    
+
+    return records
+
+
+def fetch_all_ithomiini():
+    """
+    Fetch all Ithomiini occurrences from GBIF by querying each genus.
+
+    Note: GBIF doesn't have a single tribe-level key for Ithomiini with occurrences,
+    so we query each genus individually and combine results.
+    """
+    all_records = []
+    genus_stats = {}
+
+    print(f"Querying GBIF for {len(ITHOMIINI_GENERA)} Ithomiini genera...")
+    print("=" * 60)
+
+    for i, genus in enumerate(ITHOMIINI_GENERA, 1):
+        print(f"[{i}/{len(ITHOMIINI_GENERA)}] Looking up {genus}...")
+
+        # Get taxon key for this genus
+        taxon_key = get_genus_taxon_key(genus)
+
+        if not taxon_key:
+            print(f"  {genus}: Not found in GBIF Lepidoptera")
+            genus_stats[genus] = 0
+            continue
+
+        # Fetch occurrences for this genus
+        records = fetch_genus_occurrences(genus, taxon_key)
+        genus_stats[genus] = len(records)
+        all_records.extend(records)
+
+        # Progress update
+        if len(records) > 0:
+            print(f"    -> Added {len(records):,} records (total: {len(all_records):,})")
+
+    print("=" * 60)
     print(f"\nTotal records processed: {len(all_records):,}")
+
+    # Print top genera by record count
+    print("\nTop 10 genera by record count:")
+    for genus, count in sorted(genus_stats.items(), key=lambda x: -x[1])[:10]:
+        if count > 0:
+            print(f"  {genus}: {count:,}")
+
     return all_records
 
 

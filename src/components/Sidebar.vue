@@ -15,18 +15,132 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 
 const store = useDataStore()
 
-// Local state for CAMID search with debounce
+// Local state for CAMID search with autocomplete (multi-value textarea)
 const camidInput = ref('')
+const camidTextarea = ref(null)
+const showCamidDropdown = ref(false)
+const selectedSuggestionIndex = ref(-1)
+const currentWordInfo = ref({ word: '', start: 0, end: 0 })
 let debounceTimer = null
 
-const handleCamidSearch = (e) => {
-  const value = e.target.value
+// Get the current word at cursor position for autocomplete
+const getCurrentWord = (text, cursorPos) => {
+  // Find word boundaries (split by comma, space, newline)
+  const beforeCursor = text.slice(0, cursorPos)
+  const afterCursor = text.slice(cursorPos)
+
+  // Find start of current word (last separator before cursor)
+  const startMatch = beforeCursor.match(/[\s,\n]*([^\s,\n]*)$/)
+  const wordStart = startMatch ? cursorPos - startMatch[1].length : cursorPos
+
+  // Find end of current word (first separator after cursor)
+  const endMatch = afterCursor.match(/^([^\s,\n]*)/)
+  const wordEnd = cursorPos + (endMatch ? endMatch[1].length : 0)
+
+  const word = text.slice(wordStart, wordEnd)
+  return { word, start: wordStart, end: wordEnd }
+}
+
+// Filtered CAMID suggestions based on current word
+const camidSuggestions = computed(() => {
+  const query = currentWordInfo.value.word.trim().toUpperCase()
+  if (!query || query.length < 2) return []
+
+  // Filter and limit to 15 suggestions for performance
+  const matches = []
+  for (const id of store.uniqueCamids) {
+    if (id.toUpperCase().includes(query)) {
+      matches.push(id)
+      if (matches.length >= 15) break
+    }
+  }
+  return matches
+})
+
+const handleCamidInput = (e) => {
+  const textarea = e.target
+  const value = textarea.value
+  const cursorPos = textarea.selectionStart
+
   camidInput.value = value
-  
+  currentWordInfo.value = getCurrentWord(value, cursorPos)
+  showCamidDropdown.value = currentWordInfo.value.word.length >= 2
+  selectedSuggestionIndex.value = -1
+
   clearTimeout(debounceTimer)
   debounceTimer = setTimeout(() => {
     store.filters.camidSearch = value.trim().toUpperCase()
   }, 300)
+}
+
+const selectCamid = (camid) => {
+  const { start, end } = currentWordInfo.value
+  const before = camidInput.value.slice(0, start)
+  const after = camidInput.value.slice(end)
+
+  // Insert selected CAMID, add separator if there's more text after
+  const separator = after.trim() ? '' : ' '
+  camidInput.value = before + camid + separator + after
+
+  // Update the store filter
+  store.filters.camidSearch = camidInput.value.trim().toUpperCase()
+
+  showCamidDropdown.value = false
+  selectedSuggestionIndex.value = -1
+
+  // Focus back and position cursor after inserted CAMID
+  if (camidTextarea.value) {
+    const newCursorPos = start + camid.length + separator.length
+    camidTextarea.value.focus()
+    camidTextarea.value.setSelectionRange(newCursorPos, newCursorPos)
+  }
+}
+
+const handleCamidKeydown = (e) => {
+  // Update current word on cursor movement
+  if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
+    setTimeout(() => {
+      const textarea = e.target
+      currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
+      showCamidDropdown.value = currentWordInfo.value.word.length >= 2
+    }, 0)
+    return
+  }
+
+  if (!showCamidDropdown.value || camidSuggestions.value.length === 0) return
+
+  if (e.key === 'ArrowDown' && !e.altKey) {
+    e.preventDefault()
+    selectedSuggestionIndex.value = Math.min(
+      selectedSuggestionIndex.value + 1,
+      camidSuggestions.value.length - 1
+    )
+  } else if (e.key === 'ArrowUp' && !e.altKey) {
+    e.preventDefault()
+    selectedSuggestionIndex.value = Math.max(selectedSuggestionIndex.value - 1, -1)
+  } else if (e.key === 'Enter' && selectedSuggestionIndex.value >= 0) {
+    e.preventDefault()
+    selectCamid(camidSuggestions.value[selectedSuggestionIndex.value])
+  } else if (e.key === 'Tab' && camidSuggestions.value.length > 0) {
+    e.preventDefault()
+    const idx = selectedSuggestionIndex.value >= 0 ? selectedSuggestionIndex.value : 0
+    selectCamid(camidSuggestions.value[idx])
+  } else if (e.key === 'Escape') {
+    showCamidDropdown.value = false
+  }
+}
+
+const handleCamidBlur = () => {
+  // Delay to allow click on suggestion
+  setTimeout(() => {
+    showCamidDropdown.value = false
+  }, 150)
+}
+
+const handleCamidClick = (e) => {
+  const textarea = e.target
+  currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
+  showCamidDropdown.value = currentWordInfo.value.word.length >= 2
 }
 
 // Computed: Record counts
@@ -62,8 +176,9 @@ const statusColors = {
   'Preserved Specimen': '#f59e0b',
   'Published': '#a855f7',
   'GBIF Record': '#6b7280',
-  'Observation': '#6b7280',
-  'Museum Specimen': '#8b5cf6'
+  'Observation': '#22c55e',        // Research Grade equivalent
+  'Museum Specimen': '#8b5cf6',
+  'Living Specimen': '#14b8a6',
 }
 
 // Share URL functionality
@@ -77,6 +192,44 @@ const showCopiedToast = ref(false)
 
 // Show date filter section
 const showDateFilter = ref(false)
+
+// Show cluster settings section
+const showClusterSettings = ref(false)
+
+// Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
+const showAdvancedTaxonomy = ref(false)
+
+// Show additional legend settings (Position/Text Size/Max Items)
+const showAdvancedLegend = ref(false)
+
+// Show point style settings section
+const showPointStyle = ref(false)
+
+// Show export settings section
+const showExportSettings = ref(false)
+
+// Show URL share settings section
+const showUrlSettings = ref(false)
+
+// Aspect ratio options
+const aspectRatioOptions = [
+  { value: '16:9', label: '16:9 (Widescreen)', width: 1920, height: 1080 },
+  { value: '4:3', label: '4:3 (Standard)', width: 1600, height: 1200 },
+  { value: '1:1', label: '1:1 (Square)', width: 1200, height: 1200 },
+  { value: '3:2', label: '3:2 (Photo)', width: 1800, height: 1200 },
+  { value: 'A4', label: 'A4 Portrait', width: 2480, height: 3508 },
+  { value: 'A4L', label: 'A4 Landscape', width: 3508, height: 2480 },
+  { value: 'custom', label: 'Custom', width: null, height: null },
+]
+
+// Get current aspect ratio dimensions
+const currentExportDimensions = computed(() => {
+  const option = aspectRatioOptions.find(o => o.value === store.exportSettings.aspectRatio)
+  if (option && option.value !== 'custom') {
+    return { width: option.width, height: option.height }
+  }
+  return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
+})
 </script>
 
 <template>
@@ -161,25 +314,51 @@ const showDateFilter = ref(false)
         </button>
       </div>
 
-      <!-- CAMID Search -->
+      <!-- CAMID Search with Autocomplete (Multi-value) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/>
             <path d="m21 21-4.3-4.3"/>
           </svg>
-          Quick Search (CAMID)
+          Search CAMIDs
         </label>
-        <input 
-          type="text" 
-          class="search-input"
-          placeholder="e.g. CAM012345"
-          :value="camidInput"
-          @input="handleCamidSearch"
-        />
+        <p class="filter-hint" style="margin-top: 0; margin-bottom: 6px;">
+          Enter or paste multiple IDs (comma/space/newline separated)
+        </p>
+        <div class="camid-autocomplete">
+          <textarea
+            ref="camidTextarea"
+            class="camid-textarea"
+            placeholder="e.g. CAM012345, CAM012346..."
+            :value="camidInput"
+            @input="handleCamidInput"
+            @keydown="handleCamidKeydown"
+            @click="handleCamidClick"
+            @focus="handleCamidClick"
+            @blur="handleCamidBlur"
+            autocomplete="off"
+            spellcheck="false"
+            rows="1"
+          ></textarea>
+          <div
+            v-if="showCamidDropdown && camidSuggestions.length > 0"
+            class="camid-dropdown"
+          >
+            <button
+              v-for="(suggestion, index) in camidSuggestions"
+              :key="suggestion"
+              class="camid-suggestion"
+              :class="{ selected: index === selectedSuggestionIndex }"
+              @mousedown.prevent="selectCamid(suggestion)"
+            >
+              {{ suggestion }}
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- Primary Filters: Species & Subspecies with Multi-select -->
+      <!-- Taxonomy Section (Species/Subspecies visible, Family/Tribe/Genus expandable) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -206,22 +385,21 @@ const showDateFilter = ref(false)
           :multiple="true"
           :disabled="store.filters.species.length === 0"
         />
-      </div>
 
-      <!-- Advanced Taxonomy (Collapsible) -->
-      <div class="filter-section collapsible">
-        <button 
-          class="collapse-toggle"
-          @click="store.toggleAdvancedFilters"
-          :class="{ expanded: store.showAdvancedFilters }"
+        <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->
+        <button
+          class="subsection-toggle"
+          @click="showAdvancedTaxonomy = !showAdvancedTaxonomy"
+          :class="{ expanded: showAdvancedTaxonomy }"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="m9 18 6-6-6-6"/>
           </svg>
-          Advanced Taxonomy
+          Family / Tribe / Genus
+          <span v-if="store.filters.family !== 'All' || store.filters.tribe !== 'All' || store.filters.genus !== 'All'" class="active-indicator"></span>
         </button>
 
-        <div v-show="store.showAdvancedFilters" class="collapse-content">
+        <div v-show="showAdvancedTaxonomy" class="subsection-content">
           <FilterSelect
             label="Family"
             v-model="store.filters.family"
@@ -310,7 +488,7 @@ const showDateFilter = ref(false)
         </div>
       </div>
 
-      <!-- Sequencing Status -->
+      <!-- Sequencing Status (Dropdown with All default) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -319,31 +497,18 @@ const showDateFilter = ref(false)
           Sequencing Status
         </label>
 
-        <div class="status-grid">
-          <button
-            v-for="status in store.uniqueStatuses"
-            :key="status"
-            class="status-btn"
-            :class="{ active: isStatusSelected(status) }"
-            :style="{ 
-              '--status-color': statusColors[status] || '#6b7280',
-              borderColor: isStatusSelected(status) ? statusColors[status] : 'transparent'
-            }"
-            @click="toggleStatus(status)"
-          >
-            <span 
-              class="status-dot" 
-              :style="{ background: statusColors[status] || '#6b7280' }"
-            ></span>
-            <span class="status-label">{{ status }}</span>
-          </button>
-        </div>
+        <FilterSelect
+          v-model="store.filters.status"
+          :options="store.uniqueStatuses"
+          placeholder="All Statuses"
+          :multiple="true"
+        />
         <p class="filter-hint" v-if="store.filters.status.length > 0">
           {{ store.filters.status.length }} status{{ store.filters.status.length > 1 ? 'es' : '' }} selected
         </p>
       </div>
 
-      <!-- Data Source -->
+      <!-- Data Source (Multi-select, default Sanger) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -355,8 +520,28 @@ const showDateFilter = ref(false)
         </label>
         <FilterSelect
           v-model="store.filters.source"
-          :options="['All', ...store.uniqueSources]"
-          placeholder="All Sources"
+          :options="store.uniqueSources"
+          placeholder="Select sources..."
+          :multiple="true"
+        />
+        <p class="filter-hint" v-if="store.filters.source.length === 0">
+          No sources selected - showing all data
+        </p>
+      </div>
+
+      <!-- Country Filter -->
+      <div class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          Country
+        </label>
+        <FilterSelect
+          v-model="store.filters.country"
+          :options="['All', ...store.uniqueCountries]"
+          placeholder="All Countries"
           :multiple="false"
           :show-count="false"
         />
@@ -368,6 +553,439 @@ const showDateFilter = ref(false)
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
+      </div>
+
+      <!-- Clustering Settings (Map View Only) -->
+      <div class="filter-section collapsible" v-if="currentView === 'map'">
+        <button
+          class="collapse-toggle"
+          @click="showClusterSettings = !showClusterSettings"
+          :class="{ expanded: showClusterSettings }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Point Clustering
+          <span
+            class="clustering-toggle-badge"
+            :class="{ active: store.clusteringEnabled }"
+            @click.stop="store.clusteringEnabled = !store.clusteringEnabled"
+            title="Click to toggle clustering"
+          >
+            {{ store.clusteringEnabled ? 'ON' : 'OFF' }}
+          </span>
+        </button>
+
+        <div v-show="showClusterSettings" class="collapse-content">
+          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
+            Auto-enabled when GBIF data is included. Click ON/OFF to toggle.
+          </p>
+
+          <!-- Cluster Settings (only visible when clustering is enabled) -->
+          <div v-if="store.clusteringEnabled" class="cluster-settings">
+            <!-- Cluster Radius -->
+            <div class="setting-row">
+              <label>Cluster Radius <span class="setting-hint">(px)</span></label>
+              <div class="slider-group">
+                <input
+                  type="range"
+                  min="20"
+                  max="100"
+                  step="5"
+                  v-model.number="store.clusterSettings.radius"
+                />
+                <input
+                  type="number"
+                  class="setting-input"
+                  min="10"
+                  max="200"
+                  v-model.number.lazy="store.clusterSettings.radius"
+                  @keydown.enter="$event.target.blur()"
+                />
+              </div>
+            </div>
+
+            <!-- Max Zoom -->
+            <div class="setting-row">
+              <label>Max Cluster Zoom <span class="setting-hint">(zoom level where clusters stop)</span></label>
+              <div class="slider-group">
+                <input
+                  type="range"
+                  min="6"
+                  max="16"
+                  step="1"
+                  v-model.number="store.clusterSettings.maxZoom"
+                />
+                <input
+                  type="number"
+                  class="setting-input"
+                  min="1"
+                  max="18"
+                  v-model.number.lazy="store.clusterSettings.maxZoom"
+                  @keydown.enter="$event.target.blur()"
+                />
+              </div>
+            </div>
+
+            <!-- Min Points -->
+            <div class="setting-row">
+              <label>Min Points per Cluster</label>
+              <div class="slider-group">
+                <input
+                  type="range"
+                  min="2"
+                  max="20"
+                  step="1"
+                  v-model.number="store.clusterSettings.minPoints"
+                />
+                <input
+                  type="number"
+                  class="setting-input"
+                  min="2"
+                  max="50"
+                  v-model.number.lazy="store.clusterSettings.minPoints"
+                  @keydown.enter="$event.target.blur()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legend Settings (Map View Only) - Color by visible, Position/Text/Max expandable -->
+      <div class="filter-section" v-if="currentView === 'map'">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <line x1="8" y1="9" x2="8" y2="9.01"/>
+            <line x1="8" y1="13" x2="8" y2="13.01"/>
+            <line x1="8" y1="17" x2="8" y2="17.01"/>
+            <line x1="12" y1="9" x2="18" y2="9"/>
+            <line x1="12" y1="13" x2="18" y2="13"/>
+            <line x1="12" y1="17" x2="18" y2="17"/>
+          </svg>
+          Legend Settings
+          <span
+            class="toggle-badge-inline"
+            :class="{ active: store.legendSettings.showLegend }"
+            @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend"
+            title="Click to toggle legend"
+          >
+            {{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}
+          </span>
+        </label>
+
+        <!-- Color By (always visible) -->
+        <div class="setting-row">
+          <label>Color by</label>
+          <select v-model="store.colorBy" class="style-select">
+            <option value="subspecies">Subspecies</option>
+            <option value="species">Species</option>
+            <option value="genus">Genus</option>
+            <option value="status">Sequencing Status</option>
+            <option value="mimicry">Mimicry Ring</option>
+            <option value="source">Data Source</option>
+          </select>
+        </div>
+
+        <!-- Advanced Legend Settings Toggle -->
+        <button
+          class="subsection-toggle"
+          @click="showAdvancedLegend = !showAdvancedLegend"
+          :class="{ expanded: showAdvancedLegend }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Position / Text Size / Max Items
+        </button>
+
+        <div v-show="showAdvancedLegend" class="subsection-content">
+          <!-- Legend Position -->
+          <div class="setting-row">
+            <label>Position</label>
+            <select v-model="store.legendSettings.position" class="style-select">
+              <option value="bottom-left">Bottom Left</option>
+              <option value="bottom-right">Bottom Right</option>
+              <option value="top-left">Top Left</option>
+              <option value="top-right">Top Right</option>
+            </select>
+          </div>
+
+          <!-- Text Size -->
+          <div class="setting-row">
+            <label>Text Size</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.6"
+                max="1.2"
+                step="0.05"
+                v-model.number="store.legendSettings.textSize"
+              />
+              <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
+            </div>
+          </div>
+
+          <!-- Max Items -->
+          <div class="setting-row">
+            <label>Max Items Shown</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="5"
+                max="30"
+                step="1"
+                v-model.number="store.legendSettings.maxItems"
+              />
+              <input
+                type="number"
+                class="setting-input"
+                min="3"
+                max="50"
+                v-model.number.lazy="store.legendSettings.maxItems"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Point Style (Map View Only) - Separate section for point appearance -->
+      <div class="filter-section collapsible" v-if="currentView === 'map'">
+        <button
+          class="collapse-toggle"
+          @click="showPointStyle = !showPointStyle"
+          :class="{ expanded: showPointStyle }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Point Style
+        </button>
+
+        <div v-show="showPointStyle" class="collapse-content">
+          <!-- Point Size -->
+          <div class="setting-row">
+            <label>Point Size</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="4"
+                max="20"
+                step="1"
+                v-model.number="store.mapStyle.pointSize"
+              />
+              <input
+                type="number"
+                class="setting-input"
+                min="2"
+                max="30"
+                v-model.number.lazy="store.mapStyle.pointSize"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+
+          <!-- Border Width -->
+          <div class="setting-row">
+            <label>Border Width</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0"
+                max="5"
+                step="0.5"
+                v-model.number="store.mapStyle.borderWidth"
+              />
+              <input
+                type="number"
+                class="setting-input"
+                min="0"
+                max="10"
+                step="0.5"
+                v-model.number.lazy="store.mapStyle.borderWidth"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+
+          <!-- Fill Opacity -->
+          <div class="setting-row">
+            <label>Fill Opacity</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.1"
+                max="1"
+                step="0.05"
+                v-model.number="store.mapStyle.fillOpacity"
+              />
+              <span class="slider-value">{{ Math.round(store.mapStyle.fillOpacity * 100) }}%</span>
+            </div>
+          </div>
+
+          <!-- Border Color -->
+          <div class="setting-row">
+            <label>Border Color</label>
+            <div class="color-picker-row">
+              <input
+                type="color"
+                v-model="store.mapStyle.borderColor"
+                class="color-picker"
+              />
+              <input
+                type="text"
+                class="setting-input color-input"
+                v-model="store.mapStyle.borderColor"
+                @keydown.enter="$event.target.blur()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export Settings (Map View Only) -->
+      <div class="filter-section collapsible" v-if="currentView === 'map'">
+        <button
+          class="collapse-toggle"
+          @click="showExportSettings = !showExportSettings"
+          :class="{ expanded: showExportSettings }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Export Settings
+          <span
+            class="clustering-toggle-badge"
+            :class="{ active: store.exportSettings.enabled }"
+            @click.stop="store.exportSettings.enabled = !store.exportSettings.enabled"
+            title="Toggle export preview overlay"
+          >
+            {{ store.exportSettings.enabled ? 'ON' : 'OFF' }}
+          </span>
+        </button>
+
+        <div v-show="showExportSettings" class="collapse-content">
+          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
+            Toggle ON to show export preview overlay on map
+          </p>
+
+          <!-- Aspect Ratio -->
+          <div class="setting-row">
+            <label>Aspect Ratio</label>
+            <select v-model="store.exportSettings.aspectRatio" class="style-select">
+              <option v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
+                {{ opt.label }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Custom Dimensions (only when custom is selected) -->
+          <div v-if="store.exportSettings.aspectRatio === 'custom'" class="setting-row">
+            <label>Custom Dimensions</label>
+            <div class="dimension-inputs">
+              <div class="dimension-field">
+                <input
+                  type="number"
+                  class="setting-input dimension-input"
+                  v-model.number="store.exportSettings.customWidth"
+                  min="100"
+                  max="8000"
+                  @keydown.enter="$event.target.blur()"
+                />
+                <span class="dimension-label">W</span>
+              </div>
+              <span class="dimension-x">×</span>
+              <div class="dimension-field">
+                <input
+                  type="number"
+                  class="setting-input dimension-input"
+                  v-model.number="store.exportSettings.customHeight"
+                  min="100"
+                  max="8000"
+                  @keydown.enter="$event.target.blur()"
+                />
+                <span class="dimension-label">H</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Export Dimensions Preview -->
+          <div class="export-dimensions-preview">
+            <span class="dimension-text">{{ currentExportDimensions.width }} × {{ currentExportDimensions.height }} px</span>
+          </div>
+
+          <!-- Include Options -->
+          <div class="setting-row checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.exportSettings.includeLegend" />
+              <span>Include Legend</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
+              <span>Include Scale Bar</span>
+            </label>
+          </div>
+
+          <!-- UI Scale -->
+          <div class="setting-row" style="margin-top: 12px;">
+            <label>UI Scale <span class="setting-hint">(legend, scale bar size)</span></label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.5"
+                max="2"
+                step="0.1"
+                v-model.number="store.exportSettings.uiScale"
+              />
+              <span class="slider-value">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
+            </div>
+          </div>
+          <p class="filter-hint" style="margin-top: 4px;">
+            Tip: Use Ctrl + / Ctrl - to preview at different browser zoom levels
+          </p>
+        </div>
+      </div>
+
+      <!-- URL Share Settings -->
+      <div class="filter-section collapsible">
+        <button
+          class="collapse-toggle"
+          @click="showUrlSettings = !showUrlSettings"
+          :class="{ expanded: showUrlSettings }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          URL Share Settings
+        </button>
+
+        <div v-show="showUrlSettings" class="collapse-content">
+          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
+            Choose which settings to include when sharing URLs
+          </p>
+
+          <div class="setting-row checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.urlSettings.includeFilters" />
+              <span>Include Filters</span>
+            </label>
+            <p class="checkbox-hint">Taxonomy, mimicry, status, source filters</p>
+
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.urlSettings.includeMapView" />
+              <span>Include Map View</span>
+            </label>
+            <p class="checkbox-hint">Map center, zoom, rotation</p>
+
+            <label class="checkbox-label">
+              <input type="checkbox" v-model="store.urlSettings.includeStyleSettings" />
+              <span>Include Style Settings</span>
+            </label>
+            <p class="checkbox-hint">Color by, legend, point style</p>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -657,6 +1275,78 @@ const showDateFilter = ref(false)
 .search-input:focus {
   outline: none;
   border-color: var(--color-accent, #4ade80);
+}
+
+/* CAMID Autocomplete */
+.camid-autocomplete {
+  position: relative;
+}
+
+.camid-textarea {
+  width: 100%;
+  min-height: 38px;
+  max-height: 120px; /* ~5 lines */
+  padding: 10px 14px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  font-family: monospace;
+  line-height: 1.4;
+  resize: vertical;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: border-color 0.2s;
+}
+
+.camid-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+.camid-textarea::placeholder {
+  color: var(--color-text-muted, #666);
+  font-family: inherit;
+}
+
+.camid-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.camid-suggestion {
+  width: 100%;
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  font-family: monospace;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.camid-suggestion:hover,
+.camid-suggestion.selected {
+  background: var(--color-bg-hover, #363653);
+}
+
+.camid-suggestion.selected {
+  color: var(--color-accent, #4ade80);
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
 }
 
@@ -668,7 +1358,7 @@ const showDateFilter = ref(false)
 .collapsible {
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: visible to allow dropdowns to extend outside */
 }
 
 .collapse-toggle {
@@ -717,6 +1407,87 @@ const showDateFilter = ref(false)
 
 .collapse-content.no-padding {
   padding: 0;
+}
+
+/* Subsection Toggle (used within filter sections for nested expandable content) */
+.subsection-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  margin-top: 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-muted, #666);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subsection-toggle:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-secondary, #aaa);
+  border-color: var(--color-text-muted, #666);
+}
+
+.subsection-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.subsection-toggle.expanded svg {
+  transform: rotate(90deg);
+}
+
+.subsection-toggle .active-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent, #4ade80);
+  margin-left: auto;
+}
+
+.subsection-content {
+  padding: 12px;
+  margin-top: 8px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+}
+
+/* Toggle Badge Inline (used in section headers) */
+.toggle-badge-inline {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(107, 114, 128, 0.2);
+  color: #888;
+  border: 1px solid transparent;
+}
+
+.toggle-badge-inline:hover {
+  background: rgba(107, 114, 128, 0.3);
+  border-color: rgba(107, 114, 128, 0.4);
+}
+
+.toggle-badge-inline.active {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-accent, #4ade80);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.toggle-badge-inline.active:hover {
+  background: rgba(74, 222, 128, 0.25);
+  border-color: rgba(74, 222, 128, 0.5);
 }
 
 .filter-hint {
@@ -889,6 +1660,271 @@ const showDateFilter = ref(false)
   transform: translateX(-50%) translateY(10px);
 }
 
+/* Clustering Toggle Badge */
+.clustering-toggle-badge {
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(107, 114, 128, 0.2);
+  color: #888;
+  border: 1px solid transparent;
+}
+
+.clustering-toggle-badge:hover {
+  background: rgba(107, 114, 128, 0.3);
+  border-color: rgba(107, 114, 128, 0.4);
+}
+
+.clustering-toggle-badge.active {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-accent, #4ade80);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.clustering-toggle-badge.active:hover {
+  background: rgba(74, 222, 128, 0.25);
+  border-color: rgba(74, 222, 128, 0.5);
+}
+
+/* Cluster Settings */
+.cluster-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 6px;
+}
+
+.setting-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setting-row label {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #aaa);
+  font-weight: 500;
+}
+
+.slider-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-group input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border-radius: 2px;
+  outline: none;
+}
+
+.slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent, #4ade80);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.slider-group input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.slider-group input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-accent, #4ade80);
+  cursor: pointer;
+}
+
+.slider-value {
+  min-width: 45px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent, #4ade80);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.setting-input {
+  width: 55px;
+  padding: 4px 6px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.setting-input::-webkit-outer-spin-button,
+.setting-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.setting-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
+.setting-hint {
+  font-weight: 400;
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #666);
+}
+
+/* Style Select */
+.style-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.style-select:hover {
+  border-color: var(--color-text-muted, #666);
+}
+
+.style-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
+/* Color Picker */
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  cursor: pointer;
+  background: none;
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.color-picker::-webkit-color-swatch {
+  border-radius: 4px;
+  border: none;
+}
+
+.color-input {
+  flex: 1;
+  width: auto;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+/* Export Settings */
+.dimension-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dimension-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dimension-input {
+  width: 70px !important;
+}
+
+.dimension-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+}
+
+.dimension-x {
+  color: var(--color-text-muted, #666);
+  font-size: 0.9rem;
+}
+
+.export-dimensions-preview {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.dimension-text {
+  font-size: 0.8rem;
+  color: var(--color-accent, #4ade80);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Checkbox Group */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-accent, #4ade80);
+}
+
+.checkbox-label span {
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.checkbox-hint {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+  margin: -4px 0 4px 26px;
+  font-style: italic;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .sidebar {
@@ -897,7 +1933,7 @@ const showDateFilter = ref(false)
     height: auto;
     max-height: 50vh;
   }
-  
+
   .view-toggle {
     display: none;
   }
