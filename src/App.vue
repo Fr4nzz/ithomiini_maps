@@ -204,14 +204,25 @@ const directExportMap = async () => {
   try {
     const map = mapRef.value
 
-    // Force a render and wait for it to complete
-    await new Promise((resolve) => {
-      map.once('render', resolve)
-      map.triggerRepaint()
-    })
+    // Ensure map style is loaded
+    if (!map.isStyleLoaded()) {
+      await new Promise(resolve => map.once('style.load', resolve))
+    }
 
-    // Small additional delay to ensure WebGL buffer is ready
-    await new Promise(resolve => setTimeout(resolve, 100))
+    // Wait for map to be idle (all tiles loaded)
+    if (!map.areTilesLoaded()) {
+      await new Promise(resolve => map.once('idle', resolve))
+    }
+
+    // Force a fresh render
+    map.triggerRepaint()
+
+    // Wait for GPU to complete using double requestAnimationFrame
+    await new Promise(resolve => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resolve)
+      })
+    })
 
     // Get the map canvas
     const mapCanvas = map.getCanvas()
