@@ -48,6 +48,50 @@ const ASPECT_RATIOS = {
   'custom': null
 }
 
+// Computed transform origin for legend based on position
+const legendTransformOrigin = computed(() => {
+  const pos = store.legendSettings.position
+  if (pos === 'top-left') return 'top left'
+  if (pos === 'top-right') return 'top right'
+  if (pos === 'bottom-left') return 'bottom left'
+  if (pos === 'bottom-right') return 'bottom right'
+  return 'bottom left'
+})
+
+// Scale bar text - calculated from map zoom level
+const scaleBarText = ref('500 km')
+
+// Update scale bar text when map moves
+const updateScaleBar = () => {
+  if (!map) return
+
+  try {
+    const zoom = map.getZoom()
+    const center = map.getCenter()
+    const lat = center.lat
+
+    // Calculate meters per pixel at this latitude and zoom
+    const metersPerPixel = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
+
+    // Scale bar is approximately 100px wide, calculate what distance that represents
+    const distance = metersPerPixel * 100
+
+    // Choose appropriate unit and round to nice numbers
+    if (distance >= 1000) {
+      const km = distance / 1000
+      if (km >= 500) scaleBarText.value = Math.round(km / 100) * 100 + ' km'
+      else if (km >= 50) scaleBarText.value = Math.round(km / 10) * 10 + ' km'
+      else if (km >= 5) scaleBarText.value = Math.round(km) + ' km'
+      else scaleBarText.value = km.toFixed(1) + ' km'
+    } else {
+      if (distance >= 100) scaleBarText.value = Math.round(distance / 10) * 10 + ' m'
+      else scaleBarText.value = Math.round(distance) + ' m'
+    }
+  } catch (e) {
+    scaleBarText.value = '—'
+  }
+}
+
 // Calculate the export hole position as percentages
 // This creates the largest rectangle that fits the container while maintaining aspect ratio
 const exportHolePosition = computed(() => {
@@ -252,7 +296,12 @@ const initMap = () => {
   map.on('load', () => {
     addDataLayer()
     emit('map-ready', map)
+    updateScaleBar()
   })
+
+  // Update scale bar when map moves/zooms
+  map.on('moveend', updateScaleBar)
+  map.on('zoomend', updateScaleBar)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -966,9 +1015,9 @@ const switchStyle = (styleName) => {
       </button>
     </div>
 
-    <!-- Legend -->
+    <!-- Legend (shown when NOT in export mode) -->
     <div
-      v-if="store.legendSettings.showLegend"
+      v-if="store.legendSettings.showLegend && !store.exportSettings.enabled"
       class="legend"
       :class="legendPositionClass"
       :style="{ fontSize: store.legendSettings.textSize + 'rem' }"
@@ -1027,6 +1076,45 @@ const switchStyle = (styleName) => {
         <div class="export-info">
           <span class="export-ratio">{{ store.exportSettings.aspectRatio }}</span>
           <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
+        </div>
+
+        <!-- Legend inside export region (scaled) -->
+        <div
+          v-if="store.legendSettings.showLegend && store.exportSettings.includeLegend"
+          class="export-legend"
+          :class="'export-legend-' + store.legendSettings.position"
+          :style="{
+            fontSize: (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem',
+            transform: 'scale(' + store.exportSettings.uiScale + ')',
+            transformOrigin: legendTransformOrigin
+          }"
+        >
+          <div class="legend-title">{{ store.legendTitle }}</div>
+          <div
+            v-for="(color, label) in limitedColorMap"
+            :key="label"
+            class="legend-item"
+          >
+            <span class="legend-dot" :style="{ backgroundColor: color }"></span>
+            <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
+          </div>
+          <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
+            + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
+          </div>
+        </div>
+
+        <!-- Scale bar inside export region -->
+        <div
+          v-if="store.exportSettings.includeScaleBar"
+          class="export-scale-bar"
+          :class="{ 'export-scale-bar-left': store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend }"
+          :style="{
+            transform: 'scale(' + store.exportSettings.uiScale + ')',
+            transformOrigin: store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'bottom left' : 'bottom right'
+          }"
+        >
+          <div class="scale-bar-line"></div>
+          <span class="scale-bar-text">{{ scaleBarText }}</span>
         </div>
       </div>
     </div>
@@ -1599,5 +1687,132 @@ const switchStyle = (styleName) => {
   font-size: 0.75em;
   color: #aaa;
   font-family: monospace;
+}
+
+/* Export Legend (inside export region) */
+.export-legend {
+  position: absolute;
+  background: rgba(26, 26, 46, 0.95);
+  border-radius: 8px;
+  padding: 12px 16px;
+  max-height: 60%;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.export-legend-bottom-left {
+  bottom: 15px;
+  left: 15px;
+}
+
+.export-legend-bottom-right {
+  bottom: 15px;
+  right: 15px;
+}
+
+.export-legend-top-left {
+  top: 50px;
+  left: 15px;
+}
+
+.export-legend-top-right {
+  top: 50px;
+  right: 15px;
+}
+
+.export-legend .legend-title {
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #3d3d5c;
+}
+
+.export-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  font-size: 0.85em;
+  color: #e0e0e0;
+}
+
+.export-legend .legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.export-legend .legend-label-italic {
+  font-style: italic;
+}
+
+.export-legend .legend-more {
+  font-size: 0.75em;
+  color: #888;
+  font-style: italic;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid #3d3d5c;
+}
+
+/* Export Scale Bar */
+.export-scale-bar {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  z-index: 2;
+}
+
+.export-scale-bar-left {
+  right: auto;
+  left: 15px;
+  align-items: flex-start;
+}
+
+.scale-bar-line {
+  width: 100px;
+  height: 4px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.scale-bar-line::before,
+.scale-bar-line::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background: #fff;
+  top: -2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.scale-bar-line::before {
+  left: 0;
+}
+
+.scale-bar-line::after {
+  right: 0;
+}
+
+.scale-bar-text {
+  font-size: 0.7em;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 </style>

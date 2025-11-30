@@ -926,11 +926,25 @@ const currentExportDimensions = computed(() => {
               <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
               <span>Include Scale Bar</span>
             </label>
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.exportSettings.showCoordinates" />
-              <span>Show Coordinates</span>
-            </label>
           </div>
+
+          <!-- UI Scale -->
+          <div class="setting-row" style="margin-top: 12px;">
+            <label>UI Scale <span class="setting-hint">(legend, scale bar size)</span></label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.5"
+                max="2"
+                step="0.1"
+                v-model.number="store.exportSettings.uiScale"
+              />
+              <span class="slider-value">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
+            </div>
+          </div>
+          <p class="filter-hint" style="margin-top: 4px;">
+            Tip: Use Ctrl + / Ctrl - to preview at different browser zoom levels
+          </p>
         </div>
       </div>
 

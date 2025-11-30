@@ -50,7 +50,8 @@ export const useDataStore = defineStore('data', () => {
     customHeight: 1080,
     showCoordinates: true,    // Show export area coordinates
     includeLegend: true,
-    includeScaleBar: true
+    includeScaleBar: true,
+    uiScale: 1.0              // Scale factor for UI elements in export (0.5 to 2.0)
   })
 
   // Map view state (for URL sync)
