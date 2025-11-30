@@ -158,7 +158,7 @@ onMounted(() => {
           class="modal-overlay"
           @click.self="closeExport"
         >
-          <ExportPanel @close="closeExport" />
+          <ExportPanel :map="mapRef" @close="closeExport" />
         </div>
       </Transition>
     </Teleport>

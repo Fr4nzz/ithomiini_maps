@@ -1135,6 +1135,107 @@ const switchStyle = (styleName) => {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   MAPLIBRE CONTROLS CUSTOMIZATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Style the navigation control container */
+:deep(.maplibregl-ctrl-top-right) {
+  top: 10px;
+  right: 10px;
+}
+
+:deep(.maplibregl-ctrl-group) {
+  background: rgba(26, 26, 46, 0.95) !important;
+  border: 1px solid #3d3d5c !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+
+:deep(.maplibregl-ctrl-group button) {
+  width: 32px !important;
+  height: 32px !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #3d3d5c !important;
+}
+
+:deep(.maplibregl-ctrl-group button:last-child) {
+  border-bottom: none !important;
+}
+
+:deep(.maplibregl-ctrl-group button:hover) {
+  background-color: #2d2d4a !important;
+}
+
+/* Compass button - make it more intuitive */
+:deep(.maplibregl-ctrl-compass) {
+  position: relative;
+}
+
+/* Style the compass icon */
+:deep(.maplibregl-ctrl-compass .maplibregl-ctrl-icon) {
+  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+:deep(.maplibregl-ctrl-compass:hover .maplibregl-ctrl-icon) {
+  filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
+}
+
+/* Add rotate label tooltip */
+:deep(.maplibregl-ctrl-compass::after) {
+  content: 'Rotate';
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(26, 26, 46, 0.95);
+  color: #aaa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+:deep(.maplibregl-ctrl-compass:hover::after) {
+  opacity: 1;
+}
+
+/* Zoom buttons */
+:deep(.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon),
+:deep(.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon) {
+  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+:deep(.maplibregl-ctrl-zoom-in:hover .maplibregl-ctrl-icon),
+:deep(.maplibregl-ctrl-zoom-out:hover .maplibregl-ctrl-icon) {
+  filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
+}
+
+/* Fullscreen button */
+:deep(.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon) {
+  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+:deep(.maplibregl-ctrl-fullscreen:hover .maplibregl-ctrl-icon) {
+  filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
+}
+
+/* Scale control */
+:deep(.maplibregl-ctrl-scale) {
+  background: rgba(26, 26, 46, 0.8) !important;
+  border: 1px solid #3d3d5c !important;
+  border-radius: 4px !important;
+  color: #aaa !important;
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    STYLE SWITCHER
    ═══════════════════════════════════════════════════════════════════════════ */
 
