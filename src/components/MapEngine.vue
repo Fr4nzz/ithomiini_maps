@@ -48,9 +48,12 @@ const ASPECT_RATIOS = {
   'custom': null
 }
 
-// Calculate export overlay dimensions based on container size and aspect ratio
-const exportOverlayStyle = computed(() => {
-  if (!store.exportSettings.enabled) return {}
+// Calculate the export hole position as percentages
+// This creates the largest rectangle that fits the container while maintaining aspect ratio
+const exportHolePosition = computed(() => {
+  if (!store.exportSettings.enabled) {
+    return { x: 10, y: 10, width: 80, height: 80 }
+  }
 
   const ratio = store.exportSettings.aspectRatio
   let targetWidth, targetHeight
@@ -62,34 +65,40 @@ const exportOverlayStyle = computed(() => {
     targetWidth = ASPECT_RATIOS[ratio].width
     targetHeight = ASPECT_RATIOS[ratio].height
   } else {
-    return {}
+    return { x: 10, y: 10, width: 80, height: 80 }
   }
 
   const aspectRatio = targetWidth / targetHeight
 
-  // Calculate the maximum size that fits within the map container
-  // while maintaining aspect ratio (using 80% of container)
-  return {
-    '--export-aspect-ratio': aspectRatio,
-    '--export-width': targetWidth,
-    '--export-height': targetHeight
+  // Use 92% of container as maximum (leaving small margin)
+  const maxPercent = 92
+
+  // For a container, we need to consider its aspect ratio
+  // Since we don't know the exact container dimensions, we'll use a common 16:10 estimate
+  // The SVG mask will adapt to actual container size
+  const containerAspectRatio = 1.6 // approximate, actual will vary
+
+  let holeWidth, holeHeight
+
+  if (aspectRatio > containerAspectRatio) {
+    // Export is wider than container - constrained by width
+    holeWidth = maxPercent
+    holeHeight = maxPercent / aspectRatio * containerAspectRatio
+  } else {
+    // Export is taller than container - constrained by height
+    holeHeight = maxPercent
+    holeWidth = maxPercent * aspectRatio / containerAspectRatio
   }
-})
 
-// Get bounds of the export area for coordinates display
-const exportBoundsText = computed(() => {
-  if (!store.exportSettings.enabled || !store.exportSettings.showCoordinates || !map) return ''
+  // Center the hole
+  const x = (100 - holeWidth) / 2
+  const y = (100 - holeHeight) / 2
 
-  try {
-    const bounds = map.getBounds()
-    if (!bounds) return ''
-
-    const sw = bounds.getSouthWest()
-    const ne = bounds.getNorthEast()
-
-    return `${sw.lat.toFixed(4)}°, ${sw.lng.toFixed(4)}° — ${ne.lat.toFixed(4)}°, ${ne.lng.toFixed(4)}°`
-  } catch (e) {
-    return ''
+  return {
+    x: Math.max(2, x),
+    y: Math.max(2, y),
+    width: Math.min(96, holeWidth),
+    height: Math.min(96, holeHeight)
   }
 })
 
@@ -979,19 +988,45 @@ const switchStyle = (styleName) => {
     </div>
 
     <!-- Export Preview Overlay -->
-    <div v-if="store.exportSettings.enabled" class="export-overlay" :style="exportOverlayStyle">
-      <!-- Export region with surrounding dark mask -->
-      <div class="export-region">
+    <div v-if="store.exportSettings.enabled" class="export-overlay">
+      <!-- Dark mask with transparent hole in center -->
+      <svg class="export-mask" width="100%" height="100%">
+        <defs>
+          <mask id="export-hole">
+            <rect width="100%" height="100%" fill="white"/>
+            <rect
+              class="export-hole-rect"
+              :x="exportHolePosition.x + '%'"
+              :y="exportHolePosition.y + '%'"
+              :width="exportHolePosition.width + '%'"
+              :height="exportHolePosition.height + '%'"
+              fill="black"
+            />
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill="rgba(0,0,0,0.6)" mask="url(#export-hole)"/>
+      </svg>
+
+      <!-- Export region border -->
+      <div
+        class="export-region-frame"
+        :style="{
+          left: exportHolePosition.x + '%',
+          top: exportHolePosition.y + '%',
+          width: exportHolePosition.width + '%',
+          height: exportHolePosition.height + '%'
+        }"
+      >
         <!-- Corner handles -->
         <div class="export-corner export-corner-tl"></div>
         <div class="export-corner export-corner-tr"></div>
         <div class="export-corner export-corner-bl"></div>
         <div class="export-corner export-corner-br"></div>
 
-        <!-- Export info -->
+        <!-- Export info badge -->
         <div class="export-info">
           <span class="export-ratio">{{ store.exportSettings.aspectRatio }}</span>
-          <span v-if="store.exportSettings.showCoordinates" class="export-coords">{{ exportBoundsText }}</span>
+          <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
         </div>
       </div>
     </div>
@@ -1003,6 +1038,7 @@ const switchStyle = (styleName) => {
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .map {
@@ -1482,20 +1518,21 @@ const switchStyle = (styleName) => {
   inset: 0;
   pointer-events: none;
   z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 }
 
-.export-region {
-  position: relative;
-  max-width: 85%;
-  max-height: 85%;
-  aspect-ratio: var(--export-aspect-ratio);
+.export-mask {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.export-region-frame {
+  position: absolute;
   border: 2px dashed rgba(74, 222, 128, 0.9);
-  border-radius: 4px;
-  /* Use huge box-shadow to create dark overlay around the region */
-  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  box-sizing: border-box;
 }
 
 /* Corner handles */
@@ -1538,25 +1575,27 @@ const switchStyle = (styleName) => {
 /* Export info display */
 .export-info {
   position: absolute;
-  bottom: -30px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   background: rgba(26, 26, 46, 0.95);
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 8px 14px;
+  border-radius: 6px;
   white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
 }
 
 .export-ratio {
-  font-size: 0.8em;
-  font-weight: 600;
+  font-size: 0.85em;
+  font-weight: 700;
   color: #4ade80;
 }
 
-.export-coords {
+.export-dimensions {
   font-size: 0.75em;
   color: #aaa;
   font-family: monospace;
