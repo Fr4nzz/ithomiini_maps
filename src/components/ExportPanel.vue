@@ -207,9 +207,21 @@ const exportImage = async () => {
   imageExportError.value = null
 
   try {
-    // Get the map canvas
-    const mapCanvas = props.map.getCanvas()
+    const map = props.map
+
+    // Force a render and wait for it to complete
+    await new Promise((resolve) => {
+      map.once('render', resolve)
+      map.triggerRepaint()
+    })
+
+    // Small additional delay to ensure WebGL buffer is ready
+    await new Promise(resolve => setTimeout(resolve, 100))
+
     imageExportProgress.value = 10
+
+    // Get the map canvas
+    const mapCanvas = map.getCanvas()
 
     // Determine export dimensions
     const { width: exportWidth, height: exportHeight } = exportDimensions.value

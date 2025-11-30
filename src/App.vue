@@ -202,8 +202,19 @@ const directExportMap = async () => {
   }
 
   try {
+    const map = mapRef.value
+
+    // Force a render and wait for it to complete
+    await new Promise((resolve) => {
+      map.once('render', resolve)
+      map.triggerRepaint()
+    })
+
+    // Small additional delay to ensure WebGL buffer is ready
+    await new Promise(resolve => setTimeout(resolve, 100))
+
     // Get the map canvas
-    const mapCanvas = mapRef.value.getCanvas()
+    const mapCanvas = map.getCanvas()
 
     // Determine export dimensions
     const ratio = store.exportSettings.aspectRatio
