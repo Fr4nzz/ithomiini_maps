@@ -10,6 +10,108 @@ const mapContainer = ref(null)
 let map = null
 let popup = null
 
+// ═══════════════════════════════════════════════════════════════════════════
+// LOCATION SEARCH
+// ═══════════════════════════════════════════════════════════════════════════
+
+const searchQuery = ref('')
+const searchResults = ref([])
+const isSearching = ref(false)
+const showSearchResults = ref(false)
+const searchInputRef = ref(null)
+let searchDebounceTimer = null
+
+// Geocode using Nominatim (OpenStreetMap)
+const searchLocation = async (query) => {
+  if (!query || query.length < 2) {
+    searchResults.value = []
+    return
+  }
+
+  isSearching.value = true
+
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?` +
+      new URLSearchParams({
+        q: query,
+        format: 'json',
+        limit: '8',
+        addressdetails: '1'
+      }),
+      {
+        headers: {
+          'Accept-Language': 'en'
+        }
+      }
+    )
+
+    if (response.ok) {
+      const data = await response.json()
+      searchResults.value = data.map(item => ({
+        name: item.display_name,
+        lat: parseFloat(item.lat),
+        lng: parseFloat(item.lon),
+        type: item.type,
+        importance: item.importance,
+        boundingbox: item.boundingbox
+      }))
+      showSearchResults.value = searchResults.value.length > 0
+    }
+  } catch (error) {
+    console.error('Geocoding error:', error)
+    searchResults.value = []
+  } finally {
+    isSearching.value = false
+  }
+}
+
+// Debounced search handler
+const onSearchInput = () => {
+  clearTimeout(searchDebounceTimer)
+  searchDebounceTimer = setTimeout(() => {
+    searchLocation(searchQuery.value)
+  }, 300)
+}
+
+// Select a search result and fly to location
+const selectSearchResult = (result) => {
+  if (!map) return
+
+  showSearchResults.value = false
+  searchQuery.value = ''
+
+  // If we have a bounding box, use fitBounds for better framing
+  if (result.boundingbox) {
+    const [south, north, west, east] = result.boundingbox.map(parseFloat)
+    map.fitBounds(
+      [[west, south], [east, north]],
+      { padding: 50, maxZoom: 14, duration: 1500 }
+    )
+  } else {
+    // Otherwise just fly to the point
+    map.flyTo({
+      center: [result.lng, result.lat],
+      zoom: 12,
+      duration: 1500
+    })
+  }
+}
+
+// Close search results when clicking outside
+const handleClickOutside = (event) => {
+  if (searchInputRef.value && !searchInputRef.value.contains(event.target)) {
+    showSearchResults.value = false
+  }
+}
+
+// Clear search
+const clearSearch = () => {
+  searchQuery.value = ''
+  searchResults.value = []
+  showSearchResults.value = false
+}
+
 // Legend position class based on store settings
 const legendPositionClass = computed(() => {
   return `legend-${store.legendSettings.position}`
@@ -259,6 +361,7 @@ const STATUS_COLORS = {
 
 onMounted(() => {
   initMap()
+  document.addEventListener('click', handleClickOutside)
 })
 
 onUnmounted(() => {
@@ -266,6 +369,8 @@ onUnmounted(() => {
     map.remove()
     map = null
   }
+  document.removeEventListener('click', handleClickOutside)
+  clearTimeout(searchDebounceTimer)
 })
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1002,7 +1107,59 @@ const switchStyle = (styleName) => {
 <template>
   <div class="map-wrapper">
     <div ref="mapContainer" class="map"></div>
-    
+
+    <!-- Location Search -->
+    <div ref="searchInputRef" class="location-search">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search location..."
+          @input="onSearchInput"
+          @focus="showSearchResults = searchResults.length > 0"
+          @keydown.escape="clearSearch"
+        />
+        <svg
+          v-if="isSearching"
+          class="search-spinner"
+          viewBox="0 0 24 24"
+        >
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="31.4" stroke-dashoffset="10"/>
+        </svg>
+        <button
+          v-else-if="searchQuery"
+          class="search-clear"
+          @click="clearSearch"
+          title="Clear search"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search Results Dropdown -->
+      <div v-if="showSearchResults && searchResults.length > 0" class="search-results">
+        <button
+          v-for="(result, index) in searchResults"
+          :key="index"
+          class="search-result-item"
+          @click="selectSearchResult(result)"
+        >
+          <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span class="result-name">{{ result.name }}</span>
+        </button>
+      </div>
+    </div>
+
     <!-- Style Switcher -->
     <div class="style-switcher">
       <button 
@@ -1234,6 +1391,172 @@ const switchStyle = (styleName) => {
   color: #aaa !important;
   font-size: 10px !important;
   padding: 2px 6px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOCATION SEARCH
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.location-search {
+  position: absolute;
+  top: 56px;
+  left: 10px;
+  z-index: 10;
+  width: 280px;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(26, 26, 46, 0.95);
+  border: 1px solid #3d3d5c;
+  border-radius: 8px;
+  padding: 0 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input-wrapper:focus-within {
+  border-color: #4ade80;
+  box-shadow: 0 2px 15px rgba(74, 222, 128, 0.2);
+}
+
+.search-icon {
+  width: 16px;
+  height: 16px;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.search-input-wrapper:focus-within .search-icon {
+  color: #4ade80;
+}
+
+.location-search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e0e0e0;
+  font-size: 0.875rem;
+  padding: 10px 10px;
+  width: 100%;
+}
+
+.location-search input::placeholder {
+  color: #666;
+}
+
+.search-spinner {
+  width: 18px;
+  height: 18px;
+  color: #4ade80;
+  animation: spin 1s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.search-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.search-clear:hover {
+  color: #e0e0e0;
+}
+
+.search-clear svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Search Results Dropdown */
+.search-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: rgba(26, 26, 46, 0.98);
+  border: 1px solid #3d3d5c;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #2d2d4a;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: #2d2d4a;
+}
+
+.result-icon {
+  width: 16px;
+  height: 16px;
+  color: #4ade80;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.result-name {
+  font-size: 0.8rem;
+  color: #c0c0c0;
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.search-result-item:hover .result-name {
+  color: #e0e0e0;
+}
+
+/* Scrollbar styling for search results */
+.search-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background: #3d3d5c;
+  border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+  background: #4d4d6c;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1680,6 +2003,13 @@ const switchStyle = (styleName) => {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
+  .location-search {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+  }
+
   .style-switcher {
     top: auto;
     bottom: 100px;
@@ -1687,12 +2017,12 @@ const switchStyle = (styleName) => {
     flex-wrap: wrap;
     max-width: calc(100% - 20px);
   }
-  
+
   .style-switcher button {
     padding: 8px 10px;
     font-size: 0.7em;
   }
-  
+
   .legend {
     bottom: 160px;
     font-size: 0.9em;
