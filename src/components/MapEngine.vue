@@ -447,7 +447,7 @@ const generateCirclePolygon = (centerLng, centerLat, radiusKm, points = 64) => {
 }
 
 /**
- * Build GeoJSON for scatter visualization (circles and lines)
+ * Build GeoJSON for scatter visualization (circle polygons only)
  */
 const buildScatterVisualizationGeoJSON = () => {
   const data = store.scatterVisualizationData
@@ -462,30 +462,19 @@ const buildScatterVisualizationGeoJSON = () => {
     }
   }))
 
-  // Build lines FeatureCollection
-  const lineFeatures = data.lines.map((line, index) => ({
-    type: 'Feature',
-    properties: { id: `line-${index}`, pointId: line.pointId },
-    geometry: {
-      type: 'LineString',
-      coordinates: [line.from, line.to]
-    }
-  }))
-
   return {
-    circles: { type: 'FeatureCollection', features: circleFeatures },
-    lines: { type: 'FeatureCollection', features: lineFeatures }
+    circles: { type: 'FeatureCollection', features: circleFeatures }
   }
 }
 
 /**
- * Add or update scatter visualization layers
+ * Add or update scatter visualization layers (circles only, no lines)
  */
 const updateScatterVisualization = () => {
   if (!map || !map.isStyleLoaded()) return
 
-  const layerIds = ['scatter-circles-layer', 'scatter-lines-layer']
-  const sourceIds = ['scatter-circles-source', 'scatter-lines-source']
+  const layerIds = ['scatter-circles-fill', 'scatter-circles-outline']
+  const sourceIds = ['scatter-circles-source']
 
   // Remove existing layers and sources
   layerIds.forEach(id => {
@@ -502,7 +491,7 @@ const updateScatterVisualization = () => {
 
   if (geoJSON.circles.features.length === 0) return
 
-  // Add circles source and layer
+  // Add circles source
   map.addSource('scatter-circles-source', {
     type: 'geojson',
     data: geoJSON.circles
@@ -511,30 +500,25 @@ const updateScatterVisualization = () => {
   // Try to add below points layer if it exists, otherwise just add
   const beforeLayer = map.getLayer('points-layer') ? 'points-layer' : undefined
 
+  // Add circle fill layer (semi-transparent)
   map.addLayer({
-    id: 'scatter-circles-layer',
+    id: 'scatter-circles-fill',
     type: 'fill',
     source: 'scatter-circles-source',
     paint: {
-      'fill-color': 'rgba(59, 130, 246, 0.08)',
-      'fill-outline-color': 'rgba(59, 130, 246, 0.4)'
+      'fill-color': 'rgba(59, 130, 246, 0.08)'
     }
   }, beforeLayer)
 
-  // Add lines source and layer
-  map.addSource('scatter-lines-source', {
-    type: 'geojson',
-    data: geoJSON.lines
-  })
-
+  // Add circle outline layer (dashed line)
   map.addLayer({
-    id: 'scatter-lines-layer',
+    id: 'scatter-circles-outline',
     type: 'line',
-    source: 'scatter-lines-source',
+    source: 'scatter-circles-source',
     paint: {
       'line-color': 'rgba(59, 130, 246, 0.3)',
-      'line-width': 1,
-      'line-dasharray': [2, 2]
+      'line-width': 1.5,
+      'line-dasharray': [4, 4]
     }
   }, beforeLayer)
 }
@@ -1186,6 +1170,9 @@ const fitBoundsToData = (geojson) => {
 // Track previous data length to detect actual data changes vs just settings changes
 let previousDataLength = 0
 
+// Track previous scatter state to detect scatter toggles vs actual data changes
+let previousScatterState = false
+
 // Close enhanced popup
 const closeEnhancedPopup = () => {
   if (popup) popup.remove()
@@ -1199,12 +1186,22 @@ watch(
     if (!map || !map.isStyleLoaded()) return
 
     const newLength = newData?.features?.length || 0
-    const dataChanged = newLength !== previousDataLength
+    const currentScatterState = store.scatterOverlappingPoints
+
+    // Detect if this change is from scatter toggle vs actual data change
+    const scatterJustToggled = currentScatterState !== previousScatterState
+    previousScatterState = currentScatterState
+
+    // Only consider it a "data change" if the length changed (not just scatter coordinates)
+    const dataLengthChanged = newLength !== previousDataLength
     previousDataLength = newLength
 
-    // Always rebuild to ensure clustering settings are applied correctly
-    // Only zoom if the actual data changed (not just clustering settings)
-    addDataLayer({ skipZoom: !dataChanged })
+    // Skip zoom if:
+    // - Data length didn't change, OR
+    // - Scatter was just toggled (coordinates changed but not actual data)
+    const shouldSkipZoom = !dataLengthChanged || scatterJustToggled
+
+    addDataLayer({ skipZoom: shouldSkipZoom })
 
     // Update scatter visualization if enabled
     if (store.scatterOverlappingPoints) {
@@ -1219,7 +1216,8 @@ watch(
   () => store.scatterOverlappingPoints,
   () => {
     if (!map || !map.isStyleLoaded()) return
-    addDataLayer({ skipZoom: true })
+    // Note: The displayGeoJSON watcher will also fire, but it will detect scatter toggle
+    // and skip zoom appropriately
     updateScatterVisualization()
   }
 )

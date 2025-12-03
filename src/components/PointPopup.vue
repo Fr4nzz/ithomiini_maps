@@ -93,30 +93,41 @@ const currentPhoto = computed(() => {
   return store.getPhotoForItem(currentIndividual.value)
 })
 
-// Navigation: cycle through based on current selection level
-const canNavigatePrev = computed(() => individualsList.value.length > 1)
-const canNavigateNext = computed(() => individualsList.value.length > 1)
-
-const navigatePrev = () => {
-  const list = individualsList.value
-  if (list.length <= 1) return
-  selectedIndividualIndex.value = (selectedIndividualIndex.value - 1 + list.length) % list.length
-}
-
-const navigateNext = () => {
-  const list = individualsList.value
-  if (list.length <= 1) return
-  selectedIndividualIndex.value = (selectedIndividualIndex.value + 1) % list.length
-}
-
-// Handle species selection
+// Handle species selection - update subspecies and individual to first available
 const selectSpecies = (species) => {
   selectedSpecies.value = species
-  selectedSubspecies.value = null
+
+  if (species && groupedBySpecies.value[species]) {
+    // Get first subspecies for this species
+    const speciesGroup = groupedBySpecies.value[species]
+    const subspeciesNames = Object.keys(speciesGroup.subspecies)
+
+    // Sort subspecies by those with photos first, then by count
+    const sortedSubspecies = subspeciesNames
+      .map(name => ({
+        name,
+        data: speciesGroup.subspecies[name],
+        hasPhoto: speciesGroup.subspecies[name].individuals.some(i => i.image_url)
+      }))
+      .sort((a, b) => {
+        if (a.hasPhoto && !b.hasPhoto) return -1
+        if (!a.hasPhoto && b.hasPhoto) return 1
+        return b.data.count - a.data.count
+      })
+
+    if (sortedSubspecies.length > 0) {
+      selectedSubspecies.value = sortedSubspecies[0].name
+    } else {
+      selectedSubspecies.value = null
+    }
+  } else {
+    selectedSubspecies.value = null
+  }
+
   selectedIndividualIndex.value = 0
 }
 
-// Handle subspecies selection
+// Handle subspecies selection - update individual to first available
 const selectSubspecies = (subspecies) => {
   selectedSubspecies.value = subspecies
   selectedIndividualIndex.value = 0
@@ -127,21 +138,62 @@ const selectIndividual = (index) => {
   selectedIndividualIndex.value = index
 }
 
-// Clear selection (show all)
-const clearSelection = () => {
-  selectedSpecies.value = null
-  selectedSubspecies.value = null
-  selectedIndividualIndex.value = 0
+// Initialize with first individual's species/subspecies on mount
+const initializeSelection = () => {
+  if (props.points.length === 0) return
+
+  // Get first point with photo, or just first point
+  const pointsWithPhoto = props.points.filter(p => p.image_url)
+  const firstPoint = pointsWithPhoto.length > 0 ? pointsWithPhoto[0] : props.points[0]
+
+  // Set species
+  const species = firstPoint.scientific_name
+  if (species && groupedBySpecies.value[species]) {
+    selectedSpecies.value = species
+
+    // Set subspecies
+    const subspecies = firstPoint.subspecies
+    const speciesGroup = groupedBySpecies.value[species]
+    if (subspecies && speciesGroup.subspecies[subspecies]) {
+      selectedSubspecies.value = subspecies
+
+      // Find index of this individual within the subspecies list
+      const individuals = speciesGroup.subspecies[subspecies].individuals
+      const idx = individuals.findIndex(ind => ind.id === firstPoint.id)
+      selectedIndividualIndex.value = idx >= 0 ? idx : 0
+    } else {
+      // Set first subspecies
+      const subspeciesNames = Object.keys(speciesGroup.subspecies)
+      if (subspeciesNames.length > 0) {
+        selectedSubspecies.value = subspeciesNames[0]
+      }
+      selectedIndividualIndex.value = 0
+    }
+  }
 }
 
-// Watch for points changes to reset selection
+// Initialize on mount
+initializeSelection()
+
+// Watch for points changes to reinitialize selection
 watch(() => props.points, () => {
-  clearSelection()
+  initializeSelection()
 }, { deep: true })
 
 // Total counts
 const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
 const totalIndividuals = computed(() => props.points.length)
+
+// Subspecies count for selected species
+const subspeciesCount = computed(() => {
+  if (!selectedSpecies.value || !groupedBySpecies.value[selectedSpecies.value]) {
+    return 0
+  }
+  return Object.keys(groupedBySpecies.value[selectedSpecies.value].subspecies).length
+})
+
+// Individual count for current species+subspecies
+const individualsCount = computed(() => individualsList.value.length)
 
 // Location name from current individual or first point
 const locationName = computed(() => {
@@ -161,8 +213,9 @@ const locationName = computed(() => {
     </button>
 
     <div class="popup-layout">
-      <!-- Left Column: Photo -->
-      <div class="popup-photo-section">
+      <!-- Left Column: Photo & Individual Details -->
+      <div class="popup-left-section">
+        <!-- Photo -->
         <div class="photo-container">
           <img
             v-if="currentPhoto?.url"
@@ -180,89 +233,28 @@ const locationName = computed(() => {
             <span>No photo</span>
           </div>
 
-          <!-- Navigation arrows -->
-          <button
-            v-if="canNavigatePrev"
-            class="nav-arrow nav-prev"
-            @click="navigatePrev"
-            title="Previous"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="m15 18-6-6 6-6"/>
-            </svg>
-          </button>
-          <button
-            v-if="canNavigateNext"
-            class="nav-arrow nav-next"
-            @click="navigateNext"
-            title="Next"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="m9 18 6-6-6-6"/>
-            </svg>
-          </button>
-
           <!-- Photo indicator -->
           <div v-if="!currentPhoto?.sameIndividual && currentPhoto?.url" class="photo-indicator">
             Same species
           </div>
         </div>
 
-        <!-- Individual ID -->
+        <!-- Individual ID Badge -->
         <div class="individual-id">
           {{ currentIndividual?.id || 'N/A' }}
         </div>
 
-        <!-- Navigation counter -->
-        <div v-if="individualsList.length > 1" class="nav-counter">
-          {{ selectedIndividualIndex + 1 }} / {{ individualsList.length }}
-        </div>
-      </div>
-
-      <!-- Right Column: Info -->
-      <div class="popup-info-section">
-        <!-- Species Dropdown -->
-        <div class="dropdown-row">
-          <label>Species</label>
+        <!-- Individuals Dropdown -->
+        <div class="individuals-section">
+          <div class="section-header">
+            <span class="count-badge">{{ individualsCount }}</span>
+            <span class="section-label">Individuals</span>
+          </div>
           <select
-            :value="selectedSpecies || ''"
-            @change="selectSpecies($event.target.value || null)"
-          >
-            <option value="">All Species ({{ totalSpecies }})</option>
-            <option
-              v-for="sp in speciesList"
-              :key="sp.species"
-              :value="sp.species"
-            >
-              {{ sp.species }} ({{ sp.count }})
-            </option>
-          </select>
-        </div>
-
-        <!-- Subspecies Dropdown (only if species selected) -->
-        <div v-if="selectedSpecies && subspeciesList.length > 0" class="dropdown-row">
-          <label>Subspecies</label>
-          <select
-            :value="selectedSubspecies || ''"
-            @change="selectSubspecies($event.target.value || null)"
-          >
-            <option value="">All Subspecies</option>
-            <option
-              v-for="ssp in subspeciesList"
-              :key="ssp.name"
-              :value="ssp.name"
-            >
-              {{ ssp.name }} ({{ ssp.count }})
-            </option>
-          </select>
-        </div>
-
-        <!-- Individual Dropdown (if many individuals) -->
-        <div v-if="individualsList.length > 1" class="dropdown-row">
-          <label>Individual</label>
-          <select
+            v-if="individualsList.length > 1"
             :value="selectedIndividualIndex"
             @change="selectIndividual(Number($event.target.value))"
+            class="individual-select"
           >
             <option
               v-for="(ind, idx) in individualsList"
@@ -274,9 +266,7 @@ const locationName = computed(() => {
           </select>
         </div>
 
-        <div class="divider"></div>
-
-        <!-- Details Section -->
+        <!-- Individual Details -->
         <div class="details-section">
           <!-- Observation Date -->
           <div v-if="currentIndividual?.observation_date" class="detail-row">
@@ -307,6 +297,51 @@ const locationName = computed(() => {
               {{ currentIndividual?.sequencing_status || 'Unknown' }}
             </span>
           </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Species, Subspecies & Location -->
+      <div class="popup-right-section">
+        <!-- Species Section -->
+        <div class="taxonomy-section">
+          <div class="section-header">
+            <span class="count-badge">{{ totalSpecies }}</span>
+            <span class="section-label">Species</span>
+          </div>
+          <select
+            :value="selectedSpecies || ''"
+            @change="selectSpecies($event.target.value || null)"
+            class="taxonomy-select"
+          >
+            <option
+              v-for="sp in speciesList"
+              :key="sp.species"
+              :value="sp.species"
+            >
+              {{ sp.species }} ({{ sp.count }})
+            </option>
+          </select>
+        </div>
+
+        <!-- Subspecies Section -->
+        <div v-if="subspeciesList.length > 0" class="taxonomy-section">
+          <div class="section-header">
+            <span class="count-badge">{{ subspeciesCount }}</span>
+            <span class="section-label">Subspecies</span>
+          </div>
+          <select
+            :value="selectedSubspecies || ''"
+            @change="selectSubspecies($event.target.value || null)"
+            class="taxonomy-select"
+          >
+            <option
+              v-for="ssp in subspeciesList"
+              :key="ssp.name"
+              :value="ssp.name"
+            >
+              {{ ssp.name }} ({{ ssp.count }})
+            </option>
+          </select>
         </div>
 
         <div class="divider"></div>
@@ -343,15 +378,6 @@ const locationName = computed(() => {
             </div>
           </div>
         </div>
-
-        <!-- Clear Selection Button -->
-        <button
-          v-if="selectedSpecies"
-          class="btn-clear"
-          @click="clearSelection"
-        >
-          Show all at location
-        </button>
       </div>
     </div>
   </div>
@@ -365,7 +391,7 @@ const locationName = computed(() => {
   border-radius: 10px;
   padding: 16px;
   min-width: 420px;
-  max-width: 480px;
+  max-width: 500px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   border: 1px solid #3d3d5c;
 }
@@ -403,19 +429,19 @@ const locationName = computed(() => {
   gap: 16px;
 }
 
-/* Left Column: Photo */
-.popup-photo-section {
+/* Left Column: Photo & Individual Details */
+.popup-left-section {
   flex-shrink: 0;
-  width: 160px;
+  width: 170px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .photo-container {
   position: relative;
-  width: 160px;
-  height: 160px;
+  width: 170px;
+  height: 170px;
   background: #252540;
   border-radius: 8px;
   overflow: hidden;
@@ -449,43 +475,6 @@ const locationName = computed(() => {
   font-size: 0.75rem;
 }
 
-/* Navigation arrows */
-.nav-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(26, 26, 46, 0.9);
-  border: 1px solid #3d3d5c;
-  border-radius: 50%;
-  color: #e0e0e0;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.nav-arrow:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: #4ade80;
-  color: #4ade80;
-}
-
-.nav-arrow svg {
-  width: 16px;
-  height: 16px;
-}
-
-.nav-prev {
-  left: 6px;
-}
-
-.nav-next {
-  right: 6px;
-}
-
 .photo-indicator {
   position: absolute;
   bottom: 6px;
@@ -500,92 +489,95 @@ const locationName = computed(() => {
 }
 
 .individual-id {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #4ade80;
+  color: #14b8a6;
   text-align: center;
   font-family: monospace;
-  background: rgba(74, 222, 128, 0.1);
-  padding: 6px;
-  border-radius: 4px;
+  background: rgba(20, 184, 166, 0.15);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(20, 184, 166, 0.3);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.nav-counter {
+/* Section Header with count badge */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.count-badge {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
   font-size: 0.7rem;
-  color: #888;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  min-width: 20px;
   text-align: center;
 }
 
-/* Right Column: Info */
-.popup-info-section {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.dropdown-row {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.dropdown-row label {
+.section-label {
   font-size: 0.7rem;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.dropdown-row select {
+/* Individuals Section */
+.individuals-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.individual-select {
   width: 100%;
   padding: 8px 10px;
   background: #252540;
   border: 1px solid #3d3d5c;
   border-radius: 6px;
   color: #e0e0e0;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  font-family: monospace;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.dropdown-row select:hover {
+.individual-select:hover {
   border-color: #5d5d7c;
 }
 
-.dropdown-row select:focus {
+.individual-select:focus {
   outline: none;
   border-color: #4ade80;
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
-.divider {
-  height: 1px;
-  background: #3d3d5c;
-  margin: 4px 0;
-}
-
+/* Details Section */
 .details-section {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
+  padding-top: 8px;
+  border-top: 1px solid #3d3d5c;
 }
 
 .detail-row {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 0.8rem;
+  gap: 6px;
+  font-size: 0.75rem;
 }
 
 .detail-label {
   color: #888;
   flex-shrink: 0;
-  min-width: 70px;
+  min-width: 55px;
 }
 
 .detail-value {
@@ -596,14 +588,57 @@ const locationName = computed(() => {
 .status-badge {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+/* Right Column: Species, Subspecies & Location */
+.popup-right-section {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.taxonomy-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.taxonomy-select {
+  width: 100%;
+  padding: 8px 10px;
+  background: #252540;
+  border: 1px solid #3d3d5c;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  font-style: italic;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.taxonomy-select:hover {
+  border-color: #5d5d7c;
+}
+
+.taxonomy-select:focus {
+  outline: none;
+  border-color: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
+.divider {
+  height: 1px;
+  background: #3d3d5c;
+  margin: 4px 0;
 }
 
 .location-summary {
@@ -627,7 +662,7 @@ const locationName = computed(() => {
 
 .coords {
   font-family: monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .location-stats {
@@ -653,22 +688,5 @@ const locationName = computed(() => {
 .stat-label {
   font-size: 0.7rem;
   color: #888;
-}
-
-.btn-clear {
-  width: 100%;
-  padding: 8px 12px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 6px;
-  color: #4ade80;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-clear:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
 }
 </style>

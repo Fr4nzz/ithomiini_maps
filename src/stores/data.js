@@ -741,17 +741,26 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
-   * Calculate scattered positions for overlapping points
-   * @param {number} radiusKm - Radius in kilometers (default 2.5km)
+   * Calculate scattered positions for overlapping points using Fibonacci spiral
+   * This distributes points evenly throughout the circle interior, not just on the perimeter
+   * @param {number} radiusKm - Radius in kilometers (default 2km)
    */
-  const calculateScatteredPosition = (originalLat, originalLng, index, totalPoints, radiusKm = 2.5) => {
-    const angle = (2 * Math.PI * index) / totalPoints
+  const calculateScatteredPosition = (originalLat, originalLng, index, totalPoints, radiusKm = 2) => {
+    // Golden angle in radians: π * (3 - √5) ≈ 137.5 degrees
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5))
+
+    // Calculate angle and radius for this point using Fibonacci/sunflower spiral
+    const angle = index * goldenAngle
+    // Radius increases with sqrt to ensure even area distribution
+    const radiusFraction = Math.sqrt(index / totalPoints)
+    const pointRadius = radiusFraction * radiusKm
+
     // Convert km to degrees (approximate)
     const kmPerDegreeLat = 111.32
     const kmPerDegreeLng = 111.32 * Math.cos(originalLat * Math.PI / 180)
 
-    const offsetLat = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
-    const offsetLng = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
+    const offsetLat = (pointRadius / kmPerDegreeLat) * Math.cos(angle)
+    const offsetLng = (pointRadius / kmPerDegreeLng) * Math.sin(angle)
 
     return {
       lat: originalLat + offsetLat,
@@ -821,39 +830,27 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
-   * Data needed to draw scatter visualization (circles and lines)
+   * Data needed to draw scatter visualization (circle polygons)
+   * No longer includes lines - just the scatter region circles
    */
   const scatterVisualizationData = computed(() => {
     if (!scatterOverlappingPoints.value) {
-      return { circles: [], lines: [] }
+      return { circles: [] }
     }
 
     const circles = []
-    const lines = []
 
     for (const [key, points] of coordinateGroups.value) {
       const [lat, lng] = key.split(',').map(Number)
 
-      // Add circle for this group
+      // Add circle for this group with 2km radius
       circles.push({
         center: [lng, lat],
-        radiusKm: 2.5
+        radiusKm: 2
       })
-
-      // Add lines from scattered points to center
-      for (const point of points) {
-        const pos = scatteredPositions.value.get(point.id)
-        if (pos) {
-          lines.push({
-            from: [lng, lat],
-            to: [pos.scatteredLng, pos.scatteredLat],
-            pointId: point.id
-          })
-        }
-      }
     }
 
-    return { circles, lines }
+    return { circles }
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
