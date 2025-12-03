@@ -223,9 +223,10 @@ const subspeciesCount = computed(() => {
 const individualsCount = computed(() => individualsList.value.length)
 
 // Location name from current individual or first point
+// Check multiple possible fields for location data (collection_location, locality, etc.)
 const locationName = computed(() => {
   const point = currentIndividual.value || props.points[0]
-  return point?.collection_location || null
+  return point?.collection_location || point?.locality || point?.location || null
 })
 </script>
 
@@ -290,6 +291,12 @@ const locationName = computed(() => {
 
         <!-- Individual Details -->
         <div class="details-section">
+          <!-- ID -->
+          <div class="detail-row">
+            <span class="detail-label">ID:</span>
+            <span class="detail-value id-value">{{ currentIndividual?.id || 'N/A' }}</span>
+          </div>
+
           <!-- Observation Date -->
           <div v-if="currentIndividual?.observation_date" class="detail-row">
             <span class="detail-label">Date:</span>
@@ -590,6 +597,11 @@ const locationName = computed(() => {
 .detail-value {
   color: #e0e0e0;
   word-break: break-word;
+}
+
+.id-value {
+  font-family: monospace;
+  color: #14b8a6;
 }
 
 .status-badge {

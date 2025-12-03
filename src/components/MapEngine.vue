@@ -781,52 +781,37 @@ const addDataLayer = (options = {}) => {
     if (popup) popup.remove()
     showEnhancedPopup.value = false
 
-    if (pointsAtLocation.length > 1) {
-      // Use enhanced popup for multiple points
-      // If clicked on a scattered point, pre-select that subspecies
-      enhancedPopupData.value = {
-        coordinates: { lat, lng },
-        points: pointsAtLocation,
-        initialSpecies: isScattered ? scatteredSpecies : null,
-        initialSubspecies: isScattered ? scatteredSubspecies : null
-      }
-
-      // Create popup with the Vue component container
-      nextTick(() => {
-        showEnhancedPopup.value = true
-
-        nextTick(() => {
-          if (pointPopupContainer.value) {
-            popup = new maplibregl.Popup({
-              closeButton: false,
-              closeOnClick: true,
-              maxWidth: '500px',
-              className: 'custom-popup enhanced-popup'
-            })
-              .setLngLat(coords)
-              .setDOMContent(pointPopupContainer.value)
-              .addTo(map)
-
-            popup.on('close', () => {
-              showEnhancedPopup.value = false
-            })
-          }
-        })
-      })
-    } else {
-      // Use simple popup for single point
-      const content = buildPopupContent(props)
-
-      popup = new maplibregl.Popup({
-        closeButton: true,
-        closeOnClick: true,
-        maxWidth: '340px',
-        className: 'custom-popup'
-      })
-        .setLngLat(coords)
-        .setHTML(content)
-        .addTo(map)
+    // Always use enhanced popup (even for single points)
+    // If clicked on a scattered point, pre-select that subspecies
+    enhancedPopupData.value = {
+      coordinates: { lat, lng },
+      points: pointsAtLocation.length > 0 ? pointsAtLocation : [props],
+      initialSpecies: isScattered ? scatteredSpecies : null,
+      initialSubspecies: isScattered ? scatteredSubspecies : null
     }
+
+    // Create popup with the Vue component container
+    nextTick(() => {
+      showEnhancedPopup.value = true
+
+      nextTick(() => {
+        if (pointPopupContainer.value) {
+          popup = new maplibregl.Popup({
+            closeButton: false,
+            closeOnClick: true,
+            maxWidth: '500px',
+            className: 'custom-popup enhanced-popup'
+          })
+            .setLngLat(coords)
+            .setDOMContent(pointPopupContainer.value)
+            .addTo(map)
+
+          popup.on('close', () => {
+            showEnhancedPopup.value = false
+          })
+        }
+      })
+    })
   })
 
   // ─────────────────────────────────────────────────────────────────────────
