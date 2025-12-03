@@ -555,6 +555,17 @@ const currentExportDimensions = computed(() => {
         </label>
       </div>
 
+      <!-- Scatter Overlapping Points (Map View Only) -->
+      <div class="filter-section" v-if="currentView === 'map'">
+        <label class="thumbnail-toggle scatter-toggle">
+          <input type="checkbox" v-model="store.scatterOverlappingPoints" />
+          <span>Scatter overlapping points</span>
+        </label>
+        <p class="filter-hint" style="margin-top: 6px;">
+          Evenly distribute overlapping points within 2.5km radius with connecting lines
+        </p>
+      </div>
+
       <!-- Clustering Settings (Map View Only) -->
       <div class="filter-section collapsible" v-if="currentView === 'map'">
         <button
@@ -1258,6 +1269,17 @@ const currentExportDimensions = computed(() => {
   font-size: 0.9rem;
   color: var(--color-text-primary, #e0e0e0);
   font-weight: 500;
+}
+
+/* Scatter toggle specific styles */
+.scatter-toggle {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.scatter-toggle:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 /* Search Input */

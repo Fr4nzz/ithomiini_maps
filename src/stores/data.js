@@ -24,6 +24,9 @@ export const useDataStore = defineStore('data', () => {
     minPoints: 5       // Minimum points to form a cluster
   })
 
+  // Scatter overlapping points settings
+  const scatterOverlappingPoints = ref(false)  // When enabled, evenly distributes overlapping points
+
   // Map styling settings
   const colorBy = ref('subspecies')  // What attribute to color points by: 'status', 'subspecies', 'species', 'genus', 'mimicry', 'source'
 
@@ -627,6 +630,233 @@ export const useDataStore = defineStore('data', () => {
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // COORDINATE GROUPING & SCATTER HELPERS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Get all points at the same coordinates (within tolerance)
+   * @param {number} lat - Latitude
+   * @param {number} lng - Longitude
+   * @param {number} tolerance - Coordinate tolerance (default ~10m)
+   * @returns {Array} Array of items at this location
+   */
+  const getPointsAtCoordinates = (lat, lng, tolerance = 0.0001) => {
+    const geo = filteredGeoJSON.value
+    if (!geo || !geo.features) return []
+
+    return geo.features
+      .filter(f => {
+        const [fLng, fLat] = f.geometry.coordinates
+        return Math.abs(fLat - lat) < tolerance && Math.abs(fLng - lng) < tolerance
+      })
+      .map(f => f.properties)
+  }
+
+  /**
+   * Group points by species, then by subspecies
+   * @param {Array} points - Array of point properties
+   * @returns {Object} Grouped structure { speciesName: { count, subspecies: { subspName: { count, individuals: [] } } } }
+   */
+  const groupPointsBySpecies = (points) => {
+    const groups = {}
+
+    for (const point of points) {
+      const species = point.scientific_name || 'Unknown'
+      const subspecies = point.subspecies || 'No subspecies'
+
+      if (!groups[species]) {
+        groups[species] = { count: 0, subspecies: {} }
+      }
+
+      groups[species].count++
+
+      if (!groups[species].subspecies[subspecies]) {
+        groups[species].subspecies[subspecies] = { count: 0, individuals: [] }
+      }
+
+      groups[species].subspecies[subspecies].count++
+      groups[species].subspecies[subspecies].individuals.push(point)
+    }
+
+    return groups
+  }
+
+  /**
+   * Get species list prioritized by those with photos
+   * @param {Array} points - Array of point properties
+   * @returns {Array} Sorted species list with photo info
+   */
+  const getSpeciesWithPhotos = (points) => {
+    const speciesMap = {}
+
+    for (const point of points) {
+      const species = point.scientific_name || 'Unknown'
+      if (!speciesMap[species]) {
+        speciesMap[species] = { species, hasPhoto: false, photoUrl: null, count: 0 }
+      }
+      speciesMap[species].count++
+      if (point.image_url && !speciesMap[species].hasPhoto) {
+        speciesMap[species].hasPhoto = true
+        speciesMap[species].photoUrl = point.image_url
+      }
+    }
+
+    // Sort: species with photos first, then by count
+    return Object.values(speciesMap).sort((a, b) => {
+      if (a.hasPhoto && !b.hasPhoto) return -1
+      if (!a.hasPhoto && b.hasPhoto) return 1
+      return b.count - a.count
+    })
+  }
+
+  /**
+   * Groups all points in filteredGeoJSON by their exact coordinates
+   * @returns {Map} "lat,lng" -> array of point IDs at that location
+   */
+  const coordinateGroups = computed(() => {
+    const groups = new Map()
+    const geo = filteredGeoJSON.value
+    if (!geo || !geo.features) return groups
+
+    for (const feature of geo.features) {
+      const [lng, lat] = feature.geometry.coordinates
+      // Round to ~10m precision for grouping
+      const key = `${lat.toFixed(4)},${lng.toFixed(4)}`
+
+      if (!groups.has(key)) {
+        groups.set(key, [])
+      }
+      groups.get(key).push(feature.properties)
+    }
+
+    // Only return groups with 2+ points
+    const multiGroups = new Map()
+    for (const [key, points] of groups) {
+      if (points.length >= 2) {
+        multiGroups.set(key, points)
+      }
+    }
+
+    return multiGroups
+  })
+
+  /**
+   * Calculate scattered positions for overlapping points
+   * @param {number} radiusKm - Radius in kilometers (default 2.5km)
+   */
+  const calculateScatteredPosition = (originalLat, originalLng, index, totalPoints, radiusKm = 2.5) => {
+    const angle = (2 * Math.PI * index) / totalPoints
+    // Convert km to degrees (approximate)
+    const kmPerDegreeLat = 111.32
+    const kmPerDegreeLng = 111.32 * Math.cos(originalLat * Math.PI / 180)
+
+    const offsetLat = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
+    const offsetLng = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
+
+    return {
+      lat: originalLat + offsetLat,
+      lng: originalLng + offsetLng
+    }
+  }
+
+  /**
+   * Computed property for scattered positions
+   * Returns Map: pointId -> { scatteredLat, scatteredLng, originalLat, originalLng }
+   */
+  const scatteredPositions = computed(() => {
+    const positions = new Map()
+    if (!scatterOverlappingPoints.value) return positions
+
+    for (const [key, points] of coordinateGroups.value) {
+      const [lat, lng] = key.split(',').map(Number)
+      const totalPoints = points.length
+
+      points.forEach((point, index) => {
+        const scattered = calculateScatteredPosition(lat, lng, index, totalPoints)
+        positions.set(point.id, {
+          scatteredLat: scattered.lat,
+          scatteredLng: scattered.lng,
+          originalLat: lat,
+          originalLng: lng
+        })
+      })
+    }
+
+    return positions
+  })
+
+  /**
+   * The GeoJSON to display - either filtered or with scattered coordinates
+   */
+  const displayGeoJSON = computed(() => {
+    const geo = filteredGeoJSON.value
+    if (!geo || !scatterOverlappingPoints.value) return geo
+
+    const positions = scatteredPositions.value
+    if (positions.size === 0) return geo
+
+    // Clone and update coordinates for scattered points
+    return {
+      type: 'FeatureCollection',
+      features: geo.features.map(feature => {
+        const pos = positions.get(feature.properties.id)
+        if (pos) {
+          return {
+            ...feature,
+            geometry: {
+              ...feature.geometry,
+              coordinates: [pos.scatteredLng, pos.scatteredLat]
+            },
+            properties: {
+              ...feature.properties,
+              _originalLat: pos.originalLat,
+              _originalLng: pos.originalLng,
+              _isScattered: true
+            }
+          }
+        }
+        return feature
+      })
+    }
+  })
+
+  /**
+   * Data needed to draw scatter visualization (circles and lines)
+   */
+  const scatterVisualizationData = computed(() => {
+    if (!scatterOverlappingPoints.value) {
+      return { circles: [], lines: [] }
+    }
+
+    const circles = []
+    const lines = []
+
+    for (const [key, points] of coordinateGroups.value) {
+      const [lat, lng] = key.split(',').map(Number)
+
+      // Add circle for this group
+      circles.push({
+        center: [lng, lat],
+        radiusKm: 2.5
+      })
+
+      // Add lines from scattered points to center
+      for (const point of points) {
+        const pos = scatteredPositions.value.get(point.id)
+        if (pos) {
+          lines.push({
+            from: [lng, lat],
+            to: [pos.scatteredLng, pos.scatteredLat],
+            pointId: point.id
+          })
+        }
+      }
+    }
+
+    return { circles, lines }
+  })
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // DYNAMIC COLOR PALETTE GENERATOR
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -777,6 +1007,7 @@ export const useDataStore = defineStore('data', () => {
     showThumbnail,
     clusteringEnabled,
     clusterSettings,
+    scatterOverlappingPoints,
     photoLookup,
     mimicryPhotoLookup,
 
@@ -795,6 +1026,11 @@ export const useDataStore = defineStore('data', () => {
     toggleAdvancedFilters,
     toggleMimicryFilter,
     getPhotoForItem,
+
+    // Coordinate grouping helpers
+    getPointsAtCoordinates,
+    groupPointsBySpecies,
+    getSpeciesWithPhotos,
 
     // Computed (cascading options)
     uniqueFamilies,
@@ -817,5 +1053,9 @@ export const useDataStore = defineStore('data', () => {
 
     // Final output
     filteredGeoJSON,
+    displayGeoJSON,
+    coordinateGroups,
+    scatteredPositions,
+    scatterVisualizationData,
   }
 })

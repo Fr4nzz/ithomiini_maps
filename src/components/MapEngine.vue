@@ -1,14 +1,23 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
+import PointPopup from './PointPopup.vue'
 
 const store = useDataStore()
 const emit = defineEmits(['map-ready'])
 const mapContainer = ref(null)
+const pointPopupContainer = ref(null)
 let map = null
 let popup = null
+
+// Enhanced popup state for multi-point locations
+const showEnhancedPopup = ref(false)
+const enhancedPopupData = ref({
+  coordinates: { lat: 0, lng: 0 },
+  points: []
+})
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LOCATION SEARCH
@@ -411,6 +420,126 @@ const initMap = () => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// SCATTER VISUALIZATION HELPERS
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Generate a circle polygon approximation for a given center and radius
+ * @param {number} centerLng - Center longitude
+ * @param {number} centerLat - Center latitude
+ * @param {number} radiusKm - Radius in kilometers
+ * @param {number} points - Number of points for circle approximation
+ * @returns {Array} Array of coordinate pairs forming a closed polygon
+ */
+const generateCirclePolygon = (centerLng, centerLat, radiusKm, points = 64) => {
+  const coords = []
+  const kmPerDegreeLat = 111.32
+  const kmPerDegreeLng = 111.32 * Math.cos(centerLat * Math.PI / 180)
+
+  for (let i = 0; i <= points; i++) {
+    const angle = (2 * Math.PI * i) / points
+    const latOffset = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
+    const lngOffset = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
+    coords.push([centerLng + lngOffset, centerLat + latOffset])
+  }
+
+  return coords
+}
+
+/**
+ * Build GeoJSON for scatter visualization (circles and lines)
+ */
+const buildScatterVisualizationGeoJSON = () => {
+  const data = store.scatterVisualizationData
+
+  // Build circles FeatureCollection
+  const circleFeatures = data.circles.map((circle, index) => ({
+    type: 'Feature',
+    properties: { id: `circle-${index}` },
+    geometry: {
+      type: 'Polygon',
+      coordinates: [generateCirclePolygon(circle.center[0], circle.center[1], circle.radiusKm)]
+    }
+  }))
+
+  // Build lines FeatureCollection
+  const lineFeatures = data.lines.map((line, index) => ({
+    type: 'Feature',
+    properties: { id: `line-${index}`, pointId: line.pointId },
+    geometry: {
+      type: 'LineString',
+      coordinates: [line.from, line.to]
+    }
+  }))
+
+  return {
+    circles: { type: 'FeatureCollection', features: circleFeatures },
+    lines: { type: 'FeatureCollection', features: lineFeatures }
+  }
+}
+
+/**
+ * Add or update scatter visualization layers
+ */
+const updateScatterVisualization = () => {
+  if (!map || !map.isStyleLoaded()) return
+
+  const layerIds = ['scatter-circles-layer', 'scatter-lines-layer']
+  const sourceIds = ['scatter-circles-source', 'scatter-lines-source']
+
+  // Remove existing layers and sources
+  layerIds.forEach(id => {
+    if (map.getLayer(id)) map.removeLayer(id)
+  })
+  sourceIds.forEach(id => {
+    if (map.getSource(id)) map.removeSource(id)
+  })
+
+  // Only add if scatter is enabled and there's data
+  if (!store.scatterOverlappingPoints) return
+
+  const geoJSON = buildScatterVisualizationGeoJSON()
+
+  if (geoJSON.circles.features.length === 0) return
+
+  // Add circles source and layer
+  map.addSource('scatter-circles-source', {
+    type: 'geojson',
+    data: geoJSON.circles
+  })
+
+  // Try to add below points layer if it exists, otherwise just add
+  const beforeLayer = map.getLayer('points-layer') ? 'points-layer' : undefined
+
+  map.addLayer({
+    id: 'scatter-circles-layer',
+    type: 'fill',
+    source: 'scatter-circles-source',
+    paint: {
+      'fill-color': 'rgba(59, 130, 246, 0.08)',
+      'fill-outline-color': 'rgba(59, 130, 246, 0.4)'
+    }
+  }, beforeLayer)
+
+  // Add lines source and layer
+  map.addSource('scatter-lines-source', {
+    type: 'geojson',
+    data: geoJSON.lines
+  })
+
+  map.addLayer({
+    id: 'scatter-lines-layer',
+    type: 'line',
+    source: 'scatter-lines-source',
+    paint: {
+      'line-color': 'rgba(59, 130, 246, 0.3)',
+      'line-width': 1,
+      'line-dasharray': [2, 2]
+    }
+  }, beforeLayer)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // DATA LAYER WITH SMART CLUSTERING
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -434,7 +563,7 @@ const addDataLayer = (options = {}) => {
   })
   if (map.getSource('points-source')) map.removeSource('points-source')
 
-  const geojson = store.filteredGeoJSON
+  const geojson = store.displayGeoJSON
   if (!geojson) return
 
   const pointCount = geojson.features.length
@@ -643,7 +772,7 @@ const addDataLayer = (options = {}) => {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // INDIVIDUAL POINT CLICK - show popup
+  // INDIVIDUAL POINT CLICK - show popup (enhanced for multiple points)
   // ─────────────────────────────────────────────────────────────────────────
   map.on('click', 'points-layer', (e) => {
     if (!e.features || e.features.length === 0) return
@@ -652,21 +781,60 @@ const addDataLayer = (options = {}) => {
     const props = feature.properties
     const coords = feature.geometry.coordinates.slice()
 
+    // Check if point was scattered - use original coordinates for grouping
+    const lat = props._originalLat || coords[1]
+    const lng = props._originalLng || coords[0]
+
+    // Get all points at this location
+    const pointsAtLocation = store.getPointsAtCoordinates(lat, lng)
+
     // Close existing popup
     if (popup) popup.remove()
+    showEnhancedPopup.value = false
 
-    // Build popup content
-    const content = buildPopupContent(props)
+    if (pointsAtLocation.length > 1) {
+      // Use enhanced popup for multiple points
+      enhancedPopupData.value = {
+        coordinates: { lat, lng },
+        points: pointsAtLocation
+      }
 
-    popup = new maplibregl.Popup({
-      closeButton: true,
-      closeOnClick: true,
-      maxWidth: '340px',
-      className: 'custom-popup'
-    })
-      .setLngLat(coords)
-      .setHTML(content)
-      .addTo(map)
+      // Create popup with the Vue component container
+      nextTick(() => {
+        showEnhancedPopup.value = true
+
+        nextTick(() => {
+          if (pointPopupContainer.value) {
+            popup = new maplibregl.Popup({
+              closeButton: false,
+              closeOnClick: true,
+              maxWidth: '500px',
+              className: 'custom-popup enhanced-popup'
+            })
+              .setLngLat(coords)
+              .setDOMContent(pointPopupContainer.value)
+              .addTo(map)
+
+            popup.on('close', () => {
+              showEnhancedPopup.value = false
+            })
+          }
+        })
+      })
+    } else {
+      // Use simple popup for single point
+      const content = buildPopupContent(props)
+
+      popup = new maplibregl.Popup({
+        closeButton: true,
+        closeOnClick: true,
+        maxWidth: '340px',
+        className: 'custom-popup'
+      })
+        .setLngLat(coords)
+        .setHTML(content)
+        .addTo(map)
+    }
   })
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1018,9 +1186,15 @@ const fitBoundsToData = (geojson) => {
 // Track previous data length to detect actual data changes vs just settings changes
 let previousDataLength = 0
 
-// Watch for filter changes and update the map
+// Close enhanced popup
+const closeEnhancedPopup = () => {
+  if (popup) popup.remove()
+  showEnhancedPopup.value = false
+}
+
+// Watch for displayGeoJSON changes and update the map
 watch(
-  () => store.filteredGeoJSON,
+  () => store.displayGeoJSON,
   (newData) => {
     if (!map || !map.isStyleLoaded()) return
 
@@ -1031,8 +1205,23 @@ watch(
     // Always rebuild to ensure clustering settings are applied correctly
     // Only zoom if the actual data changed (not just clustering settings)
     addDataLayer({ skipZoom: !dataChanged })
+
+    // Update scatter visualization if enabled
+    if (store.scatterOverlappingPoints) {
+      updateScatterVisualization()
+    }
   },
   { deep: true }
+)
+
+// Watch for scatter toggle changes - rebuild layers and visualization without zoom
+watch(
+  () => store.scatterOverlappingPoints,
+  () => {
+    if (!map || !map.isStyleLoaded()) return
+    addDataLayer({ skipZoom: true })
+    updateScatterVisualization()
+  }
 )
 
 // Watch for clustering settings changes - rebuild layers without zoom
@@ -1107,6 +1296,18 @@ const switchStyle = (styleName) => {
 <template>
   <div class="map-wrapper">
     <div ref="mapContainer" class="map"></div>
+
+    <!-- Enhanced Popup Container (rendered via MapLibre popup) -->
+    <div v-show="false">
+      <div ref="pointPopupContainer">
+        <PointPopup
+          v-if="showEnhancedPopup"
+          :coordinates="enhancedPopupData.coordinates"
+          :points="enhancedPopupData.points"
+          @close="closeEnhancedPopup"
+        />
+      </div>
+    </div>
 
     <!-- Location Search -->
     <div ref="searchInputRef" class="location-search">
@@ -2246,5 +2447,21 @@ const switchStyle = (styleName) => {
   font-weight: 600;
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ENHANCED POPUP (for multi-point locations)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:deep(.enhanced-popup .maplibregl-popup-content) {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  max-width: 500px !important;
+}
+
+:deep(.enhanced-popup .maplibregl-popup-tip) {
+  border-top-color: #1a1a2e !important;
 }
 </style>
