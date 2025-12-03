@@ -10,6 +10,14 @@ const props = defineProps({
   points: {
     type: Array, // Array of point properties at this location
     required: true
+  },
+  initialSpecies: {
+    type: String,
+    default: null
+  },
+  initialSubspecies: {
+    type: String,
+    default: null
   }
 })
 
@@ -138,11 +146,30 @@ const selectIndividual = (index) => {
   selectedIndividualIndex.value = index
 }
 
-// Initialize with first individual's species/subspecies on mount
+// Initialize with specified or first individual's species/subspecies on mount
 const initializeSelection = () => {
   if (props.points.length === 0) return
 
-  // Get first point with photo, or just first point
+  // Check if we have initial species/subspecies from a scattered point click
+  if (props.initialSpecies && groupedBySpecies.value[props.initialSpecies]) {
+    selectedSpecies.value = props.initialSpecies
+    const speciesGroup = groupedBySpecies.value[props.initialSpecies]
+
+    // Use initial subspecies if provided and valid
+    if (props.initialSubspecies && speciesGroup.subspecies[props.initialSubspecies]) {
+      selectedSubspecies.value = props.initialSubspecies
+    } else {
+      // Set first subspecies
+      const subspeciesNames = Object.keys(speciesGroup.subspecies)
+      if (subspeciesNames.length > 0) {
+        selectedSubspecies.value = subspeciesNames[0]
+      }
+    }
+    selectedIndividualIndex.value = 0
+    return
+  }
+
+  // Default behavior: Get first point with photo, or just first point
   const pointsWithPhoto = props.points.filter(p => p.image_url)
   const firstPoint = pointsWithPhoto.length > 0 ? pointsWithPhoto[0] : props.points[0]
 

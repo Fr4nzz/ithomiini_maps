@@ -769,24 +769,96 @@ export const useDataStore = defineStore('data', () => {
   }
 
   /**
-   * Computed property for scattered positions
-   * Returns Map: pointId -> { scatteredLat, scatteredLng, originalLat, originalLng }
+   * Group points by subspecies at each coordinate location
+   * Returns Map: "lat,lng" -> { subspeciesKey -> { representative, allPoints, species, subspecies } }
+   */
+  const subspeciesGroups = computed(() => {
+    const groups = new Map()
+    const geo = filteredGeoJSON.value
+    if (!geo || !geo.features) return groups
+
+    for (const feature of geo.features) {
+      const [lng, lat] = feature.geometry.coordinates
+      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
+      const props = feature.properties
+      const species = props.scientific_name || 'Unknown'
+      const subspecies = props.subspecies || 'No subspecies'
+      const subspeciesKey = `${species}|${subspecies}`
+
+      if (!groups.has(coordKey)) {
+        groups.set(coordKey, new Map())
+      }
+
+      const locationGroup = groups.get(coordKey)
+
+      if (!locationGroup.has(subspeciesKey)) {
+        // First point of this subspecies - it becomes the representative
+        locationGroup.set(subspeciesKey, {
+          representative: props,
+          allPoints: [props],
+          species,
+          subspecies
+        })
+      } else {
+        // Add to existing subspecies group
+        const subspGroup = locationGroup.get(subspeciesKey)
+        subspGroup.allPoints.push(props)
+        // Prefer representative with photo
+        if (props.image_url && !subspGroup.representative.image_url) {
+          subspGroup.representative = props
+        }
+      }
+    }
+
+    return groups
+  })
+
+  /**
+   * Computed property for scattered positions - one per subspecies at each location
+   * Returns Map: pointId -> { scatteredLat, scatteredLng, originalLat, originalLng, subspeciesKey }
    */
   const scatteredPositions = computed(() => {
     const positions = new Map()
     if (!scatterOverlappingPoints.value) return positions
 
-    for (const [key, points] of coordinateGroups.value) {
-      const [lat, lng] = key.split(',').map(Number)
-      const totalPoints = points.length
+    for (const [coordKey, subspeciesMap] of subspeciesGroups.value) {
+      const [lat, lng] = coordKey.split(',').map(Number)
+      const subspeciesList = Array.from(subspeciesMap.entries())
+      const totalSubspecies = subspeciesList.length
 
-      points.forEach((point, index) => {
-        const scattered = calculateScatteredPosition(lat, lng, index, totalPoints)
-        positions.set(point.id, {
+      // Only scatter if there are multiple subspecies at this location
+      if (totalSubspecies < 2) continue
+
+      subspeciesList.forEach(([subspeciesKey, data], index) => {
+        const scattered = calculateScatteredPosition(lat, lng, index, totalSubspecies)
+        const representative = data.representative
+
+        positions.set(representative.id, {
           scatteredLat: scattered.lat,
           scatteredLng: scattered.lng,
           originalLat: lat,
-          originalLng: lng
+          originalLng: lng,
+          subspeciesKey,
+          species: data.species,
+          subspecies: data.subspecies,
+          isRepresentative: true
+        })
+
+        // Mark other points in this subspecies group as hidden (they share the representative's position)
+        data.allPoints.forEach(point => {
+          if (point.id !== representative.id) {
+            positions.set(point.id, {
+              scatteredLat: scattered.lat,
+              scatteredLng: scattered.lng,
+              originalLat: lat,
+              originalLng: lng,
+              subspeciesKey,
+              species: data.species,
+              subspecies: data.subspecies,
+              isRepresentative: false,
+              representativeId: representative.id
+            })
+          }
         })
       })
     }
@@ -796,6 +868,7 @@ export const useDataStore = defineStore('data', () => {
 
   /**
    * The GeoJSON to display - either filtered or with scattered coordinates
+   * When scatter is enabled, only shows one point per subspecies at each location
    */
   const displayGeoJSON = computed(() => {
     const geo = filteredGeoJSON.value
@@ -804,13 +877,18 @@ export const useDataStore = defineStore('data', () => {
     const positions = scatteredPositions.value
     if (positions.size === 0) return geo
 
-    // Clone and update coordinates for scattered points
-    return {
-      type: 'FeatureCollection',
-      features: geo.features.map(feature => {
-        const pos = positions.get(feature.properties.id)
-        if (pos) {
-          return {
+    // Filter and update coordinates for scattered points
+    const features = []
+    const seenRepresentatives = new Set()
+
+    for (const feature of geo.features) {
+      const pos = positions.get(feature.properties.id)
+
+      if (pos) {
+        // This point is in a scatter group
+        if (pos.isRepresentative) {
+          // Show representative points with scattered coordinates
+          features.push({
             ...feature,
             geometry: {
               ...feature.geometry,
@@ -820,18 +898,30 @@ export const useDataStore = defineStore('data', () => {
               ...feature.properties,
               _originalLat: pos.originalLat,
               _originalLng: pos.originalLng,
-              _isScattered: true
+              _isScattered: true,
+              _subspeciesKey: pos.subspeciesKey,
+              _scatteredSpecies: pos.species,
+              _scatteredSubspecies: pos.subspecies
             }
-          }
+          })
+          seenRepresentatives.add(feature.properties.id)
         }
-        return feature
-      })
+        // Non-representative points are hidden (not added to features)
+      } else {
+        // Point is not in a scatter group (single point or single subspecies at location)
+        features.push(feature)
+      }
+    }
+
+    return {
+      type: 'FeatureCollection',
+      features
     }
   })
 
   /**
    * Data needed to draw scatter visualization (circle polygons)
-   * No longer includes lines - just the scatter region circles
+   * Only shows circles for locations with multiple subspecies
    */
   const scatterVisualizationData = computed(() => {
     if (!scatterOverlappingPoints.value) {
@@ -840,10 +930,12 @@ export const useDataStore = defineStore('data', () => {
 
     const circles = []
 
-    for (const [key, points] of coordinateGroups.value) {
-      const [lat, lng] = key.split(',').map(Number)
+    for (const [coordKey, subspeciesMap] of subspeciesGroups.value) {
+      // Only add circle if there are multiple subspecies at this location
+      if (subspeciesMap.size < 2) continue
 
-      // Add circle for this group with 2km radius
+      const [lat, lng] = coordKey.split(',').map(Number)
+
       circles.push({
         center: [lng, lat],
         radiusKm: 2

@@ -769,6 +769,11 @@ const addDataLayer = (options = {}) => {
     const lat = props._originalLat || coords[1]
     const lng = props._originalLng || coords[0]
 
+    // Check if this is a scattered point with subspecies info
+    const isScattered = props._isScattered
+    const scatteredSpecies = props._scatteredSpecies
+    const scatteredSubspecies = props._scatteredSubspecies
+
     // Get all points at this location
     const pointsAtLocation = store.getPointsAtCoordinates(lat, lng)
 
@@ -778,9 +783,12 @@ const addDataLayer = (options = {}) => {
 
     if (pointsAtLocation.length > 1) {
       // Use enhanced popup for multiple points
+      // If clicked on a scattered point, pre-select that subspecies
       enhancedPopupData.value = {
         coordinates: { lat, lng },
-        points: pointsAtLocation
+        points: pointsAtLocation,
+        initialSpecies: isScattered ? scatteredSpecies : null,
+        initialSubspecies: isScattered ? scatteredSubspecies : null
       }
 
       // Create popup with the Vue component container
@@ -1302,6 +1310,8 @@ const switchStyle = (styleName) => {
           v-if="showEnhancedPopup"
           :coordinates="enhancedPopupData.coordinates"
           :points="enhancedPopupData.points"
+          :initial-species="enhancedPopupData.initialSpecies"
+          :initial-subspecies="enhancedPopupData.initialSubspecies"
           @close="closeEnhancedPopup"
         />
       </div>
