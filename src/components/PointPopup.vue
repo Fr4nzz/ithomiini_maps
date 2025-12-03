@@ -266,11 +266,6 @@ const locationName = computed(() => {
           </div>
         </div>
 
-        <!-- Individual ID Badge -->
-        <div class="individual-id">
-          {{ currentIndividual?.id || 'N/A' }}
-        </div>
-
         <!-- Individuals Dropdown -->
         <div class="individuals-section">
           <div class="section-header">
@@ -513,21 +508,6 @@ const locationName = computed(() => {
   padding: 3px 6px;
   border-radius: 3px;
   text-align: center;
-}
-
-.individual-id {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #14b8a6;
-  text-align: center;
-  font-family: monospace;
-  background: rgba(20, 184, 166, 0.15);
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(20, 184, 166, 0.3);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 /* Section Header with count badge */
