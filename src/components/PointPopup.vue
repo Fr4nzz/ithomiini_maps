@@ -287,16 +287,14 @@ const locationName = computed(() => {
               {{ ind.id }}
             </option>
           </select>
+          <!-- Show ID as text when only 1 individual -->
+          <div v-else class="single-individual-id">
+            {{ currentIndividual?.id || 'N/A' }}
+          </div>
         </div>
 
         <!-- Individual Details -->
         <div class="details-section">
-          <!-- ID -->
-          <div class="detail-row">
-            <span class="detail-label">ID:</span>
-            <span class="detail-value id-value">{{ currentIndividual?.id || 'N/A' }}</span>
-          </div>
-
           <!-- Observation Date -->
           <div v-if="currentIndividual?.observation_date" class="detail-row">
             <span class="detail-label">Date:</span>
@@ -572,6 +570,16 @@ const locationName = computed(() => {
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
+.single-individual-id {
+  padding: 8px 10px;
+  background: #252540;
+  border: 1px solid #3d3d5c;
+  border-radius: 6px;
+  color: #14b8a6;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
 /* Details Section */
 .details-section {
   display: flex;
@@ -597,11 +605,6 @@ const locationName = computed(() => {
 .detail-value {
   color: #e0e0e0;
   word-break: break-word;
-}
-
-.id-value {
-  font-family: monospace;
-  color: #14b8a6;
 }
 
 .status-badge {
