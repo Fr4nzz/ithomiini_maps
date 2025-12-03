@@ -229,12 +229,36 @@ def load_local_data():
         
         # Generate ID
         df['id'] = 'DORE_' + df['ID_obs'].astype(str)
-        
+
+        # Collection location and observation date
+        # Dore database may have location and date columns
+        if 'Locality' in df.columns:
+            df['collection_location'] = df['Locality'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
+            )
+        else:
+            df['collection_location'] = None
+
+        # Try various date column names
+        date_col = None
+        for col_name in ['Date', 'Collection_date', 'Year', 'Event_date']:
+            if col_name in df.columns:
+                date_col = col_name
+                break
+
+        if date_col:
+            df['observation_date'] = df[date_col].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
+            )
+        else:
+            df['observation_date'] = None
+
         # Select final columns
         result = df[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
-            'sequencing_status', 'source', 'image_url', 'country'
+            'sequencing_status', 'source', 'image_url', 'country',
+            'collection_location', 'observation_date'
         ]].copy()
         
         # Drop rows without coordinates
@@ -352,12 +376,37 @@ def load_sanger_data():
         df_col['source'] = 'Sanger Institute'
         df_col['country'] = df_col.get('Country', pd.Series([None] * len(df_col)))
         df_col['id'] = df_col['clean_id']
-        
+
+        # Collection location from Sanger data
+        if 'Collection_location' in df_col.columns:
+            df_col['collection_location'] = df_col['Collection_location'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
+            )
+        elif 'Locality' in df_col.columns:
+            df_col['collection_location'] = df_col['Locality'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
+            )
+        else:
+            df_col['collection_location'] = None
+
+        # Observation date from Sanger data
+        if 'Collection_date' in df_col.columns:
+            df_col['observation_date'] = df_col['Collection_date'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
+            )
+        elif 'Date' in df_col.columns:
+            df_col['observation_date'] = df_col['Date'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
+            )
+        else:
+            df_col['observation_date'] = None
+
         # Select final columns
         result = df_col[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
-            'sequencing_status', 'source', 'image_url', 'country'
+            'sequencing_status', 'source', 'image_url', 'country',
+            'collection_location', 'observation_date'
         ]].copy()
         
         # Drop rows without coordinates or with empty IDs
@@ -455,11 +504,22 @@ def load_gbif_bulk_download():
         # Ensure required columns exist
         required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
                         'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
-                        'sequencing_status', 'source', 'image_url', 'country']
-        
+                        'sequencing_status', 'source', 'image_url', 'country',
+                        'collection_location', 'observation_date']
+
         for col in required_cols:
             if col not in df.columns:
-                df[col] = None if col in ['subspecies', 'image_url'] else 'Unknown'
+                df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date'] else 'Unknown'
+
+        # Process GBIF locality and event date if available
+        if 'locality' in df.columns:
+            df['collection_location'] = df['locality'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
+            )
+        if 'event_date' in df.columns:
+            df['observation_date'] = df['event_date'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
+            )
         
         # ═══════════════════════════════════════════════════════════════════
         # MIMICRY RING LOOKUP (from Dore database)
@@ -554,7 +614,9 @@ def fetch_gbif_data(species_list):
                     'sequencing_status': 'GBIF Record',
                     'source': 'GBIF',
                     'image_url': image_url,
-                    'country': rec.get('country')
+                    'country': rec.get('country'),
+                    'collection_location': rec.get('locality'),
+                    'observation_date': rec.get('eventDate')
                 })
             
             # Rate limiting
@@ -629,21 +691,37 @@ def main():
     # ═══════════════════════════════════════════════════════════════════════
     
     # Ensure all string fields are properly typed
-    str_cols = ['id', 'scientific_name', 'genus', 'species', 'family', 'tribe', 
+    str_cols = ['id', 'scientific_name', 'genus', 'species', 'family', 'tribe',
                 'mimicry_ring', 'sequencing_status', 'source', 'country']
     for col in str_cols:
         if col in df_merged.columns:
             df_merged[col] = df_merged[col].fillna('Unknown').astype(str)
-    
+
     # Handle subspecies (can be null)
     df_merged['subspecies'] = df_merged['subspecies'].apply(
         lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
     )
-    
+
     # Handle image_url (can be null)
     df_merged['image_url'] = df_merged['image_url'].apply(
         lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
     )
+
+    # Handle collection_location (can be null)
+    if 'collection_location' not in df_merged.columns:
+        df_merged['collection_location'] = None
+    else:
+        df_merged['collection_location'] = df_merged['collection_location'].apply(
+            lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
+        )
+
+    # Handle observation_date (can be null)
+    if 'observation_date' not in df_merged.columns:
+        df_merged['observation_date'] = None
+    else:
+        df_merged['observation_date'] = df_merged['observation_date'].apply(
+            lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
+        )
     
     # ═══════════════════════════════════════════════════════════════════════
     # OUTPUT STATISTICS

@@ -201,7 +201,9 @@ The Python ETL pipeline must produce JSON conforming to this schema:
     "sequencing_status": "Sequenced",
     "source": "Sanger Institute",
     "country": "Ecuador",
-    "image_url": "https://wsrv.nl/?url=..."
+    "image_url": "https://wsrv.nl/?url=...",
+    "collection_location": "Mindo, Pichincha",
+    "observation_date": "2024-03-15"
   }
 ]
 ```
@@ -216,6 +218,8 @@ The Python ETL pipeline must produce JSON conforming to this schema:
 | `family` | Default "Nymphalidae" if missing |
 | `tribe` | Default "Ithomiini" if missing |
 | `source` | One of: "Dore et al. (2025)", "Sanger Institute", "GBIF" |
+| `collection_location` | Null if empty/missing, locality string from source |
+| `observation_date` | Null if empty/missing, date string from source |
 
 ### 5.3 Sequencing Status Enum
 
@@ -269,5 +273,6 @@ When a filter is **collapsed/hidden**, it automatically resets to "All":
 
 | Date | Change |
 |------|--------|
+| 2025-12-03 | Added `collection_location` and `observation_date` fields to schema |
 | 2025-XX-XX | Initial schema documentation |
 
