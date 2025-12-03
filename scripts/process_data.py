@@ -511,8 +511,13 @@ def load_gbif_bulk_download():
             if col not in df.columns:
                 df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date'] else 'Unknown'
 
-        # Process GBIF locality and event date if available
-        if 'locality' in df.columns:
+        # Process GBIF collection_location (already set by gbif_download.py with fallbacks)
+        # Only use locality as fallback if collection_location is not already set
+        if 'collection_location' in df.columns:
+            df['collection_location'] = df['collection_location'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
+            )
+        elif 'locality' in df.columns:
             df['collection_location'] = df['locality'].apply(
                 lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
             )
