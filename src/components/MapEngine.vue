@@ -749,16 +749,22 @@ const addDataLayer = (options = {}) => {
       // Get all points from the store and filter by proximity to cluster center
       const allPoints = store.displayGeoJSON?.features || []
 
-      // Calculate approximate radius based on zoom level
+      // Calculate approximate radius based on zoom level and cluster radius setting
       // At lower zoom, clusters cover more area
+      // Use a generous multiplier to ensure we capture all cluster points
       const zoom = map.getZoom()
-      const radiusKm = Math.max(10, 200 / Math.pow(2, zoom - 3))
+      const clusterRadiusPx = store.clusterSettings.radiusPixels
+
+      // Convert pixel radius to approximate km at current zoom
+      // At zoom 0, 1 pixel ≈ 156km; halves with each zoom level
+      const kmPerPixel = 156 / Math.pow(2, zoom)
+      const radiusKm = Math.max(20, clusterRadiusPx * kmPerPixel * 2) // 2x for safety margin
 
       const nearbyPoints = allPoints
         .filter(f => {
           const [lng, lat] = f.geometry.coordinates
           const dLat = Math.abs(lat - clusterLat)
-          const dLng = Math.abs(lng - clusterLng)
+          const dLng = Math.abs(lng - clusterLng) * Math.cos(clusterLat * Math.PI / 180) // Adjust for latitude
           const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
           return distKm < radiusKm
         })
