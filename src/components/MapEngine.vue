@@ -417,6 +417,28 @@ const initMap = () => {
   // Update scale bar when map moves/zooms
   map.on('moveend', updateScaleBar)
   map.on('zoomend', updateScaleBar)
+
+  // Track zoom and center for dynamic cluster radius calculation
+  map.on('zoomend', () => {
+    const newZoom = map.getZoom()
+    const center = map.getCenter()
+
+    // Check if zoom changed significantly (affects clustering)
+    const zoomChanged = Math.abs(newZoom - currentZoom.value) >= 0.5
+
+    currentZoom.value = newZoom
+    currentCenter.value = { lat: center.lat, lng: center.lng }
+
+    // Rebuild clusters if zoom changed significantly and clustering is enabled
+    if (zoomChanged && store.clusteringEnabled && map.isStyleLoaded()) {
+      addDataLayer({ skipZoom: true })
+    }
+  })
+
+  map.on('moveend', () => {
+    const center = map.getCenter()
+    currentCenter.value = { lat: center.lat, lng: center.lng }
+  })
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -530,6 +552,24 @@ const updateScatterVisualization = () => {
 // Hover popup for cluster preview
 let clusterHoverPopup = null
 
+// Current zoom level for dynamic cluster radius calculation
+const currentZoom = ref(4)
+const currentCenter = ref({ lat: -5, lng: -60 })
+
+/**
+ * Convert kilometers to pixels at a given zoom level and latitude
+ * Uses the Web Mercator projection formula
+ */
+const kmToPixels = (km, zoom, lat) => {
+  // Earth's circumference at equator in meters
+  const earthCircumference = 40075016.686
+  // Meters per pixel at equator at zoom 0: earthCircumference / 256 tiles
+  // At each zoom level, this halves
+  const metersPerPixel = earthCircumference * Math.cos(lat * Math.PI / 180) / (256 * Math.pow(2, zoom))
+  const pixels = (km * 1000) / metersPerPixel
+  return Math.max(10, Math.min(500, Math.round(pixels))) // Clamp between 10-500px
+}
+
 const addDataLayer = (options = {}) => {
   const { skipZoom = false } = options
 
@@ -554,10 +594,9 @@ const addDataLayer = (options = {}) => {
   const shouldCluster = store.clusteringEnabled
   const settings = store.clusterSettings
 
-  // Convert km radius to approximate pixel radius
-  // Using a factor of 4 for reasonable clustering at typical zoom levels (5-12)
-  // 20km ≈ 80px, 5km ≈ 20px, 50km ≈ 200px
-  const clusterRadiusPixels = Math.round(settings.radiusKm * 4)
+  // Convert km radius to pixels based on current zoom level and center latitude
+  // This gives us the correct pixel radius for the current view
+  const clusterRadiusPixels = kmToPixels(settings.radiusKm, currentZoom.value, currentCenter.value.lat)
 
   // Add source - use store settings for clustering
   map.addSource('points-source', {
@@ -727,11 +766,50 @@ const addDataLayer = (options = {}) => {
         })
 
         // Convert GeoJSON features to point properties for the popup
-        const clusterPoints = leaves.map(leaf => leaf.properties)
+        // MapLibre may stringify some properties, so we need to parse them
+        const clusterPoints = leaves.map(leaf => {
+          const props = leaf.properties
+          // Parse any stringified properties (MapLibre sometimes does this)
+          const parsed = {}
+          for (const [key, value] of Object.entries(props)) {
+            if (typeof value === 'string') {
+              try {
+                // Try to parse JSON strings (arrays, objects)
+                if (value.startsWith('[') || value.startsWith('{')) {
+                  parsed[key] = JSON.parse(value)
+                } else {
+                  parsed[key] = value
+                }
+              } catch {
+                parsed[key] = value
+              }
+            } else {
+              parsed[key] = value
+            }
+          }
+          // Add coordinates from the feature geometry for reference
+          if (leaf.geometry && leaf.geometry.coordinates) {
+            parsed.lng = parsed.lng || leaf.geometry.coordinates[0]
+            parsed.lat = parsed.lat || leaf.geometry.coordinates[1]
+          }
+          return parsed
+        })
+
+        // Calculate a representative coordinate for the cluster
+        // Use the centroid of all points in the cluster
+        let avgLat = coords[1]
+        let avgLng = coords[0]
+        if (clusterPoints.length > 0) {
+          const validPoints = clusterPoints.filter(p => p.lat && p.lng)
+          if (validPoints.length > 0) {
+            avgLat = validPoints.reduce((sum, p) => sum + parseFloat(p.lat), 0) / validPoints.length
+            avgLng = validPoints.reduce((sum, p) => sum + parseFloat(p.lng), 0) / validPoints.length
+          }
+        }
 
         // Show enhanced popup with cluster points
         enhancedPopupData.value = {
-          coordinates: { lat: coords[1], lng: coords[0] },
+          coordinates: { lat: avgLat, lng: avgLng },
           points: clusterPoints,
           initialSpecies: null,
           initialSubspecies: null
@@ -935,7 +1013,11 @@ const addDataLayer = (options = {}) => {
   }
 
   // Log clustering status
-  console.log(`📍 ${pointCount} points loaded. Clustering: ${shouldCluster ? 'ON' : 'OFF'}`)
+  if (shouldCluster) {
+    console.log(`📍 ${pointCount} points loaded. Clustering: ON (${settings.radiusKm}km = ${clusterRadiusPixels}px at zoom ${currentZoom.value.toFixed(1)})`)
+  } else {
+    console.log(`📍 ${pointCount} points loaded. Clustering: OFF`)
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
