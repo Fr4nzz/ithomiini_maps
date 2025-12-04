@@ -17,11 +17,9 @@ export const useDataStore = defineStore('data', () => {
   const showThumbnail = ref(true)
 
   // Clustering settings
-  const clusteringEnabled = ref(false)  // Will be auto-enabled when GBIF is included
+  const clusteringEnabled = ref(false)
   const clusterSettings = ref({
-    radius: 40,        // Cluster radius in pixels
-    maxZoom: 12,       // Max zoom level for clustering
-    minPoints: 5       // Minimum points to form a cluster
+    radiusPixels: 80,  // Cluster radius in pixels (default 80px)
   })
 
   // Scatter overlapping points settings
@@ -106,6 +104,9 @@ export const useDataStore = defineStore('data', () => {
   // Mimicry ring photo lookup: { 'RingName': { representatives: [...], currentIndex: 0 } }
   const mimicryPhotoLookup = ref({})
 
+  // GBIF citation data
+  const gbifCitation = ref(null)
+
   // ═══════════════════════════════════════════════════════════════════════════
   // ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -136,6 +137,9 @@ export const useDataStore = defineStore('data', () => {
 
       // Build mimicry ring photo lookup
       buildMimicryPhotoLookup(data)
+
+      // Load GBIF citation data
+      loadGbifCitation()
 
       // Initialize filters from URL
       restoreFiltersFromURL()
@@ -238,6 +242,24 @@ export const useDataStore = defineStore('data', () => {
 
     mimicryPhotoLookup.value = lookup
     console.log(`Built mimicry photo lookup for ${Object.keys(lookup).length} rings`)
+  }
+
+  /**
+   * Load GBIF citation data if available
+   */
+  const loadGbifCitation = async () => {
+    try {
+      const basePath = import.meta.env.BASE_URL || '/'
+      const response = await fetch(`${basePath}data/gbif_citation.json`)
+
+      if (response.ok) {
+        gbifCitation.value = await response.json()
+        console.log('✓ Loaded GBIF citation data')
+      }
+    } catch (e) {
+      // Citation file is optional, don't log error
+      gbifCitation.value = null
+    }
   }
 
   /**
@@ -555,13 +577,6 @@ export const useDataStore = defineStore('data', () => {
     filters.value.subspecies = []
   }, { deep: true })
 
-  // Auto-enable/disable clustering based on source selection
-  watch(() => filters.value.source, (newSources) => {
-    // Enable clustering when GBIF is included (large dataset)
-    const hasGBIF = newSources.includes('GBIF')
-    clusteringEnabled.value = hasGBIF
-  }, { deep: true })
-
   // ═══════════════════════════════════════════════════════════════════════════
   // FINAL FILTERED DATA
   // ═══════════════════════════════════════════════════════════════════════════
@@ -741,17 +756,26 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
-   * Calculate scattered positions for overlapping points
-   * @param {number} radiusKm - Radius in kilometers (default 2.5km)
+   * Calculate scattered positions for overlapping points using Fibonacci spiral
+   * This distributes points evenly throughout the circle interior, not just on the perimeter
+   * @param {number} radiusKm - Radius in kilometers (default 2km)
    */
-  const calculateScatteredPosition = (originalLat, originalLng, index, totalPoints, radiusKm = 2.5) => {
-    const angle = (2 * Math.PI * index) / totalPoints
+  const calculateScatteredPosition = (originalLat, originalLng, index, totalPoints, radiusKm = 2) => {
+    // Golden angle in radians: π * (3 - √5) ≈ 137.5 degrees
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5))
+
+    // Calculate angle and radius for this point using Fibonacci/sunflower spiral
+    const angle = index * goldenAngle
+    // Radius increases with sqrt to ensure even area distribution
+    const radiusFraction = Math.sqrt(index / totalPoints)
+    const pointRadius = radiusFraction * radiusKm
+
     // Convert km to degrees (approximate)
     const kmPerDegreeLat = 111.32
     const kmPerDegreeLng = 111.32 * Math.cos(originalLat * Math.PI / 180)
 
-    const offsetLat = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
-    const offsetLng = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
+    const offsetLat = (pointRadius / kmPerDegreeLat) * Math.cos(angle)
+    const offsetLng = (pointRadius / kmPerDegreeLng) * Math.sin(angle)
 
     return {
       lat: originalLat + offsetLat,
@@ -760,24 +784,96 @@ export const useDataStore = defineStore('data', () => {
   }
 
   /**
-   * Computed property for scattered positions
-   * Returns Map: pointId -> { scatteredLat, scatteredLng, originalLat, originalLng }
+   * Group points by subspecies at each coordinate location
+   * Returns Map: "lat,lng" -> { subspeciesKey -> { representative, allPoints, species, subspecies } }
+   */
+  const subspeciesGroups = computed(() => {
+    const groups = new Map()
+    const geo = filteredGeoJSON.value
+    if (!geo || !geo.features) return groups
+
+    for (const feature of geo.features) {
+      const [lng, lat] = feature.geometry.coordinates
+      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
+      const props = feature.properties
+      const species = props.scientific_name || 'Unknown'
+      const subspecies = props.subspecies || 'No subspecies'
+      const subspeciesKey = `${species}|${subspecies}`
+
+      if (!groups.has(coordKey)) {
+        groups.set(coordKey, new Map())
+      }
+
+      const locationGroup = groups.get(coordKey)
+
+      if (!locationGroup.has(subspeciesKey)) {
+        // First point of this subspecies - it becomes the representative
+        locationGroup.set(subspeciesKey, {
+          representative: props,
+          allPoints: [props],
+          species,
+          subspecies
+        })
+      } else {
+        // Add to existing subspecies group
+        const subspGroup = locationGroup.get(subspeciesKey)
+        subspGroup.allPoints.push(props)
+        // Prefer representative with photo
+        if (props.image_url && !subspGroup.representative.image_url) {
+          subspGroup.representative = props
+        }
+      }
+    }
+
+    return groups
+  })
+
+  /**
+   * Computed property for scattered positions - one per subspecies at each location
+   * Returns Map: pointId -> { scatteredLat, scatteredLng, originalLat, originalLng, subspeciesKey }
    */
   const scatteredPositions = computed(() => {
     const positions = new Map()
     if (!scatterOverlappingPoints.value) return positions
 
-    for (const [key, points] of coordinateGroups.value) {
-      const [lat, lng] = key.split(',').map(Number)
-      const totalPoints = points.length
+    for (const [coordKey, subspeciesMap] of subspeciesGroups.value) {
+      const [lat, lng] = coordKey.split(',').map(Number)
+      const subspeciesList = Array.from(subspeciesMap.entries())
+      const totalSubspecies = subspeciesList.length
 
-      points.forEach((point, index) => {
-        const scattered = calculateScatteredPosition(lat, lng, index, totalPoints)
-        positions.set(point.id, {
+      // Only scatter if there are multiple subspecies at this location
+      if (totalSubspecies < 2) continue
+
+      subspeciesList.forEach(([subspeciesKey, data], index) => {
+        const scattered = calculateScatteredPosition(lat, lng, index, totalSubspecies)
+        const representative = data.representative
+
+        positions.set(representative.id, {
           scatteredLat: scattered.lat,
           scatteredLng: scattered.lng,
           originalLat: lat,
-          originalLng: lng
+          originalLng: lng,
+          subspeciesKey,
+          species: data.species,
+          subspecies: data.subspecies,
+          isRepresentative: true
+        })
+
+        // Mark other points in this subspecies group as hidden (they share the representative's position)
+        data.allPoints.forEach(point => {
+          if (point.id !== representative.id) {
+            positions.set(point.id, {
+              scatteredLat: scattered.lat,
+              scatteredLng: scattered.lng,
+              originalLat: lat,
+              originalLng: lng,
+              subspeciesKey,
+              species: data.species,
+              subspecies: data.subspecies,
+              isRepresentative: false,
+              representativeId: representative.id
+            })
+          }
         })
       })
     }
@@ -787,6 +883,7 @@ export const useDataStore = defineStore('data', () => {
 
   /**
    * The GeoJSON to display - either filtered or with scattered coordinates
+   * When scatter is enabled, only shows one point per subspecies at each location
    */
   const displayGeoJSON = computed(() => {
     const geo = filteredGeoJSON.value
@@ -795,13 +892,18 @@ export const useDataStore = defineStore('data', () => {
     const positions = scatteredPositions.value
     if (positions.size === 0) return geo
 
-    // Clone and update coordinates for scattered points
-    return {
-      type: 'FeatureCollection',
-      features: geo.features.map(feature => {
-        const pos = positions.get(feature.properties.id)
-        if (pos) {
-          return {
+    // Filter and update coordinates for scattered points
+    const features = []
+    const seenRepresentatives = new Set()
+
+    for (const feature of geo.features) {
+      const pos = positions.get(feature.properties.id)
+
+      if (pos) {
+        // This point is in a scatter group
+        if (pos.isRepresentative) {
+          // Show representative points with scattered coordinates
+          features.push({
             ...feature,
             geometry: {
               ...feature.geometry,
@@ -811,49 +913,51 @@ export const useDataStore = defineStore('data', () => {
               ...feature.properties,
               _originalLat: pos.originalLat,
               _originalLng: pos.originalLng,
-              _isScattered: true
+              _isScattered: true,
+              _subspeciesKey: pos.subspeciesKey,
+              _scatteredSpecies: pos.species,
+              _scatteredSubspecies: pos.subspecies
             }
-          }
+          })
+          seenRepresentatives.add(feature.properties.id)
         }
-        return feature
-      })
+        // Non-representative points are hidden (not added to features)
+      } else {
+        // Point is not in a scatter group (single point or single subspecies at location)
+        features.push(feature)
+      }
+    }
+
+    return {
+      type: 'FeatureCollection',
+      features
     }
   })
 
   /**
-   * Data needed to draw scatter visualization (circles and lines)
+   * Data needed to draw scatter visualization (circle polygons)
+   * Only shows circles for locations with multiple subspecies
    */
   const scatterVisualizationData = computed(() => {
     if (!scatterOverlappingPoints.value) {
-      return { circles: [], lines: [] }
+      return { circles: [] }
     }
 
     const circles = []
-    const lines = []
 
-    for (const [key, points] of coordinateGroups.value) {
-      const [lat, lng] = key.split(',').map(Number)
+    for (const [coordKey, subspeciesMap] of subspeciesGroups.value) {
+      // Only add circle if there are multiple subspecies at this location
+      if (subspeciesMap.size < 2) continue
 
-      // Add circle for this group
+      const [lat, lng] = coordKey.split(',').map(Number)
+
       circles.push({
         center: [lng, lat],
-        radiusKm: 2.5
+        radiusKm: 2
       })
-
-      // Add lines from scattered points to center
-      for (const point of points) {
-        const pos = scatteredPositions.value.get(point.id)
-        if (pos) {
-          lines.push({
-            from: [lng, lat],
-            to: [pos.scatteredLng, pos.scatteredLat],
-            pointId: point.id
-          })
-        }
-      }
     }
 
-    return { circles, lines }
+    return { circles }
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -874,7 +978,9 @@ export const useDataStore = defineStore('data', () => {
     },
     source: {
       'Sanger Institute': '#3b82f6',
-      'GBIF': '#22c55e',
+      'Dore et al.': '#f59e0b',
+      'iNaturalist': '#74ac00',
+      'GBIF': '#6b7280',
     }
   }
 
@@ -1010,6 +1116,7 @@ export const useDataStore = defineStore('data', () => {
     scatterOverlappingPoints,
     photoLookup,
     mimicryPhotoLookup,
+    gbifCitation,
 
     // Map styling state
     colorBy,

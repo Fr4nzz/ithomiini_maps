@@ -447,7 +447,7 @@ const generateCirclePolygon = (centerLng, centerLat, radiusKm, points = 64) => {
 }
 
 /**
- * Build GeoJSON for scatter visualization (circles and lines)
+ * Build GeoJSON for scatter visualization (circle polygons only)
  */
 const buildScatterVisualizationGeoJSON = () => {
   const data = store.scatterVisualizationData
@@ -462,30 +462,19 @@ const buildScatterVisualizationGeoJSON = () => {
     }
   }))
 
-  // Build lines FeatureCollection
-  const lineFeatures = data.lines.map((line, index) => ({
-    type: 'Feature',
-    properties: { id: `line-${index}`, pointId: line.pointId },
-    geometry: {
-      type: 'LineString',
-      coordinates: [line.from, line.to]
-    }
-  }))
-
   return {
-    circles: { type: 'FeatureCollection', features: circleFeatures },
-    lines: { type: 'FeatureCollection', features: lineFeatures }
+    circles: { type: 'FeatureCollection', features: circleFeatures }
   }
 }
 
 /**
- * Add or update scatter visualization layers
+ * Add or update scatter visualization layers (circles only, no lines)
  */
 const updateScatterVisualization = () => {
   if (!map || !map.isStyleLoaded()) return
 
-  const layerIds = ['scatter-circles-layer', 'scatter-lines-layer']
-  const sourceIds = ['scatter-circles-source', 'scatter-lines-source']
+  const layerIds = ['scatter-circles-fill', 'scatter-circles-outline']
+  const sourceIds = ['scatter-circles-source']
 
   // Remove existing layers and sources
   layerIds.forEach(id => {
@@ -502,7 +491,7 @@ const updateScatterVisualization = () => {
 
   if (geoJSON.circles.features.length === 0) return
 
-  // Add circles source and layer
+  // Add circles source
   map.addSource('scatter-circles-source', {
     type: 'geojson',
     data: geoJSON.circles
@@ -511,30 +500,25 @@ const updateScatterVisualization = () => {
   // Try to add below points layer if it exists, otherwise just add
   const beforeLayer = map.getLayer('points-layer') ? 'points-layer' : undefined
 
+  // Add circle fill layer (semi-transparent)
   map.addLayer({
-    id: 'scatter-circles-layer',
+    id: 'scatter-circles-fill',
     type: 'fill',
     source: 'scatter-circles-source',
     paint: {
-      'fill-color': 'rgba(59, 130, 246, 0.08)',
-      'fill-outline-color': 'rgba(59, 130, 246, 0.4)'
+      'fill-color': 'rgba(59, 130, 246, 0.08)'
     }
   }, beforeLayer)
 
-  // Add lines source and layer
-  map.addSource('scatter-lines-source', {
-    type: 'geojson',
-    data: geoJSON.lines
-  })
-
+  // Add circle outline layer (dashed line)
   map.addLayer({
-    id: 'scatter-lines-layer',
+    id: 'scatter-circles-outline',
     type: 'line',
-    source: 'scatter-lines-source',
+    source: 'scatter-circles-source',
     paint: {
       'line-color': 'rgba(59, 130, 246, 0.3)',
-      'line-width': 1,
-      'line-dasharray': [2, 2]
+      'line-width': 1.5,
+      'line-dasharray': [4, 4]
     }
   }, beforeLayer)
 }
@@ -546,6 +530,10 @@ const updateScatterVisualization = () => {
 // Hover popup for cluster preview
 let clusterHoverPopup = null
 
+// Track if event handlers are registered (to prevent duplicates)
+let clusterHandlersRegistered = false
+let pointsHandlersRegistered = false
+
 const addDataLayer = (options = {}) => {
   const { skipZoom = false } = options
 
@@ -555,6 +543,7 @@ const addDataLayer = (options = {}) => {
   const layersToRemove = [
     'clusters',
     'cluster-count',
+    'cluster-extent',
     'points-layer',
     'points-highlight'
   ]
@@ -570,14 +559,17 @@ const addDataLayer = (options = {}) => {
   const shouldCluster = store.clusteringEnabled
   const settings = store.clusterSettings
 
+  // Use the pixel radius directly from settings
+  const clusterRadiusPixels = settings.radiusPixels
+
   // Add source - use store settings for clustering
   map.addSource('points-source', {
     type: 'geojson',
     data: geojson,
     cluster: shouldCluster,
-    clusterMaxZoom: settings.maxZoom,
-    clusterRadius: settings.radius,
-    clusterMinPoints: settings.minPoints
+    clusterMaxZoom: 14,
+    clusterRadius: clusterRadiusPixels,
+    clusterMinPoints: 2
   })
 
   // Only add cluster layers if clustering is enabled
@@ -615,6 +607,24 @@ const addDataLayer = (options = {}) => {
         'circle-stroke-opacity': 0.9
       }
     })
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // CLUSTER EXTENT CIRCLES - shows the clustering radius area
+    // ─────────────────────────────────────────────────────────────────────────
+    map.addLayer({
+      id: 'cluster-extent',
+      type: 'circle',
+      source: 'points-source',
+      filter: ['has', 'point_count'],
+      paint: {
+        // The extent circle is the cluster radius (in pixels)
+        'circle-radius': clusterRadiusPixels,
+        'circle-color': 'rgba(74, 222, 128, 0.08)',
+        'circle-stroke-width': 1,
+        'circle-stroke-color': 'rgba(74, 222, 128, 0.25)',
+        'circle-stroke-opacity': 1
+      }
+    }, 'clusters') // Add below the clusters layer
 
     // ─────────────────────────────────────────────────────────────────────────
     // CLUSTER COUNT LABELS
@@ -708,72 +718,105 @@ const addDataLayer = (options = {}) => {
   })
 
   // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER CLICK - show cluster contents popup
+  // CLUSTER EVENT HANDLERS - click and hover
   // ─────────────────────────────────────────────────────────────────────────
   if (shouldCluster) {
+    // Remove old handlers first to prevent duplicates
+    if (clusterHandlersRegistered) {
+      map.off('click', 'clusters')
+      map.off('mouseenter', 'clusters')
+      map.off('mouseleave', 'clusters')
+    }
+    clusterHandlersRegistered = true
+
+    // CLUSTER CLICK - show enhanced popup with all cluster points
     map.on('click', 'clusters', async (e) => {
       const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
       if (!features.length) return
 
       const cluster = features[0]
-      const clusterId = cluster.properties.cluster_id
-      const pointCount = cluster.properties.point_count
       const coords = cluster.geometry.coordinates
 
       // Close existing popup
       if (popup) popup.remove()
+      showEnhancedPopup.value = false
 
-      // Get cluster leaves (individual points)
-      const source = map.getSource('points-source')
+      // Get cluster points using proximity-based filtering
+      // Note: getClusterLeaves doesn't work reliably in this MapLibre version
+      const clusterLng = coords[0]
+      const clusterLat = coords[1]
 
-      try {
-        // Get up to 100 points from the cluster for the preview
-        const leaves = await new Promise((resolve, reject) => {
-          source.getClusterLeaves(clusterId, 100, 0, (err, features) => {
-            if (err) reject(err)
-            else resolve(features)
+      // Get all points from the store and filter by proximity to cluster center
+      const allPoints = store.displayGeoJSON?.features || []
+
+      // Calculate approximate radius based on zoom level and cluster radius setting
+      // At lower zoom, clusters cover more area
+      // Use a generous multiplier to ensure we capture all cluster points
+      const zoom = map.getZoom()
+      const clusterRadiusPx = store.clusterSettings.radiusPixels
+
+      // Convert pixel radius to approximate km at current zoom
+      // At zoom 0, 1 pixel ≈ 156km; halves with each zoom level
+      const kmPerPixel = 156 / Math.pow(2, zoom)
+      const radiusKm = Math.max(20, clusterRadiusPx * kmPerPixel * 2) // 2x for safety margin
+
+      const nearbyPoints = allPoints
+        .filter(f => {
+          const [lng, lat] = f.geometry.coordinates
+          const dLat = Math.abs(lat - clusterLat)
+          const dLng = Math.abs(lng - clusterLng) * Math.cos(clusterLat * Math.PI / 180) // Adjust for latitude
+          const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
+          return distKm < radiusKm
+        })
+        .map(f => f.properties)
+
+      if (nearbyPoints.length > 0) {
+        enhancedPopupData.value = {
+          coordinates: { lat: clusterLat, lng: clusterLng },
+          points: nearbyPoints,
+          initialSpecies: null,
+          initialSubspecies: null
+        }
+
+        nextTick(() => {
+          showEnhancedPopup.value = true
+
+          nextTick(() => {
+            if (pointPopupContainer.value) {
+              popup = new maplibregl.Popup({
+                closeButton: false,
+                closeOnClick: true,
+                maxWidth: '500px',
+                className: 'custom-popup enhanced-popup'
+              })
+                .setLngLat(coords)
+                .setDOMContent(pointPopupContainer.value)
+                .addTo(map)
+
+              popup.on('close', () => {
+                showEnhancedPopup.value = false
+              })
+            }
           })
         })
-
-        // Build cluster popup content
-        const content = buildClusterPopupContent(leaves, pointCount, clusterId)
-
-        popup = new maplibregl.Popup({
-          closeButton: true,
-          closeOnClick: true,
-          maxWidth: '380px',
-          className: 'custom-popup cluster-popup'
-        })
-          .setLngLat(coords)
-          .setHTML(content)
-          .addTo(map)
-
-        // Add click handler for zoom button after popup is added
-        setTimeout(() => {
-          const zoomBtn = document.getElementById(`zoom-cluster-${clusterId}`)
-          if (zoomBtn) {
-            zoomBtn.addEventListener('click', () => {
-              source.getClusterExpansionZoom(clusterId, (err, zoom) => {
-                if (err) return
-                popup.remove()
-                map.easeTo({
-                  center: coords,
-                  zoom: Math.min(zoom + 1, 16)
-                })
-              })
-            })
-          }
-        }, 0)
-
-      } catch (err) {
-        console.error('Error getting cluster leaves:', err)
       }
+    })
+
+    // CLUSTER HOVER - change cursor and show preview
+    map.on('mouseenter', 'clusters', (e) => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+
+    map.on('mouseleave', 'clusters', () => {
+      map.getCanvas().style.cursor = ''
     })
   }
 
   // ─────────────────────────────────────────────────────────────────────────
   // INDIVIDUAL POINT CLICK - show popup (enhanced for multiple points)
   // ─────────────────────────────────────────────────────────────────────────
+  // Remove old handler to prevent duplicates
+  map.off('click', 'points-layer')
   map.on('click', 'points-layer', (e) => {
     if (!e.features || e.features.length === 0) return
 
@@ -785,6 +828,11 @@ const addDataLayer = (options = {}) => {
     const lat = props._originalLat || coords[1]
     const lng = props._originalLng || coords[0]
 
+    // Check if this is a scattered point with subspecies info
+    const isScattered = props._isScattered
+    const scatteredSpecies = props._scatteredSpecies
+    const scatteredSubspecies = props._scatteredSubspecies
+
     // Get all points at this location
     const pointsAtLocation = store.getPointsAtCoordinates(lat, lng)
 
@@ -792,155 +840,70 @@ const addDataLayer = (options = {}) => {
     if (popup) popup.remove()
     showEnhancedPopup.value = false
 
-    if (pointsAtLocation.length > 1) {
-      // Use enhanced popup for multiple points
-      enhancedPopupData.value = {
-        coordinates: { lat, lng },
-        points: pointsAtLocation
-      }
-
-      // Create popup with the Vue component container
-      nextTick(() => {
-        showEnhancedPopup.value = true
-
-        nextTick(() => {
-          if (pointPopupContainer.value) {
-            popup = new maplibregl.Popup({
-              closeButton: false,
-              closeOnClick: true,
-              maxWidth: '500px',
-              className: 'custom-popup enhanced-popup'
-            })
-              .setLngLat(coords)
-              .setDOMContent(pointPopupContainer.value)
-              .addTo(map)
-
-            popup.on('close', () => {
-              showEnhancedPopup.value = false
-            })
-          }
-        })
-      })
-    } else {
-      // Use simple popup for single point
-      const content = buildPopupContent(props)
-
-      popup = new maplibregl.Popup({
-        closeButton: true,
-        closeOnClick: true,
-        maxWidth: '340px',
-        className: 'custom-popup'
-      })
-        .setLngLat(coords)
-        .setHTML(content)
-        .addTo(map)
+    // Always use enhanced popup (even for single points)
+    // If clicked on a scattered point, pre-select that subspecies
+    enhancedPopupData.value = {
+      coordinates: { lat, lng },
+      points: pointsAtLocation.length > 0 ? pointsAtLocation : [props],
+      initialSpecies: isScattered ? scatteredSpecies : null,
+      initialSubspecies: isScattered ? scatteredSubspecies : null
     }
+
+    // Create popup with the Vue component container
+    nextTick(() => {
+      showEnhancedPopup.value = true
+
+      nextTick(() => {
+        if (pointPopupContainer.value) {
+          popup = new maplibregl.Popup({
+            closeButton: false,
+            closeOnClick: true,
+            maxWidth: '500px',
+            className: 'custom-popup enhanced-popup'
+          })
+            .setLngLat(coords)
+            .setDOMContent(pointPopupContainer.value)
+            .addTo(map)
+
+          popup.on('close', () => {
+            showEnhancedPopup.value = false
+          })
+        }
+      })
+    })
   })
 
   // ─────────────────────────────────────────────────────────────────────────
-  // HOVER EFFECTS
+  // POINTS LAYER HOVER EFFECTS
   // ─────────────────────────────────────────────────────────────────────────
-  if (shouldCluster) {
-    // Cluster hover - show preview popup with clickable points
-    map.on('mouseenter', 'clusters', async (e) => {
+  // Register points-layer handlers only once
+  if (!pointsHandlersRegistered) {
+    pointsHandlersRegistered = true
+
+    map.on('mouseenter', 'points-layer', (e) => {
       map.getCanvas().style.cursor = 'pointer'
 
-      if (!e.features || !e.features.length) return
-
-      const cluster = e.features[0]
-      const clusterId = cluster.properties.cluster_id
-      const pointCount = cluster.properties.point_count
-      const coords = cluster.geometry.coordinates
-
-      // Close existing hover popup
-      if (clusterHoverPopup) clusterHoverPopup.remove()
-
-      try {
-        const source = map.getSource('points-source')
-        // Get first 10 points for preview
-        const leaves = await new Promise((resolve, reject) => {
-          source.getClusterLeaves(clusterId, 10, 0, (err, features) => {
-            if (err) reject(err)
-            else resolve(features)
-          })
-        })
-
-        const content = buildClusterHoverContent(leaves, pointCount, clusterId)
-
-        clusterHoverPopup = new maplibregl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-          maxWidth: '280px',
-          className: 'cluster-hover-popup',
-          offset: 15
-        })
-          .setLngLat(coords)
-          .setHTML(content)
-          .addTo(map)
-
-        // Add click handlers for individual points in the hover popup
-        setTimeout(() => {
-          leaves.forEach((leaf, idx) => {
-            const btn = document.getElementById(`cluster-point-${clusterId}-${idx}`)
-            if (btn) {
-              btn.addEventListener('click', (evt) => {
-                evt.stopPropagation()
-                if (clusterHoverPopup) clusterHoverPopup.remove()
-                if (popup) popup.remove()
-
-                const props = leaf.properties
-                const pointCoords = leaf.geometry.coordinates
-
-                popup = new maplibregl.Popup({
-                  closeButton: true,
-                  closeOnClick: true,
-                  maxWidth: '340px',
-                  className: 'custom-popup'
-                })
-                  .setLngLat(pointCoords)
-                  .setHTML(buildPopupContent(props))
-                  .addTo(map)
-              })
-            }
-          })
-        }, 0)
-
-      } catch (err) {
-        console.error('Error getting cluster preview:', err)
+      if (e.features && e.features.length > 0) {
+        const id = e.features[0].properties.id
+        // Check current clustering state dynamically
+        const isClustering = store.clusteringEnabled
+        const filter = isClustering
+          ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
+          : ['==', ['get', 'id'], id]
+        map.setFilter('points-highlight', filter)
       }
     })
 
-    map.on('mouseleave', 'clusters', () => {
+    map.on('mouseleave', 'points-layer', () => {
       map.getCanvas().style.cursor = ''
-      // Delay removal to allow clicking on popup items
-      setTimeout(() => {
-        if (clusterHoverPopup && !clusterHoverPopup.getElement()?.matches(':hover')) {
-          clusterHoverPopup.remove()
-          clusterHoverPopup = null
-        }
-      }, 100)
+      // Check current clustering state dynamically
+      const isClustering = store.clusteringEnabled
+      const filter = isClustering
+        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
+        : ['==', ['get', 'id'], '']
+      map.setFilter('points-highlight', filter)
     })
   }
-
-  map.on('mouseenter', 'points-layer', (e) => {
-    map.getCanvas().style.cursor = 'pointer'
-
-    if (e.features && e.features.length > 0) {
-      const id = e.features[0].properties.id
-      const filter = shouldCluster
-        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
-        : ['==', ['get', 'id'], id]
-      map.setFilter('points-highlight', filter)
-    }
-  })
-
-  map.on('mouseleave', 'points-layer', () => {
-    map.getCanvas().style.cursor = ''
-    const filter = shouldCluster
-      ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-      : ['==', ['get', 'id'], '']
-    map.setFilter('points-highlight', filter)
-  })
 
   // Fit bounds to data (with padding) - only if not skipping zoom
   if (!skipZoom) {
@@ -948,7 +911,11 @@ const addDataLayer = (options = {}) => {
   }
 
   // Log clustering status
-  console.log(`📍 ${pointCount} points loaded. Clustering: ${shouldCluster ? 'ON' : 'OFF'}`)
+  if (shouldCluster) {
+    console.log(`📍 ${pointCount} points loaded. Clustering: ON (radius: ${clusterRadiusPixels}px)`)
+  } else {
+    console.log(`📍 ${pointCount} points loaded. Clustering: OFF`)
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1186,6 +1153,9 @@ const fitBoundsToData = (geojson) => {
 // Track previous data length to detect actual data changes vs just settings changes
 let previousDataLength = 0
 
+// Track previous scatter state to detect scatter toggles vs actual data changes
+let previousScatterState = false
+
 // Close enhanced popup
 const closeEnhancedPopup = () => {
   if (popup) popup.remove()
@@ -1199,12 +1169,22 @@ watch(
     if (!map || !map.isStyleLoaded()) return
 
     const newLength = newData?.features?.length || 0
-    const dataChanged = newLength !== previousDataLength
+    const currentScatterState = store.scatterOverlappingPoints
+
+    // Detect if this change is from scatter toggle vs actual data change
+    const scatterJustToggled = currentScatterState !== previousScatterState
+    previousScatterState = currentScatterState
+
+    // Only consider it a "data change" if the length changed (not just scatter coordinates)
+    const dataLengthChanged = newLength !== previousDataLength
     previousDataLength = newLength
 
-    // Always rebuild to ensure clustering settings are applied correctly
-    // Only zoom if the actual data changed (not just clustering settings)
-    addDataLayer({ skipZoom: !dataChanged })
+    // Skip zoom if:
+    // - Data length didn't change, OR
+    // - Scatter was just toggled (coordinates changed but not actual data)
+    const shouldSkipZoom = !dataLengthChanged || scatterJustToggled
+
+    addDataLayer({ skipZoom: shouldSkipZoom })
 
     // Update scatter visualization if enabled
     if (store.scatterOverlappingPoints) {
@@ -1219,7 +1199,8 @@ watch(
   () => store.scatterOverlappingPoints,
   () => {
     if (!map || !map.isStyleLoaded()) return
-    addDataLayer({ skipZoom: true })
+    // Note: The displayGeoJSON watcher will also fire, but it will detect scatter toggle
+    // and skip zoom appropriately
     updateScatterVisualization()
   }
 )
@@ -1304,6 +1285,8 @@ const switchStyle = (styleName) => {
           v-if="showEnhancedPopup"
           :coordinates="enhancedPopupData.coordinates"
           :points="enhancedPopupData.points"
+          :initial-species="enhancedPopupData.initialSpecies"
+          :initial-subspecies="enhancedPopupData.initialSubspecies"
           @close="closeEnhancedPopup"
         />
       </div>

@@ -311,6 +311,15 @@ def process_record(rec):
     # Get image if available
     image_url = get_image_url(rec)
     
+    # Get location fields - priority: locality > verbatimLocality > stateProvince > county
+    locality = rec.get('locality')
+    verbatim_locality = rec.get('verbatimLocality')
+    state_province = rec.get('stateProvince')
+    county = rec.get('county')
+
+    # Set collection_location to best available
+    collection_location = locality or verbatim_locality or state_province or county
+
     return {
         'id': str(rec.get('gbifID', rec.get('key', ''))),
         'scientific_name': parts['scientific_name'],
@@ -326,12 +335,16 @@ def process_record(rec):
         'source': 'GBIF',
         'image_url': image_url,
         'country': rec.get('country'),
+        'collection_location': collection_location,
         # Additional GBIF-specific fields for filtering
         'basis_of_record': rec.get('basisOfRecord'),
         'dataset_name': rec.get('datasetName'),
         'collection_date': rec.get('eventDate'),
         'coordinate_uncertainty': rec.get('coordinateUncertaintyInMeters'),
         'institution_code': rec.get('institutionCode'),
+        # Location detail fields
+        'locality': locality,
+        'state_province': state_province,
     }
 
 
@@ -377,6 +390,15 @@ def main():
     # With subspecies
     with_subsp = sum(1 for r in records if r.get('subspecies'))
     print(f"Records with subspecies: {with_subsp:,}")
+
+    # Location data coverage
+    with_collection_location = sum(1 for r in records if r.get('collection_location'))
+    with_locality = sum(1 for r in records if r.get('locality'))
+    with_state = sum(1 for r in records if r.get('state_province'))
+    print(f"\nLocation data coverage:")
+    print(f"  With collection_location: {with_collection_location:,} ({with_collection_location/len(records)*100:.1f}%)")
+    print(f"  With locality: {with_locality:,} ({with_locality/len(records)*100:.1f}%)")
+    print(f"  With state_province: {with_state:,} ({with_state/len(records)*100:.1f}%)")
     
     # Save to file
     print(f"\nSaving to {OUTPUT_FILE}...")
