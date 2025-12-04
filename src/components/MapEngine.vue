@@ -768,7 +768,6 @@ const addDataLayer = (options = {}) => {
           const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
           return distKm < radiusKm
         })
-        .slice(0, 500) // Limit to 500 points for performance
         .map(f => f.properties)
 
       if (nearbyPoints.length > 0) {
