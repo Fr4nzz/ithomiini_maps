@@ -317,6 +317,9 @@ const handleImageError = (e, originalUrl) => {
             <td v-if="visibleColumns.source" class="cell-source">
               {{ row.source }}
             </td>
+            <td v-if="visibleColumns.observation_date" class="cell-date">
+              {{ row.observation_date || '—' }}
+            </td>
             <td v-if="visibleColumns.country" class="cell-country">
               {{ row.country || '—' }}
             </td>
