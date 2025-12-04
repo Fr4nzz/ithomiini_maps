@@ -433,7 +433,7 @@ const currentExportDimensions = computed(() => {
 
       <!-- Mimicry Ring Filter (Collapsible) -->
       <div class="filter-section collapsible">
-        <button 
+        <button
           class="collapse-toggle"
           @click="store.toggleMimicryFilter"
           :class="{ expanded: store.showMimicryFilter }"
@@ -442,19 +442,30 @@ const currentExportDimensions = computed(() => {
             <path d="m9 18 6-6-6-6"/>
           </svg>
           Mimicry Ring
-          <span v-if="store.filters.mimicry !== 'All'" class="active-badge">
-            {{ store.filters.mimicry }}
+          <span v-if="store.filters.mimicry.length > 0" class="active-badge">
+            {{ store.filters.mimicry.length }}
           </span>
         </button>
 
         <div v-show="store.showMimicryFilter" class="collapse-content">
-          <FilterSelect
-            label="Mimicry Ring"
-            v-model="store.filters.mimicry"
-            :options="['All', ...store.uniqueMimicry]"
-            placeholder="All Mimicry Rings"
-            :multiple="false"
-          />
+          <label class="filter-label">Mimicry Ring ({{ store.uniqueMimicry.length }})</label>
+
+          <!-- Selected rings display -->
+          <div v-if="store.filters.mimicry.length > 0" class="selected-tags">
+            <button
+              v-for="ring in store.filters.mimicry"
+              :key="ring"
+              class="selected-tag"
+              @click="store.filters.mimicry.splice(store.filters.mimicry.indexOf(ring), 1)"
+            >
+              {{ ring }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          <p v-else class="filter-hint" style="margin-top: 0;">All Mimicry Rings</p>
+
           <button class="btn-visual-selector" @click="emit('open-mimicry')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="3" width="7" height="7"/>
@@ -464,6 +475,15 @@ const currentExportDimensions = computed(() => {
             </svg>
             Open Visual Selector
           </button>
+
+          <button
+            v-if="store.filters.mimicry.length > 0"
+            class="btn-clear-selection"
+            @click="store.filters.mimicry = []"
+          >
+            Clear Selection
+          </button>
+
           <p class="filter-hint">
             Mimicry data from Dore et al. (2025)
           </p>
@@ -1548,6 +1568,59 @@ const currentExportDimensions = computed(() => {
 .btn-visual-selector svg {
   width: 16px;
   height: 16px;
+}
+
+/* Clear Selection Button */
+.btn-clear-selection {
+  width: 100%;
+  padding: 6px 12px;
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-clear-selection:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+/* Selected Tags (for multi-select filters) */
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.selected-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 4px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.selected-tag:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.selected-tag svg {
+  width: 12px;
+  height: 12px;
 }
 
 /* Status Grid */
