@@ -868,6 +868,62 @@ const addDataLayer = (options = {}) => {
 
       } catch (err) {
         console.error('Error getting cluster leaves:', err)
+
+        // Fallback: use proximity-based filtering from the store's data
+        console.log('📍 Using fallback: proximity-based filtering')
+        const clusterLng = coords[0]
+        const clusterLat = coords[1]
+
+        // Get all points from the store and filter by proximity to cluster center
+        // This is an approximation since we don't know the exact cluster membership
+        const allPoints = store.displayGeoJSON?.features || []
+        const radiusKm = 50 // Approximate radius to capture cluster points
+
+        const nearbyPoints = allPoints
+          .filter(f => {
+            const [lng, lat] = f.geometry.coordinates
+            // Simple distance check (not geodesic, but good enough for clustering)
+            const dLat = Math.abs(lat - clusterLat)
+            const dLng = Math.abs(lng - clusterLng)
+            // Rough km conversion: 1 degree ≈ 111km
+            const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
+            return distKm < radiusKm
+          })
+          .slice(0, 1000) // Limit to 1000 points
+          .map(f => f.properties)
+
+        console.log(`📍 Fallback found ${nearbyPoints.length} nearby points`)
+
+        if (nearbyPoints.length > 0) {
+          enhancedPopupData.value = {
+            coordinates: { lat: clusterLat, lng: clusterLng },
+            points: nearbyPoints,
+            initialSpecies: null,
+            initialSubspecies: null
+          }
+
+          nextTick(() => {
+            showEnhancedPopup.value = true
+
+            nextTick(() => {
+              if (pointPopupContainer.value) {
+                popup = new maplibregl.Popup({
+                  closeButton: false,
+                  closeOnClick: true,
+                  maxWidth: '500px',
+                  className: 'custom-popup enhanced-popup'
+                })
+                  .setLngLat(coords)
+                  .setDOMContent(pointPopupContainer.value)
+                  .addTo(map)
+
+                popup.on('close', () => {
+                  showEnhancedPopup.value = false
+                })
+              }
+            })
+          })
+        }
       }
     })
 
