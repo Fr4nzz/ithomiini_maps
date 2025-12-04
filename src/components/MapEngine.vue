@@ -757,19 +757,35 @@ const addDataLayer = (options = {}) => {
       // Get cluster leaves (individual points)
       const source = map.getSource('points-source')
       console.log('📍 Source:', source ? 'exists' : 'null')
+      console.log('📍 Source type:', source?._data ? 'has data' : 'no data')
 
       try {
         // Get all points from the cluster (up to 1000 for performance)
         const maxLeaves = Math.min(pointCount, 1000)
         console.log(`📍 Requesting ${maxLeaves} leaves from cluster ${clusterId}`)
 
+        // Try using getClusterLeaves with a timeout fallback
         const leaves = await new Promise((resolve, reject) => {
           console.log('📍 Calling getClusterLeaves...')
-          source.getClusterLeaves(clusterId, maxLeaves, 0, (err, features) => {
-            console.log('📍 getClusterLeaves callback:', err ? 'error' : `${features?.length} features`)
-            if (err) reject(err)
-            else resolve(features)
-          })
+
+          // Set a timeout in case the callback never fires
+          const timeout = setTimeout(() => {
+            console.log('📍 getClusterLeaves timed out after 5s')
+            reject(new Error('getClusterLeaves timeout'))
+          }, 5000)
+
+          try {
+            source.getClusterLeaves(clusterId, maxLeaves, 0, (err, features) => {
+              clearTimeout(timeout)
+              console.log('📍 getClusterLeaves callback:', err ? `error: ${err}` : `${features?.length} features`)
+              if (err) reject(err)
+              else resolve(features || [])
+            })
+          } catch (syncErr) {
+            clearTimeout(timeout)
+            console.log('📍 getClusterLeaves sync error:', syncErr)
+            reject(syncErr)
+          }
         })
 
         console.log(`📍 Got ${leaves.length} leaves from cluster`)
