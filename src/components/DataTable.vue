@@ -49,28 +49,61 @@ const rawData = computed(() => {
   return geo.features.map(f => f.properties)
 })
 
+// Parse date strings in various formats (DD-MMM-YY, YYYY-MM-DD, etc.)
+function parseDate(dateStr) {
+  if (!dateStr) return null
+
+  // Handle DD-MMM-YY or D-MMM-YY format (e.g., "18-Jan-22", "1-Aug-24")
+  const ddMmmYy = /^(\d{1,2})-([A-Za-z]{3})-(\d{2})$/
+  const match = dateStr.match(ddMmmYy)
+  if (match) {
+    const [, day, monthStr, yearShort] = match
+    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
+    const month = months[monthStr.toLowerCase()]
+    if (month !== undefined) {
+      const year = parseInt(yearShort) + (parseInt(yearShort) > 50 ? 1900 : 2000)
+      return new Date(year, month, parseInt(day))
+    }
+  }
+
+  // Fallback to standard Date parsing
+  const d = new Date(dateStr)
+  return isNaN(d.getTime()) ? null : d
+}
+
 // Sorted data
 const sortedData = computed(() => {
   const data = [...rawData.value]
-  
+
   data.sort((a, b) => {
     let valA = a[sortColumn.value] || ''
     let valB = b[sortColumn.value] || ''
-    
+
     // Handle numeric columns
     if (sortColumn.value === 'lat' || sortColumn.value === 'lng') {
       valA = parseFloat(valA) || 0
       valB = parseFloat(valB) || 0
+    }
+    // Handle date column
+    else if (sortColumn.value === 'observation_date') {
+      const dateA = parseDate(valA)
+      const dateB = parseDate(valB)
+      // Put null dates at the end
+      if (!dateA && !dateB) return 0
+      if (!dateA) return 1
+      if (!dateB) return -1
+      valA = dateA.getTime()
+      valB = dateB.getTime()
     } else {
       valA = String(valA).toLowerCase()
       valB = String(valB).toLowerCase()
     }
-    
+
     if (valA < valB) return sortDirection.value === 'asc' ? -1 : 1
     if (valA > valB) return sortDirection.value === 'asc' ? 1 : -1
     return 0
   })
-  
+
   return data
 })
 
