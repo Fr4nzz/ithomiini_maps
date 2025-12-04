@@ -720,134 +720,63 @@ const addDataLayer = (options = {}) => {
   // ─────────────────────────────────────────────────────────────────────────
   // CLUSTER EVENT HANDLERS - click and hover
   // ─────────────────────────────────────────────────────────────────────────
-  // Debug: log current state
-  console.log(`📍 Cluster handlers check: shouldCluster=${shouldCluster}, registered=${clusterHandlersRegistered}`)
-
-  // Register handlers when clustering is enabled
-  // Note: We register every time clustering is enabled because layers are recreated
   if (shouldCluster) {
     // Remove old handlers first to prevent duplicates
     if (clusterHandlersRegistered) {
-      console.log('📍 Removing old cluster handlers')
       map.off('click', 'clusters')
       map.off('mouseenter', 'clusters')
       map.off('mouseleave', 'clusters')
     }
-
     clusterHandlersRegistered = true
-    console.log('📍 Registering cluster event handlers (click + hover)')
 
     // CLUSTER CLICK - show enhanced popup with all cluster points
     map.on('click', 'clusters', async (e) => {
-      console.log('📍 Cluster clicked!', e.point)
       const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-      console.log('📍 Features found:', features.length)
       if (!features.length) return
 
       const cluster = features[0]
-      const clusterId = cluster.properties.cluster_id
-      const pointCount = cluster.properties.point_count
       const coords = cluster.geometry.coordinates
-      console.log(`📍 Cluster ${clusterId}: ${pointCount} points at`, coords)
 
       // Close existing popup
       if (popup) popup.remove()
       showEnhancedPopup.value = false
 
-      // Get cluster leaves (individual points)
-      const source = map.getSource('points-source')
-      console.log('📍 Source:', source ? 'exists' : 'null')
-      console.log('📍 Source type:', source?._data ? 'has data' : 'no data')
+      // Get cluster points using proximity-based filtering
+      // Note: getClusterLeaves doesn't work reliably in this MapLibre version
+      const clusterLng = coords[0]
+      const clusterLat = coords[1]
 
-      try {
-        // Get all points from the cluster (up to 1000 for performance)
-        const maxLeaves = Math.min(pointCount, 1000)
-        console.log(`📍 Requesting ${maxLeaves} leaves from cluster ${clusterId}`)
+      // Get all points from the store and filter by proximity to cluster center
+      const allPoints = store.displayGeoJSON?.features || []
 
-        // Try using getClusterLeaves with a timeout fallback
-        const leaves = await new Promise((resolve, reject) => {
-          console.log('📍 Calling getClusterLeaves...')
+      // Calculate approximate radius based on zoom level
+      // At lower zoom, clusters cover more area
+      const zoom = map.getZoom()
+      const radiusKm = Math.max(10, 200 / Math.pow(2, zoom - 3))
 
-          // Set a timeout in case the callback never fires
-          const timeout = setTimeout(() => {
-            console.log('📍 getClusterLeaves timed out after 5s')
-            reject(new Error('getClusterLeaves timeout'))
-          }, 5000)
-
-          try {
-            source.getClusterLeaves(clusterId, maxLeaves, 0, (err, features) => {
-              clearTimeout(timeout)
-              console.log('📍 getClusterLeaves callback:', err ? `error: ${err}` : `${features?.length} features`)
-              if (err) reject(err)
-              else resolve(features || [])
-            })
-          } catch (syncErr) {
-            clearTimeout(timeout)
-            console.log('📍 getClusterLeaves sync error:', syncErr)
-            reject(syncErr)
-          }
+      const nearbyPoints = allPoints
+        .filter(f => {
+          const [lng, lat] = f.geometry.coordinates
+          const dLat = Math.abs(lat - clusterLat)
+          const dLng = Math.abs(lng - clusterLng)
+          const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
+          return distKm < radiusKm
         })
+        .slice(0, 500) // Limit to 500 points for performance
+        .map(f => f.properties)
 
-        console.log(`📍 Got ${leaves.length} leaves from cluster`)
-
-        // Convert GeoJSON features to point properties for the popup
-        // MapLibre may stringify some properties, so we need to parse them
-        const clusterPoints = leaves.map(leaf => {
-          const props = leaf.properties
-          // Parse any stringified properties (MapLibre sometimes does this)
-          const parsed = {}
-          for (const [key, value] of Object.entries(props)) {
-            if (typeof value === 'string') {
-              try {
-                // Try to parse JSON strings (arrays, objects)
-                if (value.startsWith('[') || value.startsWith('{')) {
-                  parsed[key] = JSON.parse(value)
-                } else {
-                  parsed[key] = value
-                }
-              } catch {
-                parsed[key] = value
-              }
-            } else {
-              parsed[key] = value
-            }
-          }
-          // Add coordinates from the feature geometry for reference
-          if (leaf.geometry && leaf.geometry.coordinates) {
-            parsed.lng = parsed.lng || leaf.geometry.coordinates[0]
-            parsed.lat = parsed.lat || leaf.geometry.coordinates[1]
-          }
-          return parsed
-        })
-
-        // Calculate a representative coordinate for the cluster
-        // Use the centroid of all points in the cluster
-        let avgLat = coords[1]
-        let avgLng = coords[0]
-        if (clusterPoints.length > 0) {
-          const validPoints = clusterPoints.filter(p => p.lat && p.lng)
-          if (validPoints.length > 0) {
-            avgLat = validPoints.reduce((sum, p) => sum + parseFloat(p.lat), 0) / validPoints.length
-            avgLng = validPoints.reduce((sum, p) => sum + parseFloat(p.lng), 0) / validPoints.length
-          }
-        }
-
-        console.log(`📍 Got ${clusterPoints.length} cluster points, showing popup`)
-
-        // Show enhanced popup with cluster points
+      if (nearbyPoints.length > 0) {
         enhancedPopupData.value = {
-          coordinates: { lat: avgLat, lng: avgLng },
-          points: clusterPoints,
+          coordinates: { lat: clusterLat, lng: clusterLng },
+          points: nearbyPoints,
           initialSpecies: null,
           initialSubspecies: null
         }
 
         nextTick(() => {
           showEnhancedPopup.value = true
-          console.log('📍 showEnhancedPopup set to true')
 
           nextTick(() => {
-            console.log('📍 pointPopupContainer.value:', !!pointPopupContainer.value)
             if (pointPopupContainer.value) {
               popup = new maplibregl.Popup({
                 closeButton: false,
@@ -865,65 +794,6 @@ const addDataLayer = (options = {}) => {
             }
           })
         })
-
-      } catch (err) {
-        console.error('Error getting cluster leaves:', err)
-
-        // Fallback: use proximity-based filtering from the store's data
-        console.log('📍 Using fallback: proximity-based filtering')
-        const clusterLng = coords[0]
-        const clusterLat = coords[1]
-
-        // Get all points from the store and filter by proximity to cluster center
-        // This is an approximation since we don't know the exact cluster membership
-        const allPoints = store.displayGeoJSON?.features || []
-        const radiusKm = 50 // Approximate radius to capture cluster points
-
-        const nearbyPoints = allPoints
-          .filter(f => {
-            const [lng, lat] = f.geometry.coordinates
-            // Simple distance check (not geodesic, but good enough for clustering)
-            const dLat = Math.abs(lat - clusterLat)
-            const dLng = Math.abs(lng - clusterLng)
-            // Rough km conversion: 1 degree ≈ 111km
-            const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
-            return distKm < radiusKm
-          })
-          .slice(0, 1000) // Limit to 1000 points
-          .map(f => f.properties)
-
-        console.log(`📍 Fallback found ${nearbyPoints.length} nearby points`)
-
-        if (nearbyPoints.length > 0) {
-          enhancedPopupData.value = {
-            coordinates: { lat: clusterLat, lng: clusterLng },
-            points: nearbyPoints,
-            initialSpecies: null,
-            initialSubspecies: null
-          }
-
-          nextTick(() => {
-            showEnhancedPopup.value = true
-
-            nextTick(() => {
-              if (pointPopupContainer.value) {
-                popup = new maplibregl.Popup({
-                  closeButton: false,
-                  closeOnClick: true,
-                  maxWidth: '500px',
-                  className: 'custom-popup enhanced-popup'
-                })
-                  .setLngLat(coords)
-                  .setDOMContent(pointPopupContainer.value)
-                  .addTo(map)
-
-                popup.on('close', () => {
-                  showEnhancedPopup.value = false
-                })
-              }
-            })
-          })
-        }
       }
     })
 
@@ -935,20 +805,6 @@ const addDataLayer = (options = {}) => {
     map.on('mouseleave', 'clusters', () => {
       map.getCanvas().style.cursor = ''
     })
-
-    // Debug: Add a general click handler to verify clicks are received
-    const debugClickHandler = (e) => {
-      const clustersLayer = map.getLayer('clusters')
-      console.log(`📍 Map clicked at [${e.lngLat.lng.toFixed(4)}, ${e.lngLat.lat.toFixed(4)}]`)
-      console.log(`📍 Clusters layer exists: ${!!clustersLayer}`)
-      if (clustersLayer) {
-        const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-        console.log(`📍 Cluster features at click point: ${features.length}`)
-      }
-    }
-    // Remove previous debug handler if exists
-    map.off('click', debugClickHandler)
-    map.on('click', debugClickHandler)
   }
 
   // ─────────────────────────────────────────────────────────────────────────
