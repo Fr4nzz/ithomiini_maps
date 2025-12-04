@@ -8,6 +8,28 @@ const store = useDataStore()
 const startDate = ref('')
 const endDate = ref('')
 
+// Parse date strings in various formats (DD-MMM-YY, YYYY-MM-DD, etc.)
+function parseDate(dateStr) {
+  if (!dateStr) return null
+
+  // Handle DD-MMM-YY format (e.g., "18-Jan-22")
+  const ddMmmYy = /^(\d{1,2})-([A-Za-z]{3})-(\d{2})$/
+  const match = dateStr.match(ddMmmYy)
+  if (match) {
+    const [, day, monthStr, yearShort] = match
+    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
+    const month = months[monthStr.toLowerCase()]
+    if (month !== undefined) {
+      const year = parseInt(yearShort) + (parseInt(yearShort) > 50 ? 1900 : 2000)
+      return new Date(year, month, parseInt(day))
+    }
+  }
+
+  // Fallback to standard Date parsing
+  const d = new Date(dateStr)
+  return isNaN(d.getTime()) ? null : d
+}
+
 // Quick ranges
 const quickRanges = [
   { label: 'All Time', start: '', end: '' },
@@ -35,10 +57,11 @@ const dateStats = computed(() => {
   let withoutDates = 0
 
   features.forEach(f => {
-    const date = f.properties?.observation_date || f.properties?.date || f.properties?.preservation_date
-    if (date) {
+    // Access flat object properties directly (not via f.properties)
+    const dateStr = f.observation_date || f.date || f.preservation_date
+    const d = parseDate(dateStr)
+    if (d) {
       withDates++
-      const d = new Date(date)
       if (!earliest || d < earliest) earliest = d
       if (!latest || d > latest) latest = d
     } else {
