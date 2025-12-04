@@ -87,7 +87,7 @@ export const useDataStore = defineStore('data', () => {
     species: [],        // Array for multi-select
     subspecies: [],     // Array for multi-select
     // Parallel filters
-    mimicry: 'All',
+    mimicry: [],        // Array for multi-select mimicry rings
     status: [],
     source: ['Sanger Institute'],  // Multi-select array, default to Sanger
     country: 'All',     // Country filter
@@ -614,7 +614,7 @@ export const useDataStore = defineStore('data', () => {
       if (filters.value.subspecies.length > 0 && !filters.value.subspecies.includes(item.subspecies)) return false
       
       // Parallel filters
-      if (filters.value.mimicry !== 'All' && item.mimicry_ring !== filters.value.mimicry) return false
+      if (filters.value.mimicry.length > 0 && !filters.value.mimicry.includes(item.mimicry_ring)) return false
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
       // Source filter (multi-select array)
       if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false

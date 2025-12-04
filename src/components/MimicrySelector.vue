@@ -78,21 +78,32 @@ const hasTaxonomyFilter = computed(() => {
          store.filters.subspecies.length > 0
 })
 
-// Currently selected ring
-const selectedRing = computed(() => store.filters.mimicry)
+// Currently selected rings (now an array for multi-select)
+const selectedRings = computed(() => store.filters.mimicry)
 
-// Select a ring
-const selectRing = (ring, isAvailable = true) => {
-  if (store.filters.mimicry === ring) {
-    store.filters.mimicry = 'All'
+// Toggle a ring selection (multi-select)
+const toggleRing = (ring) => {
+  const index = store.filters.mimicry.indexOf(ring)
+  if (index === -1) {
+    // Add to selection
+    store.filters.mimicry.push(ring)
   } else {
-    store.filters.mimicry = ring
+    // Remove from selection
+    store.filters.mimicry.splice(index, 1)
   }
 }
 
-// Clear selection
+// Remove a specific ring from selection
+const removeRing = (ring) => {
+  const index = store.filters.mimicry.indexOf(ring)
+  if (index !== -1) {
+    store.filters.mimicry.splice(index, 1)
+  }
+}
+
+// Clear all selections
 const clearSelection = () => {
-  store.filters.mimicry = 'All'
+  store.filters.mimicry = []
   emit('close')
 }
 </script>
@@ -130,10 +141,15 @@ const clearSelection = () => {
     </div>
 
     <!-- Current Selection -->
-    <div v-if="selectedRing !== 'All'" class="current-selection">
+    <div v-if="selectedRings.length > 0" class="current-selection">
       <span class="selection-label">Selected:</span>
-      <button class="selection-tag" @click="clearSelection">
-        {{ selectedRing }}
+      <button
+        v-for="ring in selectedRings"
+        :key="ring"
+        class="selection-tag"
+        @click="removeRing(ring)"
+      >
+        {{ ring }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 6 6 18M6 6l12 12"/>
         </svg>
@@ -154,8 +170,8 @@ const clearSelection = () => {
             v-for="ring in availableRings"
             :key="ring"
             class="ring-card"
-            :class="{ selected: selectedRing === ring }"
-            @click="selectRing(ring)"
+            :class="{ selected: selectedRings.includes(ring) }"
+            @click="toggleRing(ring)"
           >
             <!-- Photo Display -->
             <div class="ring-photo-container">
@@ -169,28 +185,6 @@ const clearSelection = () => {
                   loading="lazy"
                   @error="$event.target.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%232d2d4a%22 width=%2260%22 height=%2260%22/><text x=%2230%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2210%22>No image</text></svg>'"
                 />
-
-                <!-- Navigation arrows -->
-                <template v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
-                  <button
-                    class="nav-arrow nav-prev"
-                    @click="prevPhoto(ring, $event)"
-                    title="Previous species"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="m15 18-6-6 6-6"/>
-                    </svg>
-                  </button>
-                  <button
-                    class="nav-arrow nav-next"
-                    @click="nextPhoto(ring, $event)"
-                    title="Next species"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="m9 18 6-6-6-6"/>
-                    </svg>
-                  </button>
-                </template>
 
                 <!-- Source badge -->
                 <span
@@ -212,18 +206,33 @@ const clearSelection = () => {
               </div>
             </div>
 
-            <!-- Species name under photo -->
+            <!-- Species name under photo with navigation -->
             <div class="rep-name" v-if="getCurrentRep(ring)">
               <em>{{ getCurrentRep(ring).scientific_name }}</em>
-              <span v-if="getCurrentRep(ring).subspecies" class="subspecies">
-                {{ getCurrentRep(ring).subspecies }}
-              </span>
-              <span
-                v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1"
-                class="rep-counter"
-              >
-                {{ getPhotoIndex(ring) + 1 }}/{{ store.mimicryPhotoLookup[ring].representatives.length }}
-              </span>
+              <!-- Navigation row with arrows and counter -->
+              <div class="rep-nav-row" v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
+                <button
+                  class="nav-btn"
+                  @click="prevPhoto(ring, $event)"
+                  title="Previous subspecies"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                </button>
+                <span class="rep-counter">
+                  {{ getPhotoIndex(ring) + 1 }}/{{ store.mimicryPhotoLookup[ring].representatives.length }}
+                </span>
+                <button
+                  class="nav-btn"
+                  @click="nextPhoto(ring, $event)"
+                  title="Next subspecies"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <!-- Ring Info -->
@@ -254,8 +263,8 @@ const clearSelection = () => {
             v-for="ring in unavailableRings"
             :key="ring"
             class="ring-card unavailable"
-            :class="{ selected: selectedRing === ring }"
-            @click="selectRing(ring, false)"
+            :class="{ selected: selectedRings.includes(ring) }"
+            @click="toggleRing(ring)"
           >
             <!-- Photo Display -->
             <div class="ring-photo-container">
@@ -268,26 +277,6 @@ const clearSelection = () => {
                   :alt="getCurrentRep(ring).scientific_name"
                   loading="lazy"
                 />
-
-                <!-- Navigation arrows -->
-                <template v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
-                  <button
-                    class="nav-arrow nav-prev"
-                    @click="prevPhoto(ring, $event)"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="m15 18-6-6 6-6"/>
-                    </svg>
-                  </button>
-                  <button
-                    class="nav-arrow nav-next"
-                    @click="nextPhoto(ring, $event)"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="m9 18 6-6-6-6"/>
-                    </svg>
-                  </button>
-                </template>
               </div>
 
               <div v-else class="ring-photo-placeholder">
@@ -299,15 +288,46 @@ const clearSelection = () => {
               </div>
             </div>
 
-            <!-- Species name -->
+            <!-- Species name with navigation -->
             <div class="rep-name" v-if="getCurrentRep(ring)">
               <em>{{ getCurrentRep(ring).scientific_name }}</em>
+              <!-- Navigation row with arrows and counter -->
+              <div class="rep-nav-row" v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
+                <button
+                  class="nav-btn"
+                  @click="prevPhoto(ring, $event)"
+                  title="Previous subspecies"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                </button>
+                <span class="rep-counter">
+                  {{ getPhotoIndex(ring) + 1 }}/{{ store.mimicryPhotoLookup[ring].representatives.length }}
+                </span>
+                <button
+                  class="nav-btn"
+                  @click="nextPhoto(ring, $event)"
+                  title="Next subspecies"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <!-- Ring Info -->
             <div class="ring-info">
               <span class="ring-name">{{ ring }}</span>
               <span class="ring-count unavailable-text">Not in filter</span>
+            </div>
+
+            <!-- Selection indicator -->
+            <div class="select-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
             </div>
           </button>
         </div>
@@ -329,7 +349,7 @@ const clearSelection = () => {
         Mimicry ring data from Dore et al. (2025) • Photos prioritize Sanger Institute
       </p>
       <div class="footer-actions">
-        <button class="btn-clear" @click="clearSelection" :disabled="selectedRing === 'All'">
+        <button class="btn-clear" @click="clearSelection" :disabled="selectedRings.length === 0">
           Clear Selection
         </button>
         <button class="btn-apply" @click="emit('close')">
@@ -438,7 +458,8 @@ const clearSelection = () => {
 .current-selection {
   display: flex;
   align-items: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 12px 20px 0;
   padding: 10px 14px;
   background: rgba(74, 222, 128, 0.1);
@@ -599,44 +620,39 @@ const clearSelection = () => {
   font-size: 0.7rem;
 }
 
-/* Navigation Arrows */
-.nav-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  background: rgba(0, 0, 0, 0.6);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
+/* Navigation Buttons (below photo) */
+.rep-nav-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity 0.2s;
+  gap: 8px;
+  margin-top: 4px;
 }
 
-.ring-photo:hover .nav-arrow {
-  opacity: 1;
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
 }
 
-.nav-arrow:hover {
-  background: rgba(0, 0, 0, 0.8);
+.nav-btn:hover {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
 }
 
-.nav-arrow svg {
-  width: 14px;
-  height: 14px;
-}
-
-.nav-prev {
-  left: 4px;
-}
-
-.nav-next {
-  right: 4px;
+.nav-btn svg {
+  width: 12px;
+  height: 12px;
 }
 
 /* Source Badge */
@@ -685,11 +701,11 @@ const clearSelection = () => {
   color: var(--color-text-muted, #666);
 }
 
-.rep-name .rep-counter {
-  display: block;
-  font-size: 0.6rem;
+.rep-nav-row .rep-counter {
+  font-size: 0.65rem;
   color: var(--color-accent, #4ade80);
-  margin-top: 2px;
+  min-width: 28px;
+  text-align: center;
 }
 
 /* Ring Info */
