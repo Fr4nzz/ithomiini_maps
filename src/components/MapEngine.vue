@@ -718,10 +718,22 @@ const addDataLayer = (options = {}) => {
   })
 
   // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER EVENT HANDLERS - click and hover (register once)
+  // CLUSTER EVENT HANDLERS - click and hover
   // ─────────────────────────────────────────────────────────────────────────
-  // Only register handlers once to prevent accumulating listeners
-  if (shouldCluster && !clusterHandlersRegistered) {
+  // Debug: log current state
+  console.log(`📍 Cluster handlers check: shouldCluster=${shouldCluster}, registered=${clusterHandlersRegistered}`)
+
+  // Register handlers when clustering is enabled
+  // Note: We register every time clustering is enabled because layers are recreated
+  if (shouldCluster) {
+    // Remove old handlers first to prevent duplicates
+    if (clusterHandlersRegistered) {
+      console.log('📍 Removing old cluster handlers')
+      map.off('click', 'clusters')
+      map.off('mouseenter', 'clusters')
+      map.off('mouseleave', 'clusters')
+    }
+
     clusterHandlersRegistered = true
     console.log('📍 Registering cluster event handlers (click + hover)')
 
@@ -844,11 +856,27 @@ const addDataLayer = (options = {}) => {
     map.on('mouseleave', 'clusters', () => {
       map.getCanvas().style.cursor = ''
     })
+
+    // Debug: Add a general click handler to verify clicks are received
+    const debugClickHandler = (e) => {
+      const clustersLayer = map.getLayer('clusters')
+      console.log(`📍 Map clicked at [${e.lngLat.lng.toFixed(4)}, ${e.lngLat.lat.toFixed(4)}]`)
+      console.log(`📍 Clusters layer exists: ${!!clustersLayer}`)
+      if (clustersLayer) {
+        const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
+        console.log(`📍 Cluster features at click point: ${features.length}`)
+      }
+    }
+    // Remove previous debug handler if exists
+    map.off('click', debugClickHandler)
+    map.on('click', debugClickHandler)
   }
 
   // ─────────────────────────────────────────────────────────────────────────
   // INDIVIDUAL POINT CLICK - show popup (enhanced for multiple points)
   // ─────────────────────────────────────────────────────────────────────────
+  // Remove old handler to prevent duplicates
+  map.off('click', 'points-layer')
   map.on('click', 'points-layer', (e) => {
     if (!e.features || e.features.length === 0) return
 
