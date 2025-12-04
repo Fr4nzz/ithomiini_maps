@@ -35,7 +35,7 @@ const dateStats = computed(() => {
   let withoutDates = 0
 
   features.forEach(f => {
-    const date = f.properties?.date || f.properties?.preservation_date
+    const date = f.properties?.observation_date || f.properties?.date || f.properties?.preservation_date
     if (date) {
       withDates++
       const d = new Date(date)

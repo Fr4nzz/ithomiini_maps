@@ -623,7 +623,7 @@ export const useDataStore = defineStore('data', () => {
       
       // Date filtering
       if (filters.value.dateStart || filters.value.dateEnd) {
-        const itemDate = item.date || item.preservation_date
+        const itemDate = item.observation_date || item.date || item.preservation_date
         if (!itemDate) return false // Exclude items without dates when filtering by date
         
         const d = new Date(itemDate)
