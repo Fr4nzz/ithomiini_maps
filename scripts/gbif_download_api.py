@@ -206,7 +206,7 @@ def submit_download_request(credentials, taxon_keys):
         "creator": credentials['GBIF_USERNAME'],
         "notificationAddresses": [credentials['GBIF_EMAIL']],
         "sendNotification": True,
-        "format": "SIMPLE_CSV",
+        "format": "DWCA",
         "predicate": predicate
     }
 
@@ -270,7 +270,7 @@ def wait_for_download(download_key, credentials):
 
 
 def download_and_extract(download_info):
-    """Download and extract the ZIP file."""
+    """Download and extract the ZIP file (DWCA format)."""
     download_link = download_info.get('downloadLink')
     if not download_link:
         print("ERROR: No download link in response")
@@ -312,20 +312,21 @@ def download_and_extract(download_info):
     with zipfile.ZipFile(zip_path, 'r') as zf:
         zf.extractall(extract_dir)
 
-    # Find the CSV file (SIMPLE_CSV format produces a single CSV)
-    csv_files = list(extract_dir.glob("*.csv"))
-    if not csv_files:
-        # Try TSV (older format)
-        csv_files = list(extract_dir.glob("*.txt"))
+    # DWCA format contains occurrence.txt and multimedia.txt
+    occurrence_file = extract_dir / "occurrence.txt"
+    multimedia_file = extract_dir / "multimedia.txt"
 
-    if not csv_files:
-        print("ERROR: No data file found in download")
+    if not occurrence_file.exists():
+        print("ERROR: occurrence.txt not found in download")
         sys.exit(1)
 
-    data_file = csv_files[0]
-    print(f"  Data file: {data_file.name}")
+    print(f"  Occurrence file: {occurrence_file.name}")
+    if multimedia_file.exists():
+        print(f"  Multimedia file: {multimedia_file.name}")
+    else:
+        print("  No multimedia file found (some records may lack images)")
 
-    return data_file
+    return extract_dir
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -358,6 +359,41 @@ def clean_scientific_name(name):
         return None
 
     return name
+
+
+def load_multimedia_lookup(extract_dir):
+    """
+    Load multimedia.txt and create lookup: gbifID -> image_url.
+    Returns dict mapping gbifID to first StillImage URL.
+    """
+    multimedia_path = extract_dir / "multimedia.txt"
+
+    if not multimedia_path.exists():
+        print("  No multimedia.txt found - images will not be available")
+        return {}
+
+    print("  Loading multimedia data...")
+    lookup = {}
+    count = 0
+
+    with open(multimedia_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, delimiter='\t')
+
+        for row in reader:
+            count += 1
+            gbif_id = row.get('gbifID')
+            media_type = row.get('type', '')
+            identifier = row.get('identifier', '')
+
+            # Only keep StillImage, skip audio/video
+            if gbif_id and 'StillImage' in media_type and identifier:
+                # Keep first image per gbifID
+                if gbif_id not in lookup:
+                    lookup[gbif_id] = identifier
+
+    print(f"  Processed {count:,} multimedia records")
+    print(f"  Found images for {len(lookup):,} occurrences")
+    return lookup
 
 
 def get_observation_url(record):
@@ -429,21 +465,21 @@ def get_collection_location(record):
     return None
 
 
-def process_csv_file(csv_path):
-    """Process the downloaded CSV file into our format."""
-    print(f"\nProcessing {csv_path}...")
+def process_occurrence_file(occurrence_path, multimedia_lookup=None):
+    """Process the DWCA occurrence.txt file into our format."""
+    print(f"\nProcessing {occurrence_path}...")
+
+    if multimedia_lookup is None:
+        multimedia_lookup = {}
 
     records = []
     skipped = 0
     source_counts = {'iNaturalist': 0, 'GBIF': 0}
+    with_images = 0
 
-    # Detect delimiter
-    with open(csv_path, 'r', encoding='utf-8') as f:
-        first_line = f.readline()
-        delimiter = '\t' if '\t' in first_line else ','
-
-    with open(csv_path, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f, delimiter=delimiter)
+    # DWCA uses tab-separated values
+    with open(occurrence_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, delimiter='\t')
 
         for row in reader:
             # Skip records without coordinates
@@ -494,8 +530,14 @@ def process_csv_file(csv_path):
             # Get location
             collection_location = get_collection_location(row)
 
+            # Get image URL from multimedia lookup
+            gbif_id = str(row.get('gbifID', ''))
+            image_url = multimedia_lookup.get(gbif_id)
+            if image_url:
+                with_images += 1
+
             record = {
-                'id': str(row.get('gbifID', '')),
+                'id': gbif_id,
                 'scientific_name': scientific_name,
                 'genus': genus or 'Unknown',
                 'species': species_epithet or 'sp.',
@@ -511,7 +553,7 @@ def process_csv_file(csv_path):
                 'source': source,
                 'observation_url': observation_url,
                 'basis_of_record': row.get('basisOfRecord'),
-                'image_url': None,  # Not available in SIMPLE_CSV
+                'image_url': image_url,
                 'mimicry_ring': 'Unknown',  # Will be filled by process_data.py
                 'dataset_name': row.get('datasetName'),
                 'institution_code': row.get('institutionCode'),
@@ -521,6 +563,7 @@ def process_csv_file(csv_path):
 
     print(f"  Processed: {len(records):,} records")
     print(f"  Skipped: {skipped:,} (missing coordinates or invalid)")
+    print(f"  With images: {with_images:,}")
     print(f"  Sources: iNaturalist={source_counts['iNaturalist']:,}, GBIF={source_counts['GBIF']:,}")
 
     return records, source_counts
@@ -647,10 +690,14 @@ def main():
     download_info = wait_for_download(download_key, credentials)
 
     # Download and extract
-    data_file = download_and_extract(download_info)
+    extract_dir = download_and_extract(download_info)
 
-    # Process data
-    records, source_counts = process_csv_file(data_file)
+    # Load multimedia lookup for image URLs
+    multimedia_lookup = load_multimedia_lookup(extract_dir)
+
+    # Process occurrence data
+    occurrence_file = extract_dir / "occurrence.txt"
+    records, source_counts = process_occurrence_file(occurrence_file, multimedia_lookup)
 
     if not records:
         print("ERROR: No records processed")
@@ -699,6 +746,10 @@ def main():
     # Location coverage
     with_location = sum(1 for r in records if r.get('collection_location'))
     print(f"Records with location: {with_location:,} ({with_location/len(records)*100:.1f}%)")
+
+    # Image coverage
+    with_images = sum(1 for r in records if r.get('image_url'))
+    print(f"Records with images: {with_images:,} ({with_images/len(records)*100:.1f}%)")
 
     # Cleanup
     cleanup_temp()
