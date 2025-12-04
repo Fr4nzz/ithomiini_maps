@@ -756,16 +756,23 @@ const addDataLayer = (options = {}) => {
 
       // Get cluster leaves (individual points)
       const source = map.getSource('points-source')
+      console.log('📍 Source:', source ? 'exists' : 'null')
 
       try {
         // Get all points from the cluster (up to 1000 for performance)
         const maxLeaves = Math.min(pointCount, 1000)
+        console.log(`📍 Requesting ${maxLeaves} leaves from cluster ${clusterId}`)
+
         const leaves = await new Promise((resolve, reject) => {
+          console.log('📍 Calling getClusterLeaves...')
           source.getClusterLeaves(clusterId, maxLeaves, 0, (err, features) => {
+            console.log('📍 getClusterLeaves callback:', err ? 'error' : `${features?.length} features`)
             if (err) reject(err)
             else resolve(features)
           })
         })
+
+        console.log(`📍 Got ${leaves.length} leaves from cluster`)
 
         // Convert GeoJSON features to point properties for the popup
         // MapLibre may stringify some properties, so we need to parse them
