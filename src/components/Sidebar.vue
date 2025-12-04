@@ -597,23 +597,23 @@ const currentExportDimensions = computed(() => {
 
           <!-- Cluster Settings (only visible when clustering is enabled) -->
           <div v-if="store.clusteringEnabled" class="cluster-settings">
-            <!-- Cluster Radius in km -->
+            <!-- Cluster Radius in pixels -->
             <div class="setting-row">
-              <label>Cluster Radius <span class="setting-hint">(km)</span></label>
+              <label>Cluster Radius <span class="setting-hint">(px)</span></label>
               <div class="slider-group">
                 <input
                   type="range"
-                  min="5"
-                  max="100"
-                  step="5"
-                  v-model.number="store.clusterSettings.radiusKm"
+                  min="20"
+                  max="200"
+                  step="10"
+                  v-model.number="store.clusterSettings.radiusPixels"
                 />
                 <input
                   type="number"
                   class="setting-input"
-                  min="1"
-                  max="200"
-                  v-model.number.lazy="store.clusterSettings.radiusKm"
+                  min="10"
+                  max="500"
+                  v-model.number.lazy="store.clusterSettings.radiusPixels"
                   @keydown.enter="$event.target.blur()"
                 />
               </div>

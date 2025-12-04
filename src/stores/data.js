@@ -19,7 +19,7 @@ export const useDataStore = defineStore('data', () => {
   // Clustering settings
   const clusteringEnabled = ref(false)
   const clusterSettings = ref({
-    radiusKm: 20,      // Cluster radius in kilometers (default 20km)
+    radiusPixels: 80,  // Cluster radius in pixels (default 80px)
   })
 
   // Scatter overlapping points settings

@@ -417,28 +417,6 @@ const initMap = () => {
   // Update scale bar when map moves/zooms
   map.on('moveend', updateScaleBar)
   map.on('zoomend', updateScaleBar)
-
-  // Track zoom and center for dynamic cluster radius calculation
-  map.on('zoomend', () => {
-    const newZoom = map.getZoom()
-    const center = map.getCenter()
-
-    // Check if zoom changed significantly (affects clustering)
-    const zoomChanged = Math.abs(newZoom - currentZoom.value) >= 0.5
-
-    currentZoom.value = newZoom
-    currentCenter.value = { lat: center.lat, lng: center.lng }
-
-    // Rebuild clusters if zoom changed significantly and clustering is enabled
-    if (zoomChanged && store.clusteringEnabled && map.isStyleLoaded()) {
-      addDataLayer({ skipZoom: true })
-    }
-  })
-
-  map.on('moveend', () => {
-    const center = map.getCenter()
-    currentCenter.value = { lat: center.lat, lng: center.lng }
-  })
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -552,23 +530,9 @@ const updateScatterVisualization = () => {
 // Hover popup for cluster preview
 let clusterHoverPopup = null
 
-// Current zoom level for dynamic cluster radius calculation
-const currentZoom = ref(4)
-const currentCenter = ref({ lat: -5, lng: -60 })
-
-/**
- * Convert kilometers to pixels at a given zoom level and latitude
- * Uses the Web Mercator projection formula
- */
-const kmToPixels = (km, zoom, lat) => {
-  // Earth's circumference at equator in meters
-  const earthCircumference = 40075016.686
-  // Meters per pixel at equator at zoom 0: earthCircumference / 256 tiles
-  // At each zoom level, this halves
-  const metersPerPixel = earthCircumference * Math.cos(lat * Math.PI / 180) / (256 * Math.pow(2, zoom))
-  const pixels = (km * 1000) / metersPerPixel
-  return Math.max(10, Math.min(500, Math.round(pixels))) // Clamp between 10-500px
-}
+// Track if event handlers are registered (to prevent duplicates)
+let clusterHandlersRegistered = false
+let pointsHandlersRegistered = false
 
 const addDataLayer = (options = {}) => {
   const { skipZoom = false } = options
@@ -594,9 +558,8 @@ const addDataLayer = (options = {}) => {
   const shouldCluster = store.clusteringEnabled
   const settings = store.clusterSettings
 
-  // Convert km radius to pixels based on current zoom level and center latitude
-  // This gives us the correct pixel radius for the current view
-  const clusterRadiusPixels = kmToPixels(settings.radiusKm, currentZoom.value, currentCenter.value.lat)
+  // Use the pixel radius directly from settings
+  const clusterRadiusPixels = settings.radiusPixels
 
   // Add source - use store settings for clustering
   map.addSource('points-source', {
@@ -738,15 +701,22 @@ const addDataLayer = (options = {}) => {
   // ─────────────────────────────────────────────────────────────────────────
   // CLUSTER CLICK - show enhanced popup with all cluster points
   // ─────────────────────────────────────────────────────────────────────────
-  if (shouldCluster) {
+  // Only register handlers once to prevent accumulating listeners
+  if (shouldCluster && !clusterHandlersRegistered) {
+    clusterHandlersRegistered = true
+    console.log('📍 Registering cluster click handlers')
+
     map.on('click', 'clusters', async (e) => {
+      console.log('📍 Cluster clicked!', e.point)
       const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
+      console.log('📍 Features found:', features.length)
       if (!features.length) return
 
       const cluster = features[0]
       const clusterId = cluster.properties.cluster_id
       const pointCount = cluster.properties.point_count
       const coords = cluster.geometry.coordinates
+      console.log(`📍 Cluster ${clusterId}: ${pointCount} points at`, coords)
 
       // Close existing popup
       if (popup) popup.remove()
@@ -807,6 +777,8 @@ const addDataLayer = (options = {}) => {
           }
         }
 
+        console.log(`📍 Got ${clusterPoints.length} cluster points, showing popup`)
+
         // Show enhanced popup with cluster points
         enhancedPopupData.value = {
           coordinates: { lat: avgLat, lng: avgLng },
@@ -817,8 +789,10 @@ const addDataLayer = (options = {}) => {
 
         nextTick(() => {
           showEnhancedPopup.value = true
+          console.log('📍 showEnhancedPopup set to true')
 
           nextTick(() => {
+            console.log('📍 pointPopupContainer.value:', !!pointPopupContainer.value)
             if (pointPopupContainer.value) {
               popup = new maplibregl.Popup({
                 closeButton: false,
@@ -905,7 +879,8 @@ const addDataLayer = (options = {}) => {
   // ─────────────────────────────────────────────────────────────────────────
   // HOVER EFFECTS
   // ─────────────────────────────────────────────────────────────────────────
-  if (shouldCluster) {
+  // Register cluster hover handlers only once
+  if (shouldCluster && !clusterHandlersRegistered) {
     // Cluster hover - show preview popup with clickable points
     map.on('mouseenter', 'clusters', async (e) => {
       map.getCanvas().style.cursor = 'pointer'
@@ -987,25 +962,34 @@ const addDataLayer = (options = {}) => {
     })
   }
 
-  map.on('mouseenter', 'points-layer', (e) => {
-    map.getCanvas().style.cursor = 'pointer'
+  // Register points-layer handlers only once
+  if (!pointsHandlersRegistered) {
+    pointsHandlersRegistered = true
 
-    if (e.features && e.features.length > 0) {
-      const id = e.features[0].properties.id
-      const filter = shouldCluster
-        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
-        : ['==', ['get', 'id'], id]
+    map.on('mouseenter', 'points-layer', (e) => {
+      map.getCanvas().style.cursor = 'pointer'
+
+      if (e.features && e.features.length > 0) {
+        const id = e.features[0].properties.id
+        // Check current clustering state dynamically
+        const isClustering = store.clusteringEnabled
+        const filter = isClustering
+          ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
+          : ['==', ['get', 'id'], id]
+        map.setFilter('points-highlight', filter)
+      }
+    })
+
+    map.on('mouseleave', 'points-layer', () => {
+      map.getCanvas().style.cursor = ''
+      // Check current clustering state dynamically
+      const isClustering = store.clusteringEnabled
+      const filter = isClustering
+        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
+        : ['==', ['get', 'id'], '']
       map.setFilter('points-highlight', filter)
-    }
-  })
-
-  map.on('mouseleave', 'points-layer', () => {
-    map.getCanvas().style.cursor = ''
-    const filter = shouldCluster
-      ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-      : ['==', ['get', 'id'], '']
-    map.setFilter('points-highlight', filter)
-  })
+    })
+  }
 
   // Fit bounds to data (with padding) - only if not skipping zoom
   if (!skipZoom) {
@@ -1014,7 +998,7 @@ const addDataLayer = (options = {}) => {
 
   // Log clustering status
   if (shouldCluster) {
-    console.log(`📍 ${pointCount} points loaded. Clustering: ON (${settings.radiusKm}km = ${clusterRadiusPixels}px at zoom ${currentZoom.value.toFixed(1)})`)
+    console.log(`📍 ${pointCount} points loaded. Clustering: ON (radius: ${clusterRadiusPixels}px)`)
   } else {
     console.log(`📍 ${pointCount} points loaded. Clustering: OFF`)
   }
