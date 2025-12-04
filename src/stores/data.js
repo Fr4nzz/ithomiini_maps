@@ -17,11 +17,9 @@ export const useDataStore = defineStore('data', () => {
   const showThumbnail = ref(true)
 
   // Clustering settings
-  const clusteringEnabled = ref(false)  // Will be auto-enabled when GBIF is included
+  const clusteringEnabled = ref(false)
   const clusterSettings = ref({
-    radius: 40,        // Cluster radius in pixels
-    maxZoom: 12,       // Max zoom level for clustering
-    minPoints: 5       // Minimum points to form a cluster
+    radiusKm: 20,      // Cluster radius in kilometers (default 20km)
   })
 
   // Scatter overlapping points settings
@@ -577,13 +575,6 @@ export const useDataStore = defineStore('data', () => {
   // When species changes, reset subspecies
   watch(() => filters.value.species, () => {
     filters.value.subspecies = []
-  }, { deep: true })
-
-  // Auto-enable/disable clustering based on source selection
-  watch(() => filters.value.source, (newSources) => {
-    // Enable clustering when GBIF or iNaturalist is included (large datasets)
-    const hasLargeDataset = newSources.includes('GBIF') || newSources.includes('iNaturalist')
-    clusteringEnabled.value = hasLargeDataset
   }, { deep: true })
 
   // ═══════════════════════════════════════════════════════════════════════════

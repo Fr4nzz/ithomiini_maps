@@ -554,14 +554,19 @@ const addDataLayer = (options = {}) => {
   const shouldCluster = store.clusteringEnabled
   const settings = store.clusterSettings
 
+  // Convert km radius to approximate pixel radius
+  // Using a factor of 4 for reasonable clustering at typical zoom levels (5-12)
+  // 20km ≈ 80px, 5km ≈ 20px, 50km ≈ 200px
+  const clusterRadiusPixels = Math.round(settings.radiusKm * 4)
+
   // Add source - use store settings for clustering
   map.addSource('points-source', {
     type: 'geojson',
     data: geojson,
     cluster: shouldCluster,
-    clusterMaxZoom: settings.maxZoom,
-    clusterRadius: settings.radius,
-    clusterMinPoints: settings.minPoints
+    clusterMaxZoom: 14,
+    clusterRadius: clusterRadiusPixels,
+    clusterMinPoints: 2
   })
 
   // Only add cluster layers if clustering is enabled
@@ -692,7 +697,7 @@ const addDataLayer = (options = {}) => {
   })
 
   // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER CLICK - show cluster contents popup
+  // CLUSTER CLICK - show enhanced popup with all cluster points
   // ─────────────────────────────────────────────────────────────────────────
   if (shouldCluster) {
     map.on('click', 'clusters', async (e) => {
@@ -706,48 +711,53 @@ const addDataLayer = (options = {}) => {
 
       // Close existing popup
       if (popup) popup.remove()
+      showEnhancedPopup.value = false
 
       // Get cluster leaves (individual points)
       const source = map.getSource('points-source')
 
       try {
-        // Get up to 100 points from the cluster for the preview
+        // Get all points from the cluster (up to 1000 for performance)
+        const maxLeaves = Math.min(pointCount, 1000)
         const leaves = await new Promise((resolve, reject) => {
-          source.getClusterLeaves(clusterId, 100, 0, (err, features) => {
+          source.getClusterLeaves(clusterId, maxLeaves, 0, (err, features) => {
             if (err) reject(err)
             else resolve(features)
           })
         })
 
-        // Build cluster popup content
-        const content = buildClusterPopupContent(leaves, pointCount, clusterId)
+        // Convert GeoJSON features to point properties for the popup
+        const clusterPoints = leaves.map(leaf => leaf.properties)
 
-        popup = new maplibregl.Popup({
-          closeButton: true,
-          closeOnClick: true,
-          maxWidth: '380px',
-          className: 'custom-popup cluster-popup'
-        })
-          .setLngLat(coords)
-          .setHTML(content)
-          .addTo(map)
+        // Show enhanced popup with cluster points
+        enhancedPopupData.value = {
+          coordinates: { lat: coords[1], lng: coords[0] },
+          points: clusterPoints,
+          initialSpecies: null,
+          initialSubspecies: null
+        }
 
-        // Add click handler for zoom button after popup is added
-        setTimeout(() => {
-          const zoomBtn = document.getElementById(`zoom-cluster-${clusterId}`)
-          if (zoomBtn) {
-            zoomBtn.addEventListener('click', () => {
-              source.getClusterExpansionZoom(clusterId, (err, zoom) => {
-                if (err) return
-                popup.remove()
-                map.easeTo({
-                  center: coords,
-                  zoom: Math.min(zoom + 1, 16)
-                })
+        nextTick(() => {
+          showEnhancedPopup.value = true
+
+          nextTick(() => {
+            if (pointPopupContainer.value) {
+              popup = new maplibregl.Popup({
+                closeButton: false,
+                closeOnClick: true,
+                maxWidth: '500px',
+                className: 'custom-popup enhanced-popup'
               })
-            })
-          }
-        }, 0)
+                .setLngLat(coords)
+                .setDOMContent(pointPopupContainer.value)
+                .addTo(map)
+
+              popup.on('close', () => {
+                showEnhancedPopup.value = false
+              })
+            }
+          })
+        })
 
       } catch (err) {
         console.error('Error getting cluster leaves:', err)

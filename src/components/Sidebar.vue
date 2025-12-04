@@ -592,72 +592,28 @@ const currentExportDimensions = computed(() => {
 
         <div v-show="showClusterSettings" class="collapse-content">
           <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
-            Auto-enabled when GBIF data is included. Click ON/OFF to toggle.
+            Groups nearby points into clusters. Click a cluster to view all points.
           </p>
 
           <!-- Cluster Settings (only visible when clustering is enabled) -->
           <div v-if="store.clusteringEnabled" class="cluster-settings">
-            <!-- Cluster Radius -->
+            <!-- Cluster Radius in km -->
             <div class="setting-row">
-              <label>Cluster Radius <span class="setting-hint">(px)</span></label>
+              <label>Cluster Radius <span class="setting-hint">(km)</span></label>
               <div class="slider-group">
                 <input
                   type="range"
-                  min="20"
+                  min="5"
                   max="100"
                   step="5"
-                  v-model.number="store.clusterSettings.radius"
-                />
-                <input
-                  type="number"
-                  class="setting-input"
-                  min="10"
-                  max="200"
-                  v-model.number.lazy="store.clusterSettings.radius"
-                  @keydown.enter="$event.target.blur()"
-                />
-              </div>
-            </div>
-
-            <!-- Max Zoom -->
-            <div class="setting-row">
-              <label>Max Cluster Zoom <span class="setting-hint">(zoom level where clusters stop)</span></label>
-              <div class="slider-group">
-                <input
-                  type="range"
-                  min="6"
-                  max="16"
-                  step="1"
-                  v-model.number="store.clusterSettings.maxZoom"
+                  v-model.number="store.clusterSettings.radiusKm"
                 />
                 <input
                   type="number"
                   class="setting-input"
                   min="1"
-                  max="18"
-                  v-model.number.lazy="store.clusterSettings.maxZoom"
-                  @keydown.enter="$event.target.blur()"
-                />
-              </div>
-            </div>
-
-            <!-- Min Points -->
-            <div class="setting-row">
-              <label>Min Points per Cluster</label>
-              <div class="slider-group">
-                <input
-                  type="range"
-                  min="2"
-                  max="20"
-                  step="1"
-                  v-model.number="store.clusterSettings.minPoints"
-                />
-                <input
-                  type="number"
-                  class="setting-input"
-                  min="2"
-                  max="50"
-                  v-model.number.lazy="store.clusterSettings.minPoints"
+                  max="200"
+                  v-model.number.lazy="store.clusterSettings.radiusKm"
                   @keydown.enter="$event.target.blur()"
                 />
               </div>
