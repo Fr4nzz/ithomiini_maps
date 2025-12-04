@@ -505,11 +505,20 @@ def load_gbif_bulk_download():
         required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
                         'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
                         'sequencing_status', 'source', 'image_url', 'country',
-                        'collection_location', 'observation_date']
+                        'collection_location', 'observation_date', 'observation_url']
 
         for col in required_cols:
             if col not in df.columns:
-                df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date'] else 'Unknown'
+                df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date', 'observation_url'] else 'Unknown'
+
+        # Preserve source field from download (iNaturalist or GBIF)
+        # If source is not set, default to GBIF
+        if 'source' in df.columns:
+            df['source'] = df['source'].apply(
+                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else 'GBIF'
+            )
+        else:
+            df['source'] = 'GBIF'
 
         # Process GBIF collection_location (already set by gbif_download.py with fallbacks)
         # Only use locality as fallback if collection_location is not already set
@@ -521,8 +530,18 @@ def load_gbif_bulk_download():
             df['collection_location'] = df['locality'].apply(
                 lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
             )
-        if 'event_date' in df.columns:
-            df['observation_date'] = df['event_date'].apply(
+        # Handle observation_date from various source columns
+        if 'observation_date' not in df.columns or df['observation_date'].isna().all():
+            for date_col in ['collection_date', 'event_date']:
+                if date_col in df.columns:
+                    df['observation_date'] = df[date_col].apply(
+                        lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
+                    )
+                    break
+
+        # Clean observation_url
+        if 'observation_url' in df.columns:
+            df['observation_url'] = df['observation_url'].apply(
                 lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
             )
         
@@ -725,6 +744,14 @@ def main():
         df_merged['observation_date'] = None
     else:
         df_merged['observation_date'] = df_merged['observation_date'].apply(
+            lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
+        )
+
+    # Handle observation_url (can be null)
+    if 'observation_url' not in df_merged.columns:
+        df_merged['observation_url'] = None
+    else:
+        df_merged['observation_url'] = df_merged['observation_url'].apply(
             lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
         )
     

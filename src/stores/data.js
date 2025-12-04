@@ -106,6 +106,9 @@ export const useDataStore = defineStore('data', () => {
   // Mimicry ring photo lookup: { 'RingName': { representatives: [...], currentIndex: 0 } }
   const mimicryPhotoLookup = ref({})
 
+  // GBIF citation data
+  const gbifCitation = ref(null)
+
   // ═══════════════════════════════════════════════════════════════════════════
   // ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -136,6 +139,9 @@ export const useDataStore = defineStore('data', () => {
 
       // Build mimicry ring photo lookup
       buildMimicryPhotoLookup(data)
+
+      // Load GBIF citation data
+      loadGbifCitation()
 
       // Initialize filters from URL
       restoreFiltersFromURL()
@@ -238,6 +244,24 @@ export const useDataStore = defineStore('data', () => {
 
     mimicryPhotoLookup.value = lookup
     console.log(`Built mimicry photo lookup for ${Object.keys(lookup).length} rings`)
+  }
+
+  /**
+   * Load GBIF citation data if available
+   */
+  const loadGbifCitation = async () => {
+    try {
+      const basePath = import.meta.env.BASE_URL || '/'
+      const response = await fetch(`${basePath}data/gbif_citation.json`)
+
+      if (response.ok) {
+        gbifCitation.value = await response.json()
+        console.log('✓ Loaded GBIF citation data')
+      }
+    } catch (e) {
+      // Citation file is optional, don't log error
+      gbifCitation.value = null
+    }
   }
 
   /**
@@ -557,9 +581,9 @@ export const useDataStore = defineStore('data', () => {
 
   // Auto-enable/disable clustering based on source selection
   watch(() => filters.value.source, (newSources) => {
-    // Enable clustering when GBIF is included (large dataset)
-    const hasGBIF = newSources.includes('GBIF')
-    clusteringEnabled.value = hasGBIF
+    // Enable clustering when GBIF or iNaturalist is included (large datasets)
+    const hasLargeDataset = newSources.includes('GBIF') || newSources.includes('iNaturalist')
+    clusteringEnabled.value = hasLargeDataset
   }, { deep: true })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -963,7 +987,9 @@ export const useDataStore = defineStore('data', () => {
     },
     source: {
       'Sanger Institute': '#3b82f6',
-      'GBIF': '#22c55e',
+      'Dore et al.': '#f59e0b',
+      'iNaturalist': '#74ac00',
+      'GBIF': '#6b7280',
     }
   }
 
@@ -1099,6 +1125,7 @@ export const useDataStore = defineStore('data', () => {
     scatterOverlappingPoints,
     photoLookup,
     mimicryPhotoLookup,
+    gbifCitation,
 
     // Map styling state
     colorBy,

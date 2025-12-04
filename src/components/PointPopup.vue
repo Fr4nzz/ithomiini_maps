@@ -324,6 +324,23 @@ const locationName = computed(() => {
               {{ currentIndividual?.sequencing_status || 'Unknown' }}
             </span>
           </div>
+
+          <!-- Observation URL Link -->
+          <a
+            v-if="currentIndividual?.observation_url"
+            :href="currentIndividual.observation_url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="observation-link"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            <span v-if="currentIndividual?.source === 'iNaturalist'">View on iNaturalist</span>
+            <span v-else>View on GBIF</span>
+          </a>
         </div>
       </div>
 
@@ -710,5 +727,34 @@ const locationName = computed(() => {
 .stat-label {
   font-size: 0.7rem;
   color: #888;
+}
+
+/* Observation URL Link */
+.observation-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 5px;
+  color: #4ade80;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.observation-link:hover {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: rgba(74, 222, 128, 0.5);
+  color: #86efac;
+}
+
+.observation-link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 </style>
