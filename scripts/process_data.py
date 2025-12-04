@@ -439,7 +439,7 @@ def load_gbif_bulk_download():
     print(f">> Loading GBIF bulk download: {gbif_path}")
     
     try:
-        with open(gbif_path) as f:
+        with open(gbif_path, encoding='utf-8') as f:
             records = json.load(f)
         
         df = pd.DataFrame(records)

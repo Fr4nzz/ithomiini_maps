@@ -596,8 +596,12 @@ def cleanup_temp():
     """Clean up temporary files."""
     import shutil
     if TEMP_DIR.exists():
-        shutil.rmtree(TEMP_DIR)
-        print("Cleaned up temporary files")
+        try:
+            shutil.rmtree(TEMP_DIR)
+            print("Cleaned up temporary files")
+        except PermissionError:
+            print(f"Note: Could not delete temp directory (files may be locked): {TEMP_DIR}")
+            print("You can manually delete this folder later.")
 
 
 # ═══════════════════════════════════════════════════════════════════
