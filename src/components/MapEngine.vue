@@ -543,6 +543,7 @@ const addDataLayer = (options = {}) => {
   const layersToRemove = [
     'clusters',
     'cluster-count',
+    'cluster-extent',
     'points-layer',
     'points-highlight'
   ]
@@ -606,6 +607,24 @@ const addDataLayer = (options = {}) => {
         'circle-stroke-opacity': 0.9
       }
     })
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // CLUSTER EXTENT CIRCLES - shows the clustering radius area
+    // ─────────────────────────────────────────────────────────────────────────
+    map.addLayer({
+      id: 'cluster-extent',
+      type: 'circle',
+      source: 'points-source',
+      filter: ['has', 'point_count'],
+      paint: {
+        // The extent circle is the cluster radius (in pixels)
+        'circle-radius': clusterRadiusPixels,
+        'circle-color': 'rgba(74, 222, 128, 0.08)',
+        'circle-stroke-width': 1,
+        'circle-stroke-color': 'rgba(74, 222, 128, 0.25)',
+        'circle-stroke-opacity': 1
+      }
+    }, 'clusters') // Add below the clusters layer
 
     // ─────────────────────────────────────────────────────────────────────────
     // CLUSTER COUNT LABELS
@@ -699,13 +718,14 @@ const addDataLayer = (options = {}) => {
   })
 
   // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER CLICK - show enhanced popup with all cluster points
+  // CLUSTER EVENT HANDLERS - click and hover (register once)
   // ─────────────────────────────────────────────────────────────────────────
   // Only register handlers once to prevent accumulating listeners
   if (shouldCluster && !clusterHandlersRegistered) {
     clusterHandlersRegistered = true
-    console.log('📍 Registering cluster click handlers')
+    console.log('📍 Registering cluster event handlers (click + hover)')
 
+    // CLUSTER CLICK - show enhanced popup with all cluster points
     map.on('click', 'clusters', async (e) => {
       console.log('📍 Cluster clicked!', e.point)
       const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
@@ -815,6 +835,15 @@ const addDataLayer = (options = {}) => {
         console.error('Error getting cluster leaves:', err)
       }
     })
+
+    // CLUSTER HOVER - change cursor and show preview
+    map.on('mouseenter', 'clusters', (e) => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+
+    map.on('mouseleave', 'clusters', () => {
+      map.getCanvas().style.cursor = ''
+    })
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -877,91 +906,8 @@ const addDataLayer = (options = {}) => {
   })
 
   // ─────────────────────────────────────────────────────────────────────────
-  // HOVER EFFECTS
+  // POINTS LAYER HOVER EFFECTS
   // ─────────────────────────────────────────────────────────────────────────
-  // Register cluster hover handlers only once
-  if (shouldCluster && !clusterHandlersRegistered) {
-    // Cluster hover - show preview popup with clickable points
-    map.on('mouseenter', 'clusters', async (e) => {
-      map.getCanvas().style.cursor = 'pointer'
-
-      if (!e.features || !e.features.length) return
-
-      const cluster = e.features[0]
-      const clusterId = cluster.properties.cluster_id
-      const pointCount = cluster.properties.point_count
-      const coords = cluster.geometry.coordinates
-
-      // Close existing hover popup
-      if (clusterHoverPopup) clusterHoverPopup.remove()
-
-      try {
-        const source = map.getSource('points-source')
-        // Get first 10 points for preview
-        const leaves = await new Promise((resolve, reject) => {
-          source.getClusterLeaves(clusterId, 10, 0, (err, features) => {
-            if (err) reject(err)
-            else resolve(features)
-          })
-        })
-
-        const content = buildClusterHoverContent(leaves, pointCount, clusterId)
-
-        clusterHoverPopup = new maplibregl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-          maxWidth: '280px',
-          className: 'cluster-hover-popup',
-          offset: 15
-        })
-          .setLngLat(coords)
-          .setHTML(content)
-          .addTo(map)
-
-        // Add click handlers for individual points in the hover popup
-        setTimeout(() => {
-          leaves.forEach((leaf, idx) => {
-            const btn = document.getElementById(`cluster-point-${clusterId}-${idx}`)
-            if (btn) {
-              btn.addEventListener('click', (evt) => {
-                evt.stopPropagation()
-                if (clusterHoverPopup) clusterHoverPopup.remove()
-                if (popup) popup.remove()
-
-                const props = leaf.properties
-                const pointCoords = leaf.geometry.coordinates
-
-                popup = new maplibregl.Popup({
-                  closeButton: true,
-                  closeOnClick: true,
-                  maxWidth: '340px',
-                  className: 'custom-popup'
-                })
-                  .setLngLat(pointCoords)
-                  .setHTML(buildPopupContent(props))
-                  .addTo(map)
-              })
-            }
-          })
-        }, 0)
-
-      } catch (err) {
-        console.error('Error getting cluster preview:', err)
-      }
-    })
-
-    map.on('mouseleave', 'clusters', () => {
-      map.getCanvas().style.cursor = ''
-      // Delay removal to allow clicking on popup items
-      setTimeout(() => {
-        if (clusterHoverPopup && !clusterHoverPopup.getElement()?.matches(':hover')) {
-          clusterHoverPopup.remove()
-          clusterHoverPopup = null
-        }
-      }, 100)
-    })
-  }
-
   // Register points-layer handlers only once
   if (!pointsHandlersRegistered) {
     pointsHandlersRegistered = true
