@@ -386,7 +386,6 @@ const currentExportDimensions = computed(() => {
           :options="store.uniqueSubspecies"
           placeholder="Search subspecies..."
           :multiple="true"
-          :disabled="store.filters.species.length === 0"
         />
 
         <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->

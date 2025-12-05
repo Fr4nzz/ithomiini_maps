@@ -408,6 +408,11 @@ export const useDataStore = defineStore('data', () => {
   const getFilteredSubset = (upToLevel) => {
     let data = allFeatures.value
 
+    // Always filter by source first (so dropdowns only show values from selected sources)
+    if (filters.value.source.length > 0) {
+      data = data.filter(i => filters.value.source.includes(i.source))
+    }
+
     if (upToLevel >= 1 && filters.value.family !== 'All') {
       data = data.filter(i => i.family === filters.value.family)
     }
