@@ -1,6 +1,28 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 
+// Parse date strings in various formats (DD-MMM-YY, YYYY-MM-DD, etc.)
+function parseDate(dateStr) {
+  if (!dateStr) return null
+
+  // Handle DD-MMM-YY format (e.g., "18-Jan-22")
+  const ddMmmYy = /^(\d{1,2})-([A-Za-z]{3})-(\d{2})$/
+  const match = dateStr.match(ddMmmYy)
+  if (match) {
+    const [, day, monthStr, yearShort] = match
+    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
+    const month = months[monthStr.toLowerCase()]
+    if (month !== undefined) {
+      const year = parseInt(yearShort) + (parseInt(yearShort) > 50 ? 1900 : 2000)
+      return new Date(year, month, parseInt(day))
+    }
+  }
+
+  // Fallback to standard Date parsing
+  const d = new Date(dateStr)
+  return isNaN(d.getTime()) ? null : d
+}
+
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
@@ -87,7 +109,7 @@ export const useDataStore = defineStore('data', () => {
     species: [],        // Array for multi-select
     subspecies: [],     // Array for multi-select
     // Parallel filters
-    mimicry: 'All',
+    mimicry: [],        // Array for multi-select mimicry rings
     status: [],
     source: ['Sanger Institute'],  // Multi-select array, default to Sanger
     country: 'All',     // Country filter
@@ -614,7 +636,7 @@ export const useDataStore = defineStore('data', () => {
       if (filters.value.subspecies.length > 0 && !filters.value.subspecies.includes(item.subspecies)) return false
       
       // Parallel filters
-      if (filters.value.mimicry !== 'All' && item.mimicry_ring !== filters.value.mimicry) return false
+      if (filters.value.mimicry.length > 0 && !filters.value.mimicry.includes(item.mimicry_ring)) return false
       if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
       // Source filter (multi-select array)
       if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false
@@ -623,10 +645,10 @@ export const useDataStore = defineStore('data', () => {
       
       // Date filtering
       if (filters.value.dateStart || filters.value.dateEnd) {
-        const itemDate = item.date || item.preservation_date
-        if (!itemDate) return false // Exclude items without dates when filtering by date
-        
-        const d = new Date(itemDate)
+        const itemDateStr = item.observation_date || item.date || item.preservation_date
+        const d = parseDate(itemDateStr)
+        if (!d) return false // Exclude items without valid dates when filtering by date
+
         if (filters.value.dateStart && d < new Date(filters.value.dateStart)) return false
         if (filters.value.dateEnd && d > new Date(filters.value.dateEnd)) return false
       }
