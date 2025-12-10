@@ -372,7 +372,7 @@ export const useDataStore = defineStore('data', () => {
       genus: 'All',
       species: [],
       subspecies: [],
-      mimicry: 'All',
+      mimicry: [],
       status: [],
       source: ['Sanger Institute'],  // Default to Sanger
       country: 'All',
