@@ -962,6 +962,23 @@ watch(currentIndex, () => {
                 <span class="species-count">{{ speciesGroup.totalImages }}</span>
               </button>
 
+              <!-- Preview thumbnail when species is collapsed -->
+              <div v-if="collapsedSpecies.has(speciesGroup.name)" class="preview-container">
+                <button
+                  class="thumbnail preview-thumb"
+                  :class="{ active: speciesGroup.subspecies.some(s => s.individuals.some(i => i.id === currentSpecimen?.id)) }"
+                  @click="toggleSpeciesCollapse(speciesGroup.name)"
+                  title="Click to expand"
+                >
+                  <img
+                    v-if="speciesGroup.subspecies[0]?.individuals[0]?.image_url"
+                    :src="getThumbnailUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
+                    :alt="speciesGroup.name"
+                    loading="lazy"
+                  />
+                </button>
+              </div>
+
               <!-- Species content (subspecies groups) -->
               <div class="species-content" v-show="!collapsedSpecies.has(speciesGroup.name)">
                 <template v-for="subspGroup in speciesGroup.subspecies" :key="`${speciesGroup.name}-${subspGroup.name}`">
@@ -981,6 +998,23 @@ watch(currentIndex, () => {
                       <span class="subspecies-name">{{ subspGroup.name }}</span>
                       <span class="subspecies-count">{{ subspGroup.individuals.length }}</span>
                     </button>
+
+                    <!-- Preview thumbnail when subspecies is collapsed -->
+                    <div v-if="collapsedSubspecies.has(`${speciesGroup.name}|${subspGroup.name}`)" class="preview-container">
+                      <button
+                        class="thumbnail preview-thumb"
+                        :class="{ active: subspGroup.individuals.some(i => i.id === currentSpecimen?.id) }"
+                        @click="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)"
+                        title="Click to expand"
+                      >
+                        <img
+                          v-if="subspGroup.individuals[0]?.image_url"
+                          :src="getThumbnailUrl(subspGroup.individuals[0].image_url)"
+                          :alt="subspGroup.name"
+                          loading="lazy"
+                        />
+                      </button>
+                    </div>
 
                     <!-- Thumbnails -->
                     <div class="thumbnails-container" v-show="!collapsedSubspecies.has(`${speciesGroup.name}|${subspGroup.name}`)">
@@ -1636,6 +1670,40 @@ watch(currentIndex, () => {
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+/* Preview container for collapsed groups */
+.preview-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.preview-thumb {
+  opacity: 0.7;
+  position: relative;
+}
+
+.preview-thumb:hover {
+  opacity: 1;
+}
+
+.preview-thumb::after {
+  content: '+';
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 14px;
+  text-align: center;
+  border-radius: 2px;
 }
 
 /* Subspecies group */
