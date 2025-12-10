@@ -1,27 +1,28 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
 import { getProxiedUrl, getThumbnailUrl } from '../utils/imageProxy'
+import Panzoom from '@panzoom/panzoom'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
 
 // Gallery state
 const currentIndex = ref(0)
-const isZoomed = ref(false)
-const zoomLevel = ref(1)
-const panX = ref(0)
-const panY = ref(0)
 const isLoading = ref(true)
 const loadError = ref(false)
+const zoomLevel = ref(1)
 
 // Sidebar state
 const selectedSpecies = ref(null)
 const selectedSubspecies = ref(null)
 
-// Image container ref
+// Refs
 const imageContainer = ref(null)
 const imageEl = ref(null)
+
+// Panzoom instance
+let panzoomInstance = null
 
 // Status colors for sidebar
 const STATUS_COLORS = {
@@ -34,13 +35,6 @@ const STATUS_COLORS = {
   'Museum Specimen': '#8b5cf6',
   'Living Specimen': '#14b8a6',
 }
-
-// Get all points (with or without images)
-const allPoints = computed(() => {
-  const geo = store.filteredGeoJSON
-  if (!geo || !geo.features) return []
-  return geo.features.map(f => f.properties)
-})
 
 // Get specimens with images
 const specimensWithImages = computed(() => {
@@ -73,7 +67,7 @@ const subspeciesList = computed(() => {
       count: data.count,
       hasPhoto: data.individuals.some(i => i.image_url)
     }))
-    .filter(s => s.hasPhoto)  // Only show subspecies with photos
+    .filter(s => s.hasPhoto)
     .sort((a, b) => b.count - a.count)
 })
 
@@ -88,7 +82,6 @@ const individualsList = computed(() => {
     return speciesGroup.subspecies[selectedSubspecies.value].individuals.filter(i => i.image_url)
   }
 
-  // Return all individuals for this species (with images)
   return Object.values(speciesGroup.subspecies)
     .flatMap(s => s.individuals)
     .filter(i => i.image_url)
@@ -102,7 +95,6 @@ const selectSpecies = (species) => {
     const speciesGroup = groupedBySpecies.value[species]
     const subspeciesNames = Object.keys(speciesGroup.subspecies)
 
-    // Find first subspecies with a photo
     const sortedSubspecies = subspeciesNames
       .map(name => ({
         name,
@@ -119,7 +111,6 @@ const selectSpecies = (species) => {
     selectedSubspecies.value = null
   }
 
-  // Find the index in specimensWithImages that matches first individual
   updateCurrentIndexFromSelection()
 }
 
@@ -133,7 +124,6 @@ const selectSubspecies = (subspecies) => {
 const updateCurrentIndexFromSelection = () => {
   const list = individualsList.value
   if (list.length > 0) {
-    // Find index in full specimensWithImages
     const firstIndividual = list[0]
     const idx = specimensWithImages.value.findIndex(s => s.id === firstIndividual.id)
     if (idx >= 0) {
@@ -196,18 +186,58 @@ const goToIndex = (idx) => {
 
 // Reset view state
 const resetView = () => {
-  isZoomed.value = false
-  zoomLevel.value = 1
-  panX.value = 0
-  panY.value = 0
   isLoading.value = true
   loadError.value = false
+  zoomLevel.value = 1
+  // Reset panzoom if it exists
+  if (panzoomInstance) {
+    panzoomInstance.reset({ animate: false })
+  }
+}
+
+// Initialize panzoom on image
+const initPanzoom = () => {
+  if (!imageEl.value) return
+
+  // Destroy existing instance
+  if (panzoomInstance) {
+    panzoomInstance.destroy()
+    panzoomInstance = null
+  }
+
+  panzoomInstance = Panzoom(imageEl.value, {
+    maxScale: 5,
+    minScale: 1,
+    cursor: 'grab'
+  })
+
+  // Enable wheel zoom on container
+  imageContainer.value?.addEventListener('wheel', handleWheel, { passive: false })
+
+  // Track zoom level changes
+  imageEl.value.addEventListener('panzoomzoom', (e) => {
+    zoomLevel.value = e.detail.scale
+  })
+
+  imageEl.value.addEventListener('panzoomreset', () => {
+    zoomLevel.value = 1
+  })
+}
+
+const handleWheel = (e) => {
+  if (panzoomInstance) {
+    e.preventDefault()
+    panzoomInstance.zoomWithWheel(e)
+  }
 }
 
 // Image loaded handler
 const onImageLoad = () => {
   isLoading.value = false
   loadError.value = false
+  nextTick(() => {
+    initPanzoom()
+  })
 }
 
 const onImageError = () => {
@@ -217,113 +247,20 @@ const onImageError = () => {
 
 // Zoom controls
 const zoomIn = () => {
-  if (zoomLevel.value < 4) {
-    zoomLevel.value = Math.min(4, zoomLevel.value * 1.5)
-    isZoomed.value = zoomLevel.value > 1
+  if (panzoomInstance) {
+    panzoomInstance.zoomIn({ animate: true })
   }
 }
 
 const zoomOut = () => {
-  if (zoomLevel.value > 1) {
-    zoomLevel.value = Math.max(1, zoomLevel.value / 1.5)
-    isZoomed.value = zoomLevel.value > 1
-    if (zoomLevel.value === 1) {
-      panX.value = 0
-      panY.value = 0
-    }
+  if (panzoomInstance) {
+    panzoomInstance.zoomOut({ animate: true })
   }
 }
 
-const toggleZoom = () => {
-  if (isZoomed.value) {
-    resetView()
-  } else {
-    zoomLevel.value = 2
-    isZoomed.value = true
-  }
-}
-
-// Pan handling
-let isPanning = false
-let startX = 0
-let startY = 0
-let startPanX = 0
-let startPanY = 0
-
-const onMouseDown = (e) => {
-  if (!isZoomed.value) return
-  isPanning = true
-  startX = e.clientX
-  startY = e.clientY
-  startPanX = panX.value
-  startPanY = panY.value
-  e.preventDefault()
-}
-
-const onMouseMove = (e) => {
-  if (!isPanning) return
-  const dx = e.clientX - startX
-  const dy = e.clientY - startY
-  panX.value = startPanX + dx
-  panY.value = startPanY + dy
-}
-
-const onMouseUp = () => {
-  isPanning = false
-}
-
-// Touch handling
-let touchStartDist = 0
-let touchStartZoom = 1
-
-const onTouchStart = (e) => {
-  if (e.touches.length === 2) {
-    // Pinch zoom start
-    const dx = e.touches[0].clientX - e.touches[1].clientX
-    const dy = e.touches[0].clientY - e.touches[1].clientY
-    touchStartDist = Math.sqrt(dx * dx + dy * dy)
-    touchStartZoom = zoomLevel.value
-  } else if (e.touches.length === 1 && isZoomed.value) {
-    // Pan start
-    isPanning = true
-    startX = e.touches[0].clientX
-    startY = e.touches[0].clientY
-    startPanX = panX.value
-    startPanY = panY.value
-  }
-}
-
-const onTouchMove = (e) => {
-  if (e.touches.length === 2) {
-    // Pinch zoom
-    const dx = e.touches[0].clientX - e.touches[1].clientX
-    const dy = e.touches[0].clientY - e.touches[1].clientY
-    const dist = Math.sqrt(dx * dx + dy * dy)
-    const scale = dist / touchStartDist
-    zoomLevel.value = Math.max(1, Math.min(4, touchStartZoom * scale))
-    isZoomed.value = zoomLevel.value > 1
-    e.preventDefault()
-  } else if (e.touches.length === 1 && isPanning) {
-    // Pan
-    const dx = e.touches[0].clientX - startX
-    const dy = e.touches[0].clientY - startY
-    panX.value = startPanX + dx
-    panY.value = startPanY + dy
-    e.preventDefault()
-  }
-}
-
-const onTouchEnd = () => {
-  isPanning = false
-}
-
-// Wheel zoom
-const onWheel = (e) => {
-  e.preventDefault()
-  if (e.deltaY < 0) {
-    zoomIn()
-  } else {
-    zoomOut()
+const resetZoom = () => {
+  if (panzoomInstance) {
+    panzoomInstance.reset({ animate: true })
   }
 }
 
@@ -337,8 +274,8 @@ const onKeyDown = (e) => {
       goToNext()
       break
     case 'Escape':
-      if (isZoomed.value) {
-        resetView()
+      if (zoomLevel.value > 1.05) {
+        resetZoom()
       } else {
         emit('close')
       }
@@ -356,16 +293,15 @@ const onKeyDown = (e) => {
 // Setup/cleanup
 onMounted(() => {
   document.addEventListener('keydown', onKeyDown)
-  document.addEventListener('mouseup', onMouseUp)
-  document.addEventListener('mousemove', onMouseMove)
-  // Initialize sidebar selection from first specimen
   initializeSidebarFromCurrent()
 })
 
 onUnmounted(() => {
   document.removeEventListener('keydown', onKeyDown)
-  document.removeEventListener('mouseup', onMouseUp)
-  document.removeEventListener('mousemove', onMouseMove)
+  if (panzoomInstance) {
+    panzoomInstance.destroy()
+  }
+  imageContainer.value?.removeEventListener('wheel', handleWheel)
 })
 
 // Watch for filter changes
@@ -375,11 +311,10 @@ watch(() => store.filteredGeoJSON, () => {
   initializeSidebarFromCurrent()
 })
 
-// Watch for currentIndex changes to sync sidebar (when using arrows/thumbnails)
+// Watch for currentIndex changes to sync sidebar
 watch(currentIndex, () => {
   const specimen = currentSpecimen.value
   if (specimen) {
-    // Only update if different to avoid circular updates
     if (specimen.scientific_name !== selectedSpecies.value) {
       selectedSpecies.value = specimen.scientific_name
     }
@@ -561,145 +496,91 @@ watch(currentIndex, () => {
           </div>
         </div>
 
-        <!-- Image viewer -->
-        <div
-          ref="imageContainer"
-          class="image-viewer"
-          @mousedown="onMouseDown"
-          @touchstart="onTouchStart"
-          @touchmove="onTouchMove"
-          @touchend="onTouchEnd"
-          @wheel="onWheel"
-          @dblclick="toggleZoom"
-        >
-          <!-- Loading spinner -->
-          <div v-if="isLoading" class="image-loading">
-            <div class="spinner"></div>
-          </div>
+        <!-- Image viewer wrapper (for positioning nav buttons) -->
+        <div class="image-viewer-wrapper">
+          <!-- Image viewer -->
+          <div
+            ref="imageContainer"
+            class="image-viewer"
+          >
+            <!-- Loading spinner -->
+            <div v-if="isLoading" class="image-loading">
+              <div class="spinner"></div>
+            </div>
 
-          <!-- Error state -->
-          <div v-else-if="loadError" class="image-error">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-            <p>Failed to load image</p>
-          </div>
+            <!-- Error state -->
+            <div v-else-if="loadError" class="image-error">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <p>Failed to load image</p>
+            </div>
 
-          <!-- Image (hidden while loading) -->
-          <img
-            v-if="currentSpecimen?.image_url"
-            v-show="!isLoading && !loadError"
-            ref="imageEl"
-            :src="getProxiedUrl(currentSpecimen.image_url)"
-            :alt="currentSpecimen.scientific_name"
-            class="gallery-image"
-            :class="{ zoomed: isZoomed }"
-            :style="{
-              transform: `scale(${zoomLevel}) translate(${panX / zoomLevel}px, ${panY / zoomLevel}px)`
-            }"
-            @load="onImageLoad"
-            @error="onImageError"
-            draggable="false"
-          />
-        </div>
-      </div>
-
-      <!-- Info panel -->
-      <div class="info-panel">
-        <div class="info-content">
-          <!-- Thumbnail (if enabled) -->
-          <div v-if="store.showThumbnail && currentSpecimen?.image_url" class="info-thumbnail">
+            <!-- Image (hidden while loading) -->
             <img
-              :src="getThumbnailUrl(currentSpecimen.image_url)"
+              v-if="currentSpecimen?.image_url"
+              v-show="!isLoading && !loadError"
+              ref="imageEl"
+              :src="getProxiedUrl(currentSpecimen.image_url)"
               :alt="currentSpecimen.scientific_name"
+              class="gallery-image"
+              @load="onImageLoad"
+              @error="onImageError"
+              draggable="false"
             />
           </div>
 
-          <!-- Specimen info -->
-          <div class="specimen-info">
-            <h3 class="species-name">
-              <em>{{ currentSpecimen?.scientific_name }}</em>
-              <span v-if="currentSpecimen?.subspecies" class="subspecies">
-                {{ currentSpecimen.subspecies }}
-              </span>
-            </h3>
-            <div class="specimen-meta">
-              <span v-if="currentSpecimen?.id" class="meta-item">
-                <strong>ID:</strong> {{ currentSpecimen.id }}
-              </span>
-              <span v-if="currentSpecimen?.sequencing_status" class="meta-item">
-                <strong>Sequencing Status:</strong>
-                <span class="status-badge" :style="{
-                  backgroundColor: STATUS_COLORS[currentSpecimen.sequencing_status] || '#6b7280',
-                  color: '#fff',
-                  padding: '2px 8px',
-                  borderRadius: '4px',
-                  fontSize: '0.75rem',
-                  marginLeft: '4px'
-                }">
-                  {{ currentSpecimen.sequencing_status }}
-                </span>
-              </span>
-              <span v-if="currentSpecimen?.mimicry_ring" class="meta-item">
-                <strong>Mimicry:</strong> {{ currentSpecimen.mimicry_ring }}
-              </span>
-              <span v-if="currentSpecimen?.country" class="meta-item">
-                <strong>Country:</strong> {{ currentSpecimen.country }}
-              </span>
-              <span v-if="currentSpecimen?.source" class="meta-item">
-                <strong>Source:</strong> {{ currentSpecimen.source }}
-              </span>
-            </div>
+          <!-- Navigation arrows (inside wrapper) -->
+          <button
+            class="nav-btn nav-prev"
+            :disabled="!hasPrev"
+            @click="goToPrev"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+          </button>
+
+          <button
+            class="nav-btn nav-next"
+            :disabled="!hasNext"
+            @click="goToNext"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </button>
+
+          <!-- Zoom controls -->
+          <div class="zoom-controls">
+            <button @click="zoomOut" :disabled="zoomLevel <= 1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+                <line x1="8" y1="11" x2="14" y2="11"/>
+              </svg>
+            </button>
+            <span class="zoom-level">{{ Math.round(zoomLevel * 100) }}%</span>
+            <button @click="zoomIn" :disabled="zoomLevel >= 5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+                <line x1="11" y1="8" x2="11" y2="14"/>
+                <line x1="8" y1="11" x2="14" y2="11"/>
+              </svg>
+            </button>
+            <button @click="resetZoom" :disabled="zoomLevel <= 1.05" class="reset-btn">
+              Reset
+            </button>
+          </div>
+
+          <!-- Image counter -->
+          <div class="image-counter">
+            {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
           </div>
         </div>
-
-        <!-- Counter -->
-        <div class="image-counter">
-          {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
-        </div>
-      </div>
-
-      <!-- Navigation arrows -->
-      <button 
-        class="nav-btn nav-prev" 
-        :disabled="!hasPrev"
-        @click="goToPrev"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="m15 18-6-6 6-6"/>
-        </svg>
-      </button>
-
-      <button 
-        class="nav-btn nav-next" 
-        :disabled="!hasNext"
-        @click="goToNext"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="m9 18 6-6-6-6"/>
-        </svg>
-      </button>
-
-      <!-- Zoom controls -->
-      <div class="zoom-controls">
-        <button @click="zoomOut" :disabled="zoomLevel <= 1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
-            <line x1="8" y1="11" x2="14" y2="11"/>
-          </svg>
-        </button>
-        <span class="zoom-level">{{ Math.round(zoomLevel * 100) }}%</span>
-        <button @click="zoomIn" :disabled="zoomLevel >= 4">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
-            <line x1="11" y1="8" x2="11" y2="14"/>
-            <line x1="8" y1="11" x2="14" y2="11"/>
-          </svg>
-        </button>
       </div>
 
       <!-- Thumbnail strip -->
@@ -1005,6 +886,14 @@ watch(currentIndex, () => {
   color: #888;
 }
 
+/* Image viewer wrapper */
+.image-viewer-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Image viewer */
 .image-viewer {
   flex: 1;
@@ -1012,24 +901,18 @@ watch(currentIndex, () => {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  cursor: grab;
   user-select: none;
-}
-
-.image-viewer:active {
-  cursor: grabbing;
 }
 
 .gallery-image {
   max-width: 90%;
-  max-height: 80vh;
+  max-height: 100%;
   object-fit: contain;
-  transition: transform 0.1s ease-out;
-  will-change: transform;
+  cursor: grab;
 }
 
-.gallery-image.zoomed {
-  cursor: move;
+.gallery-image:active {
+  cursor: grabbing;
 }
 
 /* Loading */
@@ -1066,86 +949,7 @@ watch(currentIndex, () => {
   margin-bottom: 12px;
 }
 
-/* Info panel */
-.info-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 16px 24px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-}
-
-.info-content {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  flex: 1;
-}
-
-.info-thumbnail {
-  flex-shrink: 0;
-  width: 120px;
-  height: 120px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #333;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-.info-thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.specimen-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.species-name {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #fff;
-  margin: 0 0 6px 0;
-}
-
-.species-name em {
-  color: var(--color-accent, #4ade80);
-}
-
-.subspecies {
-  font-style: normal;
-  font-weight: 400;
-  color: #aaa;
-  margin-left: 8px;
-}
-
-.specimen-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.meta-item {
-  font-size: 0.85rem;
-  color: #888;
-}
-
-.meta-item strong {
-  color: #aaa;
-  font-weight: 500;
-}
-
-.image-counter {
-  font-size: 0.9rem;
-  color: #888;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Navigation buttons */
+/* Navigation buttons - positioned within wrapper */
 .nav-btn {
   position: absolute;
   top: 50%;
@@ -1160,6 +964,7 @@ watch(currentIndex, () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 5;
 }
 
 .nav-btn:hover:not(:disabled) {
@@ -1189,7 +994,7 @@ watch(currentIndex, () => {
 /* Zoom controls */
 .zoom-controls {
   position: absolute;
-  bottom: 140px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1199,6 +1004,7 @@ watch(currentIndex, () => {
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
   border-radius: 8px;
+  z-index: 5;
 }
 
 .zoom-controls button {
@@ -1213,6 +1019,12 @@ watch(currentIndex, () => {
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+}
+
+.zoom-controls button.reset-btn {
+  width: auto;
+  padding: 0 12px;
+  font-size: 0.8rem;
 }
 
 .zoom-controls button:hover:not(:disabled) {
@@ -1235,6 +1047,20 @@ watch(currentIndex, () => {
   min-width: 50px;
   text-align: center;
   font-variant-numeric: tabular-nums;
+}
+
+/* Image counter */
+.image-counter {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 0.9rem;
+  color: #888;
+  font-variant-numeric: tabular-nums;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 12px;
+  border-radius: 6px;
+  z-index: 5;
 }
 
 /* Thumbnail strip */
@@ -1307,34 +1133,17 @@ watch(currentIndex, () => {
     display: none;
   }
 
-  .info-panel {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 16px;
-  }
-
-  .info-content {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .info-thumbnail {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4/3;
-  }
-
-  .specimen-meta {
-    gap: 10px;
-  }
-
   .nav-btn {
     width: 40px;
     height: 60px;
   }
 
   .zoom-controls {
-    bottom: 100px;
+    bottom: 80px;
+  }
+
+  .image-counter {
+    bottom: 80px;
   }
 
   .thumbnail {
