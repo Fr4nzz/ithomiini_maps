@@ -298,6 +298,7 @@ const currentExportDimensions = computed(() => {
         <button class="action-btn" @click="emit('open-mimicry')">
           <img src="../assets/Mimicry_bttn.svg" alt="Mimicry" class="mimicry-icon" />
           <span>Mimicry</span>
+          <span class="badge" v-if="store.filters.mimicry.length > 0">{{ store.filters.mimicry.length }}</span>
         </button>
         <button class="action-btn" @click="emit('open-map-export')" v-if="currentView === 'map'">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -419,65 +420,6 @@ const currentExportDimensions = computed(() => {
             placeholder="All Genera"
             :multiple="false"
           />
-        </div>
-      </div>
-
-      <!-- Mimicry Ring Filter (Collapsible) -->
-      <div class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="store.toggleMimicryFilter"
-          :class="{ expanded: store.showMimicryFilter }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Mimicry Ring
-          <span v-if="store.filters.mimicry.length > 0" class="active-badge">
-            {{ store.filters.mimicry.length }}
-          </span>
-        </button>
-
-        <div v-show="store.showMimicryFilter" class="collapse-content">
-          <label class="filter-label">Mimicry Ring ({{ store.uniqueMimicry.length }})</label>
-
-          <!-- Selected rings display -->
-          <div v-if="store.filters.mimicry.length > 0" class="selected-tags">
-            <button
-              v-for="ring in store.filters.mimicry"
-              :key="ring"
-              class="selected-tag"
-              @click="store.filters.mimicry.splice(store.filters.mimicry.indexOf(ring), 1)"
-            >
-              {{ ring }}
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 6 6 18M6 6l12 12"/>
-              </svg>
-            </button>
-          </div>
-          <p v-else class="filter-hint" style="margin-top: 0;">All Mimicry Rings</p>
-
-          <button class="btn-visual-selector" @click="emit('open-mimicry')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="7" height="7"/>
-              <rect x="14" y="3" width="7" height="7"/>
-              <rect x="14" y="14" width="7" height="7"/>
-              <rect x="3" y="14" width="7" height="7"/>
-            </svg>
-            Open Visual Selector
-          </button>
-
-          <button
-            v-if="store.filters.mimicry.length > 0"
-            class="btn-clear-selection"
-            @click="store.filters.mimicry = []"
-          >
-            Clear Selection
-          </button>
-
-          <p class="filter-hint">
-            Mimicry data from Dore et al. (2025)
-          </p>
         </div>
       </div>
 
