@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useDataStore } from '../stores/data'
+import { getProxiedUrl, getThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
@@ -302,7 +303,7 @@ const getStatusColor = (status) => {
         <img
           v-if="currentSpecimen?.image_url"
           ref="imageEl"
-          :src="currentSpecimen.image_url"
+          :src="getProxiedUrl(currentSpecimen.image_url)"
           :alt="currentSpecimen.scientific_name"
           class="gallery-image"
           :class="{ zoomed: isZoomed }"
@@ -321,7 +322,7 @@ const getStatusColor = (status) => {
           <!-- Thumbnail (if enabled) -->
           <div v-if="store.showThumbnail && currentSpecimen?.image_url" class="info-thumbnail">
             <img
-              :src="currentSpecimen.image_url"
+              :src="getThumbnailUrl(currentSpecimen.image_url)"
               :alt="currentSpecimen.scientific_name"
             />
           </div>
@@ -421,8 +422,8 @@ const getStatusColor = (status) => {
             :class="{ active: idx === currentIndex }"
             @click="goToIndex(idx)"
           >
-            <img 
-              :src="specimen.image_url" 
+            <img
+              :src="getThumbnailUrl(specimen.image_url)"
               :alt="specimen.scientific_name"
               loading="lazy"
             />

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue'
 import { useDataStore } from '../stores/data'
+import { getThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
@@ -176,7 +177,7 @@ const clearSelection = () => {
                 class="ring-photo"
               >
                 <img
-                  :src="getCurrentRep(ring).image_url"
+                  :src="getThumbnailUrl(getCurrentRep(ring).image_url)"
                   :alt="getCurrentRep(ring).scientific_name"
                   loading="lazy"
                   @error="$event.target.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%232d2d4a%22 width=%2260%22 height=%2260%22/><text x=%2230%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2210%22>No image</text></svg>'"
@@ -269,7 +270,7 @@ const clearSelection = () => {
                 class="ring-photo"
               >
                 <img
-                  :src="getCurrentRep(ring).image_url"
+                  :src="getThumbnailUrl(getCurrentRep(ring).image_url)"
                   :alt="getCurrentRep(ring).scientific_name"
                   loading="lazy"
                 />
