@@ -22,6 +22,7 @@ const collapsedSpecies = ref(new Set())
 const collapsedSubspecies = ref(new Set())
 const thumbnailStripRef = ref(null)
 const stripInitialized = ref(false)
+const skipAutoExpand = ref(false)
 
 // Refs
 const imageContainer = ref(null)
@@ -147,7 +148,11 @@ const updateCurrentIndexFromSelection = () => {
 }
 
 // Handle individual selection (by specimen ID)
-const selectIndividual = (id) => {
+// When autoExpand is false, the group won't auto-expand when selecting
+const selectIndividual = (id, autoExpand = true) => {
+  if (!autoExpand) {
+    skipAutoExpand.value = true
+  }
   const idx = specimensWithImages.value.findIndex(s => s.id === id)
   if (idx >= 0) {
     currentIndex.value = idx
@@ -611,8 +616,8 @@ watch(currentIndex, () => {
       selectedSubspecies.value = specimen.subspecies
     }
 
-    // If navigating to a different species/subspecies, expand that group
-    if (speciesChanged || subspeciesChanged) {
+    // If navigating to a different species/subspecies, expand that group (unless skipAutoExpand is set)
+    if ((speciesChanged || subspeciesChanged) && !skipAutoExpand.value) {
       // Expand the new species if collapsed
       if (specimen.scientific_name && collapsedSpecies.value.has(specimen.scientific_name)) {
         const newSet = new Set(collapsedSpecies.value)
@@ -633,6 +638,9 @@ watch(currentIndex, () => {
       // Position to the thumbnail
       positionToActiveThumbnail()
     }
+
+    // Reset the skip flag
+    skipAutoExpand.value = false
   }
 })
 </script>
@@ -963,11 +971,15 @@ watch(currentIndex, () => {
               </button>
 
               <!-- Preview thumbnail when species is collapsed -->
-              <div v-if="collapsedSpecies.has(speciesGroup.name)" class="preview-container">
+              <div
+                v-if="collapsedSpecies.has(speciesGroup.name)"
+                class="preview-container"
+                @click="toggleSpeciesCollapse(speciesGroup.name)"
+              >
                 <button
                   class="thumbnail preview-thumb"
                   :class="{ active: speciesGroup.subspecies.some(s => s.individuals.some(i => i.id === currentSpecimen?.id)) }"
-                  @click="selectIndividual(speciesGroup.subspecies[0]?.individuals[0]?.id)"
+                  @click.stop="selectIndividual(speciesGroup.subspecies[0]?.individuals[0]?.id, false)"
                   :title="speciesGroup.subspecies[0]?.individuals[0]?.id || 'View'"
                 >
                   <img
@@ -1001,11 +1013,15 @@ watch(currentIndex, () => {
                     </button>
 
                     <!-- Preview thumbnail when subspecies is collapsed -->
-                    <div v-if="collapsedSubspecies.has(`${speciesGroup.name}|${subspGroup.name}`)" class="preview-container">
+                    <div
+                      v-if="collapsedSubspecies.has(`${speciesGroup.name}|${subspGroup.name}`)"
+                      class="preview-container"
+                      @click="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)"
+                    >
                       <button
                         class="thumbnail preview-thumb"
                         :class="{ active: subspGroup.individuals.some(i => i.id === currentSpecimen?.id) }"
-                        @click="selectIndividual(subspGroup.individuals[0]?.id)"
+                        @click.stop="selectIndividual(subspGroup.individuals[0]?.id, false)"
                         :title="subspGroup.individuals[0]?.id || 'View'"
                       >
                         <img
@@ -1678,7 +1694,12 @@ watch(currentIndex, () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.preview-container:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .preview-thumb {
