@@ -304,6 +304,21 @@ const resetZoom = () => {
   }
 }
 
+// View on map - set focus point and close gallery
+const viewOnMap = () => {
+  if (!currentSpecimen.value || !coordinates.value) return
+
+  // Set the focus point in the store
+  store.focusPoint = {
+    lat: coordinates.value.lat,
+    lng: coordinates.value.lng,
+    properties: currentSpecimen.value
+  }
+
+  // Close the gallery
+  emit('close')
+}
+
 // Keyboard navigation
 const onKeyDown = (e) => {
   switch (e.key) {
@@ -528,6 +543,19 @@ watch(currentIndex, () => {
               <span v-if="currentSpecimen?.source === 'iNaturalist'">View on iNaturalist</span>
               <span v-else>View on GBIF</span>
             </a>
+
+            <!-- View on Map Button -->
+            <button
+              v-if="coordinates"
+              class="view-on-map-btn"
+              @click="viewOnMap"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              View on Map
+            </button>
           </div>
 
           <div class="sidebar-divider"></div>
@@ -908,6 +936,36 @@ watch(currentIndex, () => {
 }
 
 .observation-link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.view-on-map-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 5px;
+  color: #60a5fa;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-on-map-btn:hover {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.6);
+  color: #93c5fd;
+}
+
+.view-on-map-btn svg {
   width: 14px;
   height: 14px;
   flex-shrink: 0;

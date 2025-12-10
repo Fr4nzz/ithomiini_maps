@@ -1228,6 +1228,65 @@ watch(
   { deep: true }
 )
 
+// Watch for focusPoint changes - zoom to point and show popup
+watch(
+  () => store.focusPoint,
+  (point) => {
+    if (!point || !map) return
+
+    // Close any existing popup
+    if (popup) popup.remove()
+    showEnhancedPopup.value = false
+
+    // Fly to the point
+    map.flyTo({
+      center: [point.lng, point.lat],
+      zoom: 12,
+      duration: 1500
+    })
+
+    // After flight completes, show popup
+    map.once('moveend', () => {
+      // Get all points at this location
+      const pointsAtLocation = store.getPointsAtCoordinates(point.lat, point.lng)
+
+      // Setup enhanced popup data
+      enhancedPopupData.value = {
+        coordinates: { lat: point.lat, lng: point.lng },
+        points: pointsAtLocation.length > 0 ? pointsAtLocation : [point.properties],
+        initialSpecies: point.properties?.scientific_name,
+        initialSubspecies: point.properties?.subspecies
+      }
+
+      // Create popup
+      nextTick(() => {
+        showEnhancedPopup.value = true
+
+        nextTick(() => {
+          if (pointPopupContainer.value) {
+            popup = new maplibregl.Popup({
+              closeButton: false,
+              closeOnClick: true,
+              maxWidth: '500px',
+              className: 'custom-popup enhanced-popup'
+            })
+              .setLngLat([point.lng, point.lat])
+              .setDOMContent(pointPopupContainer.value)
+              .addTo(map)
+
+            popup.on('close', () => {
+              showEnhancedPopup.value = false
+            })
+          }
+        })
+      })
+
+      // Clear the focus point so it can be triggered again
+      store.focusPoint = null
+    })
+  }
+)
+
 // ═══════════════════════════════════════════════════════════════════════════
 // STYLE SWITCHER
 // ═══════════════════════════════════════════════════════════════════════════
