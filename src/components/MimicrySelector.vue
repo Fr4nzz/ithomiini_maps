@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue'
 import { useDataStore } from '../stores/data'
+import { getThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
@@ -8,40 +9,103 @@ const emit = defineEmits(['close'])
 // Search within mimicry rings
 const searchQuery = ref('')
 
-// Track current photo index for each ring
-const ringPhotoIndex = reactive({})
+// Track species and subspecies indices separately for each ring
+const ringSpeciesIndex = reactive({})
+const ringSubspeciesIndex = reactive({})
 
-// Get current photo index for a ring
-const getPhotoIndex = (ring) => {
-  return ringPhotoIndex[ring] || 0
-}
-
-// Navigate to next photo for a ring
-const nextPhoto = (ring, event) => {
-  event.stopPropagation()
+// Get grouped data for a ring: species -> subspecies[]
+const getGroupedReps = (ring) => {
   const reps = store.mimicryPhotoLookup[ring]?.representatives || []
-  if (reps.length > 1) {
-    const current = getPhotoIndex(ring)
-    ringPhotoIndex[ring] = (current + 1) % reps.length
+  const grouped = {}
+
+  for (const rep of reps) {
+    const species = rep.scientific_name || 'Unknown'
+    if (!grouped[species]) {
+      grouped[species] = []
+    }
+    grouped[species].push(rep)
   }
+
+  // Convert to array of { species, subspecies[] }
+  return Object.keys(grouped).sort().map(species => ({
+    species,
+    subspecies: grouped[species]
+  }))
 }
 
-// Navigate to previous photo for a ring
-const prevPhoto = (ring, event) => {
-  event.stopPropagation()
-  const reps = store.mimicryPhotoLookup[ring]?.representatives || []
-  if (reps.length > 1) {
-    const current = getPhotoIndex(ring)
-    ringPhotoIndex[ring] = (current - 1 + reps.length) % reps.length
-  }
+// Get species list for a ring
+const getSpeciesList = (ring) => {
+  return getGroupedReps(ring)
 }
 
-// Get current representative for a ring
+// Get current species index for a ring
+const getSpeciesIndex = (ring) => {
+  const list = getSpeciesList(ring)
+  const idx = ringSpeciesIndex[ring] || 0
+  return Math.min(idx, list.length - 1)
+}
+
+// Get current subspecies index for a ring
+const getSubspeciesIndex = (ring) => {
+  return ringSubspeciesIndex[ring] || 0
+}
+
+// Get current species data for a ring
+const getCurrentSpecies = (ring) => {
+  const list = getSpeciesList(ring)
+  if (list.length === 0) return null
+  const idx = getSpeciesIndex(ring)
+  return list[idx]
+}
+
+// Get current subspecies data for a ring
+const getCurrentSubspecies = (ring) => {
+  const speciesData = getCurrentSpecies(ring)
+  if (!speciesData) return null
+  const idx = getSubspeciesIndex(ring)
+  const validIdx = Math.min(idx, speciesData.subspecies.length - 1)
+  return speciesData.subspecies[validIdx]
+}
+
+// Get current representative (for photo display)
 const getCurrentRep = (ring) => {
-  const lookup = store.mimicryPhotoLookup[ring]
-  if (!lookup || !lookup.representatives.length) return null
-  const idx = getPhotoIndex(ring)
-  return lookup.representatives[idx]
+  return getCurrentSubspecies(ring)
+}
+
+// Navigate species
+const prevSpecies = (ring, event) => {
+  event.stopPropagation()
+  const list = getSpeciesList(ring)
+  if (list.length <= 1) return
+  const current = getSpeciesIndex(ring)
+  ringSpeciesIndex[ring] = (current - 1 + list.length) % list.length
+  ringSubspeciesIndex[ring] = 0 // Reset subspecies when species changes
+}
+
+const nextSpecies = (ring, event) => {
+  event.stopPropagation()
+  const list = getSpeciesList(ring)
+  if (list.length <= 1) return
+  const current = getSpeciesIndex(ring)
+  ringSpeciesIndex[ring] = (current + 1) % list.length
+  ringSubspeciesIndex[ring] = 0 // Reset subspecies when species changes
+}
+
+// Navigate subspecies
+const prevSubspecies = (ring, event) => {
+  event.stopPropagation()
+  const speciesData = getCurrentSpecies(ring)
+  if (!speciesData || speciesData.subspecies.length <= 1) return
+  const current = getSubspeciesIndex(ring)
+  ringSubspeciesIndex[ring] = (current - 1 + speciesData.subspecies.length) % speciesData.subspecies.length
+}
+
+const nextSubspecies = (ring, event) => {
+  event.stopPropagation()
+  const speciesData = getCurrentSpecies(ring)
+  if (!speciesData || speciesData.subspecies.length <= 1) return
+  const current = getSubspeciesIndex(ring)
+  ringSubspeciesIndex[ring] = (current + 1) % speciesData.subspecies.length
 }
 
 // Count records per mimicry ring
@@ -176,7 +240,7 @@ const clearSelection = () => {
                 class="ring-photo"
               >
                 <img
-                  :src="getCurrentRep(ring).image_url"
+                  :src="getThumbnailUrl(getCurrentRep(ring).image_url)"
                   :alt="getCurrentRep(ring).scientific_name"
                   loading="lazy"
                   @error="$event.target.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%232d2d4a%22 width=%2260%22 height=%2260%22/><text x=%2230%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2210%22>No image</text></svg>'"
@@ -202,26 +266,59 @@ const clearSelection = () => {
               </div>
             </div>
 
-            <!-- Species name under photo with navigation -->
-            <div class="rep-name" v-if="getCurrentRep(ring)">
-              <em>{{ getCurrentRep(ring).scientific_name }}</em>
-              <!-- Navigation row with arrows and counter -->
-              <div class="rep-nav-row" v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
+            <!-- Species navigation row -->
+            <div class="taxonomy-nav" v-if="getCurrentRep(ring)">
+              <div class="nav-row">
                 <button
                   class="nav-btn"
-                  @click="prevPhoto(ring, $event)"
+                  :class="{ disabled: getSpeciesList(ring).length <= 1 }"
+                  :disabled="getSpeciesList(ring).length <= 1"
+                  @click="prevSpecies(ring, $event)"
+                  title="Previous species"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                </button>
+                <span class="nav-label">
+                  <span class="nav-prefix">Spp ({{ getSpeciesIndex(ring) + 1 }}/{{ getSpeciesList(ring).length }}):</span>
+                  <strong class="species-name">{{ getCurrentSpecies(ring)?.species }}</strong>
+                </span>
+                <button
+                  class="nav-btn"
+                  :class="{ disabled: getSpeciesList(ring).length <= 1 }"
+                  :disabled="getSpeciesList(ring).length <= 1"
+                  @click="nextSpecies(ring, $event)"
+                  title="Next species"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Subspecies navigation row -->
+              <div class="nav-row subsp-row">
+                <button
+                  class="nav-btn"
+                  :class="{ disabled: (getCurrentSpecies(ring)?.subspecies.length || 0) <= 1 }"
+                  :disabled="(getCurrentSpecies(ring)?.subspecies.length || 0) <= 1"
+                  @click="prevSubspecies(ring, $event)"
                   title="Previous subspecies"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m15 18-6-6 6-6"/>
                   </svg>
                 </button>
-                <span class="rep-counter">
-                  {{ getPhotoIndex(ring) + 1 }}/{{ store.mimicryPhotoLookup[ring].representatives.length }}
+                <span class="nav-label">
+                  <span class="nav-prefix">Subsp ({{ getSubspeciesIndex(ring) + 1 }}/{{ getCurrentSpecies(ring)?.subspecies.length || 0 }}):</span>
+                  <span class="subsp-name">{{ getCurrentSubspecies(ring)?.subspecies || '—' }}</span>
                 </span>
                 <button
                   class="nav-btn"
-                  @click="nextPhoto(ring, $event)"
+                  :class="{ disabled: (getCurrentSpecies(ring)?.subspecies.length || 0) <= 1 }"
+                  :disabled="(getCurrentSpecies(ring)?.subspecies.length || 0) <= 1"
+                  @click="nextSubspecies(ring, $event)"
                   title="Next subspecies"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -269,7 +366,7 @@ const clearSelection = () => {
                 class="ring-photo"
               >
                 <img
-                  :src="getCurrentRep(ring).image_url"
+                  :src="getThumbnailUrl(getCurrentRep(ring).image_url)"
                   :alt="getCurrentRep(ring).scientific_name"
                   loading="lazy"
                 />
@@ -284,26 +381,59 @@ const clearSelection = () => {
               </div>
             </div>
 
-            <!-- Species name with navigation -->
-            <div class="rep-name" v-if="getCurrentRep(ring)">
-              <em>{{ getCurrentRep(ring).scientific_name }}</em>
-              <!-- Navigation row with arrows and counter -->
-              <div class="rep-nav-row" v-if="store.mimicryPhotoLookup[ring]?.representatives.length > 1">
+            <!-- Species navigation row -->
+            <div class="taxonomy-nav" v-if="getCurrentRep(ring)">
+              <div class="nav-row">
                 <button
                   class="nav-btn"
-                  @click="prevPhoto(ring, $event)"
+                  :class="{ disabled: getSpeciesList(ring).length <= 1 }"
+                  :disabled="getSpeciesList(ring).length <= 1"
+                  @click="prevSpecies(ring, $event)"
+                  title="Previous species"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                </button>
+                <span class="nav-label">
+                  <span class="nav-prefix">Spp ({{ getSpeciesIndex(ring) + 1 }}/{{ getSpeciesList(ring).length }}):</span>
+                  <strong class="species-name">{{ getCurrentSpecies(ring)?.species }}</strong>
+                </span>
+                <button
+                  class="nav-btn"
+                  :class="{ disabled: getSpeciesList(ring).length <= 1 }"
+                  :disabled="getSpeciesList(ring).length <= 1"
+                  @click="nextSpecies(ring, $event)"
+                  title="Next species"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Subspecies navigation row -->
+              <div class="nav-row subsp-row">
+                <button
+                  class="nav-btn"
+                  :class="{ disabled: (getCurrentSpecies(ring)?.subspecies.length || 0) <= 1 }"
+                  :disabled="(getCurrentSpecies(ring)?.subspecies.length || 0) <= 1"
+                  @click="prevSubspecies(ring, $event)"
                   title="Previous subspecies"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m15 18-6-6 6-6"/>
                   </svg>
                 </button>
-                <span class="rep-counter">
-                  {{ getPhotoIndex(ring) + 1 }}/{{ store.mimicryPhotoLookup[ring].representatives.length }}
+                <span class="nav-label">
+                  <span class="nav-prefix">Subsp ({{ getSubspeciesIndex(ring) + 1 }}/{{ getCurrentSpecies(ring)?.subspecies.length || 0 }}):</span>
+                  <span class="subsp-name">{{ getCurrentSubspecies(ring)?.subspecies || '—' }}</span>
                 </span>
                 <button
                   class="nav-btn"
-                  @click="nextPhoto(ring, $event)"
+                  :class="{ disabled: (getCurrentSpecies(ring)?.subspecies.length || 0) <= 1 }"
+                  :disabled="(getCurrentSpecies(ring)?.subspecies.length || 0) <= 1"
+                  @click="nextSubspecies(ring, $event)"
                   title="Next subspecies"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -621,21 +751,65 @@ const clearSelection = () => {
   font-size: 0.7rem;
 }
 
-/* Navigation Buttons (below photo) */
-.rep-nav-row {
+/* Taxonomy Navigation */
+.taxonomy-nav {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.nav-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 4px;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.nav-row.subsp-row {
+  margin-bottom: 0;
+}
+
+.nav-label {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: 0.65rem;
+  line-height: 1.3;
+  color: var(--color-text-secondary, #aaa);
+}
+
+.nav-prefix {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--color-text-muted, #666);
+}
+
+.species-name {
+  display: block;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--color-text-primary, #e0e0e0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subsp-name {
+  display: block;
+  font-style: italic;
+  color: var(--color-text-secondary, #aaa);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
   background: var(--color-bg-tertiary, #2d2d4a);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
@@ -645,15 +819,20 @@ const clearSelection = () => {
   padding: 0;
 }
 
-.nav-btn:hover {
+.nav-btn:hover:not(.disabled) {
   background: var(--color-accent, #4ade80);
   border-color: var(--color-accent, #4ade80);
   color: var(--color-bg-primary, #1a1a2e);
 }
 
+.nav-btn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .nav-btn svg {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 /* Source Badge */
@@ -678,37 +857,6 @@ const clearSelection = () => {
   color: white;
 }
 
-/* Representative Name */
-.rep-name {
-  width: 100%;
-  text-align: center;
-  margin-bottom: 6px;
-  font-size: 0.7rem;
-  color: var(--color-text-secondary, #aaa);
-  line-height: 1.3;
-}
-
-.rep-name em {
-  display: block;
-  font-style: italic;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.rep-name .subspecies {
-  display: block;
-  font-size: 0.65rem;
-  color: var(--color-text-muted, #666);
-}
-
-.rep-nav-row .rep-counter {
-  font-size: 0.65rem;
-  color: var(--color-accent, #4ade80);
-  min-width: 28px;
-  text-align: center;
-}
-
 /* Ring Info */
 .ring-info {
   text-align: center;
@@ -717,10 +865,10 @@ const clearSelection = () => {
 
 .ring-name {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--color-text-primary, #e0e0e0);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .ring-count {

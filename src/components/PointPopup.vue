@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
+import { getThumbnailUrl } from '../utils/imageProxy'
 
 const props = defineProps({
   coordinates: {
@@ -247,7 +248,7 @@ const locationName = computed(() => {
         <div class="photo-container">
           <img
             v-if="currentPhoto?.url"
-            :src="currentPhoto.url"
+            :src="getThumbnailUrl(currentPhoto.url)"
             :alt="currentIndividual?.id || 'Specimen'"
             loading="lazy"
             @error="$event.target.style.display = 'none'"

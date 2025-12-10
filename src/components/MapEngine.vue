@@ -4,6 +4,7 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
 import PointPopup from './PointPopup.vue'
+import { getThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
 const emit = defineEmits(['map-ready'])
@@ -1078,7 +1079,7 @@ const buildPopupContent = (props) => {
   if (showThumbnail && hasImage) {
     html += `
       <div class="popup-thumbnail">
-        <img src="${p.image_url}" alt="Specimen ${p.id}" loading="lazy" onerror="this.style.display='none'" />
+        <img src="${getThumbnailUrl(p.image_url)}" alt="Specimen ${p.id}" loading="lazy" onerror="this.style.display='none'" />
       </div>
     `
   }
