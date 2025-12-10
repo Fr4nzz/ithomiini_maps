@@ -1563,7 +1563,7 @@ watch(currentIndex, () => {
   align-items: stretch;
   background: rgba(0, 0, 0, 0.7);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  height: 150px;
+  height: 130px;
 }
 
 /* Scroll arrows */
@@ -1668,26 +1668,28 @@ watch(currentIndex, () => {
 }
 
 .species-content {
-  flex: 1;
   display: flex;
-  overflow-x: auto;
+  overflow-x: visible;
   overflow-y: hidden;
 }
 
 /* Preview container for collapsed groups */
 .preview-container {
-  flex: 1;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
-  padding: 2px;
+  padding: 3px;
 }
 
 .preview-thumb {
   position: relative;
-  width: auto;
-  height: 100%;
-  aspect-ratio: 1;
+  width: 90px;
+  height: 90px;
+}
+
+.preview-thumb img {
+  object-fit: contain;
+  background: #222;
 }
 
 .preview-thumb:hover {
@@ -1771,20 +1773,18 @@ watch(currentIndex, () => {
 
 /* Thumbnails container */
 .thumbnails-container {
-  flex: 1;
   display: flex;
   align-items: stretch;
   gap: 4px;
   padding: 3px;
-  overflow-x: auto;
+  overflow-x: visible;
   overflow-y: hidden;
 }
 
 .thumbnail {
   flex-shrink: 0;
-  width: auto;
-  height: 100%;
-  aspect-ratio: 1;
+  width: 80px;
+  height: 80px;
   padding: 0;
   background: #333;
   border: 2px solid transparent;
