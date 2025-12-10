@@ -17,10 +17,11 @@ const zoomLevel = ref(1)
 const selectedSpecies = ref(null)
 const selectedSubspecies = ref(null)
 
-// Thumbnail strip state
+// Thumbnail strip state - all collapsed by default (populated on mount)
 const collapsedSpecies = ref(new Set())
 const collapsedSubspecies = ref(new Set())
 const thumbnailStripRef = ref(null)
+const stripInitialized = ref(false)
 
 // Refs
 const imageContainer = ref(null)
@@ -161,6 +162,9 @@ const initializeSidebarFromCurrent = () => {
 
   selectedSpecies.value = specimen.scientific_name
   selectedSubspecies.value = specimen.subspecies
+
+  // Expand only the current species/subspecies group
+  expandOnly(specimen.scientific_name, specimen.subspecies)
 }
 
 // Total counts for sidebar stats
@@ -258,6 +262,43 @@ const groupedThumbnails = computed(() => {
   return result
 })
 
+// Initialize all species/subspecies as collapsed
+const collapseAll = () => {
+  const allSpecies = new Set()
+  const allSubspecies = new Set()
+
+  groupedThumbnails.value.forEach(speciesGroup => {
+    allSpecies.add(speciesGroup.name)
+    speciesGroup.subspecies.forEach(subspGroup => {
+      allSubspecies.add(`${speciesGroup.name}|${subspGroup.name}`)
+    })
+  })
+
+  collapsedSpecies.value = allSpecies
+  collapsedSubspecies.value = allSubspecies
+}
+
+// Expand only a specific species and subspecies (keeping others collapsed)
+const expandOnly = (species, subspecies) => {
+  // Start with all collapsed
+  collapseAll()
+
+  // Expand the target species
+  if (species) {
+    const newSpeciesSet = new Set(collapsedSpecies.value)
+    newSpeciesSet.delete(species)
+    collapsedSpecies.value = newSpeciesSet
+  }
+
+  // Expand the target subspecies
+  if (species && subspecies) {
+    const key = `${species}|${subspecies}`
+    const newSubspSet = new Set(collapsedSubspecies.value)
+    newSubspSet.delete(key)
+    collapsedSubspecies.value = newSubspSet
+  }
+}
+
 // Toggle collapsed state for species
 const toggleSpeciesCollapse = (speciesName) => {
   const newSet = new Set(collapsedSpecies.value)
@@ -290,16 +331,23 @@ const scrollThumbnails = (direction) => {
   })
 }
 
-// Auto-scroll to active thumbnail
-const scrollToActiveThumbnail = () => {
+// Position thumbnail strip to show active thumbnail (instant, no animation)
+const positionToActiveThumbnail = () => {
   nextTick(() => {
     const activeThumb = thumbnailStripRef.value?.querySelector('.thumbnail.active')
-    if (activeThumb) {
-      activeThumb.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      })
+    if (activeThumb && thumbnailStripRef.value) {
+      // Get positions
+      const stripRect = thumbnailStripRef.value.getBoundingClientRect()
+      const thumbRect = activeThumb.getBoundingClientRect()
+
+      // Calculate scroll position to center the thumbnail
+      const scrollLeft = thumbnailStripRef.value.scrollLeft +
+        (thumbRect.left - stripRect.left) -
+        (stripRect.width / 2) +
+        (thumbRect.width / 2)
+
+      // Set scroll position instantly (no smooth scroll to avoid loading intermediate images)
+      thumbnailStripRef.value.scrollLeft = Math.max(0, scrollLeft)
     }
   })
 }
@@ -495,16 +543,31 @@ const handleGallerySelection = () => {
     updateCurrentIndexFromSelection()
   }
 
+  // Expand only the selected species/subspecies (others stay collapsed)
+  expandOnly(selection.species, selection.subspecies)
+
   // Clear the selection after handling
   store.gallerySelection = null
 
-  // Scroll to the active thumbnail after a short delay
-  scrollToActiveThumbnail()
+  // Position to active thumbnail instantly (no smooth scroll to avoid loading all images)
+  positionToActiveThumbnail()
+}
+
+// Initialize thumbnail strip - collapse all by default
+const initializeThumbnailStrip = () => {
+  if (stripInitialized.value) return
+  collapseAll()
+  stripInitialized.value = true
 }
 
 // Setup/cleanup
 onMounted(() => {
   document.addEventListener('keydown', onKeyDown)
+
+  // Initialize thumbnail strip with all collapsed
+  nextTick(() => {
+    initializeThumbnailStrip()
+  })
 
   // Check for gallery selection from popup
   if (store.gallerySelection) {
@@ -526,18 +589,49 @@ onUnmounted(() => {
 watch(() => store.filteredGeoJSON, () => {
   currentIndex.value = 0
   resetView()
-  initializeSidebarFromCurrent()
+  // Reset strip initialization flag so it re-collapses
+  stripInitialized.value = false
+  nextTick(() => {
+    initializeThumbnailStrip()
+    initializeSidebarFromCurrent()
+  })
 })
 
-// Watch for currentIndex changes to sync sidebar
+// Watch for currentIndex changes to sync sidebar and expand current group
 watch(currentIndex, () => {
   const specimen = currentSpecimen.value
   if (specimen) {
-    if (specimen.scientific_name !== selectedSpecies.value) {
+    const speciesChanged = specimen.scientific_name !== selectedSpecies.value
+    const subspeciesChanged = specimen.subspecies !== selectedSubspecies.value
+
+    if (speciesChanged) {
       selectedSpecies.value = specimen.scientific_name
     }
-    if (specimen.subspecies !== selectedSubspecies.value) {
+    if (subspeciesChanged) {
       selectedSubspecies.value = specimen.subspecies
+    }
+
+    // If navigating to a different species/subspecies, expand that group
+    if (speciesChanged || subspeciesChanged) {
+      // Expand the new species if collapsed
+      if (specimen.scientific_name && collapsedSpecies.value.has(specimen.scientific_name)) {
+        const newSet = new Set(collapsedSpecies.value)
+        newSet.delete(specimen.scientific_name)
+        collapsedSpecies.value = newSet
+      }
+
+      // Expand the new subspecies if collapsed
+      if (specimen.scientific_name && specimen.subspecies) {
+        const key = `${specimen.scientific_name}|${specimen.subspecies}`
+        if (collapsedSubspecies.value.has(key)) {
+          const newSet = new Set(collapsedSubspecies.value)
+          newSet.delete(key)
+          collapsedSubspecies.value = newSet
+        }
+      }
+
+      // Position to the thumbnail
+      positionToActiveThumbnail()
     }
   }
 })
