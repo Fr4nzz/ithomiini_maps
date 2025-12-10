@@ -15,9 +15,32 @@ const panY = ref(0)
 const isLoading = ref(true)
 const loadError = ref(false)
 
+// Sidebar state
+const selectedSpecies = ref(null)
+const selectedSubspecies = ref(null)
+
 // Image container ref
 const imageContainer = ref(null)
 const imageEl = ref(null)
+
+// Status colors for sidebar
+const STATUS_COLORS = {
+  'Sequenced': '#3b82f6',
+  'Tissue Available': '#10b981',
+  'Preserved Specimen': '#f59e0b',
+  'Published': '#a855f7',
+  'GBIF Record': '#6b7280',
+  'Observation': '#22c55e',
+  'Museum Specimen': '#8b5cf6',
+  'Living Specimen': '#14b8a6',
+}
+
+// Get all points (with or without images)
+const allPoints = computed(() => {
+  const geo = store.filteredGeoJSON
+  if (!geo || !geo.features) return []
+  return geo.features.map(f => f.properties)
+})
 
 // Get specimens with images
 const specimensWithImages = computed(() => {
@@ -27,6 +50,121 @@ const specimensWithImages = computed(() => {
     .filter(f => f.properties?.image_url)
     .map(f => f.properties)
 })
+
+// Group points by species for sidebar navigation
+const groupedBySpecies = computed(() => {
+  return store.groupPointsBySpecies(specimensWithImages.value)
+})
+
+// Get species list (those with images)
+const speciesList = computed(() => {
+  return store.getSpeciesWithPhotos(specimensWithImages.value)
+})
+
+// Get subspecies list for selected species
+const subspeciesList = computed(() => {
+  if (!selectedSpecies.value || !groupedBySpecies.value[selectedSpecies.value]) {
+    return []
+  }
+  const speciesGroup = groupedBySpecies.value[selectedSpecies.value]
+  return Object.entries(speciesGroup.subspecies)
+    .map(([name, data]) => ({
+      name,
+      count: data.count,
+      hasPhoto: data.individuals.some(i => i.image_url)
+    }))
+    .filter(s => s.hasPhoto)  // Only show subspecies with photos
+    .sort((a, b) => b.count - a.count)
+})
+
+// Get individuals list for selected species+subspecies (only those with images)
+const individualsList = computed(() => {
+  if (!selectedSpecies.value || !groupedBySpecies.value[selectedSpecies.value]) {
+    return specimensWithImages.value
+  }
+  const speciesGroup = groupedBySpecies.value[selectedSpecies.value]
+
+  if (selectedSubspecies.value && speciesGroup.subspecies[selectedSubspecies.value]) {
+    return speciesGroup.subspecies[selectedSubspecies.value].individuals.filter(i => i.image_url)
+  }
+
+  // Return all individuals for this species (with images)
+  return Object.values(speciesGroup.subspecies)
+    .flatMap(s => s.individuals)
+    .filter(i => i.image_url)
+})
+
+// Handle species selection
+const selectSpecies = (species) => {
+  selectedSpecies.value = species
+
+  if (species && groupedBySpecies.value[species]) {
+    const speciesGroup = groupedBySpecies.value[species]
+    const subspeciesNames = Object.keys(speciesGroup.subspecies)
+
+    // Find first subspecies with a photo
+    const sortedSubspecies = subspeciesNames
+      .map(name => ({
+        name,
+        hasPhoto: speciesGroup.subspecies[name].individuals.some(i => i.image_url)
+      }))
+      .filter(s => s.hasPhoto)
+
+    if (sortedSubspecies.length > 0) {
+      selectedSubspecies.value = sortedSubspecies[0].name
+    } else {
+      selectedSubspecies.value = null
+    }
+  } else {
+    selectedSubspecies.value = null
+  }
+
+  // Find the index in specimensWithImages that matches first individual
+  updateCurrentIndexFromSelection()
+}
+
+// Handle subspecies selection
+const selectSubspecies = (subspecies) => {
+  selectedSubspecies.value = subspecies
+  updateCurrentIndexFromSelection()
+}
+
+// Update currentIndex when species/subspecies selection changes
+const updateCurrentIndexFromSelection = () => {
+  const list = individualsList.value
+  if (list.length > 0) {
+    // Find index in full specimensWithImages
+    const firstIndividual = list[0]
+    const idx = specimensWithImages.value.findIndex(s => s.id === firstIndividual.id)
+    if (idx >= 0) {
+      currentIndex.value = idx
+      resetView()
+    }
+  }
+}
+
+// Handle individual selection (by specimen ID)
+const selectIndividual = (id) => {
+  const idx = specimensWithImages.value.findIndex(s => s.id === id)
+  if (idx >= 0) {
+    currentIndex.value = idx
+    resetView()
+  }
+}
+
+// Initialize sidebar selection from current specimen
+const initializeSidebarFromCurrent = () => {
+  const specimen = currentSpecimen.value
+  if (!specimen) return
+
+  selectedSpecies.value = specimen.scientific_name
+  selectedSubspecies.value = specimen.subspecies
+}
+
+// Total counts for sidebar stats
+const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
+const totalIndividuals = computed(() => specimensWithImages.value.length)
+const subspeciesCount = computed(() => subspeciesList.value.length)
 
 // Current specimen
 const currentSpecimen = computed(() => {
@@ -220,6 +358,8 @@ onMounted(() => {
   document.addEventListener('keydown', onKeyDown)
   document.addEventListener('mouseup', onMouseUp)
   document.addEventListener('mousemove', onMouseMove)
+  // Initialize sidebar selection from first specimen
+  initializeSidebarFromCurrent()
 })
 
 onUnmounted(() => {
@@ -232,22 +372,22 @@ onUnmounted(() => {
 watch(() => store.filteredGeoJSON, () => {
   currentIndex.value = 0
   resetView()
+  initializeSidebarFromCurrent()
 })
 
-// Status color helper
-const getStatusColor = (status) => {
-  const colors = {
-    'Sequenced': '#3b82f6',
-    'Tissue Available': '#10b981',
-    'Preserved Specimen': '#f59e0b',
-    'Published': '#a855f7',
-    'GBIF Record': '#6b7280',
-    'Observation': '#6b7280',
-    'Museum Specimen': '#8b5cf6',
-    'Living Specimen': '#14b8a6'
+// Watch for currentIndex changes to sync sidebar (when using arrows/thumbnails)
+watch(currentIndex, () => {
+  const specimen = currentSpecimen.value
+  if (specimen) {
+    // Only update if different to avoid circular updates
+    if (specimen.scientific_name !== selectedSpecies.value) {
+      selectedSpecies.value = specimen.scientific_name
+    }
+    if (specimen.subspecies !== selectedSubspecies.value) {
+      selectedSubspecies.value = specimen.subspecies
+    }
   }
-  return colors[status] || '#6b7280'
-}
+})
 </script>
 
 <template>
@@ -273,47 +413,197 @@ const getStatusColor = (status) => {
 
     <!-- Main gallery -->
     <template v-else>
-      <!-- Image viewer -->
-      <div 
-        ref="imageContainer"
-        class="image-viewer"
-        @mousedown="onMouseDown"
-        @touchstart="onTouchStart"
-        @touchmove="onTouchMove"
-        @touchend="onTouchEnd"
-        @wheel="onWheel"
-        @dblclick="toggleZoom"
-      >
-        <!-- Loading spinner -->
-        <div v-if="isLoading" class="image-loading">
-          <div class="spinner"></div>
+      <!-- Gallery layout with sidebar -->
+      <div class="gallery-layout">
+        <!-- Sidebar -->
+        <div class="gallery-sidebar">
+          <!-- Species Section -->
+          <div class="sidebar-section">
+            <div class="section-header">
+              <span class="count-badge">{{ totalSpecies }}</span>
+              <span class="section-label">Species</span>
+            </div>
+            <select
+              :value="selectedSpecies || ''"
+              @change="selectSpecies($event.target.value || null)"
+              class="sidebar-select"
+            >
+              <option value="" disabled>Select species...</option>
+              <option
+                v-for="sp in speciesList"
+                :key="sp.species"
+                :value="sp.species"
+              >
+                {{ sp.species }} ({{ sp.count }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Subspecies Section -->
+          <div v-if="subspeciesList.length > 0" class="sidebar-section">
+            <div class="section-header">
+              <span class="count-badge">{{ subspeciesCount }}</span>
+              <span class="section-label">Subspecies</span>
+            </div>
+            <select
+              :value="selectedSubspecies || ''"
+              @change="selectSubspecies($event.target.value || null)"
+              class="sidebar-select"
+            >
+              <option
+                v-for="ssp in subspeciesList"
+                :key="ssp.name"
+                :value="ssp.name"
+              >
+                {{ ssp.name }} ({{ ssp.count }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Individuals Section -->
+          <div class="sidebar-section">
+            <div class="section-header">
+              <span class="count-badge">{{ individualsList.length }}</span>
+              <span class="section-label">Individuals</span>
+            </div>
+            <select
+              v-if="individualsList.length > 1"
+              :value="currentSpecimen?.id || ''"
+              @change="selectIndividual($event.target.value)"
+              class="sidebar-select individual-select"
+            >
+              <option
+                v-for="ind in individualsList"
+                :key="ind.id"
+                :value="ind.id"
+              >
+                {{ ind.id }}
+              </option>
+            </select>
+            <div v-else class="single-individual-id">
+              {{ currentSpecimen?.id || 'N/A' }}
+            </div>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <!-- Details Section -->
+          <div class="sidebar-details">
+            <!-- Observation Date -->
+            <div v-if="currentSpecimen?.observation_date" class="detail-row">
+              <span class="detail-label">Date:</span>
+              <span class="detail-value">{{ currentSpecimen.observation_date }}</span>
+            </div>
+
+            <!-- Mimicry Ring -->
+            <div v-if="currentSpecimen?.mimicry_ring && currentSpecimen.mimicry_ring !== 'Unknown'" class="detail-row">
+              <span class="detail-label">Mimicry:</span>
+              <span class="detail-value">{{ currentSpecimen.mimicry_ring }}</span>
+            </div>
+
+            <!-- Source -->
+            <div class="detail-row">
+              <span class="detail-label">Source:</span>
+              <span class="detail-value">{{ currentSpecimen?.source || 'Unknown' }}</span>
+            </div>
+
+            <!-- Status -->
+            <div class="detail-row">
+              <span class="detail-label">Status:</span>
+              <span
+                class="detail-value status-badge"
+                :style="{ color: STATUS_COLORS[currentSpecimen?.sequencing_status] || '#6b7280' }"
+              >
+                <span class="status-dot" :style="{ background: STATUS_COLORS[currentSpecimen?.sequencing_status] || '#6b7280' }"></span>
+                {{ currentSpecimen?.sequencing_status || 'Unknown' }}
+              </span>
+            </div>
+
+            <!-- Country -->
+            <div v-if="currentSpecimen?.country && currentSpecimen.country !== 'Unknown'" class="detail-row">
+              <span class="detail-label">Country:</span>
+              <span class="detail-value">{{ currentSpecimen.country }}</span>
+            </div>
+
+            <!-- Observation URL Link -->
+            <a
+              v-if="currentSpecimen?.observation_url"
+              :href="currentSpecimen.observation_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="observation-link"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              <span v-if="currentSpecimen?.source === 'iNaturalist'">View on iNaturalist</span>
+              <span v-else>View on GBIF</span>
+            </a>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <!-- Search Summary -->
+          <div class="search-summary">
+            <div class="summary-title">Search Summary</div>
+            <div class="summary-stats">
+              <div class="stat">
+                <span class="stat-value">{{ totalSpecies }}</span>
+                <span class="stat-label">species</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">{{ totalIndividuals }}</span>
+                <span class="stat-label">with images</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Error state -->
-        <div v-else-if="loadError" class="image-error">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          <p>Failed to load image</p>
-        </div>
+        <!-- Image viewer -->
+        <div
+          ref="imageContainer"
+          class="image-viewer"
+          @mousedown="onMouseDown"
+          @touchstart="onTouchStart"
+          @touchmove="onTouchMove"
+          @touchend="onTouchEnd"
+          @wheel="onWheel"
+          @dblclick="toggleZoom"
+        >
+          <!-- Loading spinner -->
+          <div v-if="isLoading" class="image-loading">
+            <div class="spinner"></div>
+          </div>
 
-        <!-- Image -->
-        <img
-          v-if="currentSpecimen?.image_url"
-          ref="imageEl"
-          :src="getProxiedUrl(currentSpecimen.image_url)"
-          :alt="currentSpecimen.scientific_name"
-          class="gallery-image"
-          :class="{ zoomed: isZoomed }"
-          :style="{
-            transform: `scale(${zoomLevel}) translate(${panX / zoomLevel}px, ${panY / zoomLevel}px)`
-          }"
-          @load="onImageLoad"
-          @error="onImageError"
-          draggable="false"
-        />
+          <!-- Error state -->
+          <div v-else-if="loadError" class="image-error">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p>Failed to load image</p>
+          </div>
+
+          <!-- Image (hidden while loading) -->
+          <img
+            v-if="currentSpecimen?.image_url"
+            v-show="!isLoading && !loadError"
+            ref="imageEl"
+            :src="getProxiedUrl(currentSpecimen.image_url)"
+            :alt="currentSpecimen.scientific_name"
+            class="gallery-image"
+            :class="{ zoomed: isZoomed }"
+            :style="{
+              transform: `scale(${zoomLevel}) translate(${panX / zoomLevel}px, ${panY / zoomLevel}px)`
+            }"
+            @load="onImageLoad"
+            @error="onImageError"
+            draggable="false"
+          />
+        </div>
       </div>
 
       <!-- Info panel -->
@@ -517,6 +807,202 @@ const getStatusColor = (status) => {
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
+}
+
+/* Gallery layout with sidebar */
+.gallery-layout {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Sidebar styles */
+.gallery-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #1a1a2e;
+  border-right: 1px solid #3d3d5c;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.count-badge {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-select {
+  width: 100%;
+  padding: 8px 10px;
+  background: #252540;
+  border: 1px solid #3d3d5c;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 0.8rem;
+  font-style: italic;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidebar-select:hover {
+  border-color: #5d5d7c;
+}
+
+.sidebar-select:focus {
+  outline: none;
+  border-color: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
+.sidebar-select.individual-select {
+  font-style: normal;
+  font-family: monospace;
+}
+
+.single-individual-id {
+  padding: 8px 10px;
+  background: #252540;
+  border: 1px solid #3d3d5c;
+  border-radius: 6px;
+  color: #14b8a6;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: #3d3d5c;
+  margin: 4px 0;
+}
+
+.sidebar-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.75rem;
+}
+
+.detail-label {
+  color: #888;
+  flex-shrink: 0;
+  min-width: 50px;
+}
+
+.detail-value {
+  color: #e0e0e0;
+  word-break: break-word;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.observation-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 5px;
+  color: #4ade80;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.observation-link:hover {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: rgba(74, 222, 128, 0.5);
+  color: #86efac;
+}
+
+.observation-link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.search-summary {
+  background: rgba(74, 222, 128, 0.05);
+  border: 1px solid rgba(74, 222, 128, 0.15);
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.summary-title {
+  font-size: 0.7rem;
+  color: #4ade80;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.stat {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4ade80;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #888;
 }
 
 /* Image viewer */
@@ -817,6 +1303,10 @@ const getStatusColor = (status) => {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .gallery-sidebar {
+    display: none;
+  }
+
   .info-panel {
     flex-direction: column;
     align-items: flex-start;
