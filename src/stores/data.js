@@ -38,6 +38,10 @@ export const useDataStore = defineStore('data', () => {
   // UI preferences
   const showThumbnail = ref(true)
 
+  // Focus point - when set, map should zoom to this point and show popup
+  // { lat, lng, properties } - set to null after map handles it
+  const focusPoint = ref(null)
+
   // Clustering settings
   const clusteringEnabled = ref(false)
   const clusterSettings = ref({
@@ -1138,6 +1142,7 @@ export const useDataStore = defineStore('data', () => {
     showAdvancedFilters,
     showMimicryFilter,
     showThumbnail,
+    focusPoint,
     clusteringEnabled,
     clusterSettings,
     scatterOverlappingPoints,
