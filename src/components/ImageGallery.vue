@@ -1676,14 +1676,17 @@ watch(currentIndex, () => {
 .preview-container {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  padding: 4px;
+  padding: 3px;
 }
 
 .preview-thumb {
-  opacity: 0.7;
+  opacity: 0.8;
   position: relative;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1;
 }
 
 .preview-thumb:hover {
@@ -1693,17 +1696,17 @@ watch(currentIndex, () => {
 .preview-thumb::after {
   content: '+';
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
-  background: rgba(0, 0, 0, 0.7);
+  bottom: 3px;
+  right: 3px;
+  width: 16px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.8);
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
-  line-height: 14px;
+  line-height: 16px;
   text-align: center;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 /* Subspecies group */
