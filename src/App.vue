@@ -400,10 +400,11 @@ onMounted(() => {
       </div>
 
       <!-- Map View -->
-      <MapEngine 
+      <MapEngine
         v-else-if="currentView === 'map'"
         class="view-container"
         @map-ready="onMapReady"
+        @open-gallery="openImageGallery"
       />
 
       <!-- Table View -->

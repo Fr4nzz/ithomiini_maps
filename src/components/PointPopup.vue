@@ -22,7 +22,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'open-gallery'])
 
 const store = useDataStore()
 
@@ -229,6 +229,18 @@ const locationName = computed(() => {
   const point = currentIndividual.value || props.points[0]
   return point?.collection_location || point?.locality || point?.location || null
 })
+
+// Open gallery with current selection
+const openGallery = () => {
+  // Set gallery selection in store
+  store.gallerySelection = {
+    species: selectedSpecies.value,
+    subspecies: selectedSubspecies.value,
+    individualId: currentIndividual.value?.id
+  }
+  // Emit to open gallery
+  emit('open-gallery')
+}
 </script>
 
 <template>
@@ -266,6 +278,21 @@ const locationName = computed(() => {
           <div v-if="!currentPhoto?.sameIndividual && currentPhoto?.url" class="photo-indicator">
             Same species
           </div>
+
+          <!-- Expand button -->
+          <button
+            v-if="currentPhoto?.url"
+            class="expand-btn"
+            @click="openGallery"
+            title="View in Gallery"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 3 21 3 21 9"/>
+              <polyline points="9 21 3 21 3 15"/>
+              <line x1="21" y1="3" x2="14" y2="10"/>
+              <line x1="3" y1="21" x2="10" y2="14"/>
+            </svg>
+          </button>
         </div>
 
         <!-- Individuals Dropdown -->
@@ -531,6 +558,38 @@ const locationName = computed(() => {
   padding: 3px 6px;
   border-radius: 3px;
   text-align: center;
+}
+
+.expand-btn {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0.7;
+}
+
+.expand-btn:hover {
+  background: rgba(59, 130, 246, 0.9);
+  opacity: 1;
+}
+
+.expand-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.photo-container:has(.photo-indicator) .expand-btn {
+  bottom: 28px;
 }
 
 /* Section Header with count badge */

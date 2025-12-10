@@ -7,7 +7,7 @@ import PointPopup from './PointPopup.vue'
 import { getThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
-const emit = defineEmits(['map-ready'])
+const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
 let map = null
@@ -1163,6 +1163,12 @@ const closeEnhancedPopup = () => {
   showEnhancedPopup.value = false
 }
 
+// Handle open gallery from popup
+const handleOpenGallery = () => {
+  closeEnhancedPopup()
+  emit('open-gallery')
+}
+
 // Watch for displayGeoJSON changes and update the map
 watch(
   () => store.displayGeoJSON,
@@ -1348,6 +1354,7 @@ const switchStyle = (styleName) => {
           :initial-species="enhancedPopupData.initialSpecies"
           :initial-subspecies="enhancedPopupData.initialSubspecies"
           @close="closeEnhancedPopup"
+          @open-gallery="handleOpenGallery"
         />
       </div>
     </div>
