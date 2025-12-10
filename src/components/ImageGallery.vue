@@ -632,7 +632,7 @@ watch(currentIndex, () => {
               <span v-if="currentSpecimen?.sequencing_status" class="meta-item">
                 <strong>Sequencing Status:</strong>
                 <span class="status-badge" :style="{
-                  backgroundColor: getStatusColor(currentSpecimen.sequencing_status),
+                  backgroundColor: STATUS_COLORS[currentSpecimen.sequencing_status] || '#6b7280',
                   color: '#fff',
                   padding: '2px 8px',
                   borderRadius: '4px',
