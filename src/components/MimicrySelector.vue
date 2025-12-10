@@ -113,11 +113,7 @@ const clearSelection = () => {
     <!-- Header -->
     <div class="selector-header">
       <h3>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
-          <path d="M12 2c-2.5 0-5 4-5 10s2.5 10 5 10"/>
-          <path d="M12 2c2.5 0 5 4 5 10s-2.5 10-5 10"/>
-        </svg>
+        <img src="../assets/Mimicry_bttn.svg" alt="Mimicry" class="header-icon" />
         Mimicry Rings
       </h3>
       <button class="btn-close" @click="emit('close')">
@@ -396,6 +392,11 @@ const clearSelection = () => {
   width: 22px;
   height: 22px;
   color: var(--color-accent, #4ade80);
+}
+
+.selector-header h3 .header-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .btn-close {

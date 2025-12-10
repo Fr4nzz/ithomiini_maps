@@ -300,11 +300,7 @@ const currentExportDimensions = computed(() => {
           <span class="badge" v-if="imageCount > 0">{{ imageCount }}</span>
         </button>
         <button class="action-btn" @click="emit('open-mimicry')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
-            <path d="M12 2c-2.5 0-5 4-5 10s2.5 10 5 10"/>
-            <path d="M12 2c2.5 0 5 4 5 10s-2.5 10-5 10"/>
-          </svg>
+          <img src="../assets/Mimicry_bttn.svg" alt="Mimicry" class="mimicry-icon" />
           <span>Mimicry</span>
         </button>
         <button class="action-btn" @click="emit('open-map-export')" v-if="currentView === 'map'">
@@ -1224,6 +1220,11 @@ const currentExportDimensions = computed(() => {
 .action-btn svg {
   width: 18px;
   height: 18px;
+}
+
+.action-btn .mimicry-icon {
+  width: 22px;
+  height: 22px;
 }
 
 .action-btn .badge {
