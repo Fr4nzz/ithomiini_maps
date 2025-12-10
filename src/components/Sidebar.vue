@@ -239,17 +239,13 @@ const currentExportDimensions = computed(() => {
   <aside class="sidebar">
     <!-- Header -->
     <header class="sidebar-header">
-      <div class="logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
-          <path d="M12 6c-2 0-4 3-4 6s2 6 4 6 4-3 4-6-2-6-4-6z"/>
-          <path d="M2 12h20"/>
-        </svg>
+      <a href="https://github.com/Fr4nzz/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="logo">
+        <img src="../assets/Map_icon.svg" alt="Ithomiini Maps" class="logo-icon" />
         <div class="logo-text">
           <span class="title">Ithomiini</span>
           <span class="subtitle">Distribution Maps</span>
         </div>
-      </div>
+      </a>
     </header>
 
     <!-- Scrollable Content -->
@@ -300,11 +296,7 @@ const currentExportDimensions = computed(() => {
           <span class="badge" v-if="imageCount > 0">{{ imageCount }}</span>
         </button>
         <button class="action-btn" @click="emit('open-mimicry')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
-            <path d="M12 2c-2.5 0-5 4-5 10s2.5 10 5 10"/>
-            <path d="M12 2c2.5 0 5 4 5 10s-2.5 10-5 10"/>
-          </svg>
+          <img src="../assets/Mimicry_bttn.svg" alt="Mimicry" class="mimicry-icon" />
           <span>Mimicry</span>
         </button>
         <button class="action-btn" @click="emit('open-map-export')" v-if="currentView === 'map'">
@@ -386,7 +378,6 @@ const currentExportDimensions = computed(() => {
           :options="store.uniqueSubspecies"
           placeholder="Search subspecies..."
           :multiple="true"
-          :disabled="store.filters.species.length === 0"
         />
 
         <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->
@@ -1088,12 +1079,23 @@ const currentExportDimensions = computed(() => {
   display: flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.logo:hover {
+  opacity: 0.85;
 }
 
 .logo svg {
   width: 36px;
   height: 36px;
   color: var(--color-accent, #4ade80);
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
 }
 
 .logo-text {
@@ -1225,6 +1227,11 @@ const currentExportDimensions = computed(() => {
 .action-btn svg {
   width: 18px;
   height: 18px;
+}
+
+.action-btn .mimicry-icon {
+  width: 22px;
+  height: 22px;
 }
 
 .action-btn .badge {
