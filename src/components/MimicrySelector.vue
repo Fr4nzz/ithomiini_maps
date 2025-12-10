@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
 import { getThumbnailUrl } from '../utils/imageProxy'
 
@@ -8,6 +8,54 @@ const emit = defineEmits(['close'])
 
 // Search within mimicry rings
 const searchQuery = ref('')
+const showDropdown = ref(false)
+const dropdownInput = ref(null)
+
+// All rings for the dropdown (combines available + unavailable)
+const allRingsForDropdown = computed(() => {
+  const available = store.availableMimicryRings || []
+  const unavailable = store.unavailableMimicryRings || []
+  return [...available, ...unavailable].sort()
+})
+
+// Fuzzy search filter for dropdown
+const filteredDropdownRings = computed(() => {
+  if (!searchQuery.value) return allRingsForDropdown.value
+  const query = searchQuery.value.toLowerCase()
+  return allRingsForDropdown.value.filter(ring => {
+    // Fuzzy match: check if all characters appear in order
+    let ringLower = ring.toLowerCase()
+    let queryIndex = 0
+    for (let i = 0; i < ringLower.length && queryIndex < query.length; i++) {
+      if (ringLower[i] === query[queryIndex]) {
+        queryIndex++
+      }
+    }
+    return queryIndex === query.length
+  })
+})
+
+// Toggle dropdown
+const toggleDropdown = () => {
+  showDropdown.value = !showDropdown.value
+  if (showDropdown.value) {
+    nextTick(() => {
+      dropdownInput.value?.focus()
+    })
+  }
+}
+
+// Close dropdown when clicking outside
+const closeDropdown = () => {
+  showDropdown.value = false
+  searchQuery.value = ''
+}
+
+// Select from dropdown
+const selectFromDropdown = (ring) => {
+  toggleRing(ring)
+  searchQuery.value = ''
+}
 
 // Track species and subspecies indices separately for each ring
 const ringSpeciesIndex = reactive({})
@@ -187,17 +235,59 @@ const clearSelection = () => {
       </button>
     </div>
 
-    <!-- Search -->
-    <div class="selector-search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="m21 21-4.3-4.3"/>
-      </svg>
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Search mimicry rings..."
-      />
+    <!-- Dropdown Filter -->
+    <div class="selector-dropdown-wrapper">
+      <button
+        class="dropdown-trigger"
+        @click="toggleDropdown"
+        :class="{ active: showDropdown }"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <span v-if="selectedRings.length === 0">Select mimicry rings...</span>
+        <span v-else>{{ selectedRings.length }} ring{{ selectedRings.length > 1 ? 's' : '' }} selected</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </button>
+
+      <!-- Dropdown list -->
+      <div v-if="showDropdown" class="dropdown-list" @click.stop>
+        <div class="dropdown-search">
+          <input
+            ref="dropdownInput"
+            type="text"
+            v-model="searchQuery"
+            placeholder="Type to filter..."
+            @keydown.escape="closeDropdown"
+          />
+        </div>
+        <div class="dropdown-options">
+          <button
+            v-for="ring in filteredDropdownRings"
+            :key="ring"
+            class="dropdown-option"
+            :class="{ selected: selectedRings.includes(ring) }"
+            @click="selectFromDropdown(ring)"
+          >
+            <span class="option-check">
+              <svg v-if="selectedRings.includes(ring)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </span>
+            <span class="option-name">{{ ring }}</span>
+            <span class="option-count">{{ ringCounts[ring] || 0 }}</span>
+          </button>
+          <div v-if="filteredDropdownRings.length === 0" class="dropdown-empty">
+            No rings match "{{ searchQuery }}"
+          </div>
+        </div>
+      </div>
+
+      <!-- Click outside to close -->
+      <div v-if="showDropdown" class="dropdown-backdrop" @click="closeDropdown"></div>
     </div>
 
     <!-- Current Selection -->
@@ -553,36 +643,167 @@ const clearSelection = () => {
   height: 18px;
 }
 
-/* Search */
-.selector-search {
+/* Dropdown Filter */
+.selector-dropdown-wrapper {
+  position: relative;
+  margin: 16px 20px 0;
+}
+
+.dropdown-trigger {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 16px 20px 0;
+  width: 100%;
   padding: 10px 14px;
   background: var(--color-bg-tertiary, #2d2d4a);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.selector-search svg {
+.dropdown-trigger:hover {
+  border-color: #5d5d7c;
+}
+
+.dropdown-trigger.active {
+  border-color: var(--color-accent, #4ade80);
+}
+
+.dropdown-trigger svg {
   width: 18px;
   height: 18px;
   color: var(--color-text-muted, #666);
   flex-shrink: 0;
 }
 
-.selector-search input {
+.dropdown-trigger svg.chevron {
+  margin-left: auto;
+  transition: transform 0.2s;
+}
+
+.dropdown-trigger.active svg.chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown-trigger span {
   flex: 1;
-  background: transparent;
-  border: none;
+  text-align: left;
+}
+
+.dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.dropdown-search {
+  padding: 10px;
+  border-bottom: 1px solid var(--color-border, #3d3d5c);
+}
+
+.dropdown-search input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
   color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   outline: none;
 }
 
-.selector-search input::placeholder {
+.dropdown-search input:focus {
+  border-color: var(--color-accent, #4ade80);
+}
+
+.dropdown-search input::placeholder {
   color: var(--color-text-muted, #666);
+}
+
+.dropdown-options {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.dropdown-option:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-option.selected {
+  background: rgba(74, 222, 128, 0.1);
+}
+
+.option-check {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.dropdown-option.selected .option-check {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+}
+
+.option-check svg {
+  width: 12px;
+  height: 12px;
+  color: var(--color-bg-primary, #1a1a2e);
+}
+
+.option-name {
+  flex: 1;
+}
+
+.option-count {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #666);
+  padding: 2px 8px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 10px;
+}
+
+.dropdown-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-muted, #666);
+  font-size: 0.85rem;
 }
 
 /* Current Selection */
