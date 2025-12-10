@@ -967,8 +967,8 @@ watch(currentIndex, () => {
                 <button
                   class="thumbnail preview-thumb"
                   :class="{ active: speciesGroup.subspecies.some(s => s.individuals.some(i => i.id === currentSpecimen?.id)) }"
-                  @click="toggleSpeciesCollapse(speciesGroup.name)"
-                  title="Click to expand"
+                  @click="selectIndividual(speciesGroup.subspecies[0]?.individuals[0]?.id)"
+                  :title="speciesGroup.subspecies[0]?.individuals[0]?.id || 'View'"
                 >
                   <img
                     v-if="speciesGroup.subspecies[0]?.individuals[0]?.image_url"
@@ -976,6 +976,7 @@ watch(currentIndex, () => {
                     :alt="speciesGroup.name"
                     loading="lazy"
                   />
+                  <span class="expand-badge" @click.stop="toggleSpeciesCollapse(speciesGroup.name)" title="Expand group">+</span>
                 </button>
               </div>
 
@@ -1004,8 +1005,8 @@ watch(currentIndex, () => {
                       <button
                         class="thumbnail preview-thumb"
                         :class="{ active: subspGroup.individuals.some(i => i.id === currentSpecimen?.id) }"
-                        @click="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)"
-                        title="Click to expand"
+                        @click="selectIndividual(subspGroup.individuals[0]?.id)"
+                        :title="subspGroup.individuals[0]?.id || 'View'"
                       >
                         <img
                           v-if="subspGroup.individuals[0]?.image_url"
@@ -1013,6 +1014,7 @@ watch(currentIndex, () => {
                           :alt="subspGroup.name"
                           loading="lazy"
                         />
+                        <span class="expand-badge" @click.stop="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)" title="Expand group">+</span>
                       </button>
                     </div>
 
@@ -1561,7 +1563,7 @@ watch(currentIndex, () => {
   align-items: stretch;
   background: rgba(0, 0, 0, 0.7);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  height: 120px;
+  height: 150px;
 }
 
 /* Scroll arrows */
@@ -1678,11 +1680,10 @@ watch(currentIndex, () => {
   display: flex;
   align-items: stretch;
   justify-content: center;
-  padding: 3px;
+  padding: 2px;
 }
 
 .preview-thumb {
-  opacity: 0.8;
   position: relative;
   width: auto;
   height: 100%;
@@ -1690,23 +1691,30 @@ watch(currentIndex, () => {
 }
 
 .preview-thumb:hover {
-  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
-.preview-thumb::after {
-  content: '+';
+.expand-badge {
   position: absolute;
-  bottom: 3px;
-  right: 3px;
-  width: 16px;
-  height: 16px;
-  background: rgba(0, 0, 0, 0.8);
+  bottom: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.85);
   color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
-  line-height: 16px;
+  line-height: 20px;
   text-align: center;
-  border-radius: 3px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.expand-badge:hover {
+  background: var(--color-accent, #4ade80);
+  color: #000;
+  transform: scale(1.1);
 }
 
 /* Subspecies group */
@@ -1765,17 +1773,18 @@ watch(currentIndex, () => {
 .thumbnails-container {
   flex: 1;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 4px;
-  padding: 4px;
+  padding: 3px;
   overflow-x: auto;
   overflow-y: hidden;
 }
 
 .thumbnail {
   flex-shrink: 0;
-  width: 52px;
-  height: 52px;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1;
   padding: 0;
   background: #333;
   border: 2px solid transparent;
@@ -1839,20 +1848,15 @@ watch(currentIndex, () => {
   }
 
   .zoom-controls {
-    bottom: 130px;
+    bottom: 160px;
   }
 
   .image-counter {
-    bottom: 130px;
+    bottom: 160px;
   }
 
   .thumbnail-strip {
-    height: 100px;
-  }
-
-  .thumbnail {
-    width: 44px;
-    height: 44px;
+    height: 120px;
   }
 
   .species-header {
@@ -1867,6 +1871,13 @@ watch(currentIndex, () => {
 
   .scroll-arrow {
     width: 28px;
+  }
+
+  .expand-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    line-height: 18px;
   }
 }
 </style>
