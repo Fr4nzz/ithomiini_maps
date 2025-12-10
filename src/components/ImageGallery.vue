@@ -36,6 +36,13 @@ const STATUS_COLORS = {
   'Living Specimen': '#14b8a6',
 }
 
+// Get all filtered individuals (with or without images)
+const allFilteredIndividuals = computed(() => {
+  const geo = store.filteredGeoJSON
+  if (!geo || !geo.features) return []
+  return geo.features.map(f => f.properties)
+})
+
 // Get specimens with images
 const specimensWithImages = computed(() => {
   const geo = store.filteredGeoJSON
@@ -155,6 +162,39 @@ const initializeSidebarFromCurrent = () => {
 const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
 const totalIndividuals = computed(() => specimensWithImages.value.length)
 const subspeciesCount = computed(() => subspeciesList.value.length)
+
+// Search summary stats (from all filtered data, not just with images)
+const allFilteredTotal = computed(() => allFilteredIndividuals.value.length)
+const allFilteredWithoutImages = computed(() => allFilteredTotal.value - totalIndividuals.value)
+
+// Count total unique subspecies from all filtered data
+const totalSubspeciesCount = computed(() => {
+  const subspeciesSet = new Set()
+  allFilteredIndividuals.value.forEach(ind => {
+    if (ind.subspecies) {
+      subspeciesSet.add(`${ind.scientific_name}|${ind.subspecies}`)
+    }
+  })
+  return subspeciesSet.size
+})
+
+// Location name from current individual
+const locationName = computed(() => {
+  const point = currentSpecimen.value
+  return point?.collection_location || point?.locality || point?.location || null
+})
+
+// Coordinates from current individual
+const coordinates = computed(() => {
+  const point = currentSpecimen.value
+  if (point?.lat && point?.lng) {
+    return { lat: point.lat, lng: point.lng }
+  }
+  if (point?.latitude && point?.longitude) {
+    return { lat: point.latitude, lng: point.longitude }
+  }
+  return null
+})
 
 // Current specimen
 const currentSpecimen = computed(() => {
@@ -460,6 +500,18 @@ watch(currentIndex, () => {
               <span class="detail-value">{{ currentSpecimen.country }}</span>
             </div>
 
+            <!-- Location -->
+            <div v-if="locationName" class="detail-row">
+              <span class="detail-label">Location:</span>
+              <span class="detail-value location-name">{{ locationName }}</span>
+            </div>
+
+            <!-- Coordinates -->
+            <div v-if="coordinates" class="detail-row">
+              <span class="detail-label">Coords:</span>
+              <span class="detail-value coords">{{ coordinates.lat.toFixed(4) }}, {{ coordinates.lng.toFixed(4) }}</span>
+            </div>
+
             <!-- Observation URL Link -->
             <a
               v-if="currentSpecimen?.observation_url"
@@ -483,14 +535,26 @@ watch(currentIndex, () => {
           <!-- Search Summary -->
           <div class="search-summary">
             <div class="summary-title">Search Summary</div>
-            <div class="summary-stats">
-              <div class="stat">
+            <div class="summary-stats-grid">
+              <div class="stat-row">
+                <span class="stat-label">Species:</span>
                 <span class="stat-value">{{ totalSpecies }}</span>
-                <span class="stat-label">species</span>
               </div>
-              <div class="stat">
+              <div class="stat-row">
+                <span class="stat-label">Subspecies:</span>
+                <span class="stat-value">{{ totalSubspeciesCount }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">With images:</span>
                 <span class="stat-value">{{ totalIndividuals }}</span>
-                <span class="stat-label">with images</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Without images:</span>
+                <span class="stat-value">{{ allFilteredWithoutImages }}</span>
+              </div>
+              <div class="stat-row total-row">
+                <span class="stat-label">Total individuals:</span>
+                <span class="stat-value">{{ allFilteredTotal }}</span>
               </div>
             </div>
           </div>
@@ -849,6 +913,15 @@ watch(currentIndex, () => {
   flex-shrink: 0;
 }
 
+.location-name {
+  font-style: italic;
+}
+
+.coords {
+  font-family: monospace;
+  font-size: 0.7rem;
+}
+
 .search-summary {
   background: rgba(74, 222, 128, 0.05);
   border: 1px solid rgba(74, 222, 128, 0.15);
@@ -864,26 +937,36 @@ watch(currentIndex, () => {
   margin-bottom: 8px;
 }
 
-.summary-stats {
+.summary-stats-grid {
   display: flex;
-  gap: 16px;
-}
-
-.stat {
-  display: flex;
-  align-items: baseline;
+  flex-direction: column;
   gap: 4px;
 }
 
-.stat-value {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #4ade80;
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
 }
 
-.stat-label {
-  font-size: 0.7rem;
+.stat-row .stat-label {
   color: #888;
+}
+
+.stat-row .stat-value {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.stat-row.total-row {
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(74, 222, 128, 0.15);
+}
+
+.stat-row.total-row .stat-value {
+  font-size: 0.9rem;
 }
 
 /* Image viewer wrapper */
