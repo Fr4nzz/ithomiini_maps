@@ -296,21 +296,16 @@ const exportImage = async () => {
     // Get the map canvas
     const mapCanvas = map.getCanvas()
 
-    // Debug: Check if canvas has content by sampling some pixels
-    const gl = mapCanvas.getContext('webgl') || mapCanvas.getContext('webgl2')
-    if (gl) {
-      const pixels = new Uint8Array(4)
-      // Sample pixel from center of canvas
-      gl.readPixels(
-        Math.floor(mapCanvas.width / 2),
-        Math.floor(mapCanvas.height / 2),
-        1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels
-      )
-      console.log('[Export] Center pixel RGBA:', pixels)
-
-      // Sample from corner
-      gl.readPixels(10, 10, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
-      console.log('[Export] Corner pixel RGBA:', pixels)
+    // Check if map container is large enough for reliable export
+    const minWidth = 800
+    const minHeight = 400
+    if (mapCanvas.clientWidth < minWidth || mapCanvas.clientHeight < minHeight) {
+      console.warn('[Export] Map container too small:', {
+        clientWidth: mapCanvas.clientWidth,
+        clientHeight: mapCanvas.clientHeight,
+        minRequired: `${minWidth}x${minHeight}`
+      })
+      throw new Error(`Map area too small for export. Please resize your browser window larger (need at least ${minWidth}x${minHeight}px map area, currently ${mapCanvas.clientWidth}x${mapCanvas.clientHeight}px). Try maximizing your browser or closing the sidebar.`)
     }
 
     console.log('[Export] Map canvas info:', {
