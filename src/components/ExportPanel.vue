@@ -270,43 +270,48 @@ const exportImage = async () => {
       await new Promise(resolve => map.once('style.load', resolve))
     }
 
-    // Wait for map to be idle (all tiles loaded)
-    // Always wait for idle to ensure map is fully rendered after any resize
-    console.log('[Export] Waiting for map to be idle...')
-    await new Promise(resolve => {
-      if (map.areTilesLoaded() && map.isStyleLoaded()) {
-        // Already idle, but wait a frame to be sure
-        requestAnimationFrame(resolve)
-      } else {
-        map.once('idle', resolve)
-      }
-    })
+    // Force the map to recalculate its size (important after window resize)
+    console.log('[Export] Forcing map resize...')
+    map.resize()
+
+    // Wait for the resize to take effect and tiles to load
+    console.log('[Export] Waiting for map to be idle after resize...')
+    await new Promise(resolve => map.once('idle', resolve))
 
     // Force a fresh render
     map.triggerRepaint()
 
-    // Wait for the map to finish rendering
-    // Use multiple animation frames and a small timeout for WebGL to complete
+    // Wait for the render to complete
     await new Promise(resolve => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          // Add a small delay to ensure WebGL has fully rendered
-          setTimeout(resolve, 100)
-        })
+      map.once('render', () => {
+        // Add delay after render for WebGL to finish
+        setTimeout(resolve, 200)
       })
-    })
-
-    // Wait for idle again after repaint to ensure all rendering is complete
-    await new Promise(resolve => {
-      map.once('idle', resolve)
-      // Fallback timeout in case idle doesn't fire
-      setTimeout(resolve, 500)
+      // Fallback in case render doesn't fire
+      setTimeout(resolve, 1000)
     })
 
     imageExportProgress.value = 10
 
     // Get the map canvas
     const mapCanvas = map.getCanvas()
+
+    // Debug: Check if canvas has content by sampling some pixels
+    const gl = mapCanvas.getContext('webgl') || mapCanvas.getContext('webgl2')
+    if (gl) {
+      const pixels = new Uint8Array(4)
+      // Sample pixel from center of canvas
+      gl.readPixels(
+        Math.floor(mapCanvas.width / 2),
+        Math.floor(mapCanvas.height / 2),
+        1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels
+      )
+      console.log('[Export] Center pixel RGBA:', pixels)
+
+      // Sample from corner
+      gl.readPixels(10, 10, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
+      console.log('[Export] Corner pixel RGBA:', pixels)
+    }
 
     console.log('[Export] Map canvas info:', {
       width: mapCanvas.width,
