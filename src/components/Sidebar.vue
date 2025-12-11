@@ -205,9 +205,6 @@ const showAdvancedLegend = ref(false)
 // Show point style settings section
 const showPointStyle = ref(false)
 
-// Show export settings section
-const showExportSettings = ref(false)
-
 // Show URL share settings section
 const showUrlSettings = ref(false)
 
@@ -233,6 +230,23 @@ const currentExportDimensions = computed(() => {
   }
   return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
 })
+
+// Update export dimensions - switches to custom mode when editing
+const updateExportWidth = (value) => {
+  const width = parseInt(value, 10)
+  if (!isNaN(width) && width >= 100 && width <= 8000) {
+    store.exportSettings.aspectRatio = 'custom'
+    store.exportSettings.customWidth = width
+  }
+}
+
+const updateExportHeight = (value) => {
+  const height = parseInt(value, 10)
+  if (!isNaN(height) && height >= 100 && height <= 8000) {
+    store.exportSettings.aspectRatio = 'custom'
+    store.exportSettings.customHeight = height
+  }
+}
 </script>
 
 <template>
@@ -300,13 +314,109 @@ const currentExportDimensions = computed(() => {
           <span>Mimicry</span>
           <span class="badge" v-if="store.filters.mimicry.length > 0">{{ store.filters.mimicry.length }}</span>
         </button>
-        <button class="action-btn" @click="emit('open-map-export')" v-if="currentView === 'map'">
+        <button
+          class="action-btn"
+          :class="{ active: store.exportSettings.enabled }"
+          @click="store.exportSettings.enabled = !store.exportSettings.enabled"
+          v-if="currentView === 'map'"
+        >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
             <circle cx="8.5" cy="8.5" r="1.5"/>
             <polyline points="21 15 16 10 5 21"/>
           </svg>
-          <span>Export Map</span>
+          <span>Preview Export</span>
+        </button>
+      </div>
+
+      <!-- Export Settings (appears when Preview Export is active) -->
+      <div v-if="store.exportSettings.enabled && currentView === 'map'" class="filter-section export-settings-panel">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          Export Settings
+        </label>
+
+        <!-- Aspect Ratio -->
+        <div class="setting-row">
+          <label>Aspect Ratio</label>
+          <select v-model="store.exportSettings.aspectRatio" class="style-select">
+            <option v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
+              {{ opt.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Dimensions (editable) -->
+        <div class="setting-row">
+          <label>Resolution</label>
+          <div class="dimension-inputs">
+            <div class="dimension-field">
+              <input
+                type="number"
+                class="setting-input dimension-input"
+                :value="currentExportDimensions.width"
+                @input="updateExportWidth($event.target.value)"
+                min="100"
+                max="8000"
+                @keydown.enter="$event.target.blur()"
+              />
+              <span class="dimension-label">W</span>
+            </div>
+            <span class="dimension-x">×</span>
+            <div class="dimension-field">
+              <input
+                type="number"
+                class="setting-input dimension-input"
+                :value="currentExportDimensions.height"
+                @input="updateExportHeight($event.target.value)"
+                min="100"
+                max="8000"
+                @keydown.enter="$event.target.blur()"
+              />
+              <span class="dimension-label">H</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Include Options -->
+        <div class="setting-row checkbox-group" style="margin-top: 12px;">
+          <label class="checkbox-label">
+            <input type="checkbox" v-model="store.exportSettings.includeLegend" />
+            <span>Include Legend</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
+            <span>Include Scale Bar</span>
+          </label>
+        </div>
+
+        <!-- UI Scale -->
+        <div class="setting-row" style="margin-top: 12px;">
+          <label>UI Scale <span class="setting-hint">(legend, scale bar size)</span></label>
+          <div class="slider-group">
+            <input
+              type="range"
+              min="0.5"
+              max="2"
+              step="0.1"
+              v-model.number="store.exportSettings.uiScale"
+            />
+            <span class="slider-value">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
+          </div>
+        </div>
+
+        <!-- Export Button -->
+        <button class="btn-export-now" @click="emit('open-map-export')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export Image
         </button>
       </div>
 
@@ -768,109 +878,6 @@ const currentExportDimensions = computed(() => {
         </div>
       </div>
 
-      <!-- Export Settings (Map View Only) -->
-      <div class="filter-section collapsible" v-if="currentView === 'map'">
-        <button
-          class="collapse-toggle"
-          @click="showExportSettings = !showExportSettings"
-          :class="{ expanded: showExportSettings }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Export Settings
-          <span
-            class="clustering-toggle-badge"
-            :class="{ active: store.exportSettings.enabled }"
-            @click.stop="store.exportSettings.enabled = !store.exportSettings.enabled"
-            title="Toggle export preview overlay"
-          >
-            {{ store.exportSettings.enabled ? 'ON' : 'OFF' }}
-          </span>
-        </button>
-
-        <div v-show="showExportSettings" class="collapse-content">
-          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
-            Toggle ON to show export preview overlay on map
-          </p>
-
-          <!-- Aspect Ratio -->
-          <div class="setting-row">
-            <label>Aspect Ratio</label>
-            <select v-model="store.exportSettings.aspectRatio" class="style-select">
-              <option v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
-                {{ opt.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Custom Dimensions (only when custom is selected) -->
-          <div v-if="store.exportSettings.aspectRatio === 'custom'" class="setting-row">
-            <label>Custom Dimensions</label>
-            <div class="dimension-inputs">
-              <div class="dimension-field">
-                <input
-                  type="number"
-                  class="setting-input dimension-input"
-                  v-model.number="store.exportSettings.customWidth"
-                  min="100"
-                  max="8000"
-                  @keydown.enter="$event.target.blur()"
-                />
-                <span class="dimension-label">W</span>
-              </div>
-              <span class="dimension-x">×</span>
-              <div class="dimension-field">
-                <input
-                  type="number"
-                  class="setting-input dimension-input"
-                  v-model.number="store.exportSettings.customHeight"
-                  min="100"
-                  max="8000"
-                  @keydown.enter="$event.target.blur()"
-                />
-                <span class="dimension-label">H</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Export Dimensions Preview -->
-          <div class="export-dimensions-preview">
-            <span class="dimension-text">{{ currentExportDimensions.width }} × {{ currentExportDimensions.height }} px</span>
-          </div>
-
-          <!-- Include Options -->
-          <div class="setting-row checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.exportSettings.includeLegend" />
-              <span>Include Legend</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
-              <span>Include Scale Bar</span>
-            </label>
-          </div>
-
-          <!-- UI Scale -->
-          <div class="setting-row" style="margin-top: 12px;">
-            <label>UI Scale <span class="setting-hint">(legend, scale bar size)</span></label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0.5"
-                max="2"
-                step="0.1"
-                v-model.number="store.exportSettings.uiScale"
-              />
-              <span class="slider-value">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
-            </div>
-          </div>
-          <p class="filter-hint" style="margin-top: 4px;">
-            Tip: Use Ctrl + / Ctrl - to preview at different browser zoom levels
-          </p>
-        </div>
-      </div>
-
       <!-- URL Share Settings -->
       <div class="filter-section collapsible">
         <button
@@ -1161,6 +1168,16 @@ const currentExportDimensions = computed(() => {
   border-color: var(--color-accent, #4ade80);
 }
 
+.action-btn.active {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+}
+
+.action-btn.active:hover {
+  background: rgba(74, 222, 128, 0.25);
+}
+
 .action-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -1193,6 +1210,47 @@ const currentExportDimensions = computed(() => {
 /* Filter Sections */
 .filter-section {
   margin-bottom: 20px;
+}
+
+/* Export Settings Panel */
+.export-settings-panel {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(74, 222, 128, 0.03) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.export-settings-panel .section-label {
+  color: var(--color-accent, #4ade80);
+}
+
+.btn-export-now {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin-top: 16px;
+  background: var(--color-accent, #4ade80);
+  border: none;
+  border-radius: 6px;
+  color: var(--color-bg-primary, #1a1a2e);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-export-now:hover {
+  background: #5eeb94;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+}
+
+.btn-export-now svg {
+  width: 18px;
+  height: 18px;
 }
 
 .section-label {
