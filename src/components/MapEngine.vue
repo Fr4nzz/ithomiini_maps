@@ -174,6 +174,26 @@ const legendTransformOrigin = computed(() => {
   return 'bottom left'
 })
 
+// Calculate the preview legend scale to match the exported legend appearance
+// This ensures WYSIWYG behavior: preview legend looks the same as it will in the export
+const previewLegendScale = computed(() => {
+  const uiScale = store.exportSettings.uiScale || 1
+
+  // Get the preview frame height in pixels
+  const containerH = containerSize.value.height || 900
+  const frameHeightPercent = exportHolePosition.value.height
+  const previewFrameHeight = containerH * (frameHeightPercent / 100)
+
+  // The export uses referenceHeight = 650 for scaling
+  // Scale = uiScale * (outputHeight / 650)
+  // For preview, we want it to appear the same relative size
+  // So preview scale = uiScale * (previewFrameHeight / 650)
+  const referenceHeight = 650
+  const scale = uiScale * (previewFrameHeight / referenceHeight)
+
+  return scale
+})
+
 // Scale bar text - calculated from map zoom level
 const scaleBarText = ref('500 km')
 
@@ -1518,14 +1538,14 @@ const switchStyle = (styleName) => {
           <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
         </div>
 
-        <!-- Legend inside export region (scaled) -->
+        <!-- Legend inside export region (scaled to match export appearance) -->
         <div
           v-if="store.legendSettings.showLegend && store.exportSettings.includeLegend"
           class="export-legend"
           :class="'export-legend-' + store.legendSettings.position"
           :style="{
-            fontSize: (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem',
-            transform: 'scale(' + store.exportSettings.uiScale + ')',
+            fontSize: (store.legendSettings.textSize * previewLegendScale) + 'rem',
+            transform: 'scale(' + previewLegendScale + ')',
             transformOrigin: legendTransformOrigin
           }"
         >
@@ -1543,13 +1563,13 @@ const switchStyle = (styleName) => {
           </div>
         </div>
 
-        <!-- Scale bar inside export region -->
+        <!-- Scale bar inside export region (scaled to match export appearance) -->
         <div
           v-if="store.exportSettings.includeScaleBar"
           class="export-scale-bar"
           :class="{ 'export-scale-bar-left': store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend }"
           :style="{
-            transform: 'scale(' + store.exportSettings.uiScale + ')',
+            transform: 'scale(' + previewLegendScale + ')',
             transformOrigin: store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'bottom left' : 'bottom right'
           }"
         >
