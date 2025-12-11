@@ -296,18 +296,6 @@ const exportImage = async () => {
     // Get the map canvas
     const mapCanvas = map.getCanvas()
 
-    // Check if map container is large enough for reliable export
-    const minWidth = 800
-    const minHeight = 400
-    if (mapCanvas.clientWidth < minWidth || mapCanvas.clientHeight < minHeight) {
-      console.warn('[Export] Map container too small:', {
-        clientWidth: mapCanvas.clientWidth,
-        clientHeight: mapCanvas.clientHeight,
-        minRequired: `${minWidth}x${minHeight}`
-      })
-      throw new Error(`Map area too small for export. Please resize your browser window larger (need at least ${minWidth}x${minHeight}px map area, currently ${mapCanvas.clientWidth}x${mapCanvas.clientHeight}px). Try maximizing your browser or closing the sidebar.`)
-    }
-
     console.log('[Export] Map canvas info:', {
       width: mapCanvas.width,
       height: mapCanvas.height,
@@ -342,18 +330,29 @@ const exportImage = async () => {
     const mapImage = await loadImage(mapDataUrl)
 
     // Check if map image was captured properly
+    // Expected data URL size is roughly proportional to canvas pixels
+    // A typical rendered map has about 0.1-0.2 bytes per pixel in PNG format
     const dataUrlLength = mapDataUrl.length
-    const isLikelyEmpty = dataUrlLength < 10000 // Very small data URL indicates empty/black canvas
+    const canvasPixels = mapImage.width * mapImage.height
+    const bytesPerPixel = dataUrlLength / canvasPixels
+    const isLikelyEmpty = bytesPerPixel < 0.05 // Less than 0.05 bytes/pixel suggests mostly empty
+
     console.log('[Export] Map image captured:', {
       width: mapImage.width,
       height: mapImage.height,
       dataUrlLength: dataUrlLength,
+      canvasPixels: canvasPixels,
+      bytesPerPixel: bytesPerPixel.toFixed(4),
       isLikelyEmpty: isLikelyEmpty,
       dataUrlPreview: mapDataUrl.substring(0, 100) + '...'
     })
 
     if (isLikelyEmpty) {
-      console.warn('[Export] WARNING: Map canvas data URL is very small - may be black/empty!')
+      console.warn('[Export] WARNING: Map canvas appears mostly empty! The exported image may be black.')
+      console.warn('[Export] This often happens when the browser window is too small or positioned off-screen.')
+      console.warn('[Export] Try maximizing your browser window and exporting again.')
+      // Show warning to user but continue with export
+      imageExportError.value = 'Warning: Map may not have rendered correctly. If the image is black, try maximizing your browser window.'
     }
 
     imageExportProgress.value = 40
