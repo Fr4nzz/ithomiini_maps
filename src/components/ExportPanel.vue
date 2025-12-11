@@ -195,6 +195,38 @@ const exportDimensions = computed(() => {
   return ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
 })
 
+// Calculate the export region position (same logic as MapEngine)
+const calculateExportRegion = (containerWidth, containerHeight, targetWidth, targetHeight) => {
+  const targetAspectRatio = targetWidth / targetHeight
+  const containerAspectRatio = containerWidth / containerHeight
+
+  // Use 92% of container as maximum (same as MapEngine)
+  const maxPercent = 92
+
+  let holeWidthPercent, holeHeightPercent
+
+  if (targetAspectRatio > containerAspectRatio) {
+    // Target is wider than container - constrained by width
+    holeWidthPercent = maxPercent
+    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
+  } else {
+    // Target is taller than container - constrained by height
+    holeHeightPercent = maxPercent
+    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
+  }
+
+  // Center the hole
+  const x = (100 - holeWidthPercent) / 2
+  const y = (100 - holeHeightPercent) / 2
+
+  return {
+    x: Math.max(2, x),
+    y: Math.max(2, y),
+    width: Math.min(96, holeWidthPercent),
+    height: Math.min(96, holeHeightPercent)
+  }
+}
+
 // Export map as image
 const exportImage = async () => {
   if (!props.map) {
@@ -256,19 +288,28 @@ const exportImage = async () => {
     imageExportProgress.value = 40
 
     // Calculate how to draw the map
-    // If export settings enabled, crop to the export region
+    // If export settings enabled, crop to the exact export preview region
     if (store.exportSettings.enabled) {
-      // Draw the map scaled to fill the export canvas
-      const scale = Math.max(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
+      // Calculate the export region exactly as shown in the preview
+      const region = calculateExportRegion(
+        mapImage.width,
+        mapImage.height,
+        exportWidth,
+        exportHeight
       )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
 
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
+      // Convert percentages to pixels
+      const srcX = (region.x / 100) * mapImage.width
+      const srcY = (region.y / 100) * mapImage.height
+      const srcW = (region.width / 100) * mapImage.width
+      const srcH = (region.height / 100) * mapImage.height
+
+      // Draw the cropped region scaled to fill the export canvas
+      ctx.drawImage(
+        mapImage,
+        srcX, srcY, srcW, srcH,  // Source rectangle (crop region)
+        0, 0, canvas.width, canvas.height  // Destination (full canvas)
+      )
     } else {
       // Draw the map scaled to fit (letterboxed)
       const scale = Math.min(
@@ -345,7 +386,29 @@ const drawLegendOnCanvas = (ctx, width, height) => {
 
   const padding = 20 * uiScale
   const itemHeight = 24 * uiScale
-  const legendWidth = 200 * uiScale
+  const leftPadding = 12 * uiScale
+  const dotSpace = 32 * uiScale // space for dot + gap
+  const rightPadding = 12 * uiScale
+
+  // Calculate legend width based on content
+  const isItalic = ['species', 'subspecies', 'genus'].includes(store.colorBy)
+  ctx.font = isItalic
+    ? `italic ${13 * uiScale}px system-ui, sans-serif`
+    : `${13 * uiScale}px system-ui, sans-serif`
+
+  let maxLabelWidth = 0
+  entries.forEach(([label]) => {
+    const labelWidth = ctx.measureText(label).width
+    if (labelWidth > maxLabelWidth) maxLabelWidth = labelWidth
+  })
+
+  // Also check title width
+  ctx.font = `bold ${12 * uiScale}px system-ui, sans-serif`
+  const titleWidth = ctx.measureText(store.legendTitle.toUpperCase()).width
+
+  // Calculate legend width with padding, minimum 180px scaled
+  const contentWidth = Math.max(maxLabelWidth + dotSpace, titleWidth) + leftPadding + rightPadding
+  const legendWidth = Math.max(180 * uiScale, Math.min(contentWidth, 300 * uiScale))
   const legendHeight = entries.length * itemHeight + 45 * uiScale
 
   // Position based on settings
@@ -365,10 +428,16 @@ const drawLegendOnCanvas = (ctx, width, height) => {
   ctx.fillStyle = '#888'
   ctx.font = `bold ${12 * uiScale}px system-ui, sans-serif`
   ctx.textAlign = 'left'
-  ctx.fillText(store.legendTitle.toUpperCase(), x + 12 * uiScale, y + 22 * uiScale)
+  ctx.fillText(store.legendTitle.toUpperCase(), x + leftPadding, y + 22 * uiScale)
+
+  // Maximum width for label text (with some padding from edge)
+  const maxTextWidth = legendWidth - dotSpace - rightPadding
 
   // Items
-  ctx.font = `${13 * uiScale}px system-ui, sans-serif`
+  ctx.font = isItalic
+    ? `italic ${13 * uiScale}px system-ui, sans-serif`
+    : `${13 * uiScale}px system-ui, sans-serif`
+
   entries.forEach(([label, color], i) => {
     const itemY = y + 40 * uiScale + i * itemHeight
 
@@ -378,13 +447,19 @@ const drawLegendOnCanvas = (ctx, width, height) => {
     ctx.fillStyle = color
     ctx.fill()
 
-    // Label
+    // Label - truncate if too long
     ctx.fillStyle = '#e0e0e0'
-    const isItalic = ['species', 'subspecies', 'genus'].includes(store.colorBy)
-    ctx.font = isItalic
-      ? `italic ${13 * uiScale}px system-ui, sans-serif`
-      : `${13 * uiScale}px system-ui, sans-serif`
-    ctx.fillText(label, x + 32 * uiScale, itemY + 4 * uiScale)
+    let displayLabel = label
+    let labelWidth = ctx.measureText(displayLabel).width
+    if (labelWidth > maxTextWidth) {
+      // Truncate with ellipsis
+      while (labelWidth > maxTextWidth && displayLabel.length > 0) {
+        displayLabel = displayLabel.slice(0, -1)
+        labelWidth = ctx.measureText(displayLabel + '…').width
+      }
+      displayLabel += '…'
+    }
+    ctx.fillText(displayLabel, x + dotSpace, itemY + 4 * uiScale)
   })
 
   // "More" indicator
