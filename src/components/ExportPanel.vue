@@ -271,19 +271,36 @@ const exportImage = async () => {
     }
 
     // Wait for map to be idle (all tiles loaded)
-    if (!map.areTilesLoaded()) {
-      console.log('[Export] Waiting for tiles to load...')
-      await new Promise(resolve => map.once('idle', resolve))
-    }
+    // Always wait for idle to ensure map is fully rendered after any resize
+    console.log('[Export] Waiting for map to be idle...')
+    await new Promise(resolve => {
+      if (map.areTilesLoaded() && map.isStyleLoaded()) {
+        // Already idle, but wait a frame to be sure
+        requestAnimationFrame(resolve)
+      } else {
+        map.once('idle', resolve)
+      }
+    })
 
     // Force a fresh render
     map.triggerRepaint()
 
-    // Wait for GPU to complete using double requestAnimationFrame
+    // Wait for the map to finish rendering
+    // Use multiple animation frames and a small timeout for WebGL to complete
     await new Promise(resolve => {
       requestAnimationFrame(() => {
-        requestAnimationFrame(resolve)
+        requestAnimationFrame(() => {
+          // Add a small delay to ensure WebGL has fully rendered
+          setTimeout(resolve, 100)
+        })
       })
+    })
+
+    // Wait for idle again after repaint to ensure all rendering is complete
+    await new Promise(resolve => {
+      map.once('idle', resolve)
+      // Fallback timeout in case idle doesn't fire
+      setTimeout(resolve, 500)
     })
 
     imageExportProgress.value = 10
