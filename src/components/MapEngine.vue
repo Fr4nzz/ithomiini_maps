@@ -417,7 +417,7 @@ onUnmounted(() => {
 
 const initMap = () => {
   const styleConfig = MAP_STYLES[currentStyle.value]
-  
+
   map = new maplibregl.Map({
     container: mapContainer.value,
     style: styleConfig.style,
@@ -426,7 +426,10 @@ const initMap = () => {
     attributionControl: false,
     maxZoom: 18,
     minZoom: 2,
-    preserveDrawingBuffer: true // Required for canvas export after map interactions
+    // For MapLibre v5.0+, preserveDrawingBuffer must be in canvasContextAttributes
+    canvasContextAttributes: {
+      preserveDrawingBuffer: true // Required for canvas export
+    }
   })
 
   // Add controls

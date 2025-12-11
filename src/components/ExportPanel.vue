@@ -270,26 +270,12 @@ const exportImage = async () => {
       await new Promise(resolve => map.once('style.load', resolve))
     }
 
-    // Force the map to recalculate its size (important after window resize)
-    console.log('[Export] Forcing map resize...')
-    map.resize()
-
-    // Wait for the resize to take effect and tiles to load
-    console.log('[Export] Waiting for map to be idle after resize...')
-    await new Promise(resolve => map.once('idle', resolve))
-
-    // Force a fresh render
+    // Use the recommended approach from MapLibre docs:
+    // Trigger repaint and wait for idle event to capture canvas
+    // https://github.com/maplibre/maplibre-gl-js/discussions/3900
+    console.log('[Export] Triggering repaint and waiting for idle...')
     map.triggerRepaint()
-
-    // Wait for the render to complete
-    await new Promise(resolve => {
-      map.once('render', () => {
-        // Add delay after render for WebGL to finish
-        setTimeout(resolve, 200)
-      })
-      // Fallback in case render doesn't fire
-      setTimeout(resolve, 1000)
-    })
+    await new Promise(resolve => map.once('idle', resolve))
 
     imageExportProgress.value = 10
 
@@ -329,31 +315,11 @@ const exportImage = async () => {
     const mapDataUrl = mapCanvas.toDataURL('image/png')
     const mapImage = await loadImage(mapDataUrl)
 
-    // Check if map image was captured properly
-    // Expected data URL size is roughly proportional to canvas pixels
-    // A typical rendered map has about 0.1-0.2 bytes per pixel in PNG format
-    const dataUrlLength = mapDataUrl.length
-    const canvasPixels = mapImage.width * mapImage.height
-    const bytesPerPixel = dataUrlLength / canvasPixels
-    const isLikelyEmpty = bytesPerPixel < 0.05 // Less than 0.05 bytes/pixel suggests mostly empty
-
     console.log('[Export] Map image captured:', {
       width: mapImage.width,
       height: mapImage.height,
-      dataUrlLength: dataUrlLength,
-      canvasPixels: canvasPixels,
-      bytesPerPixel: bytesPerPixel.toFixed(4),
-      isLikelyEmpty: isLikelyEmpty,
-      dataUrlPreview: mapDataUrl.substring(0, 100) + '...'
+      dataUrlLength: mapDataUrl.length
     })
-
-    if (isLikelyEmpty) {
-      console.warn('[Export] WARNING: Map canvas appears mostly empty! The exported image may be black.')
-      console.warn('[Export] This often happens when the browser window is too small or positioned off-screen.')
-      console.warn('[Export] Try maximizing your browser window and exporting again.')
-      // Show warning to user but continue with export
-      imageExportError.value = 'Warning: Map may not have rendered correctly. If the image is black, try maximizing your browser window.'
-    }
 
     imageExportProgress.value = 40
 
