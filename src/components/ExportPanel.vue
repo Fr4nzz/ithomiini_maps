@@ -219,12 +219,25 @@ const calculateExportRegion = (containerWidth, containerHeight, targetWidth, tar
   const x = (100 - holeWidthPercent) / 2
   const y = (100 - holeHeightPercent) / 2
 
-  return {
+  const result = {
     x: Math.max(2, x),
     y: Math.max(2, y),
     width: Math.min(96, holeWidthPercent),
     height: Math.min(96, holeHeightPercent)
   }
+
+  console.log('[Export] calculateExportRegion:', {
+    input: { containerWidth, containerHeight, targetWidth, targetHeight },
+    aspectRatios: { target: targetAspectRatio.toFixed(3), container: containerAspectRatio.toFixed(3) },
+    result: {
+      x: result.x.toFixed(2) + '%',
+      y: result.y.toFixed(2) + '%',
+      width: result.width.toFixed(2) + '%',
+      height: result.height.toFixed(2) + '%'
+    }
+  })
+
+  return result
 }
 
 // Export map as image
@@ -238,16 +251,28 @@ const exportImage = async () => {
   imageExportProgress.value = 0
   imageExportError.value = null
 
+  console.log('═══════════════════════════════════════════════════════════════')
+  console.log('[Export] Starting image export...')
+  console.log('[Export] Export settings:', {
+    enabled: store.exportSettings.enabled,
+    aspectRatio: store.exportSettings.aspectRatio,
+    includeLegend: store.exportSettings.includeLegend,
+    includeScaleBar: store.exportSettings.includeScaleBar,
+    uiScale: store.exportSettings.uiScale
+  })
+
   try {
     const map = props.map
 
     // Ensure map style is loaded
     if (!map.isStyleLoaded()) {
+      console.log('[Export] Waiting for map style to load...')
       await new Promise(resolve => map.once('style.load', resolve))
     }
 
     // Wait for map to be idle (all tiles loaded)
     if (!map.areTilesLoaded()) {
+      console.log('[Export] Waiting for tiles to load...')
       await new Promise(resolve => map.once('idle', resolve))
     }
 
@@ -266,8 +291,22 @@ const exportImage = async () => {
     // Get the map canvas
     const mapCanvas = map.getCanvas()
 
+    console.log('[Export] Map canvas info:', {
+      width: mapCanvas.width,
+      height: mapCanvas.height,
+      clientWidth: mapCanvas.clientWidth,
+      clientHeight: mapCanvas.clientHeight,
+      aspectRatio: (mapCanvas.width / mapCanvas.height).toFixed(3)
+    })
+
     // Determine export dimensions
     const { width: exportWidth, height: exportHeight } = exportDimensions.value
+
+    console.log('[Export] Target export dimensions:', {
+      width: exportWidth,
+      height: exportHeight,
+      aspectRatio: (exportWidth / exportHeight).toFixed(3)
+    })
 
     // Create output canvas
     const canvas = document.createElement('canvas')
@@ -284,6 +323,21 @@ const exportImage = async () => {
     // Capture the map as image
     const mapDataUrl = mapCanvas.toDataURL('image/png')
     const mapImage = await loadImage(mapDataUrl)
+
+    // Check if map image was captured properly
+    const dataUrlLength = mapDataUrl.length
+    const isLikelyEmpty = dataUrlLength < 10000 // Very small data URL indicates empty/black canvas
+    console.log('[Export] Map image captured:', {
+      width: mapImage.width,
+      height: mapImage.height,
+      dataUrlLength: dataUrlLength,
+      isLikelyEmpty: isLikelyEmpty,
+      dataUrlPreview: mapDataUrl.substring(0, 100) + '...'
+    })
+
+    if (isLikelyEmpty) {
+      console.warn('[Export] WARNING: Map canvas data URL is very small - may be black/empty!')
+    }
 
     imageExportProgress.value = 40
 
@@ -304,6 +358,19 @@ const exportImage = async () => {
       const srcW = (region.width / 100) * mapImage.width
       const srcH = (region.height / 100) * mapImage.height
 
+      console.log('[Export] Crop region (pixels):', {
+        srcX: Math.round(srcX),
+        srcY: Math.round(srcY),
+        srcW: Math.round(srcW),
+        srcH: Math.round(srcH),
+        srcAspectRatio: (srcW / srcH).toFixed(3)
+      })
+
+      console.log('[Export] Drawing cropped region:', {
+        source: `(${Math.round(srcX)}, ${Math.round(srcY)}) ${Math.round(srcW)}x${Math.round(srcH)}`,
+        destination: `(0, 0) ${canvas.width}x${canvas.height}`
+      })
+
       // Draw the cropped region scaled to fill the export canvas
       ctx.drawImage(
         mapImage,
@@ -320,6 +387,14 @@ const exportImage = async () => {
       const scaledHeight = mapImage.height * scale
       const offsetX = (canvas.width - scaledWidth) / 2
       const offsetY = (canvas.height - scaledHeight) / 2
+
+      console.log('[Export] Letterbox mode (export preview OFF):', {
+        scale: scale.toFixed(3),
+        scaledWidth: Math.round(scaledWidth),
+        scaledHeight: Math.round(scaledHeight),
+        offsetX: Math.round(offsetX),
+        offsetY: Math.round(offsetY)
+      })
 
       ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
     }
@@ -352,6 +427,13 @@ const exportImage = async () => {
     link.href = dataUrl
     link.click()
 
+    console.log('[Export] Export complete:', {
+      outputSize: `${exportWidth}x${exportHeight}`,
+      outputDataUrlLength: dataUrl.length,
+      filename: link.download
+    })
+    console.log('═══════════════════════════════════════════════════════════════')
+
     imageExportProgress.value = 100
     exportSuccess.value = true
 
@@ -362,7 +444,7 @@ const exportImage = async () => {
     }, 2000)
 
   } catch (e) {
-    console.error('Image export failed:', e)
+    console.error('[Export] Image export failed:', e)
     imageExportError.value = e.message || 'Export failed'
     isExporting.value = false
   }
@@ -384,6 +466,15 @@ const drawLegendOnCanvas = (ctx, width, height) => {
   const entries = Object.entries(colorMap).slice(0, store.legendSettings.maxItems)
   const uiScale = store.exportSettings.uiScale || 1
 
+  console.log('[Export] Drawing legend:', {
+    totalEntries: Object.keys(colorMap).length,
+    displayedEntries: entries.length,
+    maxItems: store.legendSettings.maxItems,
+    uiScale: uiScale,
+    position: store.legendSettings.position,
+    colorBy: store.colorBy
+  })
+
   const padding = 20 * uiScale
   const itemHeight = 24 * uiScale
   const leftPadding = 12 * uiScale
@@ -397,9 +488,13 @@ const drawLegendOnCanvas = (ctx, width, height) => {
     : `${13 * uiScale}px system-ui, sans-serif`
 
   let maxLabelWidth = 0
+  let longestLabel = ''
   entries.forEach(([label]) => {
     const labelWidth = ctx.measureText(label).width
-    if (labelWidth > maxLabelWidth) maxLabelWidth = labelWidth
+    if (labelWidth > maxLabelWidth) {
+      maxLabelWidth = labelWidth
+      longestLabel = label
+    }
   })
 
   // Also check title width
@@ -411,6 +506,17 @@ const drawLegendOnCanvas = (ctx, width, height) => {
   const legendWidth = Math.max(180 * uiScale, Math.min(contentWidth, 300 * uiScale))
   const legendHeight = entries.length * itemHeight + 45 * uiScale
 
+  console.log('[Export] Legend dimensions:', {
+    legendWidth: Math.round(legendWidth),
+    legendHeight: Math.round(legendHeight),
+    maxLabelWidth: Math.round(maxLabelWidth),
+    longestLabel: longestLabel,
+    titleWidth: Math.round(titleWidth),
+    contentWidth: Math.round(contentWidth),
+    canvasWidth: width,
+    canvasHeight: height
+  })
+
   // Position based on settings
   let x, y
   const pos = store.legendSettings.position
@@ -418,6 +524,14 @@ const drawLegendOnCanvas = (ctx, width, height) => {
   else if (pos === 'top-right') { x = width - legendWidth - padding; y = padding }
   else if (pos === 'bottom-right') { x = width - legendWidth - padding; y = height - legendHeight - padding }
   else { x = padding; y = height - legendHeight - padding } // bottom-left default
+
+  console.log('[Export] Legend position:', {
+    position: pos,
+    x: Math.round(x),
+    y: Math.round(y),
+    legendRight: Math.round(x + legendWidth),
+    legendBottom: Math.round(y + legendHeight)
+  })
 
   // Background
   ctx.fillStyle = 'rgba(26, 26, 46, 0.95)'

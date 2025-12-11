@@ -256,12 +256,28 @@ const exportHolePosition = computed(() => {
   const x = (100 - holeWidthPercent) / 2
   const y = (100 - holeHeightPercent) / 2
 
-  return {
+  const result = {
     x: Math.max(2, x),
     y: Math.max(2, y),
     width: Math.min(96, holeWidthPercent),
     height: Math.min(96, holeHeightPercent)
   }
+
+  // Debug logging for preview rectangle (only log when enabled)
+  console.log('[Preview] Export preview rectangle:', {
+    containerSize: `${containerW}x${containerH}`,
+    containerAspectRatio: containerAspectRatio.toFixed(3),
+    targetSize: `${targetWidth}x${targetHeight}`,
+    targetAspectRatio: targetAspectRatio.toFixed(3),
+    result: {
+      x: result.x.toFixed(2) + '%',
+      y: result.y.toFixed(2) + '%',
+      width: result.width.toFixed(2) + '%',
+      height: result.height.toFixed(2) + '%'
+    }
+  })
+
+  return result
 })
 
 // ═══════════════════════════════════════════════════════════════════════════
