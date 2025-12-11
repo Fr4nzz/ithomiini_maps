@@ -475,7 +475,18 @@ const drawLegendOnCanvas = (ctx, width, height) => {
     colorBy: store.colorBy
   })
 
-  const padding = 20 * uiScale
+  // Match CSS preview positioning from MapEngine.vue
+  // Preview uses fixed pixels (15px, 50px) in a variably-sized frame
+  // We use percentage-based positioning to match the visual appearance
+  // Preview frame is typically ~600-700px tall, CSS uses 15px padding ≈ 2.3%
+  const sidePaddingPercent = 0.015  // ~1.5% for side padding
+  const bottomPaddingPercent = 0.015  // ~1.5% for bottom padding
+  const topPaddingPercent = 0.05  // ~5% for top padding (CSS uses 50px)
+
+  const sidePadding = width * sidePaddingPercent * uiScale
+  const topPadding = height * topPaddingPercent * uiScale
+  const bottomPadding = height * bottomPaddingPercent * uiScale
+
   const itemHeight = 24 * uiScale
   const leftPadding = 12 * uiScale
   const dotSpace = 32 * uiScale // space for dot + gap
@@ -517,13 +528,13 @@ const drawLegendOnCanvas = (ctx, width, height) => {
     canvasHeight: height
   })
 
-  // Position based on settings
+  // Position based on settings (matching CSS preview from MapEngine.vue)
   let x, y
   const pos = store.legendSettings.position
-  if (pos === 'top-left') { x = padding; y = padding }
-  else if (pos === 'top-right') { x = width - legendWidth - padding; y = padding }
-  else if (pos === 'bottom-right') { x = width - legendWidth - padding; y = height - legendHeight - padding }
-  else { x = padding; y = height - legendHeight - padding } // bottom-left default
+  if (pos === 'top-left') { x = sidePadding; y = topPadding }
+  else if (pos === 'top-right') { x = width - legendWidth - sidePadding; y = topPadding }
+  else if (pos === 'bottom-right') { x = width - legendWidth - sidePadding; y = height - legendHeight - bottomPadding }
+  else { x = sidePadding; y = height - legendHeight - bottomPadding } // bottom-left default
 
   console.log('[Export] Legend position:', {
     position: pos,
@@ -588,18 +599,23 @@ const drawLegendOnCanvas = (ctx, width, height) => {
 // Draw scale bar on canvas
 const drawScaleBarOnCanvas = (ctx, width, height) => {
   const uiScale = store.exportSettings.uiScale || 1
-  const padding = 20 * uiScale
+  // Use percentage-based padding to match legend positioning
+  const sidePaddingPercent = 0.015
+  const bottomPaddingPercent = 0.015
+  const sidePadding = width * sidePaddingPercent * uiScale
+  const bottomPadding = height * bottomPaddingPercent * uiScale
+
   const barWidth = 100 * uiScale
   const barHeight = 4 * uiScale
 
   // Position: bottom-right, or bottom-left if legend is bottom-right
   let x
   if (store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend) {
-    x = padding
+    x = sidePadding
   } else {
-    x = width - barWidth - padding
+    x = width - barWidth - sidePadding
   }
-  const y = height - padding - barHeight - 20 * uiScale
+  const y = height - bottomPadding - barHeight - 20 * uiScale
 
   // Scale bar line
   ctx.fillStyle = '#fff'
