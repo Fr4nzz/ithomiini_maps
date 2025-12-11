@@ -7,11 +7,15 @@ import PointPopup from './PointPopup.vue'
 import { getThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
-const emit = defineEmits(['map-ready'])
+const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
 let map = null
 let popup = null
+
+// Container size for accurate export preview calculations
+const containerSize = ref({ width: 1600, height: 900 })
+let resizeObserver = null
 
 // Enhanced popup state for multi-point locations
 const showEnhancedPopup = ref(false)
@@ -205,7 +209,7 @@ const updateScaleBar = () => {
 }
 
 // Calculate the export hole position as percentages
-// This creates the largest rectangle that fits the container while maintaining aspect ratio
+// This creates the largest rectangle that fits the container while maintaining the target aspect ratio
 const exportHolePosition = computed(() => {
   if (!store.exportSettings.enabled) {
     return { x: 10, y: 10, width: 80, height: 80 }
@@ -224,37 +228,39 @@ const exportHolePosition = computed(() => {
     return { x: 10, y: 10, width: 80, height: 80 }
   }
 
-  const aspectRatio = targetWidth / targetHeight
+  const targetAspectRatio = targetWidth / targetHeight
+
+  // Use actual container dimensions for accurate calculation
+  const containerW = containerSize.value.width || 1600
+  const containerH = containerSize.value.height || 900
+  const containerAspectRatio = containerW / containerH
 
   // Use 92% of container as maximum (leaving small margin)
   const maxPercent = 92
 
-  // For a container, we need to consider its aspect ratio
-  // Since we don't know the exact container dimensions, we'll use a common 16:10 estimate
-  // The SVG mask will adapt to actual container size
-  const containerAspectRatio = 1.6 // approximate, actual will vary
+  let holeWidthPercent, holeHeightPercent
 
-  let holeWidth, holeHeight
-
-  if (aspectRatio > containerAspectRatio) {
-    // Export is wider than container - constrained by width
-    holeWidth = maxPercent
-    holeHeight = maxPercent / aspectRatio * containerAspectRatio
+  if (targetAspectRatio > containerAspectRatio) {
+    // Target is wider than container - constrained by width
+    holeWidthPercent = maxPercent
+    // Calculate height based on the width and target aspect ratio
+    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
   } else {
-    // Export is taller than container - constrained by height
-    holeHeight = maxPercent
-    holeWidth = maxPercent * aspectRatio / containerAspectRatio
+    // Target is taller than container - constrained by height
+    holeHeightPercent = maxPercent
+    // Calculate width based on the height and target aspect ratio
+    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
   }
 
   // Center the hole
-  const x = (100 - holeWidth) / 2
-  const y = (100 - holeHeight) / 2
+  const x = (100 - holeWidthPercent) / 2
+  const y = (100 - holeHeightPercent) / 2
 
   return {
     x: Math.max(2, x),
     y: Math.max(2, y),
-    width: Math.min(96, holeWidth),
-    height: Math.min(96, holeHeight)
+    width: Math.min(96, holeWidthPercent),
+    height: Math.min(96, holeHeightPercent)
   }
 })
 
@@ -372,12 +378,34 @@ const STATUS_COLORS = {
 onMounted(() => {
   initMap()
   document.addEventListener('click', handleClickOutside)
+
+  // Set up ResizeObserver for accurate export preview calculations
+  if (mapContainer.value) {
+    containerSize.value = {
+      width: mapContainer.value.clientWidth,
+      height: mapContainer.value.clientHeight
+    }
+
+    resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        containerSize.value = {
+          width: entry.contentRect.width,
+          height: entry.contentRect.height
+        }
+      }
+    })
+    resizeObserver.observe(mapContainer.value)
+  }
 })
 
 onUnmounted(() => {
   if (map) {
     map.remove()
     map = null
+  }
+  if (resizeObserver) {
+    resizeObserver.disconnect()
+    resizeObserver = null
   }
   document.removeEventListener('click', handleClickOutside)
   clearTimeout(searchDebounceTimer)
@@ -1163,6 +1191,12 @@ const closeEnhancedPopup = () => {
   showEnhancedPopup.value = false
 }
 
+// Handle open gallery from popup
+const handleOpenGallery = () => {
+  closeEnhancedPopup()
+  emit('open-gallery')
+}
+
 // Watch for displayGeoJSON changes and update the map
 watch(
   () => store.displayGeoJSON,
@@ -1348,6 +1382,7 @@ const switchStyle = (styleName) => {
           :initial-species="enhancedPopupData.initialSpecies"
           :initial-subspecies="enhancedPopupData.initialSubspecies"
           @close="closeEnhancedPopup"
+          @open-gallery="handleOpenGallery"
         />
       </div>
     </div>

@@ -195,6 +195,51 @@ const exportDimensions = computed(() => {
   return ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
 })
 
+// Calculate the export region position (same logic as MapEngine)
+const calculateExportRegion = (containerWidth, containerHeight, targetWidth, targetHeight) => {
+  const targetAspectRatio = targetWidth / targetHeight
+  const containerAspectRatio = containerWidth / containerHeight
+
+  // Use 92% of container as maximum (same as MapEngine)
+  const maxPercent = 92
+
+  let holeWidthPercent, holeHeightPercent
+
+  if (targetAspectRatio > containerAspectRatio) {
+    // Target is wider than container - constrained by width
+    holeWidthPercent = maxPercent
+    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
+  } else {
+    // Target is taller than container - constrained by height
+    holeHeightPercent = maxPercent
+    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
+  }
+
+  // Center the hole
+  const x = (100 - holeWidthPercent) / 2
+  const y = (100 - holeHeightPercent) / 2
+
+  const result = {
+    x: Math.max(2, x),
+    y: Math.max(2, y),
+    width: Math.min(96, holeWidthPercent),
+    height: Math.min(96, holeHeightPercent)
+  }
+
+  console.log('[Export] calculateExportRegion:', {
+    input: { containerWidth, containerHeight, targetWidth, targetHeight },
+    aspectRatios: { target: targetAspectRatio.toFixed(3), container: containerAspectRatio.toFixed(3) },
+    result: {
+      x: result.x.toFixed(2) + '%',
+      y: result.y.toFixed(2) + '%',
+      width: result.width.toFixed(2) + '%',
+      height: result.height.toFixed(2) + '%'
+    }
+  })
+
+  return result
+}
+
 // Export map as image
 const exportImage = async () => {
   if (!props.map) {
@@ -206,27 +251,44 @@ const exportImage = async () => {
   imageExportProgress.value = 0
   imageExportError.value = null
 
+  console.log('═══════════════════════════════════════════════════════════════')
+  console.log('[Export] Starting image export...')
+  console.log('[Export] Export settings:', {
+    enabled: store.exportSettings.enabled,
+    aspectRatio: store.exportSettings.aspectRatio,
+    includeLegend: store.exportSettings.includeLegend,
+    includeScaleBar: store.exportSettings.includeScaleBar,
+    uiScale: store.exportSettings.uiScale
+  })
+
   try {
     const map = props.map
 
     // Ensure map style is loaded
     if (!map.isStyleLoaded()) {
+      console.log('[Export] Waiting for map style to load...')
       await new Promise(resolve => map.once('style.load', resolve))
     }
 
-    // Wait for map to be idle (all tiles loaded)
-    if (!map.areTilesLoaded()) {
-      await new Promise(resolve => map.once('idle', resolve))
-    }
+    // Force the map to recalculate its size (important after window resize)
+    console.log('[Export] Forcing map resize...')
+    map.resize()
+
+    // Wait for the resize to take effect and tiles to load
+    console.log('[Export] Waiting for map to be idle after resize...')
+    await new Promise(resolve => map.once('idle', resolve))
 
     // Force a fresh render
     map.triggerRepaint()
 
-    // Wait for GPU to complete using double requestAnimationFrame
+    // Wait for the render to complete
     await new Promise(resolve => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(resolve)
+      map.once('render', () => {
+        // Add delay after render for WebGL to finish
+        setTimeout(resolve, 200)
       })
+      // Fallback in case render doesn't fire
+      setTimeout(resolve, 1000)
     })
 
     imageExportProgress.value = 10
@@ -234,8 +296,34 @@ const exportImage = async () => {
     // Get the map canvas
     const mapCanvas = map.getCanvas()
 
+    // Check if map container is large enough for reliable export
+    const minWidth = 800
+    const minHeight = 400
+    if (mapCanvas.clientWidth < minWidth || mapCanvas.clientHeight < minHeight) {
+      console.warn('[Export] Map container too small:', {
+        clientWidth: mapCanvas.clientWidth,
+        clientHeight: mapCanvas.clientHeight,
+        minRequired: `${minWidth}x${minHeight}`
+      })
+      throw new Error(`Map area too small for export. Please resize your browser window larger (need at least ${minWidth}x${minHeight}px map area, currently ${mapCanvas.clientWidth}x${mapCanvas.clientHeight}px). Try maximizing your browser or closing the sidebar.`)
+    }
+
+    console.log('[Export] Map canvas info:', {
+      width: mapCanvas.width,
+      height: mapCanvas.height,
+      clientWidth: mapCanvas.clientWidth,
+      clientHeight: mapCanvas.clientHeight,
+      aspectRatio: (mapCanvas.width / mapCanvas.height).toFixed(3)
+    })
+
     // Determine export dimensions
     const { width: exportWidth, height: exportHeight } = exportDimensions.value
+
+    console.log('[Export] Target export dimensions:', {
+      width: exportWidth,
+      height: exportHeight,
+      aspectRatio: (exportWidth / exportHeight).toFixed(3)
+    })
 
     // Create output canvas
     const canvas = document.createElement('canvas')
@@ -253,22 +341,59 @@ const exportImage = async () => {
     const mapDataUrl = mapCanvas.toDataURL('image/png')
     const mapImage = await loadImage(mapDataUrl)
 
+    // Check if map image was captured properly
+    const dataUrlLength = mapDataUrl.length
+    const isLikelyEmpty = dataUrlLength < 10000 // Very small data URL indicates empty/black canvas
+    console.log('[Export] Map image captured:', {
+      width: mapImage.width,
+      height: mapImage.height,
+      dataUrlLength: dataUrlLength,
+      isLikelyEmpty: isLikelyEmpty,
+      dataUrlPreview: mapDataUrl.substring(0, 100) + '...'
+    })
+
+    if (isLikelyEmpty) {
+      console.warn('[Export] WARNING: Map canvas data URL is very small - may be black/empty!')
+    }
+
     imageExportProgress.value = 40
 
     // Calculate how to draw the map
-    // If export settings enabled, crop to the export region
+    // If export settings enabled, crop to the exact export preview region
     if (store.exportSettings.enabled) {
-      // Draw the map scaled to fill the export canvas
-      const scale = Math.max(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
+      // Calculate the export region exactly as shown in the preview
+      const region = calculateExportRegion(
+        mapImage.width,
+        mapImage.height,
+        exportWidth,
+        exportHeight
       )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
 
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
+      // Convert percentages to pixels
+      const srcX = (region.x / 100) * mapImage.width
+      const srcY = (region.y / 100) * mapImage.height
+      const srcW = (region.width / 100) * mapImage.width
+      const srcH = (region.height / 100) * mapImage.height
+
+      console.log('[Export] Crop region (pixels):', {
+        srcX: Math.round(srcX),
+        srcY: Math.round(srcY),
+        srcW: Math.round(srcW),
+        srcH: Math.round(srcH),
+        srcAspectRatio: (srcW / srcH).toFixed(3)
+      })
+
+      console.log('[Export] Drawing cropped region:', {
+        source: `(${Math.round(srcX)}, ${Math.round(srcY)}) ${Math.round(srcW)}x${Math.round(srcH)}`,
+        destination: `(0, 0) ${canvas.width}x${canvas.height}`
+      })
+
+      // Draw the cropped region scaled to fill the export canvas
+      ctx.drawImage(
+        mapImage,
+        srcX, srcY, srcW, srcH,  // Source rectangle (crop region)
+        0, 0, canvas.width, canvas.height  // Destination (full canvas)
+      )
     } else {
       // Draw the map scaled to fit (letterboxed)
       const scale = Math.min(
@@ -279,6 +404,14 @@ const exportImage = async () => {
       const scaledHeight = mapImage.height * scale
       const offsetX = (canvas.width - scaledWidth) / 2
       const offsetY = (canvas.height - scaledHeight) / 2
+
+      console.log('[Export] Letterbox mode (export preview OFF):', {
+        scale: scale.toFixed(3),
+        scaledWidth: Math.round(scaledWidth),
+        scaledHeight: Math.round(scaledHeight),
+        offsetX: Math.round(offsetX),
+        offsetY: Math.round(offsetY)
+      })
 
       ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
     }
@@ -311,6 +444,13 @@ const exportImage = async () => {
     link.href = dataUrl
     link.click()
 
+    console.log('[Export] Export complete:', {
+      outputSize: `${exportWidth}x${exportHeight}`,
+      outputDataUrlLength: dataUrl.length,
+      filename: link.download
+    })
+    console.log('═══════════════════════════════════════════════════════════════')
+
     imageExportProgress.value = 100
     exportSuccess.value = true
 
@@ -321,7 +461,7 @@ const exportImage = async () => {
     }, 2000)
 
   } catch (e) {
-    console.error('Image export failed:', e)
+    console.error('[Export] Image export failed:', e)
     imageExportError.value = e.message || 'Export failed'
     isExporting.value = false
   }
@@ -343,91 +483,180 @@ const drawLegendOnCanvas = (ctx, width, height) => {
   const entries = Object.entries(colorMap).slice(0, store.legendSettings.maxItems)
   const uiScale = store.exportSettings.uiScale || 1
 
-  const padding = 20 * uiScale
-  const itemHeight = 24 * uiScale
-  const legendWidth = 200 * uiScale
-  const legendHeight = entries.length * itemHeight + 45 * uiScale
+  // Calculate resolution scale factor to match preview appearance
+  // Preview frame is typically ~650px tall; scale legend proportionally to output size
+  const referenceHeight = 650
+  const resolutionScale = height / referenceHeight
 
-  // Position based on settings
+  // Combined scale: user's UI scale * resolution scaling
+  const scale = uiScale * resolutionScale
+
+  console.log('[Export] Drawing legend:', {
+    totalEntries: Object.keys(colorMap).length,
+    displayedEntries: entries.length,
+    maxItems: store.legendSettings.maxItems,
+    uiScale: uiScale,
+    resolutionScale: resolutionScale.toFixed(2),
+    combinedScale: scale.toFixed(2),
+    position: store.legendSettings.position,
+    colorBy: store.colorBy
+  })
+
+  // Match CSS preview padding (15px bottom/sides, 50px top)
+  // These are scaled proportionally to output size
+  const sidePadding = 15 * resolutionScale * uiScale
+  const topPadding = 50 * resolutionScale * uiScale
+  const bottomPadding = 15 * resolutionScale * uiScale
+
+  const itemHeight = 24 * scale
+  const leftPadding = 12 * scale
+  const dotSpace = 32 * scale // space for dot + gap
+  const rightPadding = 12 * scale
+
+  // Calculate legend width based on content
+  const isItalic = ['species', 'subspecies', 'genus'].includes(store.colorBy)
+  ctx.font = isItalic
+    ? `italic ${13 * scale}px system-ui, sans-serif`
+    : `${13 * scale}px system-ui, sans-serif`
+
+  let maxLabelWidth = 0
+  let longestLabel = ''
+  entries.forEach(([label]) => {
+    const labelWidth = ctx.measureText(label).width
+    if (labelWidth > maxLabelWidth) {
+      maxLabelWidth = labelWidth
+      longestLabel = label
+    }
+  })
+
+  // Also check title width
+  ctx.font = `bold ${12 * scale}px system-ui, sans-serif`
+  const titleWidth = ctx.measureText(store.legendTitle.toUpperCase()).width
+
+  // Calculate legend width with padding, minimum 180px scaled
+  const contentWidth = Math.max(maxLabelWidth + dotSpace, titleWidth) + leftPadding + rightPadding
+  const legendWidth = Math.max(180 * scale, Math.min(contentWidth, 300 * scale))
+  const legendHeight = entries.length * itemHeight + 45 * scale
+
+  console.log('[Export] Legend dimensions:', {
+    legendWidth: Math.round(legendWidth),
+    legendHeight: Math.round(legendHeight),
+    maxLabelWidth: Math.round(maxLabelWidth),
+    longestLabel: longestLabel,
+    titleWidth: Math.round(titleWidth),
+    contentWidth: Math.round(contentWidth),
+    canvasWidth: width,
+    canvasHeight: height
+  })
+
+  // Position based on settings (matching CSS preview from MapEngine.vue)
   let x, y
   const pos = store.legendSettings.position
-  if (pos === 'top-left') { x = padding; y = padding }
-  else if (pos === 'top-right') { x = width - legendWidth - padding; y = padding }
-  else if (pos === 'bottom-right') { x = width - legendWidth - padding; y = height - legendHeight - padding }
-  else { x = padding; y = height - legendHeight - padding } // bottom-left default
+  if (pos === 'top-left') { x = sidePadding; y = topPadding }
+  else if (pos === 'top-right') { x = width - legendWidth - sidePadding; y = topPadding }
+  else if (pos === 'bottom-right') { x = width - legendWidth - sidePadding; y = height - legendHeight - bottomPadding }
+  else { x = sidePadding; y = height - legendHeight - bottomPadding } // bottom-left default
+
+  console.log('[Export] Legend position:', {
+    position: pos,
+    x: Math.round(x),
+    y: Math.round(y),
+    legendRight: Math.round(x + legendWidth),
+    legendBottom: Math.round(y + legendHeight)
+  })
 
   // Background
   ctx.fillStyle = 'rgba(26, 26, 46, 0.95)'
-  roundRect(ctx, x, y, legendWidth, legendHeight, 8 * uiScale)
+  roundRect(ctx, x, y, legendWidth, legendHeight, 8 * scale)
   ctx.fill()
 
   // Title
   ctx.fillStyle = '#888'
-  ctx.font = `bold ${12 * uiScale}px system-ui, sans-serif`
+  ctx.font = `bold ${12 * scale}px system-ui, sans-serif`
   ctx.textAlign = 'left'
-  ctx.fillText(store.legendTitle.toUpperCase(), x + 12 * uiScale, y + 22 * uiScale)
+  ctx.fillText(store.legendTitle.toUpperCase(), x + leftPadding, y + 22 * scale)
+
+  // Maximum width for label text (with some padding from edge)
+  const maxTextWidth = legendWidth - dotSpace - rightPadding
 
   // Items
-  ctx.font = `${13 * uiScale}px system-ui, sans-serif`
+  ctx.font = isItalic
+    ? `italic ${13 * scale}px system-ui, sans-serif`
+    : `${13 * scale}px system-ui, sans-serif`
+
   entries.forEach(([label, color], i) => {
-    const itemY = y + 40 * uiScale + i * itemHeight
+    const itemY = y + 40 * scale + i * itemHeight
 
     // Dot
     ctx.beginPath()
-    ctx.arc(x + 18 * uiScale, itemY, 5 * uiScale, 0, Math.PI * 2)
+    ctx.arc(x + 18 * scale, itemY, 5 * scale, 0, Math.PI * 2)
     ctx.fillStyle = color
     ctx.fill()
 
-    // Label
+    // Label - truncate if too long
     ctx.fillStyle = '#e0e0e0'
-    const isItalic = ['species', 'subspecies', 'genus'].includes(store.colorBy)
-    ctx.font = isItalic
-      ? `italic ${13 * uiScale}px system-ui, sans-serif`
-      : `${13 * uiScale}px system-ui, sans-serif`
-    ctx.fillText(label, x + 32 * uiScale, itemY + 4 * uiScale)
+    let displayLabel = label
+    let labelWidth = ctx.measureText(displayLabel).width
+    if (labelWidth > maxTextWidth) {
+      // Truncate with ellipsis
+      while (labelWidth > maxTextWidth && displayLabel.length > 0) {
+        displayLabel = displayLabel.slice(0, -1)
+        labelWidth = ctx.measureText(displayLabel + '…').width
+      }
+      displayLabel += '…'
+    }
+    ctx.fillText(displayLabel, x + dotSpace, itemY + 4 * scale)
   })
 
   // "More" indicator
   if (Object.keys(colorMap).length > store.legendSettings.maxItems) {
-    const moreY = y + legendHeight - 12 * uiScale
+    const moreY = y + legendHeight - 12 * scale
     ctx.fillStyle = '#666'
-    ctx.font = `italic ${11 * uiScale}px system-ui, sans-serif`
-    ctx.fillText(`+ ${Object.keys(colorMap).length - store.legendSettings.maxItems} more`, x + 12 * uiScale, moreY)
+    ctx.font = `italic ${11 * scale}px system-ui, sans-serif`
+    ctx.fillText(`+ ${Object.keys(colorMap).length - store.legendSettings.maxItems} more`, x + 12 * scale, moreY)
   }
 }
 
 // Draw scale bar on canvas
 const drawScaleBarOnCanvas = (ctx, width, height) => {
   const uiScale = store.exportSettings.uiScale || 1
-  const padding = 20 * uiScale
-  const barWidth = 100 * uiScale
-  const barHeight = 4 * uiScale
+  // Scale proportionally to output resolution (same as legend)
+  const referenceHeight = 650
+  const resolutionScale = height / referenceHeight
+  const scale = uiScale * resolutionScale
+
+  // Match CSS preview padding
+  const sidePadding = 15 * resolutionScale * uiScale
+  const bottomPadding = 15 * resolutionScale * uiScale
+
+  const barWidth = 100 * scale
+  const barHeight = 4 * scale
 
   // Position: bottom-right, or bottom-left if legend is bottom-right
   let x
   if (store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend) {
-    x = padding
+    x = sidePadding
   } else {
-    x = width - barWidth - padding
+    x = width - barWidth - sidePadding
   }
-  const y = height - padding - barHeight - 20 * uiScale
+  const y = height - bottomPadding - barHeight - 20 * scale
 
   // Scale bar line
   ctx.fillStyle = '#fff'
   ctx.fillRect(x, y, barWidth, barHeight)
 
   // End caps
-  ctx.fillRect(x, y - 4 * uiScale, 2 * uiScale, barHeight + 8 * uiScale)
-  ctx.fillRect(x + barWidth - 2 * uiScale, y - 4 * uiScale, 2 * uiScale, barHeight + 8 * uiScale)
+  ctx.fillRect(x, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
+  ctx.fillRect(x + barWidth - 2 * scale, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
 
   // Text - approximate scale based on zoom
   ctx.fillStyle = '#fff'
-  ctx.font = `bold ${11 * uiScale}px system-ui, sans-serif`
+  ctx.font = `bold ${11 * scale}px system-ui, sans-serif`
   ctx.textAlign = store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'left' : 'right'
   ctx.textBaseline = 'top'
   ctx.shadowColor = 'rgba(0,0,0,0.7)'
   ctx.shadowBlur = 3
-  ctx.fillText('Scale varies with latitude', store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? x : x + barWidth, y + barHeight + 6 * uiScale)
+  ctx.fillText('Scale varies with latitude', store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? x : x + barWidth, y + barHeight + 6 * scale)
   ctx.shadowBlur = 0
 }
 

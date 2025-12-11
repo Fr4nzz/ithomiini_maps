@@ -42,6 +42,10 @@ export const useDataStore = defineStore('data', () => {
   // { lat, lng, properties } - set to null after map handles it
   const focusPoint = ref(null)
 
+  // Gallery selection - when set, gallery should open with this pre-selected
+  // { species, subspecies, individualId } - set to null after gallery handles it
+  const gallerySelection = ref(null)
+
   // Clustering settings
   const clusteringEnabled = ref(false)
   const clusterSettings = ref({
@@ -1143,6 +1147,7 @@ export const useDataStore = defineStore('data', () => {
     showMimicryFilter,
     showThumbnail,
     focusPoint,
+    gallerySelection,
     clusteringEnabled,
     clusterSettings,
     scatterOverlappingPoints,
