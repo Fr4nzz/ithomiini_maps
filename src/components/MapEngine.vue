@@ -194,6 +194,18 @@ const previewLegendScale = computed(() => {
   return scale
 })
 
+// Calculate preview legend padding to match export positioning
+// The export uses: sidePadding = 15 * resolutionScale * uiScale
+//                  topPadding = 50 * resolutionScale * uiScale
+// For WYSIWYG, preview padding should scale proportionally
+const previewSidePadding = computed(() => {
+  return 15 * previewLegendScale.value
+})
+
+const previewTopPadding = computed(() => {
+  return 50 * previewLegendScale.value
+})
+
 // Scale bar text - calculated from map zoom level
 const scaleBarText = ref('500 km')
 
@@ -1546,7 +1558,12 @@ const switchStyle = (styleName) => {
           :style="{
             fontSize: (store.legendSettings.textSize * previewLegendScale) + 'rem',
             transform: 'scale(' + previewLegendScale + ')',
-            transformOrigin: legendTransformOrigin
+            transformOrigin: legendTransformOrigin,
+            // Dynamic positioning to match export padding
+            ...(store.legendSettings.position === 'bottom-left' ? { bottom: previewSidePadding + 'px', left: previewSidePadding + 'px' } : {}),
+            ...(store.legendSettings.position === 'bottom-right' ? { bottom: previewSidePadding + 'px', right: previewSidePadding + 'px' } : {}),
+            ...(store.legendSettings.position === 'top-left' ? { top: previewTopPadding + 'px', left: previewSidePadding + 'px' } : {}),
+            ...(store.legendSettings.position === 'top-right' ? { top: previewTopPadding + 'px', right: previewSidePadding + 'px' } : {})
           }"
         >
           <div class="legend-title">{{ store.legendTitle }}</div>
@@ -1570,7 +1587,12 @@ const switchStyle = (styleName) => {
           :class="{ 'export-scale-bar-left': store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend }"
           :style="{
             transform: 'scale(' + previewLegendScale + ')',
-            transformOrigin: store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'bottom left' : 'bottom right'
+            transformOrigin: store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'bottom left' : 'bottom right',
+            // Dynamic positioning to match export padding
+            bottom: previewSidePadding + 'px',
+            ...(store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend
+              ? { left: previewSidePadding + 'px', right: 'auto' }
+              : { right: previewSidePadding + 'px', left: 'auto' })
           }"
         >
           <div class="scale-bar-line"></div>
