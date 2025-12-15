@@ -4,6 +4,26 @@ import { useDataStore } from '../stores/data'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 
+// shadcn-vue components
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Slider } from '@/components/ui/slider'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible'
+import { Map, Table2, Image, Download, RotateCcw, Share2, ChevronRight, Info } from 'lucide-vue-next'
+
 const props = defineProps({
   currentView: {
     type: String,
@@ -266,31 +286,18 @@ const updateExportHeight = (value) => {
     <div class="sidebar-content">
       
       <!-- View Toggle -->
-      <div class="view-toggle">
-        <button 
-          :class="{ active: currentView === 'map' }"
-          @click="emit('set-view', 'map')"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
-            <line x1="8" y1="2" x2="8" y2="18"/>
-            <line x1="16" y1="6" x2="16" y2="22"/>
-          </svg>
-          Map
-        </button>
-        <button 
-          :class="{ active: currentView === 'table' }"
-          @click="emit('set-view', 'table')"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <line x1="3" y1="9" x2="21" y2="9"/>
-            <line x1="3" y1="15" x2="21" y2="15"/>
-            <line x1="9" y1="3" x2="9" y2="21"/>
-          </svg>
-          Table
-        </button>
-      </div>
+      <Tabs :model-value="currentView" @update:model-value="emit('set-view', $event)" class="view-toggle-tabs">
+        <TabsList class="view-toggle-list">
+          <TabsTrigger value="map" class="view-toggle-trigger">
+            <Map class="h-4 w-4" />
+            Map
+          </TabsTrigger>
+          <TabsTrigger value="table" class="view-toggle-trigger">
+            <Table2 class="h-4 w-4" />
+            Table
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       <!-- Record Count Banner -->
       <div class="record-count">
@@ -342,12 +349,20 @@ const updateExportHeight = (value) => {
 
         <!-- Aspect Ratio -->
         <div class="setting-row">
-          <label>Aspect Ratio</label>
-          <select v-model="store.exportSettings.aspectRatio" class="style-select">
-            <option v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
-              {{ opt.label }}
-            </option>
-          </select>
+          <Label class="setting-label">Aspect Ratio</Label>
+          <Select
+            :model-value="store.exportSettings.aspectRatio"
+            @update:model-value="store.exportSettings.aspectRatio = $event"
+          >
+            <SelectTrigger class="select-trigger">
+              <SelectValue placeholder="Select ratio" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
+                {{ opt.label }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <!-- Dimensions (editable) -->
@@ -384,40 +399,45 @@ const updateExportHeight = (value) => {
 
         <!-- Include Options -->
         <div class="setting-row checkbox-group" style="margin-top: 12px;">
-          <label class="checkbox-label">
-            <input type="checkbox" v-model="store.exportSettings.includeLegend" />
-            <span>Include Legend</span>
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
-            <span>Include Scale Bar</span>
-          </label>
+          <div class="flex items-center gap-2">
+            <Checkbox
+              id="includeLegend"
+              :checked="store.exportSettings.includeLegend"
+              @update:checked="store.exportSettings.includeLegend = $event"
+            />
+            <Label for="includeLegend" class="checkbox-text">Include Legend</Label>
+          </div>
+          <div class="flex items-center gap-2">
+            <Checkbox
+              id="includeScaleBar"
+              :checked="store.exportSettings.includeScaleBar"
+              @update:checked="store.exportSettings.includeScaleBar = $event"
+            />
+            <Label for="includeScaleBar" class="checkbox-text">Include Scale Bar</Label>
+          </div>
         </div>
 
         <!-- UI Scale -->
         <div class="setting-row" style="margin-top: 12px;">
-          <label>UI Scale <span class="setting-hint">(legend, scale bar size)</span></label>
+          <Label class="setting-label">UI Scale <span class="setting-hint">(legend, scale bar size)</span></Label>
           <div class="slider-group">
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              v-model.number="store.exportSettings.uiScale"
+            <Slider
+              :model-value="[store.exportSettings.uiScale]"
+              @update:model-value="store.exportSettings.uiScale = $event[0]"
+              :min="0.5"
+              :max="2"
+              :step="0.1"
+              class="slider-control"
             />
             <span class="slider-value">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
           </div>
         </div>
 
         <!-- Export Button -->
-        <button class="btn-export-now" @click="emit('open-map-export')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
+        <Button variant="default" class="btn-export-now" @click="emit('open-map-export')">
+          <Download class="h-4 w-4" />
           Export Image
-        </button>
+        </Button>
       </div>
 
       <!-- CAMID Search with Autocomplete (Multi-value) -->
@@ -615,18 +635,26 @@ const updateExportHeight = (value) => {
 
       <!-- UI Preferences -->
       <div class="filter-section">
-        <label class="thumbnail-toggle">
-          <input type="checkbox" v-model="store.showThumbnail" />
-          <span>Show thumbnails</span>
-        </label>
+        <div class="toggle-row">
+          <Checkbox
+            id="showThumbnail"
+            :checked="store.showThumbnail"
+            @update:checked="store.showThumbnail = $event"
+          />
+          <Label for="showThumbnail" class="toggle-label">Show thumbnails</Label>
+        </div>
       </div>
 
       <!-- Scatter Overlapping Points (Map View Only) -->
       <div class="filter-section" v-if="currentView === 'map'">
-        <label class="thumbnail-toggle scatter-toggle">
-          <input type="checkbox" v-model="store.scatterOverlappingPoints" />
-          <span>Scatter overlapping points</span>
-        </label>
+        <div class="toggle-row scatter-toggle">
+          <Checkbox
+            id="scatterPoints"
+            :checked="store.scatterOverlappingPoints"
+            @update:checked="store.scatterOverlappingPoints = $event"
+          />
+          <Label for="scatterPoints" class="toggle-label">Scatter overlapping points</Label>
+        </div>
         <p class="filter-hint" style="margin-top: 6px;">
           Evenly distribute overlapping points within 2.5km radius with connecting lines
         </p>
@@ -662,14 +690,15 @@ const updateExportHeight = (value) => {
           <div v-if="store.clusteringEnabled" class="cluster-settings">
             <!-- Cluster Radius in pixels -->
             <div class="setting-row">
-              <label>Cluster Radius <span class="setting-hint">(px)</span></label>
+              <Label class="setting-label">Cluster Radius <span class="setting-hint">(px)</span></Label>
               <div class="slider-group">
-                <input
-                  type="range"
-                  min="20"
-                  max="200"
-                  step="10"
-                  v-model.number="store.clusterSettings.radiusPixels"
+                <Slider
+                  :model-value="[store.clusterSettings.radiusPixels]"
+                  @update:model-value="store.clusterSettings.radiusPixels = $event[0]"
+                  :min="20"
+                  :max="200"
+                  :step="10"
+                  class="slider-control"
                 />
                 <input
                   type="number"
@@ -710,15 +739,23 @@ const updateExportHeight = (value) => {
 
         <!-- Color By (always visible) -->
         <div class="setting-row">
-          <label>Color by</label>
-          <select v-model="store.colorBy" class="style-select">
-            <option value="subspecies">Subspecies</option>
-            <option value="species">Species</option>
-            <option value="genus">Genus</option>
-            <option value="status">Sequencing Status</option>
-            <option value="mimicry">Mimicry Ring</option>
-            <option value="source">Data Source</option>
-          </select>
+          <Label class="setting-label">Color by</Label>
+          <Select
+            :model-value="store.colorBy"
+            @update:model-value="store.colorBy = $event"
+          >
+            <SelectTrigger class="select-trigger">
+              <SelectValue placeholder="Select color by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="subspecies">Subspecies</SelectItem>
+              <SelectItem value="species">Species</SelectItem>
+              <SelectItem value="genus">Genus</SelectItem>
+              <SelectItem value="status">Sequencing Status</SelectItem>
+              <SelectItem value="mimicry">Mimicry Ring</SelectItem>
+              <SelectItem value="source">Data Source</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <!-- Advanced Legend Settings Toggle -->
@@ -736,25 +773,34 @@ const updateExportHeight = (value) => {
         <div v-show="showAdvancedLegend" class="subsection-content">
           <!-- Legend Position -->
           <div class="setting-row">
-            <label>Position</label>
-            <select v-model="store.legendSettings.position" class="style-select">
-              <option value="bottom-left">Bottom Left</option>
-              <option value="bottom-right">Bottom Right</option>
-              <option value="top-left">Top Left</option>
-              <option value="top-right">Top Right</option>
-            </select>
+            <Label class="setting-label">Position</Label>
+            <Select
+              :model-value="store.legendSettings.position"
+              @update:model-value="store.legendSettings.position = $event"
+            >
+              <SelectTrigger class="select-trigger">
+                <SelectValue placeholder="Select position" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="bottom-left">Bottom Left</SelectItem>
+                <SelectItem value="bottom-right">Bottom Right</SelectItem>
+                <SelectItem value="top-left">Top Left</SelectItem>
+                <SelectItem value="top-right">Top Right</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <!-- Text Size -->
           <div class="setting-row">
-            <label>Text Size</label>
+            <Label class="setting-label">Text Size</Label>
             <div class="slider-group">
-              <input
-                type="range"
-                min="0.6"
-                max="1.2"
-                step="0.05"
-                v-model.number="store.legendSettings.textSize"
+              <Slider
+                :model-value="[store.legendSettings.textSize]"
+                @update:model-value="store.legendSettings.textSize = $event[0]"
+                :min="0.6"
+                :max="1.2"
+                :step="0.05"
+                class="slider-control"
               />
               <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
             </div>
@@ -762,14 +808,15 @@ const updateExportHeight = (value) => {
 
           <!-- Max Items -->
           <div class="setting-row">
-            <label>Max Items Shown</label>
+            <Label class="setting-label">Max Items Shown</Label>
             <div class="slider-group">
-              <input
-                type="range"
-                min="5"
-                max="30"
-                step="1"
-                v-model.number="store.legendSettings.maxItems"
+              <Slider
+                :model-value="[store.legendSettings.maxItems]"
+                @update:model-value="store.legendSettings.maxItems = $event[0]"
+                :min="5"
+                :max="30"
+                :step="1"
+                class="slider-control"
               />
               <input
                 type="number"
@@ -800,14 +847,15 @@ const updateExportHeight = (value) => {
         <div v-show="showPointStyle" class="collapse-content">
           <!-- Point Size -->
           <div class="setting-row">
-            <label>Point Size</label>
+            <Label class="setting-label">Point Size</Label>
             <div class="slider-group">
-              <input
-                type="range"
-                min="4"
-                max="20"
-                step="1"
-                v-model.number="store.mapStyle.pointSize"
+              <Slider
+                :model-value="[store.mapStyle.pointSize]"
+                @update:model-value="store.mapStyle.pointSize = $event[0]"
+                :min="4"
+                :max="20"
+                :step="1"
+                class="slider-control"
               />
               <input
                 type="number"
@@ -822,14 +870,15 @@ const updateExportHeight = (value) => {
 
           <!-- Border Width -->
           <div class="setting-row">
-            <label>Border Width</label>
+            <Label class="setting-label">Border Width</Label>
             <div class="slider-group">
-              <input
-                type="range"
-                min="0"
-                max="5"
-                step="0.5"
-                v-model.number="store.mapStyle.borderWidth"
+              <Slider
+                :model-value="[store.mapStyle.borderWidth]"
+                @update:model-value="store.mapStyle.borderWidth = $event[0]"
+                :min="0"
+                :max="5"
+                :step="0.5"
+                class="slider-control"
               />
               <input
                 type="number"
@@ -845,14 +894,15 @@ const updateExportHeight = (value) => {
 
           <!-- Fill Opacity -->
           <div class="setting-row">
-            <label>Fill Opacity</label>
+            <Label class="setting-label">Fill Opacity</Label>
             <div class="slider-group">
-              <input
-                type="range"
-                min="0.1"
-                max="1"
-                step="0.05"
-                v-model.number="store.mapStyle.fillOpacity"
+              <Slider
+                :model-value="[store.mapStyle.fillOpacity]"
+                @update:model-value="store.mapStyle.fillOpacity = $event[0]"
+                :min="0.1"
+                :max="1"
+                :step="0.05"
+                class="slider-control"
               />
               <span class="slider-value">{{ Math.round(store.mapStyle.fillOpacity * 100) }}%</span>
             </div>
@@ -860,7 +910,7 @@ const updateExportHeight = (value) => {
 
           <!-- Border Color -->
           <div class="setting-row">
-            <label>Border Color</label>
+            <Label class="setting-label">Border Color</Label>
             <div class="color-picker-row">
               <input
                 type="color"
@@ -897,22 +947,34 @@ const updateExportHeight = (value) => {
           </p>
 
           <div class="setting-row checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeFilters" />
-              <span>Include Filters</span>
-            </label>
+            <div class="flex items-center gap-2">
+              <Checkbox
+                id="includeFilters"
+                :checked="store.urlSettings.includeFilters"
+                @update:checked="store.urlSettings.includeFilters = $event"
+              />
+              <Label for="includeFilters" class="checkbox-text">Include Filters</Label>
+            </div>
             <p class="checkbox-hint">Taxonomy, mimicry, status, source filters</p>
 
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeMapView" />
-              <span>Include Map View</span>
-            </label>
+            <div class="flex items-center gap-2">
+              <Checkbox
+                id="includeMapView"
+                :checked="store.urlSettings.includeMapView"
+                @update:checked="store.urlSettings.includeMapView = $event"
+              />
+              <Label for="includeMapView" class="checkbox-text">Include Map View</Label>
+            </div>
             <p class="checkbox-hint">Map center, zoom, rotation</p>
 
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeStyleSettings" />
-              <span>Include Style Settings</span>
-            </label>
+            <div class="flex items-center gap-2">
+              <Checkbox
+                id="includeStyleSettings"
+                :checked="store.urlSettings.includeStyleSettings"
+                @update:checked="store.urlSettings.includeStyleSettings = $event"
+              />
+              <Label for="includeStyleSettings" class="checkbox-text">Include Style Settings</Label>
+            </div>
             <p class="checkbox-hint">Color by, legend, point style</p>
           </div>
         </div>
@@ -967,32 +1029,20 @@ const updateExportHeight = (value) => {
     <!-- Footer Actions -->
     <footer class="sidebar-footer">
       <div class="footer-row">
-        <button class="btn-reset" @click="store.resetAllFilters">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-            <path d="M3 3v5h5"/>
-          </svg>
+        <Button variant="outline" size="sm" class="footer-btn" @click="store.resetAllFilters">
+          <RotateCcw class="h-3.5 w-3.5" />
           Reset
-        </button>
+        </Button>
 
-        <button class="btn-share" @click="copyShareUrl">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="18" cy="5" r="3"/>
-            <circle cx="6" cy="12" r="3"/>
-            <circle cx="18" cy="19" r="3"/>
-            <path d="m8.59 13.51 6.83 3.98m-.01-10.98-6.82 3.98"/>
-          </svg>
+        <Button variant="outline" size="sm" class="footer-btn" @click="copyShareUrl">
+          <Share2 class="h-3.5 w-3.5" />
           Share
-        </button>
+        </Button>
 
-        <button class="btn-export" @click="emit('open-export')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
+        <Button variant="default" size="sm" class="footer-btn footer-btn-export" @click="emit('open-export')">
+          <Download class="h-3.5 w-3.5" />
           Export
-        </button>
+        </Button>
       </div>
 
       <!-- Toast notification -->
@@ -2147,6 +2197,122 @@ const updateExportHeight = (value) => {
   transform: translateY(-10px);
 }
 
+/* shadcn-vue Tabs Styles */
+.view-toggle-tabs {
+  margin-bottom: 16px;
+}
+
+.view-toggle-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 8px;
+}
+
+.view-toggle-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px !important;
+  font-size: 0.8rem !important;
+  font-weight: 500;
+}
+
+.view-toggle-trigger[data-state="active"] {
+  background: var(--color-accent, #4ade80) !important;
+  color: var(--color-bg-primary, #1a1a2e) !important;
+}
+
+/* shadcn-vue Checkbox Styles */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-row:hover {
+  background: var(--color-bg-hover, #363653);
+}
+
+.toggle-row.scatter-toggle {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.toggle-row.scatter-toggle:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.toggle-label {
+  font-size: 0.9rem !important;
+  color: var(--color-text-primary, #e0e0e0);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.checkbox-text {
+  font-size: 0.85rem !important;
+  color: var(--color-text-primary, #e0e0e0);
+  cursor: pointer;
+}
+
+/* shadcn-vue Slider Styles */
+.slider-control {
+  flex: 1;
+}
+
+/* shadcn-vue Select Styles */
+.select-trigger {
+  background: var(--color-bg-primary, #1a1a2e);
+  border-color: var(--color-border, #3d3d5c);
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.select-trigger:hover {
+  border-color: var(--color-text-muted, #666);
+}
+
+.select-trigger:focus {
+  border-color: var(--color-accent, #4ade80);
+}
+
+/* shadcn-vue Label Styles */
+.setting-label {
+  font-size: 0.75rem !important;
+  color: var(--color-text-secondary, #aaa);
+  font-weight: 500;
+}
+
+/* Footer Button Styles */
+.footer-row {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-btn {
+  flex: 1;
+}
+
+.footer-btn-export {
+  background: var(--color-accent, #4ade80) !important;
+  color: var(--color-bg-primary, #1a1a2e) !important;
+  border: none !important;
+}
+
+.footer-btn-export:hover {
+  background: #5eeb94 !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .sidebar {
@@ -2156,7 +2322,7 @@ const updateExportHeight = (value) => {
     max-height: 50vh;
   }
 
-  .view-toggle {
+  .view-toggle-tabs {
     display: none;
   }
 }

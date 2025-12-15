@@ -8,6 +8,7 @@ import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
 import MapExport from './components/MapExport.vue'
+import { Toaster } from '@/components/ui/sonner'
 
 const store = useDataStore()
 
@@ -458,12 +459,15 @@ onMounted(() => {
     <!-- Image Gallery (Full screen) -->
     <Teleport to="body">
       <Transition name="fade">
-        <ImageGallery 
-          v-if="showImageGallery" 
-          @close="closeImageGallery" 
+        <ImageGallery
+          v-if="showImageGallery"
+          @close="closeImageGallery"
         />
       </Transition>
     </Teleport>
+
+    <!-- Toast Notifications -->
+    <Toaster position="bottom-right" :rich-colors="true" />
   </div>
 </template>
 
