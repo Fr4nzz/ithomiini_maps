@@ -10,6 +10,7 @@ import { Button } from '@/shared/ui/button'
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
 import { useUrlState } from '@/shared/hooks'
 import { Image as ImageIcon, Map, Table2, Download } from 'lucide-react'
+import MapIcon from '@/assets/Map_icon.svg'
 
 function App() {
   // Load records from JSON
@@ -45,7 +46,20 @@ function App() {
     <div className="flex h-screen flex-col bg-background text-foreground">
       {/* Header */}
       <header className="flex items-center justify-between border-b px-4 py-2">
-        <h1 className="text-xl font-bold">Ithomiini Maps</h1>
+        <a
+          href="https://github.com/Fr4nzz/ithomiini_maps"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 no-underline transition-opacity hover:opacity-85"
+        >
+          <img src={MapIcon} alt="Ithomiini Maps" className="h-10 w-10" />
+          <div className="flex flex-col">
+            <span className="text-xl font-semibold tracking-tight">Ithomiini</span>
+            <span className="text-xs uppercase tracking-wider text-muted-foreground">
+              Distribution Maps
+            </span>
+          </div>
+        </a>
         <div className="flex items-center gap-4">
           {/* View toggle */}
           <Tabs value={view} onValueChange={(v) => setView(v as 'map' | 'table')}>

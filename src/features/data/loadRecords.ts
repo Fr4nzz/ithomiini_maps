@@ -4,8 +4,10 @@ import type { Record } from './types'
 
 // Fetch records from the JSON file
 async function fetchRecords(): Promise<Record[]> {
-  // Handle both dev and production (GitHub Pages) base paths
-  const basePath = import.meta.env.BASE_URL || '/'
+  // In development, Vite serves from root even with base set
+  // In production (GitHub Pages), we need the base path
+  const isDev = import.meta.env.DEV
+  const basePath = isDev ? '/' : (import.meta.env.BASE_URL || '/')
   const response = await fetch(`${basePath}data/map_points.json`)
 
   if (!response.ok) {
