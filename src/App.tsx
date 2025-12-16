@@ -1,13 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { useRecords, useDataStore } from '@/features/data'
 import { MapView } from '@/features/map'
 import { Sidebar } from '@/features/filters'
+import { ImageGallery } from '@/features/gallery'
+import { Button } from '@/shared/ui/button'
+import { Image as ImageIcon } from 'lucide-react'
 
 function App() {
   // Load records from JSON
   const { data: records, isLoading, error } = useRecords()
   const setRecords = useDataStore((s) => s.setRecords)
+
+  // Gallery state
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [galleryInitialId, setGalleryInitialId] = useState<string | undefined>()
 
   // Populate store when data loads
   useEffect(() => {
@@ -16,12 +23,29 @@ function App() {
     }
   }, [records, setRecords])
 
+  // Open gallery from external trigger (e.g., PointDetailsSheet)
+  const openGallery = (specimenId?: string) => {
+    setGalleryInitialId(specimenId)
+    setGalleryOpen(true)
+  }
+
   return (
     <div className="flex h-screen flex-col bg-background text-foreground">
       {/* Header */}
       <header className="flex items-center justify-between border-b px-4 py-2">
         <h1 className="text-xl font-bold">Ithomiini Maps</h1>
-        <ModeToggle />
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={() => openGallery()}
+          >
+            <ImageIcon className="h-4 w-4" />
+            Gallery
+          </Button>
+          <ModeToggle />
+        </div>
       </header>
 
       {/* Main content */}
@@ -44,6 +68,13 @@ function App() {
           <MapView />
         </main>
       </div>
+
+      {/* Image Gallery */}
+      <ImageGallery
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        initialSpecimenId={galleryInitialId}
+      />
     </div>
   )
 }
