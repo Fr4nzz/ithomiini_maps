@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { useRecords, useDataStore } from '@/features/data'
 import { MapView } from '@/features/map'
+import { Sidebar } from '@/features/filters'
 
 function App() {
   // Load records from JSON
@@ -24,19 +25,25 @@ function App() {
       </header>
 
       {/* Main content */}
-      <main className="relative flex-1">
-        {isLoading && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
-            <p className="text-muted-foreground">Loading records...</p>
-          </div>
-        )}
-        {error && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
-            <p className="text-destructive">Error: {error.message}</p>
-          </div>
-        )}
-        <MapView />
-      </main>
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Map/Table View */}
+        <main className="relative flex-1">
+          {isLoading && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
+              <p className="text-muted-foreground">Loading records...</p>
+            </div>
+          )}
+          {error && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
+              <p className="text-destructive">Error: {error.message}</p>
+            </div>
+          )}
+          <MapView />
+        </main>
+      </div>
     </div>
   )
 }
