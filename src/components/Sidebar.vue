@@ -11,6 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Slider } from '@/components/ui/slider'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Map, Table2, Download, RotateCcw, Share2, ChevronRight } from 'lucide-vue-next'
 
@@ -166,7 +167,7 @@ const updateExportHeight = (value) => {
 </script>
 
 <template>
-  <aside class="w-[340px] min-w-[340px] h-screen bg-secondary border-r border-border flex flex-col overflow-hidden">
+  <aside class="sidebar-aside w-[340px] min-w-[340px] h-screen bg-secondary border-r border-border flex flex-col overflow-hidden">
     <!-- Header -->
     <header class="p-5 border-b border-border bg-background">
       <div class="flex items-center justify-between">
@@ -302,14 +303,14 @@ const updateExportHeight = (value) => {
       </div>
 
       <!-- Date Filter -->
-      <div class="filter-section collapsible">
-        <button class="collapse-toggle" :class="{ expanded: showDateFilter }" @click="showDateFilter = !showDateFilter">
+      <Collapsible v-model:open="showDateFilter" class="filter-section border border-border rounded-lg">
+        <CollapsibleTrigger class="w-full flex items-center gap-2.5 p-3.5 bg-muted text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground rounded-t-lg data-[state=closed]:rounded-lg">
           <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showDateFilter }" />
           Date Range
           <span v-if="store.filters.dateStart || store.filters.dateEnd" class="active-badge">Active</span>
-        </button>
-        <div v-show="showDateFilter" class="p-0"><DateFilter /></div>
-      </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent><DateFilter /></CollapsibleContent>
+      </Collapsible>
 
       <!-- Sequencing Status -->
       <div class="filter-section">
@@ -333,28 +334,28 @@ const updateExportHeight = (value) => {
 
       <!-- UI Toggles -->
       <div class="filter-section">
-        <div class="toggle-row">
-          <Checkbox id="showThumbnail" :checked="store.showThumbnail" @update:checked="store.showThumbnail = $event" />
-          <Label for="showThumbnail" class="text-sm font-medium cursor-pointer">Show thumbnails</Label>
+        <div class="toggle-row cursor-pointer" @click="store.showThumbnail = !store.showThumbnail">
+          <Checkbox :checked="store.showThumbnail" @update:checked="store.showThumbnail = $event" @click.stop />
+          <span class="text-sm font-medium">Show thumbnails</span>
         </div>
       </div>
 
       <div v-if="currentView === 'map'" class="filter-section">
-        <div class="toggle-row scatter">
-          <Checkbox id="scatterPoints" :checked="store.scatterOverlappingPoints" @update:checked="store.scatterOverlappingPoints = $event" />
-          <Label for="scatterPoints" class="text-sm font-medium cursor-pointer">Scatter overlapping points</Label>
+        <div class="toggle-row scatter cursor-pointer" @click="store.scatterOverlappingPoints = !store.scatterOverlappingPoints">
+          <Checkbox :checked="store.scatterOverlappingPoints" @update:checked="store.scatterOverlappingPoints = $event" @click.stop />
+          <span class="text-sm font-medium">Scatter overlapping points</span>
         </div>
         <p class="text-xs text-muted-foreground italic mt-1.5">Evenly distribute overlapping points within 2.5km radius</p>
       </div>
 
       <!-- Clustering (Map only) -->
-      <div v-if="currentView === 'map'" class="filter-section collapsible">
-        <button class="collapse-toggle" :class="{ expanded: showClusterSettings }" @click="showClusterSettings = !showClusterSettings">
+      <Collapsible v-if="currentView === 'map'" v-model:open="showClusterSettings" class="filter-section border border-border rounded-lg">
+        <CollapsibleTrigger class="w-full flex items-center gap-2.5 p-3.5 bg-muted text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground rounded-t-lg data-[state=closed]:rounded-lg">
           <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showClusterSettings }" />
           Point Clustering
           <span class="toggle-badge" :class="{ active: store.clusteringEnabled }" @click.stop="store.clusteringEnabled = !store.clusteringEnabled">{{ store.clusteringEnabled ? 'ON' : 'OFF' }}</span>
-        </button>
-        <div v-show="showClusterSettings" class="collapse-content">
+        </CollapsibleTrigger>
+        <CollapsibleContent class="p-3.5 border-t border-border">
           <p class="text-xs text-muted-foreground italic mb-3">Groups nearby points into clusters. Click a cluster to view all points.</p>
           <div v-if="store.clusteringEnabled">
             <Label class="text-xs text-muted-foreground mb-1.5 block">Cluster Radius (px)</Label>
@@ -363,8 +364,8 @@ const updateExportHeight = (value) => {
               <input type="number" class="input-sm w-14 text-center" min="10" max="500" v-model.number.lazy="store.clusterSettings.radiusPixels" />
             </div>
           </div>
-        </div>
-      </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       <!-- Legend Settings (Map only) -->
       <div v-if="currentView === 'map'" class="filter-section">
@@ -421,12 +422,12 @@ const updateExportHeight = (value) => {
       </div>
 
       <!-- Point Style (Map only) -->
-      <div v-if="currentView === 'map'" class="filter-section collapsible">
-        <button class="collapse-toggle" :class="{ expanded: showPointStyle }" @click="showPointStyle = !showPointStyle">
+      <Collapsible v-if="currentView === 'map'" v-model:open="showPointStyle" class="filter-section border border-border rounded-lg">
+        <CollapsibleTrigger class="w-full flex items-center gap-2.5 p-3.5 bg-muted text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground rounded-t-lg data-[state=closed]:rounded-lg">
           <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showPointStyle }" />
           Point Style
-        </button>
-        <div v-show="showPointStyle" class="collapse-content space-y-3">
+        </CollapsibleTrigger>
+        <CollapsibleContent class="p-3.5 border-t border-border space-y-3">
           <div>
             <Label class="text-xs text-muted-foreground mb-1.5 block">Point Size</Label>
             <div class="flex items-center gap-3">
@@ -455,16 +456,16 @@ const updateExportHeight = (value) => {
               <input type="text" class="input-sm flex-1 font-mono uppercase" v-model="store.mapStyle.borderColor" />
             </div>
           </div>
-        </div>
-      </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       <!-- URL Share Settings -->
-      <div class="filter-section collapsible">
-        <button class="collapse-toggle" :class="{ expanded: showUrlSettings }" @click="showUrlSettings = !showUrlSettings">
+      <Collapsible v-model:open="showUrlSettings" class="filter-section border border-border rounded-lg">
+        <CollapsibleTrigger class="w-full flex items-center gap-2.5 p-3.5 bg-muted text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground rounded-t-lg data-[state=closed]:rounded-lg">
           <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showUrlSettings }" />
           URL Share Settings
-        </button>
-        <div v-show="showUrlSettings" class="collapse-content">
+        </CollapsibleTrigger>
+        <CollapsibleContent class="p-3.5 border-t border-border">
           <p class="text-xs text-muted-foreground italic mb-3">Choose which settings to include when sharing URLs</p>
           <div class="space-y-2">
             <div class="flex items-center gap-2">
@@ -483,31 +484,29 @@ const updateExportHeight = (value) => {
             </div>
             <p class="text-xs text-muted-foreground italic ml-6">Color by, legend, point style</p>
           </div>
-        </div>
-      </div>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
 
     <!-- GBIF Citation -->
-    <div v-if="store.gbifCitation" class="border-t border-border p-3">
-      <button class="w-full flex items-center gap-2 p-2 border border-border rounded-md text-sm text-muted-foreground hover:bg-background hover:text-foreground transition-colors" @click="showCitation = !showCitation">
+    <Collapsible v-if="store.gbifCitation" v-model:open="showCitation" class="border-t border-border p-3">
+      <CollapsibleTrigger class="w-full flex items-center gap-2 p-2 border border-border rounded-md text-sm text-muted-foreground hover:bg-background hover:text-foreground transition-colors">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span>Data Citation</span>
         <ChevronRight class="h-4 w-4 ml-auto transition-transform" :class="{ 'rotate-90': showCitation }" />
-      </button>
-      <Transition name="slide">
-        <div v-if="showCitation" class="mt-3 p-3 bg-background rounded-md border border-border">
-          <p class="text-xs text-muted-foreground leading-relaxed mb-3">{{ store.gbifCitation.citation_text }}</p>
-          <a v-if="store.gbifCitation.doi_url" :href="store.gbifCitation.doi_url" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-primary/10 border border-primary/30 rounded text-xs text-primary hover:bg-primary/20 transition-colors">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            View on GBIF
-          </a>
-          <div class="flex gap-4 mt-3 pt-3 border-t border-border">
-            <div><span class="block text-base font-semibold text-primary">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span><span class="text-xs text-muted-foreground">iNaturalist</span></div>
-            <div><span class="block text-base font-semibold text-primary">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span><span class="text-xs text-muted-foreground">Other GBIF</span></div>
-          </div>
+      </CollapsibleTrigger>
+      <CollapsibleContent class="mt-3 p-3 bg-background rounded-md border border-border">
+        <p class="text-xs text-muted-foreground leading-relaxed mb-3">{{ store.gbifCitation.citation_text }}</p>
+        <a v-if="store.gbifCitation.doi_url" :href="store.gbifCitation.doi_url" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-primary/10 border border-primary/30 rounded text-xs text-primary hover:bg-primary/20 transition-colors">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View on GBIF
+        </a>
+        <div class="flex gap-4 mt-3 pt-3 border-t border-border">
+          <div><span class="block text-base font-semibold text-primary">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span><span class="text-xs text-muted-foreground">iNaturalist</span></div>
+          <div><span class="block text-base font-semibold text-primary">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span><span class="text-xs text-muted-foreground">Other GBIF</span></div>
         </div>
-      </Transition>
-    </div>
+      </CollapsibleContent>
+    </Collapsible>
 
     <!-- Footer -->
     <footer class="p-4 border-t border-border bg-background relative">
@@ -523,46 +522,4 @@ const updateExportHeight = (value) => {
   </aside>
 </template>
 
-<style scoped>
-@reference "../index.css";
-/* Minimal custom CSS - mostly using Tailwind now */
-.filter-section { @apply mb-6; }
-.section-label { @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3; }
-
-.action-btn { @apply flex-1 flex flex-col items-center gap-1.5 p-3 bg-muted border border-border rounded-lg text-xs text-muted-foreground cursor-pointer transition-all relative hover:bg-accent hover:text-foreground hover:border-primary; }
-.action-btn.active { @apply bg-primary/15 text-primary border-primary; }
-.action-btn:disabled { @apply opacity-50 cursor-not-allowed; }
-.action-btn .badge { @apply absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded-full min-w-[18px] text-center; }
-
-.toggle-row { @apply flex items-center gap-3 p-3.5 bg-muted rounded-md cursor-pointer transition-colors hover:bg-accent; }
-.toggle-row.scatter { @apply bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/15; }
-
-.collapsible { @apply border border-border rounded-lg; }
-.collapse-toggle { @apply w-full flex items-center gap-2.5 p-3.5 bg-muted border-0 text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground; }
-.collapse-content { @apply p-3.5 border-t border-border; }
-
-.subsection-toggle { @apply w-full flex items-center gap-2 p-3 mt-3 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-muted hover:text-foreground; }
-.subsection-content { @apply p-3.5 mt-2 bg-background border border-border rounded-md; }
-
-.toggle-badge { @apply ml-auto px-2 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors bg-muted-foreground/20 text-muted-foreground border border-transparent hover:bg-muted-foreground/30; }
-.toggle-badge.active { @apply bg-primary/15 text-primary border-primary/30 hover:bg-primary/25; }
-
-.active-badge { @apply ml-auto px-2 py-0.5 bg-primary/15 text-primary rounded text-xs; }
-
-.input-sm { @apply px-2 py-1.5 bg-muted border border-border rounded text-sm text-primary font-semibold tabular-nums focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20; }
-.color-picker { @apply w-9 h-9 p-0 border-2 border-border rounded-md cursor-pointer bg-transparent; }
-
-.camid-textarea { @apply w-full min-h-[38px] max-h-[120px] p-2.5 bg-muted border border-border rounded-md text-sm font-mono text-foreground resize-y transition-colors focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10; }
-.camid-dropdown { @apply absolute top-full left-0 right-0 bg-muted border border-border border-t-0 rounded-b-md max-h-[200px] overflow-y-auto z-50 shadow-lg; }
-.camid-suggestion { @apply w-full px-3.5 py-2 bg-transparent border-0 text-sm font-mono text-foreground text-left cursor-pointer transition-colors hover:bg-accent; }
-.camid-suggestion.selected { @apply bg-accent text-primary; }
-
-.slide-enter-active, .slide-leave-active { transition: all 0.3s ease; }
-.slide-enter-from, .slide-leave-to { opacity: 0; transform: translateY(-10px); }
-.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
-.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(-50%) translateY(10px); }
-
-@media (max-width: 768px) {
-  aside { @apply w-full min-w-full h-auto max-h-[50vh]; }
-}
-</style>
+<!-- Styles moved to src/styles/components.css for reliable Tailwind v4 processing -->
