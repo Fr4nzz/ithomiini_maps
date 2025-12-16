@@ -10,6 +10,10 @@ export default defineConfig({
 
   plugins: [react(), tailwindcss()],
 
+  server: {
+    open: true, // Auto-open browser on npm run dev
+  },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

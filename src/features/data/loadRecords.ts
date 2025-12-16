@@ -4,10 +4,9 @@ import type { Record } from './types'
 
 // Fetch records from the JSON file
 async function fetchRecords(): Promise<Record[]> {
-  // In development, Vite serves from root even with base set
-  // In production (GitHub Pages), we need the base path
-  const isDev = import.meta.env.DEV
-  const basePath = isDev ? '/' : (import.meta.env.BASE_URL || '/')
+  // BASE_URL includes the base path from vite.config.ts (e.g., '/ithomiini_maps/')
+  // This works in both dev and production
+  const basePath = import.meta.env.BASE_URL || '/'
   const response = await fetch(`${basePath}data/map_points.json`)
 
   if (!response.ok) {
