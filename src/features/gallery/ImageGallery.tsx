@@ -1,5 +1,6 @@
-import { useState, useMemo, useCallback, useEffect } from 'react'
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import { Button } from '@/shared/ui/button'
 import { ScrollArea } from '@/shared/ui/scroll-area'
 import { Badge } from '@/shared/ui/badge'
@@ -103,6 +104,9 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
         .sort((a, b) => b.count - a.count),
     [groupedBySpecies]
   )
+
+  // Refs
+  const thumbnailContainerRef = useRef<HTMLDivElement>(null)
 
   // State
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -225,6 +229,23 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
       onClose()
     }
   }, [currentSpecimen, setSelectedPoint, onClose])
+
+  // Thumbnail strip virtualizer (horizontal)
+  const THUMBNAIL_SIZE = 84 // 80px + gap
+  const thumbnailVirtualizer = useVirtualizer({
+    count: specimensWithImages.length,
+    getScrollElement: () => thumbnailContainerRef.current,
+    estimateSize: () => THUMBNAIL_SIZE,
+    horizontal: true,
+    overscan: 5,
+  })
+
+  // Scroll to current thumbnail when index changes
+  useEffect(() => {
+    if (open && specimensWithImages.length > 1) {
+      thumbnailVirtualizer.scrollToIndex(currentIndex, { align: 'center' })
+    }
+  }, [currentIndex, open, specimensWithImages.length, thumbnailVirtualizer])
 
   if (!open) return null
 
@@ -554,29 +575,41 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
         </div>
       </div>
 
-      {/* Thumbnail strip */}
+      {/* Virtualized Thumbnail strip */}
       {specimensWithImages.length > 1 && (
-        <div className="flex h-28 overflow-x-auto border-t border-white/10 bg-black/70">
-          <div className="flex gap-1 p-2">
-            {specimensWithImages.map((specimen, idx) => (
-              <button
-                key={specimen.id}
-                className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded border-2 transition-all hover:border-white/40 ${
-                  currentIndex === idx
-                    ? 'border-primary shadow-[0_0_8px_rgba(74,222,128,0.5)]'
-                    : 'border-transparent'
-                }`}
-                onClick={() => selectSpecimen(specimen.id)}
-                title={specimen.id}
-              >
-                <img
-                  src={getThumbnailUrl(specimen.image_url)}
+        <div
+          ref={thumbnailContainerRef}
+          className="h-28 overflow-x-auto border-t border-white/10 bg-black/70"
+        >
+          <div
+            className="relative h-full"
+            style={{ width: `${thumbnailVirtualizer.getTotalSize()}px` }}
+          >
+            {thumbnailVirtualizer.getVirtualItems().map((virtualItem) => {
+              const specimen = specimensWithImages[virtualItem.index]
+              return (
+                <button
+                  key={specimen.id}
+                  className={`absolute top-2 h-20 w-20 overflow-hidden rounded border-2 transition-all hover:border-white/40 ${
+                    currentIndex === virtualItem.index
+                      ? 'border-primary shadow-[0_0_8px_rgba(74,222,128,0.5)]'
+                      : 'border-transparent'
+                  }`}
+                  style={{
+                    left: `${virtualItem.start + 8}px`, // 8px padding
+                  }}
+                  onClick={() => selectSpecimen(specimen.id)}
+                  title={specimen.id}
+                >
+                  <img
+                    src={getThumbnailUrl(specimen.image_url)}
                     alt={specimen.id}
                     loading="lazy"
                     className="h-full w-full object-cover"
-                />
-              </button>
-            ))}
+                  />
+                </button>
+              )
+            })}
           </div>
         </div>
       )}
