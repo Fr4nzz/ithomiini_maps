@@ -14,7 +14,7 @@ const props = defineProps({
   <TabsList
     :class="
       cn(
-        'inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground',
+        'inline-flex h-11 items-center justify-center rounded-lg bg-muted p-1.5 text-muted-foreground',
         props.class
       )
     "

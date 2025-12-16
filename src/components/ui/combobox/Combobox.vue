@@ -79,7 +79,7 @@ watch(open, (val) => { if (!val) search.value = '' })
       <button
         type="button"
         :class="cn(
-          'flex h-9 w-full items-center justify-between rounded-md border border-input bg-muted px-3 py-2 text-sm',
+          'flex h-10 w-full items-center justify-between rounded-md border border-input bg-muted px-3 py-2.5 text-sm',
           'focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
           open && 'ring-1 ring-ring'
         )"
