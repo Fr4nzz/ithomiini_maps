@@ -505,7 +505,11 @@ const buildScatterVisualizationGeoJSON = () => {
  * Add or update scatter visualization layers (circles only, no lines)
  */
 const updateScatterVisualization = () => {
-  if (!map || !map.isStyleLoaded()) return
+  console.log('[updateScatterVisualization] Called')
+  if (!map || !map.isStyleLoaded()) {
+    console.log('[updateScatterVisualization] Map not ready')
+    return
+  }
 
   const layerIds = ['scatter-circles-fill', 'scatter-circles-outline']
   const sourceIds = ['scatter-circles-source']
@@ -519,11 +523,18 @@ const updateScatterVisualization = () => {
   })
 
   // Only add if scatter is enabled and there's data
-  if (!store.scatterOverlappingPoints) return
+  if (!store.scatterOverlappingPoints) {
+    console.log('[updateScatterVisualization] Scatter disabled, layers removed')
+    return
+  }
 
   const geoJSON = buildScatterVisualizationGeoJSON()
+  console.log('[updateScatterVisualization] Circle features:', geoJSON.circles.features.length)
 
-  if (geoJSON.circles.features.length === 0) return
+  if (geoJSON.circles.features.length === 0) {
+    console.log('[updateScatterVisualization] No circles to draw')
+    return
+  }
 
   // Add circles source
   map.addSource('scatter-circles-source', {
@@ -1005,10 +1016,12 @@ const handleOpenGallery = () => {
 watch(
   () => store.displayGeoJSON,
   (newData) => {
+    console.log('[DisplayGeoJSON Watch] Triggered, features:', newData?.features?.length)
     if (!map || !map.isStyleLoaded()) return
 
     const newLength = newData?.features?.length || 0
     const currentScatterState = store.scatterOverlappingPoints
+    console.log('[DisplayGeoJSON Watch] currentScatterState:', currentScatterState, 'previousScatterState:', previousScatterState)
 
     // Detect if this change is from scatter toggle vs actual data change
     const scatterJustToggled = currentScatterState !== previousScatterState
@@ -1022,11 +1035,13 @@ watch(
     // - Data length didn't change, OR
     // - Scatter was just toggled (coordinates changed but not actual data)
     const shouldSkipZoom = !dataLengthChanged || scatterJustToggled
+    console.log('[DisplayGeoJSON Watch] scatterJustToggled:', scatterJustToggled, 'dataLengthChanged:', dataLengthChanged, 'shouldSkipZoom:', shouldSkipZoom)
 
     addDataLayer({ skipZoom: shouldSkipZoom })
 
     // Update scatter visualization if enabled
     if (store.scatterOverlappingPoints) {
+      console.log('[DisplayGeoJSON Watch] Scatter enabled, calling updateScatterVisualization')
       updateScatterVisualization()
     }
   },
@@ -1036,8 +1051,13 @@ watch(
 // Watch for scatter toggle changes - rebuild layers and visualization without zoom
 watch(
   () => store.scatterOverlappingPoints,
-  () => {
-    if (!map || !map.isStyleLoaded()) return
+  (newVal) => {
+    console.log('[Scatter Watch] scatterOverlappingPoints changed to:', newVal)
+    if (!map || !map.isStyleLoaded()) {
+      console.log('[Scatter Watch] Map not ready, skipping')
+      return
+    }
+    console.log('[Scatter Watch] Calling updateScatterVisualization')
     // Note: The displayGeoJSON watcher will also fire, but it will detect scatter toggle
     // and skip zoom appropriately
     updateScatterVisualization()
