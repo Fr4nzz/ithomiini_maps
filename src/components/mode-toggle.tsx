@@ -1,5 +1,5 @@
-import { useTheme } from './theme-provider'
-import { Button } from './ui/button'
+import { useTheme } from '@/app/providers'
+import { Button } from '@/shared/ui/button'
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme()

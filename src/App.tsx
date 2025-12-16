@@ -1,7 +1,32 @@
-import { Button } from '@/components/ui/button'
+import { useEffect } from 'react'
+import { Button } from '@/shared/ui/button'
 import { ModeToggle } from '@/components/mode-toggle'
+import { Panel, Stack, Section } from '@/shared/layout'
+import {
+  useRecords,
+  useDataStore,
+  useFilteredCount,
+  useTotalCount,
+  useUniqueSources,
+} from '@/features/data'
 
 function App() {
+  // Load records from JSON
+  const { data: records, isLoading, error } = useRecords()
+  const setRecords = useDataStore((s) => s.setRecords)
+
+  // Populate store when data loads
+  useEffect(() => {
+    if (records) {
+      setRecords(records)
+    }
+  }, [records, setRecords])
+
+  // Get counts from store
+  const totalCount = useTotalCount()
+  const filteredCount = useFilteredCount()
+  const sources = useUniqueSources()
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto p-8">
@@ -10,35 +35,59 @@ function App() {
           <ModeToggle />
         </header>
 
-        <main className="space-y-6">
-          <div className="rounded-lg border bg-card p-6">
-            <h2 className="text-xl font-semibold mb-4">React + Vite + shadcn/ui</h2>
-            <p className="text-muted-foreground mb-4">
-              Project scaffolding complete! Ready to build the Ithomiini Maps application.
-            </p>
-            <div className="flex gap-4">
-              <Button>Primary Button</Button>
-              <Button variant="secondary">Secondary</Button>
-              <Button variant="outline">Outline</Button>
-              <Button variant="ghost">Ghost</Button>
-              <Button variant="destructive">Destructive</Button>
-            </div>
-          </div>
+        <main>
+          <Stack gap="lg">
+            {/* Data Loading Status */}
+            <Panel>
+              <Section title="Data Status">
+                {isLoading && (
+                  <p className="text-muted-foreground">Loading records...</p>
+                )}
+                {error && (
+                  <p className="text-destructive">
+                    Error loading data: {error.message}
+                  </p>
+                )}
+                {!isLoading && !error && (
+                  <div className="space-y-2">
+                    <p className="text-2xl font-bold">
+                      {filteredCount.toLocaleString()} / {totalCount.toLocaleString()} records
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Sources: {sources.join(', ') || 'None loaded'}
+                    </p>
+                  </div>
+                )}
+              </Section>
+            </Panel>
 
-          <div className="rounded-lg border bg-card p-6">
-            <h2 className="text-xl font-semibold mb-4">Installed Dependencies</h2>
-            <ul className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-muted-foreground">
-              <li>- Zustand (state)</li>
-              <li>- TanStack Query</li>
-              <li>- TanStack Table</li>
-              <li>- TanStack Virtual</li>
-              <li>- MapLibre GL</li>
-              <li>- nuqs (URL state)</li>
-              <li>- uFuzzy (search)</li>
-              <li>- Zod (validation)</li>
-              <li>- html-to-image</li>
-            </ul>
-          </div>
+            {/* Project Info */}
+            <Panel>
+              <Section title="React + Vite + shadcn/ui">
+                <p className="text-muted-foreground mb-4">
+                  Project scaffolding complete! Data layer implemented with Zustand + TanStack Query.
+                </p>
+                <div className="flex gap-4 flex-wrap">
+                  <Button>Primary Button</Button>
+                  <Button variant="secondary">Secondary</Button>
+                  <Button variant="outline">Outline</Button>
+                  <Button variant="ghost">Ghost</Button>
+                  <Button variant="destructive">Destructive</Button>
+                </div>
+              </Section>
+            </Panel>
+
+            {/* Build Info */}
+            <Panel>
+              <Section title="Build Info">
+                <p className="text-sm text-muted-foreground">
+                  Build time: {__BUILD_TIME__}
+                  <br />
+                  Commit: {__COMMIT_HASH__}
+                </p>
+              </Section>
+            </Panel>
+          </Stack>
         </main>
       </div>
     </div>
