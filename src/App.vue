@@ -8,6 +8,7 @@ import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
 import MapExport from './components/MapExport.vue'
+import { Toaster } from '@/components/ui/sonner'
 
 const store = useDataStore()
 
@@ -458,12 +459,15 @@ onMounted(() => {
     <!-- Image Gallery (Full screen) -->
     <Teleport to="body">
       <Transition name="fade">
-        <ImageGallery 
-          v-if="showImageGallery" 
-          @close="closeImageGallery" 
+        <ImageGallery
+          v-if="showImageGallery"
+          @close="closeImageGallery"
         />
       </Transition>
     </Teleport>
+
+    <!-- Toast Notifications -->
+    <Toaster position="bottom-right" :rich-colors="true" />
   </div>
 </template>
 
@@ -493,7 +497,7 @@ html, body, #app {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: hsl(var(--background));
 }
 
 .view-container {
@@ -508,8 +512,8 @@ html, body, #app {
   align-items: center;
   gap: 4px;
   padding: 8px 12px;
-  background: var(--color-bg-secondary, #252540);
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  background: hsl(var(--card));
+  border-bottom: 1px solid hsl(var(--border));
 }
 
 .view-toggle-bar button {
@@ -517,10 +521,10 @@ html, body, #app {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: hsl(var(--secondary));
+  border: 1px solid hsl(var(--border));
   border-radius: 6px;
-  color: var(--color-text-muted, #666);
+  color: hsl(var(--muted-foreground));
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -528,14 +532,14 @@ html, body, #app {
 }
 
 .view-toggle-bar button:hover {
-  background: #353558;
-  color: var(--color-text-secondary, #aaa);
+  background: hsl(246 22% 32%);
+  color: hsl(var(--foreground));
 }
 
 .view-toggle-bar button.active {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  border-color: var(--color-accent, #4ade80);
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-color: hsl(var(--primary));
 }
 
 .view-toggle-bar button svg {
@@ -566,7 +570,7 @@ html, body, #app {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%);
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--card)) 100%);
   z-index: 100;
 }
 
@@ -578,8 +582,8 @@ html, body, #app {
   width: 60px;
   height: 60px;
   margin: 0 auto 24px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #4ade80;
+  border: 3px solid hsl(var(--border) / 0.3);
+  border-top-color: hsl(var(--primary));
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -590,13 +594,13 @@ html, body, #app {
 
 .loading-text {
   font-size: 1.2em;
-  color: #e0e0e0;
+  color: hsl(var(--foreground));
   margin-bottom: 8px;
 }
 
 .loading-subtext {
   font-size: 0.9em;
-  color: #666;
+  color: hsl(var(--muted-foreground));
 }
 
 /* Modal Overlay */

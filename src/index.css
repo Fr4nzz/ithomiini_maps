@@ -1,0 +1,277 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TAILWIND CSS 4 THEME CONFIGURATION
+   Map CSS variables to Tailwind utilities
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@theme inline {
+  /* Colors mapped from CSS variables */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* Chart colors */
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  /* Border radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SHADCN-VUE CSS VARIABLES
+   Ithomiini Maps Theme
+
+   To use a custom theme from tweakcn.com:
+   1. Go to https://tweakcn.com/editor/theme
+   2. Customize your theme
+   3. Click "Copy CSS"
+   4. Replace the :root and .dark sections below
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Light Theme */
+:root, .light {
+  --background: 210 20% 98%;
+  --foreground: 235 33% 14%;
+  --card: 0 0% 100%;
+  --card-foreground: 235 33% 14%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 235 33% 14%;
+  --primary: 142 69% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 15% 93%;
+  --secondary-foreground: 235 33% 14%;
+  --muted: 210 15% 93%;
+  --muted-foreground: 220 10% 40%;
+  --accent: 142 69% 45%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 220 13% 87%;
+  --input: 220 13% 87%;
+  --ring: 142 69% 45%;
+  --radius: 0.5rem;
+
+  /* Chart colors */
+  --chart-1: 217 91% 60%;
+  --chart-2: 160 84% 39%;
+  --chart-3: 38 92% 50%;
+  --chart-4: 271 81% 56%;
+  --chart-5: 220 9% 46%;
+
+  /* Status colors */
+  --status-sequenced: 217 91% 60%;
+  --status-tissue: 160 84% 39%;
+  --status-preserved: 38 92% 50%;
+  --status-published: 271 81% 56%;
+  --status-gbif: 220 9% 46%;
+  --status-observation: 142 71% 45%;
+  --status-museum: 258 90% 66%;
+  --status-living: 173 80% 40%;
+
+  color-scheme: light;
+}
+
+/* Dark Theme - Ithomiini Maps Scientific Theme */
+.dark {
+  /* Background Colors */
+  --background: 235 33% 14%;           /* #1a1a2e - primary bg */
+  --foreground: 0 0% 88%;              /* #e0e0e0 - primary text */
+
+  /* Card/Panel Colors */
+  --card: 240 25% 20%;                 /* #252540 - secondary bg */
+  --card-foreground: 0 0% 88%;
+
+  /* Popover/Dropdown Colors */
+  --popover: 240 25% 20%;              /* #252540 */
+  --popover-foreground: 0 0% 88%;
+
+  /* Primary Action Color (Green Accent) */
+  --primary: 142 69% 58%;              /* #4ade80 - green accent */
+  --primary-foreground: 235 33% 14%;   /* Dark text on green */
+
+  /* Secondary Colors */
+  --secondary: 246 22% 27%;            /* #2d2d4a - tertiary bg */
+  --secondary-foreground: 0 0% 88%;
+
+  /* Muted/Subtle Colors */
+  --muted: 240 20% 25%;
+  --muted-foreground: 0 0% 67%;        /* #aaa - secondary text */
+
+  /* Accent (same as primary for consistency) */
+  --accent: 246 22% 32%;
+  --accent-foreground: 0 0% 88%;
+
+  /* Destructive/Danger */
+  --destructive: 0 84% 60%;            /* #ef4444 */
+  --destructive-foreground: 0 0% 98%;
+
+  /* Border & Input Colors */
+  --border: 246 22% 30%;               /* #3d3d5c */
+  --input: 246 22% 30%;
+
+  /* Focus Ring */
+  --ring: 142 69% 58%;                 /* Green accent */
+
+  /* Chart Colors (for data visualization) */
+  --chart-1: 217 91% 60%;              /* #3b82f6 - Sequenced */
+  --chart-2: 160 84% 39%;              /* #10b981 - Tissue Available */
+  --chart-3: 38 92% 50%;               /* #f59e0b - Preserved */
+  --chart-4: 271 81% 56%;              /* #a855f7 - Published */
+  --chart-5: 220 9% 46%;               /* #6b7280 - GBIF Record */
+
+  color-scheme: dark;
+}
+
+/* Default to dark theme - set via JavaScript in useTheme.js */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CUSTOM UTILITIES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Status badge utilities */
+.badge-sequenced {
+  background-color: hsl(var(--status-sequenced));
+  color: white;
+}
+.badge-tissue {
+  background-color: hsl(var(--status-tissue));
+  color: white;
+}
+.badge-preserved {
+  background-color: hsl(var(--status-preserved));
+  color: white;
+}
+.badge-published {
+  background-color: hsl(var(--status-published));
+  color: white;
+}
+.badge-gbif {
+  background-color: hsl(var(--status-gbif));
+  color: white;
+}
+.badge-observation {
+  background-color: hsl(var(--status-observation));
+  color: white;
+}
+.badge-museum {
+  background-color: hsl(var(--status-museum));
+  color: white;
+}
+.badge-living {
+  background-color: hsl(var(--status-living));
+  color: white;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--reka-accordion-content-height); }
+}
+
+@keyframes accordion-up {
+  from { height: var(--reka-accordion-content-height); }
+  to { height: 0; }
+}
+
+@keyframes collapsible-down {
+  from { height: 0; }
+  to { height: var(--reka-collapsible-content-height); }
+}
+
+@keyframes collapsible-up {
+  from { height: var(--reka-collapsible-content-height); }
+  to { height: 0; }
+}
+
+.animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+
+.animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
+}
+
+.animate-collapsible-down {
+  animation: collapsible-down 0.2s ease-out;
+}
+
+.animate-collapsible-up {
+  animation: collapsible-up 0.2s ease-out;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR STYLING
+   ══════════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(246 22% 35%);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) hsl(var(--background));
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SELECTION STYLING
+   ══════════════════════════════════════════════════════════════════════════ */
+
+::selection {
+  background: hsl(var(--primary));
+  color: hsl(var(--background));
+}

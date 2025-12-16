@@ -1,10 +1,12 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
-import './style.css'
 
-// Import vue-multiselect CSS
-import 'vue-multiselect/dist/vue-multiselect.css'
+// Tailwind CSS + shadcn-vue theme
+import './index.css'
+
+// MapLibre and print styles
+import './style.css'
 
 const app = createApp(App)
 const pinia = createPinia()

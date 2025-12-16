@@ -4,18 +4,24 @@ import { useDataStore } from '../stores/data'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 
+// shadcn-vue components
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Slider } from '@/components/ui/slider'
+import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { Map, Table2, Download, RotateCcw, Share2, ChevronRight } from 'lucide-vue-next'
+
 const props = defineProps({
-  currentView: {
-    type: String,
-    default: 'map'
-  }
+  currentView: { type: String, default: 'map' }
 })
 
 const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'set-view'])
-
 const store = useDataStore()
 
-// Local state for CAMID search with autocomplete (multi-value textarea)
+// CAMID search state
 const camidInput = ref('')
 const camidTextarea = ref(null)
 const showCamidDropdown = ref(false)
@@ -23,30 +29,19 @@ const selectedSuggestionIndex = ref(-1)
 const currentWordInfo = ref({ word: '', start: 0, end: 0 })
 let debounceTimer = null
 
-// Get the current word at cursor position for autocomplete
 const getCurrentWord = (text, cursorPos) => {
-  // Find word boundaries (split by comma, space, newline)
   const beforeCursor = text.slice(0, cursorPos)
   const afterCursor = text.slice(cursorPos)
-
-  // Find start of current word (last separator before cursor)
   const startMatch = beforeCursor.match(/[\s,\n]*([^\s,\n]*)$/)
   const wordStart = startMatch ? cursorPos - startMatch[1].length : cursorPos
-
-  // Find end of current word (first separator after cursor)
   const endMatch = afterCursor.match(/^([^\s,\n]*)/)
   const wordEnd = cursorPos + (endMatch ? endMatch[1].length : 0)
-
-  const word = text.slice(wordStart, wordEnd)
-  return { word, start: wordStart, end: wordEnd }
+  return { word: text.slice(wordStart, wordEnd), start: wordStart, end: wordEnd }
 }
 
-// Filtered CAMID suggestions based on current word
 const camidSuggestions = computed(() => {
   const query = currentWordInfo.value.word.trim().toUpperCase()
   if (!query || query.length < 2) return []
-
-  // Filter and limit to 15 suggestions for performance
   const matches = []
   for (const id of store.uniqueCamids) {
     if (id.toUpperCase().includes(query)) {
@@ -58,37 +53,24 @@ const camidSuggestions = computed(() => {
 })
 
 const handleCamidInput = (e) => {
-  const textarea = e.target
-  const value = textarea.value
-  const cursorPos = textarea.selectionStart
-
+  const { value, selectionStart } = e.target
   camidInput.value = value
-  currentWordInfo.value = getCurrentWord(value, cursorPos)
+  currentWordInfo.value = getCurrentWord(value, selectionStart)
   showCamidDropdown.value = currentWordInfo.value.word.length >= 2
   selectedSuggestionIndex.value = -1
-
   clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(() => {
-    store.filters.camidSearch = value.trim().toUpperCase()
-  }, 300)
+  debounceTimer = setTimeout(() => { store.filters.camidSearch = value.trim().toUpperCase() }, 300)
 }
 
 const selectCamid = (camid) => {
   const { start, end } = currentWordInfo.value
   const before = camidInput.value.slice(0, start)
   const after = camidInput.value.slice(end)
-
-  // Insert selected CAMID, add separator if there's more text after
   const separator = after.trim() ? '' : ' '
   camidInput.value = before + camid + separator + after
-
-  // Update the store filter
   store.filters.camidSearch = camidInput.value.trim().toUpperCase()
-
   showCamidDropdown.value = false
   selectedSuggestionIndex.value = -1
-
-  // Focus back and position cursor after inserted CAMID
   if (camidTextarea.value) {
     const newCursorPos = start + camid.length + separator.length
     camidTextarea.value.focus()
@@ -97,24 +79,17 @@ const selectCamid = (camid) => {
 }
 
 const handleCamidKeydown = (e) => {
-  // Update current word on cursor movement
   if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
     setTimeout(() => {
-      const textarea = e.target
-      currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
+      currentWordInfo.value = getCurrentWord(e.target.value, e.target.selectionStart)
       showCamidDropdown.value = currentWordInfo.value.word.length >= 2
     }, 0)
     return
   }
-
   if (!showCamidDropdown.value || camidSuggestions.value.length === 0) return
-
   if (e.key === 'ArrowDown' && !e.altKey) {
     e.preventDefault()
-    selectedSuggestionIndex.value = Math.min(
-      selectedSuggestionIndex.value + 1,
-      camidSuggestions.value.length - 1
-    )
+    selectedSuggestionIndex.value = Math.min(selectedSuggestionIndex.value + 1, camidSuggestions.value.length - 1)
   } else if (e.key === 'ArrowUp' && !e.altKey) {
     e.preventDefault()
     selectedSuggestionIndex.value = Math.max(selectedSuggestionIndex.value - 1, -1)
@@ -123,115 +98,56 @@ const handleCamidKeydown = (e) => {
     selectCamid(camidSuggestions.value[selectedSuggestionIndex.value])
   } else if (e.key === 'Tab' && camidSuggestions.value.length > 0) {
     e.preventDefault()
-    const idx = selectedSuggestionIndex.value >= 0 ? selectedSuggestionIndex.value : 0
-    selectCamid(camidSuggestions.value[idx])
+    selectCamid(camidSuggestions.value[selectedSuggestionIndex.value >= 0 ? selectedSuggestionIndex.value : 0])
   } else if (e.key === 'Escape') {
     showCamidDropdown.value = false
   }
 }
 
-const handleCamidBlur = () => {
-  // Delay to allow click on suggestion
-  setTimeout(() => {
-    showCamidDropdown.value = false
-  }, 150)
-}
-
+const handleCamidBlur = () => setTimeout(() => { showCamidDropdown.value = false }, 150)
 const handleCamidClick = (e) => {
-  const textarea = e.target
-  currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
+  currentWordInfo.value = getCurrentWord(e.target.value, e.target.selectionStart)
   showCamidDropdown.value = currentWordInfo.value.word.length >= 2
 }
 
-// Computed: Record counts
+// Computed values
 const totalRecords = computed(() => store.allFeatures.length)
-const filteredRecords = computed(() => {
-  const geo = store.filteredGeoJSON
-  return geo ? geo.features.length : 0
-})
+const filteredRecords = computed(() => store.filteredGeoJSON?.features.length ?? 0)
+const imageCount = computed(() => store.filteredGeoJSON?.features.filter(f => f.properties?.image_url).length ?? 0)
 
-// Image count
-const imageCount = computed(() => {
-  const geo = store.filteredGeoJSON
-  if (!geo || !geo.features) return 0
-  return geo.features.filter(f => f.properties?.image_url).length
-})
+// UI state
+const showCopiedToast = ref(false)
+const showDateFilter = ref(false)
+const showClusterSettings = ref(false)
+const showAdvancedTaxonomy = ref(false)
+const showAdvancedLegend = ref(false)
+const showPointStyle = ref(false)
+const showUrlSettings = ref(false)
+const showCitation = ref(false)
 
-// Status filter helpers
-const isStatusSelected = (status) => store.filters.status.includes(status)
-
-const toggleStatus = (status) => {
-  const idx = store.filters.status.indexOf(status)
-  if (idx > -1) {
-    store.filters.status.splice(idx, 1)
-  } else {
-    store.filters.status.push(status)
-  }
-}
-
-// Status color mapping
-const statusColors = {
-  'Sequenced': '#3b82f6',
-  'Tissue Available': '#10b981',
-  'Preserved Specimen': '#f59e0b',
-  'Published': '#a855f7',
-  'GBIF Record': '#6b7280',
-  'Observation': '#22c55e',        // Research Grade equivalent
-  'Museum Specimen': '#8b5cf6',
-  'Living Specimen': '#14b8a6',
-}
-
-// Share URL functionality
 const copyShareUrl = () => {
   navigator.clipboard.writeText(window.location.href)
   showCopiedToast.value = true
   setTimeout(() => { showCopiedToast.value = false }, 2000)
 }
 
-const showCopiedToast = ref(false)
-
-// Show date filter section
-const showDateFilter = ref(false)
-
-// Show cluster settings section
-const showClusterSettings = ref(false)
-
-// Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
-const showAdvancedTaxonomy = ref(false)
-
-// Show additional legend settings (Position/Text Size/Max Items)
-const showAdvancedLegend = ref(false)
-
-// Show point style settings section
-const showPointStyle = ref(false)
-
-// Show URL share settings section
-const showUrlSettings = ref(false)
-
-// Show citation section
-const showCitation = ref(false)
-
-// Aspect ratio options
 const aspectRatioOptions = [
-  { value: '16:9', label: '16:9 (Widescreen)', width: 1920, height: 1080 },
-  { value: '4:3', label: '4:3 (Standard)', width: 1600, height: 1200 },
-  { value: '1:1', label: '1:1 (Square)', width: 1200, height: 1200 },
-  { value: '3:2', label: '3:2 (Photo)', width: 1800, height: 1200 },
-  { value: 'A4', label: 'A4 Portrait', width: 2480, height: 3508 },
-  { value: 'A4L', label: 'A4 Landscape', width: 3508, height: 2480 },
-  { value: 'custom', label: 'Custom', width: null, height: null },
+  { value: '16:9', label: '16:9 (Widescreen)' },
+  { value: '4:3', label: '4:3 (Standard)' },
+  { value: '1:1', label: '1:1 (Square)' },
+  { value: '3:2', label: '3:2 (Photo)' },
+  { value: 'A4', label: 'A4 Portrait' },
+  { value: 'A4L', label: 'A4 Landscape' },
+  { value: 'custom', label: 'Custom' },
 ]
 
-// Get current aspect ratio dimensions
+const ASPECT_DIMS = { '16:9': [1920, 1080], '4:3': [1600, 1200], '1:1': [1200, 1200], '3:2': [1800, 1200], 'A4': [2480, 3508], 'A4L': [3508, 2480] }
+
 const currentExportDimensions = computed(() => {
-  const option = aspectRatioOptions.find(o => o.value === store.exportSettings.aspectRatio)
-  if (option && option.value !== 'custom') {
-    return { width: option.width, height: option.height }
-  }
-  return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
+  const dims = ASPECT_DIMS[store.exportSettings.aspectRatio]
+  return dims ? { width: dims[0], height: dims[1] } : { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
 })
 
-// Update export dimensions - switches to custom mode when editing
 const updateExportWidth = (value) => {
   const width = parseInt(value, 10)
   if (!isNaN(width) && width >= 100 && width <= 8000) {
@@ -250,629 +166,293 @@ const updateExportHeight = (value) => {
 </script>
 
 <template>
-  <aside class="sidebar">
+  <aside class="w-[340px] min-w-[340px] h-screen bg-secondary border-r border-border flex flex-col overflow-hidden">
     <!-- Header -->
-    <header class="sidebar-header">
-      <a href="https://github.com/Fr4nzz/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="logo">
-        <img src="../assets/Map_icon.svg" alt="Ithomiini Maps" class="logo-icon" />
-        <div class="logo-text">
-          <span class="title">Ithomiini</span>
-          <span class="subtitle">Distribution Maps</span>
-        </div>
-      </a>
+    <header class="p-5 border-b border-border bg-background">
+      <div class="flex items-center justify-between">
+        <a href="https://github.com/Fr4nzz/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 no-underline hover:opacity-85 transition-opacity">
+          <img src="../assets/Map_icon.svg" alt="Ithomiini Maps" class="w-10 h-10" />
+          <div class="flex flex-col">
+            <span class="text-xl font-semibold text-foreground tracking-tight">Ithomiini</span>
+            <span class="text-xs text-muted-foreground uppercase tracking-wider">Distribution Maps</span>
+          </div>
+        </a>
+        <ThemeToggle />
+      </div>
     </header>
 
     <!-- Scrollable Content -->
-    <div class="sidebar-content">
-      
+    <div class="flex-1 overflow-y-auto p-4">
       <!-- View Toggle -->
-      <div class="view-toggle">
-        <button 
-          :class="{ active: currentView === 'map' }"
-          @click="emit('set-view', 'map')"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
-            <line x1="8" y1="2" x2="8" y2="18"/>
-            <line x1="16" y1="6" x2="16" y2="22"/>
-          </svg>
-          Map
-        </button>
-        <button 
-          :class="{ active: currentView === 'table' }"
-          @click="emit('set-view', 'table')"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <line x1="3" y1="9" x2="21" y2="9"/>
-            <line x1="3" y1="15" x2="21" y2="15"/>
-            <line x1="9" y1="3" x2="9" y2="21"/>
-          </svg>
-          Table
-        </button>
+      <Tabs :model-value="currentView" @update:model-value="emit('set-view', $event)" class="mb-4">
+        <TabsList class="w-full grid grid-cols-2 gap-1 p-1 bg-background rounded-lg">
+          <TabsTrigger value="map" class="flex items-center justify-center gap-1.5 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <Map class="h-4 w-4" /> Map
+          </TabsTrigger>
+          <TabsTrigger value="table" class="flex items-center justify-center gap-1.5 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <Table2 class="h-4 w-4" /> Table
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      <!-- Record Count -->
+      <div class="bg-primary/10 border border-primary/20 rounded-lg p-3 mb-4 text-center">
+        <span class="text-2xl font-bold text-primary tabular-nums">{{ filteredRecords.toLocaleString() }}</span>
+        <span class="text-sm text-muted-foreground ml-1.5">of {{ totalRecords.toLocaleString() }} records</span>
       </div>
 
-      <!-- Record Count Banner -->
-      <div class="record-count">
-        <span class="count">{{ filteredRecords.toLocaleString() }}</span>
-        <span class="label">of {{ totalRecords.toLocaleString() }} records</span>
-      </div>
-
-      <!-- Quick Actions Row -->
-      <div class="quick-actions">
+      <!-- Quick Actions -->
+      <div class="flex gap-2 mb-5">
         <button class="action-btn" @click="emit('open-gallery')" :disabled="imageCount === 0">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
           </svg>
           <span>Gallery</span>
-          <span class="badge" v-if="imageCount > 0">{{ imageCount }}</span>
+          <span v-if="imageCount > 0" class="badge">{{ imageCount }}</span>
         </button>
         <button class="action-btn" @click="emit('open-mimicry')">
-          <img src="../assets/Mimicry_bttn.svg" alt="Mimicry" class="mimicry-icon" />
+          <img src="../assets/Mimicry_bttn.svg" alt="Mimicry" class="w-5 h-5" />
           <span>Mimicry</span>
-          <span class="badge" v-if="store.filters.mimicry.length > 0">{{ store.filters.mimicry.length }}</span>
+          <span v-if="store.filters.mimicry.length > 0" class="badge">{{ store.filters.mimicry.length }}</span>
         </button>
-        <button
-          class="action-btn"
-          :class="{ active: store.exportSettings.enabled }"
-          @click="store.exportSettings.enabled = !store.exportSettings.enabled"
-          v-if="currentView === 'map'"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
+        <button v-if="currentView === 'map'" class="action-btn" :class="{ active: store.exportSettings.enabled }" @click="store.exportSettings.enabled = !store.exportSettings.enabled">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
           </svg>
-          <span>Preview Export</span>
+          <span>Export</span>
         </button>
       </div>
 
-      <!-- Export Settings (appears when Preview Export is active) -->
-      <div v-if="store.exportSettings.enabled && currentView === 'map'" class="filter-section export-settings-panel">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
-          </svg>
-          Export Settings
-        </label>
+      <!-- Export Settings Panel -->
+      <div v-if="store.exportSettings.enabled && currentView === 'map'" class="filter-section bg-primary/5 border border-primary/20 rounded-lg p-3.5">
+        <label class="section-label text-primary">Export Settings</label>
 
-        <!-- Aspect Ratio -->
-        <div class="setting-row">
-          <label>Aspect Ratio</label>
-          <select v-model="store.exportSettings.aspectRatio" class="style-select">
-            <option v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
-              {{ opt.label }}
-            </option>
-          </select>
-        </div>
+        <div class="space-y-3">
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Aspect Ratio</Label>
+            <Select :model-value="store.exportSettings.aspectRatio" @update:model-value="store.exportSettings.aspectRatio = $event">
+              <SelectTrigger class="h-9"><SelectValue placeholder="Select ratio" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-        <!-- Dimensions (editable) -->
-        <div class="setting-row">
-          <label>Resolution</label>
-          <div class="dimension-inputs">
-            <div class="dimension-field">
-              <input
-                type="number"
-                class="setting-input dimension-input"
-                :value="currentExportDimensions.width"
-                @input="updateExportWidth($event.target.value)"
-                min="100"
-                max="8000"
-                @keydown.enter="$event.target.blur()"
-              />
-              <span class="dimension-label">W</span>
-            </div>
-            <span class="dimension-x">×</span>
-            <div class="dimension-field">
-              <input
-                type="number"
-                class="setting-input dimension-input"
-                :value="currentExportDimensions.height"
-                @input="updateExportHeight($event.target.value)"
-                min="100"
-                max="8000"
-                @keydown.enter="$event.target.blur()"
-              />
-              <span class="dimension-label">H</span>
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Resolution</Label>
+            <div class="flex items-center gap-2">
+              <input type="number" class="input-sm w-16" :value="currentExportDimensions.width" @input="updateExportWidth($event.target.value)" min="100" max="8000" />
+              <span class="text-muted-foreground">×</span>
+              <input type="number" class="input-sm w-16" :value="currentExportDimensions.height" @input="updateExportHeight($event.target.value)" min="100" max="8000" />
             </div>
           </div>
-        </div>
 
-        <!-- Include Options -->
-        <div class="setting-row checkbox-group" style="margin-top: 12px;">
-          <label class="checkbox-label">
-            <input type="checkbox" v-model="store.exportSettings.includeLegend" />
-            <span>Include Legend</span>
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
-            <span>Include Scale Bar</span>
-          </label>
-        </div>
-
-        <!-- UI Scale -->
-        <div class="setting-row" style="margin-top: 12px;">
-          <label>UI Scale <span class="setting-hint">(legend, scale bar size)</span></label>
-          <div class="slider-group">
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              v-model.number="store.exportSettings.uiScale"
-            />
-            <span class="slider-value">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
+          <div class="flex flex-col gap-2 pt-2">
+            <div class="flex items-center gap-2">
+              <Checkbox id="includeLegend" :checked="store.exportSettings.includeLegend" @update:checked="store.exportSettings.includeLegend = $event" />
+              <Label for="includeLegend" class="text-sm cursor-pointer">Include Legend</Label>
+            </div>
+            <div class="flex items-center gap-2">
+              <Checkbox id="includeScaleBar" :checked="store.exportSettings.includeScaleBar" @update:checked="store.exportSettings.includeScaleBar = $event" />
+              <Label for="includeScaleBar" class="text-sm cursor-pointer">Include Scale Bar</Label>
+            </div>
           </div>
-        </div>
 
-        <!-- Export Button -->
-        <button class="btn-export-now" @click="emit('open-map-export')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Export Image
-        </button>
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">UI Scale</Label>
+            <div class="flex items-center gap-3">
+              <Slider :model-value="[store.exportSettings.uiScale]" @update:model-value="store.exportSettings.uiScale = $event[0]" :min="0.5" :max="2" :step="0.1" class="flex-1" />
+              <span class="text-sm font-semibold text-primary w-12 text-right">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
+            </div>
+          </div>
+
+          <Button class="w-full mt-2" @click="emit('open-map-export')">
+            <Download class="h-4 w-4 mr-2" /> Export Image
+          </Button>
+        </div>
       </div>
 
-      <!-- CAMID Search with Autocomplete (Multi-value) -->
+      <!-- CAMID Search -->
       <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
-          </svg>
-          Search CAMIDs
-        </label>
-        <p class="filter-hint" style="margin-top: 0; margin-bottom: 6px;">
-          Enter or paste multiple IDs (comma/space/newline separated)
-        </p>
-        <div class="camid-autocomplete">
-          <textarea
-            ref="camidTextarea"
-            class="camid-textarea"
-            placeholder="e.g. CAM012345, CAM012346..."
-            :value="camidInput"
-            @input="handleCamidInput"
-            @keydown="handleCamidKeydown"
-            @click="handleCamidClick"
-            @focus="handleCamidClick"
-            @blur="handleCamidBlur"
-            autocomplete="off"
-            spellcheck="false"
-            rows="1"
-          ></textarea>
-          <div
-            v-if="showCamidDropdown && camidSuggestions.length > 0"
-            class="camid-dropdown"
-          >
-            <button
-              v-for="(suggestion, index) in camidSuggestions"
-              :key="suggestion"
-              class="camid-suggestion"
-              :class="{ selected: index === selectedSuggestionIndex }"
-              @mousedown.prevent="selectCamid(suggestion)"
-            >
-              {{ suggestion }}
-            </button>
+        <label class="section-label">Search CAMIDs</label>
+        <p class="text-xs text-muted-foreground italic mb-1.5">Enter or paste multiple IDs (comma/space/newline separated)</p>
+        <div class="relative">
+          <textarea ref="camidTextarea" class="camid-textarea" placeholder="e.g. CAM012345, CAM012346..." :value="camidInput" @input="handleCamidInput" @keydown="handleCamidKeydown" @click="handleCamidClick" @focus="handleCamidClick" @blur="handleCamidBlur" autocomplete="off" spellcheck="false" rows="1" />
+          <div v-if="showCamidDropdown && camidSuggestions.length > 0" class="camid-dropdown">
+            <button v-for="(s, i) in camidSuggestions" :key="s" class="camid-suggestion" :class="{ selected: i === selectedSuggestionIndex }" @mousedown.prevent="selectCamid(s)">{{ s }}</button>
           </div>
         </div>
       </div>
 
-      <!-- Taxonomy Section (Species/Subspecies visible, Family/Tribe/Genus expandable) -->
+      <!-- Taxonomy -->
       <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3v18m-6-6 6 6 6-6"/>
-          </svg>
-          Taxonomy
-        </label>
-
-        <!-- Species Multi-select with Fuzzy Search -->
-        <FilterSelect
-          label="Species"
-          v-model="store.filters.species"
-          :options="store.uniqueSpecies"
-          placeholder="Search species..."
-          :multiple="true"
-        />
-
-        <!-- Subspecies Multi-select -->
-        <FilterSelect
-          label="Subspecies"
-          v-model="store.filters.subspecies"
-          :options="store.uniqueSubspecies"
-          placeholder="Search subspecies..."
-          :multiple="true"
-        />
-
-        <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->
-        <button
-          class="subsection-toggle"
-          @click="showAdvancedTaxonomy = !showAdvancedTaxonomy"
-          :class="{ expanded: showAdvancedTaxonomy }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
+        <label class="section-label">Taxonomy</label>
+        <FilterSelect label="Species" v-model="store.filters.species" :options="store.uniqueSpecies" placeholder="Search species..." :multiple="true" />
+        <FilterSelect label="Subspecies" v-model="store.filters.subspecies" :options="store.uniqueSubspecies" placeholder="Search subspecies..." :multiple="true" />
+        <button class="subsection-toggle" :class="{ expanded: showAdvancedTaxonomy }" @click="showAdvancedTaxonomy = !showAdvancedTaxonomy">
+          <ChevronRight class="h-3.5 w-3.5 transition-transform" :class="{ 'rotate-90': showAdvancedTaxonomy }" />
           Family / Tribe / Genus
-          <span v-if="store.filters.family !== 'All' || store.filters.tribe !== 'All' || store.filters.genus !== 'All'" class="active-indicator"></span>
+          <span v-if="store.filters.family !== 'All' || store.filters.tribe !== 'All' || store.filters.genus !== 'All'" class="w-1.5 h-1.5 rounded-full bg-primary ml-auto" />
         </button>
-
         <div v-show="showAdvancedTaxonomy" class="subsection-content">
-          <FilterSelect
-            label="Family"
-            v-model="store.filters.family"
-            :options="['All', ...store.uniqueFamilies]"
-            placeholder="All Families"
-            :multiple="false"
-            :show-count="false"
-          />
-
-          <FilterSelect
-            label="Tribe"
-            v-model="store.filters.tribe"
-            :options="['All', ...store.uniqueTribes]"
-            placeholder="All Tribes"
-            :multiple="false"
-            :show-count="false"
-          />
-
-          <FilterSelect
-            label="Genus"
-            v-model="store.filters.genus"
-            :options="['All', ...store.uniqueGenera]"
-            placeholder="All Genera"
-            :multiple="false"
-          />
+          <FilterSelect label="Family" v-model="store.filters.family" :options="['All', ...store.uniqueFamilies]" placeholder="All Families" :multiple="false" :show-count="false" />
+          <FilterSelect label="Tribe" v-model="store.filters.tribe" :options="['All', ...store.uniqueTribes]" placeholder="All Tribes" :multiple="false" :show-count="false" />
+          <FilterSelect label="Genus" v-model="store.filters.genus" :options="['All', ...store.uniqueGenera]" placeholder="All Genera" :multiple="false" />
         </div>
       </div>
 
-      <!-- Date Filter (Collapsible) -->
+      <!-- Date Filter -->
       <div class="filter-section collapsible">
-        <button 
-          class="collapse-toggle"
-          @click="showDateFilter = !showDateFilter"
-          :class="{ expanded: showDateFilter }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
+        <button class="collapse-toggle" :class="{ expanded: showDateFilter }" @click="showDateFilter = !showDateFilter">
+          <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showDateFilter }" />
           Date Range
-          <span v-if="store.filters.dateStart || store.filters.dateEnd" class="active-badge">
-            Active
-          </span>
+          <span v-if="store.filters.dateStart || store.filters.dateEnd" class="active-badge">Active</span>
         </button>
+        <div v-show="showDateFilter" class="p-0"><DateFilter /></div>
+      </div>
 
-        <div v-show="showDateFilter" class="collapse-content no-padding">
-          <DateFilter />
+      <!-- Sequencing Status -->
+      <div class="filter-section">
+        <label class="section-label">Sequencing Status</label>
+        <FilterSelect v-model="store.filters.status" :options="store.uniqueStatuses" placeholder="All Statuses" :multiple="true" />
+        <p v-if="store.filters.status.length > 0" class="text-xs text-muted-foreground italic mt-2">{{ store.filters.status.length }} status{{ store.filters.status.length > 1 ? 'es' : '' }} selected</p>
+      </div>
+
+      <!-- Data Source -->
+      <div class="filter-section">
+        <label class="section-label">Data Source</label>
+        <FilterSelect v-model="store.filters.source" :options="store.uniqueSources" placeholder="Select sources..." :multiple="true" />
+        <p v-if="store.filters.source.length === 0" class="text-xs text-muted-foreground italic mt-2">No sources selected - showing all data</p>
+      </div>
+
+      <!-- Country -->
+      <div class="filter-section">
+        <label class="section-label">Country</label>
+        <FilterSelect v-model="store.filters.country" :options="['All', ...store.uniqueCountries]" placeholder="All Countries" :multiple="false" :show-count="false" />
+      </div>
+
+      <!-- UI Toggles -->
+      <div class="filter-section">
+        <div class="toggle-row">
+          <Checkbox id="showThumbnail" :checked="store.showThumbnail" @update:checked="store.showThumbnail = $event" />
+          <Label for="showThumbnail" class="text-sm font-medium cursor-pointer">Show thumbnails</Label>
         </div>
       </div>
 
-      <!-- Sequencing Status (Dropdown with All default) -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
-          Sequencing Status
-        </label>
-
-        <FilterSelect
-          v-model="store.filters.status"
-          :options="store.uniqueStatuses"
-          placeholder="All Statuses"
-          :multiple="true"
-        />
-        <p class="filter-hint" v-if="store.filters.status.length > 0">
-          {{ store.filters.status.length }} status{{ store.filters.status.length > 1 ? 'es' : '' }} selected
-        </p>
+      <div v-if="currentView === 'map'" class="filter-section">
+        <div class="toggle-row scatter">
+          <Checkbox id="scatterPoints" :checked="store.scatterOverlappingPoints" @update:checked="store.scatterOverlappingPoints = $event" />
+          <Label for="scatterPoints" class="text-sm font-medium cursor-pointer">Scatter overlapping points</Label>
+        </div>
+        <p class="text-xs text-muted-foreground italic mt-1.5">Evenly distribute overlapping points within 2.5km radius</p>
       </div>
 
-      <!-- Data Source (Multi-select, default Sanger) -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-            <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
-          </svg>
-          Data Source
-        </label>
-        <FilterSelect
-          v-model="store.filters.source"
-          :options="store.uniqueSources"
-          placeholder="Select sources..."
-          :multiple="true"
-        />
-        <p class="filter-hint" v-if="store.filters.source.length === 0">
-          No sources selected - showing all data
-        </p>
-      </div>
-
-      <!-- Country Filter -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
-          Country
-        </label>
-        <FilterSelect
-          v-model="store.filters.country"
-          :options="['All', ...store.uniqueCountries]"
-          placeholder="All Countries"
-          :multiple="false"
-          :show-count="false"
-        />
-      </div>
-
-      <!-- UI Preferences -->
-      <div class="filter-section">
-        <label class="thumbnail-toggle">
-          <input type="checkbox" v-model="store.showThumbnail" />
-          <span>Show thumbnails</span>
-        </label>
-      </div>
-
-      <!-- Scatter Overlapping Points (Map View Only) -->
-      <div class="filter-section" v-if="currentView === 'map'">
-        <label class="thumbnail-toggle scatter-toggle">
-          <input type="checkbox" v-model="store.scatterOverlappingPoints" />
-          <span>Scatter overlapping points</span>
-        </label>
-        <p class="filter-hint" style="margin-top: 6px;">
-          Evenly distribute overlapping points within 2.5km radius with connecting lines
-        </p>
-      </div>
-
-      <!-- Clustering Settings (Map View Only) -->
-      <div class="filter-section collapsible" v-if="currentView === 'map'">
-        <button
-          class="collapse-toggle"
-          @click="showClusterSettings = !showClusterSettings"
-          :class="{ expanded: showClusterSettings }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
+      <!-- Clustering (Map only) -->
+      <div v-if="currentView === 'map'" class="filter-section collapsible">
+        <button class="collapse-toggle" :class="{ expanded: showClusterSettings }" @click="showClusterSettings = !showClusterSettings">
+          <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showClusterSettings }" />
           Point Clustering
-          <span
-            class="clustering-toggle-badge"
-            :class="{ active: store.clusteringEnabled }"
-            @click.stop="store.clusteringEnabled = !store.clusteringEnabled"
-            title="Click to toggle clustering"
-          >
-            {{ store.clusteringEnabled ? 'ON' : 'OFF' }}
-          </span>
+          <span class="toggle-badge" :class="{ active: store.clusteringEnabled }" @click.stop="store.clusteringEnabled = !store.clusteringEnabled">{{ store.clusteringEnabled ? 'ON' : 'OFF' }}</span>
         </button>
-
         <div v-show="showClusterSettings" class="collapse-content">
-          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
-            Groups nearby points into clusters. Click a cluster to view all points.
-          </p>
-
-          <!-- Cluster Settings (only visible when clustering is enabled) -->
-          <div v-if="store.clusteringEnabled" class="cluster-settings">
-            <!-- Cluster Radius in pixels -->
-            <div class="setting-row">
-              <label>Cluster Radius <span class="setting-hint">(px)</span></label>
-              <div class="slider-group">
-                <input
-                  type="range"
-                  min="20"
-                  max="200"
-                  step="10"
-                  v-model.number="store.clusterSettings.radiusPixels"
-                />
-                <input
-                  type="number"
-                  class="setting-input"
-                  min="10"
-                  max="500"
-                  v-model.number.lazy="store.clusterSettings.radiusPixels"
-                  @keydown.enter="$event.target.blur()"
-                />
-              </div>
+          <p class="text-xs text-muted-foreground italic mb-3">Groups nearby points into clusters. Click a cluster to view all points.</p>
+          <div v-if="store.clusteringEnabled">
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Cluster Radius (px)</Label>
+            <div class="flex items-center gap-3">
+              <Slider :model-value="[store.clusterSettings.radiusPixels]" @update:model-value="store.clusterSettings.radiusPixels = $event[0]" :min="20" :max="200" :step="10" class="flex-1" />
+              <input type="number" class="input-sm w-14 text-center" min="10" max="500" v-model.number.lazy="store.clusterSettings.radiusPixels" />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Legend Settings (Map View Only) - Color by visible, Position/Text/Max expandable -->
-      <div class="filter-section" v-if="currentView === 'map'">
+      <!-- Legend Settings (Map only) -->
+      <div v-if="currentView === 'map'" class="filter-section">
         <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <line x1="8" y1="9" x2="8" y2="9.01"/>
-            <line x1="8" y1="13" x2="8" y2="13.01"/>
-            <line x1="8" y1="17" x2="8" y2="17.01"/>
-            <line x1="12" y1="9" x2="18" y2="9"/>
-            <line x1="12" y1="13" x2="18" y2="13"/>
-            <line x1="12" y1="17" x2="18" y2="17"/>
-          </svg>
           Legend Settings
-          <span
-            class="toggle-badge-inline"
-            :class="{ active: store.legendSettings.showLegend }"
-            @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend"
-            title="Click to toggle legend"
-          >
-            {{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}
-          </span>
+          <span class="toggle-badge ml-auto" :class="{ active: store.legendSettings.showLegend }" @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend">{{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}</span>
         </label>
-
-        <!-- Color By (always visible) -->
-        <div class="setting-row">
-          <label>Color by</label>
-          <select v-model="store.colorBy" class="style-select">
-            <option value="subspecies">Subspecies</option>
-            <option value="species">Species</option>
-            <option value="genus">Genus</option>
-            <option value="status">Sequencing Status</option>
-            <option value="mimicry">Mimicry Ring</option>
-            <option value="source">Data Source</option>
-          </select>
+        <div class="mb-3">
+          <Label class="text-xs text-muted-foreground mb-1.5 block">Color by</Label>
+          <Select :model-value="store.colorBy" @update:model-value="store.colorBy = $event">
+            <SelectTrigger class="h-9"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="subspecies">Subspecies</SelectItem>
+              <SelectItem value="species">Species</SelectItem>
+              <SelectItem value="genus">Genus</SelectItem>
+              <SelectItem value="status">Sequencing Status</SelectItem>
+              <SelectItem value="mimicry">Mimicry Ring</SelectItem>
+              <SelectItem value="source">Data Source</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-
-        <!-- Advanced Legend Settings Toggle -->
-        <button
-          class="subsection-toggle"
-          @click="showAdvancedLegend = !showAdvancedLegend"
-          :class="{ expanded: showAdvancedLegend }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
+        <button class="subsection-toggle" :class="{ expanded: showAdvancedLegend }" @click="showAdvancedLegend = !showAdvancedLegend">
+          <ChevronRight class="h-3.5 w-3.5 transition-transform" :class="{ 'rotate-90': showAdvancedLegend }" />
           Position / Text Size / Max Items
         </button>
-
-        <div v-show="showAdvancedLegend" class="subsection-content">
-          <!-- Legend Position -->
-          <div class="setting-row">
-            <label>Position</label>
-            <select v-model="store.legendSettings.position" class="style-select">
-              <option value="bottom-left">Bottom Left</option>
-              <option value="bottom-right">Bottom Right</option>
-              <option value="top-left">Top Left</option>
-              <option value="top-right">Top Right</option>
-            </select>
+        <div v-show="showAdvancedLegend" class="subsection-content space-y-3">
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Position</Label>
+            <Select :model-value="store.legendSettings.position" @update:model-value="store.legendSettings.position = $event">
+              <SelectTrigger class="h-9"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="bottom-left">Bottom Left</SelectItem>
+                <SelectItem value="bottom-right">Bottom Right</SelectItem>
+                <SelectItem value="top-left">Top Left</SelectItem>
+                <SelectItem value="top-right">Top Right</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-
-          <!-- Text Size -->
-          <div class="setting-row">
-            <label>Text Size</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0.6"
-                max="1.2"
-                step="0.05"
-                v-model.number="store.legendSettings.textSize"
-              />
-              <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Text Size</Label>
+            <div class="flex items-center gap-3">
+              <Slider :model-value="[store.legendSettings.textSize]" @update:model-value="store.legendSettings.textSize = $event[0]" :min="0.6" :max="1.2" :step="0.05" class="flex-1" />
+              <span class="text-sm font-semibold text-primary w-12 text-right">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
             </div>
           </div>
-
-          <!-- Max Items -->
-          <div class="setting-row">
-            <label>Max Items Shown</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="5"
-                max="30"
-                step="1"
-                v-model.number="store.legendSettings.maxItems"
-              />
-              <input
-                type="number"
-                class="setting-input"
-                min="3"
-                max="50"
-                v-model.number.lazy="store.legendSettings.maxItems"
-                @keydown.enter="$event.target.blur()"
-              />
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Max Items Shown</Label>
+            <div class="flex items-center gap-3">
+              <Slider :model-value="[store.legendSettings.maxItems]" @update:model-value="store.legendSettings.maxItems = $event[0]" :min="5" :max="30" :step="1" class="flex-1" />
+              <input type="number" class="input-sm w-14 text-center" min="3" max="50" v-model.number.lazy="store.legendSettings.maxItems" />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Point Style (Map View Only) - Separate section for point appearance -->
-      <div class="filter-section collapsible" v-if="currentView === 'map'">
-        <button
-          class="collapse-toggle"
-          @click="showPointStyle = !showPointStyle"
-          :class="{ expanded: showPointStyle }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
+      <!-- Point Style (Map only) -->
+      <div v-if="currentView === 'map'" class="filter-section collapsible">
+        <button class="collapse-toggle" :class="{ expanded: showPointStyle }" @click="showPointStyle = !showPointStyle">
+          <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showPointStyle }" />
           Point Style
         </button>
-
-        <div v-show="showPointStyle" class="collapse-content">
-          <!-- Point Size -->
-          <div class="setting-row">
-            <label>Point Size</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="4"
-                max="20"
-                step="1"
-                v-model.number="store.mapStyle.pointSize"
-              />
-              <input
-                type="number"
-                class="setting-input"
-                min="2"
-                max="30"
-                v-model.number.lazy="store.mapStyle.pointSize"
-                @keydown.enter="$event.target.blur()"
-              />
+        <div v-show="showPointStyle" class="collapse-content space-y-3">
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Point Size</Label>
+            <div class="flex items-center gap-3">
+              <Slider :model-value="[store.mapStyle.pointSize]" @update:model-value="store.mapStyle.pointSize = $event[0]" :min="4" :max="20" :step="1" class="flex-1" />
+              <input type="number" class="input-sm w-14 text-center" min="2" max="30" v-model.number.lazy="store.mapStyle.pointSize" />
             </div>
           </div>
-
-          <!-- Border Width -->
-          <div class="setting-row">
-            <label>Border Width</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0"
-                max="5"
-                step="0.5"
-                v-model.number="store.mapStyle.borderWidth"
-              />
-              <input
-                type="number"
-                class="setting-input"
-                min="0"
-                max="10"
-                step="0.5"
-                v-model.number.lazy="store.mapStyle.borderWidth"
-                @keydown.enter="$event.target.blur()"
-              />
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Border Width</Label>
+            <div class="flex items-center gap-3">
+              <Slider :model-value="[store.mapStyle.borderWidth]" @update:model-value="store.mapStyle.borderWidth = $event[0]" :min="0" :max="5" :step="0.5" class="flex-1" />
+              <input type="number" class="input-sm w-14 text-center" min="0" max="10" step="0.5" v-model.number.lazy="store.mapStyle.borderWidth" />
             </div>
           </div>
-
-          <!-- Fill Opacity -->
-          <div class="setting-row">
-            <label>Fill Opacity</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0.1"
-                max="1"
-                step="0.05"
-                v-model.number="store.mapStyle.fillOpacity"
-              />
-              <span class="slider-value">{{ Math.round(store.mapStyle.fillOpacity * 100) }}%</span>
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Fill Opacity</Label>
+            <div class="flex items-center gap-3">
+              <Slider :model-value="[store.mapStyle.fillOpacity]" @update:model-value="store.mapStyle.fillOpacity = $event[0]" :min="0.1" :max="1" :step="0.05" class="flex-1" />
+              <span class="text-sm font-semibold text-primary w-12 text-right">{{ Math.round(store.mapStyle.fillOpacity * 100) }}%</span>
             </div>
           </div>
-
-          <!-- Border Color -->
-          <div class="setting-row">
-            <label>Border Color</label>
-            <div class="color-picker-row">
-              <input
-                type="color"
-                v-model="store.mapStyle.borderColor"
-                class="color-picker"
-              />
-              <input
-                type="text"
-                class="setting-input color-input"
-                v-model="store.mapStyle.borderColor"
-                @keydown.enter="$event.target.blur()"
-              />
+          <div>
+            <Label class="text-xs text-muted-foreground mb-1.5 block">Border Color</Label>
+            <div class="flex items-center gap-2">
+              <input type="color" v-model="store.mapStyle.borderColor" class="color-picker" />
+              <input type="text" class="input-sm flex-1 font-mono uppercase" v-model="store.mapStyle.borderColor" />
             </div>
           </div>
         </div>
@@ -880,1284 +460,109 @@ const updateExportHeight = (value) => {
 
       <!-- URL Share Settings -->
       <div class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="showUrlSettings = !showUrlSettings"
-          :class="{ expanded: showUrlSettings }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
+        <button class="collapse-toggle" :class="{ expanded: showUrlSettings }" @click="showUrlSettings = !showUrlSettings">
+          <ChevronRight class="h-4 w-4 transition-transform" :class="{ 'rotate-90': showUrlSettings }" />
           URL Share Settings
         </button>
-
         <div v-show="showUrlSettings" class="collapse-content">
-          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
-            Choose which settings to include when sharing URLs
-          </p>
-
-          <div class="setting-row checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeFilters" />
-              <span>Include Filters</span>
-            </label>
-            <p class="checkbox-hint">Taxonomy, mimicry, status, source filters</p>
-
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeMapView" />
-              <span>Include Map View</span>
-            </label>
-            <p class="checkbox-hint">Map center, zoom, rotation</p>
-
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeStyleSettings" />
-              <span>Include Style Settings</span>
-            </label>
-            <p class="checkbox-hint">Color by, legend, point style</p>
+          <p class="text-xs text-muted-foreground italic mb-3">Choose which settings to include when sharing URLs</p>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <Checkbox id="includeFilters" :checked="store.urlSettings.includeFilters" @update:checked="store.urlSettings.includeFilters = $event" />
+              <Label for="includeFilters" class="text-sm cursor-pointer">Include Filters</Label>
+            </div>
+            <p class="text-xs text-muted-foreground italic ml-6">Taxonomy, mimicry, status, source filters</p>
+            <div class="flex items-center gap-2">
+              <Checkbox id="includeMapView" :checked="store.urlSettings.includeMapView" @update:checked="store.urlSettings.includeMapView = $event" />
+              <Label for="includeMapView" class="text-sm cursor-pointer">Include Map View</Label>
+            </div>
+            <p class="text-xs text-muted-foreground italic ml-6">Map center, zoom, rotation</p>
+            <div class="flex items-center gap-2">
+              <Checkbox id="includeStyleSettings" :checked="store.urlSettings.includeStyleSettings" @update:checked="store.urlSettings.includeStyleSettings = $event" />
+              <Label for="includeStyleSettings" class="text-sm cursor-pointer">Include Style Settings</Label>
+            </div>
+            <p class="text-xs text-muted-foreground italic ml-6">Color by, legend, point style</p>
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- GBIF Citation -->
-    <div v-if="store.gbifCitation" class="citation-section">
-      <button class="citation-toggle" @click="showCitation = !showCitation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 16v-4"/>
-          <path d="M12 8h.01"/>
-        </svg>
+    <div v-if="store.gbifCitation" class="border-t border-border p-3">
+      <button class="w-full flex items-center gap-2 p-2 border border-border rounded-md text-sm text-muted-foreground hover:bg-background hover:text-foreground transition-colors" @click="showCitation = !showCitation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span>Data Citation</span>
-        <svg class="chevron" :class="{ rotated: showCitation }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+        <ChevronRight class="h-4 w-4 ml-auto transition-transform" :class="{ 'rotate-90': showCitation }" />
       </button>
       <Transition name="slide">
-        <div v-if="showCitation" class="citation-content">
-          <p class="citation-text">{{ store.gbifCitation.citation_text }}</p>
-          <a
-            v-if="store.gbifCitation.doi_url"
-            :href="store.gbifCitation.doi_url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="citation-link"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              <polyline points="15 3 21 3 21 9"/>
-              <line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
+        <div v-if="showCitation" class="mt-3 p-3 bg-background rounded-md border border-border">
+          <p class="text-xs text-muted-foreground leading-relaxed mb-3">{{ store.gbifCitation.citation_text }}</p>
+          <a v-if="store.gbifCitation.doi_url" :href="store.gbifCitation.doi_url" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-primary/10 border border-primary/30 rounded text-xs text-primary hover:bg-primary/20 transition-colors">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             View on GBIF
           </a>
-          <div class="citation-stats">
-            <div class="stat">
-              <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span>
-              <span class="stat-label">iNaturalist</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span>
-              <span class="stat-label">Other GBIF</span>
-            </div>
+          <div class="flex gap-4 mt-3 pt-3 border-t border-border">
+            <div><span class="block text-base font-semibold text-primary">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span><span class="text-xs text-muted-foreground">iNaturalist</span></div>
+            <div><span class="block text-base font-semibold text-primary">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span><span class="text-xs text-muted-foreground">Other GBIF</span></div>
           </div>
         </div>
       </Transition>
     </div>
 
-    <!-- Footer Actions -->
-    <footer class="sidebar-footer">
-      <div class="footer-row">
-        <button class="btn-reset" @click="store.resetAllFilters">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-            <path d="M3 3v5h5"/>
-          </svg>
-          Reset
-        </button>
-
-        <button class="btn-share" @click="copyShareUrl">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="18" cy="5" r="3"/>
-            <circle cx="6" cy="12" r="3"/>
-            <circle cx="18" cy="19" r="3"/>
-            <path d="m8.59 13.51 6.83 3.98m-.01-10.98-6.82 3.98"/>
-          </svg>
-          Share
-        </button>
-
-        <button class="btn-export" @click="emit('open-export')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Export
-        </button>
+    <!-- Footer -->
+    <footer class="p-4 border-t border-border bg-background relative">
+      <div class="flex gap-2">
+        <Button variant="outline" size="sm" class="flex-1" @click="store.resetAllFilters"><RotateCcw class="h-3.5 w-3.5 mr-1" />Reset</Button>
+        <Button variant="outline" size="sm" class="flex-1" @click="copyShareUrl"><Share2 class="h-3.5 w-3.5 mr-1" />Share</Button>
+        <Button size="sm" class="flex-1" @click="emit('open-export')"><Download class="h-3.5 w-3.5 mr-1" />Export</Button>
       </div>
-
-      <!-- Toast notification -->
       <Transition name="toast">
-        <div v-if="showCopiedToast" class="toast">
-          URL copied to clipboard!
-        </div>
+        <div v-if="showCopiedToast" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium shadow-lg whitespace-nowrap">URL copied to clipboard!</div>
       </Transition>
     </footer>
   </aside>
 </template>
 
 <style scoped>
-.sidebar {
-  width: 340px;
-  min-width: 340px;
-  height: 100vh;
-  background: var(--color-bg-secondary, #252540);
-  border-right: 1px solid var(--color-border, #3d3d5c);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+@reference "../index.css";
+/* Minimal custom CSS - mostly using Tailwind now */
+.filter-section { @apply mb-5; }
+.section-label { @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5; }
 
-/* Header */
-.sidebar-header {
-  padding: 20px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-primary, #1a1a2e);
-}
+.action-btn { @apply flex-1 flex flex-col items-center gap-1 p-2.5 bg-muted border border-border rounded-lg text-xs text-muted-foreground cursor-pointer transition-all relative hover:bg-accent hover:text-foreground hover:border-primary; }
+.action-btn.active { @apply bg-primary/15 text-primary border-primary; }
+.action-btn:disabled { @apply opacity-50 cursor-not-allowed; }
+.action-btn .badge { @apply absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded-full min-w-[18px] text-center; }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
+.toggle-row { @apply flex items-center gap-2.5 p-3 bg-muted rounded-md cursor-pointer transition-colors hover:bg-accent; }
+.toggle-row.scatter { @apply bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/15; }
 
-.logo:hover {
-  opacity: 0.85;
-}
+.collapsible { @apply border border-border rounded-lg; }
+.collapse-toggle { @apply w-full flex items-center gap-2 p-3 bg-muted border-0 text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground; }
+.collapse-content { @apply p-3 border-t border-border; }
 
-.logo svg {
-  width: 36px;
-  height: 36px;
-  color: var(--color-accent, #4ade80);
-}
+.subsection-toggle { @apply w-full flex items-center gap-1.5 p-2.5 mt-3 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-muted hover:text-foreground; }
+.subsection-content { @apply p-3 mt-2 bg-background border border-border rounded-md; }
 
-.logo-icon {
-  width: 40px;
-  height: 40px;
-}
+.toggle-badge { @apply ml-auto px-2 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors bg-muted-foreground/20 text-muted-foreground border border-transparent hover:bg-muted-foreground/30; }
+.toggle-badge.active { @apply bg-primary/15 text-primary border-primary/30 hover:bg-primary/25; }
 
-.logo-text {
-  display: flex;
-  flex-direction: column;
-}
+.active-badge { @apply ml-auto px-2 py-0.5 bg-primary/15 text-primary rounded text-xs; }
 
-.logo-text .title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--color-text-primary, #e0e0e0);
-  letter-spacing: -0.5px;
-}
+.input-sm { @apply px-2 py-1.5 bg-muted border border-border rounded text-sm text-primary font-semibold tabular-nums focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20; }
+.color-picker { @apply w-9 h-9 p-0 border-2 border-border rounded-md cursor-pointer bg-transparent; }
 
-.logo-text .subtitle {
-  font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+.camid-textarea { @apply w-full min-h-[38px] max-h-[120px] p-2.5 bg-muted border border-border rounded-md text-sm font-mono text-foreground resize-y transition-colors focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10; }
+.camid-dropdown { @apply absolute top-full left-0 right-0 bg-muted border border-border border-t-0 rounded-b-md max-h-[200px] overflow-y-auto z-50 shadow-lg; }
+.camid-suggestion { @apply w-full px-3.5 py-2 bg-transparent border-0 text-sm font-mono text-foreground text-left cursor-pointer transition-colors hover:bg-accent; }
+.camid-suggestion.selected { @apply bg-accent text-primary; }
 
-/* Scrollable Content */
-.sidebar-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-}
+.slide-enter-active, .slide-leave-active { transition: all 0.3s ease; }
+.slide-enter-from, .slide-leave-to { opacity: 0; transform: translateY(-10px); }
+.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
+.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(-50%) translateY(10px); }
 
-/* View Toggle */
-.view-toggle {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 16px;
-  padding: 4px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 8px;
-}
-
-.view-toggle button {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background: transparent;
-  border: none;
-  border-radius: 6px;
-  color: var(--color-text-muted, #666);
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.view-toggle button:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-secondary, #aaa);
-}
-
-.view-toggle button.active {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-}
-
-.view-toggle button svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Record Count */
-.record-count {
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
-  border: 1px solid rgba(74, 222, 128, 0.2);
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.record-count .count {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-accent, #4ade80);
-  font-variant-numeric: tabular-nums;
-}
-
-.record-count .label {
-  font-size: 0.8rem;
-  color: var(--color-text-secondary, #aaa);
-  margin-left: 6px;
-}
-
-/* Quick Actions */
-.quick-actions {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.action-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 8px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-
-.action-btn:hover:not(:disabled) {
-  background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
-  border-color: var(--color-accent, #4ade80);
-}
-
-.action-btn.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  border-color: var(--color-accent, #4ade80);
-}
-
-.action-btn.active:hover {
-  background: rgba(74, 222, 128, 0.25);
-}
-
-.action-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.action-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.action-btn .mimicry-icon {
-  width: 22px;
-  height: 22px;
-}
-
-.action-btn .badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  font-size: 0.6rem;
-  font-weight: 600;
-  padding: 2px 5px;
-  border-radius: 10px;
-  min-width: 18px;
-  text-align: center;
-}
-
-/* Filter Sections */
-.filter-section {
-  margin-bottom: 20px;
-}
-
-/* Export Settings Panel */
-.export-settings-panel {
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(74, 222, 128, 0.03) 100%);
-  border: 1px solid rgba(74, 222, 128, 0.2);
-  border-radius: 8px;
-  padding: 14px;
-}
-
-.export-settings-panel .section-label {
-  color: var(--color-accent, #4ade80);
-}
-
-.btn-export-now {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  margin-top: 16px;
-  background: var(--color-accent, #4ade80);
-  border: none;
-  border-radius: 6px;
-  color: var(--color-bg-primary, #1a1a2e);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-export-now:hover {
-  background: #5eeb94;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
-}
-
-.btn-export-now svg {
-  width: 18px;
-  height: 18px;
-}
-
-.section-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-text-secondary, #aaa);
-  margin-bottom: 10px;
-}
-
-.section-label svg {
-  width: 14px;
-  height: 14px;
-  opacity: 0.7;
-}
-
-/* Thumbnail Toggle */
-.thumbnail-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border-radius: 6px;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.2s;
-}
-
-.thumbnail-toggle:hover {
-  background: var(--color-bg-hover, #363653);
-}
-
-.thumbnail-toggle input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.thumbnail-toggle span {
-  font-size: 0.9rem;
-  color: var(--color-text-primary, #e0e0e0);
-  font-weight: 500;
-}
-
-/* Scatter toggle specific styles */
-.scatter-toggle {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.scatter-toggle:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-/* Search Input */
-.search-input {
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
-/* CAMID Autocomplete */
-.camid-autocomplete {
-  position: relative;
-}
-
-.camid-textarea {
-  width: 100%;
-  min-height: 38px;
-  max-height: 120px; /* ~5 lines */
-  padding: 10px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-  font-family: monospace;
-  line-height: 1.4;
-  resize: vertical;
-  overflow: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  transition: border-color 0.2s;
-}
-
-.camid-textarea:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
-}
-
-.camid-textarea::placeholder {
-  color: var(--color-text-muted, #666);
-  font-family: inherit;
-}
-
-.camid-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-top: none;
-  border-radius: 0 0 6px 6px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 100;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.camid-suggestion {
-  width: 100%;
-  padding: 8px 14px;
-  background: transparent;
-  border: none;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-  font-family: monospace;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.camid-suggestion:hover,
-.camid-suggestion.selected {
-  background: var(--color-bg-hover, #363653);
-}
-
-.camid-suggestion.selected {
-  color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
-}
-
-.search-input::placeholder {
-  color: var(--color-text-muted, #666);
-}
-
-/* Collapsible Sections */
-.collapsible {
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 8px;
-  /* overflow: visible to allow dropdowns to extend outside */
-}
-
-.collapse-toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: none;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.collapse-toggle:hover {
-  background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.collapse-toggle svg {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s;
-}
-
-.collapse-toggle.expanded svg {
-  transform: rotate(90deg);
-}
-
-.active-badge {
-  margin-left: auto;
-  padding: 2px 8px;
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  border-radius: 4px;
-  font-size: 0.7rem;
-}
-
-.collapse-content {
-  padding: 12px 14px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-}
-
-.collapse-content.no-padding {
-  padding: 0;
-}
-
-/* Subsection Toggle (used within filter sections for nested expandable content) */
-.subsection-toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 12px;
-  margin-top: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-muted, #666);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.subsection-toggle:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-secondary, #aaa);
-  border-color: var(--color-text-muted, #666);
-}
-
-.subsection-toggle svg {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.2s;
-  flex-shrink: 0;
-}
-
-.subsection-toggle.expanded svg {
-  transform: rotate(90deg);
-}
-
-.subsection-toggle .active-indicator {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent, #4ade80);
-  margin-left: auto;
-}
-
-.subsection-content {
-  padding: 12px;
-  margin-top: 8px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-}
-
-/* Toggle Badge Inline (used in section headers) */
-.toggle-badge-inline {
-  margin-left: auto;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: rgba(107, 114, 128, 0.2);
-  color: #888;
-  border: 1px solid transparent;
-}
-
-.toggle-badge-inline:hover {
-  background: rgba(107, 114, 128, 0.3);
-  border-color: rgba(107, 114, 128, 0.4);
-}
-
-.toggle-badge-inline.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  border-color: rgba(74, 222, 128, 0.3);
-}
-
-.toggle-badge-inline.active:hover {
-  background: rgba(74, 222, 128, 0.25);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
-.filter-hint {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
-  font-style: italic;
-  margin-top: 8px;
-}
-
-/* Visual Selector Button */
-.btn-visual-selector {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 12px;
-  margin-top: 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px dashed rgba(74, 222, 128, 0.3);
-  border-radius: 6px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-visual-selector:hover {
-  background: rgba(74, 222, 128, 0.15);
-  border-style: solid;
-}
-
-.btn-visual-selector svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Clear Selection Button */
-.btn-clear-selection {
-  width: 100%;
-  padding: 6px 12px;
-  margin-top: 8px;
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-clear-selection:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-/* Selected Tags (for multi-select filters) */
-.selected-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
-.selected-tag {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 4px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.selected-tag:hover {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-.selected-tag svg {
-  width: 12px;
-  height: 12px;
-}
-
-/* Status Grid */
-.status-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.status-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 2px solid transparent;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.status-btn:hover {
-  background: #353558;
-}
-
-.status-btn.active {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.status-label {
-  font-size: 0.8rem;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-/* Footer */
-.sidebar-footer {
-  padding: 16px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-primary, #1a1a2e);
-  position: relative;
-}
-
-.footer-row {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-reset,
-.btn-share,
-.btn-export {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 10px 8px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-reset {
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  color: var(--color-text-secondary, #aaa);
-}
-
-.btn-reset:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.btn-share {
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  color: var(--color-text-secondary, #aaa);
-}
-
-.btn-share:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.btn-export {
-  background: var(--color-accent, #4ade80);
-  border: none;
-  color: var(--color-bg-primary, #1a1a2e);
-}
-
-.btn-export:hover {
-  background: #5eeb94;
-}
-
-.btn-reset svg,
-.btn-share svg,
-.btn-export svg {
-  width: 14px;
-  height: 14px;
-}
-
-/* Toast */
-.toast {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  white-space: nowrap;
-  margin-bottom: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.toast-enter-active,
-.toast-leave-active {
-  transition: all 0.3s ease;
-}
-
-.toast-enter-from,
-.toast-leave-to {
-  opacity: 0;
-  transform: translateX(-50%) translateY(10px);
-}
-
-/* Clustering Toggle Badge */
-.clustering-toggle-badge {
-  margin-left: auto;
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: rgba(107, 114, 128, 0.2);
-  color: #888;
-  border: 1px solid transparent;
-}
-
-.clustering-toggle-badge:hover {
-  background: rgba(107, 114, 128, 0.3);
-  border-color: rgba(107, 114, 128, 0.4);
-}
-
-.clustering-toggle-badge.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  border-color: rgba(74, 222, 128, 0.3);
-}
-
-.clustering-toggle-badge.active:hover {
-  background: rgba(74, 222, 128, 0.25);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
-/* Cluster Settings */
-.cluster-settings {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 6px;
-}
-
-.setting-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.setting-row label {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
-  font-weight: 500;
-}
-
-.slider-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.slider-group input[type="range"] {
-  flex: 1;
-  height: 4px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border-radius: 2px;
-  outline: none;
-}
-
-.slider-group input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--color-accent, #4ade80);
-  cursor: pointer;
-  transition: transform 0.15s;
-}
-
-.slider-group input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-}
-
-.slider-group input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  border: none;
-  border-radius: 50%;
-  background: var(--color-accent, #4ade80);
-  cursor: pointer;
-}
-
-.slider-value {
-  min-width: 45px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-accent, #4ade80);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-.setting-input {
-  width: 55px;
-  padding: 4px 6px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  -moz-appearance: textfield;
-}
-
-.setting-input::-webkit-outer-spin-button,
-.setting-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.setting-input:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
-}
-
-.setting-hint {
-  font-weight: 400;
-  font-size: 0.65rem;
-  color: var(--color-text-muted, #666);
-}
-
-/* Style Select */
-.style-select {
-  width: 100%;
-  padding: 8px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.style-select:hover {
-  border-color: var(--color-text-muted, #666);
-}
-
-.style-select:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
-}
-
-/* Color Picker */
-.color-picker-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.color-picker {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  cursor: pointer;
-  background: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 4px;
-  border: none;
-}
-
-.color-input {
-  flex: 1;
-  width: auto;
-  font-family: monospace;
-  text-transform: uppercase;
-}
-
-/* Export Settings */
-.dimension-inputs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dimension-field {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.dimension-input {
-  width: 70px !important;
-}
-
-.dimension-label {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
-}
-
-.dimension-x {
-  color: var(--color-text-muted, #666);
-  font-size: 0.9rem;
-}
-
-.export-dimensions-preview {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 4px;
-  text-align: center;
-}
-
-.dimension-text {
-  font-size: 0.8rem;
-  color: var(--color-accent, #4ade80);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Checkbox Group */
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  padding: 6px 0;
-}
-
-.checkbox-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.checkbox-label span {
-  font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.checkbox-hint {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
-  margin: -4px 0 4px 26px;
-  font-style: italic;
-}
-
-/* Citation Section */
-.citation-section {
-  border-top: 1px solid var(--color-border, #3d3d5c);
-  padding: 12px 16px;
-}
-
-.citation-toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.citation-toggle:hover {
-  background: var(--color-bg-primary, #1a1a2e);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.citation-toggle svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-.citation-toggle .chevron {
-  margin-left: auto;
-  transition: transform 0.2s;
-}
-
-.citation-toggle .chevron.rotated {
-  transform: rotate(180deg);
-}
-
-.citation-content {
-  margin-top: 12px;
-  padding: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 6px;
-  border: 1px solid var(--color-border, #3d3d5c);
-}
-
-.citation-text {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
-  line-height: 1.5;
-  margin: 0 0 12px 0;
-}
-
-.citation-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 4px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.75rem;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.citation-link:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
-.citation-link svg {
-  width: 14px;
-  height: 14px;
-}
-
-.citation-stats {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-}
-
-.citation-stats .stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.citation-stats .stat-value {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-accent, #4ade80);
-}
-
-.citation-stats .stat-label {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
-}
-
-/* Slide transition for citation */
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    min-width: 100%;
-    height: auto;
-    max-height: 50vh;
-  }
-
-  .view-toggle {
-    display: none;
-  }
+  aside { @apply w-full min-w-full h-auto max-h-[50vh]; }
 }
 </style>
