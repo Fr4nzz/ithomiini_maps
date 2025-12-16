@@ -2,14 +2,11 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 
-// Tailwind CSS + shadcn-vue theme (must come first)
+// Tailwind CSS + shadcn-vue theme
 import './index.css'
 
-// Legacy styles (MapLibre overrides, animations - will be migrated gradually)
+// MapLibre and print styles
 import './style.css'
-
-// Import vue-multiselect CSS (will be removed after migration to shadcn Command)
-import 'vue-multiselect/dist/vue-multiselect.css'
 
 const app = createApp(App)
 const pinia = createPinia()

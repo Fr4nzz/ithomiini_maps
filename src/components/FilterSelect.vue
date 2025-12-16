@@ -1,10 +1,9 @@
 <script setup>
 /**
  * FilterSelect Component
- * Multi-select dropdown with fuzzy search using vue-multiselect
+ * Multi-select dropdown with search using shadcn Combobox
  */
-import VueMultiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.css'
+import { Combobox } from '@/components/ui/combobox'
 
 const props = defineProps({
   label: String,
@@ -17,13 +16,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
-
-const updateValue = (val) => emit('update:modelValue', val)
-
-const customLabel = (option) => {
-  if (typeof option === 'object') return option.label || option.name || option.value
-  return option
-}
 </script>
 
 <template>
@@ -32,27 +24,13 @@ const customLabel = (option) => {
       {{ label }}
       <span v-if="showCount && options.length > 0" class="text-muted-foreground/70 font-normal">({{ options.length }})</span>
     </label>
-    <VueMultiselect
+    <Combobox
       :model-value="modelValue"
-      @update:model-value="updateValue"
+      @update:model-value="emit('update:modelValue', $event)"
       :options="options"
       :placeholder="placeholder"
       :multiple="multiple"
-      :close-on-select="!multiple"
-      :searchable="true"
-      :show-labels="false"
-      :custom-label="customLabel"
-      :allow-empty="true"
       :disabled="disabled"
-      :max-height="300"
-      :options-limit="500"
-    >
-      <template #noResult>
-        <span class="block px-3 py-2.5 text-muted-foreground text-sm italic">No matching results</span>
-      </template>
-      <template #noOptions>
-        <span class="block px-3 py-2.5 text-muted-foreground text-sm italic">No options available</span>
-      </template>
-    </VueMultiselect>
+    />
   </div>
 </template>
