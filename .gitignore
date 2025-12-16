@@ -5,8 +5,8 @@ node_modules/
 dist/
 dist-ssr/
 
-# Generated data (regenerate via scripts)
-public/data/
+# Note: public/data/ is tracked for GitHub Pages deployment
+# To regenerate, run: python scripts/gbif_download_api.py && python scripts/process_data.py
 
 # Secrets
 .env

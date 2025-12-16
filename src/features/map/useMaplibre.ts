@@ -78,28 +78,49 @@ export function useMaplibre(
     map.on('load', () => {
       addDataSource(map)
 
-      // Initialize spiderfy for overlapping points
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      spiderfyRef.current = new Spiderfy(map as any, {
-        onLeafClick: (feature: GeoJSON.Feature) => {
-          const id = feature.properties?.id as string
-          if (id) {
-            const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
-            setSelectedPoint(id)
-            options.onPointClick?.(id, { lat, lng })
-          }
-        },
-        minZoomLevel: 12,
-        zoomIncrement: 2,
-        closeOnLeafClick: true,
-        circleFootSeparation: 40,
-        spiralFootSeparation: 30,
-        spiralLengthStart: 20,
-        spiralLengthFactor: 5,
-      })
+      // Try to initialize spiderfy for overlapping points
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        spiderfyRef.current = new Spiderfy(map as any, {
+          onLeafClick: (feature: GeoJSON.Feature) => {
+            const id = feature.properties?.id as string
+            if (id) {
+              const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
+              setSelectedPoint(id)
+              options.onPointClick?.(id, { lat, lng })
+            }
+          },
+          minZoomLevel: 12,
+          zoomIncrement: 2,
+          closeOnLeafClick: true,
+          circleFootSeparation: 40,
+          spiralFootSeparation: 30,
+          spiralLengthStart: 20,
+          spiralLengthFactor: 5,
+        })
 
-      // Apply spiderfy to points layer
-      spiderfyRef.current.applyTo('points-layer')
+        // Apply spiderfy to points layer
+        spiderfyRef.current.applyTo('points-layer')
+      } catch (err) {
+        console.warn('Spiderfy initialization failed, using fallback click handler:', err)
+        spiderfyRef.current = null
+
+        // Fallback: direct click handler for points
+        map.on('click', 'points-layer', (e) => {
+          if (e.features && e.features.length > 0) {
+            const ids = e.features
+              .map((f) => f.properties?.id as string)
+              .filter((id): id is string => !!id)
+
+            if (ids.length > 0) {
+              const feature = e.features[0]
+              const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
+              setSelectedPoint(ids[0])
+              options.onPointClick?.(ids.length === 1 ? ids[0] : ids, { lat, lng })
+            }
+          }
+        })
+      }
 
       options.onMapReady?.(map)
     })
