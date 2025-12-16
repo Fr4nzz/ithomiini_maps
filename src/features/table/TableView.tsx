@@ -1,35 +1,20 @@
-import { useState, useMemo } from 'react'
+import { useState, useRef } from 'react'
 import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  getPaginationRowModel,
   useReactTable,
   type ColumnDef,
   type SortingState,
   type VisibilityState,
 } from '@tanstack/react-table'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import { Button } from '@/shared/ui/button'
 import { Badge } from '@/shared/ui/badge'
 import { Checkbox } from '@/shared/ui/checkbox'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/ui/select'
 import { useFilteredRecords } from '@/features/data'
 import { getThumbnailUrl } from '@/shared/lib/imageProxy'
-import {
-  ChevronUp,
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  LayoutGrid,
-  Search,
-} from 'lucide-react'
+import { ChevronUp, LayoutGrid, Search } from 'lucide-react'
 import type { Record as DataRecord } from '@/features/data/types'
 
 // Status colors
@@ -39,6 +24,9 @@ const STATUS_COLORS: { [key: string]: string } = {
   'Preserved Specimen': 'bg-amber-500',
   Published: 'bg-purple-500',
 }
+
+// Row height for virtualization
+const ROW_HEIGHT = 60
 
 // Column definitions
 const columnDefs: ColumnDef<DataRecord>[] = [
@@ -113,9 +101,7 @@ const columnDefs: ColumnDef<DataRecord>[] = [
       if (!val) return '—'
       return (
         <span className="inline-flex items-center gap-1.5 rounded bg-white/5 px-2 py-0.5 text-xs">
-          <span
-            className={`h-2 w-2 rounded-full ${STATUS_COLORS[val] || 'bg-gray-500'}`}
-          />
+          <span className={`h-2 w-2 rounded-full ${STATUS_COLORS[val] || 'bg-gray-500'}`} />
           {val}
         </span>
       )
@@ -168,6 +154,7 @@ const columnDefs: ColumnDef<DataRecord>[] = [
 
 export function TableView() {
   const records = useFilteredRecords()
+  const tableContainerRef = useRef<HTMLDivElement>(null)
 
   // Column visibility state
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
@@ -192,7 +179,7 @@ export function TableView() {
   // Show column settings popup
   const [showColumnSettings, setShowColumnSettings] = useState(false)
 
-  // Table instance
+  // Table instance (no pagination)
   const table = useReactTable({
     data: records,
     columns: columnDefs,
@@ -204,39 +191,24 @@ export function TableView() {
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: 50,
-      },
-    },
   })
 
-  // Pagination info
-  const pageIndex = table.getState().pagination.pageIndex
-  const pageSize = table.getState().pagination.pageSize
-  const pageCount = table.getPageCount()
+  const { rows } = table.getRowModel()
+
+  // Virtual row renderer with Firefox fix
+  const rowVirtualizer = useVirtualizer({
+    count: rows.length,
+    getScrollElement: () => tableContainerRef.current,
+    estimateSize: () => ROW_HEIGHT,
+    // Firefox fix for measureElement
+    measureElement:
+      navigator.userAgent.indexOf('Firefox') === -1
+        ? (el) => el?.getBoundingClientRect().height
+        : undefined,
+    overscan: 10,
+  })
+
   const totalRows = records.length
-
-  // Visible pages for pagination
-  const visiblePages = useMemo(() => {
-    const pages: (number | '...')[] = []
-    const current = pageIndex + 1
-
-    if (pageCount <= 7) {
-      for (let i = 1; i <= pageCount; i++) pages.push(i)
-    } else {
-      pages.push(1)
-      if (current > 3) pages.push('...')
-      for (let i = Math.max(2, current - 1); i <= Math.min(pageCount - 1, current + 1); i++) {
-        pages.push(i)
-      }
-      if (current < pageCount - 2) pages.push('...')
-      pages.push(pageCount)
-    }
-
-    return pages
-  }, [pageIndex, pageCount])
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-lg bg-card">
@@ -246,26 +218,8 @@ export function TableView() {
           <span className="text-sm text-secondary-foreground">
             <strong className="text-primary">{totalRows.toLocaleString()}</strong> records
           </span>
-          <span className="text-xs text-muted-foreground">
-            Page {pageIndex + 1} of {pageCount}
-          </span>
         </div>
         <div className="relative flex items-center gap-3">
-          <Select
-            value={pageSize.toString()}
-            onValueChange={(value) => table.setPageSize(parseInt(value))}
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="25">25 rows</SelectItem>
-              <SelectItem value="50">50 rows</SelectItem>
-              <SelectItem value="100">100 rows</SelectItem>
-              <SelectItem value="200">200 rows</SelectItem>
-            </SelectContent>
-          </Select>
-
           <Button
             variant="outline"
             size="sm"
@@ -305,17 +259,17 @@ export function TableView() {
         </div>
       </div>
 
-      {/* Table */}
-      <div className="flex-1 overflow-auto">
+      {/* Virtualized Table */}
+      <div ref={tableContainerRef} className="flex-1 overflow-auto">
         <table className="w-full border-collapse text-sm">
-          <thead>
+          <thead className="sticky top-0 z-10 bg-background">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
                     style={{ width: header.getSize() }}
-                    className={`sticky top-0 z-10 whitespace-nowrap border-b-2 border-border bg-background px-3 py-2.5 text-left font-semibold text-secondary-foreground ${
+                    className={`whitespace-nowrap border-b-2 border-border px-3 py-2.5 text-left font-semibold text-secondary-foreground ${
                       header.column.getCanSort()
                         ? 'cursor-pointer hover:text-foreground'
                         : ''
@@ -338,19 +292,48 @@ export function TableView() {
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.length > 0 ? (
-              table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-b border-border hover:bg-primary/5"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-3 py-2">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
+            {rows.length > 0 ? (
+              <>
+                {/* Spacer for virtualization */}
+                <tr>
+                  <td
+                    colSpan={table.getVisibleFlatColumns().length}
+                    style={{ height: `${rowVirtualizer.getVirtualItems()[0]?.start ?? 0}px` }}
+                  />
                 </tr>
-              ))
+                {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                  const row = rows[virtualRow.index]
+                  return (
+                    <tr
+                      key={row.id}
+                      data-index={virtualRow.index}
+                      ref={(node) => rowVirtualizer.measureElement(node)}
+                      className="border-b border-border hover:bg-primary/5"
+                      style={{ height: `${ROW_HEIGHT}px` }}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <td key={cell.id} className="px-3 py-2">
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                  )
+                })}
+                {/* Bottom spacer */}
+                <tr>
+                  <td
+                    colSpan={table.getVisibleFlatColumns().length}
+                    style={{
+                      height: `${
+                        rowVirtualizer.getTotalSize() -
+                        (rowVirtualizer.getVirtualItems()[
+                          rowVirtualizer.getVirtualItems().length - 1
+                        ]?.end ?? 0)
+                      }px`,
+                    }}
+                  />
+                </tr>
+              </>
             ) : (
               <tr>
                 <td
@@ -367,71 +350,6 @@ export function TableView() {
           </tbody>
         </table>
       </div>
-
-      {/* Pagination */}
-      {pageCount > 1 && (
-        <div className="flex items-center justify-center gap-1 border-t border-border bg-background px-4 py-3">
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            disabled={!table.getCanPreviousPage()}
-            onClick={() => table.setPageIndex(0)}
-          >
-            <ChevronsLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            disabled={!table.getCanPreviousPage()}
-            onClick={() => table.previousPage()}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-
-          {visiblePages.map((page, idx) =>
-            page === '...' ? (
-              <span key={`ellipsis-${idx}`} className="px-2 text-muted-foreground">
-                ...
-              </span>
-            ) : (
-              <Button
-                key={page}
-                variant="outline"
-                size="sm"
-                className={`h-8 min-w-[32px] ${
-                  page === pageIndex + 1
-                    ? 'border-primary bg-primary text-primary-foreground'
-                    : ''
-                }`}
-                onClick={() => table.setPageIndex(page - 1)}
-              >
-                {page}
-              </Button>
-            )
-          )}
-
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            disabled={!table.getCanNextPage()}
-            onClick={() => table.nextPage()}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            disabled={!table.getCanNextPage()}
-            onClick={() => table.setPageIndex(pageCount - 1)}
-          >
-            <ChevronsRight className="h-4 w-4" />
-          </Button>
-        </div>
-      )}
     </div>
   )
 }
