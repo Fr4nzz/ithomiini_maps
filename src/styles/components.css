@@ -22,11 +22,6 @@
   .toggle-row { @apply flex items-center gap-3 p-3.5 bg-muted rounded-md cursor-pointer transition-colors hover:bg-accent; }
   .toggle-row.scatter { @apply bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/15; }
 
-  /* Collapsible sections */
-  .collapsible { @apply border border-border rounded-lg; }
-  .collapse-toggle { @apply w-full flex items-center gap-2.5 p-3.5 bg-muted border-0 text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground; }
-  .collapse-content { @apply p-3.5 border-t border-border; }
-
   /* Subsections within filters */
   .subsection-toggle { @apply w-full flex items-center gap-2 p-3 mt-3 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-muted hover:text-foreground; }
   .subsection-content { @apply p-3.5 mt-2 bg-background border border-border rounded-md; }
@@ -65,10 +60,8 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   TRANSITION ANIMATIONS (Vue transitions - not @apply based)
+   TRANSITION ANIMATIONS (Vue transitions)
    ══════════════════════════════════════════════════════════════════════════ */
 
-.slide-enter-active, .slide-leave-active { transition: all 0.3s ease; }
-.slide-enter-from, .slide-leave-to { opacity: 0; transform: translateY(-10px); }
 .toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(-50%) translateY(10px); }
