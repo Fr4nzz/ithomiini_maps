@@ -5,6 +5,8 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
 import PointPopup from './PointPopup.vue'
 import { getThumbnailUrl } from '../utils/imageProxy'
+import { Button } from '@/components/ui/button'
+import { Search, X, MapPin, Loader2 } from 'lucide-vue-next'
 
 const store = useDataStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
@@ -951,207 +953,6 @@ const addDataLayer = (options = {}) => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CLUSTER POPUP BUILDER
-// ═══════════════════════════════════════════════════════════════════════════
-
-const buildClusterPopupContent = (leaves, totalCount, clusterId) => {
-  // Group by species
-  const speciesCounts = {}
-  const statusCounts = {}
-
-  leaves.forEach(leaf => {
-    const props = leaf.properties
-    const species = props.scientific_name || 'Unknown'
-    const status = props.sequencing_status || 'Unknown'
-
-    speciesCounts[species] = (speciesCounts[species] || 0) + 1
-    statusCounts[status] = (statusCounts[status] || 0) + 1
-  })
-
-  // Sort species by count
-  const sortedSpecies = Object.entries(speciesCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 8) // Top 8 species
-
-  let html = `<div class="cluster-popup-content">`
-
-  // Header
-  html += `
-    <div class="cluster-header">
-      <span class="cluster-count">${totalCount.toLocaleString()}</span>
-      <span class="cluster-label">records in this area</span>
-    </div>
-  `
-
-  // Species breakdown
-  html += `<div class="cluster-section">
-    <div class="cluster-section-title">Top Species</div>
-    <div class="cluster-species-list">`
-
-  sortedSpecies.forEach(([species, count]) => {
-    const pct = Math.round((count / leaves.length) * 100)
-    html += `
-      <div class="cluster-species-item">
-        <em>${species}</em>
-        <span class="cluster-species-count">${count} (${pct}%)</span>
-      </div>
-    `
-  })
-
-  if (Object.keys(speciesCounts).length > 8) {
-    html += `<div class="cluster-more">+ ${Object.keys(speciesCounts).length - 8} more species</div>`
-  }
-
-  html += `</div></div>`
-
-  // Status breakdown
-  html += `<div class="cluster-section">
-    <div class="cluster-section-title">By Status</div>
-    <div class="cluster-status-grid">`
-
-  Object.entries(statusCounts).forEach(([status, count]) => {
-    const color = STATUS_COLORS[status] || '#6b7280'
-    html += `
-      <div class="cluster-status-item">
-        <span class="status-dot" style="background: ${color}"></span>
-        <span>${status}: ${count}</span>
-      </div>
-    `
-  })
-
-  html += `</div></div>`
-
-  // Zoom button
-  html += `
-    <button id="zoom-cluster-${clusterId}" class="cluster-zoom-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="m21 21-4.3-4.3"/>
-        <path d="M11 8v6M8 11h6"/>
-      </svg>
-      Zoom to explore points
-    </button>
-  `
-
-  html += `</div>`
-  return html
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// CLUSTER HOVER PREVIEW BUILDER
-// ═══════════════════════════════════════════════════════════════════════════
-
-const buildClusterHoverContent = (leaves, totalCount, clusterId) => {
-  let html = `<div class="cluster-hover-content">`
-
-  // Header
-  html += `
-    <div class="cluster-hover-header">
-      <span class="cluster-hover-count">${totalCount.toLocaleString()}</span>
-      <span class="cluster-hover-label">points</span>
-      <span class="cluster-hover-hint">Click cluster or point below</span>
-    </div>
-  `
-
-  // List of points (clickable)
-  html += `<div class="cluster-hover-list">`
-
-  leaves.forEach((leaf, idx) => {
-    const props = leaf.properties
-    const species = props.scientific_name || 'Unknown'
-    const status = props.sequencing_status || 'Unknown'
-    const statusColor = STATUS_COLORS[status] || '#6b7280'
-    const id = props.id || `#${idx + 1}`
-
-    html += `
-      <button id="cluster-point-${clusterId}-${idx}" class="cluster-hover-item">
-        <span class="status-dot" style="background: ${statusColor}"></span>
-        <span class="cluster-hover-species"><em>${species}</em></span>
-        <span class="cluster-hover-id">${id}</span>
-      </button>
-    `
-  })
-
-  html += `</div>`
-
-  // "More" indicator if there are more points
-  if (totalCount > leaves.length) {
-    html += `<div class="cluster-hover-more">+ ${totalCount - leaves.length} more points</div>`
-  }
-
-  html += `</div>`
-  return html
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// POPUP BUILDER
-// ═══════════════════════════════════════════════════════════════════════════
-
-const buildPopupContent = (props) => {
-  // Parse props (MapLibre stringifies nested objects)
-  const p = typeof props === 'string' ? JSON.parse(props) : props
-
-  const statusColor = STATUS_COLORS[p.sequencing_status] || '#6b7280'
-  const showThumbnail = store.showThumbnail
-  const hasImage = p.image_url && p.image_url !== 'null' && p.image_url !== ''
-
-  let html = `<div class="popup-content">`
-
-  // Header with species name
-  html += `
-    <div class="popup-header">
-      <span class="status-dot" style="background: ${statusColor}"></span>
-      <strong>${p.scientific_name || 'Unknown'}</strong>
-    </div>
-    <div class="popup-body">
-  `
-
-  // Thumbnail on the left (if enabled and available)
-  if (showThumbnail && hasImage) {
-    html += `
-      <div class="popup-thumbnail">
-        <img src="${getThumbnailUrl(p.image_url)}" alt="Specimen ${p.id}" loading="lazy" onerror="this.style.display='none'" />
-      </div>
-    `
-  }
-
-  // Info section
-  html += `<div class="popup-info">`
-
-  // Subspecies
-  if (p.subspecies && p.subspecies !== 'null' && p.subspecies !== 'None') {
-    html += `<div class="popup-row"><span class="label">Subspecies:</span> <em>${p.subspecies}</em></div>`
-  }
-
-  // Core info
-  html += `
-    <div class="popup-row"><span class="label">ID:</span> ${p.id || 'N/A'}</div>
-    <div class="popup-row"><span class="label">Status:</span> <span style="color: ${statusColor}">${p.sequencing_status || 'Unknown'}</span></div>
-    <div class="popup-row"><span class="label">Source:</span> ${p.source || 'Unknown'}</div>
-  `
-
-  // Mimicry ring
-  if (p.mimicry_ring && p.mimicry_ring !== 'Unknown' && p.mimicry_ring !== 'null') {
-    html += `<div class="popup-row"><span class="label">Mimicry Ring:</span> ${p.mimicry_ring}</div>`
-  }
-
-  // Country
-  if (p.country && p.country !== 'null' && p.country !== 'Unknown') {
-    html += `<div class="popup-row"><span class="label">Country:</span> ${p.country}</div>`
-  }
-
-  // Coordinates
-  if (p.lat && p.lng) {
-    html += `<div class="popup-row"><span class="label">Coordinates:</span> ${parseFloat(p.lat).toFixed(4)}, ${parseFloat(p.lng).toFixed(4)}</div>`
-  }
-
-  html += `</div>` // close popup-info
-  html += `</div>` // close popup-body
-  html += `</div>` // close popup-content
-  return html
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
 // MAP UTILITIES
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -1391,68 +1192,56 @@ const switchStyle = (styleName) => {
     </div>
 
     <!-- Location Search -->
-    <div ref="searchInputRef" class="location-search">
-      <div class="search-input-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.35-4.35"/>
-        </svg>
+    <div ref="searchInputRef" class="absolute top-14 left-2.5 z-10 w-70">
+      <div class="flex items-center bg-card/95 border border-border rounded-lg px-3 shadow-lg backdrop-blur transition-all focus-within:border-primary focus-within:shadow-[0_2px_15px_rgba(74,222,128,0.2)]">
+        <Search class="w-4 h-4 text-muted-foreground shrink-0" />
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Search location..."
+          class="flex-1 bg-transparent border-none outline-none text-foreground text-sm py-2.5 px-2.5 w-full placeholder:text-muted-foreground"
           @input="onSearchInput"
           @focus="showSearchResults = searchResults.length > 0"
           @keydown.escape="clearSearch"
         />
-        <svg
-          v-if="isSearching"
-          class="search-spinner"
-          viewBox="0 0 24 24"
-        >
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="31.4" stroke-dashoffset="10"/>
-        </svg>
+        <Loader2 v-if="isSearching" class="w-4 h-4 text-primary animate-spin shrink-0" />
         <button
           v-else-if="searchQuery"
-          class="search-clear"
+          class="flex items-center justify-center p-1 text-muted-foreground hover:text-foreground transition-colors"
           @click="clearSearch"
           title="Clear search"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
+          <X class="w-3.5 h-3.5" />
         </button>
       </div>
 
       <!-- Search Results Dropdown -->
-      <div v-if="showSearchResults && searchResults.length > 0" class="search-results">
+      <div v-if="showSearchResults && searchResults.length > 0" class="absolute top-full left-0 right-0 mt-1 bg-card/98 border border-border rounded-lg shadow-xl backdrop-blur-lg max-h-75 overflow-y-auto z-50">
         <button
           v-for="(result, index) in searchResults"
           :key="index"
-          class="search-result-item"
+          class="flex items-start gap-2.5 w-full p-2.5 px-3 bg-transparent border-0 border-b border-border/50 last:border-b-0 cursor-pointer text-left transition-colors hover:bg-muted"
           @click="selectSearchResult(result)"
         >
-          <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
-          <span class="result-name">{{ result.name }}</span>
+          <MapPin class="w-4 h-4 text-primary shrink-0 mt-0.5" />
+          <span class="text-xs text-muted-foreground leading-snug line-clamp-2">{{ result.name }}</span>
         </button>
       </div>
     </div>
 
     <!-- Style Switcher -->
-    <div class="style-switcher">
-      <button 
-        v-for="(config, key) in MAP_STYLES" 
+    <div class="absolute top-2.5 left-2.5 flex gap-1 bg-card/95 p-1.5 rounded-lg z-10 shadow-lg backdrop-blur">
+      <Button
+        v-for="(config, key) in MAP_STYLES"
         :key="key"
-        :class="{ active: currentStyle === key }"
+        :variant="currentStyle === key ? 'default' : 'secondary'"
+        size="sm"
+        class="text-xs px-3 py-1.5"
         @click="switchStyle(key)"
         :title="config.name"
       >
         {{ config.name }}
-      </button>
+      </Button>
     </div>
 
     <!-- Legend (shown when NOT in export mode) -->
@@ -1462,16 +1251,16 @@ const switchStyle = (styleName) => {
       :class="legendPositionClass"
       :style="{ fontSize: store.legendSettings.textSize + 'rem' }"
     >
-      <div class="legend-title">{{ store.legendTitle }}</div>
+      <div class="text-[0.875em] text-muted-foreground uppercase tracking-wider mb-2.5 pb-1.5 border-b border-border">{{ store.legendTitle }}</div>
       <div
         v-for="(color, label) in limitedColorMap"
         :key="label"
-        class="legend-item"
+        class="flex items-center gap-2.5 text-[1em] text-foreground mb-1.5 last:mb-0"
       >
-        <span class="legend-dot" :style="{ backgroundColor: color }"></span>
-        <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
+        <span class="inline-block w-2.5 h-2.5 rounded-full shrink-0 shadow-[0_0_4px_rgba(255,255,255,0.2)]" :style="{ backgroundColor: color }"></span>
+        <span :class="{ 'italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
       </div>
-      <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
+      <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="mt-2 pt-2 border-t border-border text-[0.85em] text-muted-foreground italic">
         + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
       </div>
     </div>
@@ -1676,219 +1465,12 @@ const switchStyle = (styleName) => {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LOCATION SEARCH
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.location-search {
-  position: absolute;
-  top: 56px;
-  left: 10px;
-  z-index: 10;
-  width: 280px;
-}
-
-.search-input-wrapper {
-  display: flex;
-  align-items: center;
-  background: rgba(26, 26, 46, 0.95);
-  border: 1px solid #3d3d5c;
-  border-radius: 8px;
-  padding: 0 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.search-input-wrapper:focus-within {
-  border-color: #4ade80;
-  box-shadow: 0 2px 15px rgba(74, 222, 128, 0.2);
-}
-
-.search-icon {
-  width: 16px;
-  height: 16px;
-  color: #666;
-  flex-shrink: 0;
-}
-
-.search-input-wrapper:focus-within .search-icon {
-  color: #4ade80;
-}
-
-.location-search input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #e0e0e0;
-  font-size: 0.875rem;
-  padding: 10px 10px;
-  width: 100%;
-}
-
-.location-search input::placeholder {
-  color: #666;
-}
-
-.search-spinner {
-  width: 18px;
-  height: 18px;
-  color: #4ade80;
-  animation: spin 1s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.search-clear {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: #666;
-  transition: color 0.2s;
-}
-
-.search-clear:hover {
-  color: #e0e0e0;
-}
-
-.search-clear svg {
-  width: 14px;
-  height: 14px;
-}
-
-/* Search Results Dropdown */
-.search-results {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  background: rgba(26, 26, 46, 0.98);
-  border: 1px solid #3d3d5c;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 100;
-}
-
-.search-result-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  width: 100%;
-  padding: 10px 12px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #2d2d4a;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.15s;
-}
-
-.search-result-item:last-child {
-  border-bottom: none;
-}
-
-.search-result-item:hover {
-  background: #2d2d4a;
-}
-
-.result-icon {
-  width: 16px;
-  height: 16px;
-  color: #4ade80;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.result-name {
-  font-size: 0.8rem;
-  color: #c0c0c0;
-  line-height: 1.4;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.search-result-item:hover .result-name {
-  color: #e0e0e0;
-}
-
-/* Scrollbar styling for search results */
-.search-results::-webkit-scrollbar {
-  width: 6px;
-}
-
-.search-results::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.search-results::-webkit-scrollbar-thumb {
-  background: #3d3d5c;
-  border-radius: 3px;
-}
-
-.search-results::-webkit-scrollbar-thumb:hover {
-  background: #4d4d6c;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   STYLE SWITCHER
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.style-switcher {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: flex;
-  gap: 4px;
-  background: rgba(26, 26, 46, 0.95);
-  padding: 6px;
-  border-radius: 8px;
-  z-index: 10;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-}
-
-.style-switcher button {
-  padding: 6px 12px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
-  color: #aaa;
-  border-radius: 4px;
-  font-size: 0.75em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.style-switcher button:hover {
-  background: #2d2d4a;
-  color: #fff;
-}
-
-.style-switcher button.active {
-  background: #4ade80;
-  color: #1a1a2e;
-  border-color: #4ade80;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
    LEGEND
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .legend {
   position: absolute;
-  background: rgba(26, 26, 46, 0.95);
+  background: color-mix(in oklch, var(--card) 95%, transparent);
   padding: 12px 16px;
   border-radius: 8px;
   z-index: 10;
@@ -1896,415 +1478,21 @@ const switchStyle = (styleName) => {
   max-width: 220px;
   max-height: 400px;
   overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px color-mix(in oklch, var(--foreground) 15%, transparent);
   backdrop-filter: blur(4px);
 }
 
 /* Legend positioning */
-.legend-bottom-left {
-  bottom: 30px;
-  left: 10px;
-}
-
-.legend-bottom-right {
-  bottom: 30px;
-  right: 10px;
-}
-
-.legend-top-left {
-  top: 60px;
-  left: 10px;
-}
-
-.legend-top-right {
-  top: 60px;
-  right: 10px;
-}
-
-.legend-title {
-  font-size: 0.875em;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #3d3d5c;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1em;
-  color: #e0e0e0;
-  margin-bottom: 6px;
-}
-
-.legend-item:last-child {
-  margin-bottom: 0;
-}
-
-.legend-label-italic {
-  font-style: italic;
-}
-
-.legend-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
-}
-
-.legend-more {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #3d3d5c;
-  font-size: 0.85em;
-  color: #666;
-  font-style: italic;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   POPUP STYLES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-:deep(.maplibregl-popup-content) {
-  background: #1a1a2e !important;
-  color: #e0e0e0 !important;
-  border-radius: 10px;
-  padding: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  border: 1px solid #3d3d5c;
-  max-width: 340px;
-}
-
-:deep(.maplibregl-popup-close-button) {
-  color: #888 !important;
-  font-size: 20px;
-  padding: 6px 10px;
-  line-height: 1;
-}
-
-:deep(.maplibregl-popup-close-button:hover) {
-  color: #fff !important;
-  background: transparent !important;
-}
-
-:deep(.maplibregl-popup-tip) {
-  border-top-color: #1a1a2e !important;
-}
-
-:deep(.popup-content) {
-  padding: 14px 18px;
-}
-
-:deep(.popup-header) {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.1em;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #3d3d5c;
-}
-
-:deep(.popup-header strong) {
-  font-style: italic;
-  color: #fff;
-}
-
-:deep(.status-dot) {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 6px currentColor;
-}
-
-:deep(.popup-row) {
-  font-size: 0.85em;
-  margin-bottom: 5px;
-  color: #ccc;
-  line-height: 1.4;
-}
-
-:deep(.popup-row .label) {
-  color: #888;
-  margin-right: 6px;
-}
-
-:deep(.popup-body) {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-:deep(.popup-thumbnail) {
-  flex-shrink: 0;
-  width: 100px;
-  height: 100px;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #252540;
-  border: 1px solid #3d3d5c;
-}
-
-:deep(.popup-thumbnail img) {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-:deep(.popup-info) {
-  flex: 1;
-  min-width: 0;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   CLUSTER POPUP STYLES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-:deep(.cluster-popup-content) {
-  padding: 14px 18px;
-}
-
-:deep(.cluster-header) {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #3d3d5c;
-}
-
-:deep(.cluster-count) {
-  font-size: 1.4em;
-  font-weight: 700;
-  color: #4ade80;
-}
-
-:deep(.cluster-label) {
-  font-size: 0.85em;
-  color: #888;
-}
-
-:deep(.cluster-section) {
-  margin-bottom: 12px;
-}
-
-:deep(.cluster-section-title) {
-  font-size: 0.7em;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #888;
-  margin-bottom: 6px;
-}
-
-:deep(.cluster-species-list) {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-:deep(.cluster-species-item) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85em;
-  color: #e0e0e0;
-}
-
-:deep(.cluster-species-item em) {
-  color: #fff;
-}
-
-:deep(.cluster-species-count) {
-  color: #888;
-  font-size: 0.9em;
-}
-
-:deep(.cluster-more) {
-  font-size: 0.8em;
-  color: #666;
-  font-style: italic;
-  margin-top: 4px;
-}
-
-:deep(.cluster-status-grid) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 12px;
-}
-
-:deep(.cluster-status-item) {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8em;
-  color: #ccc;
-}
-
-:deep(.cluster-zoom-btn) {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 10px;
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 6px;
-  color: #4ade80;
-  font-size: 0.85em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-:deep(.cluster-zoom-btn:hover) {
-  background: rgba(74, 222, 128, 0.25);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   CLUSTER HOVER POPUP STYLES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-:deep(.cluster-hover-popup .maplibregl-popup-content) {
-  padding: 0;
-  background: rgba(26, 26, 46, 0.98) !important;
-  border: 1px solid #4ade80;
-  box-shadow: 0 4px 20px rgba(74, 222, 128, 0.2);
-}
-
-:deep(.cluster-hover-popup .maplibregl-popup-tip) {
-  border-top-color: rgba(26, 26, 46, 0.98) !important;
-}
-
-:deep(.cluster-hover-content) {
-  padding: 10px 12px;
-  max-height: 280px;
-  overflow-y: auto;
-}
-
-:deep(.cluster-hover-header) {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #3d3d5c;
-  flex-wrap: wrap;
-}
-
-:deep(.cluster-hover-count) {
-  font-size: 1.1em;
-  font-weight: 700;
-  color: #4ade80;
-}
-
-:deep(.cluster-hover-label) {
-  font-size: 0.85em;
-  color: #888;
-}
-
-:deep(.cluster-hover-hint) {
-  font-size: 0.7em;
-  color: #666;
-  font-style: italic;
-  margin-left: auto;
-}
-
-:deep(.cluster-hover-list) {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-:deep(.cluster-hover-item) {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid transparent;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-align: left;
-  width: 100%;
-}
-
-:deep(.cluster-hover-item:hover) {
-  background: rgba(74, 222, 128, 0.1);
-  border-color: rgba(74, 222, 128, 0.3);
-}
-
-:deep(.cluster-hover-item .status-dot) {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-:deep(.cluster-hover-species) {
-  flex: 1;
-  font-size: 0.8em;
-  color: #e0e0e0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-:deep(.cluster-hover-species em) {
-  color: #fff;
-}
-
-:deep(.cluster-hover-id) {
-  font-size: 0.7em;
-  color: #666;
-  font-family: monospace;
-}
-
-:deep(.cluster-hover-more) {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #3d3d5c;
-  font-size: 0.75em;
-  color: #666;
-  text-align: center;
-  font-style: italic;
-}
+.legend-bottom-left { bottom: 30px; left: 10px; }
+.legend-bottom-right { bottom: 30px; right: 10px; }
+.legend-top-left { top: 60px; left: 10px; }
+.legend-top-right { top: 60px; right: 10px; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  .location-search {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    width: auto;
-  }
-
-  .style-switcher {
-    top: auto;
-    bottom: 100px;
-    left: 10px;
-    flex-wrap: wrap;
-    max-width: calc(100% - 20px);
-  }
-
-  .style-switcher button {
-    padding: 8px 10px;
-    font-size: 0.7em;
-  }
-
   .legend {
     bottom: 160px;
     font-size: 0.9em;
