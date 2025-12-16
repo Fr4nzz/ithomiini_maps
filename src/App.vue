@@ -497,7 +497,7 @@ html, body, #app {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: hsl(var(--background));
+  background: var(--background);
 }
 
 .view-container {
@@ -512,8 +512,8 @@ html, body, #app {
   align-items: center;
   gap: 4px;
   padding: 8px 12px;
-  background: hsl(var(--card));
-  border-bottom: 1px solid hsl(var(--border));
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 }
 
 .view-toggle-bar button {
@@ -521,10 +521,10 @@ html, body, #app {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: hsl(var(--secondary));
-  border: 1px solid hsl(var(--border));
+  background: var(--secondary);
+  border: 1px solid var(--border);
   border-radius: 6px;
-  color: hsl(var(--muted-foreground));
+  color: var(--muted-foreground);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -532,14 +532,14 @@ html, body, #app {
 }
 
 .view-toggle-bar button:hover {
-  background: hsl(246 22% 32%);
-  color: hsl(var(--foreground));
+  background: var(--accent);
+  color: var(--foreground);
 }
 
 .view-toggle-bar button.active {
-  background: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
-  border-color: hsl(var(--primary));
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
 }
 
 .view-toggle-bar button svg {
@@ -570,7 +570,7 @@ html, body, #app {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--card)) 100%);
+  background: linear-gradient(135deg, var(--background) 0%, var(--card) 100%);
   z-index: 100;
 }
 
@@ -582,8 +582,8 @@ html, body, #app {
   width: 60px;
   height: 60px;
   margin: 0 auto 24px;
-  border: 3px solid hsl(var(--border) / 0.3);
-  border-top-color: hsl(var(--primary));
+  border: 3px solid color-mix(in oklch, var(--border) 30%, transparent);
+  border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -594,13 +594,13 @@ html, body, #app {
 
 .loading-text {
   font-size: 1.2em;
-  color: hsl(var(--foreground));
+  color: var(--foreground);
   margin-bottom: 8px;
 }
 
 .loading-subtext {
   font-size: 0.9em;
-  color: hsl(var(--muted-foreground));
+  color: var(--muted-foreground);
 }
 
 /* Modal Overlay */
