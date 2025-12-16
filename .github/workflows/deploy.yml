@@ -1,33 +1,26 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Runs on pushes to main branch
   push:
-    branches: [main]
-  
-  # Allows manual trigger from Actions tab
+    branches: [main, claude/vue-to-react-migration-GEBHN]
   workflow_dispatch:
 
-# Sets permissions for GITHUB_TOKEN
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -36,27 +29,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build application
+      - name: Build
         run: npm run build
         env:
           GITHUB_SHA: ${{ github.sha }}
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: ./dist
 
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
     runs-on: ubuntu-latest
     needs: build
-    
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
