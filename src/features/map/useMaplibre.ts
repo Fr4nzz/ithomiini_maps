@@ -1,6 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import Spiderfy from '@nazka/map-gl-js-spiderfy'
 import { useDataStore, useFilteredGeoJSON } from '@/features/data'
 
 // Map style configurations
@@ -25,6 +26,7 @@ export function useMaplibre(
   options: UseMaplibreOptions = {}
 ) {
   const mapRef = useRef<maplibregl.Map | null>(null)
+  const spiderfyRef = useRef<Spiderfy | null>(null)
   const viewport = useDataStore((s) => s.viewport)
   const setViewport = useDataStore((s) => s.setViewport)
   const setSelectedPoint = useDataStore((s) => s.setSelectedPoint)
@@ -74,24 +76,31 @@ export function useMaplibre(
     // Handle map load
     map.on('load', () => {
       addDataSource(map)
+
+      // Initialize spiderfy for overlapping points
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      spiderfyRef.current = new Spiderfy(map as any, {
+        onLeafClick: (feature: GeoJSON.Feature) => {
+          const id = feature.properties?.id as string
+          if (id) {
+            const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
+            setSelectedPoint(id)
+            options.onPointClick?.(id, { lat, lng })
+          }
+        },
+        minZoomLevel: 12,
+        zoomIncrement: 2,
+        closeOnLeafClick: true,
+        circleFootSeparation: 40,
+        spiralFootSeparation: 30,
+        spiralLengthStart: 20,
+        spiralLengthFactor: 5,
+      })
+
+      // Apply spiderfy to points layer
+      spiderfyRef.current.applyTo('points-layer')
+
       options.onMapReady?.(map)
-    })
-
-    // Handle point clicks
-    map.on('click', 'points-layer', (e) => {
-      if (e.features && e.features.length > 0) {
-        // Collect all point IDs at this location (for overlapping points)
-        const ids = e.features
-          .map((f) => f.properties?.id as string)
-          .filter((id): id is string => !!id)
-
-        if (ids.length > 0) {
-          const feature = e.features[0]
-          const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
-          setSelectedPoint(ids[0])
-          options.onPointClick?.(ids.length === 1 ? ids[0] : ids, { lat, lng })
-        }
-      }
     })
 
     // Change cursor on hover
@@ -105,6 +114,8 @@ export function useMaplibre(
     mapRef.current = map
 
     return () => {
+      spiderfyRef.current?.unsppidefyAll?.()
+      spiderfyRef.current = null
       map.remove()
       mapRef.current = null
     }
