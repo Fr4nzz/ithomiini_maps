@@ -5,8 +5,13 @@ node_modules/
 dist/
 dist-ssr/
 
-# Note: public/data/ is tracked for GitHub Pages deployment
-# To regenerate, run: python scripts/gbif_download_api.py && python scripts/process_data.py
+# Data files - only track what's needed for deployment
+# map_points.json is tracked (needed for the app)
+# gbif_citation.json and gbif_taxon_keys.json are tracked (small metadata)
+public/data/gbif_occurrences.json
+*.xlsx
+
+# To regenerate data: python scripts/gbif_download_api.py && python scripts/process_data.py
 
 # Secrets
 .env
