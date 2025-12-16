@@ -4,6 +4,7 @@ import App from './App.vue'
 
 // Tailwind CSS + shadcn-vue theme
 import './index.css'
+import './styles/components.css'
 
 // MapLibre and print styles
 import './style.css'

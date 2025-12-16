@@ -1,3 +1,5 @@
+@reference "../index.css";
+
 /* ══════════════════════════════════════════════════════════════════════════
    GLOBAL COMPONENT STYLES
    Extracted from Vue SFC scoped styles for reliable Tailwind v4 processing
