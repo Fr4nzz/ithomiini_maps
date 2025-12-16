@@ -1,7 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import Spiderfy from '@nazka/map-gl-js-spiderfy'
 import { toPng, toJpeg } from 'html-to-image'
 import { useDataStore, useFilteredGeoJSON } from '@/features/data'
 
@@ -27,7 +26,7 @@ export function useMaplibre(
   options: UseMaplibreOptions = {}
 ) {
   const mapRef = useRef<maplibregl.Map | null>(null)
-  const spiderfyRef = useRef<Spiderfy | null>(null)
+  const mapLoadedRef = useRef(false)
   const viewport = useDataStore((s) => s.viewport)
   const setViewport = useDataStore((s) => s.setViewport)
   const setSelectedPoint = useDataStore((s) => s.setSelectedPoint)
@@ -76,51 +75,23 @@ export function useMaplibre(
 
     // Handle map load
     map.on('load', () => {
-      addDataSource(map)
+      mapLoadedRef.current = true
 
-      // Try to initialize spiderfy for overlapping points
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        spiderfyRef.current = new Spiderfy(map as any, {
-          onLeafClick: (feature: GeoJSON.Feature) => {
-            const id = feature.properties?.id as string
-            if (id) {
-              const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
-              setSelectedPoint(id)
-              options.onPointClick?.(id, { lat, lng })
-            }
-          },
-          minZoomLevel: 12,
-          zoomIncrement: 2,
-          closeOnLeafClick: true,
-          circleFootSeparation: 40,
-          spiralFootSeparation: 30,
-          spiralLengthStart: 20,
-          spiralLengthFactor: 5,
-        })
+      // Click handler for points
+      map.on('click', 'points-layer', (e) => {
+        if (e.features && e.features.length > 0) {
+          const ids = e.features
+            .map((f) => f.properties?.id as string)
+            .filter((id): id is string => !!id)
 
-        // Apply spiderfy to points layer
-        spiderfyRef.current.applyTo('points-layer')
-      } catch (err) {
-        console.warn('Spiderfy initialization failed, using fallback click handler:', err)
-        spiderfyRef.current = null
-
-        // Fallback: direct click handler for points
-        map.on('click', 'points-layer', (e) => {
-          if (e.features && e.features.length > 0) {
-            const ids = e.features
-              .map((f) => f.properties?.id as string)
-              .filter((id): id is string => !!id)
-
-            if (ids.length > 0) {
-              const feature = e.features[0]
-              const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
-              setSelectedPoint(ids[0])
-              options.onPointClick?.(ids.length === 1 ? ids[0] : ids, { lat, lng })
-            }
+          if (ids.length > 0) {
+            const feature = e.features[0]
+            const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
+            setSelectedPoint(ids[0])
+            options.onPointClick?.(ids.length === 1 ? ids[0] : ids, { lat, lng })
           }
-        })
-      }
+        }
+      })
 
       options.onMapReady?.(map)
     })
@@ -136,57 +107,63 @@ export function useMaplibre(
     mapRef.current = map
 
     return () => {
-      spiderfyRef.current?.unsppidefyAll?.()
-      spiderfyRef.current = null
+      mapLoadedRef.current = false
       map.remove()
       mapRef.current = null
     }
   }, []) // Only run once on mount
 
-  // Add data source and layers
-  const addDataSource = useCallback((map: maplibregl.Map) => {
-    if (!geojson) return
-
-    // Add source
-    map.addSource('points-source', {
-      type: 'geojson',
-      data: geojson,
-      cluster: false,
-    })
-
-    // Add points layer
-    map.addLayer({
-      id: 'points-layer',
-      type: 'circle',
-      source: 'points-source',
-      paint: {
-        'circle-radius': [
-          'interpolate',
-          ['linear'],
-          ['zoom'],
-          3, 3,
-          6, 5,
-          10, 8,
-          14, 12,
-        ],
-        'circle-color': '#22c55e', // lime-500
-        'circle-opacity': 0.85,
-        'circle-stroke-width': 1.5,
-        'circle-stroke-color': '#ffffff',
-        'circle-stroke-opacity': 0.6,
-      },
-    })
-  }, [geojson])
-
-  // Update data when geojson changes
+  // Add or update data source when geojson changes
   useEffect(() => {
     const map = mapRef.current
-    if (!map || !map.isStyleLoaded() || !geojson) return
+    if (!map || !geojson) return
 
-    const source = map.getSource('points-source') as maplibregl.GeoJSONSource
-    if (source) {
-      source.setData(geojson)
+    // Wait for map to be loaded
+    const updateSource = () => {
+      if (!map.isStyleLoaded()) {
+        // If style not loaded yet, wait for it
+        map.once('load', updateSource)
+        return
+      }
+
+      const source = map.getSource('points-source') as maplibregl.GeoJSONSource
+
+      if (source) {
+        // Source exists, just update data
+        source.setData(geojson)
+      } else {
+        // Source doesn't exist, create it with layer
+        map.addSource('points-source', {
+          type: 'geojson',
+          data: geojson,
+          cluster: false,
+        })
+
+        map.addLayer({
+          id: 'points-layer',
+          type: 'circle',
+          source: 'points-source',
+          paint: {
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              3, 3,
+              6, 5,
+              10, 8,
+              14, 12,
+            ],
+            'circle-color': '#22c55e',
+            'circle-opacity': 0.85,
+            'circle-stroke-width': 1.5,
+            'circle-stroke-color': '#ffffff',
+            'circle-stroke-opacity': 0.6,
+          },
+        })
+      }
     }
+
+    updateSource()
   }, [geojson])
 
   // Fly to point
@@ -209,16 +186,13 @@ export function useMaplibre(
         throw new Error('Map not initialized')
       }
 
-      // Get the map container
       const container = map.getContainer()
       if (!container) {
         throw new Error('Map container not found')
       }
 
-      // Generate filename with timestamp
       const date = new Date().toISOString().split('T')[0]
-      const defaultFilename = `ithomiini_map_${date}`
-      const finalFilename = filename || defaultFilename
+      const finalFilename = filename || `ithomiini_map_${date}`
 
       try {
         const dataUrl =
@@ -228,10 +202,9 @@ export function useMaplibre(
                 backgroundColor: '#ffffff',
               })
             : await toPng(container, {
-                pixelRatio: 2, // Higher resolution
+                pixelRatio: 2,
               })
 
-        // Download the image
         const link = document.createElement('a')
         link.download = `${finalFilename}.${format}`
         link.href = dataUrl
