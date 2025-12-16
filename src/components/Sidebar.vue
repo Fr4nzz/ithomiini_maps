@@ -182,7 +182,7 @@ const updateExportHeight = (value) => {
     </header>
 
     <!-- Scrollable Content -->
-    <div class="flex-1 overflow-y-auto p-4">
+    <div class="flex-1 overflow-y-auto p-5">
       <!-- View Toggle -->
       <Tabs :model-value="currentView" @update:model-value="emit('set-view', $event)" class="mb-4">
         <TabsList class="w-full grid grid-cols-2 gap-1 p-1 bg-background rounded-lg">
@@ -202,7 +202,7 @@ const updateExportHeight = (value) => {
       </div>
 
       <!-- Quick Actions -->
-      <div class="flex gap-2 mb-5">
+      <div class="flex gap-2.5 mb-6">
         <button class="action-btn" @click="emit('open-gallery')" :disabled="imageCount === 0">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
             <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
@@ -526,23 +526,23 @@ const updateExportHeight = (value) => {
 <style scoped>
 @reference "../index.css";
 /* Minimal custom CSS - mostly using Tailwind now */
-.filter-section { @apply mb-5; }
-.section-label { @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5; }
+.filter-section { @apply mb-6; }
+.section-label { @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3; }
 
-.action-btn { @apply flex-1 flex flex-col items-center gap-1 p-2.5 bg-muted border border-border rounded-lg text-xs text-muted-foreground cursor-pointer transition-all relative hover:bg-accent hover:text-foreground hover:border-primary; }
+.action-btn { @apply flex-1 flex flex-col items-center gap-1.5 p-3 bg-muted border border-border rounded-lg text-xs text-muted-foreground cursor-pointer transition-all relative hover:bg-accent hover:text-foreground hover:border-primary; }
 .action-btn.active { @apply bg-primary/15 text-primary border-primary; }
 .action-btn:disabled { @apply opacity-50 cursor-not-allowed; }
 .action-btn .badge { @apply absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded-full min-w-[18px] text-center; }
 
-.toggle-row { @apply flex items-center gap-2.5 p-3 bg-muted rounded-md cursor-pointer transition-colors hover:bg-accent; }
+.toggle-row { @apply flex items-center gap-3 p-3.5 bg-muted rounded-md cursor-pointer transition-colors hover:bg-accent; }
 .toggle-row.scatter { @apply bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/15; }
 
 .collapsible { @apply border border-border rounded-lg; }
-.collapse-toggle { @apply w-full flex items-center gap-2 p-3 bg-muted border-0 text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground; }
-.collapse-content { @apply p-3 border-t border-border; }
+.collapse-toggle { @apply w-full flex items-center gap-2.5 p-3.5 bg-muted border-0 text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground; }
+.collapse-content { @apply p-3.5 border-t border-border; }
 
-.subsection-toggle { @apply w-full flex items-center gap-1.5 p-2.5 mt-3 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-muted hover:text-foreground; }
-.subsection-content { @apply p-3 mt-2 bg-background border border-border rounded-md; }
+.subsection-toggle { @apply w-full flex items-center gap-2 p-3 mt-3 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-muted hover:text-foreground; }
+.subsection-content { @apply p-3.5 mt-2 bg-background border border-border rounded-md; }
 
 .toggle-badge { @apply ml-auto px-2 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors bg-muted-foreground/20 text-muted-foreground border border-transparent hover:bg-muted-foreground/30; }
 .toggle-badge.active { @apply bg-primary/15 text-primary border-primary/30 hover:bg-primary/25; }
