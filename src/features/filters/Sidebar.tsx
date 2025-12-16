@@ -1,8 +1,10 @@
-import { ChevronDown, RotateCcw, Map, Table2 } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { ChevronDown, RotateCcw, Search } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
 import { ScrollArea } from '@/shared/ui/scroll-area'
 import { Separator } from '@/shared/ui/separator'
+import { Input } from '@/shared/ui/input'
 import {
   Collapsible,
   CollapsibleContent,
@@ -19,6 +21,7 @@ import { Checkbox } from '@/shared/ui/checkbox'
 import { Label } from '@/shared/ui/label'
 import { Badge } from '@/shared/ui/badge'
 import { Stack } from '@/shared/layout'
+import { useDebounce } from '@/shared/hooks'
 import {
   useDataStore,
   useFilteredCount,
@@ -35,7 +38,6 @@ export function Sidebar() {
   const setFilters = useDataStore((s) => s.setFilters)
   const resetFilters = useDataStore((s) => s.resetFilters)
   const ui = useDataStore((s) => s.ui)
-  const setView = useDataStore((s) => s.setView)
   const toggleAdvancedFilters = useDataStore((s) => s.toggleAdvancedFilters)
 
   const filteredCount = useFilteredCount()
@@ -45,6 +47,24 @@ export function Sidebar() {
   const subspecies = useUniqueSubspecies()
   const sources = useUniqueSources()
   const countries = useUniqueCountries()
+
+  // CAMID search with debounce (300ms)
+  const [camidInput, setCamidInput] = useState(filters.camidSearch)
+  const debouncedCamid = useDebounce(camidInput, 300)
+
+  // Sync debounced value to store
+  useEffect(() => {
+    if (debouncedCamid !== filters.camidSearch) {
+      setFilters({ camidSearch: debouncedCamid })
+    }
+  }, [debouncedCamid, filters.camidSearch, setFilters])
+
+  // Reset local state when filters are reset
+  useEffect(() => {
+    if (filters.camidSearch === '' && camidInput !== '') {
+      setCamidInput('')
+    }
+  }, [filters.camidSearch, camidInput])
 
   return (
     <Card className="flex h-full w-80 flex-col rounded-none border-r border-l-0 border-t-0 border-b-0">
@@ -69,26 +89,18 @@ export function Sidebar() {
       <ScrollArea className="flex-1">
         <CardContent className="p-4">
           <Stack gap="md">
-            {/* View Toggle */}
-            <div className="flex gap-2">
-              <Button
-                variant={ui.view === 'map' ? 'default' : 'outline'}
-                size="sm"
-                className="flex-1"
-                onClick={() => setView('map')}
-              >
-                <Map className="mr-1 h-4 w-4" />
-                Map
-              </Button>
-              <Button
-                variant={ui.view === 'table' ? 'default' : 'outline'}
-                size="sm"
-                className="flex-1"
-                onClick={() => setView('table')}
-              >
-                <Table2 className="mr-1 h-4 w-4" />
-                Table
-              </Button>
+            {/* CAMID Search */}
+            <div>
+              <Label className="text-xs text-muted-foreground">CAMID Search</Label>
+              <div className="relative mt-1">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by CAMID..."
+                  value={camidInput}
+                  onChange={(e) => setCamidInput(e.target.value)}
+                  className="pl-8"
+                />
+              </div>
             </div>
 
             <Separator />
