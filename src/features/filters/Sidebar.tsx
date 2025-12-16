@@ -158,7 +158,12 @@ export function Sidebar() {
                       <Combobox
                         value={filters.genus || ''}
                         onChange={(value) =>
-                          setFilters({ genus: value || null })
+                          // Clear species and subspecies when genus changes
+                          setFilters({
+                            genus: value || null,
+                            species: [],
+                            subspecies: [],
+                          })
                         }
                         options={genera}
                         placeholder="All genera"
@@ -174,7 +179,11 @@ export function Sidebar() {
                       <Combobox
                         value={filters.species[0] || ''}
                         onChange={(value) =>
-                          setFilters({ species: value ? [value] : [] })
+                          // Clear subspecies when species changes
+                          setFilters({
+                            species: value ? [value] : [],
+                            subspecies: [],
+                          })
                         }
                         options={species}
                         placeholder="All species"

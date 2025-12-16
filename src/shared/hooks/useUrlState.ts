@@ -16,7 +16,7 @@ const urlStateSchema = {
 
 export function useUrlState() {
   const [urlState, setUrlState] = useQueryStates(urlStateSchema, {
-    history: 'push',
+    history: 'replace', // Use replace to avoid cluttering browser history
     shallow: false,
   })
 
