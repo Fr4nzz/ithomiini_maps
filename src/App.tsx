@@ -8,6 +8,7 @@ import { ImageGallery } from '@/features/gallery'
 import { ExportDialog } from '@/features/export'
 import { Button } from '@/shared/ui/button'
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
+import { useUrlState } from '@/shared/hooks'
 import { Image as ImageIcon, Map, Table2, Download } from 'lucide-react'
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
   const setRecords = useDataStore((s) => s.setRecords)
   const view = useDataStore((s) => s.ui.view)
   const setView = useDataStore((s) => s.setView)
+
+  // URL state sync
+  useUrlState()
 
   // Gallery state
   const [galleryOpen, setGalleryOpen] = useState(false)
