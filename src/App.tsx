@@ -5,9 +5,10 @@ import { MapView } from '@/features/map'
 import { TableView } from '@/features/table'
 import { Sidebar } from '@/features/filters'
 import { ImageGallery } from '@/features/gallery'
+import { ExportDialog } from '@/features/export'
 import { Button } from '@/shared/ui/button'
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
-import { Image as ImageIcon, Map, Table2 } from 'lucide-react'
+import { Image as ImageIcon, Map, Table2, Download } from 'lucide-react'
 
 function App() {
   // Load records from JSON
@@ -19,6 +20,9 @@ function App() {
   // Gallery state
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryInitialId, setGalleryInitialId] = useState<string | undefined>()
+
+  // Export dialog state
+  const [exportOpen, setExportOpen] = useState(false)
 
   // Populate store when data loads
   useEffect(() => {
@@ -62,6 +66,17 @@ function App() {
             <ImageIcon className="h-4 w-4" />
             Gallery
           </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={() => setExportOpen(true)}
+          >
+            <Download className="h-4 w-4" />
+            Export
+          </Button>
+
           <ModeToggle />
         </div>
       </header>
@@ -93,6 +108,9 @@ function App() {
         onClose={() => setGalleryOpen(false)}
         initialSpecimenId={galleryInitialId}
       />
+
+      {/* Export Dialog */}
+      <ExportDialog open={exportOpen} onOpenChange={setExportOpen} />
     </div>
   )
 }
