@@ -1,19 +1,50 @@
-import { useRef } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { useMaplibre } from './useMaplibre'
-import { useFilteredCount, useTotalCount } from '@/features/data'
+import { PointDetailsSheet } from './PointDetailsSheet'
+import { useFilteredCount, useTotalCount, useDataStore } from '@/features/data'
+
+interface SelectedPoint {
+  ids: string[]
+  coordinates: { lat: number; lng: number }
+}
 
 export function MapView() {
   const containerRef = useRef<HTMLDivElement>(null)
   const filteredCount = useFilteredCount()
   const totalCount = useTotalCount()
+  const setSelectedPoint = useDataStore((s) => s.setSelectedPoint)
+
+  // Sheet state for point details
+  const [selectedPoint, setSelectedPointState] = useState<SelectedPoint | null>(null)
+  const [sheetOpen, setSheetOpen] = useState(false)
+
+  const handlePointClick = useCallback(
+    (ids: string | string[], coords: { lat: number; lng: number }) => {
+      const idArray = Array.isArray(ids) ? ids : [ids]
+      setSelectedPointState({ ids: idArray, coordinates: coords })
+      setSheetOpen(true)
+      // Also update the store for potential use elsewhere
+      setSelectedPoint(idArray[0])
+    },
+    [setSelectedPoint]
+  )
+
+  const handleSheetOpenChange = useCallback(
+    (open: boolean) => {
+      setSheetOpen(open)
+      if (!open) {
+        setSelectedPointState(null)
+        setSelectedPoint(null)
+      }
+    },
+    [setSelectedPoint]
+  )
 
   useMaplibre(containerRef, {
     onMapReady: (map) => {
       console.log('Map ready:', map)
     },
-    onPointClick: (id, coords) => {
-      console.log('Point clicked:', id, coords)
-    },
+    onPointClick: handlePointClick,
   })
 
   return (
@@ -23,14 +54,20 @@ export function MapView() {
 
       {/* Record count overlay */}
       <div className="absolute left-4 top-4 rounded-lg bg-background/90 px-3 py-2 text-sm shadow-lg backdrop-blur">
-        <span className="font-medium">
-          {filteredCount.toLocaleString()}
-        </span>
+        <span className="font-medium">{filteredCount.toLocaleString()}</span>
         <span className="text-muted-foreground">
           {' / '}
           {totalCount.toLocaleString()} records
         </span>
       </div>
+
+      {/* Point details sheet */}
+      <PointDetailsSheet
+        open={sheetOpen}
+        onOpenChange={handleSheetOpenChange}
+        pointIds={selectedPoint?.ids || []}
+        coordinates={selectedPoint?.coordinates}
+      />
     </div>
   )
 }

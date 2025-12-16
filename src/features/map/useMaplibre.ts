@@ -17,7 +17,7 @@ const MAP_STYLES = {
 
 interface UseMaplibreOptions {
   onMapReady?: (map: maplibregl.Map) => void
-  onPointClick?: (id: string, coordinates: [number, number]) => void
+  onPointClick?: (ids: string | string[], coordinates: { lat: number; lng: number }) => void
 }
 
 export function useMaplibre(
@@ -80,11 +80,17 @@ export function useMaplibre(
     // Handle point clicks
     map.on('click', 'points-layer', (e) => {
       if (e.features && e.features.length > 0) {
-        const feature = e.features[0]
-        const id = feature.properties?.id as string
-        const coords = (feature.geometry as GeoJSON.Point).coordinates as [number, number]
-        setSelectedPoint(id)
-        options.onPointClick?.(id, coords)
+        // Collect all point IDs at this location (for overlapping points)
+        const ids = e.features
+          .map((f) => f.properties?.id as string)
+          .filter((id): id is string => !!id)
+
+        if (ids.length > 0) {
+          const feature = e.features[0]
+          const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates
+          setSelectedPoint(ids[0])
+          options.onPointClick?.(ids.length === 1 ? ids[0] : ids, { lat, lng })
+        }
       }
     })
 
