@@ -10,9 +10,9 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/shared/ui/tabs'
 import { Button } from '@/shared/ui/button'
 import { Badge } from '@/shared/ui/badge'
 import { Separator } from '@/shared/ui/separator'
-import { useFilteredRecords } from '@/features/data'
+import { useFilteredRecords, useDataStore } from '@/features/data'
 import { exportToCSV, exportToGeoJSON } from '@/shared/lib/export'
-import { Download, Copy, Check, FileJson, FileSpreadsheet, Quote } from 'lucide-react'
+import { Download, Copy, Check, FileJson, FileSpreadsheet, Quote, Image as ImageIcon } from 'lucide-react'
 
 // Build-time constants
 declare const __BUILD_TIME__: string
@@ -25,10 +25,14 @@ interface ExportDialogProps {
 
 export function ExportDialog({ open, onOpenChange }: ExportDialogProps) {
   const records = useFilteredRecords()
+  const mapExportFn = useDataStore((s) => s.mapExportFn)
+  const view = useDataStore((s) => s.ui.view)
 
   const [isExporting, setIsExporting] = useState(false)
   const [exportSuccess, setExportSuccess] = useState(false)
   const [citationCopied, setCitationCopied] = useState<'plain' | 'bibtex' | null>(null)
+  const [mapExportSuccess, setMapExportSuccess] = useState(false)
+  const [mapExportError, setMapExportError] = useState<string | null>(null)
 
   // Get build info
   const buildTime =
@@ -95,6 +99,22 @@ export function ExportDialog({ open, onOpenChange }: ExportDialogProps) {
     setTimeout(() => setCitationCopied(null), 2000)
   }
 
+  const handleExportMapImage = async (format: 'png' | 'jpeg') => {
+    if (!mapExportFn) return
+    setIsExporting(true)
+    setMapExportError(null)
+    try {
+      const date = new Date().toISOString().split('T')[0]
+      await mapExportFn(format, `ithomiini_map_${date}`)
+      setMapExportSuccess(true)
+      setTimeout(() => setMapExportSuccess(false), 3000)
+    } catch (err) {
+      setMapExportError((err as Error).message)
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg">
@@ -109,14 +129,18 @@ export function ExportDialog({ open, onOpenChange }: ExportDialogProps) {
         </DialogHeader>
 
         <Tabs defaultValue="data" className="mt-4">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="data" className="gap-2">
               <Download className="h-4 w-4" />
-              Data Export
+              Data
+            </TabsTrigger>
+            <TabsTrigger value="map" className="gap-2">
+              <ImageIcon className="h-4 w-4" />
+              Map
             </TabsTrigger>
             <TabsTrigger value="citation" className="gap-2">
               <Quote className="h-4 w-4" />
-              Citation
+              Cite
             </TabsTrigger>
           </TabsList>
 
@@ -169,6 +193,75 @@ export function ExportDialog({ open, onOpenChange }: ExportDialogProps) {
                 <Check className="h-4 w-4" />
                 <span className="text-sm">Export completed successfully!</span>
               </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="map" className="space-y-4">
+            {view !== 'map' ? (
+              <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-4 text-amber-600 dark:text-amber-400">
+                <p className="text-sm">
+                  Switch to Map view to export the map as an image.
+                </p>
+              </div>
+            ) : !mapExportFn ? (
+              <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-4 text-amber-600 dark:text-amber-400">
+                <p className="text-sm">
+                  Map is loading... Please wait.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="rounded-lg border p-4">
+                  <p className="text-sm text-muted-foreground">
+                    Export the current map view as an image. The export includes all visible points and map controls.
+                  </p>
+                </div>
+
+                <div className="grid gap-3">
+                  <Button
+                    variant="outline"
+                    className="justify-start gap-3 h-auto py-4"
+                    onClick={() => handleExportMapImage('png')}
+                    disabled={isExporting}
+                  >
+                    <ImageIcon className="h-5 w-5 text-purple-500" />
+                    <div className="text-left">
+                      <p className="font-medium">Export as PNG</p>
+                      <p className="text-xs text-muted-foreground">
+                        High-quality image with transparency
+                      </p>
+                    </div>
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    className="justify-start gap-3 h-auto py-4"
+                    onClick={() => handleExportMapImage('jpeg')}
+                    disabled={isExporting}
+                  >
+                    <ImageIcon className="h-5 w-5 text-orange-500" />
+                    <div className="text-left">
+                      <p className="font-medium">Export as JPEG</p>
+                      <p className="text-xs text-muted-foreground">
+                        Smaller file size, white background
+                      </p>
+                    </div>
+                  </Button>
+                </div>
+
+                {mapExportSuccess && (
+                  <div className="flex items-center gap-2 rounded-lg border border-green-500/20 bg-green-500/10 p-3 text-green-500">
+                    <Check className="h-4 w-4" />
+                    <span className="text-sm">Map exported successfully!</span>
+                  </div>
+                )}
+
+                {mapExportError && (
+                  <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-destructive">
+                    <span className="text-sm">Export failed: {mapExportError}</span>
+                  </div>
+                )}
+              </>
             )}
           </TabsContent>
 

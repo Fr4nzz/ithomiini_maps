@@ -8,6 +8,9 @@ import type {
 } from './types'
 import { defaultFilters, defaultUIState, defaultViewport } from './types'
 
+// Type for map export function
+type MapExportFn = (format: 'png' | 'jpeg', filename?: string) => Promise<void>
+
 interface DataState {
   // Data
   records: Record[]
@@ -23,6 +26,9 @@ interface DataState {
   // Map viewport
   viewport: ViewportState
 
+  // Map export function reference
+  mapExportFn: MapExportFn | null
+
   // Actions
   setRecords: (records: Record[]) => void
   setLoading: (loading: boolean) => void
@@ -34,6 +40,7 @@ interface DataState {
   setViewport: (viewport: Partial<ViewportState>) => void
   toggleAdvancedFilters: () => void
   toggleMimicryFilter: () => void
+  setMapExportFn: (fn: MapExportFn | null) => void
 }
 
 export const useDataStore = create<DataState>()(
@@ -45,6 +52,7 @@ export const useDataStore = create<DataState>()(
     filters: defaultFilters,
     ui: defaultUIState,
     viewport: defaultViewport,
+    mapExportFn: null,
 
     // Actions
     setRecords: (records) =>
@@ -123,6 +131,8 @@ export const useDataStore = create<DataState>()(
         }
         return { ui: { ...state.ui, showMimicryFilter: show } }
       }),
+
+    setMapExportFn: (fn) => set({ mapExportFn: fn }),
   }))
 )
 

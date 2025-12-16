@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 import { useMaplibre } from './useMaplibre'
 import { PointDetailsSheet } from './PointDetailsSheet'
 import { useFilteredCount, useTotalCount, useDataStore } from '@/features/data'
@@ -13,6 +13,7 @@ export function MapView() {
   const filteredCount = useFilteredCount()
   const totalCount = useTotalCount()
   const setSelectedPoint = useDataStore((s) => s.setSelectedPoint)
+  const setMapExportFn = useDataStore((s) => s.setMapExportFn)
 
   // Sheet state for point details
   const [selectedPoint, setSelectedPointState] = useState<SelectedPoint | null>(null)
@@ -40,12 +41,15 @@ export function MapView() {
     [setSelectedPoint]
   )
 
-  useMaplibre(containerRef, {
-    onMapReady: (map) => {
-      console.log('Map ready:', map)
-    },
+  const { exportMapImage } = useMaplibre(containerRef, {
     onPointClick: handlePointClick,
   })
+
+  // Register export function with store
+  useEffect(() => {
+    setMapExportFn(exportMapImage)
+    return () => setMapExportFn(null)
+  }, [exportMapImage, setMapExportFn])
 
   return (
     <div className="relative h-full w-full">

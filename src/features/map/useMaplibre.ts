@@ -2,6 +2,7 @@ import { useRef, useEffect, useCallback } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import Spiderfy from '@nazka/map-gl-js-spiderfy'
+import { toPng, toJpeg } from 'html-to-image'
 import { useDataStore, useFilteredGeoJSON } from '@/features/data'
 
 // Map style configurations
@@ -179,9 +180,53 @@ export function useMaplibre(
   // Get map instance
   const getMap = useCallback(() => mapRef.current, [])
 
+  // Export map as image
+  const exportMapImage = useCallback(
+    async (format: 'png' | 'jpeg' = 'png', filename?: string): Promise<void> => {
+      const map = mapRef.current
+      if (!map) {
+        throw new Error('Map not initialized')
+      }
+
+      // Get the map container
+      const container = map.getContainer()
+      if (!container) {
+        throw new Error('Map container not found')
+      }
+
+      // Generate filename with timestamp
+      const date = new Date().toISOString().split('T')[0]
+      const defaultFilename = `ithomiini_map_${date}`
+      const finalFilename = filename || defaultFilename
+
+      try {
+        const dataUrl =
+          format === 'jpeg'
+            ? await toJpeg(container, {
+                quality: 0.95,
+                backgroundColor: '#ffffff',
+              })
+            : await toPng(container, {
+                pixelRatio: 2, // Higher resolution
+              })
+
+        // Download the image
+        const link = document.createElement('a')
+        link.download = `${finalFilename}.${format}`
+        link.href = dataUrl
+        link.click()
+      } catch (err) {
+        console.error('Map export failed:', err)
+        throw err
+      }
+    },
+    []
+  )
+
   return {
     mapRef,
     flyTo,
     getMap,
+    exportMapImage,
   }
 }
