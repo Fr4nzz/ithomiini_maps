@@ -335,14 +335,14 @@ const updateExportHeight = (value) => {
       <!-- UI Toggles -->
       <div class="filter-section">
         <div class="toggle-row cursor-pointer" @click="store.showThumbnail = !store.showThumbnail">
-          <Checkbox :checked="store.showThumbnail" class="pointer-events-none" />
+          <Checkbox :checked="store.showThumbnail" @update:checked="store.showThumbnail = $event" @click.stop />
           <span class="text-sm font-medium">Show thumbnails</span>
         </div>
       </div>
 
       <div v-if="currentView === 'map'" class="filter-section">
         <div class="toggle-row scatter cursor-pointer" @click="store.scatterOverlappingPoints = !store.scatterOverlappingPoints">
-          <Checkbox :checked="store.scatterOverlappingPoints" class="pointer-events-none" />
+          <Checkbox :checked="store.scatterOverlappingPoints" @update:checked="store.scatterOverlappingPoints = $event" @click.stop />
           <span class="text-sm font-medium">Scatter overlapping points</span>
         </div>
         <p class="text-xs text-muted-foreground italic mt-1.5">Evenly distribute overlapping points within 2.5km radius</p>
