@@ -29,17 +29,19 @@ from pathlib import Path
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
 
+PROJECT_ROOT = Path(__file__).parent.parent
+OUTPUT_DIR = PROJECT_ROOT / "public" / "data"
+
 LOCAL_EXCEL_PATH = "Dore_Ithomiini_records.xlsx"
 GOOGLE_SHEET_ID = "1QZj6YgHAJ9NmFXFPCtu-i-1NDuDmAdMF2Wogts7S2_4"
 SHEET_GIDS = {
     "Collection_data": "900206579",
     "Photo_links": "439406691"
 }
-OUTPUT_DIR = "public/data"
 
 # GBIF Configuration
 USE_GBIF_BULK_DOWNLOAD = True
-GBIF_BULK_FILE = "public/data/gbif_occurrences.json"
+GBIF_BULK_FILE = OUTPUT_DIR / "gbif_occurrences.json"
 GBIF_SEARCH_FALLBACK = False
 GBIF_SPECIES_LIMIT = 5
 GBIF_RECORDS_PER_SPECIES = 50
