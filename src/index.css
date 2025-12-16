@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "./styles/components.css";
+
+@custom-variant dark (&:is(.dark *));
 
 /* ══════════════════════════════════════════════════════════════════════════
    ITHOMIINI MAPS THEME - Green Cyberpunk

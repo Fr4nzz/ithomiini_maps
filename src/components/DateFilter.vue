@@ -143,7 +143,4 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   </div>
 </template>
 
-<style scoped>
-@reference "../index.css";
-input[type="date"]::-webkit-calendar-picker-indicator { @apply invert opacity-50 cursor-pointer; }
-</style>
+<!-- Styles moved to src/styles/components.css for reliable Tailwind v4 processing -->

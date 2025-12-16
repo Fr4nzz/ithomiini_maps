@@ -166,7 +166,7 @@ const updateExportHeight = (value) => {
 </script>
 
 <template>
-  <aside class="w-[340px] min-w-[340px] h-screen bg-secondary border-r border-border flex flex-col overflow-hidden">
+  <aside class="sidebar-aside w-[340px] min-w-[340px] h-screen bg-secondary border-r border-border flex flex-col overflow-hidden">
     <!-- Header -->
     <header class="p-5 border-b border-border bg-background">
       <div class="flex items-center justify-between">
@@ -523,46 +523,4 @@ const updateExportHeight = (value) => {
   </aside>
 </template>
 
-<style scoped>
-@reference "../index.css";
-/* Minimal custom CSS - mostly using Tailwind now */
-.filter-section { @apply mb-6; }
-.section-label { @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3; }
-
-.action-btn { @apply flex-1 flex flex-col items-center gap-1.5 p-3 bg-muted border border-border rounded-lg text-xs text-muted-foreground cursor-pointer transition-all relative hover:bg-accent hover:text-foreground hover:border-primary; }
-.action-btn.active { @apply bg-primary/15 text-primary border-primary; }
-.action-btn:disabled { @apply opacity-50 cursor-not-allowed; }
-.action-btn .badge { @apply absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded-full min-w-[18px] text-center; }
-
-.toggle-row { @apply flex items-center gap-3 p-3.5 bg-muted rounded-md cursor-pointer transition-colors hover:bg-accent; }
-.toggle-row.scatter { @apply bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/15; }
-
-.collapsible { @apply border border-border rounded-lg; }
-.collapse-toggle { @apply w-full flex items-center gap-2.5 p-3.5 bg-muted border-0 text-sm font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-accent hover:text-foreground; }
-.collapse-content { @apply p-3.5 border-t border-border; }
-
-.subsection-toggle { @apply w-full flex items-center gap-2 p-3 mt-3 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground cursor-pointer transition-colors hover:bg-muted hover:text-foreground; }
-.subsection-content { @apply p-3.5 mt-2 bg-background border border-border rounded-md; }
-
-.toggle-badge { @apply ml-auto px-2 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors bg-muted-foreground/20 text-muted-foreground border border-transparent hover:bg-muted-foreground/30; }
-.toggle-badge.active { @apply bg-primary/15 text-primary border-primary/30 hover:bg-primary/25; }
-
-.active-badge { @apply ml-auto px-2 py-0.5 bg-primary/15 text-primary rounded text-xs; }
-
-.input-sm { @apply px-2 py-1.5 bg-muted border border-border rounded text-sm text-primary font-semibold tabular-nums focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20; }
-.color-picker { @apply w-9 h-9 p-0 border-2 border-border rounded-md cursor-pointer bg-transparent; }
-
-.camid-textarea { @apply w-full min-h-[38px] max-h-[120px] p-2.5 bg-muted border border-border rounded-md text-sm font-mono text-foreground resize-y transition-colors focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10; }
-.camid-dropdown { @apply absolute top-full left-0 right-0 bg-muted border border-border border-t-0 rounded-b-md max-h-[200px] overflow-y-auto z-50 shadow-lg; }
-.camid-suggestion { @apply w-full px-3.5 py-2 bg-transparent border-0 text-sm font-mono text-foreground text-left cursor-pointer transition-colors hover:bg-accent; }
-.camid-suggestion.selected { @apply bg-accent text-primary; }
-
-.slide-enter-active, .slide-leave-active { transition: all 0.3s ease; }
-.slide-enter-from, .slide-leave-to { opacity: 0; transform: translateY(-10px); }
-.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
-.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(-50%) translateY(10px); }
-
-@media (max-width: 768px) {
-  aside { @apply w-full min-w-full h-auto max-h-[50vh]; }
-}
-</style>
+<!-- Styles moved to src/styles/components.css for reliable Tailwind v4 processing -->
