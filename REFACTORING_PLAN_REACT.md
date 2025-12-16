@@ -10,8 +10,13 @@ This document is the **single source of truth** for rebuilding Ithomiini Maps as
 - `DOCS_REACT_VITE_SHADCN.md` — Setup and configuration details
 - `EQUIVALENTS_VUE_TO_REACT.md` — Library choices and patterns
 
+**First step — run this to access Vue reference code:**
+```bash
+git fetch --all
+```
+
 **Key workflow:**
-1. You're working on the `react/rebuild` branch
+1. You're working on the auto-created branch (Claude Code web creates this automatically)
 2. Reference Vue code using `git show claude/refactor-shadcn-ui-HT92U:path/to/file`
 3. Follow this plan step-by-step, completing each checkpoint before moving on
 4. Use layout primitives (Stack, Panel, Section) — no scattered padding/margin
@@ -63,13 +68,9 @@ https://ui.shadcn.com/create?style=mira&base=base&baseColor=gray&theme=lime&icon
 
 ### For Claude Code Web / Cloud Environments (Recommended)
 
-Claude Code web clones the repo into a container. Use a **single clone** approach with `git show` to reference Vue files:
+Claude Code web automatically creates a new branch when you start. Just fetch all remote branches to access the Vue reference:
 
 ```bash
-# You're already in the cloned repo on main branch
-# Create and switch to the new React branch
-git checkout -b react/rebuild
-
 # Fetch all branches to access the Vue reference
 git fetch --all
 ```
@@ -86,7 +87,7 @@ git ls-tree --name-only claude/refactor-shadcn-ui-HT92U:src/components/
 ```
 
 This approach lets you:
-- Work on `react/rebuild` branch
+- Work on the auto-created branch
 - Reference Vue code anytime with `git show`
 - No branch switching, no risk of committing to wrong branch
 
