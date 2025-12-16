@@ -1,197 +1,73 @@
-# Ithomiini Distribution Maps
+# React + TypeScript + Vite
 
-Interactive mapping tool for Ithomiini butterfly research. Visualize specimen distributions, sequencing status, and mimicry patterns across South America.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🔗 [Live Application](https://fr4nzz.github.io/ithomiini_maps/)
+Currently, two official plugins are available:
 
-## Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### 🗺️ Interactive Map
-- **Multiple Base Layers**: Dark, Light, Satellite (Esri), Terrain, Streets
-- **Clustered Points**: Efficient rendering of 30,000+ records
-- **Dynamic Filtering**: Real-time map updates as filters change
-- **Shareable URLs**: Filter state encoded in URL for easy sharing
-- **Point Popups**: Click to view specimen details and images
-- **High-Resolution Export**: Export maps at 300 DPI for publications
+## React Compiler
 
-### 🖼️ Image Gallery
-- **Full-Screen Viewer**: Browse specimen images in gallery mode
-- **Zoom & Pan**: Detailed examination of wing patterns
-- **Keyboard Navigation**: Arrow keys and shortcuts for quick browsing
-- **Touch Support**: Pinch-to-zoom on mobile devices
-- **Thumbnail Strip**: Quick preview of all images
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### 🦋 Visual Mimicry Selector
-- **Wing Pattern Icons**: Visual representation of mimicry rings
-- **Color-Coded Display**: Distinctive colors for each ring
-- **Search Filter**: Find mimicry rings by name
-- **Record Counts**: See how many specimens per ring
+## Expanding the ESLint configuration
 
-### 🔬 Filter System
-- **Taxonomic Cascade**: Family → Tribe → Genus → Species → Subspecies
-- **Multi-Select Filters**: Select multiple species/subspecies at once (fuzzy search)
-- **Sequencing Status**: Filter by Sequenced, Tissue Available, Preserved, Published, Observation, Museum Specimen
-- **Mimicry Rings**: 44 unique mimicry patterns from Dore et al. (2025)
-- **Mimicry Ring Propagation**: Automatically applied to Sanger and GBIF records based on species/subspecies matching
-- **Date Range Filter**: Filter by collection/preservation date
-- **CAMID Search**: Instant lookup by specimen ID
-- **Data Source**: Filter by Dore, Sanger Institute, or GBIF
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### 📊 Data Table with Photos
-- **Sortable Columns**: Click headers to sort by any field
-- **Photo Thumbnails**: See specimen photo in each row
-- **Species Photo Lookup**: If no photo for individual, shows photo from same species/subspecies
-- **Photo Indicator**: Distinguishes own photo vs. reference photo from another individual
-- **Pagination**: Navigate through large datasets efficiently
-- **Column Visibility**: Toggle columns to customize your view
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### 📥 Export & Citation
-- **CSV Export**: Download filtered data as spreadsheet
-- **GeoJSON Export**: Download for GIS/mapping applications
-- **Map Image Export**: High-resolution PNG/JPEG for publications
-- **Scientific Citation**: Auto-generated citation with version hash
-- **BibTeX Format**: Ready-to-use citation for LaTeX documents
-- **Reproducibility**: Version-controlled data with Git commit hash
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-### 📊 Data Sources
-1. **Dore et al. (2025)**: 28,927 published occurrence records with mimicry data
-2. **Sanger Institute**: Live collection/sequencing data with specimen photos
-3. **GBIF**: External occurrence enrichment (includes iNaturalist data)
-
-## Tech Stack
-
-- **Frontend**: Vue 3 (Composition API) + Vite
-- **Mapping**: MapLibre GL JS
-- **State Management**: Pinia
-- **Data Processing**: Python (Pandas)
-- **Hosting**: GitHub Pages
-- **CI/CD**: GitHub Actions
-
-## Local Development
-
-### Prerequisites
-- Node.js 18+
-- Python 3.9+
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/Fr4nzz/ithomiini_maps.git
-cd ithomiini_maps
-
-# Install JavaScript dependencies
-npm install
-
-# Start development server
-npm run dev
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-### Data Processing
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```bash
-# Install Python dependencies
-pip install -r scripts/requirements.txt
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-# Download GBIF data (run this first if you need GBIF records)
-cd scripts
-python gbif_download.py
-
-# Run data processing pipeline
-# (Requires Dore_Ithomiini_records.xlsx in scripts/ folder)
-python process_data.py
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-### GBIF Data Download
-
-The `gbif_download.py` script downloads ALL Ithomiini occurrences from GBIF:
-- Properly parses species names (removes author citations)
-- Extracts subspecies from `infraspecificEpithet` field
-- Filters out BOLD sequence IDs and invalid entries
-- Includes `basisOfRecord` for quality filtering (Research Grade equivalent)
-- Downloads images where available
-
-## Deployment
-
-### Automatic Deployment (Recommended)
-Push to `main` branch triggers automatic deployment via GitHub Actions.
-
-### Manual Deployment
-1. Build the application: `npm run build`
-2. Deploy `dist/` folder to GitHub Pages
-
-### GitHub Repository Settings Required:
-1. **Settings → Pages → Source**: Select "GitHub Actions"
-2. **Settings → Actions → General → Workflow permissions**: "Read and write"
-
-## Project Structure
-
-```
-ithomiini_maps/
-├── .github/workflows/
-│   ├── deploy.yml          # Auto-deploy to GitHub Pages
-│   └── update_data.yml     # Manual data refresh
-├── public/data/
-│   ├── map_points.json     # Processed occurrence data
-│   └── gbif_occurrences.json  # Downloaded GBIF data (generated)
-├── scripts/
-│   ├── gbif_download.py    # Download all GBIF Ithomiini records
-│   ├── process_data.py     # ETL pipeline with mimicry lookup
-│   └── requirements.txt    # Python dependencies
-├── src/
-│   ├── components/
-│   │   ├── DataTable.vue       # Sortable table with photo thumbnails
-│   │   ├── DateFilter.vue      # Date range filter component
-│   │   ├── ExportPanel.vue     # CSV/GeoJSON export & citations
-│   │   ├── FilterSelect.vue    # Multi-select with fuzzy search
-│   │   ├── ImageGallery.vue    # Full-screen image viewer
-│   │   ├── MapEngine.vue       # MapLibre map component
-│   │   ├── MapExport.vue       # High-res map image export
-│   │   ├── MimicrySelector.vue # Visual mimicry ring picker
-│   │   └── Sidebar.vue         # Filter controls & view toggle
-│   ├── stores/
-│   │   └── data.js         # Pinia state management with photo lookup
-│   ├── App.vue             # Root component with modals
-│   ├── main.js             # Entry point
-│   └── style.css           # Global styles
-├── index.html              # HTML template
-├── package.json            # Node dependencies
-└── vite.config.js          # Build configuration
-```
-
-## Data Schema
-
-Each record in `map_points.json` contains:
-
-```json
-{
-  "id": "CAM12345",
-  "scientific_name": "Mechanitis menophilus",
-  "genus": "Mechanitis",
-  "species": "menophilus",
-  "subspecies": "nevadensis",
-  "family": "Nymphalidae",
-  "tribe": "Ithomiini",
-  "lat": -0.9234,
-  "lng": -77.8123,
-  "mimicry_ring": "Tiger",
-  "sequencing_status": "Sequenced",
-  "source": "Sanger Institute",
-  "country": "Ecuador",
-  "image_url": "https://wsrv.nl/?url=...",
-  "date": "2023-05-15"
-}
-```
-
-## Credits
-
-- **Project Lead**: Dr. Joana Meier (Wellcome Sanger Institute)
-- **Development**: Franz Chandi
-- **Data Sources**: 
-  - Dore et al. (2025) - Published occurrence data
-  - Sanger Institute - Sequencing data
-  - GBIF - Global biodiversity data
-
-## License
-
-MIT License - See LICENSE file for details

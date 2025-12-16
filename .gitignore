@@ -1,3 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+
+# Generated data (regenerate via scripts)
+public/data/
+
+# Secrets
+.env
+.env.local
+gbif_credentials.env
+!gbif_credentials.env.template
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+*.local
+
 # Logs
 logs
 *.log
@@ -7,16 +31,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
+# Editor files
 *.suo
 *.ntvs*
 *.njsproj
