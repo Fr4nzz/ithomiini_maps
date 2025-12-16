@@ -1230,13 +1230,13 @@ const switchStyle = (styleName) => {
     </div>
 
     <!-- Style Switcher -->
-    <div class="absolute top-2.5 left-2.5 flex gap-1 bg-card/95 p-1.5 rounded-lg z-10 shadow-lg backdrop-blur">
+    <div class="absolute top-3 left-3 flex gap-1.5 bg-card/95 p-2 rounded-lg z-10 shadow-lg backdrop-blur">
       <Button
         v-for="(config, key) in MAP_STYLES"
         :key="key"
         :variant="currentStyle === key ? 'default' : 'secondary'"
         size="sm"
-        class="text-xs px-3 py-1.5"
+        class="text-xs"
         @click="switchStyle(key)"
         :title="config.name"
       >
