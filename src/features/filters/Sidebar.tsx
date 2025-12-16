@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
 import { ScrollArea } from '@/shared/ui/scroll-area'
 import { Separator } from '@/shared/ui/separator'
 import { Input } from '@/shared/ui/input'
+import { Combobox } from '@/shared/ui/combobox'
 import {
   Collapsible,
   CollapsibleContent,
@@ -150,50 +151,36 @@ export function Sidebar() {
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <Stack gap="sm" className="pt-2">
-                  {/* Genus */}
+                  {/* Genus - with fuzzy search */}
                   <div>
                     <Label className="text-xs text-muted-foreground">Genus</Label>
-                    <Select
-                      value={filters.genus || 'all'}
-                      onValueChange={(value) =>
-                        setFilters({ genus: value === 'all' ? null : value })
-                      }
-                    >
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="All genera" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All genera</SelectItem>
-                        {genera.map((g) => (
-                          <SelectItem key={g} value={g}>
-                            {g}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div className="mt-1">
+                      <Combobox
+                        value={filters.genus || ''}
+                        onChange={(value) =>
+                          setFilters({ genus: value || null })
+                        }
+                        options={genera}
+                        placeholder="All genera"
+                        emptyText="No genera found"
+                      />
+                    </div>
                   </div>
 
-                  {/* Species */}
+                  {/* Species - with fuzzy search */}
                   <div>
                     <Label className="text-xs text-muted-foreground">Species</Label>
-                    <Select
-                      value={filters.species[0] || 'all'}
-                      onValueChange={(value) =>
-                        setFilters({ species: value === 'all' ? [] : [value] })
-                      }
-                    >
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="All species" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All species</SelectItem>
-                        {species.map((s) => (
-                          <SelectItem key={s} value={s}>
-                            {s}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div className="mt-1">
+                      <Combobox
+                        value={filters.species[0] || ''}
+                        onChange={(value) =>
+                          setFilters({ species: value ? [value] : [] })
+                        }
+                        options={species}
+                        placeholder="All species"
+                        emptyText="No species found"
+                      />
+                    </div>
                   </div>
 
                   {/* Subspecies */}
