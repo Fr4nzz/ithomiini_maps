@@ -11,6 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Slider } from '@/components/ui/slider'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Map, Table2, Download, RotateCcw, Share2, ChevronRight } from 'lucide-vue-next'
 
 const props = defineProps({
@@ -168,13 +169,16 @@ const updateExportHeight = (value) => {
   <aside class="w-[340px] min-w-[340px] h-screen bg-secondary border-r border-border flex flex-col overflow-hidden">
     <!-- Header -->
     <header class="p-5 border-b border-border bg-background">
-      <a href="https://github.com/Fr4nzz/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 no-underline hover:opacity-85 transition-opacity">
-        <img src="../assets/Map_icon.svg" alt="Ithomiini Maps" class="w-10 h-10" />
-        <div class="flex flex-col">
-          <span class="text-xl font-semibold text-foreground tracking-tight">Ithomiini</span>
-          <span class="text-xs text-muted-foreground uppercase tracking-wider">Distribution Maps</span>
-        </div>
-      </a>
+      <div class="flex items-center justify-between">
+        <a href="https://github.com/Fr4nzz/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 no-underline hover:opacity-85 transition-opacity">
+          <img src="../assets/Map_icon.svg" alt="Ithomiini Maps" class="w-10 h-10" />
+          <div class="flex flex-col">
+            <span class="text-xl font-semibold text-foreground tracking-tight">Ithomiini</span>
+            <span class="text-xs text-muted-foreground uppercase tracking-wider">Distribution Maps</span>
+          </div>
+        </a>
+        <ThemeToggle />
+      </div>
     </header>
 
     <!-- Scrollable Content -->
