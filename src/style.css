@@ -3,27 +3,27 @@
    Note: Main styles are in index.css (Tailwind + shadcn theme)
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* MapLibre GL Overrides - Dark Theme */
+/* MapLibre GL Overrides - Theme-aware */
 .maplibregl-ctrl-attrib {
-  background: rgba(26, 26, 46, 0.85) !important;
-  color: #888 !important;
+  background: color-mix(in oklch, var(--background) 85%, transparent) !important;
+  color: var(--muted-foreground) !important;
   font-size: 10px !important;
   backdrop-filter: blur(4px);
 }
 
 .maplibregl-ctrl-attrib a {
-  color: #aaa !important;
+  color: var(--muted-foreground) !important;
 }
 
 .maplibregl-ctrl-group {
-  background: rgba(26, 26, 46, 0.95) !important;
-  border: 1px solid hsl(246 22% 30%) !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+  background: color-mix(in oklch, var(--card) 95%, transparent) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 4px 8px color-mix(in oklch, var(--foreground) 15%, transparent) !important;
 }
 
 .maplibregl-ctrl-group button {
   background-color: transparent !important;
-  border-bottom: 1px solid hsl(246 22% 30%) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 
 .maplibregl-ctrl-group button:last-child {
@@ -31,41 +31,50 @@
 }
 
 .maplibregl-ctrl-group button:hover {
-  background-color: hsl(246 22% 27%) !important;
+  background-color: var(--muted) !important;
 }
 
 .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
   filter: invert(0.8);
 }
 
+.dark .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(0.8);
+}
+
+.light .maplibregl-ctrl-group button .maplibregl-ctrl-icon,
+:root:not(.dark) .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(0.2);
+}
+
 .maplibregl-ctrl-scale {
-  background: rgba(26, 26, 46, 0.85) !important;
-  color: #aaa !important;
-  border-color: #666 !important;
+  background: color-mix(in oklch, var(--background) 85%, transparent) !important;
+  color: var(--muted-foreground) !important;
+  border-color: var(--border) !important;
   font-size: 10px !important;
 }
 
 /* MapLibre Popup Overrides */
 .maplibregl-popup-content {
-  background: hsl(240 25% 20%) !important;
-  border: 1px solid hsl(246 22% 30%) !important;
+  background: var(--popover) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 0.5rem !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--foreground) 20%, transparent) !important;
   padding: 0 !important;
 }
 
 .maplibregl-popup-tip {
-  border-top-color: hsl(240 25% 20%) !important;
+  border-top-color: var(--popover) !important;
 }
 
 .maplibregl-popup-close-button {
-  color: hsl(0 0% 67%) !important;
+  color: var(--muted-foreground) !important;
   font-size: 20px !important;
   padding: 4px 8px !important;
 }
 
 .maplibregl-popup-close-button:hover {
-  color: hsl(0 0% 88%) !important;
+  color: var(--foreground) !important;
   background: transparent !important;
 }
 
