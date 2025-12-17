@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ChevronDown, RotateCcw, Search, Map, Table2, Image as ImageIcon, Download, Menu } from 'lucide-react'
+import { ChevronDown, RotateCcw, Search, Map, Table2, Image as ImageIcon, Download, Menu, Share2, Check } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
 import { ScrollArea } from '@/shared/ui/scroll-area'
@@ -39,7 +39,9 @@ import {
   useUniqueGenera,
   useUniqueSources,
   useUniqueCountries,
+  useUniqueStatuses,
 } from '@/features/data'
+import type { SequencingStatus } from '@/features/data/types'
 import { DateFilter } from './DateFilter'
 import { MapSettingsSection } from './MapSettingsSection'
 import { GbifCitationSection } from './GbifCitationSection'
@@ -66,11 +68,20 @@ function SidebarContent({ onGalleryOpen, onExportOpen }: SidebarProps) {
   const subspecies = useUniqueSubspecies()
   const sources = useUniqueSources()
   const countries = useUniqueCountries()
+  const statuses = useUniqueStatuses()
 
   // Collapsible section states
   const [showMapSettings, setShowMapSettings] = useState(false)
   const [showCitation, setShowCitation] = useState(false)
   const [showMimicryDialog, setShowMimicryDialog] = useState(false)
+  const [shareCopied, setShareCopied] = useState(false)
+
+  // Copy current URL to clipboard
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href)
+    setShareCopied(true)
+    setTimeout(() => setShareCopied(false), 2000)
+  }
 
   // CAMID search with debounce (300ms)
   const [camidInput, setCamidInput] = useState(filters.camidSearch)
@@ -125,24 +136,33 @@ function SidebarContent({ onGalleryOpen, onExportOpen }: SidebarProps) {
         </Tabs>
 
         {/* Action buttons */}
-        <div className="mt-3 flex gap-2">
+        <div className="mt-3 grid grid-cols-4 gap-2">
           <Button
             variant="outline"
             size="sm"
-            className="flex-1 gap-1.5"
+            className="gap-1"
             onClick={onGalleryOpen}
           >
             <ImageIcon className="h-4 w-4" />
-            Gallery
+            <span className="hidden sm:inline">Gallery</span>
           </Button>
           <Button
             variant="outline"
             size="sm"
-            className="flex-1 gap-1.5"
+            className="gap-1"
             onClick={onExportOpen}
           >
             <Download className="h-4 w-4" />
-            Export
+            <span className="hidden sm:inline">Export</span>
+          </Button>
+          <Button
+            variant={shareCopied ? 'default' : 'outline'}
+            size="sm"
+            className="gap-1"
+            onClick={handleShare}
+          >
+            {shareCopied ? <Check className="h-4 w-4" /> : <Share2 className="h-4 w-4" />}
+            <span className="hidden sm:inline">{shareCopied ? 'Copied!' : 'Share'}</span>
           </Button>
           <ModeToggle />
         </div>
@@ -352,6 +372,43 @@ function SidebarContent({ onGalleryOpen, onExportOpen }: SidebarProps) {
                 )}
               </Button>
             </div>
+
+            <Separator />
+
+            {/* Sequencing Status Filter */}
+            <Collapsible>
+              <CollapsibleTrigger className="flex w-full items-center justify-between py-2 text-sm font-medium">
+                Sequencing Status
+                <ChevronDown className="h-4 w-4 transition-transform duration-200 [[data-state=open]>&]:rotate-180" />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <Stack gap="sm" className="pt-2">
+                  {statuses.map((status) => (
+                    <div key={status} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`status-${status}`}
+                        checked={filters.statuses.includes(status)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setFilters({ statuses: [...filters.statuses, status] as SequencingStatus[] })
+                          } else {
+                            setFilters({
+                              statuses: filters.statuses.filter((s) => s !== status),
+                            })
+                          }
+                        }}
+                      />
+                      <Label
+                        htmlFor={`status-${status}`}
+                        className="text-sm font-normal"
+                      >
+                        {status}
+                      </Label>
+                    </div>
+                  ))}
+                </Stack>
+              </CollapsibleContent>
+            </Collapsible>
 
             {/* Date Filter */}
             <DateFilter />
