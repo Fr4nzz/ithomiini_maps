@@ -142,29 +142,28 @@ export function useMaplibre(
           cluster: false,
         })
 
+        // Add pulse effect layer FIRST (bottom layer - largest, semi-transparent)
         map.addLayer({
-          id: 'points-layer',
+          id: 'points-pulse',
           type: 'circle',
           source: 'points-source',
+          filter: ['==', ['get', 'id'], ''],
           paint: {
             'circle-radius': [
               'interpolate',
               ['linear'],
               ['zoom'],
-              3, 3,
-              6, 5,
-              10, 8,
-              14, 12,
+              3, 12,
+              6, 18,
+              10, 24,
+              14, 32,
             ],
             'circle-color': '#22c55e',
-            'circle-opacity': 0.85,
-            'circle-stroke-width': 1.5,
-            'circle-stroke-color': '#ffffff',
-            'circle-stroke-opacity': 0.6,
+            'circle-opacity': 0.3,
           },
         })
 
-        // Add highlight layer for selected point (larger ring behind)
+        // Add highlight layer SECOND (middle layer - ring behind point)
         map.addLayer({
           id: 'points-highlight',
           type: 'circle',
@@ -187,24 +186,26 @@ export function useMaplibre(
           },
         })
 
-        // Add pulse effect layer (even larger, semi-transparent)
+        // Add main points layer LAST (top layer - the actual colored point)
         map.addLayer({
-          id: 'points-pulse',
+          id: 'points-layer',
           type: 'circle',
           source: 'points-source',
-          filter: ['==', ['get', 'id'], ''],
           paint: {
             'circle-radius': [
               'interpolate',
               ['linear'],
               ['zoom'],
-              3, 12,
-              6, 18,
-              10, 24,
-              14, 32,
+              3, 3,
+              6, 5,
+              10, 8,
+              14, 12,
             ],
             'circle-color': '#22c55e',
-            'circle-opacity': 0.3,
+            'circle-opacity': 0.85,
+            'circle-stroke-width': 1.5,
+            'circle-stroke-color': '#ffffff',
+            'circle-stroke-opacity': 0.6,
           },
         })
       }

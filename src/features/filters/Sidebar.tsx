@@ -436,7 +436,7 @@ export function Sidebar({ onGalleryOpen, onExportOpen }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <Card className="hidden h-full w-80 flex-col rounded-none border-r border-l-0 border-t-0 border-b-0 md:flex">
+      <Card className="hidden h-screen w-80 flex-col overflow-hidden rounded-none border-r border-l-0 border-t-0 border-b-0 md:flex">
         <SidebarContent onGalleryOpen={onGalleryOpen} onExportOpen={onExportOpen} />
       </Card>
 

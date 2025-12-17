@@ -44,19 +44,43 @@ function SheetOverlay({
   )
 }
 
+interface SheetContentProps extends React.ComponentProps<typeof SheetPrimitive.Content> {
+  side?: "top" | "right" | "bottom" | "left"
+  modal?: boolean
+}
+
 function SheetContent({
   className,
   children,
   side = "right",
+  modal = true,
+  onInteractOutside,
+  onPointerDownOutside,
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Content> & {
-  side?: "top" | "right" | "bottom" | "left"
-}) {
+}: SheetContentProps) {
+  // For non-modal sheets, prevent close on outside interaction
+  const handleInteractOutside = modal
+    ? onInteractOutside
+    : (e: Event) => {
+        e.preventDefault()
+        onInteractOutside?.(e as CustomEvent)
+      }
+
+  const handlePointerDownOutside = modal
+    ? onPointerDownOutside
+    : (e: Event) => {
+        e.preventDefault()
+        onPointerDownOutside?.(e as CustomEvent)
+      }
+
   return (
     <SheetPortal>
-      <SheetOverlay />
+      {/* Only render overlay for modal sheets */}
+      {modal && <SheetOverlay />}
       <SheetPrimitive.Content
         data-slot="sheet-content"
+        onInteractOutside={handleInteractOutside}
+        onPointerDownOutside={handlePointerDownOutside}
         className={cn(
           "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
           side === "right" &&

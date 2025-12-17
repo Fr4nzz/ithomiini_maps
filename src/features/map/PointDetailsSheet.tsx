@@ -189,7 +189,7 @@ export function PointDetailsSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange} modal={false}>
-      <SheetContent className="w-[420px] sm:max-w-[420px]">
+      <SheetContent className="w-[420px] sm:max-w-[420px]" modal={false}>
         <SheetHeader className="pb-0">
           <SheetTitle className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-primary" />

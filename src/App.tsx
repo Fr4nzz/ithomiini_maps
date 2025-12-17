@@ -47,7 +47,7 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen bg-background text-foreground">
+    <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground">
       {/* Sidebar with integrated header */}
       <Sidebar
         onGalleryOpen={() => openGallery()}
@@ -55,7 +55,7 @@ function App() {
       />
 
       {/* Map/Table View */}
-      <main className="relative flex-1">
+      <main className="relative flex-1 h-full overflow-hidden">
         {isLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
             <p className="text-muted-foreground">Loading records...</p>
