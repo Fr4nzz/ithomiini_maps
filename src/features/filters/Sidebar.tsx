@@ -43,8 +43,6 @@ export function Sidebar() {
   const filters = useDataStore((s) => s.filters)
   const setFilters = useDataStore((s) => s.setFilters)
   const resetFilters = useDataStore((s) => s.resetFilters)
-  const ui = useDataStore((s) => s.ui)
-  const toggleAdvancedFilters = useDataStore((s) => s.toggleAdvancedFilters)
 
   const filteredCount = useFilteredCount()
   const totalCount = useTotalCount()
