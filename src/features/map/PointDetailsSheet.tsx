@@ -18,7 +18,8 @@ import {
   SelectValue,
 } from '@/shared/ui/select'
 import { useDataStore } from '@/features/data'
-import { getThumbnailUrl } from '@/shared/lib/imageProxy'
+import { getProxiedUrl } from '@/shared/lib/imageProxy'
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { ExternalLink, Image as ImageIcon, MapPin, Calendar, Dna } from 'lucide-react'
 import type { Record as DataRecord } from '@/features/data/types'
 
@@ -216,17 +217,32 @@ export function PointDetailsSheet({
               </Badge>
             </div>
 
-            {/* Photo */}
+            {/* Photo with panzoom */}
             <div className="relative aspect-square w-full overflow-hidden rounded-lg border bg-muted">
               {currentIndividual?.image_url ? (
-                <img
-                  src={getThumbnailUrl(currentIndividual.image_url)}
-                  alt={currentIndividual.id}
-                  className="h-full w-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
-                />
+                <TransformWrapper
+                  initialScale={1}
+                  minScale={0.5}
+                  maxScale={5}
+                  centerOnInit
+                  wheel={{ step: 0.5 }}
+                  doubleClick={{ step: 0.7 }}
+                >
+                  <TransformComponent
+                    wrapperClass="!w-full !h-full"
+                    contentClass="!w-full !h-full flex items-center justify-center"
+                  >
+                    <img
+                      src={getProxiedUrl(currentIndividual.image_url)}
+                      alt={currentIndividual.id}
+                      className="h-full w-full object-cover cursor-grab active:cursor-grabbing"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                      draggable={false}
+                    />
+                  </TransformComponent>
+                </TransformWrapper>
               ) : (
                 <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground">
                   <ImageIcon className="h-10 w-10 opacity-50" />

@@ -486,6 +486,8 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
                 minScale={0.5}
                 maxScale={5}
                 centerOnInit
+                wheel={{ step: 0.5 }}
+                doubleClick={{ step: 0.7 }}
                 onTransformed={(_, state) => setZoomLevel(state.scale)}
               >
                 {({ zoomIn, zoomOut, resetTransform }) => (
