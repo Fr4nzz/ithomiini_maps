@@ -160,11 +160,78 @@ export function useMaplibre(
             'circle-stroke-opacity': 0.6,
           },
         })
+
+        // Add highlight layer for selected point (larger ring behind)
+        map.addLayer({
+          id: 'points-highlight',
+          type: 'circle',
+          source: 'points-source',
+          filter: ['==', ['get', 'id'], ''], // Initially show nothing
+          paint: {
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              3, 8,
+              6, 12,
+              10, 16,
+              14, 22,
+            ],
+            'circle-color': 'transparent',
+            'circle-stroke-width': 3,
+            'circle-stroke-color': '#ffffff',
+            'circle-stroke-opacity': 1,
+          },
+        })
+
+        // Add pulse effect layer (even larger, semi-transparent)
+        map.addLayer({
+          id: 'points-pulse',
+          type: 'circle',
+          source: 'points-source',
+          filter: ['==', ['get', 'id'], ''],
+          paint: {
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              3, 12,
+              6, 18,
+              10, 24,
+              14, 32,
+            ],
+            'circle-color': '#22c55e',
+            'circle-opacity': 0.3,
+          },
+        })
       }
     }
 
     updateSource()
   }, [geojson])
+
+  // Update highlight when selectedPointId changes
+  useEffect(() => {
+    const unsubscribe = useDataStore.subscribe(
+      (state) => state.ui.selectedPointId,
+      (selectedId) => {
+        const map = mapRef.current
+        if (!map || !mapLoadedRef.current) return
+
+        // Check if layers exist
+        if (!map.getLayer('points-highlight')) return
+
+        const filter: maplibregl.FilterSpecification = selectedId
+          ? ['==', ['get', 'id'], selectedId]
+          : ['==', ['get', 'id'], '']
+
+        map.setFilter('points-highlight', filter)
+        map.setFilter('points-pulse', filter)
+      }
+    )
+
+    return () => unsubscribe()
+  }, [])
 
   // Fly to point
   const flyTo = useCallback((lng: number, lat: number, zoom = 12) => {

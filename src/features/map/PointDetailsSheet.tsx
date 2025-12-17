@@ -101,6 +101,7 @@ export function PointDetailsSheet({
   coordinates,
 }: PointDetailsSheetProps) {
   const recordsById = useDataStore((s) => s.recordsById)
+  const setSelectedPoint = useDataStore((s) => s.setSelectedPoint)
 
   // Get records for the given IDs
   const points = useMemo(() => {
@@ -173,6 +174,13 @@ export function PointDetailsSheet({
     return individualsList[Math.min(selectedIndividualIndex, individualsList.length - 1)]
   }, [individualsList, selectedIndividualIndex])
 
+  // Sync selected point to store when current individual changes (for map highlight)
+  useEffect(() => {
+    if (currentIndividual && open) {
+      setSelectedPoint(currentIndividual.id)
+    }
+  }, [currentIndividual, open, setSelectedPoint])
+
   // Statistics
   const totalSpecies = Object.keys(groupedBySpecies).length
   const totalIndividuals = points.length
@@ -180,7 +188,7 @@ export function PointDetailsSheet({
   if (points.length === 0) return null
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={onOpenChange} modal={false}>
       <SheetContent className="w-[420px] sm:max-w-[420px]">
         <SheetHeader className="pb-0">
           <SheetTitle className="flex items-center gap-2">
