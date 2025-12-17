@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { useMaplibre } from './useMaplibre'
 import { PointDetailsSheet } from './PointDetailsSheet'
+import { Legend } from './Legend'
 import { useFilteredCount, useTotalCount, useDataStore } from '@/features/data'
 
 interface SelectedPoint {
@@ -64,6 +65,9 @@ export function MapView() {
           {totalCount.toLocaleString()} records
         </span>
       </div>
+
+      {/* Legend */}
+      <Legend />
 
       {/* Point details sheet */}
       <PointDetailsSheet

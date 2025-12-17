@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { toPng, toJpeg } from 'html-to-image'
-import { useDataStore, useFilteredGeoJSON } from '@/features/data'
+import { useDataStore, useFilteredGeoJSON, useActiveColorMap } from '@/features/data'
 
 // Map style configurations
 const MAP_STYLES = {
@@ -31,6 +31,9 @@ export function useMaplibre(
   const setViewport = useDataStore((s) => s.setViewport)
   const setSelectedPoint = useDataStore((s) => s.setSelectedPoint)
   const geojson = useFilteredGeoJSON()
+  const colorBy = useDataStore((s) => s.colorBy)
+  const mapStyle = useDataStore((s) => s.mapStyle)
+  const activeColorMap = useActiveColorMap()
 
   // Initialize map
   useEffect(() => {
@@ -232,6 +235,52 @@ export function useMaplibre(
 
     return () => unsubscribe()
   }, [])
+
+  // Update point colors when colorBy or activeColorMap changes
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapLoadedRef.current) return
+    if (!map.getLayer('points-layer')) return
+
+    // Build match expression for colors
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const colorExpression: any[] = ['match', ['get', colorBy]]
+
+    Object.entries(activeColorMap).forEach(([value, color]) => {
+      colorExpression.push(value, color)
+    })
+    colorExpression.push('#808080') // Default fallback for unknown values
+
+    try {
+      map.setPaintProperty('points-layer', 'circle-color', colorExpression)
+    } catch (e) {
+      // Fallback to static color if expression fails
+      console.warn('Color expression failed, using fallback:', e)
+      map.setPaintProperty('points-layer', 'circle-color', '#22c55e')
+    }
+  }, [colorBy, activeColorMap])
+
+  // Update point styling when mapStyle changes
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapLoadedRef.current) return
+    if (!map.getLayer('points-layer')) return
+
+    // Update point radius based on zoom with the configured base radius
+    const radiusExpression: maplibregl.ExpressionSpecification = [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      3, mapStyle.pointRadius * 0.5,
+      6, mapStyle.pointRadius * 0.8,
+      10, mapStyle.pointRadius,
+      14, mapStyle.pointRadius * 1.5,
+    ]
+
+    map.setPaintProperty('points-layer', 'circle-radius', radiusExpression)
+    map.setPaintProperty('points-layer', 'circle-opacity', mapStyle.pointOpacity)
+    map.setPaintProperty('points-layer', 'circle-stroke-color', mapStyle.borderColor)
+  }, [mapStyle])
 
   // Fly to point
   const flyTo = useCallback((lng: number, lat: number, zoom = 12) => {
