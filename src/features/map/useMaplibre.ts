@@ -318,7 +318,17 @@ export function useMaplibre(
 
   // Export map as image
   const exportMapImage = useCallback(
-    async (format: 'png' | 'jpeg' = 'png', filename?: string): Promise<void> => {
+    async (
+      format: 'png' | 'jpeg' = 'png',
+      filename?: string,
+      options?: {
+        width?: number
+        height?: number
+        includeLegend?: boolean
+        includeScaleBar?: boolean
+        uiScale?: number
+      }
+    ): Promise<void> => {
       const map = mapRef.current
       if (!map) {
         throw new Error('Map not initialized')
@@ -332,15 +342,28 @@ export function useMaplibre(
       const date = new Date().toISOString().split('T')[0]
       const finalFilename = filename || `ithomiini_map_${date}`
 
+      // Calculate pixel ratio based on desired output size and UI scale
+      const { width = 1920, height = 1080, uiScale = 1 } = options || {}
+      const containerWidth = container.offsetWidth
+      const containerHeight = container.offsetHeight
+      const scaleX = width / containerWidth
+      const scaleY = height / containerHeight
+      const pixelRatio = Math.max(scaleX, scaleY) * uiScale
+
       try {
         const dataUrl =
           format === 'jpeg'
             ? await toJpeg(container, {
                 quality: 0.95,
                 backgroundColor: '#ffffff',
+                pixelRatio,
+                width,
+                height,
               })
             : await toPng(container, {
-                pixelRatio: 2,
+                pixelRatio,
+                width,
+                height,
               })
 
         const link = document.createElement('a')

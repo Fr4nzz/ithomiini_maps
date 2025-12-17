@@ -9,7 +9,15 @@ import type {
 import { defaultFilters, defaultUIState, defaultViewport } from './types'
 
 // Type for map export function
-type MapExportFn = (format: 'png' | 'jpeg', filename?: string) => Promise<void>
+interface MapExportOptions {
+  width?: number
+  height?: number
+  includeLegend?: boolean
+  includeScaleBar?: boolean
+  uiScale?: number
+}
+
+type MapExportFn = (format: 'png' | 'jpeg', filename?: string, options?: MapExportOptions) => Promise<void>
 
 // Color/Legend settings types
 type ColorByField = 'species' | 'subspecies' | 'genus' | 'mimicry_ring' | 'sequencing_status' | 'source'
