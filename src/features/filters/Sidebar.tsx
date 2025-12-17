@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ChevronDown, RotateCcw, Search } from 'lucide-react'
+import { ChevronDown, RotateCcw, Search, Map, Table2, Image as ImageIcon, Download, Menu } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
 import { ScrollArea } from '@/shared/ui/scroll-area'
@@ -21,8 +21,15 @@ import {
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Label } from '@/shared/ui/label'
 import { Badge } from '@/shared/ui/badge'
+import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from '@/shared/ui/sheet'
 import { Stack } from '@/shared/layout'
 import { useDebounce } from '@/shared/hooks'
+import { ModeToggle } from '@/components/mode-toggle'
 import {
   useDataStore,
   useFilteredCount,
@@ -38,11 +45,19 @@ import { MapSettingsSection } from './MapSettingsSection'
 import { GbifCitationSection } from './GbifCitationSection'
 import { MimicrySelectorDialog } from './MimicrySelectorDialog'
 import MimicryIcon from '@/assets/Mimicry_bttn.svg'
+import MapIcon from '@/assets/Map_icon.svg'
 
-export function Sidebar() {
+interface SidebarProps {
+  onGalleryOpen?: () => void
+  onExportOpen?: () => void
+}
+
+function SidebarContent({ onGalleryOpen, onExportOpen }: SidebarProps) {
   const filters = useDataStore((s) => s.filters)
   const setFilters = useDataStore((s) => s.setFilters)
   const resetFilters = useDataStore((s) => s.resetFilters)
+  const view = useDataStore((s) => s.ui.view)
+  const setView = useDataStore((s) => s.setView)
 
   const filteredCount = useFilteredCount()
   const totalCount = useTotalCount()
@@ -76,7 +91,64 @@ export function Sidebar() {
   }, [filters.camidSearch, camidInput])
 
   return (
-    <Card className="flex h-full w-80 flex-col rounded-none border-r border-l-0 border-t-0 border-b-0">
+    <>
+      {/* Header with logo, view toggle, and actions */}
+      <div className="border-b p-4">
+        {/* Logo */}
+        <a
+          href="https://github.com/Fr4nzz/ithomiini_maps"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-4 flex items-center gap-3 no-underline transition-opacity hover:opacity-85"
+        >
+          <img src={MapIcon} alt="Ithomiini Maps" className="h-10 w-10" />
+          <div className="flex flex-col">
+            <span className="text-xl font-semibold tracking-tight">Ithomiini</span>
+            <span className="text-xs uppercase tracking-wider text-muted-foreground">
+              Distribution Maps
+            </span>
+          </div>
+        </a>
+
+        {/* View toggle */}
+        <Tabs value={view} onValueChange={(v) => setView(v as 'map' | 'table')}>
+          <TabsList className="w-full">
+            <TabsTrigger value="map" className="flex-1 gap-1.5">
+              <Map className="h-4 w-4" />
+              Map
+            </TabsTrigger>
+            <TabsTrigger value="table" className="flex-1 gap-1.5">
+              <Table2 className="h-4 w-4" />
+              Table
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        {/* Action buttons */}
+        <div className="mt-3 flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1 gap-1.5"
+            onClick={onGalleryOpen}
+          >
+            <ImageIcon className="h-4 w-4" />
+            Gallery
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1 gap-1.5"
+            onClick={onExportOpen}
+          >
+            <Download className="h-4 w-4" />
+            Export
+          </Button>
+          <ModeToggle />
+        </div>
+      </div>
+
+      {/* Filters header */}
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">Filters</CardTitle>
@@ -297,6 +369,46 @@ export function Sidebar() {
 
       {/* Mimicry Selector Dialog */}
       <MimicrySelectorDialog open={showMimicryDialog} onOpenChange={setShowMimicryDialog} />
-    </Card>
+    </>
+  )
+}
+
+export function Sidebar({ onGalleryOpen, onExportOpen }: SidebarProps) {
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <Card className="hidden h-full w-80 flex-col rounded-none border-r border-l-0 border-t-0 border-b-0 md:flex">
+        <SidebarContent onGalleryOpen={onGalleryOpen} onExportOpen={onExportOpen} />
+      </Card>
+
+      {/* Mobile sidebar sheet */}
+      <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="fixed bottom-4 left-4 z-50 h-12 w-12 rounded-full shadow-lg md:hidden"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-80 p-0">
+          <div className="flex h-full flex-col">
+            <SidebarContent
+              onGalleryOpen={() => {
+                setIsMobileOpen(false)
+                onGalleryOpen?.()
+              }}
+              onExportOpen={() => {
+                setIsMobileOpen(false)
+                onExportOpen?.()
+              }}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
   )
 }
