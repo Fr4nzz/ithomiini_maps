@@ -33,6 +33,9 @@ import {
   useUniqueSources,
   useUniqueCountries,
 } from '@/features/data'
+import { DateFilter } from './DateFilter'
+import { MapSettingsSection } from './MapSettingsSection'
+import { GbifCitationSection } from './GbifCitationSection'
 
 export function Sidebar() {
   const filters = useDataStore((s) => s.filters)
@@ -48,6 +51,10 @@ export function Sidebar() {
   const subspecies = useUniqueSubspecies()
   const sources = useUniqueSources()
   const countries = useUniqueCountries()
+
+  // Collapsible section states
+  const [showMapSettings, setShowMapSettings] = useState(false)
+  const [showCitation, setShowCitation] = useState(false)
 
   // CAMID search with debounce (300ms)
   const [camidInput, setCamidInput] = useState(filters.camidSearch)
@@ -254,26 +261,19 @@ export function Sidebar() {
               </CollapsibleContent>
             </Collapsible>
 
-            {/* Advanced Filters Toggle */}
-            <Collapsible
-              open={ui.showAdvancedFilters}
-              onOpenChange={toggleAdvancedFilters}
-            >
-              <CollapsibleTrigger className="flex w-full items-center justify-between py-2 text-sm font-medium text-muted-foreground">
-                Advanced Filters
-                <ChevronDown className="h-4 w-4 transition-transform duration-200 [[data-state=open]>&]:rotate-180" />
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <Stack gap="sm" className="pt-2">
-                  <p className="text-xs text-muted-foreground">
-                    Additional filters like Family, Tribe, and date range will appear here.
-                  </p>
-                </Stack>
-              </CollapsibleContent>
-            </Collapsible>
+            {/* Date Filter */}
+            <DateFilter />
+
+            <Separator />
+
+            {/* Map & Legend Settings */}
+            <MapSettingsSection open={showMapSettings} onOpenChange={setShowMapSettings} />
           </Stack>
         </CardContent>
       </ScrollArea>
+
+      {/* GBIF Citation (at bottom) */}
+      <GbifCitationSection open={showCitation} onOpenChange={setShowCitation} />
     </Card>
   )
 }
