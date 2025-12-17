@@ -282,6 +282,28 @@ export function useMaplibre(
     map.setPaintProperty('points-layer', 'circle-stroke-color', mapStyle.borderColor)
   }, [mapStyle])
 
+  // Handle flyTo requests from store (e.g., from table row clicks)
+  useEffect(() => {
+    const unsubscribe = useDataStore.subscribe(
+      (state) => state.flyToTarget,
+      (flyToTarget) => {
+        const map = mapRef.current
+        if (!map || !mapLoadedRef.current || !flyToTarget) return
+
+        map.flyTo({
+          center: flyToTarget.center,
+          zoom: flyToTarget.zoom ?? Math.max(map.getZoom(), 10),
+          duration: 1500,
+        })
+
+        // Clear the target after consuming it
+        useDataStore.getState().clearFlyToTarget()
+      }
+    )
+
+    return () => unsubscribe()
+  }, [])
+
   // Fly to point
   const flyTo = useCallback((lng: number, lat: number, zoom = 12) => {
     mapRef.current?.flyTo({

@@ -43,6 +43,12 @@ interface GbifCitation {
   dataset_breakdown: { iNaturalist?: number; 'Other GBIF'?: number }
 }
 
+// Fly-to target for map navigation
+interface FlyToTarget {
+  center: [number, number]
+  zoom?: number
+}
+
 // Default values
 const defaultLegendSettings: LegendSettings = {
   showLegend: true,
@@ -92,6 +98,9 @@ interface DataState {
   exportSettings: ExportSettings
   gbifCitation: GbifCitation | null
 
+  // Map navigation target (consumed by map, then cleared)
+  flyToTarget: FlyToTarget | null
+
   // Actions
   setRecords: (records: Record[]) => void
   setLoading: (loading: boolean) => void
@@ -109,6 +118,8 @@ interface DataState {
   setMapStyle: (style: Partial<MapStyleSettings>) => void
   setExportSettings: (settings: Partial<ExportSettings>) => void
   setGbifCitation: (citation: GbifCitation | null) => void
+  flyTo: (target: FlyToTarget) => void
+  clearFlyToTarget: () => void
 }
 
 export const useDataStore = create<DataState>()(
@@ -126,6 +137,7 @@ export const useDataStore = create<DataState>()(
     mapStyle: defaultMapStyle,
     exportSettings: defaultExportSettings,
     gbifCitation: null,
+    flyToTarget: null,
 
     // Actions
     setRecords: (records) =>
@@ -225,6 +237,10 @@ export const useDataStore = create<DataState>()(
       })),
 
     setGbifCitation: (citation) => set({ gbifCitation: citation }),
+
+    flyTo: (target) => set({ flyToTarget: target }),
+
+    clearFlyToTarget: () => set({ flyToTarget: null }),
   }))
 )
 

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import {
   flexRender,
   getCoreRowModel,
@@ -12,9 +12,9 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { Button } from '@/shared/ui/button'
 import { Badge } from '@/shared/ui/badge'
 import { Checkbox } from '@/shared/ui/checkbox'
-import { useFilteredRecords } from '@/features/data'
+import { useFilteredRecords, useDataStore } from '@/features/data'
 import { getThumbnailUrl } from '@/shared/lib/imageProxy'
-import { ChevronUp, LayoutGrid, Search } from 'lucide-react'
+import { ChevronUp, LayoutGrid, Search, MapPin } from 'lucide-react'
 import type { Record as DataRecord } from '@/features/data/types'
 
 // Status colors
@@ -150,11 +150,43 @@ const columnDefs: ColumnDef<DataRecord>[] = [
       )
     },
   },
+  {
+    id: 'actions',
+    header: '',
+    size: 50,
+    enableSorting: false,
+    cell: () => (
+      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+        <MapPin className="h-4 w-4" />
+      </Button>
+    ),
+  },
 ]
 
 export function TableView() {
   const records = useFilteredRecords()
   const tableContainerRef = useRef<HTMLDivElement>(null)
+  const setSelectedPoint = useDataStore((s) => s.setSelectedPoint)
+  const setView = useDataStore((s) => s.setView)
+  const flyTo = useDataStore((s) => s.flyTo)
+
+  // Handle row click to select point and switch to map
+  const handleRowClick = useCallback(
+    (record: DataRecord) => {
+      // Set selection in store
+      setSelectedPoint(record.id)
+
+      // Request map to fly to the point
+      flyTo({
+        center: [record.lng, record.lat],
+        zoom: 12,
+      })
+
+      // Switch to map view
+      setView('map')
+    },
+    [setSelectedPoint, setView, flyTo]
+  )
 
   // Column visibility state
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
@@ -308,8 +340,9 @@ export function TableView() {
                       key={row.id}
                       data-index={virtualRow.index}
                       ref={(node) => rowVirtualizer.measureElement(node)}
-                      className="border-b border-border hover:bg-primary/5"
+                      className="cursor-pointer border-b border-border transition-colors hover:bg-primary/10"
                       style={{ height: `${ROW_HEIGHT}px` }}
+                      onClick={() => handleRowClick(row.original)}
                     >
                       {row.getVisibleCells().map((cell) => (
                         <td key={cell.id} className="px-3 py-2">

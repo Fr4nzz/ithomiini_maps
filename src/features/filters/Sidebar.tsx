@@ -36,6 +36,8 @@ import {
 import { DateFilter } from './DateFilter'
 import { MapSettingsSection } from './MapSettingsSection'
 import { GbifCitationSection } from './GbifCitationSection'
+import { MimicrySelectorDialog } from './MimicrySelectorDialog'
+import MimicryIcon from '@/assets/Mimicry_bttn.svg'
 
 export function Sidebar() {
   const filters = useDataStore((s) => s.filters)
@@ -55,6 +57,7 @@ export function Sidebar() {
   // Collapsible section states
   const [showMapSettings, setShowMapSettings] = useState(false)
   const [showCitation, setShowCitation] = useState(false)
+  const [showMimicryDialog, setShowMimicryDialog] = useState(false)
 
   // CAMID search with debounce (300ms)
   const [camidInput, setCamidInput] = useState(filters.camidSearch)
@@ -261,6 +264,25 @@ export function Sidebar() {
               </CollapsibleContent>
             </Collapsible>
 
+            <Separator />
+
+            {/* Mimicry Ring Filter */}
+            <div>
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-2"
+                onClick={() => setShowMimicryDialog(true)}
+              >
+                <img src={MimicryIcon} alt="Mimicry" className="h-5 w-5" />
+                <span>Mimicry Rings</span>
+                {filters.mimicryRings.length > 0 && (
+                  <Badge variant="secondary" className="ml-auto">
+                    {filters.mimicryRings.length}
+                  </Badge>
+                )}
+              </Button>
+            </div>
+
             {/* Date Filter */}
             <DateFilter />
 
@@ -274,6 +296,9 @@ export function Sidebar() {
 
       {/* GBIF Citation (at bottom) */}
       <GbifCitationSection open={showCitation} onOpenChange={setShowCitation} />
+
+      {/* Mimicry Selector Dialog */}
+      <MimicrySelectorDialog open={showMimicryDialog} onOpenChange={setShowMimicryDialog} />
     </Card>
   )
 }
