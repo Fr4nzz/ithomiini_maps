@@ -27,7 +27,7 @@ export function useDebouncedCallback<T extends (...args: unknown[]) => void>(
   delay: number
 ): T {
   const callbackRef = useRef(callback)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   // Update the callback ref when callback changes
   useEffect(() => {

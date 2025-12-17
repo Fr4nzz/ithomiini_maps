@@ -29,7 +29,7 @@ export function fuzzySearch(
     return items.slice(0, limit)
   }
 
-  const [idxs, info, order] = uf.search(items, query)
+  const [idxs, _info, order] = uf.search(items, query)
 
   if (!idxs || idxs.length === 0) {
     return []

@@ -6,7 +6,11 @@ import {
   parseAsArrayOf,
 } from 'nuqs'
 import { useDataStore } from '@/features/data'
+import type { DataSource } from '@/features/data/types'
 import { useDebounce } from './useDebounce'
+
+// Valid data sources for type checking
+const VALID_SOURCES: DataSource[] = ['Dore et al. (2025)', 'Sanger Institute', 'GBIF']
 
 // URL state schema with all parameters
 const urlStateSchema = {
@@ -116,7 +120,10 @@ export function useUrlState() {
       urlFilters.mimicryRings = urlState.mimicry
     }
     if (urlState.sources.length > 0) {
-      urlFilters.sources = urlState.sources
+      // Filter to only valid DataSource values
+      urlFilters.sources = urlState.sources.filter(
+        (s): s is DataSource => VALID_SOURCES.includes(s as DataSource)
+      )
     }
     if (urlState.country) {
       urlFilters.country = urlState.country
