@@ -1,6 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
-import { useVirtualizer } from '@tanstack/react-virtual'
 import { Button } from '@/shared/ui/button'
 import { ScrollArea } from '@/shared/ui/scroll-area'
 import { Badge } from '@/shared/ui/badge'
@@ -18,6 +17,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   ZoomIn,
   ZoomOut,
   RotateCcw,
@@ -26,6 +26,7 @@ import {
   Dna,
   Image as ImageIcon,
   AlertCircle,
+  Plus,
 } from 'lucide-react'
 import type { Record as DataRecord } from '@/features/data/types'
 
@@ -37,6 +38,19 @@ const STATUS_COLORS: { [key: string]: string } = {
   Published: '#a855f7',
 }
 
+// Generate consistent colors for species
+function generateSpeciesColor(species: string): { main: string; bg: string } {
+  let hash = 0
+  for (let i = 0; i < species.length; i++) {
+    hash = species.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  const hue = Math.abs(hash) % 360
+  return {
+    main: `hsl(${hue}, 70%, 55%)`,
+    bg: `hsla(${hue}, 70%, 20%, 0.3)`,
+  }
+}
+
 interface ImageGalleryProps {
   open: boolean
   onClose: () => void
@@ -46,6 +60,7 @@ interface ImageGalleryProps {
 interface GroupedBySpecies {
   [species: string]: {
     count: number
+    color: { main: string; bg: string }
     subspecies: {
       [subspecies: string]: {
         count: number
@@ -53,6 +68,20 @@ interface GroupedBySpecies {
       }
     }
   }
+}
+
+interface SpeciesGroup {
+  name: string
+  count: number
+  color: { main: string; bg: string }
+  subspecies: SubspeciesGroup[]
+}
+
+interface SubspeciesGroup {
+  name: string
+  count: number
+  individuals: DataRecord[]
+  parentSpecies: string
 }
 
 function groupBySpecies(records: DataRecord[]): GroupedBySpecies {
@@ -65,7 +94,11 @@ function groupBySpecies(records: DataRecord[]): GroupedBySpecies {
     const subspecies = record.subspecies || 'No subspecies'
 
     if (!grouped[species]) {
-      grouped[species] = { count: 0, subspecies: {} }
+      grouped[species] = {
+        count: 0,
+        color: generateSpeciesColor(species),
+        subspecies: {},
+      }
     }
 
     if (!grouped[species].subspecies[subspecies]) {
@@ -78,6 +111,22 @@ function groupBySpecies(records: DataRecord[]): GroupedBySpecies {
   }
 
   return grouped
+}
+
+function createGroupedThumbnails(groupedBySpecies: GroupedBySpecies): SpeciesGroup[] {
+  return Object.entries(groupedBySpecies)
+    .map(([speciesName, speciesData]) => ({
+      name: speciesName,
+      count: speciesData.count,
+      color: speciesData.color,
+      subspecies: Object.entries(speciesData.subspecies).map(([subspName, subspData]) => ({
+        name: subspName,
+        count: subspData.count,
+        individuals: subspData.individuals,
+        parentSpecies: speciesName,
+      })),
+    }))
+    .sort((a, b) => b.count - a.count)
 }
 
 export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryProps) {
@@ -96,6 +145,12 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
     [specimensWithImages]
   )
 
+  // Grouped thumbnails for strip
+  const groupedThumbnails = useMemo(
+    () => createGroupedThumbnails(groupedBySpecies),
+    [groupedBySpecies]
+  )
+
   // Species list sorted by count
   const speciesList = useMemo(
     () =>
@@ -106,7 +161,7 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
   )
 
   // Refs
-  const thumbnailContainerRef = useRef<HTMLDivElement>(null)
+  const thumbnailStripRef = useRef<HTMLDivElement>(null)
 
   // State
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -116,25 +171,89 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
   const [loadError, setLoadError] = useState(false)
   const [zoomLevel, setZoomLevel] = useState(1)
 
+  // Collapsed species (starts collapsed)
+  const [collapsedSpecies, setCollapsedSpecies] = useState<Set<string>>(() => new Set())
+
+  // Initialize collapsed state when data changes
+  useEffect(() => {
+    if (open && groupedThumbnails.length > 0) {
+      // Collapse all species initially
+      setCollapsedSpecies(new Set(groupedThumbnails.map((g) => g.name)))
+    }
+  }, [open, groupedThumbnails.length])
+
   // Initialize from initial specimen
   useEffect(() => {
-    if (!open) return
+    if (!open || !initialSpecimenId || specimensWithImages.length === 0) return
 
-    if (initialSpecimenId) {
-      const idx = specimensWithImages.findIndex((s) => s.id === initialSpecimenId)
-      if (idx >= 0) {
-        setCurrentIndex(idx)
-        const specimen = specimensWithImages[idx]
-        setSelectedSpecies(specimen.scientific_name)
-        setSelectedSubspecies(specimen.subspecies)
-      }
-    } else if (specimensWithImages.length > 0) {
-      setCurrentIndex(0)
-      const first = specimensWithImages[0]
-      setSelectedSpecies(first.scientific_name)
-      setSelectedSubspecies(first.subspecies)
+    const idx = specimensWithImages.findIndex((s) => s.id === initialSpecimenId)
+    if (idx >= 0) {
+      setCurrentIndex(idx)
+      const specimen = specimensWithImages[idx]
+      setSelectedSpecies(specimen.scientific_name)
+      setSelectedSubspecies(specimen.subspecies)
+      // Expand the specimen's species
+      setCollapsedSpecies((prev) => {
+        const next = new Set(prev)
+        next.delete(specimen.scientific_name)
+        return next
+      })
     }
   }, [open, initialSpecimenId, specimensWithImages])
+
+  // Current specimen
+  const currentSpecimen = specimensWithImages[currentIndex] || null
+
+  // Auto-expand current species when navigating
+  useEffect(() => {
+    if (currentSpecimen) {
+      const species = currentSpecimen.scientific_name
+      if (species && collapsedSpecies.has(species)) {
+        setCollapsedSpecies((prev) => {
+          const next = new Set(prev)
+          next.delete(species)
+          return next
+        })
+      }
+      // Update selection to match current
+      setSelectedSpecies(species)
+      setSelectedSubspecies(currentSpecimen.subspecies)
+    }
+  }, [currentSpecimen])
+
+  // Toggle species collapse
+  const toggleSpeciesCollapse = useCallback((speciesName: string) => {
+    setCollapsedSpecies((prev) => {
+      const next = new Set(prev)
+      if (next.has(speciesName)) {
+        next.delete(speciesName)
+      } else {
+        next.add(speciesName)
+      }
+      return next
+    })
+  }, [])
+
+  // Select specimen by ID
+  const selectSpecimen = useCallback(
+    (id: string, autoExpand = true) => {
+      const idx = specimensWithImages.findIndex((s) => s.id === id)
+      if (idx >= 0) {
+        setCurrentIndex(idx)
+        setIsLoading(true)
+        setLoadError(false)
+        if (autoExpand) {
+          const specimen = specimensWithImages[idx]
+          setCollapsedSpecies((prev) => {
+            const next = new Set(prev)
+            next.delete(specimen.scientific_name)
+            return next
+          })
+        }
+      }
+    },
+    [specimensWithImages]
+  )
 
   // Subspecies list for selected species
   const subspeciesList = useMemo(() => {
@@ -143,22 +262,6 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
       .map(([name, data]) => ({ name, count: data.count }))
       .sort((a, b) => b.count - a.count)
   }, [selectedSpecies, groupedBySpecies])
-
-  // Individuals list for selected species/subspecies
-  const individualsList = useMemo(() => {
-    if (!selectedSpecies || !groupedBySpecies[selectedSpecies]) {
-      return specimensWithImages
-    }
-
-    const speciesGroup = groupedBySpecies[selectedSpecies]
-    if (selectedSubspecies && speciesGroup.subspecies[selectedSubspecies]) {
-      return speciesGroup.subspecies[selectedSubspecies].individuals
-    }
-
-    return Object.values(speciesGroup.subspecies).flatMap((s) => s.individuals)
-  }, [selectedSpecies, selectedSubspecies, groupedBySpecies, specimensWithImages])
-
-  const currentSpecimen = specimensWithImages[currentIndex] || null
 
   // Navigation
   const hasPrev = currentIndex > 0
@@ -180,26 +283,6 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
     }
   }, [hasNext])
 
-  const selectSpecimen = useCallback(
-    (id: string) => {
-      const idx = specimensWithImages.findIndex((s) => s.id === id)
-      if (idx >= 0) {
-        setCurrentIndex(idx)
-        setIsLoading(true)
-        setLoadError(false)
-      }
-    },
-    [specimensWithImages]
-  )
-
-  // Update selection when current specimen changes
-  useEffect(() => {
-    if (currentSpecimen) {
-      setSelectedSpecies(currentSpecimen.scientific_name)
-      setSelectedSubspecies(currentSpecimen.subspecies)
-    }
-  }, [currentSpecimen])
-
   // Keyboard navigation
   useEffect(() => {
     if (!open) return
@@ -213,14 +296,18 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
           goToNext()
           break
         case 'Escape':
-          onClose()
+          if (zoomLevel > 1.05) {
+            // Would need ref to resetTransform - skip for now
+          } else {
+            onClose()
+          }
           break
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [open, goToPrev, goToNext, onClose])
+  }, [open, goToPrev, goToNext, onClose, zoomLevel])
 
   // View on map
   const viewOnMap = useCallback(() => {
@@ -230,22 +317,15 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
     }
   }, [currentSpecimen, setSelectedPoint, onClose])
 
-  // Thumbnail strip virtualizer (horizontal)
-  const THUMBNAIL_SIZE = 84 // 80px + gap
-  const thumbnailVirtualizer = useVirtualizer({
-    count: specimensWithImages.length,
-    getScrollElement: () => thumbnailContainerRef.current,
-    estimateSize: () => THUMBNAIL_SIZE,
-    horizontal: true,
-    overscan: 5,
-  })
-
-  // Scroll to current thumbnail when index changes
-  useEffect(() => {
-    if (open && specimensWithImages.length > 1) {
-      thumbnailVirtualizer.scrollToIndex(currentIndex, { align: 'center' })
+  // Scroll thumbnail strip functions
+  const scrollThumbnails = useCallback((direction: -1 | 1) => {
+    if (thumbnailStripRef.current) {
+      thumbnailStripRef.current.scrollBy({
+        left: direction * 300,
+        behavior: 'smooth',
+      })
     }
-  }, [currentIndex, open, specimensWithImages.length, thumbnailVirtualizer])
+  }, [])
 
   if (!open) return null
 
@@ -306,10 +386,16 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
                       groupedBySpecies[value]?.subspecies || {}
                     )
                     setSelectedSubspecies(subspeciesNames[0] || null)
+                    // Select first individual of new species
+                    const firstIndividual =
+                      groupedBySpecies[value]?.subspecies[subspeciesNames[0]]?.individuals[0]
+                    if (firstIndividual) {
+                      selectSpecimen(firstIndividual.id)
+                    }
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select species" />
+                    <SelectValue placeholder="All species" />
                   </SelectTrigger>
                   <SelectContent>
                     {speciesList.map((sp) => (
@@ -335,15 +421,23 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
                   </div>
                   <Select
                     value={selectedSubspecies || ''}
-                    onValueChange={setSelectedSubspecies}
+                    onValueChange={(value) => {
+                      setSelectedSubspecies(value)
+                      // Select first individual of new subspecies
+                      const firstIndividual =
+                        groupedBySpecies[selectedSpecies!]?.subspecies[value]?.individuals[0]
+                      if (firstIndividual) {
+                        selectSpecimen(firstIndividual.id)
+                      }
+                    }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select subspecies" />
+                      <SelectValue placeholder="All subspecies" />
                     </SelectTrigger>
                     <SelectContent>
                       {subspeciesList.map((ssp) => (
                         <SelectItem key={ssp.name} value={ssp.name}>
-                          <span className="italic">{ssp.name}</span>
+                          {ssp.name}
                           <span className="ml-2 text-muted-foreground">({ssp.count})</span>
                         </SelectItem>
                       ))}
@@ -352,33 +446,6 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
                 </div>
               )}
 
-              {/* Individual selector */}
-              <div>
-                <div className="mb-1.5 flex items-center gap-1.5">
-                  <Badge variant="secondary" className="text-primary">
-                    {individualsList.length}
-                  </Badge>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Individuals
-                  </span>
-                </div>
-                <Select
-                  value={currentSpecimen?.id || ''}
-                  onValueChange={selectSpecimen}
-                >
-                  <SelectTrigger className="font-mono">
-                    <SelectValue placeholder="Select individual" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {individualsList.map((ind) => (
-                      <SelectItem key={ind.id} value={ind.id} className="font-mono">
-                        {ind.id}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
               <Separator />
 
               {/* Current specimen details */}
@@ -386,12 +453,24 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
                 <div className="space-y-2 text-xs">
                   <div>
                     <span className="text-muted-foreground">ID</span>
-                    <p className="font-mono text-primary">{currentSpecimen.id}</p>
+                    <p className="font-mono">{currentSpecimen.id}</p>
                   </div>
 
+                  <div>
+                    <span className="text-muted-foreground">Species</span>
+                    <p className="italic">{currentSpecimen.scientific_name}</p>
+                  </div>
+
+                  {currentSpecimen.subspecies && (
+                    <div>
+                      <span className="text-muted-foreground">Subspecies</span>
+                      <p className="italic">{currentSpecimen.subspecies}</p>
+                    </div>
+                  )}
+
                   {currentSpecimen.observation_date && (
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
+                    <div className="flex items-start gap-2">
+                      <Calendar className="mt-0.5 h-3.5 w-3.5 text-muted-foreground" />
                       <span>{currentSpecimen.observation_date}</span>
                     </div>
                   )}
@@ -539,13 +618,12 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
                       </Button>
                       <Button
                         variant="ghost"
-                        size="sm"
-                        className="h-9 bg-white/10 px-3 text-white hover:bg-white/20 disabled:opacity-30"
+                        size="icon"
+                        className="h-9 w-9 bg-white/10 text-white hover:bg-white/20 disabled:opacity-30"
                         onClick={() => resetTransform()}
                         disabled={zoomLevel <= 1.05}
                       >
-                        <RotateCcw className="mr-1 h-4 w-4" />
-                        Reset
+                        <RotateCcw className="h-5 w-5" />
                       </Button>
                     </div>
                   </>
@@ -577,42 +655,133 @@ export function ImageGallery({ open, onClose, initialSpecimenId }: ImageGalleryP
         </div>
       </div>
 
-      {/* Virtualized Thumbnail strip */}
+      {/* Grouped Thumbnail strip */}
       {specimensWithImages.length > 1 && (
-        <div
-          ref={thumbnailContainerRef}
-          className="h-28 overflow-x-auto border-t border-white/10 bg-black/70"
-        >
-          <div
-            className="relative h-full"
-            style={{ width: `${thumbnailVirtualizer.getTotalSize()}px` }}
+        <div className="flex h-[130px] border-t border-white/10 bg-black/70">
+          {/* Scroll left button */}
+          <button
+            className="flex w-9 flex-shrink-0 items-center justify-center border-r border-white/10 bg-black/50 text-muted-foreground hover:bg-black/80 hover:text-white"
+            onClick={() => scrollThumbnails(-1)}
           >
-            {thumbnailVirtualizer.getVirtualItems().map((virtualItem) => {
-              const specimen = specimensWithImages[virtualItem.index]
-              return (
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          {/* Thumbnail strip */}
+          <div
+            ref={thumbnailStripRef}
+            className="flex flex-1 items-stretch gap-0.5 overflow-x-auto overflow-y-hidden scroll-smooth"
+          >
+            {groupedThumbnails.map((speciesGroup) => (
+              <div
+                key={speciesGroup.name}
+                className="flex flex-shrink-0 flex-col"
+                style={{
+                  background: speciesGroup.color.bg,
+                  borderLeft: `3px solid ${speciesGroup.color.main}`,
+                  minWidth: '80px',
+                }}
+              >
+                {/* Species header */}
                 <button
-                  key={specimen.id}
-                  className={`absolute top-2 h-20 w-20 overflow-hidden rounded border-2 transition-all hover:border-white/40 ${
-                    currentIndex === virtualItem.index
-                      ? 'border-primary shadow-[0_0_8px_rgba(74,222,128,0.5)]'
-                      : 'border-transparent'
-                  }`}
-                  style={{
-                    left: `${virtualItem.start + 8}px`, // 8px padding
-                  }}
-                  onClick={() => selectSpecimen(specimen.id)}
-                  title={specimen.id}
+                  onClick={() => toggleSpeciesCollapse(speciesGroup.name)}
+                  title={speciesGroup.name}
+                  className="flex items-center gap-1 whitespace-nowrap border-b border-white/10 bg-black/30 px-2 py-1 text-xs font-semibold italic transition-colors hover:bg-black/50"
+                  style={{ color: speciesGroup.color.main }}
                 >
-                  <img
-                    src={getThumbnailUrl(specimen.image_url)}
-                    alt={specimen.id}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
+                  <ChevronDown
+                    className={`h-3 w-3 flex-shrink-0 transition-transform ${
+                      collapsedSpecies.has(speciesGroup.name) ? '-rotate-90' : ''
+                    }`}
                   />
+                  <span className="max-w-[120px] truncate">{speciesGroup.name}</span>
+                  <span
+                    className="ml-auto rounded px-1.5 py-0.5 text-[10px] font-bold not-italic"
+                    style={{ background: speciesGroup.color.main, color: '#000' }}
+                  >
+                    {speciesGroup.count}
+                  </span>
                 </button>
-              )
-            })}
+
+                {/* Collapsed preview */}
+                {collapsedSpecies.has(speciesGroup.name) ? (
+                  <div
+                    className="flex cursor-pointer items-center justify-center p-2 hover:bg-white/5"
+                    onClick={() => toggleSpeciesCollapse(speciesGroup.name)}
+                  >
+                    <button
+                      className={`relative h-[90px] w-[90px] overflow-hidden rounded border-2 bg-[#333] transition-all hover:border-white/40 ${
+                        speciesGroup.subspecies.some((s) =>
+                          s.individuals.some((i) => i.id === currentSpecimen?.id)
+                        )
+                          ? 'border-primary shadow-[0_0_8px_rgba(74,222,128,0.5)]'
+                          : 'border-transparent'
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        const firstIndividual = speciesGroup.subspecies[0]?.individuals[0]
+                        if (firstIndividual) {
+                          selectSpecimen(firstIndividual.id, false)
+                        }
+                      }}
+                    >
+                      {speciesGroup.subspecies[0]?.individuals[0]?.image_url && (
+                        <img
+                          src={getThumbnailUrl(
+                            speciesGroup.subspecies[0].individuals[0].image_url
+                          )}
+                          loading="lazy"
+                          className="h-full w-full object-contain bg-[#222]"
+                          alt=""
+                        />
+                      )}
+                      <span
+                        className="absolute bottom-1 right-1 flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-black/85 text-sm font-bold text-white transition-all hover:scale-110 hover:bg-primary hover:text-black"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          toggleSpeciesCollapse(speciesGroup.name)
+                        }}
+                      >
+                        <Plus className="h-3 w-3" />
+                      </span>
+                    </button>
+                  </div>
+                ) : (
+                  /* Expanded thumbnails */
+                  <div className="flex items-stretch gap-1 overflow-x-visible overflow-y-hidden p-1">
+                    {speciesGroup.subspecies.flatMap((subsp) =>
+                      subsp.individuals.map((specimen) => (
+                        <button
+                          key={specimen.id}
+                          className={`h-20 w-20 flex-shrink-0 cursor-pointer overflow-hidden rounded border-2 bg-[#333] transition-all hover:scale-105 hover:border-white/40 ${
+                            currentSpecimen?.id === specimen.id
+                              ? 'border-primary shadow-[0_0_8px_rgba(74,222,128,0.5)]'
+                              : 'border-transparent'
+                          }`}
+                          onClick={() => selectSpecimen(specimen.id)}
+                          title={specimen.id}
+                        >
+                          <img
+                            src={getThumbnailUrl(specimen.image_url)}
+                            alt={specimen.id}
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                          />
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
+
+          {/* Scroll right button */}
+          <button
+            className="flex w-9 flex-shrink-0 items-center justify-center border-l border-white/10 bg-black/50 text-muted-foreground hover:bg-black/80 hover:text-white"
+            onClick={() => scrollThumbnails(1)}
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
         </div>
       )}
     </div>
