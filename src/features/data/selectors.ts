@@ -222,3 +222,63 @@ export function useSelectedRecord(): Record | null {
     return recordsById.get(selectedId) ?? null
   }, [recordsById, selectedId])
 }
+
+// Color palettes for categorical coloring
+const SEQUENCING_COLORS: { [key: string]: string } = {
+  'Sequenced': '#3b82f6',
+  'Tissue Available': '#10b981',
+  'Preserved Specimen': '#f59e0b',
+  'Published': '#a855f7',
+}
+
+const SOURCE_COLORS: { [key: string]: string } = {
+  'Sanger Institute': '#22c55e',
+  'GBIF': '#6b7280',
+  'Dore et al. (2025)': '#f97316',
+}
+
+// Dynamic color generation for taxonomy fields
+function generateColors(values: string[]): { [key: string]: string } {
+  const hueStep = 360 / Math.max(values.length, 1)
+  return Object.fromEntries(
+    values.map((v, i) => [v, `hsl(${i * hueStep}, 70%, 50%)`])
+  )
+}
+
+// Selector: active color map based on colorBy setting
+export function useActiveColorMap(): { [key: string]: string } {
+  const colorBy = useDataStore((s) => s.colorBy)
+  const records = useDataStore((s) => s.records)
+
+  return useMemo(() => {
+    if (colorBy === 'sequencing_status') return SEQUENCING_COLORS
+    if (colorBy === 'source') return SOURCE_COLORS
+
+    // For taxonomy fields, generate colors dynamically
+    const uniqueValues = [
+      ...new Set(
+        records
+          .map((r) => r[colorBy as keyof typeof r])
+          .filter((v): v is string => typeof v === 'string' && v !== '')
+      ),
+    ].sort()
+
+    return generateColors(uniqueValues)
+  }, [colorBy, records])
+}
+
+// Selector: legend title based on colorBy
+export function useLegendTitle(): string {
+  const colorBy = useDataStore((s) => s.colorBy)
+
+  const titles: { [key: string]: string } = {
+    species: 'Species',
+    subspecies: 'Subspecies',
+    genus: 'Genus',
+    mimicry_ring: 'Mimicry Ring',
+    sequencing_status: 'Status',
+    source: 'Source',
+  }
+
+  return titles[colorBy] || 'Legend'
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ModeToggle } from '@/components/mode-toggle'
-import { useRecords, useDataStore } from '@/features/data'
+import { useRecords, useDataStore, loadGbifCitation } from '@/features/data'
 import { MapView } from '@/features/map'
 import { TableView } from '@/features/table'
 import { Sidebar } from '@/features/filters'
@@ -16,6 +16,7 @@ function App() {
   // Load records from JSON
   const { data: records, isLoading, error } = useRecords()
   const setRecords = useDataStore((s) => s.setRecords)
+  const setGbifCitation = useDataStore((s) => s.setGbifCitation)
   const view = useDataStore((s) => s.ui.view)
   const setView = useDataStore((s) => s.setView)
 
@@ -35,6 +36,15 @@ function App() {
       setRecords(records)
     }
   }, [records, setRecords])
+
+  // Load GBIF citation data
+  useEffect(() => {
+    loadGbifCitation().then((citation) => {
+      if (citation) {
+        setGbifCitation(citation)
+      }
+    })
+  }, [setGbifCitation])
 
   // Open gallery from external trigger (e.g., PointDetailsSheet)
   const openGallery = (specimenId?: string) => {

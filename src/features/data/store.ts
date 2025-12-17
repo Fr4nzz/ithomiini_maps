@@ -11,6 +11,62 @@ import { defaultFilters, defaultUIState, defaultViewport } from './types'
 // Type for map export function
 type MapExportFn = (format: 'png' | 'jpeg', filename?: string) => Promise<void>
 
+// Color/Legend settings types
+type ColorByField = 'species' | 'subspecies' | 'genus' | 'mimicry_ring' | 'sequencing_status' | 'source'
+
+interface LegendSettings {
+  showLegend: boolean
+  position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+  maxItems: number
+}
+
+interface MapStyleSettings {
+  pointRadius: number
+  pointOpacity: number
+  fillOpacity: number
+  borderColor: string
+}
+
+interface ExportSettings {
+  aspectRatio: '16:9' | '4:3' | '1:1' | '3:2' | 'A4' | 'A4L' | 'custom'
+  customWidth: number
+  customHeight: number
+  uiScale: number
+  includeLegend: boolean
+  includeScaleBar: boolean
+  enabled: boolean
+}
+
+interface GbifCitation {
+  citation_text: string
+  doi_url: string
+  dataset_breakdown: { iNaturalist?: number; 'Other GBIF'?: number }
+}
+
+// Default values
+const defaultLegendSettings: LegendSettings = {
+  showLegend: true,
+  position: 'bottom-left',
+  maxItems: 10,
+}
+
+const defaultMapStyle: MapStyleSettings = {
+  pointRadius: 6,
+  pointOpacity: 0.85,
+  fillOpacity: 0.85,
+  borderColor: '#ffffff',
+}
+
+const defaultExportSettings: ExportSettings = {
+  aspectRatio: '16:9',
+  customWidth: 1920,
+  customHeight: 1080,
+  uiScale: 1,
+  includeLegend: true,
+  includeScaleBar: true,
+  enabled: true,
+}
+
 interface DataState {
   // Data
   records: Record[]
@@ -29,6 +85,13 @@ interface DataState {
   // Map export function reference
   mapExportFn: MapExportFn | null
 
+  // Color/Legend settings
+  colorBy: ColorByField
+  legendSettings: LegendSettings
+  mapStyle: MapStyleSettings
+  exportSettings: ExportSettings
+  gbifCitation: GbifCitation | null
+
   // Actions
   setRecords: (records: Record[]) => void
   setLoading: (loading: boolean) => void
@@ -41,6 +104,11 @@ interface DataState {
   toggleAdvancedFilters: () => void
   toggleMimicryFilter: () => void
   setMapExportFn: (fn: MapExportFn | null) => void
+  setColorBy: (colorBy: ColorByField) => void
+  setLegendSettings: (settings: Partial<LegendSettings>) => void
+  setMapStyle: (style: Partial<MapStyleSettings>) => void
+  setExportSettings: (settings: Partial<ExportSettings>) => void
+  setGbifCitation: (citation: GbifCitation | null) => void
 }
 
 export const useDataStore = create<DataState>()(
@@ -53,6 +121,11 @@ export const useDataStore = create<DataState>()(
     ui: defaultUIState,
     viewport: defaultViewport,
     mapExportFn: null,
+    colorBy: 'source',
+    legendSettings: defaultLegendSettings,
+    mapStyle: defaultMapStyle,
+    exportSettings: defaultExportSettings,
+    gbifCitation: null,
 
     // Actions
     setRecords: (records) =>
@@ -133,6 +206,25 @@ export const useDataStore = create<DataState>()(
       }),
 
     setMapExportFn: (fn) => set({ mapExportFn: fn }),
+
+    setColorBy: (colorBy) => set({ colorBy }),
+
+    setLegendSettings: (settings) =>
+      set((state) => ({
+        legendSettings: { ...state.legendSettings, ...settings },
+      })),
+
+    setMapStyle: (style) =>
+      set((state) => ({
+        mapStyle: { ...state.mapStyle, ...style },
+      })),
+
+    setExportSettings: (settings) =>
+      set((state) => ({
+        exportSettings: { ...state.exportSettings, ...settings },
+      })),
+
+    setGbifCitation: (citation) => set({ gbifCitation: citation }),
   }))
 )
 

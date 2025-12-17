@@ -33,3 +33,19 @@ export function useRecords() {
     queryFn: fetchRecords,
   })
 }
+
+// Load GBIF citation data
+export async function loadGbifCitation(): Promise<{
+  citation_text: string
+  doi_url: string
+  dataset_breakdown: { iNaturalist?: number; 'Other GBIF'?: number }
+} | null> {
+  try {
+    const basePath = import.meta.env.BASE_URL || '/'
+    const response = await fetch(`${basePath}data/gbif_citation.json`)
+    if (!response.ok) return null
+    return response.json()
+  } catch {
+    return null
+  }
+}
