@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
+import { ASPECT_RATIOS } from '../utils/constants'
 
 const props = defineProps({
   currentView: {
@@ -157,30 +158,6 @@ const imageCount = computed(() => {
   return geo.features.filter(f => f.properties?.image_url).length
 })
 
-// Status filter helpers
-const isStatusSelected = (status) => store.filters.status.includes(status)
-
-const toggleStatus = (status) => {
-  const idx = store.filters.status.indexOf(status)
-  if (idx > -1) {
-    store.filters.status.splice(idx, 1)
-  } else {
-    store.filters.status.push(status)
-  }
-}
-
-// Status color mapping
-const statusColors = {
-  'Sequenced': '#3b82f6',
-  'Tissue Available': '#10b981',
-  'Preserved Specimen': '#f59e0b',
-  'Published': '#a855f7',
-  'GBIF Record': '#6b7280',
-  'Observation': '#22c55e',        // Research Grade equivalent
-  'Museum Specimen': '#8b5cf6',
-  'Living Specimen': '#14b8a6',
-}
-
 // Share URL functionality
 const copyShareUrl = () => {
   navigator.clipboard.writeText(window.location.href)
@@ -211,14 +188,22 @@ const showUrlSettings = ref(false)
 // Show citation section
 const showCitation = ref(false)
 
-// Aspect ratio options
+// Aspect ratio options - derived from shared constants
+const aspectRatioLabels = {
+  '16:9': '16:9 (Widescreen)',
+  '4:3': '4:3 (Standard)',
+  '1:1': '1:1 (Square)',
+  '3:2': '3:2 (Photo)',
+  'A4': 'A4 Portrait',
+  'A4L': 'A4 Landscape',
+}
+
 const aspectRatioOptions = [
-  { value: '16:9', label: '16:9 (Widescreen)', width: 1920, height: 1080 },
-  { value: '4:3', label: '4:3 (Standard)', width: 1600, height: 1200 },
-  { value: '1:1', label: '1:1 (Square)', width: 1200, height: 1200 },
-  { value: '3:2', label: '3:2 (Photo)', width: 1800, height: 1200 },
-  { value: 'A4', label: 'A4 Portrait', width: 2480, height: 3508 },
-  { value: 'A4L', label: 'A4 Landscape', width: 3508, height: 2480 },
+  ...Object.entries(ASPECT_RATIOS).map(([key, dims]) => ({
+    value: key,
+    label: aspectRatioLabels[key] || key,
+    ...dims
+  })),
   { value: 'custom', label: 'Custom', width: null, height: null },
 ]
 
@@ -1312,23 +1297,6 @@ const updateExportHeight = (value) => {
   border-color: rgba(59, 130, 246, 0.3);
 }
 
-/* Search Input */
-.search-input {
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
 /* CAMID Autocomplete */
 .camid-autocomplete {
   position: relative;
@@ -1400,10 +1368,6 @@ const updateExportHeight = (value) => {
 .camid-suggestion.selected {
   color: var(--color-accent, #4ade80);
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
-}
-
-.search-input::placeholder {
-  color: var(--color-text-muted, #666);
 }
 
 /* Collapsible Sections */
@@ -1547,126 +1511,6 @@ const updateExportHeight = (value) => {
   color: var(--color-text-muted, #666);
   font-style: italic;
   margin-top: 8px;
-}
-
-/* Visual Selector Button */
-.btn-visual-selector {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 12px;
-  margin-top: 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px dashed rgba(74, 222, 128, 0.3);
-  border-radius: 6px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-visual-selector:hover {
-  background: rgba(74, 222, 128, 0.15);
-  border-style: solid;
-}
-
-.btn-visual-selector svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Clear Selection Button */
-.btn-clear-selection {
-  width: 100%;
-  padding: 6px 12px;
-  margin-top: 8px;
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-clear-selection:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-/* Selected Tags (for multi-select filters) */
-.selected-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
-.selected-tag {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 4px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.selected-tag:hover {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-.selected-tag svg {
-  width: 12px;
-  height: 12px;
-}
-
-/* Status Grid */
-.status-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.status-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 2px solid transparent;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.status-btn:hover {
-  background: #353558;
-}
-
-.status-btn.active {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.status-label {
-  font-size: 0.8rem;
-  color: var(--color-text-primary, #e0e0e0);
 }
 
 /* Footer */
@@ -1979,21 +1823,6 @@ const updateExportHeight = (value) => {
 .dimension-x {
   color: var(--color-text-muted, #666);
   font-size: 0.9rem;
-}
-
-.export-dimensions-preview {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 4px;
-  text-align: center;
-}
-
-.dimension-text {
-  font-size: 0.8rem;
-  color: var(--color-accent, #4ade80);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
 }
 
 /* Checkbox Group */
