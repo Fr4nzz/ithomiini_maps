@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import './style.css'
-import './styles/components.css'
 
 // Import vue-multiselect CSS
 import 'vue-multiselect/dist/vue-multiselect.css'
