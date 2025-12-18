@@ -1,7 +1,3 @@
-/**
- * Shared constants for the Ithomiini Maps application
- */
-
 // Aspect ratio presets for map export
 export const ASPECT_RATIOS = {
   '16:9': { width: 1920, height: 1080 },
@@ -51,11 +47,7 @@ export const DYNAMIC_COLORS = [
 ]
 
 // Get status color with fallback
-export const getStatusColor = (status) => {
-  return STATUS_COLORS[status] || '#6b7280'
-}
+export const getStatusColor = (status) => STATUS_COLORS[status] || '#6b7280'
 
 // Get source color with fallback
-export const getSourceColor = (source) => {
-  return SOURCE_COLORS[source] || '#6b7280'
-}
+export const getSourceColor = (source) => SOURCE_COLORS[source] || '#6b7280'
