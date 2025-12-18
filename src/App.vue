@@ -390,11 +390,6 @@ html, body, #app {
   height: 16px;
 }
 
-.btn-gallery-mobile,
-.btn-export-mobile {
-  margin-left: auto;
-}
-
 .btn-gallery-mobile {
   margin-left: auto;
 }

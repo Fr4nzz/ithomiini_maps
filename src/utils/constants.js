@@ -8,16 +8,6 @@ export const ASPECT_RATIOS = {
   'A4L': { width: 3508, height: 2480 },
 }
 
-// Preset size options for export
-export const PRESET_SIZES = [
-  { name: 'HD (16:9)', width: 1920, height: 1080 },
-  { name: '4K (16:9)', width: 3840, height: 2160 },
-  { name: 'A4 Landscape', width: 3508, height: 2480 },
-  { name: 'A4 Portrait', width: 2480, height: 3508 },
-  { name: 'Square', width: 2000, height: 2000 },
-  { name: 'Letter Landscape', width: 3300, height: 2550 },
-]
-
 // Status colors for sequencing status badges
 export const STATUS_COLORS = {
   'Sequenced': '#3b82f6',
@@ -48,6 +38,3 @@ export const DYNAMIC_COLORS = [
 
 // Get status color with fallback
 export const getStatusColor = (status) => STATUS_COLORS[status] || '#6b7280'
-
-// Get source color with fallback
-export const getSourceColor = (source) => SOURCE_COLORS[source] || '#6b7280'
