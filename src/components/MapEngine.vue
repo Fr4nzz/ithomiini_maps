@@ -4,13 +4,22 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
 import PointPopup from './PointPopup.vue'
-import { ASPECT_RATIOS, STATUS_COLORS } from '../utils/constants'
+import { ASPECT_RATIOS } from '../utils/constants'
+import {
+  MAP_STYLES,
+  useLocationSearch,
+  useExportPreview,
+  useScatterVisualization,
+  useDataLayer,
+  useStyleSwitcher,
+  useScaleBar
+} from '../composables/useMapEngine'
 
 const store = useDataStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
-let map = null
+const map = ref(null)
 let popup = null
 
 // Container size for accurate export preview calculations
@@ -24,107 +33,61 @@ const enhancedPopupData = ref({
   points: []
 })
 
-// ═══════════════════════════════════════════════════════════════════════════
-// LOCATION SEARCH
-// ═══════════════════════════════════════════════════════════════════════════
+// Initialize composables
+const {
+  searchQuery,
+  searchResults,
+  isSearching,
+  showSearchResults,
+  searchInputRef,
+  onSearchInput,
+  selectSearchResult,
+  handleClickOutside,
+  clearSearch,
+  cleanup: cleanupSearch
+} = useLocationSearch(map)
 
-const searchQuery = ref('')
-const searchResults = ref([])
-const isSearching = ref(false)
-const showSearchResults = ref(false)
-const searchInputRef = ref(null)
-let searchDebounceTimer = null
+const { legendTransformOrigin, exportHolePosition } = useExportPreview(containerSize)
+const { updateScatterVisualization } = useScatterVisualization(map)
+const { scaleBarText, updateScaleBar } = useScaleBar(map)
 
-// Geocode using Nominatim (OpenStreetMap)
-const searchLocation = async (query) => {
-  if (!query || query.length < 2) {
-    searchResults.value = []
-    return
+// Popup handler for data layer
+const handleShowPopup = (data) => {
+  if (popup) popup.remove()
+  showEnhancedPopup.value = false
+
+  enhancedPopupData.value = {
+    coordinates: data.coordinates,
+    points: data.points,
+    initialSpecies: data.initialSpecies || null,
+    initialSubspecies: data.initialSubspecies || null
   }
 
-  isSearching.value = true
+  nextTick(() => {
+    showEnhancedPopup.value = true
 
-  try {
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?` +
-      new URLSearchParams({
-        q: query,
-        format: 'json',
-        limit: '8',
-        addressdetails: '1'
-      }),
-      {
-        headers: {
-          'Accept-Language': 'en'
-        }
+    nextTick(() => {
+      if (pointPopupContainer.value) {
+        popup = new maplibregl.Popup({
+          closeButton: false,
+          closeOnClick: true,
+          maxWidth: '500px',
+          className: 'custom-popup enhanced-popup'
+        })
+          .setLngLat(data.lngLat)
+          .setDOMContent(pointPopupContainer.value)
+          .addTo(map.value)
+
+        popup.on('close', () => {
+          showEnhancedPopup.value = false
+        })
       }
-    )
-
-    if (response.ok) {
-      const data = await response.json()
-      searchResults.value = data.map(item => ({
-        name: item.display_name,
-        lat: parseFloat(item.lat),
-        lng: parseFloat(item.lon),
-        type: item.type,
-        importance: item.importance,
-        boundingbox: item.boundingbox
-      }))
-      showSearchResults.value = searchResults.value.length > 0
-    }
-  } catch (error) {
-    console.error('Geocoding error:', error)
-    searchResults.value = []
-  } finally {
-    isSearching.value = false
-  }
-}
-
-// Debounced search handler
-const onSearchInput = () => {
-  clearTimeout(searchDebounceTimer)
-  searchDebounceTimer = setTimeout(() => {
-    searchLocation(searchQuery.value)
-  }, 300)
-}
-
-// Select a search result and fly to location
-const selectSearchResult = (result) => {
-  if (!map) return
-
-  showSearchResults.value = false
-  searchQuery.value = ''
-
-  // If we have a bounding box, use fitBounds for better framing
-  if (result.boundingbox) {
-    const [south, north, west, east] = result.boundingbox.map(parseFloat)
-    map.fitBounds(
-      [[west, south], [east, north]],
-      { padding: 50, maxZoom: 14, duration: 1500 }
-    )
-  } else {
-    // Otherwise just fly to the point
-    map.flyTo({
-      center: [result.lng, result.lat],
-      zoom: 12,
-      duration: 1500
     })
-  }
+  })
 }
 
-// Close search results when clicking outside
-const handleClickOutside = (event) => {
-  if (searchInputRef.value && !searchInputRef.value.contains(event.target)) {
-    showSearchResults.value = false
-  }
-}
-
-// Clear search
-const clearSearch = () => {
-  searchQuery.value = ''
-  searchResults.value = []
-  showSearchResults.value = false
-}
+const { addDataLayer, fitBoundsToData } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer)
 
 // Legend position class based on store settings
 const legendPositionClass = computed(() => {
@@ -141,7 +104,6 @@ const limitedColorMap = computed(() => {
     return colorMap
   }
 
-  // Return only the first maxItems entries
   const limited = {}
   entries.slice(0, maxItems).forEach(([key, value]) => {
     limited[key] = value
@@ -149,206 +111,7 @@ const limitedColorMap = computed(() => {
   return limited
 })
 
-// ═══════════════════════════════════════════════════════════════════════════
-// EXPORT PREVIEW OVERLAY
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Computed transform origin for legend based on position
-const legendTransformOrigin = computed(() => {
-  const pos = store.legendSettings.position
-  if (pos === 'top-left') return 'top left'
-  if (pos === 'top-right') return 'top right'
-  if (pos === 'bottom-left') return 'bottom left'
-  if (pos === 'bottom-right') return 'bottom right'
-  return 'bottom left'
-})
-
-// Scale bar text - calculated from map zoom level
-const scaleBarText = ref('500 km')
-
-// Update scale bar text when map moves
-const updateScaleBar = () => {
-  if (!map) return
-
-  try {
-    const zoom = map.getZoom()
-    const center = map.getCenter()
-    const lat = center.lat
-
-    // Calculate meters per pixel at this latitude and zoom
-    const metersPerPixel = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
-
-    // Scale bar is approximately 100px wide, calculate what distance that represents
-    const distance = metersPerPixel * 100
-
-    // Choose appropriate unit and round to nice numbers
-    if (distance >= 1000) {
-      const km = distance / 1000
-      if (km >= 500) scaleBarText.value = Math.round(km / 100) * 100 + ' km'
-      else if (km >= 50) scaleBarText.value = Math.round(km / 10) * 10 + ' km'
-      else if (km >= 5) scaleBarText.value = Math.round(km) + ' km'
-      else scaleBarText.value = km.toFixed(1) + ' km'
-    } else {
-      if (distance >= 100) scaleBarText.value = Math.round(distance / 10) * 10 + ' m'
-      else scaleBarText.value = Math.round(distance) + ' m'
-    }
-  } catch (e) {
-    scaleBarText.value = '—'
-  }
-}
-
-// Calculate the export hole position as percentages
-// This creates the largest rectangle that fits the container while maintaining the target aspect ratio
-const exportHolePosition = computed(() => {
-  if (!store.exportSettings.enabled) {
-    return { x: 10, y: 10, width: 80, height: 80 }
-  }
-
-  const ratio = store.exportSettings.aspectRatio
-  let targetWidth, targetHeight
-
-  if (ratio === 'custom') {
-    targetWidth = store.exportSettings.customWidth
-    targetHeight = store.exportSettings.customHeight
-  } else if (ASPECT_RATIOS[ratio]) {
-    targetWidth = ASPECT_RATIOS[ratio].width
-    targetHeight = ASPECT_RATIOS[ratio].height
-  } else {
-    return { x: 10, y: 10, width: 80, height: 80 }
-  }
-
-  const targetAspectRatio = targetWidth / targetHeight
-
-  // Use actual container dimensions for accurate calculation
-  const containerW = containerSize.value.width || 1600
-  const containerH = containerSize.value.height || 900
-  const containerAspectRatio = containerW / containerH
-
-  // Use 92% of container as maximum (leaving small margin)
-  const maxPercent = 92
-
-  let holeWidthPercent, holeHeightPercent
-
-  if (targetAspectRatio > containerAspectRatio) {
-    // Target is wider than container - constrained by width
-    holeWidthPercent = maxPercent
-    // Calculate height based on the width and target aspect ratio
-    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
-  } else {
-    // Target is taller than container - constrained by height
-    holeHeightPercent = maxPercent
-    // Calculate width based on the height and target aspect ratio
-    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
-  }
-
-  // Center the hole
-  const x = (100 - holeWidthPercent) / 2
-  const y = (100 - holeHeightPercent) / 2
-
-  return {
-    x: Math.max(2, x),
-    y: Math.max(2, y),
-    width: Math.min(96, holeWidthPercent),
-    height: Math.min(96, holeHeightPercent)
-  }
-})
-
-// ═══════════════════════════════════════════════════════════════════════════
-// MAP STYLES - Free tile sources
-// ═══════════════════════════════════════════════════════════════════════════
-
-const MAP_STYLES = {
-  dark: {
-    name: 'Dark',
-    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
-  },
-  light: {
-    name: 'Light',
-    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
-  },
-  satellite: {
-    name: 'Satellite',
-    style: {
-      version: 8,
-      sources: {
-        'esri-satellite': {
-          type: 'raster',
-          tiles: [
-            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-          ],
-          tileSize: 256,
-          attribution: '&copy; Esri, Maxar, Earthstar Geographics'
-        }
-      },
-      layers: [
-        {
-          id: 'esri-satellite-layer',
-          type: 'raster',
-          source: 'esri-satellite',
-          minzoom: 0,
-          maxzoom: 19
-        }
-      ]
-    }
-  },
-  terrain: {
-    name: 'Terrain',
-    style: {
-      version: 8,
-      sources: {
-        'osm-terrain': {
-          type: 'raster',
-          tiles: [
-            'https://tile.opentopomap.org/{z}/{x}/{y}.png'
-          ],
-          tileSize: 256,
-          attribution: '&copy; OpenTopoMap contributors'
-        }
-      },
-      layers: [
-        {
-          id: 'osm-terrain-layer',
-          type: 'raster',
-          source: 'osm-terrain',
-          minzoom: 0,
-          maxzoom: 17
-        }
-      ]
-    }
-  },
-  streets: {
-    name: 'Streets',
-    style: {
-      version: 8,
-      sources: {
-        'osm-streets': {
-          type: 'raster',
-          tiles: [
-            'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-          ],
-          tileSize: 256,
-          attribution: '&copy; OpenStreetMap contributors'
-        }
-      },
-      layers: [
-        {
-          id: 'osm-streets-layer',
-          type: 'raster',
-          source: 'osm-streets',
-          minzoom: 0,
-          maxzoom: 19
-        }
-      ]
-    }
-  }
-}
-
-const currentStyle = ref('dark')
-
-// ═══════════════════════════════════════════════════════════════════════════
-// LIFECYCLE
-// ═══════════════════════════════════════════════════════════════════════════
-
+// Lifecycle
 onMounted(() => {
   initMap()
   document.addEventListener('click', handleClickOutside)
@@ -373,592 +136,52 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (map) {
-    map.remove()
-    map = null
+  if (map.value) {
+    map.value.remove()
+    map.value = null
   }
   if (resizeObserver) {
     resizeObserver.disconnect()
     resizeObserver = null
   }
   document.removeEventListener('click', handleClickOutside)
-  clearTimeout(searchDebounceTimer)
+  cleanupSearch()
 })
 
-// ═══════════════════════════════════════════════════════════════════════════
-// MAP INITIALIZATION
-// ═══════════════════════════════════════════════════════════════════════════
-
+// Map initialization
 const initMap = () => {
   const styleConfig = MAP_STYLES[currentStyle.value]
 
-  map = new maplibregl.Map({
+  map.value = new maplibregl.Map({
     container: mapContainer.value,
     style: styleConfig.style,
-    center: [-60, -5], // South America center (Ithomiini range)
+    center: [-60, -5],
     zoom: 4,
     attributionControl: false,
     maxZoom: 18,
     minZoom: 2,
-    // For MapLibre v5.0+, preserveDrawingBuffer must be in canvasContextAttributes
     canvasContextAttributes: {
-      preserveDrawingBuffer: true // Required for canvas export
+      preserveDrawingBuffer: true
     }
   })
 
-  // Add controls
-  map.addControl(new maplibregl.NavigationControl(), 'top-right')
-  map.addControl(new maplibregl.ScaleControl({ maxWidth: 200, unit: 'metric' }), 'bottom-right')
-  map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
-  
-  // Fullscreen control
-  map.addControl(new maplibregl.FullscreenControl(), 'top-right')
+  map.value.addControl(new maplibregl.NavigationControl(), 'top-right')
+  map.value.addControl(new maplibregl.ScaleControl({ maxWidth: 200, unit: 'metric' }), 'bottom-right')
+  map.value.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
+  map.value.addControl(new maplibregl.FullscreenControl(), 'top-right')
 
-  map.on('load', () => {
+  map.value.on('load', () => {
     addDataLayer()
-    emit('map-ready', map)
+    emit('map-ready', map.value)
     updateScaleBar()
   })
 
-  // Update scale bar when map moves/zooms
-  map.on('moveend', updateScaleBar)
-  map.on('zoomend', updateScaleBar)
+  map.value.on('moveend', updateScaleBar)
+  map.value.on('zoomend', updateScaleBar)
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// SCATTER VISUALIZATION HELPERS
-// ═══════════════════════════════════════════════════════════════════════════
-
-/**
- * Generate a circle polygon approximation for a given center and radius
- * @param {number} centerLng - Center longitude
- * @param {number} centerLat - Center latitude
- * @param {number} radiusKm - Radius in kilometers
- * @param {number} points - Number of points for circle approximation
- * @returns {Array} Array of coordinate pairs forming a closed polygon
- */
-const generateCirclePolygon = (centerLng, centerLat, radiusKm, points = 64) => {
-  const coords = []
-  const kmPerDegreeLat = 111.32
-  const kmPerDegreeLng = 111.32 * Math.cos(centerLat * Math.PI / 180)
-
-  for (let i = 0; i <= points; i++) {
-    const angle = (2 * Math.PI * i) / points
-    const latOffset = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
-    const lngOffset = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
-    coords.push([centerLng + lngOffset, centerLat + latOffset])
-  }
-
-  return coords
-}
-
-/**
- * Build GeoJSON for scatter visualization (circle polygons only)
- */
-const buildScatterVisualizationGeoJSON = () => {
-  const data = store.scatterVisualizationData
-
-  // Build circles FeatureCollection
-  const circleFeatures = data.circles.map((circle, index) => ({
-    type: 'Feature',
-    properties: { id: `circle-${index}` },
-    geometry: {
-      type: 'Polygon',
-      coordinates: [generateCirclePolygon(circle.center[0], circle.center[1], circle.radiusKm)]
-    }
-  }))
-
-  return {
-    circles: { type: 'FeatureCollection', features: circleFeatures }
-  }
-}
-
-/**
- * Add or update scatter visualization layers (circles only, no lines)
- */
-const updateScatterVisualization = () => {
-  if (!map || !map.isStyleLoaded()) return
-
-  const layerIds = ['scatter-circles-fill', 'scatter-circles-outline']
-  const sourceIds = ['scatter-circles-source']
-
-  // Remove existing layers and sources
-  layerIds.forEach(id => {
-    if (map.getLayer(id)) map.removeLayer(id)
-  })
-  sourceIds.forEach(id => {
-    if (map.getSource(id)) map.removeSource(id)
-  })
-
-  // Only add if scatter is enabled and there's data
-  if (!store.scatterOverlappingPoints) return
-
-  const geoJSON = buildScatterVisualizationGeoJSON()
-
-  if (geoJSON.circles.features.length === 0) return
-
-  // Add circles source
-  map.addSource('scatter-circles-source', {
-    type: 'geojson',
-    data: geoJSON.circles
-  })
-
-  // Try to add below points layer if it exists, otherwise just add
-  const beforeLayer = map.getLayer('points-layer') ? 'points-layer' : undefined
-
-  // Add circle fill layer (semi-transparent)
-  map.addLayer({
-    id: 'scatter-circles-fill',
-    type: 'fill',
-    source: 'scatter-circles-source',
-    paint: {
-      'fill-color': 'rgba(59, 130, 246, 0.08)'
-    }
-  }, beforeLayer)
-
-  // Add circle outline layer (dashed line)
-  map.addLayer({
-    id: 'scatter-circles-outline',
-    type: 'line',
-    source: 'scatter-circles-source',
-    paint: {
-      'line-color': 'rgba(59, 130, 246, 0.3)',
-      'line-width': 1.5,
-      'line-dasharray': [4, 4]
-    }
-  }, beforeLayer)
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// DATA LAYER WITH SMART CLUSTERING
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Hover popup for cluster preview
-let clusterHoverPopup = null
-
-// Track if event handlers are registered (to prevent duplicates)
-let clusterHandlersRegistered = false
-let pointsHandlersRegistered = false
-
-const addDataLayer = (options = {}) => {
-  const { skipZoom = false } = options
-
-  if (!map) return
-
-  // Remove existing layers/sources if they exist
-  const layersToRemove = [
-    'clusters',
-    'cluster-count',
-    'cluster-extent',
-    'points-layer',
-    'points-highlight'
-  ]
-  layersToRemove.forEach(layer => {
-    if (map.getLayer(layer)) map.removeLayer(layer)
-  })
-  if (map.getSource('points-source')) map.removeSource('points-source')
-
-  const geojson = store.displayGeoJSON
-  if (!geojson) return
-
-  const pointCount = geojson.features.length
-  const shouldCluster = store.clusteringEnabled
-  const settings = store.clusterSettings
-
-  // Use the pixel radius directly from settings
-  const clusterRadiusPixels = settings.radiusPixels
-
-  // Add source - use store settings for clustering
-  map.addSource('points-source', {
-    type: 'geojson',
-    data: geojson,
-    cluster: shouldCluster,
-    clusterMaxZoom: 14,
-    clusterRadius: clusterRadiusPixels,
-    clusterMinPoints: 2
-  })
-
-  // Only add cluster layers if clustering is enabled
-  if (shouldCluster) {
-    // ─────────────────────────────────────────────────────────────────────────
-    // CLUSTER CIRCLES - sized by point count
-    // ─────────────────────────────────────────────────────────────────────────
-    map.addLayer({
-      id: 'clusters',
-      type: 'circle',
-      source: 'points-source',
-      filter: ['has', 'point_count'],
-      paint: {
-        'circle-radius': [
-          'step',
-          ['get', 'point_count'],
-          12,      // 12px for count < 20
-          20, 16,  // 16px for count >= 20
-          50, 20,  // 20px for count >= 50
-          100, 25, // 25px for count >= 100
-          500, 32  // 32px for count >= 500
-        ],
-        'circle-color': [
-          'step',
-          ['get', 'point_count'],
-          '#4ade80',   // Green for small clusters
-          20, '#22d3ee', // Cyan
-          50, '#facc15', // Yellow
-          100, '#fb923c', // Orange
-          500, '#ef4444'  // Red for large clusters
-        ],
-        'circle-opacity': 0.9,
-        'circle-stroke-width': 2,
-        'circle-stroke-color': '#ffffff',
-        'circle-stroke-opacity': 0.9
-      }
-    })
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // CLUSTER EXTENT CIRCLES - shows the clustering radius area
-    // ─────────────────────────────────────────────────────────────────────────
-    map.addLayer({
-      id: 'cluster-extent',
-      type: 'circle',
-      source: 'points-source',
-      filter: ['has', 'point_count'],
-      paint: {
-        // The extent circle is the cluster radius (in pixels)
-        'circle-radius': clusterRadiusPixels,
-        'circle-color': 'rgba(74, 222, 128, 0.08)',
-        'circle-stroke-width': 1,
-        'circle-stroke-color': 'rgba(74, 222, 128, 0.25)',
-        'circle-stroke-opacity': 1
-      }
-    }, 'clusters') // Add below the clusters layer
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // CLUSTER COUNT LABELS
-    // ─────────────────────────────────────────────────────────────────────────
-    map.addLayer({
-      id: 'cluster-count',
-      type: 'symbol',
-      source: 'points-source',
-      filter: ['has', 'point_count'],
-      layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-        'text-size': 11,
-        'text-allow-overlap': true
-      },
-      paint: {
-        'text-color': '#1a1a2e'
-      }
-    })
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // INDIVIDUAL POINTS
-  // ─────────────────────────────────────────────────────────────────────────
-
-  // Build dynamic color expression based on store settings
-  const colorMap = store.activeColorMap
-  const colorAttr = store.colorByAttribute
-  const style = store.mapStyle
-
-  // Build MapLibre match expression for colors
-  const colorExpression = ['match', ['get', colorAttr]]
-  Object.entries(colorMap).forEach(([value, color]) => {
-    colorExpression.push(value, color)
-  })
-  colorExpression.push('#6b7280') // default gray
-
-  // Calculate point sizes based on style settings
-  const baseSize = style.pointSize
-  const sizeExpression = [
-    'interpolate', ['linear'], ['zoom'],
-    3, baseSize * 0.375,
-    6, baseSize * 0.625,
-    10, baseSize,
-    14, baseSize * 1.5
-  ]
-
-  map.addLayer({
-    id: 'points-layer',
-    type: 'circle',
-    source: 'points-source',
-    filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'], // All points if no clustering
-    paint: {
-      'circle-radius': sizeExpression,
-      'circle-color': colorExpression,
-      'circle-opacity': style.fillOpacity,
-      'circle-stroke-width': [
-        'interpolate', ['linear'], ['zoom'],
-        3, style.borderWidth * 0.33,
-        10, style.borderWidth
-      ],
-      'circle-stroke-color': style.borderColor,
-      'circle-stroke-opacity': style.borderOpacity
-    }
-  })
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // HIGHLIGHT LAYER (for hover on individual points)
-  // ─────────────────────────────────────────────────────────────────────────
-  const highlightSizeExpression = [
-    'interpolate', ['linear'], ['zoom'],
-    3, baseSize * 0.75,
-    6, baseSize * 1.25,
-    10, baseSize * 1.75,
-    14, baseSize * 2.25
-  ]
-
-  map.addLayer({
-    id: 'points-highlight',
-    type: 'circle',
-    source: 'points-source',
-    filter: shouldCluster
-      ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-      : ['==', ['get', 'id'], ''],
-    paint: {
-      'circle-radius': highlightSizeExpression,
-      'circle-color': 'transparent',
-      'circle-stroke-width': 2,
-      'circle-stroke-color': '#ffffff'
-    }
-  })
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // CLUSTER EVENT HANDLERS - click and hover
-  // ─────────────────────────────────────────────────────────────────────────
-  if (shouldCluster) {
-    // Remove old handlers first to prevent duplicates
-    if (clusterHandlersRegistered) {
-      map.off('click', 'clusters')
-      map.off('mouseenter', 'clusters')
-      map.off('mouseleave', 'clusters')
-    }
-    clusterHandlersRegistered = true
-
-    // CLUSTER CLICK - show enhanced popup with all cluster points
-    map.on('click', 'clusters', async (e) => {
-      const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-      if (!features.length) return
-
-      const cluster = features[0]
-      const coords = cluster.geometry.coordinates
-
-      // Close existing popup
-      if (popup) popup.remove()
-      showEnhancedPopup.value = false
-
-      // Get cluster points using proximity-based filtering
-      // Note: getClusterLeaves doesn't work reliably in this MapLibre version
-      const clusterLng = coords[0]
-      const clusterLat = coords[1]
-
-      // Get all points from the store and filter by proximity to cluster center
-      const allPoints = store.displayGeoJSON?.features || []
-
-      // Calculate approximate radius based on zoom level and cluster radius setting
-      // At lower zoom, clusters cover more area
-      // Use a generous multiplier to ensure we capture all cluster points
-      const zoom = map.getZoom()
-      const clusterRadiusPx = store.clusterSettings.radiusPixels
-
-      // Convert pixel radius to approximate km at current zoom
-      // At zoom 0, 1 pixel ≈ 156km; halves with each zoom level
-      const kmPerPixel = 156 / Math.pow(2, zoom)
-      const radiusKm = Math.max(20, clusterRadiusPx * kmPerPixel * 2) // 2x for safety margin
-
-      const nearbyPoints = allPoints
-        .filter(f => {
-          const [lng, lat] = f.geometry.coordinates
-          const dLat = Math.abs(lat - clusterLat)
-          const dLng = Math.abs(lng - clusterLng) * Math.cos(clusterLat * Math.PI / 180) // Adjust for latitude
-          const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
-          return distKm < radiusKm
-        })
-        .map(f => f.properties)
-
-      if (nearbyPoints.length > 0) {
-        enhancedPopupData.value = {
-          coordinates: { lat: clusterLat, lng: clusterLng },
-          points: nearbyPoints,
-          initialSpecies: null,
-          initialSubspecies: null
-        }
-
-        nextTick(() => {
-          showEnhancedPopup.value = true
-
-          nextTick(() => {
-            if (pointPopupContainer.value) {
-              popup = new maplibregl.Popup({
-                closeButton: false,
-                closeOnClick: true,
-                maxWidth: '500px',
-                className: 'custom-popup enhanced-popup'
-              })
-                .setLngLat(coords)
-                .setDOMContent(pointPopupContainer.value)
-                .addTo(map)
-
-              popup.on('close', () => {
-                showEnhancedPopup.value = false
-              })
-            }
-          })
-        })
-      }
-    })
-
-    // CLUSTER HOVER - change cursor and show preview
-    map.on('mouseenter', 'clusters', (e) => {
-      map.getCanvas().style.cursor = 'pointer'
-    })
-
-    map.on('mouseleave', 'clusters', () => {
-      map.getCanvas().style.cursor = ''
-    })
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // INDIVIDUAL POINT CLICK - show popup (enhanced for multiple points)
-  // ─────────────────────────────────────────────────────────────────────────
-  // Remove old handler to prevent duplicates
-  map.off('click', 'points-layer')
-  map.on('click', 'points-layer', (e) => {
-    if (!e.features || e.features.length === 0) return
-
-    const feature = e.features[0]
-    const props = feature.properties
-    const coords = feature.geometry.coordinates.slice()
-
-    // Check if point was scattered - use original coordinates for grouping
-    const lat = props._originalLat || coords[1]
-    const lng = props._originalLng || coords[0]
-
-    // Check if this is a scattered point with subspecies info
-    const isScattered = props._isScattered
-    const scatteredSpecies = props._scatteredSpecies
-    const scatteredSubspecies = props._scatteredSubspecies
-
-    // Get all points at this location
-    const pointsAtLocation = store.getPointsAtCoordinates(lat, lng)
-
-    // Close existing popup
-    if (popup) popup.remove()
-    showEnhancedPopup.value = false
-
-    // Always use enhanced popup (even for single points)
-    // If clicked on a scattered point, pre-select that subspecies
-    enhancedPopupData.value = {
-      coordinates: { lat, lng },
-      points: pointsAtLocation.length > 0 ? pointsAtLocation : [props],
-      initialSpecies: isScattered ? scatteredSpecies : null,
-      initialSubspecies: isScattered ? scatteredSubspecies : null
-    }
-
-    // Create popup with the Vue component container
-    nextTick(() => {
-      showEnhancedPopup.value = true
-
-      nextTick(() => {
-        if (pointPopupContainer.value) {
-          popup = new maplibregl.Popup({
-            closeButton: false,
-            closeOnClick: true,
-            maxWidth: '500px',
-            className: 'custom-popup enhanced-popup'
-          })
-            .setLngLat(coords)
-            .setDOMContent(pointPopupContainer.value)
-            .addTo(map)
-
-          popup.on('close', () => {
-            showEnhancedPopup.value = false
-          })
-        }
-      })
-    })
-  })
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // POINTS LAYER HOVER EFFECTS
-  // ─────────────────────────────────────────────────────────────────────────
-  // Register points-layer handlers only once
-  if (!pointsHandlersRegistered) {
-    pointsHandlersRegistered = true
-
-    map.on('mouseenter', 'points-layer', (e) => {
-      map.getCanvas().style.cursor = 'pointer'
-
-      if (e.features && e.features.length > 0) {
-        const id = e.features[0].properties.id
-        // Check current clustering state dynamically
-        const isClustering = store.clusteringEnabled
-        const filter = isClustering
-          ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
-          : ['==', ['get', 'id'], id]
-        map.setFilter('points-highlight', filter)
-      }
-    })
-
-    map.on('mouseleave', 'points-layer', () => {
-      map.getCanvas().style.cursor = ''
-      // Check current clustering state dynamically
-      const isClustering = store.clusteringEnabled
-      const filter = isClustering
-        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-        : ['==', ['get', 'id'], '']
-      map.setFilter('points-highlight', filter)
-    })
-  }
-
-  // Fit bounds to data (with padding) - only if not skipping zoom
-  if (!skipZoom) {
-    fitBoundsToData(geojson)
-  }
-
-  // Log clustering status
-  if (shouldCluster) {
-    console.log(`📍 ${pointCount} points loaded. Clustering: ON (radius: ${clusterRadiusPixels}px)`)
-  } else {
-    console.log(`📍 ${pointCount} points loaded. Clustering: OFF`)
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// MAP UTILITIES
-// ═══════════════════════════════════════════════════════════════════════════
-
-const fitBoundsToData = (geojson) => {
-  if (!geojson || !geojson.features || geojson.features.length === 0) return
-
-  // If only one point, just center on it
-  if (geojson.features.length === 1) {
-    const coords = geojson.features[0].geometry.coordinates
-    map.flyTo({
-      center: coords,
-      zoom: 8,
-      duration: 1000
-    })
-    return
-  }
-
-  const bounds = new maplibregl.LngLatBounds()
-  
-  geojson.features.forEach(f => {
-    bounds.extend(f.geometry.coordinates)
-  })
-
-  map.fitBounds(bounds, {
-    padding: { top: 50, bottom: 50, left: 50, right: 50 },
-    maxZoom: 12,
-    duration: 1000
-  })
-}
-
-// Track previous data length to detect actual data changes vs just settings changes
+// Track previous data length to detect actual data changes
 let previousDataLength = 0
-
-// Track previous scatter state to detect scatter toggles vs actual data changes
 let previousScatterState = false
 
 // Close enhanced popup
@@ -973,31 +196,25 @@ const handleOpenGallery = () => {
   emit('open-gallery')
 }
 
-// Watch for displayGeoJSON changes and update the map
+// Watch for displayGeoJSON changes
 watch(
   () => store.displayGeoJSON,
   (newData) => {
-    if (!map || !map.isStyleLoaded()) return
+    if (!map.value || !map.value.isStyleLoaded()) return
 
     const newLength = newData?.features?.length || 0
     const currentScatterState = store.scatterOverlappingPoints
 
-    // Detect if this change is from scatter toggle vs actual data change
     const scatterJustToggled = currentScatterState !== previousScatterState
     previousScatterState = currentScatterState
 
-    // Only consider it a "data change" if the length changed (not just scatter coordinates)
     const dataLengthChanged = newLength !== previousDataLength
     previousDataLength = newLength
 
-    // Skip zoom if:
-    // - Data length didn't change, OR
-    // - Scatter was just toggled (coordinates changed but not actual data)
     const shouldSkipZoom = !dataLengthChanged || scatterJustToggled
 
     addDataLayer({ skipZoom: shouldSkipZoom })
 
-    // Update scatter visualization if enabled
     if (store.scatterOverlappingPoints) {
       updateScatterVisualization()
     }
@@ -1005,62 +222,53 @@ watch(
   { deep: true }
 )
 
-// Watch for scatter toggle changes - rebuild layers and visualization without zoom
+// Watch for scatter toggle changes
 watch(
   () => store.scatterOverlappingPoints,
   () => {
-    if (!map || !map.isStyleLoaded()) return
-    // Note: The displayGeoJSON watcher will also fire, but it will detect scatter toggle
-    // and skip zoom appropriately
+    if (!map.value || !map.value.isStyleLoaded()) return
     updateScatterVisualization()
   }
 )
 
-// Watch for clustering settings changes - rebuild layers without zoom
+// Watch for clustering settings changes
 watch(
   [() => store.clusteringEnabled, () => store.clusterSettings],
   () => {
-    if (!map || !map.isStyleLoaded()) return
-    // Rebuild the data layer with new clustering settings - skip zoom
+    if (!map.value || !map.value.isStyleLoaded()) return
     addDataLayer({ skipZoom: true })
   },
   { deep: true }
 )
 
-// Watch for color and style settings changes - rebuild layers without zoom
+// Watch for color and style settings changes
 watch(
   [() => store.colorBy, () => store.mapStyle],
   () => {
-    if (!map || !map.isStyleLoaded()) return
-    // Rebuild the data layer with new color/style settings - skip zoom
+    if (!map.value || !map.value.isStyleLoaded()) return
     addDataLayer({ skipZoom: true })
   },
   { deep: true }
 )
 
-// Watch for focusPoint changes - zoom to point and show popup
+// Watch for focusPoint changes
 watch(
   () => store.focusPoint,
   (point) => {
-    if (!point || !map) return
+    if (!point || !map.value) return
 
-    // Close any existing popup
     if (popup) popup.remove()
     showEnhancedPopup.value = false
 
-    // Fly to the point
-    map.flyTo({
+    map.value.flyTo({
       center: [point.lng, point.lat],
       zoom: 12,
       duration: 1500
     })
 
-    // After flight completes, show popup
-    map.once('moveend', () => {
-      // Get all points at this location
+    map.value.once('moveend', () => {
       const pointsAtLocation = store.getPointsAtCoordinates(point.lat, point.lng)
 
-      // Setup enhanced popup data
       enhancedPopupData.value = {
         coordinates: { lat: point.lat, lng: point.lng },
         points: pointsAtLocation.length > 0 ? pointsAtLocation : [point.properties],
@@ -1068,7 +276,6 @@ watch(
         initialSubspecies: point.properties?.subspecies
       }
 
-      // Create popup
       nextTick(() => {
         showEnhancedPopup.value = true
 
@@ -1082,7 +289,7 @@ watch(
             })
               .setLngLat([point.lng, point.lat])
               .setDOMContent(pointPopupContainer.value)
-              .addTo(map)
+              .addTo(map.value)
 
             popup.on('close', () => {
               showEnhancedPopup.value = false
@@ -1091,57 +298,10 @@ watch(
         })
       })
 
-      // Clear the focus point so it can be triggered again
       store.focusPoint = null
     })
   }
 )
-
-// ═══════════════════════════════════════════════════════════════════════════
-// STYLE SWITCHER
-// ═══════════════════════════════════════════════════════════════════════════
-
-const switchStyle = (styleName) => {
-  if (!map || !MAP_STYLES[styleName]) return
-
-  // Save current view state before style change
-  const center = map.getCenter()
-  const zoom = map.getZoom()
-  const bearing = map.getBearing()
-  const pitch = map.getPitch()
-
-  currentStyle.value = styleName
-  const styleConfig = MAP_STYLES[styleName]
-
-  map.setStyle(styleConfig.style)
-
-  // Use a more robust approach: wait for style to be fully loaded
-  const waitForStyleAndAddLayer = () => {
-    if (map.isStyleLoaded()) {
-      // Restore view state
-      map.jumpTo({ center, zoom, bearing, pitch })
-      // Re-add the data layer with current filtered data - skip zoom to preserve view
-      addDataLayer({ skipZoom: true })
-    } else {
-      // Style not ready yet, try again
-      setTimeout(waitForStyleAndAddLayer, 50)
-    }
-  }
-
-  // Start checking after style.load event (or immediately for inline styles)
-  map.once('style.load', () => {
-    // Give it a small delay then check if truly ready
-    setTimeout(waitForStyleAndAddLayer, 100)
-  })
-
-  // Fallback: also try on idle event
-  map.once('idle', () => {
-    if (!map.getSource('points-source')) {
-      map.jumpTo({ center, zoom, bearing, pitch })
-      addDataLayer({ skipZoom: true })
-    }
-  })
-}
 </script>
 
 <template>
@@ -1217,8 +377,8 @@ const switchStyle = (styleName) => {
 
     <!-- Style Switcher -->
     <div class="style-switcher">
-      <button 
-        v-for="(config, key) in MAP_STYLES" 
+      <button
+        v-for="(config, key) in MAP_STYLES"
         :key="key"
         :class="{ active: currentStyle === key }"
         @click="switchStyle(key)"
@@ -1347,11 +507,7 @@ const switchStyle = (styleName) => {
   height: 100%;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   MAPLIBRE CONTROLS CUSTOMIZATION
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Style the navigation control container */
+/* MapLibre Controls Customization */
 :deep(.maplibregl-ctrl-top-right) {
   top: 10px;
   right: 10px;
@@ -1382,12 +538,10 @@ const switchStyle = (styleName) => {
   background-color: #2d2d4a !important;
 }
 
-/* Compass button - make it more intuitive */
 :deep(.maplibregl-ctrl-compass) {
   position: relative;
 }
 
-/* Style the compass icon */
 :deep(.maplibregl-ctrl-compass .maplibregl-ctrl-icon) {
   filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
@@ -1396,7 +550,6 @@ const switchStyle = (styleName) => {
   filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
 }
 
-/* Add rotate label tooltip */
 :deep(.maplibregl-ctrl-compass::after) {
   content: 'Rotate';
   position: absolute;
@@ -1418,7 +571,6 @@ const switchStyle = (styleName) => {
   opacity: 1;
 }
 
-/* Zoom buttons */
 :deep(.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon),
 :deep(.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon) {
   filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
@@ -1429,7 +581,6 @@ const switchStyle = (styleName) => {
   filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
 }
 
-/* Fullscreen button */
 :deep(.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon) {
   filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
@@ -1438,7 +589,6 @@ const switchStyle = (styleName) => {
   filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
 }
 
-/* Scale control */
 :deep(.maplibregl-ctrl-scale) {
   background: rgba(26, 26, 46, 0.8) !important;
   border: 1px solid #3d3d5c !important;
@@ -1448,10 +598,7 @@ const switchStyle = (styleName) => {
   padding: 2px 6px !important;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   LOCATION SEARCH
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Location Search */
 .location-search {
   position: absolute;
   top: 56px;
@@ -1536,7 +683,6 @@ const switchStyle = (styleName) => {
   height: 14px;
 }
 
-/* Search Results Dropdown */
 .search-results {
   position: absolute;
   top: calc(100% + 4px);
@@ -1596,7 +742,6 @@ const switchStyle = (styleName) => {
   color: #e0e0e0;
 }
 
-/* Scrollbar styling for search results */
 .search-results::-webkit-scrollbar {
   width: 6px;
 }
@@ -1614,10 +759,7 @@ const switchStyle = (styleName) => {
   background: #4d4d6c;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   STYLE SWITCHER
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Style Switcher */
 .style-switcher {
   position: absolute;
   top: 10px;
@@ -1655,10 +797,7 @@ const switchStyle = (styleName) => {
   border-color: #4ade80;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   LEGEND
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Legend */
 .legend {
   position: absolute;
   background: rgba(26, 26, 46, 0.95);
@@ -1673,26 +812,10 @@ const switchStyle = (styleName) => {
   backdrop-filter: blur(4px);
 }
 
-/* Legend positioning */
-.legend-bottom-left {
-  bottom: 30px;
-  left: 10px;
-}
-
-.legend-bottom-right {
-  bottom: 30px;
-  right: 10px;
-}
-
-.legend-top-left {
-  top: 60px;
-  left: 10px;
-}
-
-.legend-top-right {
-  top: 60px;
-  right: 10px;
-}
+.legend-bottom-left { bottom: 30px; left: 10px; }
+.legend-bottom-right { bottom: 30px; right: 10px; }
+.legend-top-left { top: 60px; left: 10px; }
+.legend-top-right { top: 60px; right: 10px; }
 
 .legend-title {
   font-size: 0.875em;
@@ -1713,13 +836,8 @@ const switchStyle = (styleName) => {
   margin-bottom: 6px;
 }
 
-.legend-item:last-child {
-  margin-bottom: 0;
-}
-
-.legend-label-italic {
-  font-style: italic;
-}
+.legend-item:last-child { margin-bottom: 0; }
+.legend-label-italic { font-style: italic; }
 
 .legend-dot {
   display: inline-block;
@@ -1739,10 +857,7 @@ const switchStyle = (styleName) => {
   font-style: italic;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   POPUP STYLES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Popup Styles */
 :deep(.maplibregl-popup-content) {
   background: #1a1a2e !important;
   color: #e0e0e0 !important;
@@ -1769,9 +884,7 @@ const switchStyle = (styleName) => {
   border-top-color: #1a1a2e !important;
 }
 
-:deep(.popup-content) {
-  padding: 14px 18px;
-}
+:deep(.popup-content) { padding: 14px 18px; }
 
 :deep(.popup-header) {
   display: flex;
@@ -1836,10 +949,7 @@ const switchStyle = (styleName) => {
   min-width: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Responsive */
 @media (max-width: 768px) {
   .location-search {
     top: 10px;
@@ -1867,10 +977,7 @@ const switchStyle = (styleName) => {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   EXPORT PREVIEW OVERLAY
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Export Preview Overlay */
 .export-overlay {
   position: absolute;
   inset: 0;
@@ -1893,7 +1000,6 @@ const switchStyle = (styleName) => {
   box-sizing: border-box;
 }
 
-/* Corner handles */
 .export-corner {
   position: absolute;
   width: 12px;
@@ -1902,35 +1008,11 @@ const switchStyle = (styleName) => {
   background: transparent;
 }
 
-.export-corner-tl {
-  top: -2px;
-  left: -2px;
-  border-right: none;
-  border-bottom: none;
-}
+.export-corner-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.export-corner-tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.export-corner-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.export-corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
 
-.export-corner-tr {
-  top: -2px;
-  right: -2px;
-  border-left: none;
-  border-bottom: none;
-}
-
-.export-corner-bl {
-  bottom: -2px;
-  left: -2px;
-  border-right: none;
-  border-top: none;
-}
-
-.export-corner-br {
-  bottom: -2px;
-  right: -2px;
-  border-left: none;
-  border-top: none;
-}
-
-/* Export info display */
 .export-info {
   position: absolute;
   top: 10px;
@@ -1959,7 +1041,6 @@ const switchStyle = (styleName) => {
   font-family: monospace;
 }
 
-/* Export Legend (inside export region) */
 .export-legend {
   position: absolute;
   background: rgba(26, 26, 46, 0.95);
@@ -1972,25 +1053,10 @@ const switchStyle = (styleName) => {
   z-index: 2;
 }
 
-.export-legend-bottom-left {
-  bottom: 15px;
-  left: 15px;
-}
-
-.export-legend-bottom-right {
-  bottom: 15px;
-  right: 15px;
-}
-
-.export-legend-top-left {
-  top: 50px;
-  left: 15px;
-}
-
-.export-legend-top-right {
-  top: 50px;
-  right: 15px;
-}
+.export-legend-bottom-left { bottom: 15px; left: 15px; }
+.export-legend-bottom-right { bottom: 15px; right: 15px; }
+.export-legend-top-left { top: 50px; left: 15px; }
+.export-legend-top-right { top: 50px; right: 15px; }
 
 .export-legend .legend-title {
   font-size: 0.75em;
@@ -2020,9 +1086,7 @@ const switchStyle = (styleName) => {
   display: inline-block;
 }
 
-.export-legend .legend-label-italic {
-  font-style: italic;
-}
+.export-legend .legend-label-italic { font-style: italic; }
 
 .export-legend .legend-more {
   font-size: 0.75em;
@@ -2033,7 +1097,6 @@ const switchStyle = (styleName) => {
   border-top: 1px solid #3d3d5c;
 }
 
-/* Export Scale Bar */
 .export-scale-bar {
   position: absolute;
   bottom: 15px;
@@ -2071,13 +1134,8 @@ const switchStyle = (styleName) => {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.scale-bar-line::before {
-  left: 0;
-}
-
-.scale-bar-line::after {
-  right: 0;
-}
+.scale-bar-line::before { left: 0; }
+.scale-bar-line::after { right: 0; }
 
 .scale-bar-text {
   font-size: 0.7em;
@@ -2086,10 +1144,7 @@ const switchStyle = (styleName) => {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   ENHANCED POPUP (for multi-point locations)
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Enhanced Popup */
 :deep(.enhanced-popup .maplibregl-popup-content) {
   background: transparent !important;
   padding: 0 !important;
