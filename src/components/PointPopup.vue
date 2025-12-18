@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
 import { getThumbnailUrl } from '../utils/imageProxy'
+import { STATUS_COLORS, getStatusColor } from '../utils/constants'
 
 const props = defineProps({
   coordinates: {
@@ -30,18 +31,6 @@ const store = useDataStore()
 const selectedSpecies = ref(null)
 const selectedSubspecies = ref(null)
 const selectedIndividualIndex = ref(0)
-
-// Status colors
-const STATUS_COLORS = {
-  'Sequenced': '#3b82f6',
-  'Tissue Available': '#10b981',
-  'Preserved Specimen': '#f59e0b',
-  'Published': '#a855f7',
-  'GBIF Record': '#6b7280',
-  'Observation': '#22c55e',
-  'Museum Specimen': '#8b5cf6',
-  'Living Specimen': '#14b8a6',
-}
 
 // Group points by species
 const groupedBySpecies = computed(() => {

@@ -1,27 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
-
-// Parse date strings in various formats (DD-MMM-YY, YYYY-MM-DD, etc.)
-function parseDate(dateStr) {
-  if (!dateStr) return null
-
-  // Handle DD-MMM-YY format (e.g., "18-Jan-22")
-  const ddMmmYy = /^(\d{1,2})-([A-Za-z]{3})-(\d{2})$/
-  const match = dateStr.match(ddMmmYy)
-  if (match) {
-    const [, day, monthStr, yearShort] = match
-    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
-    const month = months[monthStr.toLowerCase()]
-    if (month !== undefined) {
-      const year = parseInt(yearShort) + (parseInt(yearShort) > 50 ? 1900 : 2000)
-      return new Date(year, month, parseInt(day))
-    }
-  }
-
-  // Fallback to standard Date parsing
-  const d = new Date(dateStr)
-  return isNaN(d.getTime()) ? null : d
-}
+import { parseDate } from '../utils/dateHelpers'
+import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
 
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
@@ -999,37 +979,17 @@ export const useDataStore = defineStore('data', () => {
   // DYNAMIC COLOR PALETTE GENERATOR
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Predefined color palettes
+  // Predefined color palettes (using imported constants)
   const COLOR_PALETTES = {
-    status: {
-      'Sequenced': '#3b82f6',
-      'Tissue Available': '#10b981',
-      'Preserved Specimen': '#f59e0b',
-      'Published': '#a855f7',
-      'GBIF Record': '#6b7280',
-      'Observation': '#22c55e',
-      'Museum Specimen': '#8b5cf6',
-      'Living Specimen': '#14b8a6',
-    },
-    source: {
-      'Sanger Institute': '#3b82f6',
-      'Dore et al.': '#f59e0b',
-      'iNaturalist': '#74ac00',
-      'GBIF': '#6b7280',
-    }
+    status: STATUS_COLORS,
+    source: SOURCE_COLORS
   }
 
-  // Generate colors for dynamic categories
+  // Generate colors for dynamic categories (using imported dynamic colors)
   const generateColorPalette = (values) => {
-    const colors = [
-      '#3b82f6', '#10b981', '#f59e0b', '#a855f7', '#ef4444',
-      '#22d3ee', '#f97316', '#84cc16', '#ec4899', '#6366f1',
-      '#14b8a6', '#eab308', '#8b5cf6', '#06b6d4', '#f43f5e',
-      '#0ea5e9', '#22c55e', '#d946ef', '#64748b', '#fb923c'
-    ]
     const palette = {}
     values.forEach((val, idx) => {
-      palette[val] = colors[idx % colors.length]
+      palette[val] = DYNAMIC_COLORS[idx % DYNAMIC_COLORS.length]
     })
     return palette
   }

@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
 import { getProxiedUrl, getThumbnailUrl } from '../utils/imageProxy'
+import { STATUS_COLORS, getStatusColor } from '../utils/constants'
 import Panzoom from '@panzoom/panzoom'
 
 const store = useDataStore()
@@ -30,18 +31,6 @@ const imageEl = ref(null)
 
 // Panzoom instance
 let panzoomInstance = null
-
-// Status colors for sidebar
-const STATUS_COLORS = {
-  'Sequenced': '#3b82f6',
-  'Tissue Available': '#10b981',
-  'Preserved Specimen': '#f59e0b',
-  'Published': '#a855f7',
-  'GBIF Record': '#6b7280',
-  'Observation': '#22c55e',
-  'Museum Specimen': '#8b5cf6',
-  'Living Specimen': '#14b8a6',
-}
 
 // Get all filtered individuals (with or without images)
 const allFilteredIndividuals = computed(() => {

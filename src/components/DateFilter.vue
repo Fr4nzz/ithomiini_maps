@@ -1,34 +1,13 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
+import { parseDate, getDateOffset } from '../utils/dateHelpers'
 
 const store = useDataStore()
 
 // Date range
 const startDate = ref('')
 const endDate = ref('')
-
-// Parse date strings in various formats (DD-MMM-YY, YYYY-MM-DD, etc.)
-function parseDate(dateStr) {
-  if (!dateStr) return null
-
-  // Handle DD-MMM-YY format (e.g., "18-Jan-22")
-  const ddMmmYy = /^(\d{1,2})-([A-Za-z]{3})-(\d{2})$/
-  const match = dateStr.match(ddMmmYy)
-  if (match) {
-    const [, day, monthStr, yearShort] = match
-    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
-    const month = months[monthStr.toLowerCase()]
-    if (month !== undefined) {
-      const year = parseInt(yearShort) + (parseInt(yearShort) > 50 ? 1900 : 2000)
-      return new Date(year, month, parseInt(day))
-    }
-  }
-
-  // Fallback to standard Date parsing
-  const d = new Date(dateStr)
-  return isNaN(d.getTime()) ? null : d
-}
 
 // Quick ranges
 const quickRanges = [
@@ -41,12 +20,6 @@ const quickRanges = [
   { label: '2000s', start: '2000-01-01', end: '2009-12-31' },
   { label: 'Pre-2000', start: '', end: '1999-12-31' },
 ]
-
-function getDateOffset(days) {
-  const date = new Date()
-  date.setDate(date.getDate() + days)
-  return date.toISOString().split('T')[0]
-}
 
 // Get date statistics from data
 const dateStats = computed(() => {
