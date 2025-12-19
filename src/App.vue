@@ -7,7 +7,14 @@ import DataTable from './components/DataTable.vue'
 import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
-import MapExport from './components/MapExport.vue'
+import { ASPECT_RATIOS } from './utils/constants'
+import {
+  loadImage,
+  roundRect,
+  drawLegendOnCanvas,
+  drawScaleBarOnCanvas,
+  drawAttributionOnCanvas
+} from './utils/canvasHelpers'
 
 const store = useDataStore()
 
@@ -18,7 +25,6 @@ const currentView = ref('map') // 'map' or 'table'
 const showExportPanel = ref(false)
 const showMimicrySelector = ref(false)
 const showImageGallery = ref(false)
-const showMapExport = ref(false)
 
 // Map reference for export
 const mapRef = ref(null)
@@ -37,162 +43,6 @@ const closeMimicrySelector = () => { showMimicrySelector.value = false }
 
 const openImageGallery = () => { showImageGallery.value = true }
 const closeImageGallery = () => { showImageGallery.value = false }
-
-const openMapExport = () => { showMapExport.value = true }
-const closeMapExport = () => { showMapExport.value = false }
-
-// ═══════════════════════════════════════════════════════════════════════════
-// DIRECT MAP EXPORT (used by top Export Map button)
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Aspect ratio dimensions
-const ASPECT_RATIOS = {
-  '16:9': { width: 1920, height: 1080 },
-  '4:3': { width: 1600, height: 1200 },
-  '1:1': { width: 1200, height: 1200 },
-  '3:2': { width: 1800, height: 1200 },
-  'A4': { width: 2480, height: 3508 },
-  'A4L': { width: 3508, height: 2480 },
-}
-
-// Helper to load image from data URL
-const loadImage = (src) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.onload = () => resolve(img)
-    img.onerror = () => reject(new Error('Failed to load image'))
-    img.src = src
-  })
-}
-
-// RoundRect helper
-const roundRect = (ctx, x, y, w, h, r) => {
-  if (w < 2 * r) r = w / 2
-  if (h < 2 * r) r = h / 2
-  ctx.beginPath()
-  ctx.moveTo(x + r, y)
-  ctx.arcTo(x + w, y, x + w, y + h, r)
-  ctx.arcTo(x + w, y + h, x, y + h, r)
-  ctx.arcTo(x, y + h, x, y, r)
-  ctx.arcTo(x, y, x + w, y, r)
-  ctx.closePath()
-  return ctx
-}
-
-// Draw legend on canvas
-const drawLegendOnCanvas = (ctx, width, height) => {
-  const colorMap = store.activeColorMap
-  const entries = Object.entries(colorMap).slice(0, store.legendSettings.maxItems)
-  const uiScale = store.exportSettings.uiScale || 1
-
-  const padding = 20 * uiScale
-  const itemHeight = 24 * uiScale
-  const legendWidth = 200 * uiScale
-  const legendHeight = entries.length * itemHeight + 45 * uiScale
-
-  // Position based on settings
-  let x, y
-  const pos = store.legendSettings.position
-  if (pos === 'top-left') { x = padding; y = padding }
-  else if (pos === 'top-right') { x = width - legendWidth - padding; y = padding }
-  else if (pos === 'bottom-right') { x = width - legendWidth - padding; y = height - legendHeight - padding }
-  else { x = padding; y = height - legendHeight - padding } // bottom-left default
-
-  // Background
-  ctx.fillStyle = 'rgba(26, 26, 46, 0.95)'
-  roundRect(ctx, x, y, legendWidth, legendHeight, 8 * uiScale)
-  ctx.fill()
-
-  // Title
-  ctx.fillStyle = '#888'
-  ctx.font = `bold ${12 * uiScale}px system-ui, sans-serif`
-  ctx.textAlign = 'left'
-  ctx.fillText(store.legendTitle.toUpperCase(), x + 12 * uiScale, y + 22 * uiScale)
-
-  // Items
-  ctx.font = `${13 * uiScale}px system-ui, sans-serif`
-  entries.forEach(([label, color], i) => {
-    const itemY = y + 40 * uiScale + i * itemHeight
-
-    // Dot
-    ctx.beginPath()
-    ctx.arc(x + 18 * uiScale, itemY, 5 * uiScale, 0, Math.PI * 2)
-    ctx.fillStyle = color
-    ctx.fill()
-
-    // Label
-    ctx.fillStyle = '#e0e0e0'
-    const isItalic = ['species', 'subspecies', 'genus'].includes(store.colorBy)
-    ctx.font = isItalic
-      ? `italic ${13 * uiScale}px system-ui, sans-serif`
-      : `${13 * uiScale}px system-ui, sans-serif`
-    ctx.fillText(label, x + 32 * uiScale, itemY + 4 * uiScale)
-  })
-
-  // "More" indicator
-  if (Object.keys(colorMap).length > store.legendSettings.maxItems) {
-    const moreY = y + legendHeight - 12 * uiScale
-    ctx.fillStyle = '#666'
-    ctx.font = `italic ${11 * uiScale}px system-ui, sans-serif`
-    ctx.fillText(`+ ${Object.keys(colorMap).length - store.legendSettings.maxItems} more`, x + 12 * uiScale, moreY)
-  }
-}
-
-// Draw scale bar on canvas
-const drawScaleBarOnCanvas = (ctx, width, height) => {
-  const uiScale = store.exportSettings.uiScale || 1
-  const padding = 20 * uiScale
-  const barWidth = 100 * uiScale
-  const barHeight = 4 * uiScale
-
-  // Position: bottom-right, or bottom-left if legend is bottom-right
-  let x
-  if (store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend) {
-    x = padding
-  } else {
-    x = width - barWidth - padding
-  }
-  const y = height - padding - barHeight - 20 * uiScale
-
-  // Scale bar line
-  ctx.fillStyle = '#fff'
-  ctx.fillRect(x, y, barWidth, barHeight)
-
-  // End caps
-  ctx.fillRect(x, y - 4 * uiScale, 2 * uiScale, barHeight + 8 * uiScale)
-  ctx.fillRect(x + barWidth - 2 * uiScale, y - 4 * uiScale, 2 * uiScale, barHeight + 8 * uiScale)
-
-  // Text
-  ctx.fillStyle = '#fff'
-  ctx.font = `bold ${11 * uiScale}px system-ui, sans-serif`
-  ctx.textAlign = store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'left' : 'right'
-  ctx.textBaseline = 'top'
-  ctx.shadowColor = 'rgba(0,0,0,0.7)'
-  ctx.shadowBlur = 3
-  ctx.fillText('Scale varies with latitude', store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? x : x + barWidth, y + barHeight + 6 * uiScale)
-  ctx.shadowBlur = 0
-}
-
-// Draw attribution on canvas
-const drawAttributionOnCanvas = (ctx, width, height) => {
-  const uiScale = store.exportSettings.uiScale || 1
-  const text = 'Ithomiini Distribution Maps | Data: Dore et al., Sanger Institute, GBIF'
-  const padding = 15 * uiScale
-
-  ctx.font = `${11 * uiScale}px system-ui, sans-serif`
-  const textWidth = ctx.measureText(text).width
-
-  // Background
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
-  roundRect(ctx, width - textWidth - padding - 12 * uiScale, height - 28 * uiScale, textWidth + 12 * uiScale, 22 * uiScale, 4 * uiScale)
-  ctx.fill()
-
-  // Text
-  ctx.fillStyle = '#aaa'
-  ctx.textAlign = 'right'
-  ctx.textBaseline = 'middle'
-  ctx.fillText(text, width - padding, height - 17 * uiScale)
-}
 
 // Direct export function for Export Map button
 const directExportMap = async () => {
@@ -282,16 +132,27 @@ const directExportMap = async () => {
 
     // Draw legend if enabled
     if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
-      drawLegendOnCanvas(ctx, canvas.width, canvas.height)
+      drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
+        colorMap: store.activeColorMap,
+        legendSettings: store.legendSettings,
+        exportSettings: store.exportSettings,
+        colorBy: store.colorBy,
+        legendTitle: store.legendTitle,
+      })
     }
 
     // Draw scale bar if enabled
     if (store.exportSettings.includeScaleBar) {
-      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height)
+      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
+        legendSettings: store.legendSettings,
+        exportSettings: store.exportSettings,
+      })
     }
 
     // Draw attribution
-    drawAttributionOnCanvas(ctx, canvas.width, canvas.height)
+    drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
+      exportSettings: store.exportSettings,
+    })
 
     // Download the image
     const dataUrl = canvas.toDataURL('image/png', 1.0)
@@ -314,7 +175,6 @@ const onMapReady = (map) => {
 // Provide modal openers to children
 provide('openMimicrySelector', openMimicrySelector)
 provide('openImageGallery', openImageGallery)
-provide('openMapExport', openMapExport)
 
 onMounted(() => {
   store.loadMapData()
@@ -432,25 +292,12 @@ onMounted(() => {
     <!-- Mimicry Selector Modal -->
     <Teleport to="body">
       <Transition name="modal">
-        <div 
-          v-if="showMimicrySelector" 
+        <div
+          v-if="showMimicrySelector"
           class="modal-overlay"
           @click.self="closeMimicrySelector"
         >
           <MimicrySelector @close="closeMimicrySelector" />
-        </div>
-      </Transition>
-    </Teleport>
-
-    <!-- Map Export Modal -->
-    <Teleport to="body">
-      <Transition name="modal">
-        <div 
-          v-if="showMapExport" 
-          class="modal-overlay"
-          @click.self="closeMapExport"
-        >
-          <MapExport :map="mapRef" @close="closeMapExport" />
         </div>
       </Transition>
     </Teleport>
@@ -541,11 +388,6 @@ html, body, #app {
 .view-toggle-bar button svg {
   width: 16px;
   height: 16px;
-}
-
-.btn-gallery-mobile,
-.btn-export-mobile {
-  margin-left: auto;
 }
 
 .btn-gallery-mobile {

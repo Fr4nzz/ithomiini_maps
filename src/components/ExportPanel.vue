@@ -1,6 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
+import { ASPECT_RATIOS } from '../utils/constants'
+import {
+  loadImage,
+  calculateExportRegion,
+  drawLegendOnCanvas,
+  drawScaleBarOnCanvas,
+  drawAttributionOnCanvas
+} from '../utils/canvasHelpers'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
@@ -176,16 +184,6 @@ const copyCitation = (type = 'plain') => {
 // IMAGE EXPORT
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Aspect ratio dimensions
-const ASPECT_RATIOS = {
-  '16:9': { width: 1920, height: 1080 },
-  '4:3': { width: 1600, height: 1200 },
-  '1:1': { width: 1200, height: 1200 },
-  '3:2': { width: 1800, height: 1200 },
-  'A4': { width: 2480, height: 3508 },
-  'A4L': { width: 3508, height: 2480 },
-}
-
 // Get export dimensions
 const exportDimensions = computed(() => {
   const ratio = store.exportSettings.aspectRatio
@@ -194,51 +192,6 @@ const exportDimensions = computed(() => {
   }
   return ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
 })
-
-// Calculate the export region position (same logic as MapEngine)
-const calculateExportRegion = (containerWidth, containerHeight, targetWidth, targetHeight) => {
-  const targetAspectRatio = targetWidth / targetHeight
-  const containerAspectRatio = containerWidth / containerHeight
-
-  // Use 92% of container as maximum (same as MapEngine)
-  const maxPercent = 92
-
-  let holeWidthPercent, holeHeightPercent
-
-  if (targetAspectRatio > containerAspectRatio) {
-    // Target is wider than container - constrained by width
-    holeWidthPercent = maxPercent
-    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
-  } else {
-    // Target is taller than container - constrained by height
-    holeHeightPercent = maxPercent
-    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
-  }
-
-  // Center the hole
-  const x = (100 - holeWidthPercent) / 2
-  const y = (100 - holeHeightPercent) / 2
-
-  const result = {
-    x: Math.max(2, x),
-    y: Math.max(2, y),
-    width: Math.min(96, holeWidthPercent),
-    height: Math.min(96, holeHeightPercent)
-  }
-
-  console.log('[Export] calculateExportRegion:', {
-    input: { containerWidth, containerHeight, targetWidth, targetHeight },
-    aspectRatios: { target: targetAspectRatio.toFixed(3), container: containerAspectRatio.toFixed(3) },
-    result: {
-      x: result.x.toFixed(2) + '%',
-      y: result.y.toFixed(2) + '%',
-      width: result.width.toFixed(2) + '%',
-      height: result.height.toFixed(2) + '%'
-    }
-  })
-
-  return result
-}
 
 // Export map as image
 const exportImage = async () => {
@@ -385,20 +338,31 @@ const exportImage = async () => {
 
     // Draw legend if enabled
     if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
-      drawLegendOnCanvas(ctx, canvas.width, canvas.height)
+      drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
+        colorMap: store.activeColorMap,
+        legendSettings: store.legendSettings,
+        exportSettings: store.exportSettings,
+        colorBy: store.colorBy,
+        legendTitle: store.legendTitle,
+      })
     }
 
     imageExportProgress.value = 75
 
     // Draw scale bar if enabled
     if (store.exportSettings.includeScaleBar) {
-      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height)
+      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
+        legendSettings: store.legendSettings,
+        exportSettings: store.exportSettings,
+      })
     }
 
     imageExportProgress.value = 85
 
     // Draw attribution
-    drawAttributionOnCanvas(ctx, canvas.width, canvas.height)
+    drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
+      exportSettings: store.exportSettings,
+    })
 
     imageExportProgress.value = 95
 
@@ -430,234 +394,6 @@ const exportImage = async () => {
     imageExportError.value = e.message || 'Export failed'
     isExporting.value = false
   }
-}
-
-// Helper to load image from data URL
-const loadImage = (src) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.onload = () => resolve(img)
-    img.onerror = () => reject(new Error('Failed to load image'))
-    img.src = src
-  })
-}
-
-// Draw legend on canvas
-const drawLegendOnCanvas = (ctx, width, height) => {
-  const colorMap = store.activeColorMap
-  const entries = Object.entries(colorMap).slice(0, store.legendSettings.maxItems)
-  const uiScale = store.exportSettings.uiScale || 1
-
-  // Calculate resolution scale factor to match preview appearance
-  // Preview frame is typically ~650px tall; scale legend proportionally to output size
-  const referenceHeight = 650
-  const resolutionScale = height / referenceHeight
-
-  // Combined scale: user's UI scale * resolution scaling
-  const scale = uiScale * resolutionScale
-
-  console.log('[Export] Drawing legend:', {
-    totalEntries: Object.keys(colorMap).length,
-    displayedEntries: entries.length,
-    maxItems: store.legendSettings.maxItems,
-    uiScale: uiScale,
-    resolutionScale: resolutionScale.toFixed(2),
-    combinedScale: scale.toFixed(2),
-    position: store.legendSettings.position,
-    colorBy: store.colorBy
-  })
-
-  // Match CSS preview padding (15px bottom/sides, 50px top)
-  // These are scaled proportionally to output size
-  const sidePadding = 15 * resolutionScale * uiScale
-  const topPadding = 50 * resolutionScale * uiScale
-  const bottomPadding = 15 * resolutionScale * uiScale
-
-  const itemHeight = 24 * scale
-  const leftPadding = 12 * scale
-  const dotSpace = 32 * scale // space for dot + gap
-  const rightPadding = 12 * scale
-
-  // Calculate legend width based on content
-  const isItalic = ['species', 'subspecies', 'genus'].includes(store.colorBy)
-  ctx.font = isItalic
-    ? `italic ${13 * scale}px system-ui, sans-serif`
-    : `${13 * scale}px system-ui, sans-serif`
-
-  let maxLabelWidth = 0
-  let longestLabel = ''
-  entries.forEach(([label]) => {
-    const labelWidth = ctx.measureText(label).width
-    if (labelWidth > maxLabelWidth) {
-      maxLabelWidth = labelWidth
-      longestLabel = label
-    }
-  })
-
-  // Also check title width
-  ctx.font = `bold ${12 * scale}px system-ui, sans-serif`
-  const titleWidth = ctx.measureText(store.legendTitle.toUpperCase()).width
-
-  // Calculate legend width with padding, minimum 180px scaled
-  const contentWidth = Math.max(maxLabelWidth + dotSpace, titleWidth) + leftPadding + rightPadding
-  const legendWidth = Math.max(180 * scale, Math.min(contentWidth, 300 * scale))
-  const legendHeight = entries.length * itemHeight + 45 * scale
-
-  console.log('[Export] Legend dimensions:', {
-    legendWidth: Math.round(legendWidth),
-    legendHeight: Math.round(legendHeight),
-    maxLabelWidth: Math.round(maxLabelWidth),
-    longestLabel: longestLabel,
-    titleWidth: Math.round(titleWidth),
-    contentWidth: Math.round(contentWidth),
-    canvasWidth: width,
-    canvasHeight: height
-  })
-
-  // Position based on settings (matching CSS preview from MapEngine.vue)
-  let x, y
-  const pos = store.legendSettings.position
-  if (pos === 'top-left') { x = sidePadding; y = topPadding }
-  else if (pos === 'top-right') { x = width - legendWidth - sidePadding; y = topPadding }
-  else if (pos === 'bottom-right') { x = width - legendWidth - sidePadding; y = height - legendHeight - bottomPadding }
-  else { x = sidePadding; y = height - legendHeight - bottomPadding } // bottom-left default
-
-  console.log('[Export] Legend position:', {
-    position: pos,
-    x: Math.round(x),
-    y: Math.round(y),
-    legendRight: Math.round(x + legendWidth),
-    legendBottom: Math.round(y + legendHeight)
-  })
-
-  // Background
-  ctx.fillStyle = 'rgba(26, 26, 46, 0.95)'
-  roundRect(ctx, x, y, legendWidth, legendHeight, 8 * scale)
-  ctx.fill()
-
-  // Title
-  ctx.fillStyle = '#888'
-  ctx.font = `bold ${12 * scale}px system-ui, sans-serif`
-  ctx.textAlign = 'left'
-  ctx.fillText(store.legendTitle.toUpperCase(), x + leftPadding, y + 22 * scale)
-
-  // Maximum width for label text (with some padding from edge)
-  const maxTextWidth = legendWidth - dotSpace - rightPadding
-
-  // Items
-  ctx.font = isItalic
-    ? `italic ${13 * scale}px system-ui, sans-serif`
-    : `${13 * scale}px system-ui, sans-serif`
-
-  entries.forEach(([label, color], i) => {
-    const itemY = y + 40 * scale + i * itemHeight
-
-    // Dot
-    ctx.beginPath()
-    ctx.arc(x + 18 * scale, itemY, 5 * scale, 0, Math.PI * 2)
-    ctx.fillStyle = color
-    ctx.fill()
-
-    // Label - truncate if too long
-    ctx.fillStyle = '#e0e0e0'
-    let displayLabel = label
-    let labelWidth = ctx.measureText(displayLabel).width
-    if (labelWidth > maxTextWidth) {
-      // Truncate with ellipsis
-      while (labelWidth > maxTextWidth && displayLabel.length > 0) {
-        displayLabel = displayLabel.slice(0, -1)
-        labelWidth = ctx.measureText(displayLabel + '…').width
-      }
-      displayLabel += '…'
-    }
-    ctx.fillText(displayLabel, x + dotSpace, itemY + 4 * scale)
-  })
-
-  // "More" indicator
-  if (Object.keys(colorMap).length > store.legendSettings.maxItems) {
-    const moreY = y + legendHeight - 12 * scale
-    ctx.fillStyle = '#666'
-    ctx.font = `italic ${11 * scale}px system-ui, sans-serif`
-    ctx.fillText(`+ ${Object.keys(colorMap).length - store.legendSettings.maxItems} more`, x + 12 * scale, moreY)
-  }
-}
-
-// Draw scale bar on canvas
-const drawScaleBarOnCanvas = (ctx, width, height) => {
-  const uiScale = store.exportSettings.uiScale || 1
-  // Scale proportionally to output resolution (same as legend)
-  const referenceHeight = 650
-  const resolutionScale = height / referenceHeight
-  const scale = uiScale * resolutionScale
-
-  // Match CSS preview padding
-  const sidePadding = 15 * resolutionScale * uiScale
-  const bottomPadding = 15 * resolutionScale * uiScale
-
-  const barWidth = 100 * scale
-  const barHeight = 4 * scale
-
-  // Position: bottom-right, or bottom-left if legend is bottom-right
-  let x
-  if (store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend) {
-    x = sidePadding
-  } else {
-    x = width - barWidth - sidePadding
-  }
-  const y = height - bottomPadding - barHeight - 20 * scale
-
-  // Scale bar line
-  ctx.fillStyle = '#fff'
-  ctx.fillRect(x, y, barWidth, barHeight)
-
-  // End caps
-  ctx.fillRect(x, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
-  ctx.fillRect(x + barWidth - 2 * scale, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
-
-  // Text - approximate scale based on zoom
-  ctx.fillStyle = '#fff'
-  ctx.font = `bold ${11 * scale}px system-ui, sans-serif`
-  ctx.textAlign = store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'left' : 'right'
-  ctx.textBaseline = 'top'
-  ctx.shadowColor = 'rgba(0,0,0,0.7)'
-  ctx.shadowBlur = 3
-  ctx.fillText('Scale varies with latitude', store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? x : x + barWidth, y + barHeight + 6 * scale)
-  ctx.shadowBlur = 0
-}
-
-// Draw attribution on canvas
-const drawAttributionOnCanvas = (ctx, width, height) => {
-  const uiScale = store.exportSettings.uiScale || 1
-  const text = 'Ithomiini Distribution Maps | Data: Dore et al., Sanger Institute, GBIF'
-  const padding = 15 * uiScale
-
-  ctx.font = `${11 * uiScale}px system-ui, sans-serif`
-  const textWidth = ctx.measureText(text).width
-
-  // Background
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
-  roundRect(ctx, width - textWidth - padding - 12 * uiScale, height - 28 * uiScale, textWidth + 12 * uiScale, 22 * uiScale, 4 * uiScale)
-  ctx.fill()
-
-  // Text
-  ctx.fillStyle = '#aaa'
-  ctx.textAlign = 'right'
-  ctx.textBaseline = 'middle'
-  ctx.fillText(text, width - padding, height - 17 * uiScale)
-}
-
-// RoundRect helper
-const roundRect = (ctx, x, y, w, h, r) => {
-  if (w < 2 * r) r = w / 2
-  if (h < 2 * r) r = h / 2
-  ctx.beginPath()
-  ctx.moveTo(x + r, y)
-  ctx.arcTo(x + w, y, x + w, y + h, r)
-  ctx.arcTo(x + w, y + h, x, y + h, r)
-  ctx.arcTo(x, y + h, x, y, r)
-  ctx.arcTo(x, y, x + w, y, r)
-  ctx.closePath()
-  return ctx
 }
 
 // Active tab - default to 'image' for Export Image tab

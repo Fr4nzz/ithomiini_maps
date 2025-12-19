@@ -62,3 +62,16 @@ export function getThumbnailUrl(originalUrl) {
   const encoded = encodeURIComponent(cleanUrl)
   return `https://wsrv.nl/?url=${encoded}&w=400&q=85&output=webp`
 }
+
+/**
+ * Get small square thumbnail for table rows (60x60 cropped)
+ * @param {string} originalUrl - The original image URL (may already be proxied)
+ * @returns {string} Proxied small thumbnail URL
+ */
+export function getTableThumbnailUrl(originalUrl) {
+  if (!originalUrl) return ''
+
+  const cleanUrl = extractOriginalUrl(originalUrl)
+  const encoded = encodeURIComponent(cleanUrl)
+  return `https://wsrv.nl/?url=${encoded}&w=60&h=60&fit=cover&output=webp`
+}

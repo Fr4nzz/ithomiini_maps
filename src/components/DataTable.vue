@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
+import { parseDate } from '../utils/dateHelpers'
+import { getStatusColor } from '../utils/constants'
+import { getTableThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
 
@@ -48,28 +51,6 @@ const rawData = computed(() => {
   if (!geo || !geo.features) return []
   return geo.features.map(f => f.properties)
 })
-
-// Parse date strings in various formats (DD-MMM-YY, YYYY-MM-DD, etc.)
-function parseDate(dateStr) {
-  if (!dateStr) return null
-
-  // Handle DD-MMM-YY or D-MMM-YY format (e.g., "18-Jan-22", "1-Aug-24")
-  const ddMmmYy = /^(\d{1,2})-([A-Za-z]{3})-(\d{2})$/
-  const match = dateStr.match(ddMmmYy)
-  if (match) {
-    const [, day, monthStr, yearShort] = match
-    const months = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
-    const month = months[monthStr.toLowerCase()]
-    if (month !== undefined) {
-      const year = parseInt(yearShort) + (parseInt(yearShort) > 50 ? 1900 : 2000)
-      return new Date(year, month, parseInt(day))
-    }
-  }
-
-  // Fallback to standard Date parsing
-  const d = new Date(dateStr)
-  return isNaN(d.getTime()) ? null : d
-}
 
 // Sorted data
 const sortedData = computed(() => {
@@ -166,21 +147,6 @@ const toggleSort = (column) => {
 // Column toggle panel
 const showColumnSettings = ref(false)
 
-// Status color helper - Updated with new GBIF statuses
-const getStatusColor = (status) => {
-  const colors = {
-    'Sequenced': '#3b82f6',
-    'Tissue Available': '#10b981',
-    'Preserved Specimen': '#f59e0b',
-    'Published': '#a855f7',
-    'GBIF Record': '#6b7280',
-    'Observation': '#22c55e',      // Green - Research Grade equivalent
-    'Museum Specimen': '#8b5cf6',
-    'Living Specimen': '#14b8a6',
-  }
-  return colors[status] || '#6b7280'
-}
-
 // Visible columns array for v-for
 const activeColumns = computed(() => {
   return columns.filter(col => visibleColumns.value[col.key])
@@ -189,13 +155,6 @@ const activeColumns = computed(() => {
 // Photo helpers using store's getPhotoForItem
 const getPhotoInfo = (row) => {
   return store.getPhotoForItem(row)
-}
-
-// Image proxy URL
-const getProxiedUrl = (url) => {
-  if (!url) return null
-  // Use wsrv.nl proxy for smaller thumbnails
-  return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=60&h=60&fit=cover&output=webp`
 }
 
 // Image load error handling
@@ -304,7 +263,7 @@ const handleImageError = (e, originalUrl) => {
                 <template v-if="getPhotoInfo(row)">
                   <div class="photo-wrapper" :class="{ 'other-individual': !getPhotoInfo(row).sameIndividual }">
                     <img 
-                      :src="getProxiedUrl(getPhotoInfo(row).url)"
+                      :src="getTableThumbnailUrl(getPhotoInfo(row).url)"
                       @error="(e) => handleImageError(e, getPhotoInfo(row).url)"
                       loading="lazy"
                       :title="getPhotoInfo(row).sameIndividual ? 'Photo of this individual' : 'Photo from another individual of same species'"

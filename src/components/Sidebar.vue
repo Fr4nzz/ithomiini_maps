@@ -3,6 +3,9 @@ import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
+import SidebarMapSettings from './SidebarMapSettings.vue'
+import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
+import { ASPECT_RATIOS } from '../utils/constants'
 
 const props = defineProps({
   currentView: {
@@ -15,133 +18,19 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 
 const store = useDataStore()
 
-// Local state for CAMID search with autocomplete (multi-value textarea)
-const camidInput = ref('')
-const camidTextarea = ref(null)
-const showCamidDropdown = ref(false)
-const selectedSuggestionIndex = ref(-1)
-const currentWordInfo = ref({ word: '', start: 0, end: 0 })
-let debounceTimer = null
-
-// Get the current word at cursor position for autocomplete
-const getCurrentWord = (text, cursorPos) => {
-  // Find word boundaries (split by comma, space, newline)
-  const beforeCursor = text.slice(0, cursorPos)
-  const afterCursor = text.slice(cursorPos)
-
-  // Find start of current word (last separator before cursor)
-  const startMatch = beforeCursor.match(/[\s,\n]*([^\s,\n]*)$/)
-  const wordStart = startMatch ? cursorPos - startMatch[1].length : cursorPos
-
-  // Find end of current word (first separator after cursor)
-  const endMatch = afterCursor.match(/^([^\s,\n]*)/)
-  const wordEnd = cursorPos + (endMatch ? endMatch[1].length : 0)
-
-  const word = text.slice(wordStart, wordEnd)
-  return { word, start: wordStart, end: wordEnd }
-}
-
-// Filtered CAMID suggestions based on current word
-const camidSuggestions = computed(() => {
-  const query = currentWordInfo.value.word.trim().toUpperCase()
-  if (!query || query.length < 2) return []
-
-  // Filter and limit to 15 suggestions for performance
-  const matches = []
-  for (const id of store.uniqueCamids) {
-    if (id.toUpperCase().includes(query)) {
-      matches.push(id)
-      if (matches.length >= 15) break
-    }
-  }
-  return matches
-})
-
-const handleCamidInput = (e) => {
-  const textarea = e.target
-  const value = textarea.value
-  const cursorPos = textarea.selectionStart
-
-  camidInput.value = value
-  currentWordInfo.value = getCurrentWord(value, cursorPos)
-  showCamidDropdown.value = currentWordInfo.value.word.length >= 2
-  selectedSuggestionIndex.value = -1
-
-  clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(() => {
-    store.filters.camidSearch = value.trim().toUpperCase()
-  }, 300)
-}
-
-const selectCamid = (camid) => {
-  const { start, end } = currentWordInfo.value
-  const before = camidInput.value.slice(0, start)
-  const after = camidInput.value.slice(end)
-
-  // Insert selected CAMID, add separator if there's more text after
-  const separator = after.trim() ? '' : ' '
-  camidInput.value = before + camid + separator + after
-
-  // Update the store filter
-  store.filters.camidSearch = camidInput.value.trim().toUpperCase()
-
-  showCamidDropdown.value = false
-  selectedSuggestionIndex.value = -1
-
-  // Focus back and position cursor after inserted CAMID
-  if (camidTextarea.value) {
-    const newCursorPos = start + camid.length + separator.length
-    camidTextarea.value.focus()
-    camidTextarea.value.setSelectionRange(newCursorPos, newCursorPos)
-  }
-}
-
-const handleCamidKeydown = (e) => {
-  // Update current word on cursor movement
-  if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
-    setTimeout(() => {
-      const textarea = e.target
-      currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
-      showCamidDropdown.value = currentWordInfo.value.word.length >= 2
-    }, 0)
-    return
-  }
-
-  if (!showCamidDropdown.value || camidSuggestions.value.length === 0) return
-
-  if (e.key === 'ArrowDown' && !e.altKey) {
-    e.preventDefault()
-    selectedSuggestionIndex.value = Math.min(
-      selectedSuggestionIndex.value + 1,
-      camidSuggestions.value.length - 1
-    )
-  } else if (e.key === 'ArrowUp' && !e.altKey) {
-    e.preventDefault()
-    selectedSuggestionIndex.value = Math.max(selectedSuggestionIndex.value - 1, -1)
-  } else if (e.key === 'Enter' && selectedSuggestionIndex.value >= 0) {
-    e.preventDefault()
-    selectCamid(camidSuggestions.value[selectedSuggestionIndex.value])
-  } else if (e.key === 'Tab' && camidSuggestions.value.length > 0) {
-    e.preventDefault()
-    const idx = selectedSuggestionIndex.value >= 0 ? selectedSuggestionIndex.value : 0
-    selectCamid(camidSuggestions.value[idx])
-  } else if (e.key === 'Escape') {
-    showCamidDropdown.value = false
-  }
-}
-
-const handleCamidBlur = () => {
-  // Delay to allow click on suggestion
-  setTimeout(() => {
-    showCamidDropdown.value = false
-  }, 150)
-}
-
-const handleCamidClick = (e) => {
-  const textarea = e.target
-  currentWordInfo.value = getCurrentWord(textarea.value, textarea.selectionStart)
-  showCamidDropdown.value = currentWordInfo.value.word.length >= 2
-}
+// CAMID autocomplete from composable
+const {
+  camidInput,
+  camidTextarea,
+  showCamidDropdown,
+  selectedSuggestionIndex,
+  camidSuggestions,
+  handleCamidInput,
+  selectCamid,
+  handleCamidKeydown,
+  handleCamidBlur,
+  handleCamidClick
+} = useCamidAutocomplete(store)
 
 // Computed: Record counts
 const totalRecords = computed(() => store.allFeatures.length)
@@ -157,30 +46,6 @@ const imageCount = computed(() => {
   return geo.features.filter(f => f.properties?.image_url).length
 })
 
-// Status filter helpers
-const isStatusSelected = (status) => store.filters.status.includes(status)
-
-const toggleStatus = (status) => {
-  const idx = store.filters.status.indexOf(status)
-  if (idx > -1) {
-    store.filters.status.splice(idx, 1)
-  } else {
-    store.filters.status.push(status)
-  }
-}
-
-// Status color mapping
-const statusColors = {
-  'Sequenced': '#3b82f6',
-  'Tissue Available': '#10b981',
-  'Preserved Specimen': '#f59e0b',
-  'Published': '#a855f7',
-  'GBIF Record': '#6b7280',
-  'Observation': '#22c55e',        // Research Grade equivalent
-  'Museum Specimen': '#8b5cf6',
-  'Living Specimen': '#14b8a6',
-}
-
 // Share URL functionality
 const copyShareUrl = () => {
   navigator.clipboard.writeText(window.location.href)
@@ -193,17 +58,8 @@ const showCopiedToast = ref(false)
 // Show date filter section
 const showDateFilter = ref(false)
 
-// Show cluster settings section
-const showClusterSettings = ref(false)
-
 // Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
 const showAdvancedTaxonomy = ref(false)
-
-// Show additional legend settings (Position/Text Size/Max Items)
-const showAdvancedLegend = ref(false)
-
-// Show point style settings section
-const showPointStyle = ref(false)
 
 // Show URL share settings section
 const showUrlSettings = ref(false)
@@ -211,14 +67,22 @@ const showUrlSettings = ref(false)
 // Show citation section
 const showCitation = ref(false)
 
-// Aspect ratio options
+// Aspect ratio options - derived from shared constants
+const aspectRatioLabels = {
+  '16:9': '16:9 (Widescreen)',
+  '4:3': '4:3 (Standard)',
+  '1:1': '1:1 (Square)',
+  '3:2': '3:2 (Photo)',
+  'A4': 'A4 Portrait',
+  'A4L': 'A4 Landscape',
+}
+
 const aspectRatioOptions = [
-  { value: '16:9', label: '16:9 (Widescreen)', width: 1920, height: 1080 },
-  { value: '4:3', label: '4:3 (Standard)', width: 1600, height: 1200 },
-  { value: '1:1', label: '1:1 (Square)', width: 1200, height: 1200 },
-  { value: '3:2', label: '3:2 (Photo)', width: 1800, height: 1200 },
-  { value: 'A4', label: 'A4 Portrait', width: 2480, height: 3508 },
-  { value: 'A4L', label: 'A4 Landscape', width: 3508, height: 2480 },
+  ...Object.entries(ASPECT_RATIOS).map(([key, dims]) => ({
+    value: key,
+    label: aspectRatioLabels[key] || key,
+    ...dims
+  })),
   { value: 'custom', label: 'Custom', width: null, height: null },
 ]
 
@@ -621,262 +485,8 @@ const updateExportHeight = (value) => {
         </label>
       </div>
 
-      <!-- Scatter Overlapping Points (Map View Only) -->
-      <div class="filter-section" v-if="currentView === 'map'">
-        <label class="thumbnail-toggle scatter-toggle">
-          <input type="checkbox" v-model="store.scatterOverlappingPoints" />
-          <span>Scatter overlapping points</span>
-        </label>
-        <p class="filter-hint" style="margin-top: 6px;">
-          Evenly distribute overlapping points within 2.5km radius with connecting lines
-        </p>
-      </div>
-
-      <!-- Clustering Settings (Map View Only) -->
-      <div class="filter-section collapsible" v-if="currentView === 'map'">
-        <button
-          class="collapse-toggle"
-          @click="showClusterSettings = !showClusterSettings"
-          :class="{ expanded: showClusterSettings }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Point Clustering
-          <span
-            class="clustering-toggle-badge"
-            :class="{ active: store.clusteringEnabled }"
-            @click.stop="store.clusteringEnabled = !store.clusteringEnabled"
-            title="Click to toggle clustering"
-          >
-            {{ store.clusteringEnabled ? 'ON' : 'OFF' }}
-          </span>
-        </button>
-
-        <div v-show="showClusterSettings" class="collapse-content">
-          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
-            Groups nearby points into clusters. Click a cluster to view all points.
-          </p>
-
-          <!-- Cluster Settings (only visible when clustering is enabled) -->
-          <div v-if="store.clusteringEnabled" class="cluster-settings">
-            <!-- Cluster Radius in pixels -->
-            <div class="setting-row">
-              <label>Cluster Radius <span class="setting-hint">(px)</span></label>
-              <div class="slider-group">
-                <input
-                  type="range"
-                  min="20"
-                  max="200"
-                  step="10"
-                  v-model.number="store.clusterSettings.radiusPixels"
-                />
-                <input
-                  type="number"
-                  class="setting-input"
-                  min="10"
-                  max="500"
-                  v-model.number.lazy="store.clusterSettings.radiusPixels"
-                  @keydown.enter="$event.target.blur()"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Legend Settings (Map View Only) - Color by visible, Position/Text/Max expandable -->
-      <div class="filter-section" v-if="currentView === 'map'">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <line x1="8" y1="9" x2="8" y2="9.01"/>
-            <line x1="8" y1="13" x2="8" y2="13.01"/>
-            <line x1="8" y1="17" x2="8" y2="17.01"/>
-            <line x1="12" y1="9" x2="18" y2="9"/>
-            <line x1="12" y1="13" x2="18" y2="13"/>
-            <line x1="12" y1="17" x2="18" y2="17"/>
-          </svg>
-          Legend Settings
-          <span
-            class="toggle-badge-inline"
-            :class="{ active: store.legendSettings.showLegend }"
-            @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend"
-            title="Click to toggle legend"
-          >
-            {{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}
-          </span>
-        </label>
-
-        <!-- Color By (always visible) -->
-        <div class="setting-row">
-          <label>Color by</label>
-          <select v-model="store.colorBy" class="style-select">
-            <option value="subspecies">Subspecies</option>
-            <option value="species">Species</option>
-            <option value="genus">Genus</option>
-            <option value="status">Sequencing Status</option>
-            <option value="mimicry">Mimicry Ring</option>
-            <option value="source">Data Source</option>
-          </select>
-        </div>
-
-        <!-- Advanced Legend Settings Toggle -->
-        <button
-          class="subsection-toggle"
-          @click="showAdvancedLegend = !showAdvancedLegend"
-          :class="{ expanded: showAdvancedLegend }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Position / Text Size / Max Items
-        </button>
-
-        <div v-show="showAdvancedLegend" class="subsection-content">
-          <!-- Legend Position -->
-          <div class="setting-row">
-            <label>Position</label>
-            <select v-model="store.legendSettings.position" class="style-select">
-              <option value="bottom-left">Bottom Left</option>
-              <option value="bottom-right">Bottom Right</option>
-              <option value="top-left">Top Left</option>
-              <option value="top-right">Top Right</option>
-            </select>
-          </div>
-
-          <!-- Text Size -->
-          <div class="setting-row">
-            <label>Text Size</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0.6"
-                max="1.2"
-                step="0.05"
-                v-model.number="store.legendSettings.textSize"
-              />
-              <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
-            </div>
-          </div>
-
-          <!-- Max Items -->
-          <div class="setting-row">
-            <label>Max Items Shown</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="5"
-                max="30"
-                step="1"
-                v-model.number="store.legendSettings.maxItems"
-              />
-              <input
-                type="number"
-                class="setting-input"
-                min="3"
-                max="50"
-                v-model.number.lazy="store.legendSettings.maxItems"
-                @keydown.enter="$event.target.blur()"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Point Style (Map View Only) - Separate section for point appearance -->
-      <div class="filter-section collapsible" v-if="currentView === 'map'">
-        <button
-          class="collapse-toggle"
-          @click="showPointStyle = !showPointStyle"
-          :class="{ expanded: showPointStyle }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Point Style
-        </button>
-
-        <div v-show="showPointStyle" class="collapse-content">
-          <!-- Point Size -->
-          <div class="setting-row">
-            <label>Point Size</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="4"
-                max="20"
-                step="1"
-                v-model.number="store.mapStyle.pointSize"
-              />
-              <input
-                type="number"
-                class="setting-input"
-                min="2"
-                max="30"
-                v-model.number.lazy="store.mapStyle.pointSize"
-                @keydown.enter="$event.target.blur()"
-              />
-            </div>
-          </div>
-
-          <!-- Border Width -->
-          <div class="setting-row">
-            <label>Border Width</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0"
-                max="5"
-                step="0.5"
-                v-model.number="store.mapStyle.borderWidth"
-              />
-              <input
-                type="number"
-                class="setting-input"
-                min="0"
-                max="10"
-                step="0.5"
-                v-model.number.lazy="store.mapStyle.borderWidth"
-                @keydown.enter="$event.target.blur()"
-              />
-            </div>
-          </div>
-
-          <!-- Fill Opacity -->
-          <div class="setting-row">
-            <label>Fill Opacity</label>
-            <div class="slider-group">
-              <input
-                type="range"
-                min="0.1"
-                max="1"
-                step="0.05"
-                v-model.number="store.mapStyle.fillOpacity"
-              />
-              <span class="slider-value">{{ Math.round(store.mapStyle.fillOpacity * 100) }}%</span>
-            </div>
-          </div>
-
-          <!-- Border Color -->
-          <div class="setting-row">
-            <label>Border Color</label>
-            <div class="color-picker-row">
-              <input
-                type="color"
-                v-model="store.mapStyle.borderColor"
-                class="color-picker"
-              />
-              <input
-                type="text"
-                class="setting-input color-input"
-                v-model="store.mapStyle.borderColor"
-                @keydown.enter="$event.target.blur()"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->
+      <SidebarMapSettings v-if="currentView === 'map'" />
 
       <!-- URL Share Settings -->
       <div class="filter-section collapsible">
@@ -1301,34 +911,6 @@ const updateExportHeight = (value) => {
   font-weight: 500;
 }
 
-/* Scatter toggle specific styles */
-.scatter-toggle {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.scatter-toggle:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-/* Search Input */
-.search-input {
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
 /* CAMID Autocomplete */
 .camid-autocomplete {
   position: relative;
@@ -1400,10 +982,6 @@ const updateExportHeight = (value) => {
 .camid-suggestion.selected {
   color: var(--color-accent, #4ade80);
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
-}
-
-.search-input::placeholder {
-  color: var(--color-text-muted, #666);
 }
 
 /* Collapsible Sections */
@@ -1512,161 +1090,11 @@ const updateExportHeight = (value) => {
   border-radius: 6px;
 }
 
-/* Toggle Badge Inline (used in section headers) */
-.toggle-badge-inline {
-  margin-left: auto;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: rgba(107, 114, 128, 0.2);
-  color: #888;
-  border: 1px solid transparent;
-}
-
-.toggle-badge-inline:hover {
-  background: rgba(107, 114, 128, 0.3);
-  border-color: rgba(107, 114, 128, 0.4);
-}
-
-.toggle-badge-inline.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  border-color: rgba(74, 222, 128, 0.3);
-}
-
-.toggle-badge-inline.active:hover {
-  background: rgba(74, 222, 128, 0.25);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
 .filter-hint {
   font-size: 0.7rem;
   color: var(--color-text-muted, #666);
   font-style: italic;
   margin-top: 8px;
-}
-
-/* Visual Selector Button */
-.btn-visual-selector {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 12px;
-  margin-top: 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px dashed rgba(74, 222, 128, 0.3);
-  border-radius: 6px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-visual-selector:hover {
-  background: rgba(74, 222, 128, 0.15);
-  border-style: solid;
-}
-
-.btn-visual-selector svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Clear Selection Button */
-.btn-clear-selection {
-  width: 100%;
-  padding: 6px 12px;
-  margin-top: 8px;
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-clear-selection:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-/* Selected Tags (for multi-select filters) */
-.selected-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
-.selected-tag {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 4px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.selected-tag:hover {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-.selected-tag svg {
-  width: 12px;
-  height: 12px;
-}
-
-/* Status Grid */
-.status-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.status-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 2px solid transparent;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.status-btn:hover {
-  background: #353558;
-}
-
-.status-btn.active {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.status-label {
-  font-size: 0.8rem;
-  color: var(--color-text-primary, #e0e0e0);
 }
 
 /* Footer */
@@ -1763,46 +1191,6 @@ const updateExportHeight = (value) => {
 .toast-leave-to {
   opacity: 0;
   transform: translateX(-50%) translateY(10px);
-}
-
-/* Clustering Toggle Badge */
-.clustering-toggle-badge {
-  margin-left: auto;
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: rgba(107, 114, 128, 0.2);
-  color: #888;
-  border: 1px solid transparent;
-}
-
-.clustering-toggle-badge:hover {
-  background: rgba(107, 114, 128, 0.3);
-  border-color: rgba(107, 114, 128, 0.4);
-}
-
-.clustering-toggle-badge.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  border-color: rgba(74, 222, 128, 0.3);
-}
-
-.clustering-toggle-badge.active:hover {
-  background: rgba(74, 222, 128, 0.25);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
-/* Cluster Settings */
-.cluster-settings {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 6px;
 }
 
 .setting-row {
@@ -1921,39 +1309,6 @@ const updateExportHeight = (value) => {
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
-/* Color Picker */
-.color-picker-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.color-picker {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  cursor: pointer;
-  background: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 4px;
-  border: none;
-}
-
-.color-input {
-  flex: 1;
-  width: auto;
-  font-family: monospace;
-  text-transform: uppercase;
-}
-
 /* Export Settings */
 .dimension-inputs {
   display: flex;
@@ -1979,21 +1334,6 @@ const updateExportHeight = (value) => {
 .dimension-x {
   color: var(--color-text-muted, #666);
   font-size: 0.9rem;
-}
-
-.export-dimensions-preview {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 4px;
-  text-align: center;
-}
-
-.dimension-text {
-  font-size: 0.8rem;
-  color: var(--color-accent, #4ade80);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
 }
 
 /* Checkbox Group */
