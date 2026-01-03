@@ -1,164 +1,163 @@
 # Ithomiini Maps - Comprehensive Coding Plan
 
-## Overview
+## Completed Features
 
-This document outlines the implementation plan for all requested features based on extensive research. Each section provides multiple options where applicable, allowing you to choose the best approach.
+### 1. Legend Filtering (Show Only Selected Species) ✅ IMPLEMENTED
 
----
+**Status:** Completed
 
-## 1. Legend Filtering (Show Only Selected Species)
+The legend now shows ONLY the values present in the currently displayed data on the map, not all possible values from the dataset.
 
-### Problem
-Currently, the legend shows ALL unique values from the dataset, not just the filtered/selected items. When you select 5 species, the legend should only show those 5 species.
-
-### Root Cause
-In `src/stores/data.js`, the `activeColorMap` computed property generates colors based on `uniqueSubspecies.value` (or similar), which derives from the cascading filter subset, but still includes ALL matching values - not just what's visible on the map.
-
-### Solution
-Modify `activeColorMap` to derive colors from the actual **displayed data** (`displayGeoJSON`), not from the filter options.
-
-### Implementation
-
-**File:** `src/stores/data.js`
-
-```javascript
-// NEW computed property for legend color map
-const legendColorMap = computed(() => {
-  const geo = displayGeoJSON.value
-  if (!geo || !geo.features) return {}
-
-  const mode = colorBy.value
-  const attr = colorByAttribute.value
-
-  // Get unique values from DISPLAYED data only
-  const uniqueValues = [...new Set(
-    geo.features
-      .map(f => f.properties[attr])
-      .filter(v => v && v !== 'Unknown' && v !== 'NA')
-  )].sort()
-
-  // Use predefined palettes for status and source
-  if (mode === 'status') {
-    const filtered = {}
-    for (const val of uniqueValues) {
-      if (STATUS_COLORS[val]) filtered[val] = STATUS_COLORS[val]
-    }
-    return filtered
-  }
-
-  if (mode === 'source') {
-    const filtered = {}
-    for (const val of uniqueValues) {
-      if (SOURCE_COLORS[val]) filtered[val] = SOURCE_COLORS[val]
-    }
-    return filtered
-  }
-
-  // Generate dynamic palette for displayed values only
-  return generateColorPalette(uniqueValues)
-})
-```
-
-**Effort:** Low (2-4 hours)
-**Risk:** Low
+**Changes made:**
+- `src/stores/data.js`: Modified `activeColorMap` computed property to derive colors from `displayGeoJSON` (visible data) instead of all filter options.
 
 ---
 
-## 2. Country Boundaries on Satellite Map
+### 2. Sex/Gender Filter ✅ IMPLEMENTED
 
-### Problem
-The satellite map view only shows raster imagery without country boundaries.
+**Status:** Completed
 
-### Options
+Added sex filtering capability with male/female counts displayed in the Location Summary popup.
 
-#### Option A: Add Vector Boundary Overlay Layer (Recommended)
-Add a GeoJSON or vector tile layer with country boundaries that displays on top of any base map.
+**Changes made:**
+- `scripts/process_data.py`:
+  - Added `normalize_sex()` function to standardize sex values
+  - Extract sex from Sanger data (if Sex column exists)
+  - Extract sex from GBIF data (Darwin Core `sex` field)
+  - Added sex field to output JSON
+  - Added sex statistics to output
 
-**Data Sources:**
-1. **Natural Earth** (1:10m scale) - Free, public domain
-   - GitHub: [martynafford/natural-earth-geojson](https://github.com/martynafford/natural-earth-geojson)
-   - Direct download: ~2MB GeoJSON
+- `scripts/gbif_download_api.py`:
+  - Extract `sex` field from Darwin Core occurrence records
 
-2. **geoBoundaries** - CC-BY 4.0 license
-   - Download from: [mapscaping.com/country-boundary-viewer](https://mapscaping.com/country-boundary-viewer/)
+- `src/stores/data.js`:
+  - Added `sex` filter (values: 'all', 'male', 'female')
+  - Added sex filtering logic
+  - Added URL sync for sex filter
+  - Updated `resetAllFilters` to include sex
 
-3. **OpenMapTiles** - Bundled with vector styles
+- `src/components/Sidebar.vue`:
+  - Added Sex filter dropdown with options: All, Male only, Female only
+  - Styled to match existing filters
 
-**Implementation:**
-```javascript
-// In useMapEngine.js - add after satellite layer
-const addBoundariesLayer = (map) => {
-  map.addSource('country-boundaries', {
-    type: 'geojson',
-    data: '/data/countries.geojson'  // ~500KB simplified
-  })
-
-  map.addLayer({
-    id: 'country-boundaries-line',
-    type: 'line',
-    source: 'country-boundaries',
-    paint: {
-      'line-color': 'rgba(255, 255, 255, 0.5)',
-      'line-width': 1
-    }
-  })
-}
-```
-
-**Effort:** Low-Medium (4-6 hours)
-**Pros:** Simple, no API keys, works offline
-**Cons:** Need to bundle GeoJSON file (~500KB-2MB)
-
-#### Option B: Use MapTiler Satellite with Boundaries
-Switch satellite provider to one that includes boundaries.
-
-**Effort:** Low (2 hours)
-**Cons:** Requires API key, usage limits
-
-### Recommendation
-**Option A** - Bundle simplified Natural Earth GeoJSON. One-time 500KB addition, no API dependencies.
+- `src/components/PointPopup.vue`:
+  - Added sex counts (male/female/unknown) to Location Summary
+  - Shows ♂ and ♀ symbols with counts
 
 ---
 
-## 3. Map Layer Providers (Dropdown with Day/Night Themes)
+### 3. Database Update Feature ✅ IMPLEMENTED
 
-### Current State
-5 button-style providers: Dark, Light, Satellite, Terrain, Streets
+**Status:** Completed - Requires user setup of Cloudflare Worker
 
-### Proposed Architecture
+Added a database update section in the sidebar with options to update Sanger data, GBIF data, or both.
 
-#### Provider List (Sorted by Recommendation)
+**Changes made:**
+- `.github/workflows/update_data.yml`:
+  - Added workflow inputs for `update_sanger` and `update_gbif`
+  - GBIF update step only runs when requested
+  - 30-minute timeout for GBIF downloads
 
-| Provider | Style | Day/Night | Free Tier | API Key Required |
-|----------|-------|-----------|-----------|------------------|
-| **Stadia Maps** | Alidade Smooth | Both | 2,500 credits/mo | Yes (free) |
-| **Stadia Maps** | Alidade Smooth Dark | Night only | Included | Yes |
-| **Stadia Maps** | Stamen Terrain | Day | Included | Yes |
-| **MapTiler** | Streets | Both | 100k loads/mo | Yes (free) |
-| **MapTiler** | Satellite | Day | Included | Yes |
-| **CartoDB** | Positron | Day | Unlimited | No |
-| **CartoDB** | Dark Matter | Night | Unlimited | No |
-| **OpenStreetMap** | Standard | Day | Unlimited* | No |
-| **OpenTopoMap** | Topo | Day | Unlimited* | No |
-| **Esri** | World Imagery | Satellite | Unlimited* | No |
+- `src/components/Sidebar.vue`:
+  - Added "Update Database" collapsible section
+  - Checkboxes for Sanger (default) and GBIF sources
+  - Password input field (password: "Hyalyris")
+  - Status messages (loading, success, error)
 
-*Subject to fair use policies
+- `scripts/cloudflare-worker.js`:
+  - Cloudflare Worker script for secure API triggering
 
-### Google Maps Analysis
+#### User Setup Required
 
-**Terms of Use Issues:**
-- After March 1, 2025: Only 10,000 free loads/month for Maps JavaScript API
-- **Attribution requirement:** Must display Google logo/attribution
-- **Restriction:** Cannot use for static exports or screenshots without permission
-- **Restriction:** Cannot overlay on non-Google base maps
+To enable the database update feature, you need to set up a Cloudflare Worker:
 
-**Recommendation:** **DO NOT use Google Maps** due to:
-1. Limited free tier (10,000 loads vs unlimited CartoDB)
-2. Complex terms of service
-3. Attribution requirements conflict with export feature
-4. Better free alternatives available
+**Step 1: Create a GitHub Personal Access Token**
+1. Go to https://github.com/settings/tokens?type=beta
+2. Click "Generate new token" (Fine-grained tokens)
+3. Settings:
+   - Name: "Ithomiini DB Updater"
+   - Expiration: 1 year (or your preference)
+   - Repository access: Only select repositories → "ithomiini_maps"
+   - Permissions: Actions (Read and write)
+4. Generate and copy the token
 
-### UI Design: Dropdown with Grouped Categories
+**Step 2: Create Cloudflare Worker**
+1. Go to https://dash.cloudflare.com/
+2. Sign up or log in (free tier is fine)
+3. Go to "Workers & Pages" → "Create Application" → "Create Worker"
+4. Name it: `ithomiini-db-updater`
+5. Deploy (empty worker first)
+6. Click "Edit Code" and paste contents from `scripts/cloudflare-worker.js`
+7. Save and deploy
+
+**Step 3: Set Worker Environment Variables**
+1. In the Worker, go to "Settings" → "Variables"
+2. Add these variables:
+   - `UPDATE_PASSWORD`: `Hyalyris`
+   - `GITHUB_TOKEN`: (your token from Step 1)
+   - `GITHUB_OWNER`: `Fr4nzz`
+   - `GITHUB_REPO`: `ithomiini_maps`
+3. Click "Save"
+
+**Step 4: Update Frontend URL**
+1. Copy your Worker URL (e.g., `https://ithomiini-db-updater.your-account.workers.dev/`)
+2. Update `src/components/Sidebar.vue` line ~98 with your Worker URL
+
+---
+
+## Planned Features (Not Yet Implemented)
+
+### 4. Country Boundaries on Satellite Map
+
+**Options:**
+
+#### Option A: Bundle GeoJSON (Recommended)
+Download Natural Earth boundaries and add as overlay:
+- Source: https://github.com/martynafford/natural-earth-geojson
+- Layers available: countries, states, coastlines, etc.
+- Size: ~500KB-2MB depending on detail level
+
+#### Option B: Use MapTiler/Stadia with built-in boundaries
+Some providers include boundary layers.
+
+**Proposed UI:**
+- Add a dropdown in sidebar to choose which layers to render
+- Options: Countries, States/Provinces, Coastlines, etc.
+- Checkbox to toggle boundary visibility
+
+---
+
+### 5. Map Layer Providers (Dropdown with Day/Night Themes)
+
+#### Provider Research Summary
+
+**Stadia Maps:**
+- Website: https://stadiamaps.com/
+- Free tier: 2,500 credits/month (no credit card required)
+- **Rate limiting:** Per session, not per tile request
+- API key: Sign up at https://client.stadiamaps.com/signup/
+- **Day themes:** Alidade Smooth, Stamen Terrain
+- **Night themes:** Alidade Smooth Dark
+
+**MapTiler:**
+- Website: https://www.maptiler.com/
+- Free tier: 100,000 map loads/month
+- **Rate limiting:** Per session (one page load = one session)
+- API key: Sign up at https://cloud.maptiler.com/
+- Supports day/night themes
+
+**No API Key Required:**
+- CartoDB (Positron/Dark Matter) - Unlimited
+- OpenStreetMap - Fair use
+- Esri World Imagery - Fair use
+- OpenTopoMap - Fair use
+
+**Google Maps:** NOT RECOMMENDED
+- Only 10,000 free loads/month after March 2025
+- Complex terms of service
+- Attribution requirements conflict with export
+
+#### Proposed UI Design
 
 ```
 ┌─────────────────────────────────┐
@@ -167,446 +166,158 @@ Switch satellite provider to one that includes boundaries.
 │ ☀️ DAY THEMES                   │
 │   ○ Light (CartoDB)             │
 │   ○ Streets (MapTiler)          │
-│   ○ Terrain (OpenTopoMap)       │
+│   ○ Terrain (Stadia)            │
 │   ○ Satellite (Esri)            │
 ├─────────────────────────────────┤
 │ 🌙 NIGHT THEMES                 │
 │   ● Dark (CartoDB) ✓            │
 │   ○ Smooth Dark (Stadia)        │
-├─────────────────────────────────┤
-│ [ Toggle: Auto Day/Night 🌓 ]   │
 └─────────────────────────────────┘
 ```
 
-### Implementation
-
-**File:** `src/composables/useMapEngine.js`
-
-```javascript
-export const MAP_STYLES = {
-  // Day themes
-  light: {
-    name: 'Light',
-    category: 'day',
-    provider: 'CartoDB',
-    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-    thumbnail: '/thumbnails/light.png'
-  },
-  streets: {
-    name: 'Streets',
-    category: 'day',
-    provider: 'MapTiler',
-    style: 'https://api.maptiler.com/maps/streets/style.json?key=${MAPTILER_KEY}',
-    requiresKey: true
-  },
-  terrain: {
-    name: 'Terrain',
-    category: 'day',
-    provider: 'OpenTopoMap',
-    style: { /* raster config */ }
-  },
-  satellite: {
-    name: 'Satellite',
-    category: 'day',
-    provider: 'Esri',
-    style: { /* raster config */ },
-    needsBoundaries: true  // Flag to add boundary overlay
-  },
-
-  // Night themes
-  dark: {
-    name: 'Dark',
-    category: 'night',
-    provider: 'CartoDB',
-    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
-  },
-  'smooth-dark': {
-    name: 'Smooth Dark',
-    category: 'night',
-    provider: 'Stadia',
-    style: 'https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json'
-  }
-}
-```
-
-**New component:** `src/components/MapStyleDropdown.vue`
-
-**Effort:** Medium (8-12 hours)
-**Risk:** Low
+**Optional:** Auto day/night toggle button (uses local time)
 
 ---
 
-## 4. Vector Export (SVG/PDF)
+### 6. Vector Export (SVG/PDF)
 
-### Research Findings
+#### Research Findings
 
-**Current Limitation:** MapLibre GL JS renders using WebGL to a canvas element. True vector export is NOT natively supported.
+**MapLibre SVG Export Status:**
+- MapLibre renders to WebGL canvas (raster)
+- Existing plugin `@watergis/maplibre-gl-export` creates PDF/SVG but with **raster images embedded**, NOT true vectors
+- True vector export is NOT natively supported
 
-**Existing Plugin:** [@watergis/maplibre-gl-export](https://www.npmjs.com/package/@watergis/maplibre-gl-export)
-- Exports to PNG, JPEG, PDF, SVG
-- **BUT:** SVG/PDF outputs are **raster images embedded in vector containers** - NOT true vectors!
-- Open issue requesting true vector export: [#332](https://github.com/watergis/maplibre-gl-export/issues/332)
+#### Recommended Approach
 
-### Options
+**Option A: Enhanced GeoJSON Export + R Documentation**
 
-#### Option A: Enhanced GeoJSON Export (Recommended for R Users)
-The current GeoJSON export can be easily used in R for creating publication-quality vector maps.
+Create a downloadable ZIP containing:
+1. `data.geojson` - Filtered point data
+2. `basemap_bounds.json` - Map view bounds
+3. `legend.json` - Legend configuration
+4. `load_map.R` - R script to recreate the exact view
 
-**R Workflow:**
+**R Script Example:**
 ```r
 library(sf)
 library(ggplot2)
+library(rnaturalearth)
 
-# Load exported GeoJSON
-data <- st_read("ithomiini_data.geojson")
+# Load exported data
+points <- st_read("data.geojson")
+config <- jsonlite::fromJSON("basemap_bounds.json")
 
-# Create map
-ggplot(data) +
-  geom_sf(aes(color = subspecies)) +
-  theme_minimal() +
-  coord_sf()
+# Get base map
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# Recreate map view
+ggplot() +
+  geom_sf(data = world, fill = "#1a1a2e", color = "#3d3d5c") +
+  geom_sf(data = points, aes(color = subspecies), size = 2) +
+  coord_sf(xlim = config$bounds[c(1,3)], ylim = config$bounds[c(2,4)]) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#1a1a2e"),
+    legend.position = "bottom"
+  )
 
 # Save as vector
 ggsave("map.svg", width = 10, height = 8)
 ggsave("map.pdf", width = 10, height = 8)
 ```
 
-**Enhancement:** Add export options for:
-- Include base map bounds (for adding background in R)
-- Include legend data as separate JSON
-- Simplified coordinates option
+**Option B: Add maplibre-gl-export Plugin**
 
-**Effort:** Low (2-4 hours)
-**Pros:** Works today, true vectors, full R customization
-**Cons:** Requires R knowledge
-
-#### Option B: Implement maplibre-gl-export Plugin
-Add PNG/JPEG/PDF export with embedded raster.
-
+Improves current PNG export accuracy:
 ```bash
 npm install @watergis/maplibre-gl-export
 ```
 
-**Effort:** Medium (4-6 hours)
-**Pros:** One-click export from UI
-**Cons:** NOT true vectors - raster image in PDF/SVG container
+---
 
-#### Option C: Server-Side Vector Rendering (Complex)
-Use a headless browser or custom renderer to generate true vectors.
+### 7. Clustering Numbers Bug
 
-**Technologies:**
-- Puppeteer with SVG renderer
-- MapLibre Native (C++)
-- Custom GeoJSON-to-SVG conversion
+**Issue Clarified by User:**
+The cluster count shows the number of **rendered points** (one per subspecies), not the number of **individuals**. This is expected behavior but can be confusing.
 
-**Effort:** High (40+ hours)
-**Pros:** True vector output
-**Cons:** Complex, may require backend infrastructure
+**Proposed Solution:**
+Add an option in Map Settings to choose what clusters count:
+- Number of species
+- Number of subspecies (current default)
+- Number of individuals
 
-### Recommendation
+The cluster radius circle shows the minimum area covering all clustered points.
 
-**Implement both A and B:**
-1. **Option A:** Enhance GeoJSON export with R-friendly options (immediate value for Joana)
-2. **Option B:** Add maplibre-gl-export for quick raster exports
-
-Provide documentation showing R workflow for publication-quality figures.
+**Implementation:**
+Modify cluster generation in `useMapEngine.js` to aggregate based on selected mode.
 
 ---
 
-## 5. Database Update Feature
+## API Key Instructions
 
-### Research: Wings Gallery Implementation
+### Stadia Maps
+1. Go to https://client.stadiamaps.com/signup/
+2. Create account (no credit card required)
+3. Create a "Property" for your website
+4. Generate API key
+5. Add to `.env`: `VITE_STADIA_KEY=your_key`
 
-The Shiny Wings Gallery uses:
-1. **Google Sheets** as data source
-2. **Cloudflare Worker** as secure proxy (hides GitHub token)
-3. **GitHub Actions** workflow triggered via API
-4. Password-protected update button in UI
+**Rate Limits:**
+- 2,500 free credits/month
+- One map session = one credit (includes all zoom/pan)
+- Local development (localhost) doesn't need API key
 
-### GitHub Actions Limits
+### MapTiler
+1. Go to https://cloud.maptiler.com/
+2. Create account
+3. Copy API key from dashboard
+4. Add to `.env`: `VITE_MAPTILER_KEY=your_key`
 
-| Tier | Minutes/Month | Notes |
-|------|---------------|-------|
-| Free (Public repos) | Unlimited | ✅ Ithomiini Maps is public |
-| Free (Private repos) | 2,000 | Not applicable |
-
-**Your GBIF script takes ~15 minutes** - well within limits for public repos.
-
-### Proposed Architecture
-
-```
-┌──────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│ Update UI    │───▶│ Cloudflare Worker │───▶│ GitHub Actions  │
-│ (Password)   │    │ (Token secured)   │    │ (Process Data)  │
-└──────────────┘    └──────────────────┘    └─────────────────┘
-                                                     │
-                           ┌─────────────────────────┘
-                           ▼
-                    ┌─────────────────┐
-                    │ GitHub Pages    │
-                    │ (Auto Deploy)   │
-                    └─────────────────┘
-```
-
-### Implementation Options
-
-#### Option A: Full Update (Sanger + GBIF)
-- Runs `gbif_download_api.py` (10-15 min) + `process_data.py` (1 min)
-- Total: ~15-20 minutes
-- Frequency: Monthly recommended (GBIF data doesn't change often)
-
-#### Option B: Sanger-Only Update (Fast)
-- Runs `process_data.py` with existing GBIF cache
-- Total: ~1-2 minutes
-- Frequency: Daily/weekly as needed
-
-### UI Design
-
-```
-┌────────────────────────────────────────────────┐
-│ ⚙️ DATABASE UPDATE                              │
-├────────────────────────────────────────────────┤
-│                                                │
-│ Last updated: 2025-01-02 14:30                │
-│ Records: 32,456 | GBIF DOI: 10.15468/dl.abc123│
-│                                                │
-│ ┌────────────────────────────────────────┐    │
-│ │ 🔑 Password: [________________]         │    │
-│ └────────────────────────────────────────┘    │
-│                                                │
-│ Update Options:                               │
-│ ○ Sanger Institute only (~2 min)             │
-│ ● Full update: Sanger + GBIF (~15 min)       │
-│                                                │
-│ [ 🚀 Start Update ]                           │
-│                                                │
-│ ℹ️ GBIF updates fetch fresh iNaturalist and   │
-│   museum records. Run monthly for best data.  │
-└────────────────────────────────────────────────┘
-```
-
-### Files to Create
-
-1. **`.github/workflows/update_data.yml`** - GitHub Action
-2. **`src/components/UpdateTab.vue`** - UI component
-3. **Cloudflare Worker** - Secure proxy (optional, can use GitHub API directly with public workflow)
-
-**Effort:** Medium-High (12-20 hours)
-**Risk:** Low (follows proven Wings Gallery pattern)
+**Rate Limits:**
+- 100,000 map loads/month
+- One page load = one session (all interactions free)
+- Third-party SDK usage counted per tile request
 
 ---
 
-## 6. Sex/Gender Filter
+## GitHub Actions Information
 
-### Research Findings
+**Free Tier Limits:**
+- Public repositories: **Unlimited minutes**
+- Private repositories: 2,000 minutes/month
 
-#### Current Data Schema
-The output `map_points.json` does **NOT** include a sex field.
+Your GBIF update script (~15 minutes) works fine for public repos.
 
-#### Source Data Analysis
-
-| Source | Sex Data Available? | Notes |
-|--------|---------------------|-------|
-| **Dore et al.** | ❌ No | Has M.mimicry/F.mimicry (species-level, not individual) |
-| **Sanger Google Sheets** | ⚠️ Unknown | Need to check if column exists |
-| **GBIF** | ✅ Yes | Darwin Core `sex` field: "male", "female", "hermaphrodite" |
-
-#### GBIF Sex Field
-The Darwin Core standard includes `sex` in occurrence records. The GBIF download script (`gbif_download_api.py`) currently does NOT extract this field, but it CAN be added.
-
-### Implementation Plan
-
-#### Step 1: Check Sanger Data
-First verify if the Sanger Google Sheet has a "Sex" column.
-
-#### Step 2: Modify GBIF Download Script
-
-**File:** `scripts/gbif_download_api.py`
-
-```python
-# In process_occurrence_file(), add to record dict:
-record = {
-    # ... existing fields ...
-    'sex': row.get('sex'),  # Darwin Core sex field
-}
-```
-
-#### Step 3: Modify Data Processing
-
-**File:** `scripts/process_data.py`
-
-```python
-# Add sex field to output schema
-result = df[[
-    'id', 'scientific_name', ...,
-    'sex',  # New field
-]].copy()
-```
-
-#### Step 4: Add Frontend Filter
-
-**File:** `src/stores/data.js`
-
-```javascript
-// Add to filters
-const filters = ref({
-  // ... existing filters ...
-  sex: [],  // ['male', 'female', 'unknown']
-})
-
-// Add unique values
-const uniqueSexes = computed(() => {
-  const set = new Set(
-    allFeatures.value
-      .map(i => i.sex)
-      .filter(v => v && v.toLowerCase() !== 'unknown')
-  )
-  return Array.from(set).sort()
-})
-```
-
-#### Step 5: Update Location Summary
-
-**File:** `src/components/PointPopup.vue`
-
-```vue
-<div class="location-stats">
-  <span>{{ totalIndividuals }} individuals</span>
-  <span v-if="maleCount > 0">♂ {{ maleCount }}</span>
-  <span v-if="femaleCount > 0">♀ {{ femaleCount }}</span>
-</div>
-```
-
-### Important Note
-Sex data availability varies by source:
-- **GBIF/iNaturalist:** Many records have sex data
-- **Sanger:** Depends on collection practices
-- **Dore:** Likely no individual sex data
-
-The filter should handle records with unknown/missing sex gracefully.
-
-**Effort:** Medium (8-12 hours)
-**Risk:** Medium (data availability varies)
+**Workflow Timeout:**
+Set to 30 minutes to accommodate GBIF downloads.
 
 ---
 
-## 7. Clustering Numbers Bug
+## Implementation Priority
 
-### Problem
-The number on a cluster (e.g., "15") doesn't match the popup content (e.g., "26 individuals").
+### Phase 1: Completed ✅
+- [x] Legend filtering
+- [x] Sex filter
+- [x] Database update feature
 
-### Root Cause
-Found in `src/composables/useMapEngine.js` lines 577-615:
+### Phase 2: Next Steps
+- [ ] Country boundaries layer with dropdown
+- [ ] Map layer dropdown with grouped day/night themes
+- [ ] Clustering count options (species/subspecies/individuals)
 
-1. **Cluster number** = `point_count` (actual clustered features)
-2. **Popup query** = searches ALL points within a calculated radius
-
-The radius calculation is too generous:
-```javascript
-const radiusKm = Math.max(20, clusterRadiusPx * kmPerPixel * 2)  // ← Too large
-```
-
-### Fix
-
-```javascript
-// Replace the cluster click handler with this:
-map.value.on('click', 'clusters', async (e) => {
-  const cluster = e.features[0]
-  const clusterId = cluster.properties.cluster_id
-  const source = map.value.getSource('points-source')
-
-  // Use MapLibre's built-in cluster expansion
-  const leaves = await source.getClusterLeaves(clusterId, 1000, 0)
-
-  const points = leaves.map(f => f.properties)
-
-  if (points.length > 0 && onShowPopup) {
-    onShowPopup({
-      type: 'cluster',
-      coordinates: { lat: cluster.geometry.coordinates[1], lng: cluster.geometry.coordinates[0] },
-      lngLat: cluster.geometry.coordinates,
-      points: points
-    })
-  }
-})
-```
-
-**Effort:** Low (2-3 hours)
-**Risk:** Low
-
----
-
-## Implementation Priority & Timeline
-
-### Phase 1: Quick Wins (Week 1)
-| Task | Effort | Impact |
-|------|--------|--------|
-| 1. Legend filtering | 4h | High |
-| 7. Clustering bug fix | 3h | High |
-| 4A. Enhanced GeoJSON export | 4h | Medium |
-
-### Phase 2: Map Improvements (Week 2)
-| Task | Effort | Impact |
-|------|--------|--------|
-| 2. Country boundaries | 6h | Medium |
-| 3. Map layer dropdown | 12h | Medium |
-
-### Phase 3: Data Features (Week 3-4)
-| Task | Effort | Impact |
-|------|--------|--------|
-| 5. Database update feature | 20h | High |
-| 6. Sex filter | 12h | Medium |
-| 4B. maplibre-gl-export | 6h | Medium |
-
----
-
-## Questions for Your Decision
-
-### 1. Map Layers
-- **Include Stadia Maps?** (requires free API key signup)
-- **Include MapTiler?** (requires free API key signup)
-- Or **stick with no-API-key providers only?** (CartoDB, OSM, Esri, OpenTopoMap)
-
-### 2. Vector Export
-- **Option A only** (Enhanced GeoJSON + R documentation)?
-- **Option A + B** (Also add raster PDF/PNG export plugin)?
-- **Option C** (Full vector rendering - significant effort)?
-
-### 3. Database Update
-- **Both options** (Sanger-only + Full update)?
-- **Full update only** (simpler UI)?
-
-### 4. Sex Filter
-- **Proceed with adding sex field to GBIF data?**
-- **First check if Sanger sheet has sex column?**
-
-### 5. Country Boundaries
-- **Bundle GeoJSON file** (~500KB)?
-- **Or use MapTiler/Stadia satellite with built-in boundaries?**
+### Phase 3: Future
+- [ ] Enhanced GeoJSON export with R scripts
+- [ ] maplibre-gl-export plugin for improved PNG export
+- [ ] API key integration for Stadia/MapTiler
 
 ---
 
 ## Sources & References
 
-### Map Providers
-- [Stadia Maps Pricing](https://stadiamaps.com/pricing) - 2,500 free credits/month
-- [MapTiler Pricing](https://www.maptiler.com/cloud/pricing/) - 100k loads/month
-- [CartoDB Basemaps](https://carto.com/basemaps/) - Unlimited free
-
-### Country Boundaries
-- [Natural Earth Data](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/)
-- [geoBoundaries Viewer](https://mapscaping.com/country-boundary-viewer/)
-
-### Vector Export
+- [Stadia Maps Docs](https://docs.stadiamaps.com/)
+- [MapTiler Docs](https://docs.maptiler.com/)
+- [Natural Earth Data](https://www.naturalearthdata.com/)
 - [maplibre-gl-export](https://maplibre-gl-export.water-gis.com/)
-- [Feature request for true vectors](https://github.com/watergis/maplibre-gl-export/issues/332)
-
-### GitHub Actions
-- [GitHub Actions Billing](https://docs.github.com/billing/managing-billing-for-github-actions/about-billing-for-github-actions)
-
-### Darwin Core
-- [Darwin Core Terms](https://dwc.tdwg.org/terms/) - Sex field specification
-
-### Google Maps (Not Recommended)
-- [Maps JavaScript API Billing](https://developers.google.com/maps/documentation/javascript/usage-and-billing)
-- After March 2025: 10,000 free loads/month only
+- [GitHub Actions Billing](https://docs.github.com/billing/managing-billing-for-github-actions)
+- [Darwin Core Sex Term](https://dwc.tdwg.org/terms/#dwc:sex)

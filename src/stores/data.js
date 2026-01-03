@@ -100,6 +100,7 @@ export const useDataStore = defineStore('data', () => {
     mimicry: [],        // Array for multi-select mimicry rings
     status: [],
     source: ['Sanger Institute'],  // Multi-select array, default to Sanger
+    sex: 'all',         // Sex filter: 'all', 'male', 'female'
     country: 'All',     // Country filter
     // Search
     camidSearch: '',
@@ -341,6 +342,9 @@ export const useDataStore = defineStore('data', () => {
     if (params.get('country')) {
       filters.value.country = params.get('country')
     }
+    if (params.get('sex')) {
+      filters.value.sex = params.get('sex')
+    }
     if (params.get('cam')) {
       filters.value.camidSearch = params.get('cam')
     }
@@ -363,6 +367,7 @@ export const useDataStore = defineStore('data', () => {
       mimicry: [],
       status: [],
       source: ['Sanger Institute'],  // Default to Sanger
+      sex: 'all',
       country: 'All',
       camidSearch: '',
       dateStart: null,
@@ -635,7 +640,12 @@ export const useDataStore = defineStore('data', () => {
       if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false
       // Country filter
       if (filters.value.country !== 'All' && item.country !== filters.value.country) return false
-      
+      // Sex filter
+      if (filters.value.sex !== 'all') {
+        if (filters.value.sex === 'male' && item.sex !== 'male') return false
+        if (filters.value.sex === 'female' && item.sex !== 'female') return false
+      }
+
       // Date filtering
       if (filters.value.dateStart || filters.value.dateEnd) {
         const itemDateStr = item.observation_date || item.date || item.preservation_date
@@ -995,42 +1005,48 @@ export const useDataStore = defineStore('data', () => {
   }
 
   // Get the color map based on current colorBy setting
+  // This now derives colors from DISPLAYED data only (for accurate legend)
   const activeColorMap = computed(() => {
     const mode = colorBy.value
+    const attr = colorByAttribute.value
+    const geo = displayGeoJSON.value
 
     // Check for custom colors first
     if (customColors.value[mode]) {
       return customColors.value[mode]
     }
 
-    // Use predefined palettes for status and source
+    // Get unique values from DISPLAYED data only
+    const displayedValues = geo?.features
+      ? [...new Set(
+          geo.features
+            .map(f => f.properties[attr])
+            .filter(v => v && v !== 'Unknown' && v !== 'NA' && v !== 'null')
+        )].sort()
+      : []
+
+    // Use predefined palettes for status and source (filtered to displayed values)
     if (mode === 'status') {
-      return COLOR_PALETTES.status
+      const filtered = {}
+      for (const val of displayedValues) {
+        if (COLOR_PALETTES.status[val]) {
+          filtered[val] = COLOR_PALETTES.status[val]
+        }
+      }
+      return Object.keys(filtered).length > 0 ? filtered : COLOR_PALETTES.status
     }
     if (mode === 'source') {
-      return COLOR_PALETTES.source
+      const filtered = {}
+      for (const val of displayedValues) {
+        if (COLOR_PALETTES.source[val]) {
+          filtered[val] = COLOR_PALETTES.source[val]
+        }
+      }
+      return Object.keys(filtered).length > 0 ? filtered : COLOR_PALETTES.source
     }
 
-    // Generate dynamic palette for taxonomy and mimicry
-    let uniqueValues = []
-    switch (mode) {
-      case 'subspecies':
-        uniqueValues = uniqueSubspecies.value
-        break
-      case 'species':
-        uniqueValues = uniqueSpecies.value
-        break
-      case 'genus':
-        uniqueValues = uniqueGenera.value
-        break
-      case 'mimicry':
-        uniqueValues = uniqueMimicry.value
-        break
-      default:
-        uniqueValues = uniqueStatuses.value
-    }
-
-    return generateColorPalette(uniqueValues)
+    // Generate dynamic palette for taxonomy and mimicry using displayed values
+    return generateColorPalette(displayedValues)
   })
 
   // Get the attribute key for the current colorBy mode
@@ -1082,6 +1098,7 @@ export const useDataStore = defineStore('data', () => {
         params.set('source', newFilters.source.join(','))
       }
       if (newFilters.country !== 'All') params.set('country', newFilters.country)
+      if (newFilters.sex !== 'all') params.set('sex', newFilters.sex)
       if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
       if (newFilters.dateStart) params.set('from', newFilters.dateStart)
       if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)

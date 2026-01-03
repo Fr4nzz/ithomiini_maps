@@ -555,6 +555,7 @@ def process_occurrence_file(occurrence_path, multimedia_lookup=None):
                 'basis_of_record': row.get('basisOfRecord'),
                 'image_url': image_url,
                 'mimicry_ring': 'Unknown',  # Will be filled by process_data.py
+                'sex': row.get('sex'),  # Darwin Core sex field
                 'dataset_name': row.get('datasetName'),
                 'institution_code': row.get('institutionCode'),
             }
