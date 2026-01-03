@@ -151,23 +151,33 @@ Replaced the button-based style switcher with a grouped dropdown menu organized 
 
 ---
 
-## Planned Features (Not Yet Implemented)
+### 6. Clustering Count Options ✅ IMPLEMENTED
 
-### 6. Clustering Count Options
+**Status:** Completed
 
-**Status:** Planned
+Added option in Map Settings to choose what cluster numbers represent.
 
-Add an option in Map Settings to choose what clusters count:
-- Number of species
-- Number of subspecies (current default)
-- Number of individuals
+**Changes made:**
+- `src/stores/data.js`:
+  - Added `countMode` to `clusterSettings` ('species', 'subspecies', 'individuals')
+  - Added `speciesGroups` computed property to group points by species per location
+  - Modified `displayGeoJSON` to aggregate points based on count mode when clustering is enabled
 
-**Implementation Notes:**
-- Requires modifying cluster generation in `useMapEngine.js`
-- Need to aggregate based on selected mode
-- May require custom clustering properties
+- `src/components/SidebarMapSettings.vue`:
+  - Added "Cluster Count Shows" dropdown with three options:
+    - Individuals (records) - total specimen records
+    - Subspecies (unique) - unique subspecies count
+    - Species (unique) - unique species count
+  - Dynamic hint text explaining the current mode
+
+**How it works:**
+- **Individuals mode:** Uses all filtered records (default MapLibre point_count)
+- **Subspecies mode:** Aggregates to one point per subspecies per location
+- **Species mode:** Aggregates to one point per species per location
 
 ---
+
+## Planned Features (Not Yet Implemented)
 
 ### 7. Vector Export (SVG/PDF)
 
@@ -226,24 +236,6 @@ npm install @watergis/maplibre-gl-export
 
 ---
 
-### 7. Clustering Numbers Bug
-
-**Issue Clarified by User:**
-The cluster count shows the number of **rendered points** (one per subspecies), not the number of **individuals**. This is expected behavior but can be confusing.
-
-**Proposed Solution:**
-Add an option in Map Settings to choose what clusters count:
-- Number of species
-- Number of subspecies (current default)
-- Number of individuals
-
-The cluster radius circle shows the minimum area covering all clustered points.
-
-**Implementation:**
-Modify cluster generation in `useMapEngine.js` to aggregate based on selected mode.
-
----
-
 ## API Key Instructions
 
 ### Stadia Maps
@@ -296,8 +288,10 @@ Set to 30 minutes to accommodate GBIF downloads.
 - [x] Map layer dropdown with grouped day/night themes
 - [x] Stadia Maps integration (Smooth Dark theme)
 
-### Phase 3: Next Steps
-- [ ] Clustering count options (species/subspecies/individuals)
+### Phase 3: Completed ✅
+- [x] Clustering count options (species/subspecies/individuals)
+
+### Future Enhancements
 - [ ] Enhanced GeoJSON export with R scripts
 - [ ] maplibre-gl-export plugin for improved PNG export
 

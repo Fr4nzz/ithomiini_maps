@@ -30,6 +30,7 @@ export const useDataStore = defineStore('data', () => {
   const clusteringEnabled = ref(false)
   const clusterSettings = ref({
     radiusPixels: 80,  // Cluster radius in pixels (default 80px)
+    countMode: 'subspecies',  // What clusters count: 'species', 'subspecies', 'individuals'
   })
 
   // Scatter overlapping points settings
@@ -907,56 +908,183 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
-   * The GeoJSON to display - either filtered or with scattered coordinates
-   * When scatter is enabled, only shows one point per subspecies at each location
+   * Group points by species at each coordinate location (for species count mode)
+   * Returns Map: "lat,lng" -> { speciesKey -> { representative, allPoints, species } }
    */
-  const displayGeoJSON = computed(() => {
+  const speciesGroups = computed(() => {
+    const groups = new Map()
     const geo = filteredGeoJSON.value
-    if (!geo || !scatterOverlappingPoints.value) return geo
-
-    const positions = scatteredPositions.value
-    if (positions.size === 0) return geo
-
-    // Filter and update coordinates for scattered points
-    const features = []
-    const seenRepresentatives = new Set()
+    if (!geo || !geo.features) return groups
 
     for (const feature of geo.features) {
-      const pos = positions.get(feature.properties.id)
+      const [lng, lat] = feature.geometry.coordinates
+      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
+      const props = feature.properties
+      const species = props.scientific_name || 'Unknown'
 
-      if (pos) {
-        // This point is in a scatter group
-        if (pos.isRepresentative) {
-          // Show representative points with scattered coordinates
-          features.push({
-            ...feature,
-            geometry: {
-              ...feature.geometry,
-              coordinates: [pos.scatteredLng, pos.scatteredLat]
-            },
-            properties: {
-              ...feature.properties,
-              _originalLat: pos.originalLat,
-              _originalLng: pos.originalLng,
-              _isScattered: true,
-              _subspeciesKey: pos.subspeciesKey,
-              _scatteredSpecies: pos.species,
-              _scatteredSubspecies: pos.subspecies
-            }
-          })
-          seenRepresentatives.add(feature.properties.id)
-        }
-        // Non-representative points are hidden (not added to features)
+      if (!groups.has(coordKey)) {
+        groups.set(coordKey, new Map())
+      }
+
+      const locationGroup = groups.get(coordKey)
+
+      if (!locationGroup.has(species)) {
+        // First point of this species - it becomes the representative
+        locationGroup.set(species, {
+          representative: props,
+          allPoints: [props],
+          species
+        })
       } else {
-        // Point is not in a scatter group (single point or single subspecies at location)
-        features.push(feature)
+        // Add to existing species group
+        const speciesGroup = locationGroup.get(species)
+        speciesGroup.allPoints.push(props)
+        // Prefer representative with photo
+        if (props.image_url && !speciesGroup.representative.image_url) {
+          speciesGroup.representative = props
+        }
       }
     }
 
-    return {
-      type: 'FeatureCollection',
-      features
+    return groups
+  })
+
+  /**
+   * The GeoJSON to display - handles scatter, clustering count modes, and aggregation
+   * When scatter is enabled: shows one point per subspecies at each location with scattered coordinates
+   * When clustering is enabled with species/subspecies count mode: aggregates to one point per taxon per location
+   */
+  const displayGeoJSON = computed(() => {
+    const geo = filteredGeoJSON.value
+    if (!geo) return geo
+
+    // Scatter mode takes priority (includes subspecies aggregation with visual scatter)
+    if (scatterOverlappingPoints.value) {
+      const positions = scatteredPositions.value
+      if (positions.size === 0) return geo
+
+      // Filter and update coordinates for scattered points
+      const features = []
+      const seenRepresentatives = new Set()
+
+      for (const feature of geo.features) {
+        const pos = positions.get(feature.properties.id)
+
+        if (pos) {
+          // This point is in a scatter group
+          if (pos.isRepresentative) {
+            // Show representative points with scattered coordinates
+            features.push({
+              ...feature,
+              geometry: {
+                ...feature.geometry,
+                coordinates: [pos.scatteredLng, pos.scatteredLat]
+              },
+              properties: {
+                ...feature.properties,
+                _originalLat: pos.originalLat,
+                _originalLng: pos.originalLng,
+                _isScattered: true,
+                _subspeciesKey: pos.subspeciesKey,
+                _scatteredSpecies: pos.species,
+                _scatteredSubspecies: pos.subspecies
+              }
+            })
+            seenRepresentatives.add(feature.properties.id)
+          }
+          // Non-representative points are hidden (not added to features)
+        } else {
+          // Point is not in a scatter group (single point or single subspecies at location)
+          features.push(feature)
+        }
+      }
+
+      return {
+        type: 'FeatureCollection',
+        features
+      }
     }
+
+    // Clustering mode with aggregation (when scatter is not enabled)
+    if (clusteringEnabled.value) {
+      const countMode = clusterSettings.value.countMode
+
+      // For 'individuals' mode, use all points (default behavior)
+      if (countMode === 'individuals') {
+        return geo
+      }
+
+      // For 'subspecies' mode: aggregate to one point per subspecies per location
+      if (countMode === 'subspecies') {
+        const features = []
+        const seenIds = new Set()
+
+        for (const [coordKey, subspeciesMap] of subspeciesGroups.value) {
+          const [lat, lng] = coordKey.split(',').map(Number)
+
+          for (const [subspeciesKey, data] of subspeciesMap) {
+            const rep = data.representative
+            if (!seenIds.has(rep.id)) {
+              seenIds.add(rep.id)
+              // Find the original feature to maintain structure
+              const origFeature = geo.features.find(f => f.properties.id === rep.id)
+              if (origFeature) {
+                features.push({
+                  ...origFeature,
+                  properties: {
+                    ...origFeature.properties,
+                    _aggregatedCount: data.allPoints.length,
+                    _aggregationType: 'subspecies'
+                  }
+                })
+              }
+            }
+          }
+        }
+
+        return {
+          type: 'FeatureCollection',
+          features
+        }
+      }
+
+      // For 'species' mode: aggregate to one point per species per location
+      if (countMode === 'species') {
+        const features = []
+        const seenIds = new Set()
+
+        for (const [coordKey, speciesMap] of speciesGroups.value) {
+          const [lat, lng] = coordKey.split(',').map(Number)
+
+          for (const [speciesKey, data] of speciesMap) {
+            const rep = data.representative
+            if (!seenIds.has(rep.id)) {
+              seenIds.add(rep.id)
+              // Find the original feature to maintain structure
+              const origFeature = geo.features.find(f => f.properties.id === rep.id)
+              if (origFeature) {
+                features.push({
+                  ...origFeature,
+                  properties: {
+                    ...origFeature.properties,
+                    _aggregatedCount: data.allPoints.length,
+                    _aggregationType: 'species'
+                  }
+                })
+              }
+            }
+          }
+        }
+
+        return {
+          type: 'FeatureCollection',
+          features
+        }
+      }
+    }
+
+    // Default: return filtered GeoJSON as-is
+    return geo
   })
 
   /**
