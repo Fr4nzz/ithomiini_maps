@@ -215,54 +215,113 @@ A "Property" in Stadia Maps represents your website/application.
 
 1. After logging in, click **Add Property**
 2. Enter a name: `Ithomiini Maps`
-3. Enter your domain(s):
-   - For GitHub Pages: `fr4nzz.github.io`
-   - For local development: `localhost` (optional - localhost works without key)
-4. Click **Create Property**
+3. Click **Create Property**
 
-#### 3.3 Generate an API Key
+#### 3.3 Add Your Domain (Authentication Configuration)
 
-1. Click on your newly created Property
-2. Click **API Keys** in the sidebar
-3. Click **Generate API Key**
-4. Copy the API key (looks like: `12345678-1234-1234-1234-123456789abc`)
+This is the key step for production deployment. Stadia Maps uses **domain-based authentication** for browser requests.
 
-#### 3.4 Add to Your Project
+1. In your Property, go to **Authentication Configuration**
+2. Click **Create Domain**
+3. **Configure the domain fields:**
 
-Option A: Environment Variable (recommended)
+   For a GitHub Pages URL like `https://fr4nzz.github.io/ithomiini_maps/`:
+
+   | Field | Value | Explanation |
+   |-------|-------|-------------|
+   | **Subdomain** | `fr4nzz` | The part before `.github.io` |
+   | **Domain** | `github.io` | The main domain |
+   | **Allow All Subdomains** | OFF | Not needed for a single site |
+
+   The "Matches" preview should show: `fr4nzz.github.io`
+
+4. Click **Save Domain**
+
+> **How Domain Authentication Works:**
+> When your site at `fr4nzz.github.io` requests tiles from Stadia, their server checks the `Referer` header. If it matches an authorized domain, the request is allowed WITHOUT needing an API key in the URL. This is more secure than exposing API keys in client-side code.
+
+#### 3.4 Generate an API Key
+
+API keys are used for:
+- Local development (localhost)
+- Server-side requests
+- Mobile/desktop apps (non-browser)
+
+1. In your Property, click **API Keys** tab
+2. Click **Generate API Key**
+3. Copy the API key (looks like: `2faaf442-9d21-42a1-81a3-3a5094cfa91b`)
+
+#### 3.5 Understanding When API Keys Are Needed
+
+| Environment | API Key Needed? | Why? |
+|-------------|-----------------|------|
+| **Production (GitHub Pages)** | No* | Domain authentication handles it |
+| **localhost development** | No | Stadia allows localhost without auth |
+| **Custom domain** | No* | Add domain to Authentication Configuration |
+| **Server-side requests** | Yes | No Referer header to verify |
+| **Mobile/desktop apps** | Yes | Not browser-based |
+
+\* As long as the domain is added to Authentication Configuration
+
+#### 3.6 Local Development Setup
+
+For local development, you have two options:
+
+**Option A: No API key (recommended)**
+- Stadia Maps allows `localhost` requests without authentication
+- Just use the tile URLs directly, no configuration needed
+
+**Option B: Use API key in .env.local**
 ```bash
 # Create .env.local file in project root
 echo "VITE_STADIA_KEY=your-api-key-here" >> .env.local
 ```
-
-Option B: Direct in code (not recommended for public repos)
+Then use the key in your tile URLs:
 ```javascript
-// In your map configuration
-const stadiaKey = 'your-api-key-here'
+`https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${import.meta.env.VITE_STADIA_KEY}`
 ```
 
-#### 3.5 Available Stadia Styles
+#### 3.7 Production Deployment (GitHub Pages)
 
-With your API key, you can use these tile URLs:
+For GitHub Pages deployment, you do NOT need to expose your API key:
+
+1. Add your domain in Authentication Configuration (step 3.3)
+2. Use tile URLs WITHOUT the `?api_key=` parameter:
+   ```javascript
+   'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
+   ```
+3. Stadia will authenticate requests based on the domain
+
+> **Important:** Your `.env.local` file is NOT deployed to GitHub Pages (it's in `.gitignore`). For production, rely on domain authentication instead.
+
+#### 3.8 Available Stadia Styles
+
+These tile URLs work with domain authentication (no API key in URL) or with an API key:
 
 ```javascript
 // Alidade Smooth (light theme)
-`https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${stadiaKey}`
+'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
 
 // Alidade Smooth Dark (dark theme)
-`https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=${stadiaKey}`
+'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
 
 // Stamen Terrain
-`https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png?api_key=${stadiaKey}`
+'https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png'
+
+// Stamen Toner (black and white)
+'https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png'
+
+// OSM Bright
+'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png'
 ```
 
-#### Understanding Stadia Rate Limits
+#### 3.9 Understanding Stadia Rate Limits
 
 - **2,500 credits/month** on free tier
 - **1 credit = 1 map session** (not per tile!)
 - A session includes all zoom/pan interactions
 - Session timeout: 2 hours of inactivity
-- Localhost development: No API key needed, doesn't count against quota
+- Localhost development: Doesn't count against quota
 
 ---
 
