@@ -197,24 +197,105 @@ Added option in Map Settings to choose what cluster numbers represent.
 
 ### 7. Vector Export (SVG/PDF)
 
-#### Research Findings
+#### Current Implementation Analysis
 
-**MapLibre SVG Export Status:**
-- MapLibre renders to WebGL canvas (raster)
-- Existing plugin `@watergis/maplibre-gl-export` creates PDF/SVG but with **raster images embedded**, NOT true vectors
-- True vector export is NOT natively supported
+**What We Have:**
+- `ExportPanel.vue` - Image export using canvas-based approach
+- `canvasHelpers.js` - Helper functions for drawing legend, scale bar, attribution
+- Uses `map.getCanvas().toDataURL()` to capture map as PNG
+- Manual canvas drawing for legend, scale bar, attribution overlays
+- Requires `preserveDrawingBuffer: true` in MapLibre config
+
+**Limitations of Current Approach:**
+- PNG only (raster) - not suitable for print publications
+- Resolution limited by canvas size
+- Legend/scale bar drawn via canvas operations (font rendering issues possible)
+- Preview-to-export discrepancies due to manual calculations
+
+#### Research Findings: maplibre-gl-export Plugin
+
+**Package:** `@watergis/maplibre-gl-export` ([npm](https://www.npmjs.com/package/@watergis/maplibre-gl-export))
+
+**Capabilities:**
+- Export formats: PNG, JPEG, SVG, PDF
+- DPI options: 72, 96, 200, 300, 400
+- Page sizes: A2-A6, B2-B6
+- Page orientation: Landscape/Portrait
+- PrintableArea preview (like our export preview)
+- Crosshair alignment aid
+
+**Installation:**
+```bash
+npm install @watergis/maplibre-gl-export
+```
+
+**Usage Example:**
+```javascript
+import {
+  MaplibreExportControl,
+  Size,
+  PageOrientation,
+  Format,
+  DPI
+} from "@watergis/maplibre-gl-export";
+import '@watergis/maplibre-gl-export/css/styles.css';
+
+// Add as control
+map.addControl(new MaplibreExportControl({
+  PageSize: Size.A4,
+  PageOrientation: PageOrientation.Landscape,
+  Format: Format.PNG,
+  DPI: DPI[300],
+  Crosshair: true,
+  PrintableArea: true
+}), 'top-right');
+```
+
+**⚠️ CRITICAL LIMITATION:**
+According to [Issue #332](https://github.com/watergis/maplibre-gl-export/issues/332):
+> "Currently SVG and PDF exports are just SVG/PDF files with a **raster image on them**."
+
+The SVG/PDF export does NOT produce true vector graphics - it embeds the WebGL canvas as a raster image inside the SVG/PDF container. This is because MapLibre renders to WebGL, not SVG.
+
+**True vector export is requested but not implemented.** The maintainer has invited PRs but no implementation exists yet (as of December 2024).
 
 #### Recommended Approach
 
-**Option A: Enhanced GeoJSON Export + R Documentation**
+**Option A: Replace Current Export with maplibre-gl-export (RECOMMENDED)**
+
+Benefits:
+1. Higher DPI options (up to 400 vs our current screen resolution)
+2. Built-in print area preview (similar to ours but battle-tested)
+3. PDF output for easy sharing/printing
+4. Maintains project simplicity (one dependency vs custom code)
+5. Active maintenance
+
+Implementation:
+```javascript
+// In ExportPanel.vue or new component
+import { MaplibreExportControl } from "@watergis/maplibre-gl-export";
+
+// Option 1: Add as map control
+map.addControl(new MaplibreExportControl({...}));
+
+// Option 2: Programmatic export (if supported)
+// Check if plugin exposes export API for custom UI integration
+```
+
+**Option B: Keep Current Implementation + Add maplibre-gl-export**
+
+Use our existing ExportPanel for custom UI/workflow, but leverage maplibre-gl-export's rendering engine for better quality output.
+
+**Option C: Enhanced GeoJSON Export for R Users**
+
+For users who need TRUE vector output for publications:
 
 Create a downloadable ZIP containing:
-1. `data.geojson` - Filtered point data
-2. `basemap_bounds.json` - Map view bounds
-3. `legend.json` - Legend configuration
-4. `load_map.R` - R script to recreate the exact view
+1. `data.geojson` - Filtered point data with colors
+2. `view_config.json` - Map bounds, zoom, projection
+3. `legend.json` - Legend items and colors
+4. `generate_map.R` - Ready-to-run R script
 
-**R Script Example:**
 ```r
 library(sf)
 library(ggplot2)
@@ -222,7 +303,8 @@ library(rnaturalearth)
 
 # Load exported data
 points <- st_read("data.geojson")
-config <- jsonlite::fromJSON("basemap_bounds.json")
+config <- jsonlite::fromJSON("view_config.json")
+legend <- jsonlite::fromJSON("legend.json")
 
 # Get base map
 world <- ne_countries(scale = "medium", returnclass = "sf")
@@ -231,24 +313,48 @@ world <- ne_countries(scale = "medium", returnclass = "sf")
 ggplot() +
   geom_sf(data = world, fill = "#1a1a2e", color = "#3d3d5c") +
   geom_sf(data = points, aes(color = subspecies), size = 2) +
+  scale_color_manual(values = legend$colors) +
   coord_sf(xlim = config$bounds[c(1,3)], ylim = config$bounds[c(2,4)]) +
   theme_void() +
-  theme(
-    panel.background = element_rect(fill = "#1a1a2e"),
-    legend.position = "bottom"
-  )
+  theme(panel.background = element_rect(fill = "#1a1a2e"))
 
-# Save as vector
+# Save as true vector
 ggsave("map.svg", width = 10, height = 8)
 ggsave("map.pdf", width = 10, height = 8)
 ```
 
-**Option B: Add maplibre-gl-export Plugin**
+#### Implementation Priority
 
-Improves current PNG export accuracy:
-```bash
-npm install @watergis/maplibre-gl-export
-```
+| Option | Effort | Quality | Vector? | Recommended |
+|--------|--------|---------|---------|-------------|
+| A (Replace with plugin) | Low | High DPI raster | ❌ | ✅ Best UX |
+| B (Keep both) | Medium | High DPI raster | ❌ | For custom needs |
+| C (R export) | Medium | True vector | ✅ | For publications |
+
+**Suggested Path:**
+1. First: Implement Option A - Quick win, better export quality
+2. Later: Add Option C - For users needing true vector output
+
+#### Plugin Comparison
+
+| Feature | Current | maplibre-gl-export |
+|---------|---------|-------------------|
+| PNG | ✅ | ✅ |
+| JPEG | ❌ | ✅ |
+| SVG | ❌ | ✅ (raster embedded) |
+| PDF | ❌ | ✅ (raster embedded) |
+| Max DPI | ~96 | 400 |
+| Print sizes | Custom only | A2-A6, B2-B6 |
+| Preview area | ✅ | ✅ |
+| Custom legend | ✅ | ❌ (need manual add) |
+| Scale bar | ✅ | Built-in |
+| Attribution | ✅ | Built-in |
+
+#### Sources
+- [maplibre-gl-export Demo](https://maplibre-gl-export.water-gis.com/)
+- [Issue #332: True Vector Export Request](https://github.com/watergis/maplibre-gl-export/issues/332)
+- [geOps PDF Export Blog](https://geops.com/en/blog/export-and-print-web-maps-as-pdf)
+- [MapLibre Plugins List](https://maplibre.org/maplibre-gl-js/docs/plugins/)
 
 ---
 
@@ -334,9 +440,11 @@ Set to 30 minutes to accommodate GBIF downloads.
 ### Phase 3: Completed ✅
 - [x] Clustering count options (species/subspecies/individuals)
 
-### Future Enhancements
-- [ ] Enhanced GeoJSON export with R scripts
-- [ ] maplibre-gl-export plugin for improved PNG export
+### Phase 4: Export Improvements (Planned)
+- [ ] Install `@watergis/maplibre-gl-export` for higher DPI export (300-400 DPI)
+- [ ] Add PDF export option (raster-in-PDF, good for printing)
+- [ ] Add "Export for R" option with GeoJSON + R script bundle (true vector)
+- [ ] Consider keeping custom legend overlay (plugin doesn't include)
 
 ---
 
