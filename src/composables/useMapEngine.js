@@ -11,6 +11,12 @@ export const MAP_STYLES = {
     theme: 'day',
     style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
   },
+  'stadia-smooth': {
+    name: 'Smooth',
+    theme: 'day',
+    provider: 'Stadia',
+    style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json'
+  },
   terrain: {
     name: 'Terrain',
     theme: 'day',
@@ -36,6 +42,12 @@ export const MAP_STYLES = {
         }
       ]
     }
+  },
+  'stadia-terrain': {
+    name: 'Stamen Terrain',
+    theme: 'day',
+    provider: 'Stadia',
+    style: 'https://tiles.stadiamaps.com/styles/stamen_terrain.json'
   },
   streets: {
     name: 'Streets',
@@ -98,28 +110,14 @@ export const MAP_STYLES = {
   'stadia-dark': {
     name: 'Smooth Dark',
     theme: 'night',
-    style: {
-      version: 8,
-      sources: {
-        'stadia-tiles': {
-          type: 'raster',
-          tiles: [
-            'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
-          ],
-          tileSize: 256,
-          attribution: '&copy; Stadia Maps, &copy; OpenMapTiles, &copy; OpenStreetMap'
-        }
-      },
-      layers: [
-        {
-          id: 'stadia-tiles-layer',
-          type: 'raster',
-          source: 'stadia-tiles',
-          minzoom: 0,
-          maxzoom: 20
-        }
-      ]
-    }
+    provider: 'Stadia',
+    style: 'https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json'
+  },
+  'stadia-toner': {
+    name: 'Toner',
+    theme: 'night',
+    provider: 'Stadia',
+    style: 'https://tiles.stadiamaps.com/styles/stamen_toner.json'
   }
 }
 

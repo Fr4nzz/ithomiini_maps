@@ -136,7 +136,8 @@ Replaced the button-based style switcher with a grouped dropdown menu organized 
 - `src/composables/useMapEngine.js`:
   - Added `theme` property to each MAP_STYLES entry ('day' or 'night')
   - Added `getStylesByTheme()` helper to group styles
-  - Added Stadia Maps Smooth Dark theme (uses domain authentication, no API key needed)
+  - Uses Stadia Maps JSON style URLs (recommended by Stadia for MapLibre GL JS)
+  - Domain authentication on localhost works without API key
 
 - `src/components/MapEngine.vue`:
   - New dropdown menu with sun/moon icons for day/night sections
@@ -146,8 +147,23 @@ Replaced the button-based style switcher with a grouped dropdown menu organized 
   - Smooth transitions and responsive design
 
 **Available Styles:**
-- **Day Themes:** Light (CartoDB), Terrain, Streets, Satellite
-- **Night Themes:** Dark (CartoDB), Smooth Dark (Stadia)
+
+| Style Name | Provider | Theme | Notes |
+|------------|----------|-------|-------|
+| Light | CartoDB | Day | Vector tiles, no API key |
+| Smooth | Stadia | Day | Alidade Smooth, clean design |
+| Terrain | OpenTopoMap | Day | Raster, topographic |
+| Stamen Terrain | Stadia | Day | Hill shading, natural colors |
+| Streets | OSM | Day | Raster tiles |
+| Satellite | Esri | Day | Raster imagery |
+| Dark | CartoDB | Night | Vector tiles, no API key |
+| Smooth Dark | Stadia | Night | Alidade Smooth Dark |
+| Toner | Stadia | Night | Stamen Toner, high contrast B&W |
+
+**Technical Notes:**
+- Stadia styles use JSON style URLs (e.g., `https://tiles.stadiamaps.com/styles/alidade_smooth.json`)
+- This is the recommended approach per [Stadia MapLibre docs](https://docs.stadiamaps.com/tutorials/vector-maps-with-maplibre-gl-js/)
+- Raster tile URLs with `{r}` placeholder don't work in MapLibre - use JSON or `@2x` suffix instead
 
 ---
 
@@ -238,19 +254,40 @@ npm install @watergis/maplibre-gl-export
 
 ## API Key Instructions
 
-### Stadia Maps
+### Stadia Maps (Used in this project)
+
+**Current Implementation:**
+- Uses JSON style URLs: `https://tiles.stadiamaps.com/styles/{style_name}.json`
+- Localhost development works WITHOUT API key
+- Production deployment uses domain authentication
+
+**For Production Deployment:**
 1. Go to https://client.stadiamaps.com/signup/
 2. Create account (no credit card required)
 3. Create a "Property" for your website
-4. Generate API key
-5. Add to `.env`: `VITE_STADIA_KEY=your_key`
+4. In Authentication Configuration, add your domain:
+   - Subdomain: `fr4nzz` (part before `.github.io`)
+   - Domain: `github.io`
+5. No API key in code needed - Stadia authenticates via Referer header
 
 **Rate Limits:**
 - 2,500 free credits/month
-- One map session = one credit (includes all zoom/pan)
-- Local development (localhost) doesn't need API key
+- One map session = one credit (includes all zoom/pan within session)
+- Session timeout: 2 hours of inactivity
+- Local development (localhost): FREE, doesn't count against quota
 
-### MapTiler
+**Available Stadia Styles:**
+| Style | JSON URL |
+|-------|----------|
+| Alidade Smooth | `https://tiles.stadiamaps.com/styles/alidade_smooth.json` |
+| Alidade Smooth Dark | `https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json` |
+| Stamen Terrain | `https://tiles.stadiamaps.com/styles/stamen_terrain.json` |
+| Stamen Toner | `https://tiles.stadiamaps.com/styles/stamen_toner.json` |
+| Stamen Watercolor | `https://tiles.stadiamaps.com/styles/stamen_watercolor.json` |
+| OSM Bright | `https://tiles.stadiamaps.com/styles/osm_bright.json` |
+| Outdoors | `https://tiles.stadiamaps.com/styles/outdoors.json` |
+
+### MapTiler (Not currently used)
 1. Go to https://cloud.maptiler.com/
 2. Create account
 3. Copy API key from dashboard
@@ -260,6 +297,12 @@ npm install @watergis/maplibre-gl-export
 - 100,000 map loads/month
 - One page load = one session (all interactions free)
 - Third-party SDK usage counted per tile request
+
+### Why NOT Google Maps
+- After March 2025: Only 10,000 free loads/month
+- Complex terms of service
+- Attribution requirements conflict with export feature
+- Better free alternatives exist (Stadia, CartoDB)
 
 ---
 
