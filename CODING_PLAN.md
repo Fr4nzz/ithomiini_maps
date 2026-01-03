@@ -105,81 +105,71 @@ To enable the database update feature, you need to set up a Cloudflare Worker:
 
 ---
 
+### 4. Country Boundaries Layer ✅ IMPLEMENTED
+
+**Status:** Completed
+
+Added country boundaries overlay using Natural Earth GeoJSON data.
+
+**Changes made:**
+- `src/composables/useMapEngine.js`:
+  - Added `useCountryBoundaries` composable
+  - Fetches Natural Earth 50m country boundaries from GitHub
+  - Boundaries rendered as white lines with zoom-dependent width
+  - Boundaries added below data points layer
+  - Lazy-loads GeoJSON only when first enabled
+
+- `src/components/MapEngine.vue`:
+  - Integrated boundaries toggle in map layer dropdown
+  - Checkbox to show/hide country borders
+  - Re-adds boundaries after style changes
+
+---
+
+### 5. Map Layer Dropdown with Day/Night Themes ✅ IMPLEMENTED
+
+**Status:** Completed
+
+Replaced the button-based style switcher with a grouped dropdown menu organized by day/night themes.
+
+**Changes made:**
+- `src/composables/useMapEngine.js`:
+  - Added `theme` property to each MAP_STYLES entry ('day' or 'night')
+  - Added `getStylesByTheme()` helper to group styles
+  - Added Stadia Maps Smooth Dark theme (uses domain authentication, no API key needed)
+
+- `src/components/MapEngine.vue`:
+  - New dropdown menu with sun/moon icons for day/night sections
+  - Shows current style name with layer icon
+  - Checkmark indicator for active style
+  - Country borders toggle included in dropdown
+  - Smooth transitions and responsive design
+
+**Available Styles:**
+- **Day Themes:** Light (CartoDB), Terrain, Streets, Satellite
+- **Night Themes:** Dark (CartoDB), Smooth Dark (Stadia)
+
+---
+
 ## Planned Features (Not Yet Implemented)
 
-### 4. Country Boundaries on Satellite Map
+### 6. Clustering Count Options
 
-**Options:**
+**Status:** Planned
 
-#### Option A: Bundle GeoJSON (Recommended)
-Download Natural Earth boundaries and add as overlay:
-- Source: https://github.com/martynafford/natural-earth-geojson
-- Layers available: countries, states, coastlines, etc.
-- Size: ~500KB-2MB depending on detail level
+Add an option in Map Settings to choose what clusters count:
+- Number of species
+- Number of subspecies (current default)
+- Number of individuals
 
-#### Option B: Use MapTiler/Stadia with built-in boundaries
-Some providers include boundary layers.
-
-**Proposed UI:**
-- Add a dropdown in sidebar to choose which layers to render
-- Options: Countries, States/Provinces, Coastlines, etc.
-- Checkbox to toggle boundary visibility
+**Implementation Notes:**
+- Requires modifying cluster generation in `useMapEngine.js`
+- Need to aggregate based on selected mode
+- May require custom clustering properties
 
 ---
 
-### 5. Map Layer Providers (Dropdown with Day/Night Themes)
-
-#### Provider Research Summary
-
-**Stadia Maps:**
-- Website: https://stadiamaps.com/
-- Free tier: 2,500 credits/month (no credit card required)
-- **Rate limiting:** Per session, not per tile request
-- API key: Sign up at https://client.stadiamaps.com/signup/
-- **Day themes:** Alidade Smooth, Stamen Terrain
-- **Night themes:** Alidade Smooth Dark
-
-**MapTiler:**
-- Website: https://www.maptiler.com/
-- Free tier: 100,000 map loads/month
-- **Rate limiting:** Per session (one page load = one session)
-- API key: Sign up at https://cloud.maptiler.com/
-- Supports day/night themes
-
-**No API Key Required:**
-- CartoDB (Positron/Dark Matter) - Unlimited
-- OpenStreetMap - Fair use
-- Esri World Imagery - Fair use
-- OpenTopoMap - Fair use
-
-**Google Maps:** NOT RECOMMENDED
-- Only 10,000 free loads/month after March 2025
-- Complex terms of service
-- Attribution requirements conflict with export
-
-#### Proposed UI Design
-
-```
-┌─────────────────────────────────┐
-│ 🗺️ Base Map  ▼                  │
-├─────────────────────────────────┤
-│ ☀️ DAY THEMES                   │
-│   ○ Light (CartoDB)             │
-│   ○ Streets (MapTiler)          │
-│   ○ Terrain (Stadia)            │
-│   ○ Satellite (Esri)            │
-├─────────────────────────────────┤
-│ 🌙 NIGHT THEMES                 │
-│   ● Dark (CartoDB) ✓            │
-│   ○ Smooth Dark (Stadia)        │
-└─────────────────────────────────┘
-```
-
-**Optional:** Auto day/night toggle button (uses local time)
-
----
-
-### 6. Vector Export (SVG/PDF)
+### 7. Vector Export (SVG/PDF)
 
 #### Research Findings
 
@@ -301,15 +291,15 @@ Set to 30 minutes to accommodate GBIF downloads.
 - [x] Sex filter
 - [x] Database update feature
 
-### Phase 2: Next Steps
-- [ ] Country boundaries layer with dropdown
-- [ ] Map layer dropdown with grouped day/night themes
-- [ ] Clustering count options (species/subspecies/individuals)
+### Phase 2: Completed ✅
+- [x] Country boundaries layer with toggle
+- [x] Map layer dropdown with grouped day/night themes
+- [x] Stadia Maps integration (Smooth Dark theme)
 
-### Phase 3: Future
+### Phase 3: Next Steps
+- [ ] Clustering count options (species/subspecies/individuals)
 - [ ] Enhanced GeoJSON export with R scripts
 - [ ] maplibre-gl-export plugin for improved PNG export
-- [ ] API key integration for Stadia/MapTiler
 
 ---
 

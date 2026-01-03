@@ -3,43 +3,17 @@ import maplibregl from 'maplibre-gl'
 import { useDataStore } from '../stores/data'
 import { ASPECT_RATIOS } from '../utils/constants'
 
-// Map style configurations - free tile sources
+// Map style configurations - organized by theme
 export const MAP_STYLES = {
-  dark: {
-    name: 'Dark',
-    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
-  },
+  // Day themes
   light: {
     name: 'Light',
+    theme: 'day',
     style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
-  },
-  satellite: {
-    name: 'Satellite',
-    style: {
-      version: 8,
-      sources: {
-        'esri-satellite': {
-          type: 'raster',
-          tiles: [
-            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-          ],
-          tileSize: 256,
-          attribution: '&copy; Esri, Maxar, Earthstar Geographics'
-        }
-      },
-      layers: [
-        {
-          id: 'esri-satellite-layer',
-          type: 'raster',
-          source: 'esri-satellite',
-          minzoom: 0,
-          maxzoom: 19
-        }
-      ]
-    }
   },
   terrain: {
     name: 'Terrain',
+    theme: 'day',
     style: {
       version: 8,
       sources: {
@@ -65,6 +39,7 @@ export const MAP_STYLES = {
   },
   streets: {
     name: 'Streets',
+    theme: 'day',
     style: {
       version: 8,
       sources: {
@@ -87,7 +62,82 @@ export const MAP_STYLES = {
         }
       ]
     }
+  },
+  satellite: {
+    name: 'Satellite',
+    theme: 'day',
+    style: {
+      version: 8,
+      sources: {
+        'esri-satellite': {
+          type: 'raster',
+          tiles: [
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+          ],
+          tileSize: 256,
+          attribution: '&copy; Esri, Maxar, Earthstar Geographics'
+        }
+      },
+      layers: [
+        {
+          id: 'esri-satellite-layer',
+          type: 'raster',
+          source: 'esri-satellite',
+          minzoom: 0,
+          maxzoom: 19
+        }
+      ]
+    }
+  },
+  // Night themes
+  dark: {
+    name: 'Dark',
+    theme: 'night',
+    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+  },
+  'stadia-dark': {
+    name: 'Smooth Dark',
+    theme: 'night',
+    style: {
+      version: 8,
+      sources: {
+        'stadia-tiles': {
+          type: 'raster',
+          tiles: [
+            'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+          ],
+          tileSize: 256,
+          attribution: '&copy; Stadia Maps, &copy; OpenMapTiles, &copy; OpenStreetMap'
+        }
+      },
+      layers: [
+        {
+          id: 'stadia-tiles-layer',
+          type: 'raster',
+          source: 'stadia-tiles',
+          minzoom: 0,
+          maxzoom: 20
+        }
+      ]
+    }
   }
+}
+
+// Get styles grouped by theme
+export const getStylesByTheme = () => {
+  const day = []
+  const night = []
+
+  Object.entries(MAP_STYLES).forEach(([key, config]) => {
+    const item = { key, ...config }
+    if (config.theme === 'night') {
+      night.push(item)
+    } else {
+      day.push(item)
+    }
+  })
+
+  return { day, night }
 }
 
 // Location search composable
@@ -813,5 +863,101 @@ export function useScaleBar(map) {
   return {
     scaleBarText,
     updateScaleBar
+  }
+}
+
+// Country boundaries overlay
+// Uses Natural Earth data hosted on GitHub
+const BOUNDARIES_URL = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
+
+export function useCountryBoundaries(map) {
+  const showBoundaries = ref(false)
+  const boundariesLoaded = ref(false)
+  let boundariesData = null
+
+  const loadBoundaries = async () => {
+    if (boundariesData) return boundariesData
+
+    try {
+      const response = await fetch(BOUNDARIES_URL)
+      boundariesData = await response.json()
+      boundariesLoaded.value = true
+      return boundariesData
+    } catch (error) {
+      console.error('Failed to load country boundaries:', error)
+      return null
+    }
+  }
+
+  const addBoundariesLayer = async () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+
+    // Remove existing layers if present
+    if (map.value.getLayer('country-boundaries-fill')) {
+      map.value.removeLayer('country-boundaries-fill')
+    }
+    if (map.value.getLayer('country-boundaries-line')) {
+      map.value.removeLayer('country-boundaries-line')
+    }
+    if (map.value.getSource('country-boundaries')) {
+      map.value.removeSource('country-boundaries')
+    }
+
+    if (!showBoundaries.value) return
+
+    const data = await loadBoundaries()
+    if (!data) return
+
+    // Add source
+    map.value.addSource('country-boundaries', {
+      type: 'geojson',
+      data: data
+    })
+
+    // Add fill layer (very subtle)
+    map.value.addLayer({
+      id: 'country-boundaries-fill',
+      type: 'fill',
+      source: 'country-boundaries',
+      paint: {
+        'fill-color': 'transparent',
+        'fill-opacity': 0
+      }
+    }, 'points-layer') // Add below points
+
+    // Add line layer
+    map.value.addLayer({
+      id: 'country-boundaries-line',
+      type: 'line',
+      source: 'country-boundaries',
+      paint: {
+        'line-color': '#ffffff',
+        'line-width': [
+          'interpolate', ['linear'], ['zoom'],
+          2, 0.5,
+          6, 1,
+          10, 1.5
+        ],
+        'line-opacity': 0.5
+      }
+    }, 'points-layer') // Add below points
+  }
+
+  const toggleBoundaries = () => {
+    showBoundaries.value = !showBoundaries.value
+    addBoundariesLayer()
+  }
+
+  const setBoundaries = (value) => {
+    showBoundaries.value = value
+    addBoundariesLayer()
+  }
+
+  return {
+    showBoundaries,
+    boundariesLoaded,
+    toggleBoundaries,
+    setBoundaries,
+    addBoundariesLayer
   }
 }
