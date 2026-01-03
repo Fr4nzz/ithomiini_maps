@@ -73,7 +73,7 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - Node.js 18+
 - Python 3.9+
 
-### Setup
+### Quick Start
 
 ```bash
 # Clone the repository
@@ -86,6 +86,14 @@ npm install
 # Start development server
 npm run dev
 ```
+
+### Full Setup (For All Features)
+
+For enabling all features including database updates and premium map tiles, see the **[Setup Guide](SETUP.md)** which covers:
+
+- **GitHub Personal Access Token** - Required for database update feature (with instructions for organization repos)
+- **Cloudflare Worker** - Secure proxy for triggering GitHub Actions from the browser
+- **Map Provider API Keys** - Optional: Stadia Maps and MapTiler for premium tile styles
 
 ### Data Processing
 
