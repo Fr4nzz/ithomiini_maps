@@ -813,7 +813,7 @@ const generateMapHTML = (geoJSON, viewConfig, legendConfig, colorBy) => {
   <meta charset="utf-8">
   <title>Ithomiini Distribution Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"><\/script>
   <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -948,7 +948,7 @@ const generateMapHTML = (geoJSON, viewConfig, legendConfig, colorBy) => {
         [config.bounds.east, config.bounds.north]
       ], { padding: 20, duration: 0 });
     });
-  </script>
+  <\/script>
 </body>
 </html>`
 }
