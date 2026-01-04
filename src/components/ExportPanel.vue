@@ -1,10 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
-import { ASPECT_RATIOS } from '../utils/constants'
+import JSZip from 'jszip'
 import {
   loadImage,
-  calculateExportRegion,
   drawLegendOnCanvas,
   drawScaleBarOnCanvas,
   drawAttributionOnCanvas
@@ -24,8 +23,27 @@ const props = defineProps({
 const isExporting = ref(false)
 const exportSuccess = ref(false)
 const citationCopied = ref(false)
-const imageExportProgress = ref(0)
 const imageExportError = ref(null)
+
+// Image export options
+const exportFormat = ref('png')
+const exportDPI = ref(300)
+const exportSize = ref('A4')
+const customWidth = ref(297)  // mm
+const customHeight = ref(210) // mm
+
+// Paper sizes in mm (landscape)
+const PAPER_SIZES = {
+  'A2': [594, 420],
+  'A3': [420, 297],
+  'A4': [297, 210],
+  'A5': [210, 148],
+  'Letter': [279, 216],
+  'Custom': null
+}
+
+// Available DPI options
+const DPI_OPTIONS = [72, 96, 200, 300, 400]
 
 // Get filtered data
 const filteredData = computed(() => {
@@ -35,20 +53,35 @@ const filteredData = computed(() => {
 })
 
 // Build info (injected by Vite)
-const buildTime = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : new Date().toISOString()
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
 const shortHash = commitHash.substring(0, 7)
 
+// Calculate pixel dimensions from mm and DPI
+const pixelDimensions = computed(() => {
+  let widthMm, heightMm
+  if (exportSize.value === 'Custom') {
+    widthMm = customWidth.value
+    heightMm = customHeight.value
+  } else {
+    const size = PAPER_SIZES[exportSize.value]
+    widthMm = size[0]
+    heightMm = size[1]
+  }
+  const widthPx = Math.round((widthMm / 25.4) * exportDPI.value)
+  const heightPx = Math.round((heightMm / 25.4) * exportDPI.value)
+  return { width: widthPx, height: heightPx }
+})
+
 // Generate citation text
 const citationText = computed(() => {
-  const date = new Date().toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  const date = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   })
   const recordCount = filteredData.value.length
   const url = window.location.href
-  
+
   return `Ithomiini Distribution Maps. Data accessed on ${date}. ` +
     `${recordCount.toLocaleString()} records retrieved. ` +
     `Version: ${shortHash}. ` +
@@ -59,8 +92,8 @@ const citationText = computed(() => {
 const bibtexCitation = computed(() => {
   const year = new Date().getFullYear()
   const month = new Date().toLocaleString('en-US', { month: 'short' }).toLowerCase()
-  const url = window.location.href.split('?')[0] // Base URL without params
-  
+  const url = window.location.href.split('?')[0]
+
   return `@misc{ithomiini_maps_${year},
   title = {Ithomiini Distribution Maps},
   author = {Meier, Joana and Dore, M. and {Sanger Institute}},
@@ -74,28 +107,25 @@ const bibtexCitation = computed(() => {
 // Export to CSV
 const exportCSV = () => {
   isExporting.value = true
-  
+
   try {
     const data = filteredData.value
     if (data.length === 0) {
       alert('No data to export')
       return
     }
-    
-    // Define columns in order
+
     const columns = [
       'id', 'scientific_name', 'genus', 'species', 'subspecies',
       'family', 'tribe', 'mimicry_ring', 'sequencing_status',
-      'source', 'country', 'lat', 'lng', 'image_url'
+      'source', 'country', 'lat', 'lng', 'sex', 'image_url'
     ]
-    
-    // Build CSV content
+
     const header = columns.join(',')
     const rows = data.map(row => {
       return columns.map(col => {
         let val = row[col]
         if (val === null || val === undefined) val = ''
-        // Escape quotes and wrap in quotes if contains comma
         val = String(val)
         if (val.includes(',') || val.includes('"') || val.includes('\n')) {
           val = '"' + val.replace(/"/g, '""') + '"'
@@ -103,10 +133,8 @@ const exportCSV = () => {
         return val
       }).join(',')
     })
-    
+
     const csv = [header, ...rows].join('\n')
-    
-    // Create download
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -114,10 +142,10 @@ const exportCSV = () => {
     link.download = `ithomiini_data_${shortHash}_${Date.now()}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    
+
     exportSuccess.value = true
     setTimeout(() => { exportSuccess.value = false }, 3000)
-    
+
   } catch (e) {
     console.error('CSV export failed:', e)
     alert('Export failed: ' + e.message)
@@ -129,15 +157,14 @@ const exportCSV = () => {
 // Export to GeoJSON
 const exportGeoJSON = () => {
   isExporting.value = true
-  
+
   try {
     const geo = store.filteredGeoJSON
     if (!geo || !geo.features || geo.features.length === 0) {
       alert('No data to export')
       return
     }
-    
-    // Add metadata to GeoJSON
+
     const exportData = {
       type: 'FeatureCollection',
       metadata: {
@@ -149,10 +176,8 @@ const exportGeoJSON = () => {
       },
       features: geo.features
     }
-    
+
     const json = JSON.stringify(exportData, null, 2)
-    
-    // Create download
     const blob = new Blob([json], { type: 'application/geo+json' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -160,10 +185,10 @@ const exportGeoJSON = () => {
     link.download = `ithomiini_data_${shortHash}_${Date.now()}.geojson`
     link.click()
     URL.revokeObjectURL(url)
-    
+
     exportSuccess.value = true
     setTimeout(() => { exportSuccess.value = false }, 3000)
-    
+
   } catch (e) {
     console.error('GeoJSON export failed:', e)
     alert('Export failed: ' + e.message)
@@ -181,19 +206,9 @@ const copyCitation = (type = 'plain') => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// IMAGE EXPORT
+// IMAGE EXPORT - Canvas-based capture of current map view
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Get export dimensions
-const exportDimensions = computed(() => {
-  const ratio = store.exportSettings.aspectRatio
-  if (ratio === 'custom') {
-    return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
-  }
-  return ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
-})
-
-// Export map as image
 const exportImage = async () => {
   if (!props.map) {
     imageExportError.value = 'Map not available. Please ensure you are on the Map view.'
@@ -201,58 +216,35 @@ const exportImage = async () => {
   }
 
   isExporting.value = true
-  imageExportProgress.value = 0
   imageExportError.value = null
-
-  console.log('═══════════════════════════════════════════════════════════════')
-  console.log('[Export] Starting image export...')
-  console.log('[Export] Export settings:', {
-    enabled: store.exportSettings.enabled,
-    aspectRatio: store.exportSettings.aspectRatio,
-    includeLegend: store.exportSettings.includeLegend,
-    includeScaleBar: store.exportSettings.includeScaleBar,
-    uiScale: store.exportSettings.uiScale
-  })
 
   try {
     const map = props.map
 
-    // Ensure map style is loaded
+    // Wait for map to be ready
     if (!map.isStyleLoaded()) {
-      console.log('[Export] Waiting for map style to load...')
       await new Promise(resolve => map.once('style.load', resolve))
     }
 
-    // Use the recommended approach from MapLibre docs:
-    // Trigger repaint and wait for idle event to capture canvas
-    // https://github.com/maplibre/maplibre-gl-js/discussions/3900
-    console.log('[Export] Triggering repaint and waiting for idle...')
+    // Trigger repaint and wait for idle
     map.triggerRepaint()
     await new Promise(resolve => map.once('idle', resolve))
-
-    imageExportProgress.value = 10
 
     // Get the map canvas
     const mapCanvas = map.getCanvas()
 
-    console.log('[Export] Map canvas info:', {
-      width: mapCanvas.width,
-      height: mapCanvas.height,
-      clientWidth: mapCanvas.clientWidth,
-      clientHeight: mapCanvas.clientHeight,
-      aspectRatio: (mapCanvas.width / mapCanvas.height).toFixed(3)
+    // Calculate output dimensions from paper size and DPI
+    const { width: exportWidth, height: exportHeight } = pixelDimensions.value
+
+    console.log('[Export] Canvas export:', {
+      format: exportFormat.value,
+      size: exportSize.value,
+      dpi: exportDPI.value,
+      outputPixels: `${exportWidth}x${exportHeight}`,
+      canvasSize: `${mapCanvas.width}x${mapCanvas.height}`
     })
 
-    // Determine export dimensions
-    const { width: exportWidth, height: exportHeight } = exportDimensions.value
-
-    console.log('[Export] Target export dimensions:', {
-      width: exportWidth,
-      height: exportHeight,
-      aspectRatio: (exportWidth / exportHeight).toFixed(3)
-    })
-
-    // Create output canvas
+    // Create output canvas at target resolution
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     canvas.width = exportWidth
@@ -262,130 +254,67 @@ const exportImage = async () => {
     ctx.fillStyle = '#1a1a2e'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    imageExportProgress.value = 20
-
-    // Capture the map as image
+    // Capture map as image
     const mapDataUrl = mapCanvas.toDataURL('image/png')
     const mapImage = await loadImage(mapDataUrl)
 
-    console.log('[Export] Map image captured:', {
-      width: mapImage.width,
-      height: mapImage.height,
-      dataUrlLength: mapDataUrl.length
-    })
+    // Draw map scaled to fit canvas (cover mode - fills entire canvas)
+    const scale = Math.max(
+      canvas.width / mapImage.width,
+      canvas.height / mapImage.height
+    )
+    const scaledWidth = mapImage.width * scale
+    const scaledHeight = mapImage.height * scale
+    const offsetX = (canvas.width - scaledWidth) / 2
+    const offsetY = (canvas.height - scaledHeight) / 2
 
-    imageExportProgress.value = 40
+    ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
 
-    // Calculate how to draw the map
-    // If export settings enabled, crop to the exact export preview region
-    if (store.exportSettings.enabled) {
-      // Calculate the export region exactly as shown in the preview
-      const region = calculateExportRegion(
-        mapImage.width,
-        mapImage.height,
-        exportWidth,
-        exportHeight
-      )
-
-      // Convert percentages to pixels
-      const srcX = (region.x / 100) * mapImage.width
-      const srcY = (region.y / 100) * mapImage.height
-      const srcW = (region.width / 100) * mapImage.width
-      const srcH = (region.height / 100) * mapImage.height
-
-      console.log('[Export] Crop region (pixels):', {
-        srcX: Math.round(srcX),
-        srcY: Math.round(srcY),
-        srcW: Math.round(srcW),
-        srcH: Math.round(srcH),
-        srcAspectRatio: (srcW / srcH).toFixed(3)
-      })
-
-      console.log('[Export] Drawing cropped region:', {
-        source: `(${Math.round(srcX)}, ${Math.round(srcY)}) ${Math.round(srcW)}x${Math.round(srcH)}`,
-        destination: `(0, 0) ${canvas.width}x${canvas.height}`
-      })
-
-      // Draw the cropped region scaled to fill the export canvas
-      ctx.drawImage(
-        mapImage,
-        srcX, srcY, srcW, srcH,  // Source rectangle (crop region)
-        0, 0, canvas.width, canvas.height  // Destination (full canvas)
-      )
-    } else {
-      // Draw the map scaled to fit (letterboxed)
-      const scale = Math.min(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
-      )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
-
-      console.log('[Export] Letterbox mode (export preview OFF):', {
-        scale: scale.toFixed(3),
-        scaledWidth: Math.round(scaledWidth),
-        scaledHeight: Math.round(scaledHeight),
-        offsetX: Math.round(offsetX),
-        offsetY: Math.round(offsetY)
-      })
-
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
-    }
-
-    imageExportProgress.value = 60
-
-    // Draw legend if enabled
-    if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
+    // Draw legend
+    if (store.legendSettings.showLegend) {
       drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
         colorMap: store.activeColorMap,
         legendSettings: store.legendSettings,
-        exportSettings: store.exportSettings,
+        exportSettings: { uiScale: exportDPI.value / 96, includeLegend: true },
         colorBy: store.colorBy,
         legendTitle: store.legendTitle,
       })
     }
 
-    imageExportProgress.value = 75
-
-    // Draw scale bar if enabled
-    if (store.exportSettings.includeScaleBar) {
-      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
-        legendSettings: store.legendSettings,
-        exportSettings: store.exportSettings,
-      })
-    }
-
-    imageExportProgress.value = 85
+    // Draw scale bar
+    drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
+      legendSettings: store.legendSettings,
+      exportSettings: { uiScale: exportDPI.value / 96, includeLegend: store.legendSettings.showLegend },
+    })
 
     // Draw attribution
     drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
-      exportSettings: store.exportSettings,
+      exportSettings: { uiScale: exportDPI.value / 96 },
     })
 
-    imageExportProgress.value = 95
+    // Generate output in selected format
+    const timestamp = Date.now()
+    let dataUrl, extension
 
-    // Download the image
-    const dataUrl = canvas.toDataURL('image/png', 1.0)
+    if (exportFormat.value === 'jpg') {
+      dataUrl = canvas.toDataURL('image/jpeg', 0.95)
+      extension = 'jpg'
+    } else {
+      dataUrl = canvas.toDataURL('image/png', 1.0)
+      extension = 'png'
+    }
+
+    // Download
     const link = document.createElement('a')
-    link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.png`
+    link.download = `ithomiini_map_${exportSize.value}_${exportDPI.value}dpi_${timestamp}.${extension}`
     link.href = dataUrl
     link.click()
 
-    console.log('[Export] Export complete:', {
-      outputSize: `${exportWidth}x${exportHeight}`,
-      outputDataUrlLength: dataUrl.length,
-      filename: link.download
-    })
-    console.log('═══════════════════════════════════════════════════════════════')
+    console.log('[Export] Export complete:', link.download)
 
-    imageExportProgress.value = 100
     exportSuccess.value = true
-
     setTimeout(() => {
       isExporting.value = false
-      imageExportProgress.value = 0
       exportSuccess.value = false
     }, 2000)
 
@@ -396,7 +325,327 @@ const exportImage = async () => {
   }
 }
 
-// Active tab - default to 'image' for Export Image tab
+// ═══════════════════════════════════════════════════════════════════════════
+// R SCRIPT EXPORT
+// ═══════════════════════════════════════════════════════════════════════════
+
+const exportForR = async () => {
+  if (!props.map) {
+    imageExportError.value = 'Map not available. Please ensure you are on the Map view.'
+    return
+  }
+
+  isExporting.value = true
+  imageExportError.value = null
+
+  try {
+    const map = props.map
+    const geo = store.filteredGeoJSON
+
+    if (!geo || !geo.features || geo.features.length === 0) {
+      throw new Error('No data to export')
+    }
+
+    // Get current map view
+    const bounds = map.getBounds()
+    const center = map.getCenter()
+    const zoom = map.getZoom()
+
+    // Prepare GeoJSON with color information
+    const colorMap = store.activeColorMap
+    const colorBy = store.colorBy
+
+    // Add color to each feature
+    const featuresWithColors = geo.features.map(f => {
+      const key = f.properties[colorBy] || 'Unknown'
+      return {
+        ...f,
+        properties: {
+          ...f.properties,
+          display_color: colorMap[key] || '#888888'
+        }
+      }
+    })
+
+    const exportGeoJSON = {
+      type: 'FeatureCollection',
+      metadata: {
+        title: 'Ithomiini Distribution Data',
+        version: shortHash,
+        exportDate: new Date().toISOString(),
+        recordCount: geo.features.length,
+        colorBy: colorBy,
+        source: 'https://fr4nzz.github.io/ithomiini_maps/'
+      },
+      features: featuresWithColors
+    }
+
+    // View configuration
+    const viewConfig = {
+      bounds: {
+        west: bounds.getWest(),
+        south: bounds.getSouth(),
+        east: bounds.getEast(),
+        north: bounds.getNorth()
+      },
+      center: {
+        lng: center.lng,
+        lat: center.lat
+      },
+      zoom: zoom,
+      colorBy: colorBy
+    }
+
+    // Legend configuration
+    const legendConfig = {
+      title: store.legendTitle,
+      colorBy: colorBy,
+      colors: colorMap,
+      items: Object.entries(colorMap).map(([label, color]) => ({
+        label,
+        color
+      }))
+    }
+
+    // Generate R script
+    const rScript = generateRScript(colorBy)
+
+    // Create ZIP file
+    const zip = new JSZip()
+    zip.file('data.geojson', JSON.stringify(exportGeoJSON, null, 2))
+    zip.file('view_config.json', JSON.stringify(viewConfig, null, 2))
+    zip.file('legend.json', JSON.stringify(legendConfig, null, 2))
+    zip.file('generate_map.R', rScript)
+    zip.file('README.txt', generateReadme())
+
+    // Generate and download ZIP
+    const content = await zip.generateAsync({ type: 'blob' })
+    const url = URL.createObjectURL(content)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `ithomiini_r_export_${shortHash}_${Date.now()}.zip`
+    link.click()
+    URL.revokeObjectURL(url)
+
+    exportSuccess.value = true
+    setTimeout(() => {
+      isExporting.value = false
+      exportSuccess.value = false
+    }, 2000)
+
+  } catch (e) {
+    console.error('[Export] R export failed:', e)
+    imageExportError.value = e.message || 'Export failed'
+    isExporting.value = false
+  }
+}
+
+// Generate R script that recreates the map view
+const generateRScript = (colorBy) => {
+  return `# ═══════════════════════════════════════════════════════════════════════════
+# Ithomiini Distribution Map - R Script for Vector Export
+# Generated by Ithomiini Maps (https://fr4nzz.github.io/ithomiini_maps/)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Install required packages if needed
+required_packages <- c("sf", "ggplot2", "rnaturalearth", "rnaturalearthdata", "jsonlite")
+new_packages <- required_packages[!(required_packages %in% installed.packages()[,"Package"])]
+if(length(new_packages)) install.packages(new_packages)
+
+library(sf)
+library(ggplot2)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(jsonlite)
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Load exported data
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Read the exported files
+points <- st_read("data.geojson", quiet = TRUE)
+config <- fromJSON("view_config.json")
+legend <- fromJSON("legend.json")
+
+# Extract bounds
+xlim <- c(config$bounds$west, config$bounds$east)
+ylim <- c(config$bounds$south, config$bounds$north)
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Get base map (Natural Earth - same data source as web app)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Get country boundaries (50m resolution)
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# Get country boundaries for overlay (higher resolution for detailed view)
+# Uncomment for higher resolution if needed:
+# world <- ne_countries(scale = "large", returnclass = "sf")
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Create the map
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Set up color mapping
+color_values <- legend$colors
+names(color_values) <- names(legend$colors)
+
+# Create ggplot map matching the web app style (dark theme)
+p <- ggplot() +
+  # Base map with dark theme colors (matching CartoDB Dark)
+  geom_sf(data = world, fill = "#1a1a2e", color = "#3d3d5c", linewidth = 0.3) +
+
+  # Add data points colored by ${colorBy}
+  geom_sf(data = points, aes(color = ${colorBy}), size = 2, alpha = 0.8) +
+
+  # Use exact colors from web app
+  scale_color_manual(
+    values = color_values,
+    name = legend$title
+  ) +
+
+  # Set map extent to match web app view
+  coord_sf(xlim = xlim, ylim = ylim, expand = FALSE) +
+
+  # Dark theme matching the web app
+  theme_void() +
+  theme(
+    # Dark background
+    panel.background = element_rect(fill = "#1a1a2e", color = NA),
+    plot.background = element_rect(fill = "#1a1a2e", color = NA),
+
+    # Legend styling
+    legend.position = "bottom",
+    legend.background = element_rect(fill = "rgba(26, 26, 46, 0.95)", color = NA),
+    legend.text = element_text(color = "#e0e0e0", size = 8),
+    legend.title = element_text(color = "#888888", size = 9, face = "bold"),
+    legend.key = element_rect(fill = NA, color = NA),
+
+    # Make scientific names italic if applicable
+    ${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ?
+      'legend.text = element_text(color = "#e0e0e0", size = 8, face = "italic")' :
+      '# Non-taxonomic coloring, no italics needed'}
+  ) +
+
+  # Guide settings
+  guides(color = guide_legend(
+    ncol = 3,
+    override.aes = list(size = 3)
+  ))
+
+# Print preview
+print(p)
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Save as vector formats (TRUE vector output for publications)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Save as SVG (scalable vector graphics)
+ggsave("ithomiini_map.svg", plot = p, width = 10, height = 8, dpi = 300)
+cat("Saved: ithomiini_map.svg\\n")
+
+# Save as PDF (vector, publication-ready)
+ggsave("ithomiini_map.pdf", plot = p, width = 10, height = 8, dpi = 300)
+cat("Saved: ithomiini_map.pdf\\n")
+
+# Save as high-resolution PNG
+ggsave("ithomiini_map.png", plot = p, width = 10, height = 8, dpi = 300)
+cat("Saved: ithomiini_map.png\\n")
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Alternative: Light theme version
+# ═══════════════════════════════════════════════════════════════════════════
+
+p_light <- ggplot() +
+  geom_sf(data = world, fill = "#f8f8f8", color = "#cccccc", linewidth = 0.3) +
+  geom_sf(data = points, aes(color = ${colorBy}), size = 2, alpha = 0.8) +
+  scale_color_manual(values = color_values, name = legend$title) +
+  coord_sf(xlim = xlim, ylim = ylim, expand = FALSE) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "#ffffff", color = NA),
+    plot.background = element_rect(fill = "#ffffff", color = NA),
+    legend.position = "bottom",
+    legend.text = element_text(color = "#333333", size = 8${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ? ', face = "italic"' : ''}),
+    legend.title = element_text(color = "#666666", size = 9, face = "bold")
+  ) +
+  guides(color = guide_legend(ncol = 3, override.aes = list(size = 3)))
+
+# Save light theme versions
+ggsave("ithomiini_map_light.svg", plot = p_light, width = 10, height = 8, dpi = 300)
+ggsave("ithomiini_map_light.pdf", plot = p_light, width = 10, height = 8, dpi = 300)
+cat("Saved light theme versions\\n")
+
+cat("\\n✅ All exports complete!\\n")
+`
+}
+
+// Generate README for the ZIP
+const generateReadme = () => {
+  return `═══════════════════════════════════════════════════════════════════════════
+ITHOMIINI MAPS - R EXPORT PACKAGE
+═══════════════════════════════════════════════════════════════════════════
+
+This ZIP contains data and scripts to recreate your map view as true
+vector graphics (SVG/PDF) for publications.
+
+FILES INCLUDED:
+---------------
+- data.geojson      : Filtered specimen data with coordinates and colors
+- view_config.json  : Map view bounds and settings
+- legend.json       : Legend colors and labels
+- generate_map.R    : R script to recreate the map
+- README.txt        : This file
+
+QUICK START:
+------------
+1. Extract all files to a folder
+2. Open R or RStudio
+3. Set working directory to the extracted folder
+4. Run: source("generate_map.R")
+5. Find your exports: ithomiini_map.svg, ithomiini_map.pdf, ithomiini_map.png
+
+REQUIREMENTS:
+-------------
+R packages (will auto-install if missing):
+- sf               : Spatial data handling
+- ggplot2          : Plotting
+- rnaturalearth    : Country boundaries (same as web app)
+- rnaturalearthdata: Base map data
+- jsonlite         : Reading config files
+
+WHY R?
+------
+The web map uses WebGL rendering which produces raster (pixel) output.
+R with ggplot2 renders true vectors, giving you:
+- Infinite scalability for any print size
+- Small file sizes
+- Editable in Adobe Illustrator/Inkscape
+- Publication-quality output
+
+CUSTOMIZATION:
+--------------
+Edit generate_map.R to:
+- Change point sizes, colors, or transparency
+- Modify legend position or styling
+- Add titles, scale bars, or annotations
+- Change output dimensions or DPI
+
+CITATION:
+---------
+${citationText.value}
+
+SOURCE:
+-------
+https://fr4nzz.github.io/ithomiini_maps/
+
+Generated: ${new Date().toISOString()}
+Version: ${shortHash}
+═══════════════════════════════════════════════════════════════════════════
+`
+}
+
+// Active tab
 const activeTab = ref('image')
 </script>
 
@@ -436,8 +685,8 @@ const activeTab = ref('image')
 
     <!-- Content -->
     <div class="panel-content">
-      
-      <!-- Export Tab -->
+
+      <!-- Export Data Tab -->
       <div v-if="activeTab === 'export'" class="tab-content">
         <div class="data-summary">
           <div class="summary-item">
@@ -451,7 +700,7 @@ const activeTab = ref('image')
         </div>
 
         <div class="export-options">
-          <button 
+          <button
             class="export-btn"
             @click="exportCSV"
             :disabled="isExporting || filteredData.length === 0"
@@ -467,7 +716,7 @@ const activeTab = ref('image')
             </div>
           </button>
 
-          <button 
+          <button
             class="export-btn"
             @click="exportGeoJSON"
             :disabled="isExporting || filteredData.length === 0"
@@ -497,57 +746,67 @@ const activeTab = ref('image')
 
       <!-- Export Image Tab -->
       <div v-if="activeTab === 'image'" class="tab-content">
-        <div class="image-export-info">
-          <div class="export-mode-badge" :class="{ active: store.exportSettings.enabled }">
-            {{ store.exportSettings.enabled ? 'Export Preview Mode ON' : 'Export Preview Mode OFF' }}
+        <p class="info-text">
+          Export the current map view. What you see is what you get.
+        </p>
+
+        <!-- Format Selection -->
+        <div class="option-group">
+          <label class="option-label">Format</label>
+          <div class="format-buttons">
+            <button
+              v-for="format in ['png', 'jpg']"
+              :key="format"
+              :class="{ active: exportFormat === format }"
+              @click="exportFormat = format"
+            >
+              {{ format.toUpperCase() }}
+            </button>
           </div>
-          <p class="info-text">
-            <template v-if="store.exportSettings.enabled">
-              Will export the area shown in the export preview rectangle.
-            </template>
-            <template v-else>
-              Will export the current map view. Enable Export Preview in sidebar to define a specific region.
-            </template>
-          </p>
+          <span class="option-hint">For PDF/SVG vector output, use "Export for R" below</span>
         </div>
 
-        <div class="data-summary">
-          <div class="summary-item">
-            <span class="summary-value">{{ exportDimensions.width }}</span>
-            <span class="summary-label">Width (px)</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-value">{{ exportDimensions.height }}</span>
-            <span class="summary-label">Height (px)</span>
-          </div>
+        <!-- Paper Size -->
+        <div class="option-group">
+          <label class="option-label">Paper Size</label>
+          <select v-model="exportSize" class="select-input">
+            <option v-for="(size, name) in PAPER_SIZES" :key="name" :value="name">
+              {{ name }} {{ size ? `(${size[0]}×${size[1]}mm)` : '' }}
+            </option>
+          </select>
         </div>
 
-        <div class="image-options">
-          <div class="option-group">
-            <label class="option-label">Include in Export:</label>
-            <div class="option-list">
-              <label class="option-item">
-                <input type="checkbox" v-model="store.exportSettings.includeLegend" />
-                <span>Legend</span>
-              </label>
-              <label class="option-item">
-                <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
-                <span>Scale Bar</span>
-              </label>
+        <!-- Custom Size -->
+        <div v-if="exportSize === 'Custom'" class="option-group custom-size">
+          <div class="size-inputs">
+            <div class="size-input">
+              <label>Width (mm)</label>
+              <input type="number" v-model.number="customWidth" min="50" max="2000" />
+            </div>
+            <span class="size-separator">×</span>
+            <div class="size-input">
+              <label>Height (mm)</label>
+              <input type="number" v-model.number="customHeight" min="50" max="2000" />
             </div>
           </div>
+        </div>
 
-          <div class="option-group">
-            <label class="option-label">UI Scale: {{ Math.round(store.exportSettings.uiScale * 100) }}%</label>
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              v-model.number="store.exportSettings.uiScale"
-              class="scale-slider"
-            />
+        <!-- DPI Selection -->
+        <div class="option-group">
+          <label class="option-label">Resolution (DPI)</label>
+          <div class="dpi-buttons">
+            <button
+              v-for="dpi in DPI_OPTIONS"
+              :key="dpi"
+              :class="{ active: exportDPI === dpi }"
+              @click="exportDPI = dpi"
+            >
+              {{ dpi }}
+            </button>
           </div>
+          <span class="option-hint">
+            Output: {{ pixelDimensions.width }} × {{ pixelDimensions.height }} pixels
+          </span>
         </div>
 
         <!-- Error message -->
@@ -560,33 +819,41 @@ const activeTab = ref('image')
           {{ imageExportError }}
         </div>
 
-        <!-- Progress bar -->
-        <div v-if="isExporting" class="export-progress-container">
-          <div class="progress-bar">
-            <div class="progress-fill" :style="{ width: imageExportProgress + '%' }"></div>
-          </div>
-          <span class="progress-text">
-            {{ imageExportProgress < 100 ? 'Exporting...' : 'Complete!' }}
-          </span>
-        </div>
+        <!-- Export Buttons -->
+        <div class="export-buttons">
+          <button
+            class="export-image-btn"
+            @click="exportImage"
+            :disabled="!map || isExporting"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <div class="btn-text">
+              <span class="btn-title">Download {{ exportFormat.toUpperCase() }}</span>
+              <span class="btn-desc">{{ exportSize }} @ {{ exportDPI }} DPI</span>
+            </div>
+          </button>
 
-        <!-- Export button -->
-        <button
-          v-else
-          class="export-image-btn"
-          @click="exportImage"
-          :disabled="!map"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
-          </svg>
-          <div class="btn-text">
-            <span class="btn-title">Download PNG Image</span>
-            <span class="btn-desc">{{ exportDimensions.width }} × {{ exportDimensions.height }} pixels</span>
-          </div>
-        </button>
+          <!-- R Export Button -->
+          <button
+            class="export-btn r-export"
+            @click="exportForR"
+            :disabled="!map || isExporting || filteredData.length === 0"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <div class="btn-text">
+              <span class="btn-title">Export for R (True Vector)</span>
+              <span class="btn-desc">ZIP with GeoJSON + R script for SVG/PDF</span>
+            </div>
+          </button>
+        </div>
 
         <Transition name="fade">
           <div v-if="exportSuccess && activeTab === 'image'" class="success-toast">
@@ -594,7 +861,7 @@ const activeTab = ref('image')
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
               <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
-            Image exported!
+            Export complete!
           </div>
         </Transition>
       </div>
@@ -605,7 +872,7 @@ const activeTab = ref('image')
           <label class="citation-label">Plain Text</label>
           <div class="citation-box">
             <p class="citation-text">{{ citationText }}</p>
-            <button 
+            <button
               class="copy-btn"
               @click="copyCitation('plain')"
             >
@@ -622,7 +889,7 @@ const activeTab = ref('image')
           <label class="citation-label">BibTeX</label>
           <div class="citation-box bibtex">
             <pre class="citation-code">{{ bibtexCitation }}</pre>
-            <button 
+            <button
               class="copy-btn"
               @click="copyCitation('bibtex')"
             >
@@ -642,7 +909,7 @@ const activeTab = ref('image')
             <line x1="12" y1="8" x2="12.01" y2="8"/>
           </svg>
           <p>
-            Citations include a version hash for reproducibility. 
+            Citations include a version hash for reproducibility.
             The URL preserves your current filter settings.
           </p>
         </div>
@@ -755,7 +1022,14 @@ const activeTab = ref('image')
 .tab-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+}
+
+.info-text {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #aaa);
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Data Summary */
@@ -787,8 +1061,118 @@ const activeTab = ref('image')
   letter-spacing: 1px;
 }
 
+/* Option Groups */
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary, #aaa);
+}
+
+.option-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #666);
+}
+
+/* Format Buttons */
+.format-buttons,
+.dpi-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.format-buttons button,
+.dpi-buttons button {
+  flex: 1;
+  padding: 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.format-buttons button:hover,
+.dpi-buttons button:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.format-buttons button.active,
+.dpi-buttons button.active {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+}
+
+/* Select Input */
+.select-input {
+  padding: 10px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+/* Custom Size */
+.custom-size .size-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.size-input {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.size-input label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+}
+
+.size-input input {
+  padding: 8px 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+}
+
+.size-input input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+.size-separator {
+  color: var(--color-text-muted, #666);
+  font-size: 1.2rem;
+  padding-bottom: 8px;
+}
+
 /* Export Options */
-.export-options {
+.export-options,
+.export-buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -825,6 +1209,18 @@ const activeTab = ref('image')
   flex-shrink: 0;
 }
 
+.export-btn.r-export {
+  border-color: #6366f1;
+}
+
+.export-btn.r-export svg {
+  color: #6366f1;
+}
+
+.export-btn.r-export:hover:not(:disabled) {
+  border-color: #818cf8;
+}
+
 .btn-text {
   display: flex;
   flex-direction: column;
@@ -839,6 +1235,53 @@ const activeTab = ref('image')
 .btn-desc {
   font-size: 0.75rem;
   color: var(--color-text-muted, #666);
+}
+
+/* Export Image Button */
+.export-image-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  background: var(--color-accent, #4ade80);
+  border: none;
+  border-radius: 8px;
+  color: var(--color-bg-primary, #1a1a2e);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.export-image-btn:hover:not(:disabled) {
+  background: #5eeb94;
+}
+
+.export-image-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.export-image-btn svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.export-image-btn .btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.export-image-btn .btn-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.export-image-btn .btn-desc {
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
 
 /* Citation Section */
@@ -963,167 +1406,7 @@ const activeTab = ref('image')
   height: 18px;
 }
 
-/* Transitions */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Export Image Tab */
-.image-export-info {
-  margin-bottom: 16px;
-}
-
-.export-mode-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  background: rgba(107, 114, 128, 0.2);
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #888;
-  margin-bottom: 10px;
-}
-
-.export-mode-badge.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-}
-
-.info-text {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary, #aaa);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.image-options {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.option-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.option-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-text-secondary, #aaa);
-}
-
-.option-list {
-  display: flex;
-  gap: 16px;
-}
-
-.option-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.option-item input {
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.option-item span {
-  font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.scale-slider {
-  width: 100%;
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.export-progress-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border-radius: 8px;
-}
-
-.progress-bar {
-  height: 8px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--color-accent, #4ade80);
-  border-radius: 4px;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  font-size: 0.8rem;
-  color: var(--color-text-secondary, #aaa);
-  text-align: center;
-}
-
-.export-image-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding: 16px;
-  background: var(--color-accent, #4ade80);
-  border: none;
-  border-radius: 8px;
-  color: var(--color-bg-primary, #1a1a2e);
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-}
-
-.export-image-btn:hover:not(:disabled) {
-  background: #5eeb94;
-}
-
-.export-image-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.export-image-btn svg {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-}
-
-.export-image-btn .btn-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.export-image-btn .btn-title {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.export-image-btn .btn-desc {
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
-
+/* Error */
 .export-error {
   display: flex;
   align-items: center;
@@ -1133,13 +1416,23 @@ const activeTab = ref('image')
   border-radius: 8px;
   color: #ef4444;
   font-size: 0.85rem;
-  margin-bottom: 16px;
 }
 
 .export-error svg {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+}
+
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /* Responsive */
@@ -1153,6 +1446,16 @@ const activeTab = ref('image')
 
   .data-summary {
     flex-direction: column;
+  }
+
+  .format-buttons,
+  .dpi-buttons {
+    flex-wrap: wrap;
+  }
+
+  .format-buttons button,
+  .dpi-buttons button {
+    min-width: calc(33% - 8px);
   }
 }
 </style>
