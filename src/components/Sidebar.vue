@@ -14,7 +14,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'set-view'])
+const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'export-for-r', 'set-view'])
 
 const store = useDataStore()
 
@@ -382,6 +382,16 @@ const updateExportHeight = (value) => {
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
           Export Image
+        </button>
+
+        <!-- Export for R Button -->
+        <button class="btn-export-r" @click="emit('export-for-r')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export for R (Vector)
         </button>
       </div>
 
@@ -1055,6 +1065,36 @@ const updateExportHeight = (value) => {
 .btn-export-now svg {
   width: 18px;
   height: 18px;
+}
+
+.btn-export-r {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin-top: 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid #6366f1;
+  border-radius: 6px;
+  color: #a5b4fc;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-export-r:hover {
+  background: #3730a3;
+  border-color: #818cf8;
+  color: #e0e7ff;
+}
+
+.btn-export-r svg {
+  width: 16px;
+  height: 16px;
+  color: #6366f1;
 }
 
 /* Format and DPI Toggle Buttons */

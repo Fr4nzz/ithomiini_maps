@@ -2,12 +2,6 @@
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
 import JSZip from 'jszip'
-import {
-  loadImage,
-  drawLegendOnCanvas,
-  drawScaleBarOnCanvas,
-  drawAttributionOnCanvas
-} from '../utils/canvasHelpers'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
@@ -16,61 +10,18 @@ const props = defineProps({
   map: {
     type: Object,
     default: null
+  },
+  initialTab: {
+    type: String,
+    default: 'export'
   }
 })
-
-// Calculate scale bar text from map (same logic as useScaleBar)
-const getScaleBarText = (map) => {
-  if (!map) return '500 km'
-  try {
-    const zoom = map.getZoom()
-    const center = map.getCenter()
-    const lat = center.lat
-    // Calculate meters per pixel at this latitude and zoom
-    const metersPerPixel = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
-    // Scale bar is approximately 100px wide
-    const distance = metersPerPixel * 100
-    // Choose appropriate unit and round to nice numbers
-    if (distance >= 1000) {
-      const km = distance / 1000
-      if (km >= 500) return Math.round(km / 100) * 100 + ' km'
-      else if (km >= 50) return Math.round(km / 10) * 10 + ' km'
-      else if (km >= 5) return Math.round(km) + ' km'
-      else return km.toFixed(1) + ' km'
-    } else {
-      if (distance >= 100) return Math.round(distance / 10) * 10 + ' m'
-      else return Math.round(distance) + ' m'
-    }
-  } catch (e) {
-    return '500 km'
-  }
-}
 
 // Export state
 const isExporting = ref(false)
 const exportSuccess = ref(false)
 const citationCopied = ref(false)
-const imageExportError = ref(null)
-
-// Image export options
-const exportFormat = ref('png')
-const exportDPI = ref(300)
-const exportSize = ref('A4')
-const customWidth = ref(297)  // mm
-const customHeight = ref(210) // mm
-
-// Paper sizes in mm (landscape)
-const PAPER_SIZES = {
-  'A2': [594, 420],
-  'A3': [420, 297],
-  'A4': [297, 210],
-  'A5': [210, 148],
-  'Letter': [279, 216],
-  'Custom': null
-}
-
-// Available DPI options
-const DPI_OPTIONS = [72, 96, 200, 300, 400]
+const exportError = ref(null)
 
 // Get filtered data
 const filteredData = computed(() => {
@@ -82,22 +33,6 @@ const filteredData = computed(() => {
 // Build info (injected by Vite)
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
 const shortHash = commitHash.substring(0, 7)
-
-// Calculate pixel dimensions from mm and DPI
-const pixelDimensions = computed(() => {
-  let widthMm, heightMm
-  if (exportSize.value === 'Custom') {
-    widthMm = customWidth.value
-    heightMm = customHeight.value
-  } else {
-    const size = PAPER_SIZES[exportSize.value]
-    widthMm = size[0]
-    heightMm = size[1]
-  }
-  const widthPx = Math.round((widthMm / 25.4) * exportDPI.value)
-  const heightPx = Math.round((heightMm / 25.4) * exportDPI.value)
-  return { width: widthPx, height: heightPx }
-})
 
 // Generate citation text
 const citationText = computed(() => {
@@ -233,211 +168,17 @@ const copyCitation = (type = 'plain') => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// IMAGE EXPORT - Captures exactly what's shown in the export preview rectangle
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Calculate export region position (same logic as useMapEngine.js exportHolePosition)
-const calculateExportHolePixels = (containerWidth, containerHeight) => {
-  // Get target dimensions from store settings
-  const ratio = store.exportSettings.aspectRatio
-  let targetWidth, targetHeight
-
-  const ASPECT_RATIOS = {
-    '16:9': { width: 1920, height: 1080 },
-    '4:3': { width: 1600, height: 1200 },
-    '1:1': { width: 1080, height: 1080 },
-    '3:2': { width: 1800, height: 1200 },
-    'A4': { width: 2480, height: 1754 }
-  }
-
-  if (ratio === 'custom') {
-    targetWidth = store.exportSettings.customWidth
-    targetHeight = store.exportSettings.customHeight
-  } else if (ASPECT_RATIOS[ratio]) {
-    targetWidth = ASPECT_RATIOS[ratio].width
-    targetHeight = ASPECT_RATIOS[ratio].height
-  } else {
-    targetWidth = 1920
-    targetHeight = 1080
-  }
-
-  const targetAspectRatio = targetWidth / targetHeight
-  const containerAspectRatio = containerWidth / containerHeight
-  const maxPercent = 92
-
-  let holeWidthPercent, holeHeightPercent
-
-  if (targetAspectRatio > containerAspectRatio) {
-    holeWidthPercent = maxPercent
-    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
-  } else {
-    holeHeightPercent = maxPercent
-    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
-  }
-
-  const xPercent = Math.max(2, (100 - holeWidthPercent) / 2)
-  const yPercent = Math.max(2, (100 - holeHeightPercent) / 2)
-  const wPercent = Math.min(96, holeWidthPercent)
-  const hPercent = Math.min(96, holeHeightPercent)
-
-  // Convert to pixels
-  return {
-    x: Math.round((xPercent / 100) * containerWidth),
-    y: Math.round((yPercent / 100) * containerHeight),
-    width: Math.round((wPercent / 100) * containerWidth),
-    height: Math.round((hPercent / 100) * containerHeight)
-  }
-}
-
-const exportImage = async () => {
-  if (!props.map) {
-    imageExportError.value = 'Map not available. Please ensure you are on the Map view.'
-    return
-  }
-
-  isExporting.value = true
-  imageExportError.value = null
-
-  try {
-    const map = props.map
-
-    // Wait for map to be ready
-    if (!map.isStyleLoaded()) {
-      await new Promise(resolve => map.once('style.load', resolve))
-    }
-
-    // Trigger repaint and wait for idle
-    map.triggerRepaint()
-    await new Promise(resolve => map.once('idle', resolve))
-
-    // Get the map canvas
-    const mapCanvas = map.getCanvas()
-
-    // Calculate the export region (the preview rectangle) in canvas pixels
-    // The map canvas may have a different size than CSS dimensions due to devicePixelRatio
-    const container = map.getContainer()
-    const containerWidth = container.clientWidth
-    const containerHeight = container.clientHeight
-    const pixelRatio = window.devicePixelRatio || 1
-
-    // Get the export hole position in container pixels
-    const hole = calculateExportHolePixels(containerWidth, containerHeight)
-
-    // Scale to canvas pixels (accounting for devicePixelRatio)
-    const cropX = Math.round(hole.x * pixelRatio)
-    const cropY = Math.round(hole.y * pixelRatio)
-    const cropW = Math.round(hole.width * pixelRatio)
-    const cropH = Math.round(hole.height * pixelRatio)
-
-    // Calculate output dimensions from paper size and DPI
-    const { width: exportWidth, height: exportHeight } = pixelDimensions.value
-
-    console.log('[Export] Cropping export region:', {
-      container: `${containerWidth}x${containerHeight}`,
-      pixelRatio,
-      cropRegion: `${cropX},${cropY} ${cropW}x${cropH}`,
-      canvasSize: `${mapCanvas.width}x${mapCanvas.height}`,
-      outputSize: `${exportWidth}x${exportHeight}`
-    })
-
-    // Create output canvas at target resolution
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-    canvas.width = exportWidth
-    canvas.height = exportHeight
-
-    // Fill with dark background (in case of any gaps)
-    ctx.fillStyle = '#1a1a2e'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-    // Capture map as image
-    const mapDataUrl = mapCanvas.toDataURL('image/png')
-    const mapImage = await loadImage(mapDataUrl)
-
-    // Draw ONLY the cropped region, scaled to fill the output canvas
-    // This is the key difference - we crop to the exact preview rectangle
-    ctx.drawImage(
-      mapImage,
-      cropX, cropY, cropW, cropH,  // Source rectangle (crop region)
-      0, 0, canvas.width, canvas.height  // Destination (full output canvas)
-    )
-
-    // Calculate scale factor for UI elements
-    // The preview hole has dimensions: hole.width x hole.height (CSS pixels)
-    // We scale UI elements to maintain the same visual proportion
-    const uiScale = store.exportSettings.uiScale
-    const previewToExportScale = exportWidth / hole.width
-
-    // Draw legend inside export area (matching preview position)
-    if (store.legendSettings.showLegend && store.exportSettings.includeLegend) {
-      drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
-        colorMap: store.activeColorMap,
-        legendSettings: store.legendSettings,
-        exportSettings: { uiScale: uiScale, includeLegend: true },
-        colorBy: store.colorBy,
-        legendTitle: store.legendTitle,
-      })
-    }
-
-    // Draw scale bar (matching preview position)
-    if (store.exportSettings.includeScaleBar) {
-      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
-        legendSettings: store.legendSettings,
-        exportSettings: { uiScale: uiScale, includeLegend: store.legendSettings.showLegend && store.exportSettings.includeLegend },
-        scaleBarText: getScaleBarText(map),
-      })
-    }
-
-    // Draw attribution (small, in corner)
-    drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
-      exportSettings: { uiScale: uiScale },
-    })
-
-    // Generate output in selected format
-    const timestamp = Date.now()
-    let dataUrl, extension
-
-    if (exportFormat.value === 'jpg') {
-      dataUrl = canvas.toDataURL('image/jpeg', 0.95)
-      extension = 'jpg'
-    } else {
-      dataUrl = canvas.toDataURL('image/png', 1.0)
-      extension = 'png'
-    }
-
-    // Download
-    const link = document.createElement('a')
-    link.download = `ithomiini_map_${exportSize.value}_${exportDPI.value}dpi_${timestamp}.${extension}`
-    link.href = dataUrl
-    link.click()
-
-    console.log('[Export] Export complete:', link.download)
-
-    exportSuccess.value = true
-    setTimeout(() => {
-      isExporting.value = false
-      exportSuccess.value = false
-    }, 2000)
-
-  } catch (e) {
-    console.error('[Export] Image export failed:', e)
-    imageExportError.value = e.message || 'Export failed'
-    isExporting.value = false
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
 // R SCRIPT EXPORT
 // ═══════════════════════════════════════════════════════════════════════════
 
 const exportForR = async () => {
   if (!props.map) {
-    imageExportError.value = 'Map not available. Please ensure you are on the Map view.'
+    exportError.value = 'Map not available. Please ensure you are on the Map view.'
     return
   }
 
   isExporting.value = true
-  imageExportError.value = null
+  exportError.value = null
 
   try {
     const map = props.map
@@ -536,7 +277,7 @@ const exportForR = async () => {
 
   } catch (e) {
     console.error('[Export] R export failed:', e)
-    imageExportError.value = e.message || 'Export failed'
+    exportError.value = e.message || 'Export failed'
     isExporting.value = false
   }
 }
@@ -746,8 +487,8 @@ Version: ${shortHash}
 `
 }
 
-// Active tab
-const activeTab = ref('image')
+// Active tab - use prop as initial value
+const activeTab = ref(props.initialTab || 'export')
 </script>
 
 <template>
@@ -764,12 +505,6 @@ const activeTab = ref('image')
 
     <!-- Tabs -->
     <div class="panel-tabs">
-      <button
-        :class="{ active: activeTab === 'image' }"
-        @click="activeTab = 'image'"
-      >
-        Export Image
-      </button>
       <button
         :class="{ active: activeTab === 'export' }"
         @click="activeTab = 'export'"
@@ -832,113 +567,8 @@ const activeTab = ref('image')
               <span class="btn-desc">GIS/mapping format</span>
             </div>
           </button>
-        </div>
 
-        <Transition name="fade">
-          <div v-if="exportSuccess && activeTab === 'export'" class="success-toast">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-            Export complete!
-          </div>
-        </Transition>
-      </div>
-
-      <!-- Export Image Tab -->
-      <div v-if="activeTab === 'image'" class="tab-content">
-        <p class="info-text">
-          Export the current map view. What you see is what you get.
-        </p>
-
-        <!-- Format Selection -->
-        <div class="option-group">
-          <label class="option-label">Format</label>
-          <div class="format-buttons">
-            <button
-              v-for="format in ['png', 'jpg']"
-              :key="format"
-              :class="{ active: exportFormat === format }"
-              @click="exportFormat = format"
-            >
-              {{ format.toUpperCase() }}
-            </button>
-          </div>
-          <span class="option-hint">For PDF/SVG vector output, use "Export for R" below</span>
-        </div>
-
-        <!-- Paper Size -->
-        <div class="option-group">
-          <label class="option-label">Paper Size</label>
-          <select v-model="exportSize" class="select-input">
-            <option v-for="(size, name) in PAPER_SIZES" :key="name" :value="name">
-              {{ name }} {{ size ? `(${size[0]}×${size[1]}mm)` : '' }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Custom Size -->
-        <div v-if="exportSize === 'Custom'" class="option-group custom-size">
-          <div class="size-inputs">
-            <div class="size-input">
-              <label>Width (mm)</label>
-              <input type="number" v-model.number="customWidth" min="50" max="2000" />
-            </div>
-            <span class="size-separator">×</span>
-            <div class="size-input">
-              <label>Height (mm)</label>
-              <input type="number" v-model.number="customHeight" min="50" max="2000" />
-            </div>
-          </div>
-        </div>
-
-        <!-- DPI Selection -->
-        <div class="option-group">
-          <label class="option-label">Resolution (DPI)</label>
-          <div class="dpi-buttons">
-            <button
-              v-for="dpi in DPI_OPTIONS"
-              :key="dpi"
-              :class="{ active: exportDPI === dpi }"
-              @click="exportDPI = dpi"
-            >
-              {{ dpi }}
-            </button>
-          </div>
-          <span class="option-hint">
-            Output: {{ pixelDimensions.width }} × {{ pixelDimensions.height }} pixels
-          </span>
-        </div>
-
-        <!-- Error message -->
-        <div v-if="imageExportError" class="export-error">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          {{ imageExportError }}
-        </div>
-
-        <!-- Export Buttons -->
-        <div class="export-buttons">
-          <button
-            class="export-image-btn"
-            @click="exportImage"
-            :disabled="!map || isExporting"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-            <div class="btn-text">
-              <span class="btn-title">Download {{ exportFormat.toUpperCase() }}</span>
-              <span class="btn-desc">{{ exportSize }} @ {{ exportDPI }} DPI</span>
-            </div>
-          </button>
-
-          <!-- R Export Button -->
+          <!-- R Export Button for True Vector Output -->
           <button
             class="export-btn r-export"
             @click="exportForR"
@@ -950,14 +580,14 @@ const activeTab = ref('image')
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
             <div class="btn-text">
-              <span class="btn-title">Export for R (True Vector)</span>
+              <span class="btn-title">Export for R (Vector)</span>
               <span class="btn-desc">ZIP with GeoJSON + R script for SVG/PDF</span>
             </div>
           </button>
         </div>
 
         <Transition name="fade">
-          <div v-if="exportSuccess && activeTab === 'image'" class="success-toast">
+          <div v-if="exportSuccess && activeTab === 'export'" class="success-toast">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
               <polyline points="22 4 12 14.01 9 11.01"/>

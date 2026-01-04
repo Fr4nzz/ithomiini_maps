@@ -24,6 +24,7 @@ const currentView = ref('map') // 'map' or 'table'
 const showExportPanel = ref(false)
 const showMimicrySelector = ref(false)
 const showImageGallery = ref(false)
+const exportPanelInitialTab = ref('export') // 'export' for data, 'citation' for citation
 
 // Map reference for export
 const mapRef = ref(null)
@@ -34,7 +35,14 @@ const setView = (view) => {
 }
 
 // Modal controls
-const openExport = () => { showExportPanel.value = true }
+const openExport = () => {
+  exportPanelInitialTab.value = 'export'
+  showExportPanel.value = true
+}
+const openExportForR = () => {
+  exportPanelInitialTab.value = 'export'  // R export is in the export tab
+  showExportPanel.value = true
+}
 const closeExport = () => { showExportPanel.value = false }
 
 const openMimicrySelector = () => { showMimicrySelector.value = true }
@@ -253,6 +261,7 @@ onMounted(() => {
       @open-mimicry="openMimicrySelector"
       @open-gallery="openImageGallery"
       @open-map-export="directExportMap"
+      @export-for-r="openExportForR"
       :current-view="currentView"
       @set-view="setView"
     />
@@ -342,7 +351,7 @@ onMounted(() => {
           class="modal-overlay"
           @click.self="closeExport"
         >
-          <ExportPanel :map="mapRef" @close="closeExport" />
+          <ExportPanel :map="mapRef" :initial-tab="exportPanelInitialTab" @close="closeExport" />
         </div>
       </Transition>
     </Teleport>
