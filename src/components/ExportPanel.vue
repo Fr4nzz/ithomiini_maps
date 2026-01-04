@@ -358,15 +358,10 @@ p <- ggplot() +
 
     # Legend styling
     legend.position = "bottom",
-    legend.background = element_rect(fill = "rgba(26, 26, 46, 0.95)", color = NA),
-    legend.text = element_text(color = "#e0e0e0", size = 8),
+    legend.background = element_rect(fill = "#1a1a2e", color = NA),
+    legend.text = element_text(color = "#e0e0e0", size = 8${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ? ', face = "italic"' : ''}),
     legend.title = element_text(color = "#888888", size = 9, face = "bold"),
-    legend.key = element_rect(fill = NA, color = NA),
-
-    # Make scientific names italic if applicable
-    ${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ?
-      'legend.text = element_text(color = "#e0e0e0", size = 8, face = "italic")' :
-      '# Non-taxonomic coloring, no italics needed'}
+    legend.key = element_rect(fill = NA, color = NA)
   ) +
 
   # Guide settings
