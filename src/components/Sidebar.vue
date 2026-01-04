@@ -148,6 +148,16 @@ const currentExportDimensions = computed(() => {
   return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
 })
 
+// Calculate actual export pixel dimensions based on scale multiplier
+const exportPixelDimensions = computed(() => {
+  const base = currentExportDimensions.value
+  const scale = store.exportSettings.dpi / 100
+  return {
+    width: Math.round(base.width * scale),
+    height: Math.round(base.height * scale)
+  }
+})
+
 // Update export dimensions - switches to custom mode when editing
 const updateExportWidth = (value) => {
   const width = parseInt(value, 10)
@@ -323,6 +333,44 @@ const updateExportHeight = (value) => {
               v-model.number="store.exportSettings.uiScale"
             />
             <span class="slider-value">{{ Math.round(store.exportSettings.uiScale * 100) }}%</span>
+          </div>
+        </div>
+
+        <!-- Format Selection -->
+        <div class="setting-row" style="margin-top: 12px;">
+          <label>Format</label>
+          <div class="format-toggle">
+            <button
+              :class="{ active: store.exportSettings.format === 'png' }"
+              @click="store.exportSettings.format = 'png'"
+            >PNG</button>
+            <button
+              :class="{ active: store.exportSettings.format === 'jpg' }"
+              @click="store.exportSettings.format = 'jpg'"
+            >JPG</button>
+          </div>
+        </div>
+
+        <!-- DPI/Scale Selection -->
+        <div class="setting-row" style="margin-top: 12px;">
+          <label>Output Scale <span class="setting-hint">({{ exportPixelDimensions.width }}×{{ exportPixelDimensions.height }}px)</span></label>
+          <div class="dpi-toggle">
+            <button
+              :class="{ active: store.exportSettings.dpi === 100 }"
+              @click="store.exportSettings.dpi = 100"
+            >1×</button>
+            <button
+              :class="{ active: store.exportSettings.dpi === 150 }"
+              @click="store.exportSettings.dpi = 150"
+            >1.5×</button>
+            <button
+              :class="{ active: store.exportSettings.dpi === 200 }"
+              @click="store.exportSettings.dpi = 200"
+            >2×</button>
+            <button
+              :class="{ active: store.exportSettings.dpi === 300 }"
+              @click="store.exportSettings.dpi = 300"
+            >3×</button>
           </div>
         </div>
 
@@ -1007,6 +1055,40 @@ const updateExportHeight = (value) => {
 .btn-export-now svg {
   width: 18px;
   height: 18px;
+}
+
+/* Format and DPI Toggle Buttons */
+.format-toggle,
+.dpi-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.format-toggle button,
+.dpi-toggle button {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.format-toggle button:hover,
+.dpi-toggle button:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.format-toggle button.active,
+.dpi-toggle button.active {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
 }
 
 .section-label {

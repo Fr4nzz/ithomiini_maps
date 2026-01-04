@@ -10,7 +10,6 @@ import ImageGallery from './components/ImageGallery.vue'
 import { ASPECT_RATIOS } from './utils/constants'
 import {
   loadImage,
-  roundRect,
   drawLegendOnCanvas,
   drawScaleBarOnCanvas,
   drawAttributionOnCanvas
@@ -44,6 +43,63 @@ const closeMimicrySelector = () => { showMimicrySelector.value = false }
 const openImageGallery = () => { showImageGallery.value = true }
 const closeImageGallery = () => { showImageGallery.value = false }
 
+// Calculate scale bar text from map
+const getScaleBarText = (map) => {
+  if (!map) return '500 km'
+  try {
+    const zoom = map.getZoom()
+    const center = map.getCenter()
+    const lat = center.lat
+    const metersPerPixel = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
+    const distance = metersPerPixel * 100
+    if (distance >= 1000) {
+      const km = distance / 1000
+      if (km >= 500) return Math.round(km / 100) * 100 + ' km'
+      else if (km >= 50) return Math.round(km / 10) * 10 + ' km'
+      else if (km >= 5) return Math.round(km) + ' km'
+      else return km.toFixed(1) + ' km'
+    } else {
+      if (distance >= 100) return Math.round(distance / 10) * 10 + ' m'
+      else return Math.round(distance) + ' m'
+    }
+  } catch (e) {
+    return '500 km'
+  }
+}
+
+// Calculate export hole position (same as preview overlay)
+const calculateExportHole = (containerWidth, containerHeight) => {
+  const ratio = store.exportSettings.aspectRatio
+  let targetWidth, targetHeight
+  if (ratio === 'custom') {
+    targetWidth = store.exportSettings.customWidth
+    targetHeight = store.exportSettings.customHeight
+  } else {
+    const dims = ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
+    targetWidth = dims.width
+    targetHeight = dims.height
+  }
+  const targetAspectRatio = targetWidth / targetHeight
+  const containerAspectRatio = containerWidth / containerHeight
+  const maxPercent = 92
+  let holeWidthPercent, holeHeightPercent
+  if (targetAspectRatio > containerAspectRatio) {
+    holeWidthPercent = maxPercent
+    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
+  } else {
+    holeHeightPercent = maxPercent
+    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
+  }
+  const xPercent = Math.max(2, (100 - holeWidthPercent) / 2)
+  const yPercent = Math.max(2, (100 - holeHeightPercent) / 2)
+  return {
+    x: (xPercent / 100) * containerWidth,
+    y: (yPercent / 100) * containerHeight,
+    width: (Math.min(96, holeWidthPercent) / 100) * containerWidth,
+    height: (Math.min(96, holeHeightPercent) / 100) * containerHeight
+  }
+}
+
 // Direct export function for Export Map button
 const directExportMap = async () => {
   if (!mapRef.value) {
@@ -66,28 +122,46 @@ const directExportMap = async () => {
 
     // Force a fresh render
     map.triggerRepaint()
+    await new Promise(resolve => map.once('idle', resolve))
 
-    // Wait for GPU to complete using double requestAnimationFrame
-    await new Promise(resolve => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(resolve)
-      })
-    })
-
-    // Get the map canvas
+    // Get the map canvas and container dimensions
     const mapCanvas = map.getCanvas()
+    const container = map.getContainer()
+    const containerWidth = container.clientWidth
+    const containerHeight = container.clientHeight
+    const pixelRatio = window.devicePixelRatio || 1
 
-    // Determine export dimensions
+    // Calculate the export hole (preview region) in container pixels
+    const hole = calculateExportHole(containerWidth, containerHeight)
+
+    // Scale to canvas pixels (accounting for devicePixelRatio)
+    const cropX = Math.round(hole.x * pixelRatio)
+    const cropY = Math.round(hole.y * pixelRatio)
+    const cropW = Math.round(hole.width * pixelRatio)
+    const cropH = Math.round(hole.height * pixelRatio)
+
+    // Calculate output dimensions with DPI scale
     const ratio = store.exportSettings.aspectRatio
-    let exportWidth, exportHeight
+    let baseWidth, baseHeight
     if (ratio === 'custom') {
-      exportWidth = store.exportSettings.customWidth
-      exportHeight = store.exportSettings.customHeight
+      baseWidth = store.exportSettings.customWidth
+      baseHeight = store.exportSettings.customHeight
     } else {
       const dims = ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
-      exportWidth = dims.width
-      exportHeight = dims.height
+      baseWidth = dims.width
+      baseHeight = dims.height
     }
+    const dpiScale = store.exportSettings.dpi / 100
+    const exportWidth = Math.round(baseWidth * dpiScale)
+    const exportHeight = Math.round(baseHeight * dpiScale)
+
+    console.log('[Export] Cropping preview region:', {
+      container: `${containerWidth}x${containerHeight}`,
+      pixelRatio,
+      cropRegion: `${cropX},${cropY} ${cropW}x${cropH}`,
+      canvasSize: `${mapCanvas.width}x${mapCanvas.height}`,
+      outputSize: `${exportWidth}x${exportHeight}`
+    })
 
     // Create output canvas
     const canvas = document.createElement('canvas')
@@ -103,32 +177,12 @@ const directExportMap = async () => {
     const mapDataUrl = mapCanvas.toDataURL('image/png')
     const mapImage = await loadImage(mapDataUrl)
 
-    // Calculate how to draw the map
-    if (store.exportSettings.enabled) {
-      // Draw the map scaled to fill the export canvas
-      const scale = Math.max(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
-      )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
-
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
-    } else {
-      // Draw the map scaled to fit (letterboxed)
-      const scale = Math.min(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
-      )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
-
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
-    }
+    // Draw ONLY the cropped region (preview rectangle), scaled to output
+    ctx.drawImage(
+      mapImage,
+      cropX, cropY, cropW, cropH,  // Source: preview rectangle
+      0, 0, canvas.width, canvas.height  // Destination: full output
+    )
 
     // Draw legend if enabled
     if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
@@ -146,6 +200,7 @@ const directExportMap = async () => {
       drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
         legendSettings: store.legendSettings,
         exportSettings: store.exportSettings,
+        scaleBarText: getScaleBarText(map),
       })
     }
 
@@ -154,10 +209,13 @@ const directExportMap = async () => {
       exportSettings: store.exportSettings,
     })
 
-    // Download the image
-    const dataUrl = canvas.toDataURL('image/png', 1.0)
+    // Download the image in selected format
+    const format = store.exportSettings.format || 'png'
+    const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png'
+    const quality = format === 'jpg' ? 0.95 : 1.0
+    const dataUrl = canvas.toDataURL(mimeType, quality)
     const link = document.createElement('a')
-    link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.png`
+    link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.${format}`
     link.href = dataUrl
     link.click()
 
