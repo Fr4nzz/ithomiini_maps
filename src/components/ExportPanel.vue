@@ -270,12 +270,13 @@ const exportImage = async () => {
 
     ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
 
-    // Draw legend
+    // Draw legend - use store.exportSettings.uiScale to match preview exactly
+    // The canvasHelpers already scale based on resolution (height/650), so we only need user's uiScale
     if (store.legendSettings.showLegend) {
       drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
         colorMap: store.activeColorMap,
         legendSettings: store.legendSettings,
-        exportSettings: { uiScale: exportDPI.value / 96, includeLegend: true },
+        exportSettings: { uiScale: store.exportSettings.uiScale, includeLegend: true },
         colorBy: store.colorBy,
         legendTitle: store.legendTitle,
       })
@@ -284,12 +285,12 @@ const exportImage = async () => {
     // Draw scale bar
     drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
       legendSettings: store.legendSettings,
-      exportSettings: { uiScale: exportDPI.value / 96, includeLegend: store.legendSettings.showLegend },
+      exportSettings: { uiScale: store.exportSettings.uiScale, includeLegend: store.legendSettings.showLegend },
     })
 
     // Draw attribution
     drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
-      exportSettings: { uiScale: exportDPI.value / 96 },
+      exportSettings: { uiScale: store.exportSettings.uiScale },
     })
 
     // Generate output in selected format
