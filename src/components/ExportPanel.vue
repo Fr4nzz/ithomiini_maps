@@ -19,6 +19,33 @@ const props = defineProps({
   }
 })
 
+// Calculate scale bar text from map (same logic as useScaleBar)
+const getScaleBarText = (map) => {
+  if (!map) return '500 km'
+  try {
+    const zoom = map.getZoom()
+    const center = map.getCenter()
+    const lat = center.lat
+    // Calculate meters per pixel at this latitude and zoom
+    const metersPerPixel = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
+    // Scale bar is approximately 100px wide
+    const distance = metersPerPixel * 100
+    // Choose appropriate unit and round to nice numbers
+    if (distance >= 1000) {
+      const km = distance / 1000
+      if (km >= 500) return Math.round(km / 100) * 100 + ' km'
+      else if (km >= 50) return Math.round(km / 10) * 10 + ' km'
+      else if (km >= 5) return Math.round(km) + ' km'
+      else return km.toFixed(1) + ' km'
+    } else {
+      if (distance >= 100) return Math.round(distance / 10) * 10 + ' m'
+      else return Math.round(distance) + ' m'
+    }
+  } catch (e) {
+    return '500 km'
+  }
+}
+
 // Export state
 const isExporting = ref(false)
 const exportSuccess = ref(false)
@@ -206,8 +233,61 @@ const copyCitation = (type = 'plain') => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// IMAGE EXPORT - Canvas-based capture of current map view
+// IMAGE EXPORT - Captures exactly what's shown in the export preview rectangle
 // ═══════════════════════════════════════════════════════════════════════════
+
+// Calculate export region position (same logic as useMapEngine.js exportHolePosition)
+const calculateExportHolePixels = (containerWidth, containerHeight) => {
+  // Get target dimensions from store settings
+  const ratio = store.exportSettings.aspectRatio
+  let targetWidth, targetHeight
+
+  const ASPECT_RATIOS = {
+    '16:9': { width: 1920, height: 1080 },
+    '4:3': { width: 1600, height: 1200 },
+    '1:1': { width: 1080, height: 1080 },
+    '3:2': { width: 1800, height: 1200 },
+    'A4': { width: 2480, height: 1754 }
+  }
+
+  if (ratio === 'custom') {
+    targetWidth = store.exportSettings.customWidth
+    targetHeight = store.exportSettings.customHeight
+  } else if (ASPECT_RATIOS[ratio]) {
+    targetWidth = ASPECT_RATIOS[ratio].width
+    targetHeight = ASPECT_RATIOS[ratio].height
+  } else {
+    targetWidth = 1920
+    targetHeight = 1080
+  }
+
+  const targetAspectRatio = targetWidth / targetHeight
+  const containerAspectRatio = containerWidth / containerHeight
+  const maxPercent = 92
+
+  let holeWidthPercent, holeHeightPercent
+
+  if (targetAspectRatio > containerAspectRatio) {
+    holeWidthPercent = maxPercent
+    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
+  } else {
+    holeHeightPercent = maxPercent
+    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
+  }
+
+  const xPercent = Math.max(2, (100 - holeWidthPercent) / 2)
+  const yPercent = Math.max(2, (100 - holeHeightPercent) / 2)
+  const wPercent = Math.min(96, holeWidthPercent)
+  const hPercent = Math.min(96, holeHeightPercent)
+
+  // Convert to pixels
+  return {
+    x: Math.round((xPercent / 100) * containerWidth),
+    y: Math.round((yPercent / 100) * containerHeight),
+    width: Math.round((wPercent / 100) * containerWidth),
+    height: Math.round((hPercent / 100) * containerHeight)
+  }
+}
 
 const exportImage = async () => {
   if (!props.map) {
@@ -233,15 +313,31 @@ const exportImage = async () => {
     // Get the map canvas
     const mapCanvas = map.getCanvas()
 
+    // Calculate the export region (the preview rectangle) in canvas pixels
+    // The map canvas may have a different size than CSS dimensions due to devicePixelRatio
+    const container = map.getContainer()
+    const containerWidth = container.clientWidth
+    const containerHeight = container.clientHeight
+    const pixelRatio = window.devicePixelRatio || 1
+
+    // Get the export hole position in container pixels
+    const hole = calculateExportHolePixels(containerWidth, containerHeight)
+
+    // Scale to canvas pixels (accounting for devicePixelRatio)
+    const cropX = Math.round(hole.x * pixelRatio)
+    const cropY = Math.round(hole.y * pixelRatio)
+    const cropW = Math.round(hole.width * pixelRatio)
+    const cropH = Math.round(hole.height * pixelRatio)
+
     // Calculate output dimensions from paper size and DPI
     const { width: exportWidth, height: exportHeight } = pixelDimensions.value
 
-    console.log('[Export] Canvas export:', {
-      format: exportFormat.value,
-      size: exportSize.value,
-      dpi: exportDPI.value,
-      outputPixels: `${exportWidth}x${exportHeight}`,
-      canvasSize: `${mapCanvas.width}x${mapCanvas.height}`
+    console.log('[Export] Cropping export region:', {
+      container: `${containerWidth}x${containerHeight}`,
+      pixelRatio,
+      cropRegion: `${cropX},${cropY} ${cropW}x${cropH}`,
+      canvasSize: `${mapCanvas.width}x${mapCanvas.height}`,
+      outputSize: `${exportWidth}x${exportHeight}`
     })
 
     // Create output canvas at target resolution
@@ -250,7 +346,7 @@ const exportImage = async () => {
     canvas.width = exportWidth
     canvas.height = exportHeight
 
-    // Fill with dark background
+    // Fill with dark background (in case of any gaps)
     ctx.fillStyle = '#1a1a2e'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -258,39 +354,43 @@ const exportImage = async () => {
     const mapDataUrl = mapCanvas.toDataURL('image/png')
     const mapImage = await loadImage(mapDataUrl)
 
-    // Draw map scaled to fit canvas (cover mode - fills entire canvas)
-    const scale = Math.max(
-      canvas.width / mapImage.width,
-      canvas.height / mapImage.height
+    // Draw ONLY the cropped region, scaled to fill the output canvas
+    // This is the key difference - we crop to the exact preview rectangle
+    ctx.drawImage(
+      mapImage,
+      cropX, cropY, cropW, cropH,  // Source rectangle (crop region)
+      0, 0, canvas.width, canvas.height  // Destination (full output canvas)
     )
-    const scaledWidth = mapImage.width * scale
-    const scaledHeight = mapImage.height * scale
-    const offsetX = (canvas.width - scaledWidth) / 2
-    const offsetY = (canvas.height - scaledHeight) / 2
 
-    ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
+    // Calculate scale factor for UI elements
+    // The preview hole has dimensions: hole.width x hole.height (CSS pixels)
+    // We scale UI elements to maintain the same visual proportion
+    const uiScale = store.exportSettings.uiScale
+    const previewToExportScale = exportWidth / hole.width
 
-    // Draw legend - use store.exportSettings.uiScale to match preview exactly
-    // The canvasHelpers already scale based on resolution (height/650), so we only need user's uiScale
-    if (store.legendSettings.showLegend) {
+    // Draw legend inside export area (matching preview position)
+    if (store.legendSettings.showLegend && store.exportSettings.includeLegend) {
       drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
         colorMap: store.activeColorMap,
         legendSettings: store.legendSettings,
-        exportSettings: { uiScale: store.exportSettings.uiScale, includeLegend: true },
+        exportSettings: { uiScale: uiScale, includeLegend: true },
         colorBy: store.colorBy,
         legendTitle: store.legendTitle,
       })
     }
 
-    // Draw scale bar
-    drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
-      legendSettings: store.legendSettings,
-      exportSettings: { uiScale: store.exportSettings.uiScale, includeLegend: store.legendSettings.showLegend },
-    })
+    // Draw scale bar (matching preview position)
+    if (store.exportSettings.includeScaleBar) {
+      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
+        legendSettings: store.legendSettings,
+        exportSettings: { uiScale: uiScale, includeLegend: store.legendSettings.showLegend && store.exportSettings.includeLegend },
+        scaleBarText: getScaleBarText(map),
+      })
+    }
 
-    // Draw attribution
+    // Draw attribution (small, in corner)
     drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
-      exportSettings: { uiScale: store.exportSettings.uiScale },
+      exportSettings: { uiScale: uiScale },
     })
 
     // Generate output in selected format

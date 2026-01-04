@@ -138,7 +138,7 @@ export const drawLegendOnCanvas = (ctx, width, height, options) => {
 
 // Draw scale bar on canvas for export
 export const drawScaleBarOnCanvas = (ctx, width, height, options) => {
-  const { legendSettings, exportSettings } = options
+  const { legendSettings, exportSettings, scaleBarText } = options
   const uiScale = exportSettings.uiScale || 1
   const referenceHeight = 650
   const resolutionScale = height / referenceHeight
@@ -164,6 +164,9 @@ export const drawScaleBarOnCanvas = (ctx, width, height, options) => {
   ctx.fillRect(x, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
   ctx.fillRect(x + barWidth - 2 * scale, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
 
+  // Use actual scale bar text if provided, otherwise fallback
+  const displayText = scaleBarText || 'Scale varies with latitude'
+
   ctx.fillStyle = '#fff'
   ctx.font = `bold ${11 * scale}px system-ui, sans-serif`
   ctx.textAlign = legendSettings.position === 'bottom-right' && exportSettings.includeLegend ? 'left' : 'right'
@@ -171,7 +174,7 @@ export const drawScaleBarOnCanvas = (ctx, width, height, options) => {
   ctx.shadowColor = 'rgba(0,0,0,0.7)'
   ctx.shadowBlur = 3
   ctx.fillText(
-    'Scale varies with latitude',
+    displayText,
     legendSettings.position === 'bottom-right' && exportSettings.includeLegend ? x : x + barWidth,
     y + barHeight + 6 * scale
   )
