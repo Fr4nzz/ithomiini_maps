@@ -307,7 +307,7 @@ library(jsonlite)
 # Read the exported files
 points <- st_read("data.geojson", quiet = TRUE)
 config <- fromJSON("view_config.json")
-legend <- fromJSON("legend.json")
+legend_data <- fromJSON("legend.json")
 
 # Extract bounds
 xlim <- c(config$bounds$west, config$bounds$east)
@@ -328,9 +328,8 @@ world <- ne_countries(scale = "medium", returnclass = "sf")
 # Create the map
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Set up color mapping
-color_values <- legend$colors
-names(color_values) <- names(legend$colors)
+# Set up color mapping - convert JSON list to named character vector
+color_values <- unlist(legend_data$colors)
 
 # Create ggplot map matching the web app style (dark theme)
 p <- ggplot() +
@@ -343,7 +342,7 @@ p <- ggplot() +
   # Use exact colors from web app
   scale_color_manual(
     values = color_values,
-    name = legend$title
+    name = legend_data$title
   ) +
 
   # Set map extent to match web app view
@@ -356,18 +355,21 @@ p <- ggplot() +
     panel.background = element_rect(fill = "#1a1a2e", color = NA),
     plot.background = element_rect(fill = "#1a1a2e", color = NA),
 
-    # Legend styling
-    legend.position = "bottom",
-    legend.background = element_rect(fill = "#1a1a2e", color = NA),
-    legend.text = element_text(color = "#e0e0e0", size = 8${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ? ', face = "italic"' : ''}),
-    legend.title = element_text(color = "#888888", size = 9, face = "bold"),
-    legend.key = element_rect(fill = NA, color = NA)
+    # Legend styling - positioned inside plot on left side like web preview
+    legend.position = c(0.01, 0.5),
+    legend.justification = c(0, 0.5),
+    legend.background = element_rect(fill = alpha("#252540", 0.95), color = "#3d3d5c", linewidth = 0.5),
+    legend.margin = margin(10, 10, 10, 10),
+    legend.text = element_text(color = "#e0e0e0", size = 7${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ? ', face = "italic"' : ''}),
+    legend.title = element_text(color = "#888888", size = 8, face = "bold"),
+    legend.key = element_rect(fill = NA, color = NA),
+    legend.key.size = unit(0.4, "cm")
   ) +
 
   # Guide settings
   guides(color = guide_legend(
-    ncol = 3,
-    override.aes = list(size = 3)
+    ncol = 1,
+    override.aes = list(size = 2.5)
   ))
 
 # Print preview
@@ -378,15 +380,15 @@ print(p)
 # ═══════════════════════════════════════════════════════════════════════════
 
 # Save as SVG (scalable vector graphics)
-ggsave("ithomiini_map.svg", plot = p, width = 10, height = 8, dpi = 300)
+ggsave("ithomiini_map.svg", plot = p, width = 16, height = 9, dpi = 300)
 cat("Saved: ithomiini_map.svg\\n")
 
 # Save as PDF (vector, publication-ready)
-ggsave("ithomiini_map.pdf", plot = p, width = 10, height = 8, dpi = 300)
+ggsave("ithomiini_map.pdf", plot = p, width = 16, height = 9, dpi = 300)
 cat("Saved: ithomiini_map.pdf\\n")
 
 # Save as high-resolution PNG
-ggsave("ithomiini_map.png", plot = p, width = 10, height = 8, dpi = 300)
+ggsave("ithomiini_map.png", plot = p, width = 16, height = 9, dpi = 300)
 cat("Saved: ithomiini_map.png\\n")
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -396,21 +398,25 @@ cat("Saved: ithomiini_map.png\\n")
 p_light <- ggplot() +
   geom_sf(data = world, fill = "#f8f8f8", color = "#cccccc", linewidth = 0.3) +
   geom_sf(data = points, aes(color = ${colorBy}), size = 2, alpha = 0.8) +
-  scale_color_manual(values = color_values, name = legend$title) +
+  scale_color_manual(values = color_values, name = legend_data$title) +
   coord_sf(xlim = xlim, ylim = ylim, expand = FALSE) +
   theme_void() +
   theme(
     panel.background = element_rect(fill = "#ffffff", color = NA),
     plot.background = element_rect(fill = "#ffffff", color = NA),
-    legend.position = "bottom",
-    legend.text = element_text(color = "#333333", size = 8${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ? ', face = "italic"' : ''}),
-    legend.title = element_text(color = "#666666", size = 9, face = "bold")
+    legend.position = c(0.01, 0.5),
+    legend.justification = c(0, 0.5),
+    legend.background = element_rect(fill = alpha("#ffffff", 0.95), color = "#cccccc", linewidth = 0.5),
+    legend.margin = margin(10, 10, 10, 10),
+    legend.text = element_text(color = "#333333", size = 7${colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' ? ', face = "italic"' : ''}),
+    legend.title = element_text(color = "#666666", size = 8, face = "bold"),
+    legend.key.size = unit(0.4, "cm")
   ) +
-  guides(color = guide_legend(ncol = 3, override.aes = list(size = 3)))
+  guides(color = guide_legend(ncol = 1, override.aes = list(size = 2.5)))
 
 # Save light theme versions
-ggsave("ithomiini_map_light.svg", plot = p_light, width = 10, height = 8, dpi = 300)
-ggsave("ithomiini_map_light.pdf", plot = p_light, width = 10, height = 8, dpi = 300)
+ggsave("ithomiini_map_light.svg", plot = p_light, width = 16, height = 9, dpi = 300)
+ggsave("ithomiini_map_light.pdf", plot = p_light, width = 16, height = 9, dpi = 300)
 cat("Saved light theme versions\\n")
 
 cat("\\n✅ All exports complete!\\n")
