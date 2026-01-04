@@ -335,7 +335,7 @@ const generateRScript = (colorBy) => {
 # ═══════════════════════════════════════════════════════════════════════════
 
 # Install required packages if needed
-required_packages <- c("sf", "ggplot2", "jsonlite", "png", "grid")
+required_packages <- c("sf", "ggplot2", "jsonlite", "png", "grid", "terra")
 new_packages <- required_packages[!(required_packages %in% installed.packages()[,"Package"])]
 if(length(new_packages)) install.packages(new_packages)
 
@@ -344,6 +344,7 @@ library(ggplot2)
 library(jsonlite)
 library(png)
 library(grid)
+library(terra)
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Load exported data
@@ -359,15 +360,40 @@ xlim <- c(config$bounds$west, config$bounds$east)
 ylim <- c(config$bounds$south, config$bounds$north)
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Load basemap raster (exported from web app - matches CartoDB Dark tiles)
+# Load basemap - try maptiles (CartoDB Dark Matter), then fallback to PNG
 # ═══════════════════════════════════════════════════════════════════════════
 
-basemap <- NULL
-if (file.exists("basemap.png")) {
-  basemap <- readPNG("basemap.png")
-  cat("Loaded basemap.png (matches web app exactly)\\n")
-} else {
-  cat("Note: basemap.png not found - will use Natural Earth vector basemap\\n")
+basemap_rast <- NULL
+use_maptiles <- FALSE
+
+# Option 1: Try maptiles package (can fetch fresh CartoDB Dark Matter tiles)
+# This allows you to pan/zoom to different areas
+if (require("maptiles", quietly = TRUE)) {
+  cat("Using maptiles package for CartoDB Dark Matter basemap...\\n")
+  tryCatch({
+    # Create bounding box for tile download
+    bbox <- st_bbox(c(xmin = xlim[1], ymin = ylim[1], xmax = xlim[2], ymax = ylim[2]), crs = 4326)
+    bbox_sf <- st_as_sfc(bbox)
+
+    # Download CartoDB Dark Matter tiles (same as web app!)
+    basemap_rast <- get_tiles(bbox_sf, provider = "CartoDB.DarkMatter", crop = TRUE, zoom = NULL)
+    use_maptiles <- TRUE
+    cat("Successfully loaded CartoDB Dark Matter tiles\\n")
+  }, error = function(e) {
+    cat(paste("Could not fetch tiles:", e$message, "\\n"))
+  })
+}
+
+# Option 2: Fall back to exported PNG (exact screenshot from web app)
+basemap_png <- NULL
+if (!use_maptiles && file.exists("basemap.png")) {
+  basemap_png <- readPNG("basemap.png")
+  cat("Loaded basemap.png (exact export from web app)\\n")
+}
+
+# Option 3: Will use Natural Earth vector basemap if neither works
+if (!use_maptiles && is.null(basemap_png)) {
+  cat("No basemap available - will use Natural Earth vector countries\\n")
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -387,6 +413,12 @@ cat(paste("Legend has", nrow(legend_items), "items\\n"))
 # Create the map with basemap background
 # ═══════════════════════════════════════════════════════════════════════════
 
+# Load tidyterra for plotting SpatRaster with ggplot2 (if using maptiles)
+if (use_maptiles) {
+  if (!require("tidyterra", quietly = TRUE)) install.packages("tidyterra")
+  library(tidyterra)
+}
+
 # Start with base plot
 p <- ggplot() +
   theme_void() +
@@ -395,9 +427,13 @@ p <- ggplot() +
     plot.background = element_rect(fill = "#1a1a2e", color = NA)
   )
 
-# Add basemap raster if available (this is the exact web app basemap)
-if (!is.null(basemap)) {
-  p <- p + annotation_raster(basemap, xmin = xlim[1], xmax = xlim[2], ymin = ylim[1], ymax = ylim[2])
+# Add basemap based on what's available
+if (use_maptiles && !is.null(basemap_rast)) {
+  # Use maptiles raster (CartoDB Dark Matter - same as web app!)
+  p <- p + geom_spatraster_rgb(data = basemap_rast)
+} else if (!is.null(basemap_png)) {
+  # Use exported PNG from web app
+  p <- p + annotation_raster(basemap_png, xmin = xlim[1], xmax = xlim[2], ymin = ylim[1], ymax = ylim[2])
 }
 
 # Add data points using display_color (pre-computed exact colors from web app)
@@ -496,7 +532,7 @@ create_legend_grob <- function(items, title, is_italic = FALSE) {
 # Add legend to plot
 p_with_legend <- p +
   annotation_custom(
-    create_legend_grob(legend_items, legend_data\$title, ${isItalic}),
+    create_legend_grob(legend_items, legend_data\$title, ${isItalic ? 'TRUE' : 'FALSE'}),
     xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
   )
 
@@ -541,7 +577,7 @@ p_vector <- ggplot() +
     plot.background = element_rect(fill = "#1a1a2e", color = NA)
   ) +
   annotation_custom(
-    create_legend_grob(legend_items, legend_data\$title, ${isItalic}),
+    create_legend_grob(legend_items, legend_data\$title, ${isItalic ? 'TRUE' : 'FALSE'}),
     xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
   )
 
@@ -599,7 +635,7 @@ p_light <- ggplot() +
     plot.background = element_rect(fill = "#ffffff", color = NA)
   ) +
   annotation_custom(
-    create_legend_grob_light(legend_items, legend_data\$title, ${isItalic}),
+    create_legend_grob_light(legend_items, legend_data\$title, ${isItalic ? 'TRUE' : 'FALSE'}),
     xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
   )
 
@@ -656,7 +692,15 @@ R packages (will auto-install if missing):
 - png              : Read basemap image
 - grid             : Custom legend rendering
 - jsonlite         : Reading config files
+- terra            : Raster handling
 - rnaturalearth    : Country boundaries (for pure vector version)
+
+OPTIONAL (recommended):
+- maptiles         : Fetches CartoDB Dark Matter tiles directly (same as web app!)
+- tidyterra        : Plots maptiles rasters with ggplot2
+
+To install maptiles: install.packages("maptiles")
+This allows you to pan/zoom the map in R and still get the exact same basemap!
 
 WHY R?
 ------
