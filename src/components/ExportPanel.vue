@@ -290,12 +290,16 @@ const exportForR = async () => {
       console.warn('[Export] Could not capture basemap:', e)
     }
 
+    // Generate HTML file for exact reproduction
+    const mapHTML = generateMapHTML(exportGeoJSON, viewConfig, legendConfig, colorBy)
+
     // Create ZIP file
     const zip = new JSZip()
     zip.file('data.geojson', JSON.stringify(exportGeoJSON, null, 2))
     zip.file('view_config.json', JSON.stringify(viewConfig, null, 2))
     zip.file('legend.json', JSON.stringify(legendConfig, null, 2))
     zip.file('generate_map.R', rScript)
+    zip.file('map.html', mapHTML)
     zip.file('README.txt', generateReadme())
 
     // Add basemap if captured
@@ -643,11 +647,57 @@ ggsave("ithomiini_map_light.svg", plot = p_light, width = 16, height = 9, dpi = 
 ggsave("ithomiini_map_light.pdf", plot = p_light, width = 16, height = 9, dpi = 300)
 cat("Saved: ithomiini_map_light.svg/pdf\\n")
 
+# ═══════════════════════════════════════════════════════════════════════════
+# Option: EXACT reproduction using webshot2 to render the HTML file
+# This produces an image identical to the web app preview
+# ═══════════════════════════════════════════════════════════════════════════
+
+cat("\\nChecking for webshot2 (for exact web preview reproduction)...\\n")
+
+if (file.exists("map.html")) {
+  if (require("webshot2", quietly = TRUE)) {
+    cat("Rendering HTML with webshot2 for exact match...\\n")
+    tryCatch({
+      # Render the HTML file - this produces EXACT same output as web app
+      webshot2::webshot(
+        "map.html",
+        "ithomiini_map_exact.png",
+        vwidth = 1920,
+        vheight = 1080,
+        delay = 2  # Wait for map tiles to load
+      )
+      cat("Saved: ithomiini_map_exact.png (EXACT match to web preview)\\n")
+
+      # Also save a higher resolution version
+      webshot2::webshot(
+        "map.html",
+        "ithomiini_map_exact_4k.png",
+        vwidth = 3840,
+        vheight = 2160,
+        delay = 2
+      )
+      cat("Saved: ithomiini_map_exact_4k.png (4K resolution)\\n")
+    }, error = function(e) {
+      cat(paste("webshot2 rendering failed:", e$message, "\\n"))
+      cat("Install Chrome or Chromium for webshot2 to work.\\n")
+    })
+  } else {
+    cat("webshot2 not installed. To get EXACT web preview reproduction:\\n")
+    cat("  install.packages('webshot2')\\n")
+    cat("  # Also requires Chrome or Chromium browser\\n")
+    cat("Then re-run this script.\\n")
+  }
+} else {
+  cat("map.html not found in export package.\\n")
+}
+
 cat("\\n✅ All exports complete!\\n")
 cat("\\nOutput files:\\n")
-cat("  - ithomiini_map.pdf/png       : Web basemap (raster) + vector points\\n")
-cat("  - ithomiini_map_vector.svg/pdf: Pure vector (Natural Earth basemap)\\n")
-cat("  - ithomiini_map_light.svg/pdf : Light theme version\\n")
+cat("  - ithomiini_map.pdf/png         : Web basemap (raster) + vector points\\n")
+cat("  - ithomiini_map_vector.svg/pdf  : Pure vector (Natural Earth basemap)\\n")
+cat("  - ithomiini_map_light.svg/pdf   : Light theme version\\n")
+cat("  - ithomiini_map_exact.png       : EXACT web preview (requires webshot2)\\n")
+cat("  - ithomiini_map_exact_4k.png    : 4K version of exact preview\\n")
 `
 }
 
@@ -667,6 +717,7 @@ FILES INCLUDED:
 - view_config.json  : Map view bounds and settings
 - legend.json       : Legend colors and labels
 - basemap.png       : Exact basemap from web app (CartoDB Dark tiles)
+- map.html          : Standalone HTML file (EXACT reproduction of web preview)
 - generate_map.R    : R script to recreate the map
 - README.txt        : This file
 
@@ -683,6 +734,8 @@ OUTPUT FILES:
 - ithomiini_map.pdf/png        : Raster basemap + vector points (matches web)
 - ithomiini_map_vector.svg/pdf : Pure vector (Natural Earth basemap)
 - ithomiini_map_light.svg/pdf  : Light theme version
+- ithomiini_map_exact.png      : EXACT reproduction of web preview (requires webshot2)
+- ithomiini_map_exact_4k.png   : 4K resolution version of exact preview
 
 REQUIREMENTS:
 -------------
@@ -698,9 +751,25 @@ R packages (will auto-install if missing):
 OPTIONAL (recommended):
 - maptiles         : Fetches CartoDB Dark Matter tiles directly (same as web app!)
 - tidyterra        : Plots maptiles rasters with ggplot2
+- webshot2         : Renders HTML to produce EXACT match of web preview
 
-To install maptiles: install.packages("maptiles")
-This allows you to pan/zoom the map in R and still get the exact same basemap!
+To install optional packages:
+  install.packages(c("maptiles", "webshot2"))
+
+Note: webshot2 requires Chrome or Chromium browser to be installed.
+
+EXACT REPRODUCTION (map.html):
+------------------------------
+The map.html file is a standalone HTML file that renders identically to the
+web app preview. You can:
+
+1. Open it directly in a browser to view/interact with the map
+2. Use webshot2 in R to render it as a high-resolution image (automatic)
+3. Use browser print-to-PDF for vector output
+4. Screenshot it manually at any resolution
+
+The R script will automatically attempt to render map.html using webshot2
+if it's installed, producing ithomiini_map_exact.png and a 4K version.
 
 WHY R?
 ------
@@ -731,6 +800,157 @@ Generated: ${new Date().toISOString()}
 Version: ${shortHash}
 ═══════════════════════════════════════════════════════════════════════════
 `
+}
+
+// Generate standalone HTML file that renders exact same map as web app
+const generateMapHTML = (geoJSON, viewConfig, legendConfig, colorBy) => {
+  const isItalic = colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' || colorBy === 'scientific_name'
+  const legendItems = legendConfig.items || []
+
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ithomiini Distribution Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    #map { width: 100vw; height: 100vh; }
+
+    /* Legend - matches web app exactly */
+    .legend {
+      position: absolute;
+      bottom: 40px;
+      left: 20px;
+      background: rgba(37, 37, 64, 0.95);
+      border: 1px solid #3d3d5c;
+      border-radius: 8px;
+      padding: 12px;
+      max-height: 60vh;
+      overflow-y: auto;
+      min-width: 180px;
+      z-index: 1000;
+    }
+    .legend-title {
+      color: #888888;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 0;
+    }
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-label {
+      color: #e0e0e0;
+      font-size: 12px;
+      ${isItalic ? 'font-style: italic;' : ''}
+    }
+
+    /* Scale bar */
+    .maplibregl-ctrl-scale {
+      background: rgba(37, 37, 64, 0.9) !important;
+      color: #e0e0e0 !important;
+      border-color: #e0e0e0 !important;
+      font-size: 11px !important;
+    }
+
+    /* Hide attribution for cleaner export */
+    .maplibregl-ctrl-attrib { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div class="legend">
+    <div class="legend-title">${legendConfig.title || colorBy}</div>
+    ${legendItems.map(item => `
+    <div class="legend-item">
+      <div class="legend-color" style="background: ${item.color}"></div>
+      <span class="legend-label">${item.label}</span>
+    </div>
+    `).join('')}
+  </div>
+
+  <script>
+    // GeoJSON data embedded
+    const geoData = ${JSON.stringify(geoJSON)};
+
+    // View config
+    const config = ${JSON.stringify(viewConfig)};
+
+    // Initialize map
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: {
+        version: 8,
+        sources: {
+          'carto-dark': {
+            type: 'raster',
+            tiles: ['https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png'],
+            tileSize: 256,
+            attribution: '© CartoDB © OpenStreetMap'
+          }
+        },
+        layers: [{
+          id: 'carto-dark-layer',
+          type: 'raster',
+          source: 'carto-dark',
+          minzoom: 0,
+          maxzoom: 22
+        }]
+      },
+      center: [config.center.lng, config.center.lat],
+      zoom: config.zoom,
+      preserveDrawingBuffer: true // Required for canvas export
+    });
+
+    // Add scale bar
+    map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
+
+    map.on('load', () => {
+      // Add data source
+      map.addSource('points', {
+        type: 'geojson',
+        data: geoData
+      });
+
+      // Add points layer with exact colors from web app
+      map.addLayer({
+        id: 'points-layer',
+        type: 'circle',
+        source: 'points',
+        paint: {
+          'circle-radius': 6,
+          'circle-color': ['get', 'display_color'],
+          'circle-opacity': 0.8,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': 'rgba(255,255,255,0.3)'
+        }
+      });
+
+      // Fit to bounds
+      map.fitBounds([
+        [config.bounds.west, config.bounds.south],
+        [config.bounds.east, config.bounds.north]
+      ], { padding: 20, duration: 0 });
+    });
+  </script>
+</body>
+</html>`
 }
 
 // Active tab - use prop as initial value
