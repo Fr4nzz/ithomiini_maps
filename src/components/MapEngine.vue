@@ -13,7 +13,6 @@ import {
   useScatterVisualization,
   useDataLayer,
   useStyleSwitcher,
-  useScaleBar,
   useCountryBoundaries
 } from '../composables/useMapEngine'
 
@@ -49,9 +48,8 @@ const {
   cleanup: cleanupSearch
 } = useLocationSearch(map)
 
-const { legendTransformOrigin, exportHolePosition } = useExportPreview(containerSize)
+const { legendTransformOrigin } = useExportPreview(containerSize)
 const { updateScatterVisualization } = useScatterVisualization(map)
-const { scaleBarText, updateScaleBar } = useScaleBar(map)
 
 // Popup handler for data layer
 const handleShowPopup = (data) => {
@@ -124,6 +122,34 @@ const handleMapLayerClickOutside = (event) => {
 // Legend position class based on store settings
 const legendPositionClass = computed(() => {
   return `legend-${store.legendSettings.position}`
+})
+
+// Compute map container styles for export aspect ratio
+const mapContainerStyle = computed(() => {
+  if (!store.exportSettings.enabled) {
+    return {} // Full size when not in export mode
+  }
+
+  const ratio = store.exportSettings.aspectRatio
+  let targetWidth, targetHeight
+
+  if (ratio === 'custom') {
+    targetWidth = store.exportSettings.customWidth
+    targetHeight = store.exportSettings.customHeight
+  } else if (ASPECT_RATIOS[ratio]) {
+    targetWidth = ASPECT_RATIOS[ratio].width
+    targetHeight = ASPECT_RATIOS[ratio].height
+  } else {
+    return {}
+  }
+
+  const aspectRatio = targetWidth / targetHeight
+  return {
+    aspectRatio: `${aspectRatio}`,
+    maxWidth: '100%',
+    maxHeight: '100%',
+    margin: 'auto'
+  }
 })
 
 // Limit color map items for legend display
@@ -207,11 +233,7 @@ const initMap = () => {
   map.value.on('load', () => {
     addDataLayer()
     emit('map-ready', map.value)
-    updateScaleBar()
   })
-
-  map.value.on('moveend', updateScaleBar)
-  map.value.on('zoomend', updateScaleBar)
 }
 
 // Track previous data length to detect actual data changes
@@ -339,8 +361,19 @@ watch(
 </script>
 
 <template>
-  <div class="map-wrapper">
-    <div ref="mapContainer" class="map"></div>
+  <div class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled }">
+    <div
+      ref="mapContainer"
+      class="map"
+      :class="{ 'map-export-preview': store.exportSettings.enabled }"
+      :style="mapContainerStyle"
+    ></div>
+
+    <!-- Export info badge (shown when in export mode) -->
+    <div v-if="store.exportSettings.enabled" class="export-info-badge">
+      <span class="export-ratio">{{ store.exportSettings.aspectRatio }}</span>
+      <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
+    </div>
 
     <!-- Enhanced Popup Container (rendered via MapLibre popup) -->
     <div v-show="false">
@@ -493,12 +526,19 @@ watch(
       </div>
     </div>
 
-    <!-- Legend (shown when NOT in export mode) -->
+    <!-- Legend (always shown when enabled, positioned inside map container) -->
     <div
-      v-if="store.legendSettings.showLegend && !store.exportSettings.enabled"
+      v-if="store.legendSettings.showLegend"
       class="legend"
-      :class="legendPositionClass"
-      :style="{ fontSize: store.legendSettings.textSize + 'rem' }"
+      :class="[legendPositionClass, { 'legend-export': store.exportSettings.enabled && store.exportSettings.includeLegend }]"
+      :style="{
+        fontSize: store.exportSettings.enabled
+          ? (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem'
+          : store.legendSettings.textSize + 'rem',
+        transform: store.exportSettings.enabled ? 'scale(' + store.exportSettings.uiScale + ')' : 'none',
+        transformOrigin: legendTransformOrigin,
+        display: store.exportSettings.enabled && !store.exportSettings.includeLegend ? 'none' : 'block'
+      }"
     >
       <div class="legend-title">{{ store.legendTitle }}</div>
       <div
@@ -514,88 +554,6 @@ watch(
       </div>
     </div>
 
-    <!-- Export Preview Overlay -->
-    <div v-if="store.exportSettings.enabled" class="export-overlay">
-      <!-- Dark mask with transparent hole in center -->
-      <svg class="export-mask" width="100%" height="100%">
-        <defs>
-          <mask id="export-hole">
-            <rect width="100%" height="100%" fill="white"/>
-            <rect
-              class="export-hole-rect"
-              :x="exportHolePosition.x + '%'"
-              :y="exportHolePosition.y + '%'"
-              :width="exportHolePosition.width + '%'"
-              :height="exportHolePosition.height + '%'"
-              fill="black"
-            />
-          </mask>
-        </defs>
-        <rect width="100%" height="100%" fill="rgba(0,0,0,0.6)" mask="url(#export-hole)"/>
-      </svg>
-
-      <!-- Export region border -->
-      <div
-        class="export-region-frame"
-        :style="{
-          left: exportHolePosition.x + '%',
-          top: exportHolePosition.y + '%',
-          width: exportHolePosition.width + '%',
-          height: exportHolePosition.height + '%'
-        }"
-      >
-        <!-- Corner handles -->
-        <div class="export-corner export-corner-tl"></div>
-        <div class="export-corner export-corner-tr"></div>
-        <div class="export-corner export-corner-bl"></div>
-        <div class="export-corner export-corner-br"></div>
-
-        <!-- Export info badge -->
-        <div class="export-info">
-          <span class="export-ratio">{{ store.exportSettings.aspectRatio }}</span>
-          <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
-        </div>
-
-        <!-- Legend inside export region (scaled) -->
-        <div
-          v-if="store.legendSettings.showLegend && store.exportSettings.includeLegend"
-          class="export-legend"
-          :class="'export-legend-' + store.legendSettings.position"
-          :style="{
-            fontSize: (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem',
-            transform: 'scale(' + store.exportSettings.uiScale + ')',
-            transformOrigin: legendTransformOrigin
-          }"
-        >
-          <div class="legend-title">{{ store.legendTitle }}</div>
-          <div
-            v-for="(color, label) in limitedColorMap"
-            :key="label"
-            class="legend-item"
-          >
-            <span class="legend-dot" :style="{ backgroundColor: color }"></span>
-            <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
-          </div>
-          <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
-            + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
-          </div>
-        </div>
-
-        <!-- Scale bar inside export region -->
-        <div
-          v-if="store.exportSettings.includeScaleBar"
-          class="export-scale-bar"
-          :class="{ 'export-scale-bar-left': store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend }"
-          :style="{
-            transform: 'scale(' + store.exportSettings.uiScale + ')',
-            transformOrigin: store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'bottom left' : 'bottom right'
-          }"
-        >
-          <div class="scale-bar-line"></div>
-          <span class="scale-bar-text">{{ scaleBarText }}</span>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -607,9 +565,54 @@ watch(
   overflow: hidden;
 }
 
+/* Export mode: center the aspect-ratio constrained map */
+.map-wrapper.export-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d1a;
+}
+
 .map {
   width: 100%;
   height: 100%;
+}
+
+/* Export preview: map resizes to aspect ratio */
+.map.map-export-preview {
+  border: 2px dashed rgba(74, 222, 128, 0.9);
+  border-radius: 4px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Export info badge */
+.export-info-badge {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(26, 26, 46, 0.95);
+  padding: 8px 14px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 20;
+}
+
+.export-info-badge .export-ratio {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #4ade80;
+}
+
+.export-info-badge .export-dimensions {
+  font-size: 0.75em;
+  color: #aaa;
+  font-family: monospace;
 }
 
 /* MapLibre Controls Customization */
@@ -1209,173 +1212,6 @@ watch(
     bottom: 100px;
     font-size: 0.9em;
   }
-}
-
-/* Export Preview Overlay */
-.export-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  overflow: hidden;
-}
-
-.export-mask {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.export-region-frame {
-  position: absolute;
-  border: 2px dashed rgba(74, 222, 128, 0.9);
-  border-radius: 2px;
-  box-sizing: border-box;
-}
-
-.export-corner {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2px solid #4ade80;
-  background: transparent;
-}
-
-.export-corner-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
-.export-corner-tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
-.export-corner-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
-.export-corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
-
-.export-info {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  background: rgba(26, 26, 46, 0.95);
-  padding: 8px 14px;
-  border-radius: 6px;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-}
-
-.export-ratio {
-  font-size: 0.85em;
-  font-weight: 700;
-  color: #4ade80;
-}
-
-.export-dimensions {
-  font-size: 0.75em;
-  color: #aaa;
-  font-family: monospace;
-}
-
-.export-legend {
-  position: absolute;
-  background: rgba(26, 26, 46, 0.95);
-  border-radius: 8px;
-  padding: 12px 16px;
-  max-height: 60%;
-  overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  z-index: 2;
-}
-
-.export-legend-bottom-left { bottom: 15px; left: 15px; }
-.export-legend-bottom-right { bottom: 15px; right: 15px; }
-.export-legend-top-left { top: 50px; left: 15px; }
-.export-legend-top-right { top: 50px; right: 15px; }
-
-.export-legend .legend-title {
-  font-size: 0.75em;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #888;
-  margin-bottom: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #3d3d5c;
-}
-
-.export-legend .legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 0;
-  font-size: 0.85em;
-  color: #e0e0e0;
-}
-
-.export-legend .legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  display: inline-block;
-}
-
-.export-legend .legend-label-italic { font-style: italic; }
-
-.export-legend .legend-more {
-  font-size: 0.75em;
-  color: #888;
-  font-style: italic;
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid #3d3d5c;
-}
-
-.export-scale-bar {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  z-index: 2;
-}
-
-.export-scale-bar-left {
-  right: auto;
-  left: 15px;
-  align-items: flex-start;
-}
-
-.scale-bar-line {
-  width: 100px;
-  height: 4px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  position: relative;
-}
-
-.scale-bar-line::before,
-.scale-bar-line::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 8px;
-  background: #fff;
-  top: -2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.scale-bar-line::before { left: 0; }
-.scale-bar-line::after { right: 0; }
-
-.scale-bar-text {
-  font-size: 0.7em;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* Enhanced Popup */
