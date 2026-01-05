@@ -145,38 +145,38 @@ const mapContainerStyle = computed(() => {
   }
 
   const targetAspectRatio = targetWidth / targetHeight
-  const wrapperAspectRatio = wrapperSize.value.width / wrapperSize.value.height
+  const wrapperWidth = wrapperSize.value.width
+  const wrapperHeight = wrapperSize.value.height
+  const wrapperAspectRatio = wrapperWidth / wrapperHeight
+
+  // Calculate actual pixel dimensions that fit within wrapper while maintaining aspect ratio
+  let mapWidth, mapHeight
+  if (targetAspectRatio >= wrapperAspectRatio) {
+    // Target is wider - constrain by width, calculate height
+    mapWidth = wrapperWidth
+    mapHeight = wrapperWidth / targetAspectRatio
+  } else {
+    // Target is taller - constrain by height, calculate width
+    mapHeight = wrapperHeight
+    mapWidth = wrapperHeight * targetAspectRatio
+  }
 
   // Debug logging
   console.log('[Export Preview Debug]', {
-    wrapperSize: wrapperSize.value,
+    wrapperSize: `${wrapperWidth.toFixed(0)}x${wrapperHeight.toFixed(0)}`,
     wrapperAspectRatio: wrapperAspectRatio.toFixed(3),
     targetRatio: ratio,
-    targetDimensions: `${targetWidth}x${targetHeight}`,
     targetAspectRatio: targetAspectRatio.toFixed(3),
+    calculatedMapSize: `${mapWidth.toFixed(0)}x${mapHeight.toFixed(0)}`,
     comparison: targetAspectRatio >= wrapperAspectRatio ? 'target WIDER - constrain by width' : 'target TALLER - constrain by height'
   })
 
-  // Compare target aspect ratio to wrapper aspect ratio to determine constraining dimension
-  if (targetAspectRatio >= wrapperAspectRatio) {
-    // Target is wider than or equal to wrapper - constrain by width, let height be calculated
-    const style = {
-      width: '100%',
-      height: 'auto',
-      aspectRatio: `${targetAspectRatio}`
-    }
-    console.log('[Export Preview] Applied style:', style)
-    return style
-  } else {
-    // Target is taller than wrapper - constrain by height, let width be calculated
-    const style = {
-      width: 'auto',
-      height: '100%',
-      aspectRatio: `${targetAspectRatio}`
-    }
-    console.log('[Export Preview] Applied style:', style)
-    return style
+  const style = {
+    width: `${mapWidth}px`,
+    height: `${mapHeight}px`
   }
+  console.log('[Export Preview] Applied style:', style)
+  return style
 })
 
 // Limit color map items for legend display
