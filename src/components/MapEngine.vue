@@ -657,6 +657,22 @@ watch(
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Force MapLibre's internal elements to respect container bounds */
+.map.map-export-preview :deep(.maplibregl-canvas-container),
+.map.map-export-preview :deep(.maplibregl-canvas),
+.map.map-export-preview :deep(.maplibregl-control-container) {
+  /* Override MapLibre's absolute positioning to respect container size */
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.map.map-export-preview :deep(.maplibregl-canvas) {
+  /* Force canvas to fit within container */
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
 /* Export info badge */
 .export-info-badge {
   position: absolute;
