@@ -1,3 +1,5 @@
+import { toPng } from 'html-to-image'
+
 // Draw a rounded rectangle path
 export const roundRect = (ctx, x, y, w, h, r) => {
   if (w < 2 * r) r = w / 2
@@ -136,9 +138,9 @@ export const drawLegendOnCanvas = (ctx, width, height, options) => {
   }
 }
 
-// Read scale bar values directly from MapLibre's native ScaleControl DOM element
-// This ensures perfect accuracy since we use MapLibre's own calculation
-export const getNativeScaleBarValues = () => {
+// Capture the native MapLibre ScaleControl as an image using html-to-image
+// This gives us an exact visual copy of the scale bar
+export const captureNativeScaleBar = async (pixelRatio = 2) => {
   try {
     const scaleElement = document.querySelector('.maplibregl-ctrl-scale')
     if (!scaleElement) {
@@ -146,38 +148,98 @@ export const getNativeScaleBarValues = () => {
       return null
     }
 
-    // Get the text (e.g., "500 km", "200 m")
-    const text = scaleElement.textContent?.trim() || ''
+    // Get original dimensions
+    const rect = scaleElement.getBoundingClientRect()
 
-    // Get the computed width in pixels
-    const computedStyle = window.getComputedStyle(scaleElement)
-    const widthStr = computedStyle.width
-    const width = parseFloat(widthStr) || 100
+    // Capture as PNG with higher pixel ratio for crisp rendering
+    const dataUrl = await toPng(scaleElement, {
+      pixelRatio: pixelRatio,
+      backgroundColor: 'transparent',
+    })
 
-    return { text, width }
+    return {
+      dataUrl,
+      width: rect.width,
+      height: rect.height,
+      text: scaleElement.textContent?.trim() || ''
+    }
   } catch (e) {
-    console.warn('Failed to read native scale bar:', e)
+    console.warn('Failed to capture native scale bar:', e)
     return null
   }
 }
 
-// Calculate scale bar parameters for export, reading from native MapLibre ScaleControl
-// and adjusting for the preview rectangle and output dimensions
+// Draw the captured native scale bar image onto the canvas
+export const drawNativeScaleBarOnCanvas = async (ctx, width, height, options) => {
+  const { legendSettings, exportSettings, previewHole, outputWidth } = options
+
+  try {
+    // Capture the native scale bar
+    const captured = await captureNativeScaleBar(3) // Higher pixel ratio for quality
+    if (!captured) {
+      // Fall back to drawing custom scale bar
+      return false
+    }
+
+    const uiScale = exportSettings.uiScale || 1
+    const referenceHeight = 650
+    const resolutionScale = height / referenceHeight
+    const scale = uiScale * resolutionScale
+
+    const sidePadding = 15 * resolutionScale * uiScale
+    const bottomPadding = 20 * resolutionScale * uiScale
+
+    // Calculate scaled dimensions for the captured image
+    // Scale from preview/container pixels to output pixels
+    const scaleFactor = previewHole ? (outputWidth / previewHole.width) : scale
+    const scaledWidth = captured.width * scaleFactor
+    const scaledHeight = captured.height * scaleFactor
+
+    // Position the scale bar
+    let x
+    if (legendSettings.position === 'bottom-right' && exportSettings.includeLegend) {
+      x = sidePadding
+    } else {
+      x = width - scaledWidth - sidePadding
+    }
+    const y = height - bottomPadding - scaledHeight
+
+    // Load and draw the captured image
+    const img = await loadImage(captured.dataUrl)
+    ctx.drawImage(img, x, y, scaledWidth, scaledHeight)
+
+    return true
+  } catch (e) {
+    console.warn('Failed to draw native scale bar:', e)
+    return false
+  }
+}
+
+// Read scale bar values directly from MapLibre's native ScaleControl DOM element
+export const getNativeScaleBarValues = () => {
+  try {
+    const scaleElement = document.querySelector('.maplibregl-ctrl-scale')
+    if (!scaleElement) {
+      return null
+    }
+    const text = scaleElement.textContent?.trim() || ''
+    const computedStyle = window.getComputedStyle(scaleElement)
+    const width = parseFloat(computedStyle.width) || 100
+    return { text, width }
+  } catch (e) {
+    return null
+  }
+}
+
+// Calculate scale bar parameters (fallback if native capture fails)
 export const calculateScaleBarParams = (map, previewHole, outputWidth, maxBarWidth = 150) => {
-  // Try to read from native scale bar first (most accurate)
   const nativeValues = getNativeScaleBarValues()
 
   if (nativeValues && nativeValues.text && nativeValues.width > 0) {
-    // Scale the native bar width to match the output dimensions
-    // The native bar is in screen pixels, we need to convert to output pixels
     const container = map?.getContainer()
     if (container) {
-      const containerWidth = container.clientWidth
-      // The preview hole width in container pixels
       const previewWidthInContainer = previewHole.width
-      // Scale factor from preview to output
       const scaleFactor = outputWidth / previewWidthInContainer
-      // Scale the native bar width
       const scaledWidth = nativeValues.width * scaleFactor
 
       return {

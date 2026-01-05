@@ -13,7 +13,7 @@ import {
   drawLegendOnCanvas,
   drawScaleBarOnCanvas,
   drawAttributionOnCanvas,
-  calculateScaleBarParams
+  drawNativeScaleBarOnCanvas
 } from './utils/canvasHelpers'
 
 const store = useDataStore()
@@ -180,16 +180,24 @@ const directExportMap = async () => {
       })
     }
 
-    // Draw scale bar if enabled
+    // Draw scale bar if enabled - capture the native MapLibre scale bar
     if (store.exportSettings.includeScaleBar) {
-      // Calculate accurate scale bar parameters for the preview rectangle
-      const scaleBarParams = calculateScaleBarParams(map, hole, exportWidth)
-      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
+      const nativeDrawn = await drawNativeScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
         legendSettings: store.legendSettings,
         exportSettings: store.exportSettings,
-        scaleBarText: scaleBarParams.text,
-        scaleBarWidth: scaleBarParams.barWidth,
+        previewHole: hole,
+        outputWidth: exportWidth,
       })
+
+      // Fallback to custom scale bar if native capture failed
+      if (!nativeDrawn) {
+        drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
+          legendSettings: store.legendSettings,
+          exportSettings: store.exportSettings,
+          scaleBarText: '500 km',
+          scaleBarWidth: 100,
+        })
+      }
     }
 
     // Draw attribution
