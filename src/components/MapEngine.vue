@@ -13,8 +13,7 @@ import {
   useScatterVisualization,
   useDataLayer,
   useStyleSwitcher,
-  useCountryBoundaries,
-  useScaleBar
+  useCountryBoundaries
 } from '../composables/useMapEngine'
 
 const store = useDataStore()
@@ -53,7 +52,6 @@ const {
 
 const { legendTransformOrigin } = useExportPreview(wrapperSize)
 const { updateScatterVisualization } = useScatterVisualization(map)
-const { scaleBarText, updateScaleBar } = useScaleBar(map)
 
 // Popup handler for data layer
 const handleShowPopup = (data) => {
@@ -288,11 +286,7 @@ const initMap = () => {
   map.value.on('load', () => {
     addDataLayer()
     emit('map-ready', map.value)
-    updateScaleBar()
   })
-
-  map.value.on('moveend', updateScaleBar)
-  map.value.on('zoomend', updateScaleBar)
 }
 
 // Track previous data length to detect actual data changes
@@ -466,20 +460,6 @@ watch(
         <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
           + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
         </div>
-      </div>
-
-      <!-- Custom Scale Bar INSIDE map container so it gets captured in export -->
-      <div
-        v-if="store.exportSettings.enabled && store.exportSettings.includeScaleBar"
-        class="export-scale-bar"
-        :class="{ 'export-scale-bar-left': store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend }"
-        :style="{
-          transform: 'scale(' + store.exportSettings.uiScale + ')',
-          transformOrigin: store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'bottom left' : 'bottom right'
-        }"
-      >
-        <div class="scale-bar-line"></div>
-        <span class="scale-bar-text">{{ scaleBarText }}</span>
       </div>
     </div>
 
@@ -1195,60 +1175,6 @@ watch(
   font-size: 0.85em;
   color: #666;
   font-style: italic;
-}
-
-/* Custom Scale Bar (inside map container for export) */
-.export-scale-bar {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  z-index: 12;
-  pointer-events: none;
-}
-
-.export-scale-bar-left {
-  right: auto;
-  left: 15px;
-  align-items: flex-start;
-}
-
-.scale-bar-line {
-  width: 100px;
-  height: 4px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  position: relative;
-}
-
-.scale-bar-line::before,
-.scale-bar-line::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 8px;
-  background: #fff;
-  top: -2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.scale-bar-line::before { left: 0; }
-.scale-bar-line::after { right: 0; }
-
-.scale-bar-text {
-  font-size: 0.7em;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-}
-
-/* Hide MapLibre's built-in scale control during export preview */
-.map.map-export-preview :deep(.maplibregl-ctrl-scale) {
-  display: none !important;
 }
 
 /* Popup Styles */

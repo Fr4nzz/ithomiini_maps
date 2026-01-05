@@ -108,6 +108,7 @@ const directExportMap = async () => {
     }
 
     // Capture the map container (canvas + HTML overlays like scale bar, legend)
+    const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
     const containerDataUrl = await toPng(container, {
       pixelRatio: capturePixelRatio,
@@ -117,8 +118,8 @@ const directExportMap = async () => {
         if (node.classList?.contains('maplibregl-ctrl-top-right')) return false
         // Exclude export info badge
         if (node.classList?.contains('export-info-badge')) return false
-        // Always exclude MapLibre's built-in scale bar - we use our custom one
-        if (node.classList?.contains('maplibregl-ctrl-scale')) return false
+        // Exclude scale bar if user disabled it
+        if (!includeScaleBar && node.classList?.contains('maplibregl-ctrl-scale')) return false
         // Exclude legend if user disabled it
         if (!includeLegend && node.classList?.contains('legend')) return false
         // Exclude attribution control (we draw our own)
