@@ -401,10 +401,22 @@ cat(sprintf("  Bounds: [%.2f, %.2f] to [%.2f, %.2f]\\n",
             bounds$xmin, bounds$ymin, bounds$xmax, bounds$ymax))
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 3. LOAD BASEMAP (CartoDB Dark Matter)
+# 3. LOAD BASEMAP
 # ──────────────────────────────────────────────────────────────────────────────
 
-cat("\\nLoading CartoDB Dark Matter basemap...\\n")
+# Available basemap providers (change in STYLE section):
+#   - "CartoDB.DarkMatter"   : Dark theme (default, matches web app)
+#   - "CartoDB.Positron"     : Light theme
+#   - "CartoDB.Voyager"      : Colored roads
+#   - "OpenStreetMap"        : Standard OSM
+#   - "Esri.WorldImagery"    : Satellite imagery
+#   - "Esri.WorldTopoMap"    : Topographic
+
+# Note: STYLE is defined below, but we need basemap_provider early
+# You can change this here or in the STYLE section
+basemap_provider <- "CartoDB.DarkMatter"
+
+cat(sprintf("\\nLoading basemap (%s)...\\n", basemap_provider))
 
 # Create bounding box with small buffer for tile fetching
 buffer <- 0.5
@@ -420,7 +432,7 @@ basemap <- NULL
 tryCatch({
   basemap <- get_tiles(
     st_as_sfc(bbox_expanded),
-    provider = "CartoDB.DarkMatter",
+    provider = basemap_provider,
     crop = TRUE
   )
   cat("  Basemap tiles loaded successfully\\n")
@@ -440,12 +452,8 @@ if (is.null(basemap) && file.exists("basemap.png")) {
 # 4. PREPARE LEGEND DATA
 # ──────────────────────────────────────────────────────────────────────────────
 
-# Create legend dataframe and sort by frequency in data
-legend_df <- data.frame(
-  label = names(legend_data$colors),
-  color = unlist(legend_data$colors),
-  stringsAsFactors = FALSE
-) %>%
+# Create legend dataframe from exported items (already has label + color)
+legend_df <- as.data.frame(legend_data$items) %>%
   left_join(
     points %>%
       st_drop_geometry() %>%
@@ -465,6 +473,10 @@ STYLE <- list(
   # Background
   bg_color = "#1a1a2e",
 
+  # Basemap - options: "CartoDB.DarkMatter", "CartoDB.Positron", "CartoDB.Voyager",
+  #                    "OpenStreetMap", "Esri.WorldImagery", "Esri.WorldTopoMap"
+  basemap_provider = "CartoDB.DarkMatter",
+
   # Points
   point_size = 2.5,
   point_alpha = 0.85,
@@ -474,6 +486,7 @@ STYLE <- list(
 
   # Legend
   legend_bg = "#252540",
+  legend_bg_alpha = 0.95,    # Transparency (0 = transparent, 1 = opaque)
   legend_border = "#3d3d5c",
   legend_title_color = "#888888",
   legend_text_color = "#e0e0e0",
@@ -524,7 +537,7 @@ create_legend <- function(items, title, italic = FALSE, style = STYLE) {
     just = c("left", "bottom"),
     r = unit(8, "pt"),
     gp = gpar(
-      fill = alpha(style$legend_bg, 0.95),
+      fill = alpha(style$legend_bg, style$legend_bg_alpha),
       col = style$legend_border,
       lwd = 1
     )
