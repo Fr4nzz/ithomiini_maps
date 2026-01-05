@@ -18,13 +18,14 @@ import {
 
 const store = useDataStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
+const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
 const map = ref(null)
 let popup = null
 
-// Container size for accurate export preview calculations
-const containerSize = ref({ width: 1600, height: 900 })
+// Wrapper size (the available space) for accurate export preview calculations
+const wrapperSize = ref({ width: 1600, height: 900 })
 let resizeObserver = null
 
 // Enhanced popup state for multi-point locations
@@ -48,7 +49,7 @@ const {
   cleanup: cleanupSearch
 } = useLocationSearch(map)
 
-const { legendTransformOrigin } = useExportPreview(containerSize)
+const { legendTransformOrigin } = useExportPreview(wrapperSize)
 const { updateScatterVisualization } = useScatterVisualization(map)
 
 // Popup handler for data layer
@@ -144,23 +145,37 @@ const mapContainerStyle = computed(() => {
   }
 
   const targetAspectRatio = targetWidth / targetHeight
-  const containerAspectRatio = containerSize.value.width / containerSize.value.height
+  const wrapperAspectRatio = wrapperSize.value.width / wrapperSize.value.height
 
-  // Compare target aspect ratio to container aspect ratio to determine constraining dimension
-  if (targetAspectRatio >= containerAspectRatio) {
-    // Target is wider than or equal to container - constrain by width, let height be calculated
-    return {
+  // Debug logging
+  console.log('[Export Preview Debug]', {
+    wrapperSize: wrapperSize.value,
+    wrapperAspectRatio: wrapperAspectRatio.toFixed(3),
+    targetRatio: ratio,
+    targetDimensions: `${targetWidth}x${targetHeight}`,
+    targetAspectRatio: targetAspectRatio.toFixed(3),
+    comparison: targetAspectRatio >= wrapperAspectRatio ? 'target WIDER - constrain by width' : 'target TALLER - constrain by height'
+  })
+
+  // Compare target aspect ratio to wrapper aspect ratio to determine constraining dimension
+  if (targetAspectRatio >= wrapperAspectRatio) {
+    // Target is wider than or equal to wrapper - constrain by width, let height be calculated
+    const style = {
       width: '100%',
       height: 'auto',
       aspectRatio: `${targetAspectRatio}`
     }
+    console.log('[Export Preview] Applied style:', style)
+    return style
   } else {
-    // Target is taller than container - constrain by height, let width be calculated
-    return {
+    // Target is taller than wrapper - constrain by height, let width be calculated
+    const style = {
       width: 'auto',
       height: '100%',
       aspectRatio: `${targetAspectRatio}`
     }
+    console.log('[Export Preview] Applied style:', style)
+    return style
   }
 })
 
@@ -187,22 +202,27 @@ onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('click', handleMapLayerClickOutside)
 
-  // Set up ResizeObserver for accurate export preview calculations
-  if (mapContainer.value) {
-    containerSize.value = {
-      width: mapContainer.value.clientWidth,
-      height: mapContainer.value.clientHeight
+  // Set up ResizeObserver on WRAPPER (not map container) for accurate export preview calculations
+  // The wrapper represents the available space; the map container will resize to fit aspect ratio
+  if (mapWrapper.value) {
+    wrapperSize.value = {
+      width: mapWrapper.value.clientWidth,
+      height: mapWrapper.value.clientHeight
     }
+    console.log('[Export Preview] Initial wrapper size:', wrapperSize.value)
 
     resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        containerSize.value = {
+        wrapperSize.value = {
           width: entry.contentRect.width,
           height: entry.contentRect.height
         }
+        console.log('[Export Preview] Wrapper resized:', wrapperSize.value)
       }
     })
-    resizeObserver.observe(mapContainer.value)
+    resizeObserver.observe(mapWrapper.value)
+  } else {
+    console.warn('[Export Preview] mapWrapper ref not available!')
   }
 })
 
@@ -326,6 +346,16 @@ watch(
     if (map.value) {
       // Use nextTick to ensure CSS has been applied before resizing
       nextTick(() => {
+        // Debug: log actual computed dimensions after style applied
+        if (mapContainer.value) {
+          const computed = window.getComputedStyle(mapContainer.value)
+          console.log('[Export Preview] After style applied - mapContainer computed:', {
+            width: computed.width,
+            height: computed.height,
+            aspectRatio: computed.aspectRatio,
+            inlineStyle: mapContainer.value.style.cssText
+          })
+        }
         map.value.resize()
       })
     }
@@ -386,7 +416,7 @@ watch(
 </script>
 
 <template>
-  <div class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled }">
+  <div ref="mapWrapper" class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled }">
     <div
       ref="mapContainer"
       class="map"
@@ -606,6 +636,9 @@ watch(
 /* Export preview: map resizes to aspect ratio */
 /* Width/height set dynamically via inline style based on aspect ratio comparison */
 .map.map-export-preview {
+  /* Reset to allow inline styles to control dimensions */
+  width: auto;
+  height: auto;
   border: 2px dashed rgba(74, 222, 128, 0.9);
   border-radius: 4px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
