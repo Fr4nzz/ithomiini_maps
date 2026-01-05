@@ -307,6 +307,19 @@ watch(
   { deep: true }
 )
 
+// Watch for export settings changes to resize map
+watch(
+  [() => store.exportSettings.enabled, () => store.exportSettings.aspectRatio, () => store.exportSettings.customWidth, () => store.exportSettings.customHeight],
+  () => {
+    if (map.value) {
+      // Use nextTick to ensure CSS has been applied before resizing
+      nextTick(() => {
+        map.value.resize()
+      })
+    }
+  }
+)
+
 // Watch for focusPoint changes
 watch(
   () => store.focusPoint,
@@ -580,6 +593,9 @@ watch(
 
 /* Export preview: map resizes to aspect ratio */
 .map.map-export-preview {
+  /* Override fixed dimensions to let aspect-ratio work */
+  width: auto;
+  height: auto;
   border: 2px dashed rgba(74, 222, 128, 0.9);
   border-radius: 4px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
