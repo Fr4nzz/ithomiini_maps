@@ -780,6 +780,7 @@ export function useDataLayer(map, options = {}) {
 
 // Style switcher
 export function useStyleSwitcher(map, addDataLayer) {
+  const store = useDataStore()
   const currentStyle = ref('dark')
 
   const switchStyle = (styleName) => {
@@ -792,6 +793,7 @@ export function useStyleSwitcher(map, addDataLayer) {
     const pitch = map.value.getPitch()
 
     currentStyle.value = styleName
+    store.basemapStyle = styleName  // Sync to store for R export
     const styleConfig = MAP_STYLES[styleName]
 
     map.value.setStyle(styleConfig.style)

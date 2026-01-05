@@ -12,6 +12,7 @@ import {
   loadImage,
   drawAttributionOnCanvas,
 } from './utils/canvasHelpers'
+import { exportForR } from './utils/rExport'
 import { toPng } from 'html-to-image'
 
 const store = useDataStore()
@@ -38,9 +39,17 @@ const openExport = () => {
   exportPanelInitialTab.value = 'export'
   showExportPanel.value = true
 }
-const openExportForR = () => {
-  exportPanelInitialTab.value = 'export'  // R export is in the export tab
-  showExportPanel.value = true
+const directExportForR = async () => {
+  if (!mapRef.value) {
+    alert('Map not available. Please ensure you are on the Map view.')
+    return
+  }
+  try {
+    await exportForR(mapRef.value)
+  } catch (e) {
+    console.error('[Export] R export failed:', e)
+    alert('Export failed: ' + e.message)
+  }
 }
 const closeExport = () => { showExportPanel.value = false }
 
@@ -101,18 +110,17 @@ const directExportMap = async () => {
       capturePixelRatio
     })
 
-    // Temporarily remove the dashed border class to exclude it from capture
-    const hadExportPreviewClass = container.classList.contains('map-export-preview')
-    if (hadExportPreviewClass) {
-      container.classList.remove('map-export-preview')
-    }
-
     // Capture the map container (canvas + HTML overlays like scale bar, legend)
     const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
     const containerDataUrl = await toPng(container, {
       pixelRatio: capturePixelRatio,
       backgroundColor: '#1a1a2e',
+      // Remove dashed border from cloned element (doesn't affect original DOM)
+      onClone: (clonedDoc, clonedEl) => {
+        clonedEl.style.border = 'none'
+        clonedEl.style.boxShadow = 'none'
+      },
       filter: (node) => {
         // Exclude navigation controls (zoom buttons, compass, etc.)
         if (node.classList?.contains('maplibregl-ctrl-top-right')) return false
@@ -127,11 +135,6 @@ const directExportMap = async () => {
         return true
       }
     })
-
-    // Restore the dashed border class
-    if (hadExportPreviewClass) {
-      container.classList.add('map-export-preview')
-    }
 
     // Load the captured image
     const containerImage = await loadImage(containerDataUrl)
@@ -194,7 +197,7 @@ onMounted(() => {
       @open-mimicry="openMimicrySelector"
       @open-gallery="openImageGallery"
       @open-map-export="directExportMap"
-      @export-for-r="openExportForR"
+      @export-for-r="directExportForR"
       :current-view="currentView"
       @set-view="setView"
     />
