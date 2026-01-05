@@ -11,10 +11,9 @@ import { ASPECT_RATIOS } from './utils/constants'
 import {
   loadImage,
   drawLegendOnCanvas,
-  drawScaleBarOnCanvas,
   drawAttributionOnCanvas,
-  drawNativeScaleBarOnCanvas
 } from './utils/canvasHelpers'
+import { toPng } from 'html-to-image'
 
 const store = useDataStore()
 
@@ -109,21 +108,13 @@ const directExportMap = async () => {
     map.triggerRepaint()
     await new Promise(resolve => map.once('idle', resolve))
 
-    // Get the map canvas and container dimensions
-    const mapCanvas = map.getCanvas()
+    // Get the map container dimensions
     const container = map.getContainer()
     const containerWidth = container.clientWidth
     const containerHeight = container.clientHeight
-    const pixelRatio = window.devicePixelRatio || 1
 
     // Calculate the export hole (preview region) in container pixels
     const hole = calculateExportHole(containerWidth, containerHeight)
-
-    // Scale to canvas pixels (accounting for devicePixelRatio)
-    const cropX = Math.round(hole.x * pixelRatio)
-    const cropY = Math.round(hole.y * pixelRatio)
-    const cropW = Math.round(hole.width * pixelRatio)
-    const cropH = Math.round(hole.height * pixelRatio)
 
     // Calculate output dimensions with DPI scale
     const ratio = store.exportSettings.aspectRatio
@@ -140,13 +131,45 @@ const directExportMap = async () => {
     const exportWidth = Math.round(baseWidth * dpiScale)
     const exportHeight = Math.round(baseHeight * dpiScale)
 
-    console.log('[Export] Cropping preview region:', {
+    // Calculate pixel ratio needed for high-quality capture
+    // We want the captured image to be at least as large as the output
+    const capturePixelRatio = Math.max(2, Math.ceil(exportWidth / hole.width))
+
+    console.log('[Export] Using html-to-image to capture map with controls:', {
       container: `${containerWidth}x${containerHeight}`,
-      pixelRatio,
-      cropRegion: `${cropX},${cropY} ${cropW}x${cropH}`,
-      canvasSize: `${mapCanvas.width}x${mapCanvas.height}`,
-      outputSize: `${exportWidth}x${exportHeight}`
+      previewHole: `${hole.x},${hole.y} ${hole.width}x${hole.height}`,
+      outputSize: `${exportWidth}x${exportHeight}`,
+      capturePixelRatio
     })
+
+    // Capture the entire map container (canvas + HTML overlays like scale bar)
+    // using html-to-image - this is the same approach used by official plugins
+    const includeScaleBar = store.exportSettings.includeScaleBar
+    const containerDataUrl = await toPng(container, {
+      pixelRatio: capturePixelRatio,
+      backgroundColor: '#1a1a2e',
+      filter: (node) => {
+        // Exclude the export preview overlay from the capture
+        if (node.classList?.contains('export-preview-overlay')) return false
+        if (node.classList?.contains('export-preview-hole')) return false
+        // Exclude navigation controls (zoom buttons, compass, etc.)
+        if (node.classList?.contains('maplibregl-ctrl-top-right')) return false
+        // Exclude scale bar if user disabled it
+        if (!includeScaleBar && node.classList?.contains('maplibregl-ctrl-scale')) return false
+        // Exclude attribution control (we draw our own)
+        if (node.classList?.contains('maplibregl-ctrl-attrib')) return false
+        return true
+      }
+    })
+
+    // Load the captured image
+    const containerImage = await loadImage(containerDataUrl)
+
+    // Calculate crop coordinates in the captured image (scaled by capturePixelRatio)
+    const cropX = Math.round(hole.x * capturePixelRatio)
+    const cropY = Math.round(hole.y * capturePixelRatio)
+    const cropW = Math.round(hole.width * capturePixelRatio)
+    const cropH = Math.round(hole.height * capturePixelRatio)
 
     // Create output canvas
     const canvas = document.createElement('canvas')
@@ -158,18 +181,15 @@ const directExportMap = async () => {
     ctx.fillStyle = '#1a1a2e'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    // Capture the map as image
-    const mapDataUrl = mapCanvas.toDataURL('image/png')
-    const mapImage = await loadImage(mapDataUrl)
-
     // Draw ONLY the cropped region (preview rectangle), scaled to output
+    // This includes the native scale bar if it's within the preview region
     ctx.drawImage(
-      mapImage,
-      cropX, cropY, cropW, cropH,  // Source: preview rectangle
+      containerImage,
+      cropX, cropY, cropW, cropH,  // Source: preview rectangle from captured image
       0, 0, canvas.width, canvas.height  // Destination: full output
     )
 
-    // Draw legend if enabled
+    // Draw legend if enabled (custom overlay, not part of map)
     if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
       drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
         colorMap: store.activeColorMap,
@@ -180,27 +200,7 @@ const directExportMap = async () => {
       })
     }
 
-    // Draw scale bar if enabled - capture the native MapLibre scale bar
-    if (store.exportSettings.includeScaleBar) {
-      const nativeDrawn = await drawNativeScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
-        legendSettings: store.legendSettings,
-        exportSettings: store.exportSettings,
-        previewHole: hole,
-        outputWidth: exportWidth,
-      })
-
-      // Fallback to custom scale bar if native capture failed
-      if (!nativeDrawn) {
-        drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
-          legendSettings: store.legendSettings,
-          exportSettings: store.exportSettings,
-          scaleBarText: '500 km',
-          scaleBarWidth: 100,
-        })
-      }
-    }
-
-    // Draw attribution
+    // Draw attribution (custom overlay, not part of map)
     drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
       exportSettings: store.exportSettings,
     })
