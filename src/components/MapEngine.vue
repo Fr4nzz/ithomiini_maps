@@ -162,22 +162,10 @@ const mapContainerStyle = computed(() => {
     mapWidth = wrapperHeight * targetAspectRatio
   }
 
-  // Debug logging
-  console.log('[Export Preview Debug]', {
-    wrapperSize: `${wrapperWidth.toFixed(0)}x${wrapperHeight.toFixed(0)}`,
-    wrapperAspectRatio: wrapperAspectRatio.toFixed(3),
-    targetRatio: ratio,
-    targetAspectRatio: targetAspectRatio.toFixed(3),
-    calculatedMapSize: `${mapWidth.toFixed(0)}x${mapHeight.toFixed(0)}`,
-    comparison: targetAspectRatio >= wrapperAspectRatio ? 'target WIDER - constrain by width' : 'target TALLER - constrain by height'
-  })
-
-  const style = {
+  return {
     width: `${mapWidth}px`,
     height: `${mapHeight}px`
   }
-  console.log('[Export Preview] Applied style:', style)
-  return style
 })
 
 // Limit color map items for legend display
@@ -209,7 +197,6 @@ onMounted(() => {
       width: mapWrapper.value.clientWidth,
       height: mapWrapper.value.clientHeight
     }
-    console.log('[Export Preview] Initial wrapper size:', wrapperSize.value)
 
     wrapperResizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -217,7 +204,6 @@ onMounted(() => {
           width: entry.contentRect.width,
           height: entry.contentRect.height
         }
-        console.log('[Export Preview] Wrapper resized:', wrapperSize.value)
       }
     })
     wrapperResizeObserver.observe(mapWrapper.value)
@@ -226,17 +212,10 @@ onMounted(() => {
   // Set up ResizeObserver on MAP CONTAINER to trigger MapLibre resize when container dimensions change
   // This is critical: MapLibre needs to resize its canvas when the container size changes
   if (mapContainer.value) {
-    mapContainerResizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        console.log('[Export Preview] Map container resized to:', {
-          width: entry.contentRect.width,
-          height: entry.contentRect.height
-        })
-        // Tell MapLibre to resize its canvas to match the new container dimensions
-        if (map.value) {
-          map.value.resize()
-          console.log('[Export Preview] Called map.resize()')
-        }
+    mapContainerResizeObserver = new ResizeObserver(() => {
+      // Tell MapLibre to resize its canvas to match the new container dimensions
+      if (map.value) {
+        map.value.resize()
       }
     })
     mapContainerResizeObserver.observe(mapContainer.value)
@@ -360,18 +339,6 @@ watch(
   { deep: true }
 )
 
-// Watch for export settings changes
-// Note: map.resize() is handled by the mapContainerResizeObserver when container dimensions change
-watch(
-  [() => store.exportSettings.enabled, () => store.exportSettings.aspectRatio, () => store.exportSettings.customWidth, () => store.exportSettings.customHeight],
-  () => {
-    // Debug: log when export settings change
-    console.log('[Export Preview] Export settings changed:', {
-      enabled: store.exportSettings.enabled,
-      aspectRatio: store.exportSettings.aspectRatio
-    })
-  }
-)
 
 // Watch for focusPoint changes
 watch(

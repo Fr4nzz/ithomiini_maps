@@ -104,12 +104,6 @@ const directExportMap = async () => {
     // Calculate pixel ratio for high-quality capture
     const capturePixelRatio = Math.max(2, Math.ceil(exportWidth / container.clientWidth))
 
-    console.log('[Export] Capturing map container:', {
-      container: `${container.clientWidth}x${container.clientHeight}`,
-      outputSize: `${exportWidth}x${exportHeight}`,
-      capturePixelRatio
-    })
-
     // Capture the map container (canvas + HTML overlays like scale bar, legend)
     const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
