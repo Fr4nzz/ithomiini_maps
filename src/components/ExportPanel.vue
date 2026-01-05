@@ -1,9 +1,106 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
+import { ASPECT_RATIOS } from '../utils/constants'
 import JSZip from 'jszip'
 
 const store = useDataStore()
+
+// Calculate preview rectangle bounds in geographic coordinates
+// This matches the green preview rectangle shown in the export UI
+const getPreviewBounds = (map) => {
+  const container = map.getContainer()
+  const containerWidth = container.clientWidth
+  const containerHeight = container.clientHeight
+
+  // Calculate the preview hole position (same logic as MapEngine/App.vue)
+  const ratio = store.exportSettings.aspectRatio
+  let targetWidth, targetHeight
+  if (ratio === 'custom') {
+    targetWidth = store.exportSettings.customWidth
+    targetHeight = store.exportSettings.customHeight
+  } else {
+    const dims = ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
+    targetWidth = dims.width
+    targetHeight = dims.height
+  }
+
+  const targetAspectRatio = targetWidth / targetHeight
+  const containerAspectRatio = containerWidth / containerHeight
+  const maxPercent = 92
+
+  let holeWidthPercent, holeHeightPercent
+  if (targetAspectRatio > containerAspectRatio) {
+    holeWidthPercent = maxPercent
+    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
+  } else {
+    holeHeightPercent = maxPercent
+    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
+  }
+
+  const xPercent = Math.max(2, (100 - holeWidthPercent) / 2)
+  const yPercent = Math.max(2, (100 - holeHeightPercent) / 2)
+
+  // Calculate pixel coordinates of preview rectangle
+  const holeX = (xPercent / 100) * containerWidth
+  const holeY = (yPercent / 100) * containerHeight
+  const holeWidth = (Math.min(96, holeWidthPercent) / 100) * containerWidth
+  const holeHeight = (Math.min(96, holeHeightPercent) / 100) * containerHeight
+
+  // Convert pixel corners to geographic coordinates using map.unproject()
+  const topLeft = map.unproject([holeX, holeY])
+  const bottomRight = map.unproject([holeX + holeWidth, holeY + holeHeight])
+
+  return {
+    west: topLeft.lng,
+    north: topLeft.lat,
+    east: bottomRight.lng,
+    south: bottomRight.lat
+  }
+}
+
+// Get preview rectangle pixel coordinates for canvas cropping
+const getPreviewHolePixels = (map) => {
+  const container = map.getContainer()
+  const containerWidth = container.clientWidth
+  const containerHeight = container.clientHeight
+  const pixelRatio = window.devicePixelRatio || 1
+
+  const ratio = store.exportSettings.aspectRatio
+  let targetWidth, targetHeight
+  if (ratio === 'custom') {
+    targetWidth = store.exportSettings.customWidth
+    targetHeight = store.exportSettings.customHeight
+  } else {
+    const dims = ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
+    targetWidth = dims.width
+    targetHeight = dims.height
+  }
+
+  const targetAspectRatio = targetWidth / targetHeight
+  const containerAspectRatio = containerWidth / containerHeight
+  const maxPercent = 92
+
+  let holeWidthPercent, holeHeightPercent
+  if (targetAspectRatio > containerAspectRatio) {
+    holeWidthPercent = maxPercent
+    holeHeightPercent = (maxPercent / targetAspectRatio) * containerAspectRatio
+  } else {
+    holeHeightPercent = maxPercent
+    holeWidthPercent = (maxPercent * targetAspectRatio) / containerAspectRatio
+  }
+
+  const xPercent = Math.max(2, (100 - holeWidthPercent) / 2)
+  const yPercent = Math.max(2, (100 - holeHeightPercent) / 2)
+
+  // Calculate pixel coordinates (accounting for devicePixelRatio)
+  return {
+    x: Math.round((xPercent / 100) * containerWidth * pixelRatio),
+    y: Math.round((yPercent / 100) * containerHeight * pixelRatio),
+    width: Math.round((Math.min(96, holeWidthPercent) / 100) * containerWidth * pixelRatio),
+    height: Math.round((Math.min(96, holeHeightPercent) / 100) * containerHeight * pixelRatio)
+  }
+}
 const emit = defineEmits(['close'])
 
 const props = defineProps({
@@ -188,8 +285,8 @@ const exportForR = async () => {
       throw new Error('No data to export')
     }
 
-    // Get current map view
-    const bounds = map.getBounds()
+    // Get preview rectangle bounds (matches the green preview rectangle)
+    const previewBounds = getPreviewBounds(map)
     const center = map.getCenter()
     const zoom = map.getZoom()
 
@@ -222,13 +319,13 @@ const exportForR = async () => {
       features: featuresWithColors
     }
 
-    // View configuration
+    // View configuration (using preview rectangle bounds)
     const viewConfig = {
       bounds: {
-        west: bounds.getWest(),
-        south: bounds.getSouth(),
-        east: bounds.getEast(),
-        north: bounds.getNorth()
+        west: previewBounds.west,
+        south: previewBounds.south,
+        east: previewBounds.east,
+        north: previewBounds.north
       },
       center: {
         lng: center.lng,
@@ -253,7 +350,7 @@ const exportForR = async () => {
     const rScript = generateRScript(colorBy)
 
     // ═══════════════════════════════════════════════════════════════════════
-    // Capture basemap as raster (without data points)
+    // Capture basemap as raster (cropped to preview rectangle, without data points)
     // ═══════════════════════════════════════════════════════════════════════
     let basemapDataUrl = null
     try {
@@ -272,9 +369,26 @@ const exportForR = async () => {
       map.triggerRepaint()
       await new Promise(resolve => map.once('idle', resolve))
 
-      // Capture basemap
+      // Get preview hole pixel coordinates for cropping
+      const hole = getPreviewHolePixels(map)
+
+      // Capture full basemap canvas
       const mapCanvas = map.getCanvas()
-      basemapDataUrl = mapCanvas.toDataURL('image/png')
+
+      // Create cropped canvas with preview rectangle only
+      const croppedCanvas = document.createElement('canvas')
+      croppedCanvas.width = hole.width
+      croppedCanvas.height = hole.height
+      const ctx = croppedCanvas.getContext('2d')
+
+      // Draw only the preview rectangle region
+      ctx.drawImage(
+        mapCanvas,
+        hole.x, hole.y, hole.width, hole.height,  // Source: preview rectangle
+        0, 0, hole.width, hole.height              // Destination: full cropped canvas
+      )
+
+      basemapDataUrl = croppedCanvas.toDataURL('image/png')
 
       // Restore layer visibility
       dataLayers.forEach(layerId => {
