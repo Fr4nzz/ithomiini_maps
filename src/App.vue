@@ -117,31 +117,40 @@ const directExportMap = async () => {
     // Since map canvas is now high-res, we match it for HTML overlays
     const htmlPixelRatio = safePixelRatio
 
+    // Temporarily remove export preview border class for clean capture
+    const hadExportPreviewClass = container.classList.contains('map-export-preview')
+    if (hadExportPreviewClass) {
+      container.classList.remove('map-export-preview')
+    }
+
     // Capture the map container (canvas + HTML overlays like scale bar, legend)
     const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
-    const containerDataUrl = await toPng(container, {
-      pixelRatio: htmlPixelRatio,
-      backgroundColor: '#1a1a2e',
-      // Remove dashed border from export (style option applies to root node before rendering)
-      style: {
-        border: 'none',
-        boxShadow: 'none'
-      },
-      filter: (node) => {
-        // Exclude navigation controls (zoom buttons, compass, etc.)
-        if (node.classList?.contains('maplibregl-ctrl-top-right')) return false
-        // Exclude export info badge
-        if (node.classList?.contains('export-info-badge')) return false
-        // Exclude scale bar if user disabled it
-        if (!includeScaleBar && node.classList?.contains('maplibregl-ctrl-scale')) return false
-        // Exclude legend if user disabled it
-        if (!includeLegend && node.classList?.contains('legend')) return false
-        // Exclude attribution control (we draw our own)
-        if (node.classList?.contains('maplibregl-ctrl-attrib')) return false
-        return true
+    let containerDataUrl
+    try {
+      containerDataUrl = await toPng(container, {
+        pixelRatio: htmlPixelRatio,
+        backgroundColor: '#1a1a2e',
+        filter: (node) => {
+          // Exclude navigation controls (zoom buttons, compass, etc.)
+          if (node.classList?.contains('maplibregl-ctrl-top-right')) return false
+          // Exclude export info badge
+          if (node.classList?.contains('export-info-badge')) return false
+          // Exclude scale bar if user disabled it
+          if (!includeScaleBar && node.classList?.contains('maplibregl-ctrl-scale')) return false
+          // Exclude legend if user disabled it
+          if (!includeLegend && node.classList?.contains('legend')) return false
+          // Exclude attribution control (we draw our own)
+          if (node.classList?.contains('maplibregl-ctrl-attrib')) return false
+          return true
+        }
+      })
+    } finally {
+      // Always restore the class
+      if (hadExportPreviewClass) {
+        container.classList.add('map-export-preview')
       }
-    })
+    }
 
     // Restore original pixel ratio immediately after capture
     map.setPixelRatio(originalPixelRatio)

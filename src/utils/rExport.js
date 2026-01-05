@@ -87,9 +87,14 @@ bounds <- list(
   ymax = config$bounds$north
 )
 
+# Extract aspect ratio for dynamic output dimensions
+aspect_ratio <- config$aspectRatio
+if (is.null(aspect_ratio)) aspect_ratio <- 16/9  # fallback to 16:9
+
 cat(sprintf("  %d points loaded\\n", nrow(points)))
 cat(sprintf("  Bounds: [%.2f, %.2f] to [%.2f, %.2f]\\n",
             bounds$xmin, bounds$ymin, bounds$xmax, bounds$ymax))
+cat(sprintf("  Aspect ratio: %.3f\\n", aspect_ratio))
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 3. LOAD BASEMAP
@@ -152,18 +157,18 @@ if (is.null(basemap) && file.exists("basemap.png")) {
 # 4. PREPARE LEGEND DATA
 # ──────────────────────────────────────────────────────────────────────────────
 
-# Create legend dataframe from exported items (already has label + color)
-legend_df <- as.data.frame(legend_data$items) %>%
-  left_join(
-    points %>%
-      st_drop_geometry() %>%
-      count(display_color, name = "n"),
-    by = c("color" = "display_color")
-  ) %>%
-  replace_na(list(n = 0)) %>%
-  arrange(desc(n))
+# Get max items from legend config (matches web app setting)
+legend_max_items <- legend_data$maxItems
+if (is.null(legend_max_items)) legend_max_items <- 15
 
-cat(sprintf("\\nLegend: %d categories\\n", nrow(legend_df)))
+# Create legend dataframe from exported items - PRESERVE ORDER from web app
+# Do NOT re-sort - the items array is already in the correct display order
+legend_df <- as.data.frame(legend_data$items)
+
+# Add row index to preserve original order
+legend_df$order_idx <- seq_len(nrow(legend_df))
+
+cat(sprintf("\\nLegend: %d categories (showing max %d)\\n", nrow(legend_df), legend_max_items))
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 5. STYLING CONFIGURATION (easy to customize!)
@@ -182,12 +187,12 @@ STYLE <- list(
 
   # Legend - for light themes use: bg="#ffffff", border="#cccccc",
   #          title_color="#666666", text_color="#333333"
+  # Note: legend_max_items is read from legend.json to match web app
   legend_bg = "#252540",
   legend_bg_alpha = 0.95,    # Transparency (0 = transparent, 1 = opaque)
   legend_border = "#3d3d5c",
   legend_title_color = "#888888",
   legend_text_color = "#e0e0e0",
-  legend_max_items = 15,
   legend_font_size = 8,
   legend_title_size = 10,
   legend_width = 0.22,
@@ -201,18 +206,30 @@ STYLE <- list(
   # Note: DPI affects text, points, and vector elements but NOT basemap tile resolution.
   # For sharper basemaps, set basemap_retina=TRUE above (2x tiles) and/or increase basemap_zoom.
   # PDF/SVG are vector formats - points/legend are infinitely scalable, only basemap is raster.
-  width = 16,      # inches
-  height = 9,      # inches
+  # Dimensions are calculated from aspect_ratio to match web app export
+  base_size = 12,  # base size in inches (width for landscape, height for portrait)
   dpi = 300        # dots per inch (affects PNG rasterization, not PDF/SVG vector parts)
 )
+
+# Calculate output dimensions from aspect ratio (matches web app export)
+if (aspect_ratio >= 1) {
+  # Landscape or square: width is base_size
+  output_width <- STYLE$base_size
+  output_height <- STYLE$base_size / aspect_ratio
+} else {
+  # Portrait: height is base_size
+  output_height <- STYLE$base_size
+  output_width <- STYLE$base_size * aspect_ratio
+}
+cat(sprintf("  Output size: %.1f x %.1f inches\\n", output_width, output_height))
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 6. CREATE LEGEND GROB (with rounded corners)
 # ──────────────────────────────────────────────────────────────────────────────
 
-create_legend <- function(items, title, italic = FALSE, style = STYLE) {
-  n_items <- min(nrow(items), style$legend_max_items)
-  has_more <- nrow(items) > style$legend_max_items
+create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE) {
+  n_items <- min(nrow(items), max_items)
+  has_more <- nrow(items) > max_items
 
   # Calculate dimensions
   title_h <- style$legend_item_height * 1.8
@@ -220,8 +237,9 @@ create_legend <- function(items, title, italic = FALSE, style = STYLE) {
   more_h <- if (has_more) style$legend_item_height * 1.2 else 0
   total_h <- title_h + content_h + more_h + style$legend_padding * 3
 
-  # Find max label width (approximate)
-  max_label_len <- max(nchar(items$label[1:n_items]))
+  # Find max label width using ONLY VISIBLE items (first n_items)
+  visible_items <- items$label[1:n_items]
+  max_label_len <- max(nchar(visible_items))
   legend_w <- max(style$legend_width, 0.01 * max_label_len + 0.06)
 
   # Position (bottom-left with padding)
@@ -289,7 +307,7 @@ create_legend <- function(items, title, italic = FALSE, style = STYLE) {
   # "More" indicator if truncated
   if (has_more) {
     grobs$more <- textGrob(
-      sprintf("+ %d more...", nrow(items) - style$legend_max_items),
+      sprintf("+ %d more...", nrow(items) - max_items),
       x = x0 + style$legend_padding,
       y = y0 + style$legend_padding + more_h/2,
       just = c("left", "center"),
@@ -368,7 +386,7 @@ p <- p +
 # Add custom legend
 p_final <- p +
   annotation_custom(
-    create_legend(legend_df, legend_data$title, ${isItalic ? 'TRUE' : 'FALSE'}),
+    create_legend(legend_df, legend_data$title, legend_max_items, ${isItalic ? 'TRUE' : 'FALSE'}),
     xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
   )
 
@@ -383,17 +401,17 @@ print(p_final)
 
 # Save as PDF (vector graphics for publications)
 ggsave("ithomiini_map.pdf", plot = p_final,
-       width = STYLE$width, height = STYLE$height, dpi = STYLE$dpi)
+       width = output_width, height = output_height, dpi = STYLE$dpi)
 cat("  ithomiini_map.pdf\\n")
 
 # Save as high-resolution PNG
 ggsave("ithomiini_map.png", plot = p_final,
-       width = STYLE$width, height = STYLE$height, dpi = STYLE$dpi)
+       width = output_width, height = output_height, dpi = STYLE$dpi)
 cat("  ithomiini_map.png\\n")
 
 # Save as SVG (editable vector)
 ggsave("ithomiini_map.svg", plot = p_final,
-       width = STYLE$width, height = STYLE$height, dpi = STYLE$dpi)
+       width = output_width, height = output_height, dpi = STYLE$dpi)
 cat("  ithomiini_map.svg\\n")
 
 cat("\\n════════════════════════════════════════════════════════════════════════════════\\n")
@@ -697,6 +715,10 @@ export async function exportForR(map) {
     features: featuresWithColors
   }
 
+  // Calculate aspect ratio from map container
+  const container = map.getContainer()
+  const aspectRatio = container.clientWidth / container.clientHeight
+
   // View configuration (using map bounds directly)
   const viewConfig = {
     bounds: {
@@ -710,18 +732,23 @@ export async function exportForR(map) {
       lat: center.lat
     },
     zoom: zoom,
-    colorBy: colorBy
+    colorBy: colorBy,
+    aspectRatio: aspectRatio  // Used by R to set correct output dimensions
   }
 
-  // Legend configuration
+  // Legend configuration - preserve order from colorMap (which matches web app display order)
+  // Get legend items in the same order as they appear in the web app
+  const legendItems = Object.entries(colorMap).map(([label, color]) => ({
+    label,
+    color
+  }))
+
   const legendConfig = {
     title: store.legendTitle,
     colorBy: colorBy,
+    maxItems: store.legendSettings.maxItems,  // Pass max items setting to R
     colors: colorMap,
-    items: Object.entries(colorMap).map(([label, color]) => ({
-      label,
-      color
-    }))
+    items: legendItems
   }
 
   // Generate R script
