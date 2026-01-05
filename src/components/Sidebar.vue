@@ -92,7 +92,7 @@ const triggerDatabaseUpdate = async () => {
 
   try {
     // Call the Cloudflare Worker to trigger GitHub Action
-    const response = await fetch('https://ithomiini-db-updater.franz-chandi.workers.dev/', {
+    const response = await fetch('https://ithomiini-maps-db-updater.franz-chandi.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -158,7 +158,7 @@ Environment variables store sensitive data like your GitHub token securely.
 1. Open `src/components/Sidebar.vue` in your code editor
 2. Find the line containing the Worker URL (around line 98):
    ```javascript
-   const WORKER_URL = 'https://ithomiini-db-updater.YOUR-SUBDOMAIN.workers.dev/'
+   const response = 'https://ithomiini-db-updater.YOUR-SUBDOMAIN.workers.dev/'
    ```
 3. Replace `YOUR-SUBDOMAIN` with your actual Cloudflare subdomain
 4. Commit and push the change
