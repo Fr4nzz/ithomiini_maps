@@ -639,6 +639,8 @@ watch(
   /* Reset to allow inline styles to control dimensions */
   width: auto;
   height: auto;
+  /* CRITICAL: Clip MapLibre canvas to container bounds */
+  overflow: hidden;
   border: 2px dashed rgba(74, 222, 128, 0.9);
   border-radius: 4px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
