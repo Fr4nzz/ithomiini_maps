@@ -143,12 +143,24 @@ const mapContainerStyle = computed(() => {
     return {}
   }
 
-  const aspectRatio = targetWidth / targetHeight
-  return {
-    aspectRatio: `${aspectRatio}`,
-    maxWidth: '100%',
-    maxHeight: '100%',
-    margin: 'auto'
+  const targetAspectRatio = targetWidth / targetHeight
+  const containerAspectRatio = containerSize.value.width / containerSize.value.height
+
+  // Compare target aspect ratio to container aspect ratio to determine constraining dimension
+  if (targetAspectRatio >= containerAspectRatio) {
+    // Target is wider than or equal to container - constrain by width, let height be calculated
+    return {
+      width: '100%',
+      height: 'auto',
+      aspectRatio: `${targetAspectRatio}`
+    }
+  } else {
+    // Target is taller than container - constrain by height, let width be calculated
+    return {
+      width: 'auto',
+      height: '100%',
+      aspectRatio: `${targetAspectRatio}`
+    }
   }
 })
 
@@ -592,10 +604,8 @@ watch(
 }
 
 /* Export preview: map resizes to aspect ratio */
+/* Width/height set dynamically via inline style based on aspect ratio comparison */
 .map.map-export-preview {
-  /* Override fixed dimensions to let aspect-ratio work */
-  width: auto;
-  height: auto;
   border: 2px dashed rgba(74, 222, 128, 0.9);
   border-radius: 4px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
