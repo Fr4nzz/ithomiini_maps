@@ -96,18 +96,22 @@ cat(sprintf("  Bounds: [%.2f, %.2f] to [%.2f, %.2f]\\n",
 # ──────────────────────────────────────────────────────────────────────────────
 
 # Available basemap providers (change in STYLE section):
-#   - "CartoDB.DarkMatter"   : Dark theme (default, matches web app)
-#   - "CartoDB.Positron"     : Light theme
-#   - "CartoDB.Voyager"      : Colored roads
-#   - "OpenStreetMap"        : Standard OSM
-#   - "Esri.WorldImagery"    : Satellite imagery
-#   - "Esri.WorldTopoMap"    : Topographic
+#   - "CartoDB.DarkMatter"   : Dark theme (default, matches web app) - supports retina
+#   - "CartoDB.Positron"     : Light theme - supports retina
+#   - "CartoDB.Voyager"      : Colored roads - supports retina
+#   - "Stadia.AlidadeSmooth" : Smooth light theme - supports retina
+#   - "Stadia.AlidadeSmoothDark" : Smooth dark theme - supports retina
+#   - "OpenStreetMap"        : Standard OSM (no retina)
+#   - "Esri.WorldImagery"    : Satellite imagery (no retina)
+#   - "Esri.WorldTopoMap"    : Topographic (no retina)
 
-# Note: STYLE is defined below, but we need basemap_provider early
-# CHANGE THIS to match your preferred basemap style
+# Note: STYLE is defined below, but we need basemap settings early
+# CHANGE THESE to match your preferred basemap style and quality
 basemap_provider <- "CartoDB.DarkMatter"
+basemap_zoom <- NULL     # NULL = auto-detect, or set 1-18 (higher = more detail, slower)
+basemap_retina <- TRUE   # TRUE = high-res tiles (2x) for CartoDB/Stadia providers
 
-cat(sprintf("\\nLoading basemap (%s)...\\n", basemap_provider))
+cat(sprintf("\\nLoading basemap (%s, retina=%s)...\\n", basemap_provider, basemap_retina))
 
 # Create bounding box with small buffer for tile fetching
 buffer <- 0.5
@@ -118,15 +122,20 @@ bbox_expanded <- st_bbox(c(
   ymax = bounds$ymax + buffer
 ), crs = 4326)
 
-# Try to fetch tiles
+# Try to fetch tiles with high-resolution support
+# retina=TRUE downloads 2x resolution tiles for supported providers (CartoDB, Stadia)
+# zoom controls detail level (NULL = auto, higher = more detail but more tiles)
 basemap <- NULL
 tryCatch({
   basemap <- get_tiles(
     st_as_sfc(bbox_expanded),
     provider = basemap_provider,
-    crop = TRUE
+    zoom = basemap_zoom,
+    crop = TRUE,
+    retina = basemap_retina
   )
   cat("  Basemap tiles loaded successfully\\n")
+  if (basemap_retina) cat("  (High-resolution retina tiles)\\n")
 }, error = function(e) {
   cat(sprintf("  Could not fetch tiles: %s\\n", e$message))
   cat("  Falling back to exported basemap.png\\n")
@@ -164,12 +173,6 @@ STYLE <- list(
   # Background - use "#1a1a2e" for dark themes, "#f5f5f5" for light themes
   bg_color = "#1a1a2e",
 
-  # Basemap - options: "CartoDB.DarkMatter", "CartoDB.Positron", "CartoDB.Voyager",
-  #                    "OpenStreetMap", "Esri.WorldImagery", "Esri.WorldTopoMap",
-  #                    "Stadia.AlidadeSmooth", "Stadia.AlidadeSmoothDark", "Stadia.StamenToner",
-  #                    "Stadia.StamenTerrain", "OpenTopoMap"
-  basemap_provider = "CartoDB.DarkMatter",
-
   # Points
   point_size = 2.5,
   point_alpha = 0.85,
@@ -194,10 +197,13 @@ STYLE <- list(
   # Scale bar - use "#333333" for light themes
   scale_bar_color = "#e0e0e0",
 
-  # Output
-  width = 16,
-  height = 9,
-  dpi = 300
+  # Output dimensions and quality
+  # Note: DPI affects text, points, and vector elements but NOT basemap tile resolution.
+  # For sharper basemaps, set basemap_retina=TRUE above (2x tiles) and/or increase basemap_zoom.
+  # PDF/SVG are vector formats - points/legend are infinitely scalable, only basemap is raster.
+  width = 16,      # inches
+  height = 9,      # inches
+  dpi = 300        # dots per inch (affects PNG rasterization, not PDF/SVG vector parts)
 )
 
 # ──────────────────────────────────────────────────────────────────────────────

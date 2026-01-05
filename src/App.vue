@@ -123,10 +123,10 @@ const directExportMap = async () => {
     const containerDataUrl = await toPng(container, {
       pixelRatio: htmlPixelRatio,
       backgroundColor: '#1a1a2e',
-      // Remove dashed border from cloned element (doesn't affect original DOM)
-      onClone: (clonedDoc, clonedEl) => {
-        clonedEl.style.border = 'none'
-        clonedEl.style.boxShadow = 'none'
+      // Remove dashed border from export (style option applies to root node before rendering)
+      style: {
+        border: 'none',
+        boxShadow: 'none'
       },
       filter: (node) => {
         // Exclude navigation controls (zoom buttons, compass, etc.)
