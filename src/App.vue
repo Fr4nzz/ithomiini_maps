@@ -60,15 +60,17 @@ const openImageGallery = () => { showImageGallery.value = true }
 const closeImageGallery = () => { showImageGallery.value = false }
 
 // Direct export function - captures the map container which is already sized to aspect ratio
+// Uses MapLibre's setPixelRatio() for true high-resolution rendering
 const directExportMap = async () => {
   if (!mapRef.value) {
     alert('Map not available. Please ensure you are on the Map view.')
     return
   }
 
-  try {
-    const map = mapRef.value
+  const map = mapRef.value
+  let originalPixelRatio = null
 
+  try {
     // Ensure map style is loaded
     if (!map.isStyleLoaded()) {
       await new Promise(resolve => map.once('style.load', resolve))
@@ -78,10 +80,6 @@ const directExportMap = async () => {
     if (!map.areTilesLoaded()) {
       await new Promise(resolve => map.once('idle', resolve))
     }
-
-    // Force a fresh render
-    map.triggerRepaint()
-    await new Promise(resolve => map.once('idle', resolve))
 
     // Get the map container - it's already sized to the correct aspect ratio
     const container = map.getContainer()
@@ -101,14 +99,29 @@ const directExportMap = async () => {
     const exportWidth = Math.round(baseWidth * dpiScale)
     const exportHeight = Math.round(baseHeight * dpiScale)
 
-    // Calculate pixel ratio for high-quality capture
-    const capturePixelRatio = Math.max(2, Math.ceil(exportWidth / container.clientWidth))
+    // Calculate the pixel ratio needed for true high-resolution rendering
+    // This makes MapLibre render its canvas at the target resolution
+    const targetPixelRatio = exportWidth / container.clientWidth
+
+    // Save original pixel ratio and set high-resolution mode
+    // Cap at 8 to avoid WebGL limits (some browsers have issues above 9)
+    originalPixelRatio = map.getPixelRatio()
+    const safePixelRatio = Math.min(targetPixelRatio, 8)
+    map.setPixelRatio(safePixelRatio)
+
+    // Wait for map to re-render at high resolution
+    map.triggerRepaint()
+    await new Promise(resolve => map.once('idle', resolve))
+
+    // html-to-image pixelRatio for HTML elements (legend, scale bar)
+    // Since map canvas is now high-res, we match it for HTML overlays
+    const htmlPixelRatio = safePixelRatio
 
     // Capture the map container (canvas + HTML overlays like scale bar, legend)
     const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
     const containerDataUrl = await toPng(container, {
-      pixelRatio: capturePixelRatio,
+      pixelRatio: htmlPixelRatio,
       backgroundColor: '#1a1a2e',
       // Remove dashed border from cloned element (doesn't affect original DOM)
       onClone: (clonedDoc, clonedEl) => {
@@ -129,6 +142,11 @@ const directExportMap = async () => {
         return true
       }
     })
+
+    // Restore original pixel ratio immediately after capture
+    map.setPixelRatio(originalPixelRatio)
+    originalPixelRatio = null // Mark as restored
+    map.triggerRepaint()
 
     // Load the captured image
     const containerImage = await loadImage(containerDataUrl)
@@ -160,6 +178,12 @@ const directExportMap = async () => {
   } catch (e) {
     console.error('Image export failed:', e)
     alert('Export failed: ' + e.message)
+  } finally {
+    // Always restore pixel ratio even if export fails
+    if (originalPixelRatio !== null && map) {
+      map.setPixelRatio(originalPixelRatio)
+      map.triggerRepaint()
+    }
   }
 }
 
