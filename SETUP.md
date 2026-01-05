@@ -165,17 +165,12 @@ Environment variables store sensitive data like your GitHub token securely.
 
 #### 2.9 Dynamic Repository Detection
 
-The web app automatically detects the GitHub owner and repo:
+The web app automatically detects the GitHub owner and repo from the GitHub Pages URL:
 
 - **GitHub Pages** (`fr4nzz.github.io/ithomiini_maps`): Uses `Fr4nzz` as owner and `ithomiini_maps` as repo
-- **Other deployments**: Defaults to `rapidspeciation/ithomiini_maps`
+- **Localhost**: Database update button is disabled (only works on GitHub Pages)
 
-You can also specify a branch via URL parameter to update a feature branch:
-```
-https://fr4nzz.github.io/ithomiini_maps/?branch=claude/my-feature
-```
-
-This allows testing database updates on feature branches without modifying any configuration.
+The workflow always runs on the `main` branch.
 
 #### 2.10 Test the Worker
 
@@ -184,7 +179,7 @@ You can test your worker directly:
 ```bash
 curl -X POST https://ithomiini-db-updater.<your-subdomain>.workers.dev/ \
   -H "Content-Type: application/json" \
-  -d '{"password": "Hyalyris", "update_sanger": true, "update_gbif": false, "owner": "Fr4nzz", "repo": "ithomiini_maps", "branch": "main"}'
+  -d '{"password": "Hyalyris", "update_sanger": true, "update_gbif": false, "owner": "Fr4nzz", "repo": "ithomiini_maps"}'
 ```
 
 Expected response: `Update triggered successfully`

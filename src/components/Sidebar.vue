@@ -75,7 +75,10 @@ const updateMessage = ref('')
 // Cloudflare Worker URL - update this to your worker URL
 const WORKER_URL = 'https://ithomiini-maps-db-updater.franz-chandi.workers.dev/'
 
-// Detect GitHub owner/repo from current URL or use defaults
+// Check if running on GitHub Pages (database update only works there)
+const isGitHubPages = computed(() => window.location.hostname.endsWith('.github.io'))
+
+// Detect GitHub owner/repo from GitHub Pages URL
 const getRepoInfo = () => {
   const hostname = window.location.hostname
   const pathname = window.location.pathname
@@ -87,17 +90,17 @@ const getRepoInfo = () => {
     return { owner, repo }
   }
 
-  // Localhost or custom domain - use defaults
-  return { owner: 'rapidspeciation', repo: 'ithomiini_maps' }
-}
-
-// Allow branch override via URL parameter (e.g., ?branch=claude/my-feature)
-const getBranch = () => {
-  const params = new URLSearchParams(window.location.search)
-  return params.get('branch') || 'main'
+  return null
 }
 
 const triggerDatabaseUpdate = async () => {
+  // Check if on GitHub Pages
+  if (!isGitHubPages.value) {
+    updateStatus.value = 'error'
+    updateMessage.value = 'Database update is only available when running on GitHub Pages'
+    return
+  }
+
   // Verify password
   if (updatePassword.value !== 'Hyalyris') {
     updateStatus.value = 'error'
@@ -116,8 +119,14 @@ const triggerDatabaseUpdate = async () => {
   updateMessage.value = 'Contacting server...'
 
   try {
-    const { owner, repo } = getRepoInfo()
-    const branch = getBranch()
+    const repoInfo = getRepoInfo()
+    if (!repoInfo) {
+      updateStatus.value = 'error'
+      updateMessage.value = 'Could not detect repository info from URL'
+      return
+    }
+
+    const { owner, repo } = repoInfo
 
     // Call the Cloudflare Worker to trigger GitHub Action
     const response = await fetch(WORKER_URL, {
@@ -128,16 +137,14 @@ const triggerDatabaseUpdate = async () => {
         update_sanger: updateSanger.value,
         update_gbif: updateGbif.value,
         owner,
-        repo,
-        branch
+        repo
       })
     })
 
     if (response.ok) {
       updateStatus.value = 'success'
       const estimatedTime = updateGbif.value ? '15-20 minutes' : '2-3 minutes'
-      const branchInfo = branch !== 'main' ? ` (branch: ${branch})` : ''
-      updateMessage.value = `Update started on ${owner}/${repo}${branchInfo}! The database will refresh in approximately ${estimatedTime}. Check back later.`
+      updateMessage.value = `Update started on ${owner}/${repo}! The database will refresh in approximately ${estimatedTime}. Check back later.`
     } else {
       const error = await response.text()
       updateStatus.value = 'error'

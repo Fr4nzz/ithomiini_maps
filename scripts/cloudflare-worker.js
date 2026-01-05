@@ -50,7 +50,7 @@ export default {
 
     try {
       const body = await request.json();
-      const { password, update_sanger, update_gbif, owner, repo, branch } = body;
+      const { password, update_sanger, update_gbif, owner, repo } = body;
 
       // Verify password
       if (password !== env.UPDATE_PASSWORD) {
@@ -68,10 +68,7 @@ export default {
         });
       }
 
-      // Use provided branch or default to 'main'
-      const targetBranch = branch || 'main';
-
-      // Trigger GitHub Actions workflow
+      // Trigger GitHub Actions workflow (always runs on main branch)
       const workflowUrl = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/update_data.yml/dispatches`;
 
       const githubResponse = await fetch(workflowUrl, {
@@ -83,7 +80,7 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ref: targetBranch,
+          ref: 'main',
           inputs: {
             update_sanger: String(update_sanger !== false),
             update_gbif: String(update_gbif === true),
