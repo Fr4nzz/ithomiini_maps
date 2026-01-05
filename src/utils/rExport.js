@@ -756,11 +756,11 @@ export async function exportForR(map) {
 
   // Capture basemap as raster (without data points)
   let basemapDataUrl = null
+  const dataLayers = ['points-layer', 'points-glow', 'clusters', 'cluster-count']
+  const layerVisibility = {}
+
   try {
     // Temporarily hide data layers to capture just the basemap
-    const dataLayers = ['points-layer', 'points-glow', 'clusters', 'cluster-count']
-    const layerVisibility = {}
-
     dataLayers.forEach(layerId => {
       if (map.getLayer(layerId)) {
         layerVisibility[layerId] = map.getLayoutProperty(layerId, 'visibility')
@@ -774,19 +774,25 @@ export async function exportForR(map) {
 
     // Capture basemap canvas directly (no cropping needed)
     basemapDataUrl = map.getCanvas().toDataURL('image/png')
-
-    // Restore layer visibility
+  } catch (e) {
+    console.warn('[Export] Could not capture basemap:', e)
+  } finally {
+    // ALWAYS restore layer visibility, even if capture failed
     dataLayers.forEach(layerId => {
-      if (map.getLayer(layerId) && layerVisibility[layerId] !== undefined) {
-        map.setLayoutProperty(layerId, 'visibility', layerVisibility[layerId] || 'visible')
+      if (map.getLayer(layerId)) {
+        const originalVisibility = layerVisibility[layerId]
+        if (originalVisibility !== undefined) {
+          map.setLayoutProperty(layerId, 'visibility', originalVisibility || 'visible')
+        } else {
+          // If we didn't capture original state, default to visible
+          map.setLayoutProperty(layerId, 'visibility', 'visible')
+        }
       }
     })
 
     // Wait for render to restore
     map.triggerRepaint()
     await new Promise(resolve => map.once('idle', resolve))
-  } catch (e) {
-    console.warn('[Export] Could not capture basemap:', e)
   }
 
   // Generate citation text
