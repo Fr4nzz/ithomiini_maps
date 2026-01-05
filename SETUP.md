@@ -156,23 +156,26 @@ Environment variables store sensitive data like your GitHub token securely.
 #### 2.8 Update the Frontend Code
 
 1. Open `src/components/Sidebar.vue` in your code editor
-2. Find the `WORKER_URL` constant (around line 76):
+2. Find the database update configuration section (around line 75-82):
    ```javascript
+   // ============================================
+   // DATABASE UPDATE CONFIGURATION
+   // Update these values when deploying to a different repository
+   // ============================================
    const WORKER_URL = 'https://ithomiini-db-updater.YOUR-SUBDOMAIN.workers.dev/'
+   const GITHUB_OWNER = 'Fr4nzz'
+   const GITHUB_REPO = 'ithomiini_maps'
+   // ============================================
    ```
-3. Replace `YOUR-SUBDOMAIN` with your actual Cloudflare subdomain
+3. Update the values:
+   - `WORKER_URL`: Your Cloudflare Worker URL
+   - `GITHUB_OWNER`: Your GitHub username or organization name
+   - `GITHUB_REPO`: Your repository name
 4. Commit and push the change
-
-#### 2.9 Dynamic Repository Detection
-
-The web app automatically detects the GitHub owner and repo from the GitHub Pages URL:
-
-- **GitHub Pages** (`fr4nzz.github.io/ithomiini_maps`): Uses `Fr4nzz` as owner and `ithomiini_maps` as repo
-- **Localhost**: Database update button is disabled (only works on GitHub Pages)
 
 The workflow always runs on the `main` branch.
 
-#### 2.10 Test the Worker
+#### 2.9 Test the Worker
 
 You can test your worker directly:
 
@@ -470,7 +473,7 @@ After setup, you should have:
 
 - [ ] GitHub Classic Token with `repo` and `workflow` scopes
 - [ ] Cloudflare Worker deployed with 2 environment variables (`UPDATE_PASSWORD`, `GITHUB_TOKEN`)
-- [ ] `WORKER_URL` constant updated in `src/components/Sidebar.vue`
+- [ ] Configuration updated in `src/components/Sidebar.vue` (`WORKER_URL`, `GITHUB_OWNER`, `GITHUB_REPO`)
 - [ ] (Optional) Stadia Maps API key in `.env.local`
 - [ ] (Optional) MapTiler API key in `.env.local`
 
