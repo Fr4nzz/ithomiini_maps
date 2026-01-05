@@ -433,7 +433,35 @@ watch(
       class="map"
       :class="{ 'map-export-preview': store.exportSettings.enabled }"
       :style="mapContainerStyle"
-    ></div>
+    >
+      <!-- Legend INSIDE map container so it gets captured in export -->
+      <div
+        v-if="store.legendSettings.showLegend"
+        class="legend"
+        :class="[legendPositionClass, { 'legend-export': store.exportSettings.enabled && store.exportSettings.includeLegend }]"
+        :style="{
+          fontSize: store.exportSettings.enabled
+            ? (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem'
+            : store.legendSettings.textSize + 'rem',
+          transform: store.exportSettings.enabled ? 'scale(' + store.exportSettings.uiScale + ')' : 'none',
+          transformOrigin: legendTransformOrigin,
+          display: store.exportSettings.enabled && !store.exportSettings.includeLegend ? 'none' : 'block'
+        }"
+      >
+        <div class="legend-title">{{ store.legendTitle }}</div>
+        <div
+          v-for="(color, label) in limitedColorMap"
+          :key="label"
+          class="legend-item"
+        >
+          <span class="legend-dot" :style="{ backgroundColor: color }"></span>
+          <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
+        </div>
+        <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
+          + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
+        </div>
+      </div>
+    </div>
 
     <!-- Export info badge (shown when in export mode) -->
     <div v-if="store.exportSettings.enabled" class="export-info-badge">
@@ -589,34 +617,6 @@ watch(
             </div>
           </div>
         </Transition>
-      </div>
-    </div>
-
-    <!-- Legend (always shown when enabled, positioned inside map container) -->
-    <div
-      v-if="store.legendSettings.showLegend"
-      class="legend"
-      :class="[legendPositionClass, { 'legend-export': store.exportSettings.enabled && store.exportSettings.includeLegend }]"
-      :style="{
-        fontSize: store.exportSettings.enabled
-          ? (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem'
-          : store.legendSettings.textSize + 'rem',
-        transform: store.exportSettings.enabled ? 'scale(' + store.exportSettings.uiScale + ')' : 'none',
-        transformOrigin: legendTransformOrigin,
-        display: store.exportSettings.enabled && !store.exportSettings.includeLegend ? 'none' : 'block'
-      }"
-    >
-      <div class="legend-title">{{ store.legendTitle }}</div>
-      <div
-        v-for="(color, label) in limitedColorMap"
-        :key="label"
-        class="legend-item"
-      >
-        <span class="legend-dot" :style="{ backgroundColor: color }"></span>
-        <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
-      </div>
-      <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
-        + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
       </div>
     </div>
 

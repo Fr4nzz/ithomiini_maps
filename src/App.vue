@@ -101,6 +101,12 @@ const directExportMap = async () => {
       capturePixelRatio
     })
 
+    // Temporarily remove the dashed border class to exclude it from capture
+    const hadExportPreviewClass = container.classList.contains('map-export-preview')
+    if (hadExportPreviewClass) {
+      container.classList.remove('map-export-preview')
+    }
+
     // Capture the map container (canvas + HTML overlays like scale bar, legend)
     const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
@@ -121,6 +127,11 @@ const directExportMap = async () => {
         return true
       }
     })
+
+    // Restore the dashed border class
+    if (hadExportPreviewClass) {
+      container.classList.add('map-export-preview')
+    }
 
     // Load the captured image
     const containerImage = await loadImage(containerDataUrl)
