@@ -5,47 +5,6 @@ import { useDataStore } from '../stores/data'
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
 const shortHash = commitHash.substring(0, 7)
 
-// Mapping from web app basemap styles to R maptiles providers
-const BASEMAP_TO_R_PROVIDER = {
-  'dark': 'CartoDB.DarkMatter',
-  'light': 'CartoDB.Positron',
-  'stadia-smooth': 'Stadia.AlidadeSmooth',
-  'stadia-dark': 'Stadia.AlidadeSmoothDark',
-  'stadia-toner': 'Stadia.StamenToner',
-  'stadia-terrain': 'Stadia.StamenTerrain',
-  'terrain': 'OpenTopoMap',
-  'streets': 'OpenStreetMap',
-  'satellite': 'Esri.WorldImagery'
-}
-
-// Get background color based on basemap theme
-const getBackgroundColor = (basemapStyle) => {
-  const darkThemes = ['dark', 'stadia-dark', 'stadia-toner']
-  return darkThemes.includes(basemapStyle) ? '#1a1a2e' : '#f5f5f5'
-}
-
-// Get legend colors based on basemap theme
-const getLegendColors = (basemapStyle) => {
-  const darkThemes = ['dark', 'stadia-dark', 'stadia-toner']
-  if (darkThemes.includes(basemapStyle)) {
-    return {
-      bg: '#252540',
-      border: '#3d3d5c',
-      titleColor: '#888888',
-      textColor: '#e0e0e0',
-      scaleBarColor: '#e0e0e0'
-    }
-  } else {
-    return {
-      bg: '#ffffff',
-      border: '#cccccc',
-      titleColor: '#666666',
-      textColor: '#333333',
-      scaleBarColor: '#333333'
-    }
-  }
-}
-
 // Generate citation text
 const getCitationText = (recordCount) => {
   const date = new Date().toLocaleDateString('en-US', {
@@ -62,11 +21,8 @@ const getCitationText = (recordCount) => {
 }
 
 // Generate R script that recreates the map view
-const generateRScript = (colorBy, basemapStyle) => {
+const generateRScript = (colorBy) => {
   const isItalic = colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' || colorBy === 'scientific_name'
-  const rProvider = BASEMAP_TO_R_PROVIDER[basemapStyle] || 'CartoDB.DarkMatter'
-  const bgColor = getBackgroundColor(basemapStyle)
-  const legendColors = getLegendColors(basemapStyle)
 
   return `# ════════════════════════════════════════════════════════════════════════════════
 # Ithomiini Distribution Map - R Script for Publication-Quality Export
@@ -74,7 +30,7 @@ const generateRScript = (colorBy, basemapStyle) => {
 # ════════════════════════════════════════════════════════════════════════════════
 #
 # This script creates a map matching the web app preview with:
-#   - ${rProvider} basemap (via maptiles package)
+#   - Configurable basemap (via maptiles package)
 #   - Styled legend with rounded corners
 #   - Scale bar
 #   - Point styling with stroke
@@ -148,8 +104,8 @@ cat(sprintf("  Bounds: [%.2f, %.2f] to [%.2f, %.2f]\\n",
 #   - "Esri.WorldTopoMap"    : Topographic
 
 # Note: STYLE is defined below, but we need basemap_provider early
-# This was set from the web app to match your selected basemap
-basemap_provider <- "${rProvider}"
+# CHANGE THIS to match your preferred basemap style
+basemap_provider <- "CartoDB.DarkMatter"
 
 cat(sprintf("\\nLoading basemap (%s)...\\n", basemap_provider))
 
@@ -205,14 +161,14 @@ cat(sprintf("\\nLegend: %d categories\\n", nrow(legend_df)))
 # ──────────────────────────────────────────────────────────────────────────────
 
 STYLE <- list(
-  # Background (matches web app theme)
-  bg_color = "${bgColor}",
+  # Background - use "#1a1a2e" for dark themes, "#f5f5f5" for light themes
+  bg_color = "#1a1a2e",
 
   # Basemap - options: "CartoDB.DarkMatter", "CartoDB.Positron", "CartoDB.Voyager",
   #                    "OpenStreetMap", "Esri.WorldImagery", "Esri.WorldTopoMap",
   #                    "Stadia.AlidadeSmooth", "Stadia.AlidadeSmoothDark", "Stadia.StamenToner",
   #                    "Stadia.StamenTerrain", "OpenTopoMap"
-  basemap_provider = "${rProvider}",
+  basemap_provider = "CartoDB.DarkMatter",
 
   # Points
   point_size = 2.5,
@@ -221,12 +177,13 @@ STYLE <- list(
   point_stroke_alpha = 0.3,
   point_stroke_width = 0.5,
 
-  # Legend (colors match web app theme)
-  legend_bg = "${legendColors.bg}",
+  # Legend - for light themes use: bg="#ffffff", border="#cccccc",
+  #          title_color="#666666", text_color="#333333"
+  legend_bg = "#252540",
   legend_bg_alpha = 0.95,    # Transparency (0 = transparent, 1 = opaque)
-  legend_border = "${legendColors.border}",
-  legend_title_color = "${legendColors.titleColor}",
-  legend_text_color = "${legendColors.textColor}",
+  legend_border = "#3d3d5c",
+  legend_title_color = "#888888",
+  legend_text_color = "#e0e0e0",
   legend_max_items = 15,
   legend_font_size = 8,
   legend_title_size = 10,
@@ -234,8 +191,8 @@ STYLE <- list(
   legend_padding = 0.015,
   legend_item_height = 0.028,
 
-  # Scale bar
-  scale_bar_color = "${legendColors.scaleBarColor}",
+  # Scale bar - use "#333333" for light themes
+  scale_bar_color = "#e0e0e0",
 
   # Output
   width = 16,
@@ -708,7 +665,6 @@ export async function exportForR(map) {
   // Prepare GeoJSON with color information
   const colorMap = store.activeColorMap
   const colorBy = store.colorBy
-  const basemapStyle = store.basemapStyle || 'dark'
 
   // Add color to each feature
   const featuresWithColors = geo.features.map(f => {
@@ -748,9 +704,7 @@ export async function exportForR(map) {
       lat: center.lat
     },
     zoom: zoom,
-    colorBy: colorBy,
-    basemapStyle: basemapStyle,
-    rBasemapProvider: BASEMAP_TO_R_PROVIDER[basemapStyle] || 'CartoDB.DarkMatter'
+    colorBy: colorBy
   }
 
   // Legend configuration
@@ -765,7 +719,7 @@ export async function exportForR(map) {
   }
 
   // Generate R script
-  const rScript = generateRScript(colorBy, basemapStyle)
+  const rScript = generateRScript(colorBy)
 
   // Capture basemap as raster (without data points)
   let basemapDataUrl = null

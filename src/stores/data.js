@@ -47,9 +47,6 @@ export const useDataStore = defineStore('data', () => {
     borderOpacity: 0.6      // Point border opacity (0-1)
   })
 
-  // Current basemap style (synced from MapEngine)
-  const basemapStyle = ref('dark')  // 'dark', 'light', 'stadia-smooth', 'terrain', etc.
-
   const legendSettings = ref({
     position: 'bottom-left',  // 'top-left', 'top-right', 'bottom-left', 'bottom-right'
     textSize: 0.8,            // Font size multiplier
@@ -1268,7 +1265,6 @@ export const useDataStore = defineStore('data', () => {
     // Map styling state
     colorBy,
     mapStyle,
-    basemapStyle,
     legendSettings,
     exportSettings,
     mapView,
