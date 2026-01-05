@@ -12,7 +12,8 @@ import {
   loadImage,
   drawLegendOnCanvas,
   drawScaleBarOnCanvas,
-  drawAttributionOnCanvas
+  drawAttributionOnCanvas,
+  calculateScaleBarParams
 } from './utils/canvasHelpers'
 
 const store = useDataStore()
@@ -50,30 +51,6 @@ const closeMimicrySelector = () => { showMimicrySelector.value = false }
 
 const openImageGallery = () => { showImageGallery.value = true }
 const closeImageGallery = () => { showImageGallery.value = false }
-
-// Calculate scale bar text from map
-const getScaleBarText = (map) => {
-  if (!map) return '500 km'
-  try {
-    const zoom = map.getZoom()
-    const center = map.getCenter()
-    const lat = center.lat
-    const metersPerPixel = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
-    const distance = metersPerPixel * 100
-    if (distance >= 1000) {
-      const km = distance / 1000
-      if (km >= 500) return Math.round(km / 100) * 100 + ' km'
-      else if (km >= 50) return Math.round(km / 10) * 10 + ' km'
-      else if (km >= 5) return Math.round(km) + ' km'
-      else return km.toFixed(1) + ' km'
-    } else {
-      if (distance >= 100) return Math.round(distance / 10) * 10 + ' m'
-      else return Math.round(distance) + ' m'
-    }
-  } catch (e) {
-    return '500 km'
-  }
-}
 
 // Calculate export hole position (same as preview overlay)
 const calculateExportHole = (containerWidth, containerHeight) => {
@@ -205,10 +182,13 @@ const directExportMap = async () => {
 
     // Draw scale bar if enabled
     if (store.exportSettings.includeScaleBar) {
+      // Calculate accurate scale bar parameters for the preview rectangle
+      const scaleBarParams = calculateScaleBarParams(map, hole, exportWidth)
       drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
         legendSettings: store.legendSettings,
         exportSettings: store.exportSettings,
-        scaleBarText: getScaleBarText(map),
+        scaleBarText: scaleBarParams.text,
+        scaleBarWidth: scaleBarParams.barWidth,
       })
     }
 

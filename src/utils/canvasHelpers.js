@@ -136,9 +136,76 @@ export const drawLegendOnCanvas = (ctx, width, height, options) => {
   }
 }
 
+// Round to a "nice" number for scale bar display (matching MapLibre's algorithm)
+const getRoundNum = (num) => {
+  const pow10 = Math.pow(10, Math.floor(Math.log10(num)))
+  let d = num / pow10
+  if (d >= 10) d = 10
+  else if (d >= 5) d = 5
+  else if (d >= 3) d = 3
+  else if (d >= 2) d = 2
+  else d = 1
+  return pow10 * d
+}
+
+// Calculate scale bar parameters for accurate display
+// Returns { barWidth, text } where barWidth is in output pixels and text is the formatted distance
+export const calculateScaleBarParams = (map, previewHole, outputWidth, maxBarWidth = 150) => {
+  if (!map) return { barWidth: 100, text: '500 km' }
+
+  try {
+    // Get the center-bottom of the preview rectangle (where scale bar will be drawn)
+    const centerX = previewHole.x + previewHole.width / 2
+    const bottomY = previewHole.y + previewHole.height * 0.9 // Near bottom of preview
+
+    // Get two points at the same latitude, separated by maxBarWidth pixels in the preview
+    const scaleFactor = outputWidth / previewHole.width
+    const previewBarWidth = maxBarWidth / scaleFactor
+
+    const left = map.unproject([centerX - previewBarWidth / 2, bottomY])
+    const right = map.unproject([centerX + previewBarWidth / 2, bottomY])
+
+    // Calculate distance using haversine formula
+    const R = 6371000 // Earth's radius in meters
+    const lat1 = left.lat * Math.PI / 180
+    const lat2 = right.lat * Math.PI / 180
+    const dLat = (right.lat - left.lat) * Math.PI / 180
+    const dLng = (right.lng - left.lng) * Math.PI / 180
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(dLng / 2) * Math.sin(dLng / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    const maxDistance = R * c // Distance in meters
+
+    // Round to a nice number
+    let distance, unit
+    if (maxDistance >= 1000) {
+      distance = getRoundNum(maxDistance / 1000)
+      unit = 'km'
+    } else {
+      distance = getRoundNum(maxDistance)
+      unit = 'm'
+    }
+
+    // Calculate the actual bar width for this rounded distance
+    const actualDistance = unit === 'km' ? distance * 1000 : distance
+    const ratio = actualDistance / maxDistance
+    const barWidth = maxBarWidth * ratio
+
+    return {
+      barWidth: Math.max(50, Math.min(maxBarWidth, barWidth)),
+      text: `${distance} ${unit}`
+    }
+  } catch (e) {
+    console.warn('Scale bar calculation failed:', e)
+    return { barWidth: 100, text: '500 km' }
+  }
+}
+
 // Draw scale bar on canvas for export
 export const drawScaleBarOnCanvas = (ctx, width, height, options) => {
-  const { legendSettings, exportSettings, scaleBarText } = options
+  const { legendSettings, exportSettings, scaleBarText, scaleBarWidth } = options
   const uiScale = exportSettings.uiScale || 1
   const referenceHeight = 650
   const resolutionScale = height / referenceHeight
@@ -147,7 +214,8 @@ export const drawScaleBarOnCanvas = (ctx, width, height, options) => {
   const sidePadding = 15 * resolutionScale * uiScale
   const bottomPadding = 15 * resolutionScale * uiScale
 
-  const barWidth = 100 * scale
+  // Use calculated bar width if provided, otherwise fall back to fixed 100px
+  const barWidth = scaleBarWidth ? scaleBarWidth * scale : 100 * scale
   const barHeight = 4 * scale
 
   let x
