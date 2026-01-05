@@ -201,6 +201,10 @@ watch(() => props.points, () => {
 const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
 const totalIndividuals = computed(() => props.points.length)
 
+// Sex counts
+const maleCount = computed(() => props.points.filter(p => p.sex === 'male').length)
+const femaleCount = computed(() => props.points.filter(p => p.sex === 'female').length)
+
 // Subspecies count for selected species
 const subspeciesCount = computed(() => {
   if (!selectedSpecies.value || !groupedBySpecies.value[selectedSpecies.value]) {
@@ -437,6 +441,15 @@ const openGallery = () => {
               <span class="stat-value">{{ totalIndividuals }}</span>
               <span class="stat-label">individuals</span>
             </div>
+          </div>
+
+          <!-- Sex counts (only show if we have sex data) -->
+          <div v-if="maleCount > 0 || femaleCount > 0" class="sex-stats">
+            <span v-if="maleCount > 0" class="sex-count male">♂ {{ maleCount }}</span>
+            <span v-if="femaleCount > 0" class="sex-count female">♀ {{ femaleCount }}</span>
+            <span v-if="totalIndividuals - maleCount - femaleCount > 0" class="sex-count unknown">
+              ? {{ totalIndividuals - maleCount - femaleCount }}
+            </span>
           </div>
         </div>
       </div>
@@ -805,5 +818,34 @@ const openGallery = () => {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
+}
+
+/* Sex Stats */
+.sex-stats {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(74, 222, 128, 0.15);
+}
+
+.sex-count {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.sex-count.male {
+  color: #60a5fa; /* Blue for male */
+}
+
+.sex-count.female {
+  color: #f472b6; /* Pink for female */
+}
+
+.sex-count.unknown {
+  color: #9ca3af; /* Gray for unknown */
 }
 </style>

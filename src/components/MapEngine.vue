@@ -7,24 +7,27 @@ import PointPopup from './PointPopup.vue'
 import { ASPECT_RATIOS } from '../utils/constants'
 import {
   MAP_STYLES,
+  getStylesByTheme,
   useLocationSearch,
   useExportPreview,
   useScatterVisualization,
   useDataLayer,
   useStyleSwitcher,
-  useScaleBar
+  useCountryBoundaries
 } from '../composables/useMapEngine'
 
 const store = useDataStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
+const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
 const map = ref(null)
 let popup = null
 
-// Container size for accurate export preview calculations
-const containerSize = ref({ width: 1600, height: 900 })
-let resizeObserver = null
+// Wrapper size (the available space) for accurate export preview calculations
+const wrapperSize = ref({ width: 1600, height: 900 })
+let wrapperResizeObserver = null
+let mapContainerResizeObserver = null
 
 // Enhanced popup state for multi-point locations
 const showEnhancedPopup = ref(false)
@@ -47,9 +50,8 @@ const {
   cleanup: cleanupSearch
 } = useLocationSearch(map)
 
-const { legendTransformOrigin, exportHolePosition } = useExportPreview(containerSize)
+const { legendTransformOrigin } = useExportPreview(wrapperSize)
 const { updateScatterVisualization } = useScatterVisualization(map)
-const { scaleBarText, updateScaleBar } = useScaleBar(map)
 
 // Popup handler for data layer
 const handleShowPopup = (data) => {
@@ -88,10 +90,82 @@ const handleShowPopup = (data) => {
 
 const { addDataLayer, fitBoundsToData } = useDataLayer(map, { onShowPopup: handleShowPopup })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer)
+const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
+
+// Map layer dropdown
+const showMapLayerDropdown = ref(false)
+const stylesByTheme = getStylesByTheme()
+const mapLayerDropdownRef = ref(null)
+
+// Select a map style from dropdown
+const selectMapStyle = (styleKey) => {
+  switchStyle(styleKey)
+  showMapLayerDropdown.value = false
+  // Re-add boundaries after style change
+  setTimeout(() => {
+    if (showBoundaries.value) {
+      addBoundariesLayer()
+    }
+  }, 500)
+}
+
+// Get current style name
+const currentStyleName = computed(() => {
+  return MAP_STYLES[currentStyle.value]?.name || 'Dark'
+})
+
+// Close dropdown when clicking outside
+const handleMapLayerClickOutside = (event) => {
+  if (mapLayerDropdownRef.value && !mapLayerDropdownRef.value.contains(event.target)) {
+    showMapLayerDropdown.value = false
+  }
+}
 
 // Legend position class based on store settings
 const legendPositionClass = computed(() => {
   return `legend-${store.legendSettings.position}`
+})
+
+// Compute map container styles for export aspect ratio
+const mapContainerStyle = computed(() => {
+  if (!store.exportSettings.enabled) {
+    return {} // Full size when not in export mode
+  }
+
+  const ratio = store.exportSettings.aspectRatio
+  let targetWidth, targetHeight
+
+  if (ratio === 'custom') {
+    targetWidth = store.exportSettings.customWidth
+    targetHeight = store.exportSettings.customHeight
+  } else if (ASPECT_RATIOS[ratio]) {
+    targetWidth = ASPECT_RATIOS[ratio].width
+    targetHeight = ASPECT_RATIOS[ratio].height
+  } else {
+    return {}
+  }
+
+  const targetAspectRatio = targetWidth / targetHeight
+  const wrapperWidth = wrapperSize.value.width
+  const wrapperHeight = wrapperSize.value.height
+  const wrapperAspectRatio = wrapperWidth / wrapperHeight
+
+  // Calculate actual pixel dimensions that fit within wrapper while maintaining aspect ratio
+  let mapWidth, mapHeight
+  if (targetAspectRatio >= wrapperAspectRatio) {
+    // Target is wider - constrain by width, calculate height
+    mapWidth = wrapperWidth
+    mapHeight = wrapperWidth / targetAspectRatio
+  } else {
+    // Target is taller - constrain by height, calculate width
+    mapHeight = wrapperHeight
+    mapWidth = wrapperHeight * targetAspectRatio
+  }
+
+  return {
+    width: `${mapWidth}px`,
+    height: `${mapHeight}px`
+  }
 })
 
 // Limit color map items for legend display
@@ -115,23 +189,36 @@ const limitedColorMap = computed(() => {
 onMounted(() => {
   initMap()
   document.addEventListener('click', handleClickOutside)
+  document.addEventListener('click', handleMapLayerClickOutside)
 
-  // Set up ResizeObserver for accurate export preview calculations
-  if (mapContainer.value) {
-    containerSize.value = {
-      width: mapContainer.value.clientWidth,
-      height: mapContainer.value.clientHeight
+  // Set up ResizeObserver on WRAPPER for calculating export preview dimensions
+  if (mapWrapper.value) {
+    wrapperSize.value = {
+      width: mapWrapper.value.clientWidth,
+      height: mapWrapper.value.clientHeight
     }
 
-    resizeObserver = new ResizeObserver((entries) => {
+    wrapperResizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        containerSize.value = {
+        wrapperSize.value = {
           width: entry.contentRect.width,
           height: entry.contentRect.height
         }
       }
     })
-    resizeObserver.observe(mapContainer.value)
+    wrapperResizeObserver.observe(mapWrapper.value)
+  }
+
+  // Set up ResizeObserver on MAP CONTAINER to trigger MapLibre resize when container dimensions change
+  // This is critical: MapLibre needs to resize its canvas when the container size changes
+  if (mapContainer.value) {
+    mapContainerResizeObserver = new ResizeObserver(() => {
+      // Tell MapLibre to resize its canvas to match the new container dimensions
+      if (map.value) {
+        map.value.resize()
+      }
+    })
+    mapContainerResizeObserver.observe(mapContainer.value)
   }
 })
 
@@ -140,11 +227,16 @@ onUnmounted(() => {
     map.value.remove()
     map.value = null
   }
-  if (resizeObserver) {
-    resizeObserver.disconnect()
-    resizeObserver = null
+  if (wrapperResizeObserver) {
+    wrapperResizeObserver.disconnect()
+    wrapperResizeObserver = null
+  }
+  if (mapContainerResizeObserver) {
+    mapContainerResizeObserver.disconnect()
+    mapContainerResizeObserver = null
   }
   document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('click', handleMapLayerClickOutside)
   cleanupSearch()
 })
 
@@ -173,11 +265,7 @@ const initMap = () => {
   map.value.on('load', () => {
     addDataLayer()
     emit('map-ready', map.value)
-    updateScaleBar()
   })
-
-  map.value.on('moveend', updateScaleBar)
-  map.value.on('zoomend', updateScaleBar)
 }
 
 // Track previous data length to detect actual data changes
@@ -251,6 +339,7 @@ watch(
   { deep: true }
 )
 
+
 // Watch for focusPoint changes
 watch(
   () => store.focusPoint,
@@ -305,8 +394,47 @@ watch(
 </script>
 
 <template>
-  <div class="map-wrapper">
-    <div ref="mapContainer" class="map"></div>
+  <div ref="mapWrapper" class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled }">
+    <div
+      ref="mapContainer"
+      class="map"
+      :class="{ 'map-export-preview': store.exportSettings.enabled }"
+      :style="mapContainerStyle"
+    >
+      <!-- Legend INSIDE map container so it gets captured in export -->
+      <div
+        v-if="store.legendSettings.showLegend"
+        class="legend"
+        :class="[legendPositionClass, { 'legend-export': store.exportSettings.enabled && store.exportSettings.includeLegend }]"
+        :style="{
+          fontSize: store.exportSettings.enabled
+            ? (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem'
+            : store.legendSettings.textSize + 'rem',
+          transform: store.exportSettings.enabled ? 'scale(' + store.exportSettings.uiScale + ')' : 'none',
+          transformOrigin: legendTransformOrigin,
+          display: store.exportSettings.enabled && !store.exportSettings.includeLegend ? 'none' : 'block'
+        }"
+      >
+        <div class="legend-title">{{ store.legendTitle }}</div>
+        <div
+          v-for="(color, label) in limitedColorMap"
+          :key="label"
+          class="legend-item"
+        >
+          <span class="legend-dot" :style="{ backgroundColor: color }"></span>
+          <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
+        </div>
+        <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
+          + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
+        </div>
+      </div>
+    </div>
+
+    <!-- Export info badge (shown when in export mode) -->
+    <div v-if="store.exportSettings.enabled" class="export-info-badge">
+      <span class="export-ratio">{{ store.exportSettings.aspectRatio }}</span>
+      <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
+    </div>
 
     <!-- Enhanced Popup Container (rendered via MapLibre popup) -->
     <div v-show="false">
@@ -375,122 +503,90 @@ watch(
       </div>
     </div>
 
-    <!-- Style Switcher -->
-    <div class="style-switcher">
-      <button
-        v-for="(config, key) in MAP_STYLES"
-        :key="key"
-        :class="{ active: currentStyle === key }"
-        @click="switchStyle(key)"
-        :title="config.name"
-      >
-        {{ config.name }}
-      </button>
-    </div>
-
-    <!-- Legend (shown when NOT in export mode) -->
-    <div
-      v-if="store.legendSettings.showLegend && !store.exportSettings.enabled"
-      class="legend"
-      :class="legendPositionClass"
-      :style="{ fontSize: store.legendSettings.textSize + 'rem' }"
-    >
-      <div class="legend-title">{{ store.legendTitle }}</div>
-      <div
-        v-for="(color, label) in limitedColorMap"
-        :key="label"
-        class="legend-item"
-      >
-        <span class="legend-dot" :style="{ backgroundColor: color }"></span>
-        <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
-      </div>
-      <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
-        + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
-      </div>
-    </div>
-
-    <!-- Export Preview Overlay -->
-    <div v-if="store.exportSettings.enabled" class="export-overlay">
-      <!-- Dark mask with transparent hole in center -->
-      <svg class="export-mask" width="100%" height="100%">
-        <defs>
-          <mask id="export-hole">
-            <rect width="100%" height="100%" fill="white"/>
-            <rect
-              class="export-hole-rect"
-              :x="exportHolePosition.x + '%'"
-              :y="exportHolePosition.y + '%'"
-              :width="exportHolePosition.width + '%'"
-              :height="exportHolePosition.height + '%'"
-              fill="black"
-            />
-          </mask>
-        </defs>
-        <rect width="100%" height="100%" fill="rgba(0,0,0,0.6)" mask="url(#export-hole)"/>
-      </svg>
-
-      <!-- Export region border -->
-      <div
-        class="export-region-frame"
-        :style="{
-          left: exportHolePosition.x + '%',
-          top: exportHolePosition.y + '%',
-          width: exportHolePosition.width + '%',
-          height: exportHolePosition.height + '%'
-        }"
-      >
-        <!-- Corner handles -->
-        <div class="export-corner export-corner-tl"></div>
-        <div class="export-corner export-corner-tr"></div>
-        <div class="export-corner export-corner-bl"></div>
-        <div class="export-corner export-corner-br"></div>
-
-        <!-- Export info badge -->
-        <div class="export-info">
-          <span class="export-ratio">{{ store.exportSettings.aspectRatio }}</span>
-          <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
-        </div>
-
-        <!-- Legend inside export region (scaled) -->
-        <div
-          v-if="store.legendSettings.showLegend && store.exportSettings.includeLegend"
-          class="export-legend"
-          :class="'export-legend-' + store.legendSettings.position"
-          :style="{
-            fontSize: (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem',
-            transform: 'scale(' + store.exportSettings.uiScale + ')',
-            transformOrigin: legendTransformOrigin
-          }"
+    <!-- Map Layer Controls -->
+    <div ref="mapLayerDropdownRef" class="map-layer-controls">
+      <!-- Base Map Dropdown -->
+      <div class="map-layer-dropdown">
+        <button
+          class="dropdown-trigger"
+          @click.stop="showMapLayerDropdown = !showMapLayerDropdown"
         >
-          <div class="legend-title">{{ store.legendTitle }}</div>
-          <div
-            v-for="(color, label) in limitedColorMap"
-            :key="label"
-            class="legend-item"
-          >
-            <span class="legend-dot" :style="{ backgroundColor: color }"></span>
-            <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
-          </div>
-          <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
-            + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
-          </div>
-        </div>
+          <svg class="layer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+          <span>{{ currentStyleName }}</span>
+          <svg class="chevron" :class="{ open: showMapLayerDropdown }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
 
-        <!-- Scale bar inside export region -->
-        <div
-          v-if="store.exportSettings.includeScaleBar"
-          class="export-scale-bar"
-          :class="{ 'export-scale-bar-left': store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend }"
-          :style="{
-            transform: 'scale(' + store.exportSettings.uiScale + ')',
-            transformOrigin: store.legendSettings.position === 'bottom-right' && store.exportSettings.includeLegend ? 'bottom left' : 'bottom right'
-          }"
-        >
-          <div class="scale-bar-line"></div>
-          <span class="scale-bar-text">{{ scaleBarText }}</span>
-        </div>
+        <Transition name="dropdown">
+          <div v-if="showMapLayerDropdown" class="dropdown-menu">
+            <!-- Day Themes -->
+            <div class="theme-group">
+              <div class="theme-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="5"/>
+                  <line x1="12" y1="1" x2="12" y2="3"/>
+                  <line x1="12" y1="21" x2="12" y2="23"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                  <line x1="1" y1="12" x2="3" y2="12"/>
+                  <line x1="21" y1="12" x2="23" y2="12"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                Day
+              </div>
+              <button
+                v-for="style in stylesByTheme.day"
+                :key="style.key"
+                :class="{ active: currentStyle === style.key }"
+                @click="selectMapStyle(style.key)"
+              >
+                {{ style.name }}
+              </button>
+            </div>
+
+            <!-- Night Themes -->
+            <div class="theme-group">
+              <div class="theme-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                Night
+              </div>
+              <button
+                v-for="style in stylesByTheme.night"
+                :key="style.key"
+                :class="{ active: currentStyle === style.key }"
+                @click="selectMapStyle(style.key)"
+              >
+                {{ style.name }}
+              </button>
+            </div>
+
+            <!-- Divider -->
+            <div class="dropdown-divider"></div>
+
+            <!-- Overlays -->
+            <div class="overlay-section">
+              <label class="overlay-toggle">
+                <input
+                  type="checkbox"
+                  :checked="showBoundaries"
+                  @change="toggleBoundaries"
+                />
+                <span>Country Borders</span>
+              </label>
+            </div>
+          </div>
+        </Transition>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -502,9 +598,77 @@ watch(
   overflow: hidden;
 }
 
+/* Export mode: center the aspect-ratio constrained map */
+.map-wrapper.export-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d1a;
+}
+
 .map {
+  position: relative;
   width: 100%;
   height: 100%;
+}
+
+/* Export preview: map resizes to aspect ratio */
+/* Width/height set dynamically via inline style based on aspect ratio comparison */
+.map.map-export-preview {
+  /* Reset to allow inline styles to control dimensions */
+  width: auto;
+  height: auto;
+  /* CRITICAL: Clip MapLibre canvas to container bounds */
+  overflow: hidden;
+  border: 2px dashed rgba(74, 222, 128, 0.9);
+  border-radius: 4px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Force MapLibre's internal elements to respect container bounds */
+.map.map-export-preview :deep(.maplibregl-canvas-container),
+.map.map-export-preview :deep(.maplibregl-canvas),
+.map.map-export-preview :deep(.maplibregl-control-container) {
+  /* Override MapLibre's absolute positioning to respect container size */
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.map.map-export-preview :deep(.maplibregl-canvas) {
+  /* Force canvas to fit within container */
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+/* Export info badge */
+.export-info-badge {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(26, 26, 46, 0.95);
+  padding: 8px 14px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 20;
+}
+
+.export-info-badge .export-ratio {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #4ade80;
+}
+
+.export-info-badge .export-dimensions {
+  font-size: 0.75em;
+  color: #aaa;
+  font-family: monospace;
 }
 
 /* MapLibre Controls Customization */
@@ -759,42 +923,165 @@ watch(
   background: #4d4d6c;
 }
 
-/* Style Switcher */
-.style-switcher {
+/* Map Layer Controls */
+.map-layer-controls {
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 20;
+}
+
+.map-layer-dropdown {
+  position: relative;
+}
+
+.dropdown-trigger {
   display: flex;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
   background: rgba(26, 26, 46, 0.95);
-  padding: 6px;
+  border: 1px solid #3d3d5c;
   border-radius: 8px;
-  z-index: 10;
+  color: #e0e0e0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(4px);
 }
 
-.style-switcher button {
-  padding: 6px 12px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
-  color: #aaa;
-  border-radius: 4px;
-  font-size: 0.75em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
+.dropdown-trigger:hover {
+  background: rgba(37, 37, 64, 0.98);
+  border-color: #4d4d6c;
 }
 
-.style-switcher button:hover {
+.dropdown-trigger .layer-icon {
+  width: 16px;
+  height: 16px;
+  color: #4ade80;
+}
+
+.dropdown-trigger .chevron {
+  width: 14px;
+  height: 14px;
+  color: #888;
+  transition: transform 0.2s;
+}
+
+.dropdown-trigger .chevron.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 180px;
+  background: rgba(26, 26, 46, 0.98);
+  border: 1px solid #3d3d5c;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.theme-group {
+  padding: 8px 0;
+}
+
+.theme-group:first-child {
+  padding-top: 4px;
+}
+
+.theme-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+}
+
+.theme-label svg {
+  width: 12px;
+  height: 12px;
+}
+
+.theme-group button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px 8px 30px;
+  background: transparent;
+  border: none;
+  color: #c0c0c0;
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.theme-group button:hover {
   background: #2d2d4a;
   color: #fff;
 }
 
-.style-switcher button.active {
-  background: #4ade80;
-  color: #1a1a2e;
-  border-color: #4ade80;
+.theme-group button.active {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+}
+
+.theme-group button.active::before {
+  content: '✓';
+  position: absolute;
+  left: 12px;
+  color: #4ade80;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #3d3d5c;
+  margin: 4px 0;
+}
+
+.overlay-section {
+  padding: 8px 12px;
+}
+
+.overlay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #c0c0c0;
+}
+
+.overlay-toggle:hover {
+  color: #e0e0e0;
+}
+
+.overlay-toggle input[type="checkbox"] {
+  accent-color: #4ade80;
+  width: 14px;
+  height: 14px;
+}
+
+/* Dropdown transition */
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 /* Legend */
@@ -952,196 +1239,35 @@ watch(
 /* Responsive */
 @media (max-width: 768px) {
   .location-search {
-    top: 10px;
+    top: 56px;
     left: 10px;
     right: 10px;
     width: auto;
   }
 
-  .style-switcher {
-    top: auto;
-    bottom: 100px;
+  .map-layer-controls {
+    top: 10px;
     left: 10px;
-    flex-wrap: wrap;
-    max-width: calc(100% - 20px);
   }
 
-  .style-switcher button {
-    padding: 8px 10px;
-    font-size: 0.7em;
+  .dropdown-trigger {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .dropdown-trigger .layer-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .dropdown-menu {
+    min-width: 160px;
   }
 
   .legend {
-    bottom: 160px;
+    bottom: 100px;
     font-size: 0.9em;
   }
-}
-
-/* Export Preview Overlay */
-.export-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  overflow: hidden;
-}
-
-.export-mask {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.export-region-frame {
-  position: absolute;
-  border: 2px dashed rgba(74, 222, 128, 0.9);
-  border-radius: 2px;
-  box-sizing: border-box;
-}
-
-.export-corner {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2px solid #4ade80;
-  background: transparent;
-}
-
-.export-corner-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
-.export-corner-tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
-.export-corner-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
-.export-corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
-
-.export-info {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  background: rgba(26, 26, 46, 0.95);
-  padding: 8px 14px;
-  border-radius: 6px;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-}
-
-.export-ratio {
-  font-size: 0.85em;
-  font-weight: 700;
-  color: #4ade80;
-}
-
-.export-dimensions {
-  font-size: 0.75em;
-  color: #aaa;
-  font-family: monospace;
-}
-
-.export-legend {
-  position: absolute;
-  background: rgba(26, 26, 46, 0.95);
-  border-radius: 8px;
-  padding: 12px 16px;
-  max-height: 60%;
-  overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  z-index: 2;
-}
-
-.export-legend-bottom-left { bottom: 15px; left: 15px; }
-.export-legend-bottom-right { bottom: 15px; right: 15px; }
-.export-legend-top-left { top: 50px; left: 15px; }
-.export-legend-top-right { top: 50px; right: 15px; }
-
-.export-legend .legend-title {
-  font-size: 0.75em;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #888;
-  margin-bottom: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #3d3d5c;
-}
-
-.export-legend .legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 0;
-  font-size: 0.85em;
-  color: #e0e0e0;
-}
-
-.export-legend .legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  display: inline-block;
-}
-
-.export-legend .legend-label-italic { font-style: italic; }
-
-.export-legend .legend-more {
-  font-size: 0.75em;
-  color: #888;
-  font-style: italic;
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid #3d3d5c;
-}
-
-.export-scale-bar {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  z-index: 2;
-}
-
-.export-scale-bar-left {
-  right: auto;
-  left: 15px;
-  align-items: flex-start;
-}
-
-.scale-bar-line {
-  width: 100px;
-  height: 4px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  position: relative;
-}
-
-.scale-bar-line::before,
-.scale-bar-line::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 8px;
-  background: #fff;
-  top: -2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.scale-bar-line::before { left: 0; }
-.scale-bar-line::after { right: 0; }
-
-.scale-bar-text {
-  font-size: 0.7em;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* Enhanced Popup */

@@ -1,22 +1,20 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
-import { ASPECT_RATIOS } from '../utils/constants'
-import {
-  loadImage,
-  calculateExportRegion,
-  drawLegendOnCanvas,
-  drawScaleBarOnCanvas,
-  drawAttributionOnCanvas
-} from '../utils/canvasHelpers'
+import { exportForR as exportForRUtil } from '../utils/rExport'
 
 const store = useDataStore()
+
 const emit = defineEmits(['close'])
 
 const props = defineProps({
   map: {
     type: Object,
     default: null
+  },
+  initialTab: {
+    type: String,
+    default: 'export'
   }
 })
 
@@ -24,8 +22,7 @@ const props = defineProps({
 const isExporting = ref(false)
 const exportSuccess = ref(false)
 const citationCopied = ref(false)
-const imageExportProgress = ref(0)
-const imageExportError = ref(null)
+const exportError = ref(null)
 
 // Get filtered data
 const filteredData = computed(() => {
@@ -35,20 +32,19 @@ const filteredData = computed(() => {
 })
 
 // Build info (injected by Vite)
-const buildTime = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : new Date().toISOString()
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
 const shortHash = commitHash.substring(0, 7)
 
 // Generate citation text
 const citationText = computed(() => {
-  const date = new Date().toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  const date = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   })
   const recordCount = filteredData.value.length
   const url = window.location.href
-  
+
   return `Ithomiini Distribution Maps. Data accessed on ${date}. ` +
     `${recordCount.toLocaleString()} records retrieved. ` +
     `Version: ${shortHash}. ` +
@@ -59,8 +55,8 @@ const citationText = computed(() => {
 const bibtexCitation = computed(() => {
   const year = new Date().getFullYear()
   const month = new Date().toLocaleString('en-US', { month: 'short' }).toLowerCase()
-  const url = window.location.href.split('?')[0] // Base URL without params
-  
+  const url = window.location.href.split('?')[0]
+
   return `@misc{ithomiini_maps_${year},
   title = {Ithomiini Distribution Maps},
   author = {Meier, Joana and Dore, M. and {Sanger Institute}},
@@ -74,28 +70,25 @@ const bibtexCitation = computed(() => {
 // Export to CSV
 const exportCSV = () => {
   isExporting.value = true
-  
+
   try {
     const data = filteredData.value
     if (data.length === 0) {
       alert('No data to export')
       return
     }
-    
-    // Define columns in order
+
     const columns = [
       'id', 'scientific_name', 'genus', 'species', 'subspecies',
       'family', 'tribe', 'mimicry_ring', 'sequencing_status',
-      'source', 'country', 'lat', 'lng', 'image_url'
+      'source', 'country', 'lat', 'lng', 'sex', 'image_url'
     ]
-    
-    // Build CSV content
+
     const header = columns.join(',')
     const rows = data.map(row => {
       return columns.map(col => {
         let val = row[col]
         if (val === null || val === undefined) val = ''
-        // Escape quotes and wrap in quotes if contains comma
         val = String(val)
         if (val.includes(',') || val.includes('"') || val.includes('\n')) {
           val = '"' + val.replace(/"/g, '""') + '"'
@@ -103,10 +96,8 @@ const exportCSV = () => {
         return val
       }).join(',')
     })
-    
+
     const csv = [header, ...rows].join('\n')
-    
-    // Create download
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -114,10 +105,10 @@ const exportCSV = () => {
     link.download = `ithomiini_data_${shortHash}_${Date.now()}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    
+
     exportSuccess.value = true
     setTimeout(() => { exportSuccess.value = false }, 3000)
-    
+
   } catch (e) {
     console.error('CSV export failed:', e)
     alert('Export failed: ' + e.message)
@@ -129,15 +120,14 @@ const exportCSV = () => {
 // Export to GeoJSON
 const exportGeoJSON = () => {
   isExporting.value = true
-  
+
   try {
     const geo = store.filteredGeoJSON
     if (!geo || !geo.features || geo.features.length === 0) {
       alert('No data to export')
       return
     }
-    
-    // Add metadata to GeoJSON
+
     const exportData = {
       type: 'FeatureCollection',
       metadata: {
@@ -149,10 +139,8 @@ const exportGeoJSON = () => {
       },
       features: geo.features
     }
-    
+
     const json = JSON.stringify(exportData, null, 2)
-    
-    // Create download
     const blob = new Blob([json], { type: 'application/geo+json' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -160,10 +148,10 @@ const exportGeoJSON = () => {
     link.download = `ithomiini_data_${shortHash}_${Date.now()}.geojson`
     link.click()
     URL.revokeObjectURL(url)
-    
+
     exportSuccess.value = true
     setTimeout(() => { exportSuccess.value = false }, 3000)
-    
+
   } catch (e) {
     console.error('GeoJSON export failed:', e)
     alert('Export failed: ' + e.message)
@@ -180,224 +168,32 @@ const copyCitation = (type = 'plain') => {
   setTimeout(() => { citationCopied.value = false }, 2000)
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// IMAGE EXPORT
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Get export dimensions
-const exportDimensions = computed(() => {
-  const ratio = store.exportSettings.aspectRatio
-  if (ratio === 'custom') {
-    return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
-  }
-  return ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
-})
-
-// Export map as image
-const exportImage = async () => {
+// R Script Export - uses shared utility
+const exportForR = async () => {
   if (!props.map) {
-    imageExportError.value = 'Map not available. Please ensure you are on the Map view.'
+    exportError.value = 'Map not available. Please ensure you are on the Map view.'
     return
   }
 
   isExporting.value = true
-  imageExportProgress.value = 0
-  imageExportError.value = null
-
-  console.log('═══════════════════════════════════════════════════════════════')
-  console.log('[Export] Starting image export...')
-  console.log('[Export] Export settings:', {
-    enabled: store.exportSettings.enabled,
-    aspectRatio: store.exportSettings.aspectRatio,
-    includeLegend: store.exportSettings.includeLegend,
-    includeScaleBar: store.exportSettings.includeScaleBar,
-    uiScale: store.exportSettings.uiScale
-  })
+  exportError.value = null
 
   try {
-    const map = props.map
-
-    // Ensure map style is loaded
-    if (!map.isStyleLoaded()) {
-      console.log('[Export] Waiting for map style to load...')
-      await new Promise(resolve => map.once('style.load', resolve))
-    }
-
-    // Use the recommended approach from MapLibre docs:
-    // Trigger repaint and wait for idle event to capture canvas
-    // https://github.com/maplibre/maplibre-gl-js/discussions/3900
-    console.log('[Export] Triggering repaint and waiting for idle...')
-    map.triggerRepaint()
-    await new Promise(resolve => map.once('idle', resolve))
-
-    imageExportProgress.value = 10
-
-    // Get the map canvas
-    const mapCanvas = map.getCanvas()
-
-    console.log('[Export] Map canvas info:', {
-      width: mapCanvas.width,
-      height: mapCanvas.height,
-      clientWidth: mapCanvas.clientWidth,
-      clientHeight: mapCanvas.clientHeight,
-      aspectRatio: (mapCanvas.width / mapCanvas.height).toFixed(3)
-    })
-
-    // Determine export dimensions
-    const { width: exportWidth, height: exportHeight } = exportDimensions.value
-
-    console.log('[Export] Target export dimensions:', {
-      width: exportWidth,
-      height: exportHeight,
-      aspectRatio: (exportWidth / exportHeight).toFixed(3)
-    })
-
-    // Create output canvas
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-    canvas.width = exportWidth
-    canvas.height = exportHeight
-
-    // Fill with dark background
-    ctx.fillStyle = '#1a1a2e'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-    imageExportProgress.value = 20
-
-    // Capture the map as image
-    const mapDataUrl = mapCanvas.toDataURL('image/png')
-    const mapImage = await loadImage(mapDataUrl)
-
-    console.log('[Export] Map image captured:', {
-      width: mapImage.width,
-      height: mapImage.height,
-      dataUrlLength: mapDataUrl.length
-    })
-
-    imageExportProgress.value = 40
-
-    // Calculate how to draw the map
-    // If export settings enabled, crop to the exact export preview region
-    if (store.exportSettings.enabled) {
-      // Calculate the export region exactly as shown in the preview
-      const region = calculateExportRegion(
-        mapImage.width,
-        mapImage.height,
-        exportWidth,
-        exportHeight
-      )
-
-      // Convert percentages to pixels
-      const srcX = (region.x / 100) * mapImage.width
-      const srcY = (region.y / 100) * mapImage.height
-      const srcW = (region.width / 100) * mapImage.width
-      const srcH = (region.height / 100) * mapImage.height
-
-      console.log('[Export] Crop region (pixels):', {
-        srcX: Math.round(srcX),
-        srcY: Math.round(srcY),
-        srcW: Math.round(srcW),
-        srcH: Math.round(srcH),
-        srcAspectRatio: (srcW / srcH).toFixed(3)
-      })
-
-      console.log('[Export] Drawing cropped region:', {
-        source: `(${Math.round(srcX)}, ${Math.round(srcY)}) ${Math.round(srcW)}x${Math.round(srcH)}`,
-        destination: `(0, 0) ${canvas.width}x${canvas.height}`
-      })
-
-      // Draw the cropped region scaled to fill the export canvas
-      ctx.drawImage(
-        mapImage,
-        srcX, srcY, srcW, srcH,  // Source rectangle (crop region)
-        0, 0, canvas.width, canvas.height  // Destination (full canvas)
-      )
-    } else {
-      // Draw the map scaled to fit (letterboxed)
-      const scale = Math.min(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
-      )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
-
-      console.log('[Export] Letterbox mode (export preview OFF):', {
-        scale: scale.toFixed(3),
-        scaledWidth: Math.round(scaledWidth),
-        scaledHeight: Math.round(scaledHeight),
-        offsetX: Math.round(offsetX),
-        offsetY: Math.round(offsetY)
-      })
-
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
-    }
-
-    imageExportProgress.value = 60
-
-    // Draw legend if enabled
-    if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
-      drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
-        colorMap: store.activeColorMap,
-        legendSettings: store.legendSettings,
-        exportSettings: store.exportSettings,
-        colorBy: store.colorBy,
-        legendTitle: store.legendTitle,
-      })
-    }
-
-    imageExportProgress.value = 75
-
-    // Draw scale bar if enabled
-    if (store.exportSettings.includeScaleBar) {
-      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
-        legendSettings: store.legendSettings,
-        exportSettings: store.exportSettings,
-      })
-    }
-
-    imageExportProgress.value = 85
-
-    // Draw attribution
-    drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
-      exportSettings: store.exportSettings,
-    })
-
-    imageExportProgress.value = 95
-
-    // Download the image
-    const dataUrl = canvas.toDataURL('image/png', 1.0)
-    const link = document.createElement('a')
-    link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.png`
-    link.href = dataUrl
-    link.click()
-
-    console.log('[Export] Export complete:', {
-      outputSize: `${exportWidth}x${exportHeight}`,
-      outputDataUrlLength: dataUrl.length,
-      filename: link.download
-    })
-    console.log('═══════════════════════════════════════════════════════════════')
-
-    imageExportProgress.value = 100
+    await exportForRUtil(props.map)
     exportSuccess.value = true
-
     setTimeout(() => {
       isExporting.value = false
-      imageExportProgress.value = 0
       exportSuccess.value = false
     }, 2000)
-
   } catch (e) {
-    console.error('[Export] Image export failed:', e)
-    imageExportError.value = e.message || 'Export failed'
+    console.error('[Export] R export failed:', e)
+    exportError.value = e.message || 'Export failed'
     isExporting.value = false
   }
 }
 
-// Active tab - default to 'image' for Export Image tab
-const activeTab = ref('image')
+// Active tab - use prop as initial value
+const activeTab = ref(props.initialTab || 'export')
 </script>
 
 <template>
@@ -415,12 +211,6 @@ const activeTab = ref('image')
     <!-- Tabs -->
     <div class="panel-tabs">
       <button
-        :class="{ active: activeTab === 'image' }"
-        @click="activeTab = 'image'"
-      >
-        Export Image
-      </button>
-      <button
         :class="{ active: activeTab === 'export' }"
         @click="activeTab = 'export'"
       >
@@ -436,8 +226,8 @@ const activeTab = ref('image')
 
     <!-- Content -->
     <div class="panel-content">
-      
-      <!-- Export Tab -->
+
+      <!-- Export Data Tab -->
       <div v-if="activeTab === 'export'" class="tab-content">
         <div class="data-summary">
           <div class="summary-item">
@@ -451,7 +241,7 @@ const activeTab = ref('image')
         </div>
 
         <div class="export-options">
-          <button 
+          <button
             class="export-btn"
             @click="exportCSV"
             :disabled="isExporting || filteredData.length === 0"
@@ -467,7 +257,7 @@ const activeTab = ref('image')
             </div>
           </button>
 
-          <button 
+          <button
             class="export-btn"
             @click="exportGeoJSON"
             :disabled="isExporting || filteredData.length === 0"
@@ -480,6 +270,23 @@ const activeTab = ref('image')
             <div class="btn-text">
               <span class="btn-title">Download GeoJSON</span>
               <span class="btn-desc">GIS/mapping format</span>
+            </div>
+          </button>
+
+          <!-- R Export Button for True Vector Output -->
+          <button
+            class="export-btn r-export"
+            @click="exportForR"
+            :disabled="!map || isExporting || filteredData.length === 0"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <div class="btn-text">
+              <span class="btn-title">Export for R (Vector)</span>
+              <span class="btn-desc">ZIP with GeoJSON + R script for SVG/PDF</span>
             </div>
           </button>
         </div>
@@ -495,117 +302,13 @@ const activeTab = ref('image')
         </Transition>
       </div>
 
-      <!-- Export Image Tab -->
-      <div v-if="activeTab === 'image'" class="tab-content">
-        <div class="image-export-info">
-          <div class="export-mode-badge" :class="{ active: store.exportSettings.enabled }">
-            {{ store.exportSettings.enabled ? 'Export Preview Mode ON' : 'Export Preview Mode OFF' }}
-          </div>
-          <p class="info-text">
-            <template v-if="store.exportSettings.enabled">
-              Will export the area shown in the export preview rectangle.
-            </template>
-            <template v-else>
-              Will export the current map view. Enable Export Preview in sidebar to define a specific region.
-            </template>
-          </p>
-        </div>
-
-        <div class="data-summary">
-          <div class="summary-item">
-            <span class="summary-value">{{ exportDimensions.width }}</span>
-            <span class="summary-label">Width (px)</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-value">{{ exportDimensions.height }}</span>
-            <span class="summary-label">Height (px)</span>
-          </div>
-        </div>
-
-        <div class="image-options">
-          <div class="option-group">
-            <label class="option-label">Include in Export:</label>
-            <div class="option-list">
-              <label class="option-item">
-                <input type="checkbox" v-model="store.exportSettings.includeLegend" />
-                <span>Legend</span>
-              </label>
-              <label class="option-item">
-                <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
-                <span>Scale Bar</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="option-group">
-            <label class="option-label">UI Scale: {{ Math.round(store.exportSettings.uiScale * 100) }}%</label>
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              v-model.number="store.exportSettings.uiScale"
-              class="scale-slider"
-            />
-          </div>
-        </div>
-
-        <!-- Error message -->
-        <div v-if="imageExportError" class="export-error">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          {{ imageExportError }}
-        </div>
-
-        <!-- Progress bar -->
-        <div v-if="isExporting" class="export-progress-container">
-          <div class="progress-bar">
-            <div class="progress-fill" :style="{ width: imageExportProgress + '%' }"></div>
-          </div>
-          <span class="progress-text">
-            {{ imageExportProgress < 100 ? 'Exporting...' : 'Complete!' }}
-          </span>
-        </div>
-
-        <!-- Export button -->
-        <button
-          v-else
-          class="export-image-btn"
-          @click="exportImage"
-          :disabled="!map"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
-          </svg>
-          <div class="btn-text">
-            <span class="btn-title">Download PNG Image</span>
-            <span class="btn-desc">{{ exportDimensions.width }} × {{ exportDimensions.height }} pixels</span>
-          </div>
-        </button>
-
-        <Transition name="fade">
-          <div v-if="exportSuccess && activeTab === 'image'" class="success-toast">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-            Image exported!
-          </div>
-        </Transition>
-      </div>
-
       <!-- Citation Tab -->
       <div v-if="activeTab === 'citation'" class="tab-content">
         <div class="citation-section">
           <label class="citation-label">Plain Text</label>
           <div class="citation-box">
             <p class="citation-text">{{ citationText }}</p>
-            <button 
+            <button
               class="copy-btn"
               @click="copyCitation('plain')"
             >
@@ -622,7 +325,7 @@ const activeTab = ref('image')
           <label class="citation-label">BibTeX</label>
           <div class="citation-box bibtex">
             <pre class="citation-code">{{ bibtexCitation }}</pre>
-            <button 
+            <button
               class="copy-btn"
               @click="copyCitation('bibtex')"
             >
@@ -642,9 +345,48 @@ const activeTab = ref('image')
             <line x1="12" y1="8" x2="12.01" y2="8"/>
           </svg>
           <p>
-            Citations include a version hash for reproducibility. 
+            Citations include a version hash for reproducibility.
             The URL preserves your current filter settings.
           </p>
+        </div>
+
+        <!-- GBIF Data Citation -->
+        <div v-if="store.gbifCitation" class="gbif-citation-section">
+          <label class="citation-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4"/>
+              <path d="M12 8h.01"/>
+            </svg>
+            Data Source Citation
+          </label>
+          <div class="gbif-citation-box">
+            <p class="gbif-citation-text">{{ store.gbifCitation.citation_text }}</p>
+            <a
+              v-if="store.gbifCitation.doi_url"
+              :href="store.gbifCitation.doi_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="gbif-link"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              View on GBIF
+            </a>
+            <div class="gbif-stats">
+              <div class="stat">
+                <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span>
+                <span class="stat-label">iNaturalist</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span>
+                <span class="stat-label">Other GBIF</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <Transition name="fade">
@@ -755,7 +497,14 @@ const activeTab = ref('image')
 .tab-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+}
+
+.info-text {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #aaa);
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Data Summary */
@@ -787,8 +536,118 @@ const activeTab = ref('image')
   letter-spacing: 1px;
 }
 
+/* Option Groups */
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary, #aaa);
+}
+
+.option-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #666);
+}
+
+/* Format Buttons */
+.format-buttons,
+.dpi-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.format-buttons button,
+.dpi-buttons button {
+  flex: 1;
+  padding: 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.format-buttons button:hover,
+.dpi-buttons button:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.format-buttons button.active,
+.dpi-buttons button.active {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+}
+
+/* Select Input */
+.select-input {
+  padding: 10px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+/* Custom Size */
+.custom-size .size-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.size-input {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.size-input label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+}
+
+.size-input input {
+  padding: 8px 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+}
+
+.size-input input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+.size-separator {
+  color: var(--color-text-muted, #666);
+  font-size: 1.2rem;
+  padding-bottom: 8px;
+}
+
 /* Export Options */
-.export-options {
+.export-options,
+.export-buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -825,6 +684,18 @@ const activeTab = ref('image')
   flex-shrink: 0;
 }
 
+.export-btn.r-export {
+  border-color: #6366f1;
+}
+
+.export-btn.r-export svg {
+  color: #6366f1;
+}
+
+.export-btn.r-export:hover:not(:disabled) {
+  border-color: #818cf8;
+}
+
 .btn-text {
   display: flex;
   flex-direction: column;
@@ -839,6 +710,53 @@ const activeTab = ref('image')
 .btn-desc {
   font-size: 0.75rem;
   color: var(--color-text-muted, #666);
+}
+
+/* Export Image Button */
+.export-image-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  background: var(--color-accent, #4ade80);
+  border: none;
+  border-radius: 8px;
+  color: var(--color-bg-primary, #1a1a2e);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.export-image-btn:hover:not(:disabled) {
+  background: #5eeb94;
+}
+
+.export-image-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.export-image-btn svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.export-image-btn .btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.export-image-btn .btn-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.export-image-btn .btn-desc {
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
 
 /* Citation Section */
@@ -945,6 +863,89 @@ const activeTab = ref('image')
   line-height: 1.5;
 }
 
+/* GBIF Data Citation */
+.gbif-citation-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.gbif-citation-section .citation-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gbif-citation-section .citation-label svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent, #4ade80);
+}
+
+.gbif-citation-box {
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 6px;
+  border: 1px solid var(--color-border, #3d3d5c);
+}
+
+.gbif-citation-text {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #aaa);
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+.gbif-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 4px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.gbif-link:hover {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: rgba(74, 222, 128, 0.5);
+}
+
+.gbif-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+.gbif-stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.gbif-stats .stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gbif-stats .stat-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent, #4ade80);
+}
+
+.gbif-stats .stat-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+}
+
 /* Success Toast */
 .success-toast {
   display: flex;
@@ -963,167 +964,7 @@ const activeTab = ref('image')
   height: 18px;
 }
 
-/* Transitions */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Export Image Tab */
-.image-export-info {
-  margin-bottom: 16px;
-}
-
-.export-mode-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  background: rgba(107, 114, 128, 0.2);
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #888;
-  margin-bottom: 10px;
-}
-
-.export-mode-badge.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-}
-
-.info-text {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary, #aaa);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.image-options {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.option-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.option-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-text-secondary, #aaa);
-}
-
-.option-list {
-  display: flex;
-  gap: 16px;
-}
-
-.option-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.option-item input {
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.option-item span {
-  font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.scale-slider {
-  width: 100%;
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.export-progress-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border-radius: 8px;
-}
-
-.progress-bar {
-  height: 8px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--color-accent, #4ade80);
-  border-radius: 4px;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  font-size: 0.8rem;
-  color: var(--color-text-secondary, #aaa);
-  text-align: center;
-}
-
-.export-image-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding: 16px;
-  background: var(--color-accent, #4ade80);
-  border: none;
-  border-radius: 8px;
-  color: var(--color-bg-primary, #1a1a2e);
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-}
-
-.export-image-btn:hover:not(:disabled) {
-  background: #5eeb94;
-}
-
-.export-image-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.export-image-btn svg {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-}
-
-.export-image-btn .btn-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.export-image-btn .btn-title {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.export-image-btn .btn-desc {
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
-
+/* Error */
 .export-error {
   display: flex;
   align-items: center;
@@ -1133,13 +974,23 @@ const activeTab = ref('image')
   border-radius: 8px;
   color: #ef4444;
   font-size: 0.85rem;
-  margin-bottom: 16px;
 }
 
 .export-error svg {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+}
+
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /* Responsive */
@@ -1153,6 +1004,16 @@ const activeTab = ref('image')
 
   .data-summary {
     flex-direction: column;
+  }
+
+  .format-buttons,
+  .dpi-buttons {
+    flex-wrap: wrap;
+  }
+
+  .format-buttons button,
+  .dpi-buttons button {
+    min-width: calc(33% - 8px);
   }
 }
 </style>

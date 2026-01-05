@@ -21,6 +21,7 @@ const visibleColumns = ref({
   id: true,
   scientific_name: true,
   subspecies: true,
+  sex: true,
   mimicry_ring: true,
   sequencing_status: true,
   source: true,
@@ -36,6 +37,7 @@ const columns = [
   { key: 'id', label: 'ID', width: '120px' },
   { key: 'scientific_name', label: 'Species', width: '200px' },
   { key: 'subspecies', label: 'Subspecies', width: '130px' },
+  { key: 'sex', label: 'Sex', width: '70px' },
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
   { key: 'source', label: 'Source', width: '130px' },
@@ -288,6 +290,11 @@ const handleImageError = (e, originalUrl) => {
             </td>
             <td v-if="visibleColumns.subspecies" class="cell-subspecies">
               {{ row.subspecies || '—' }}
+            </td>
+            <td v-if="visibleColumns.sex" class="cell-sex">
+              <span v-if="row.sex === 'male'" class="sex-badge male" title="Male">♂</span>
+              <span v-else-if="row.sex === 'female'" class="sex-badge female" title="Female">♀</span>
+              <span v-else class="text-muted">—</span>
             </td>
             <td v-if="visibleColumns.mimicry_ring" class="cell-mimicry">
               <span 
@@ -598,6 +605,31 @@ const handleImageError = (e, originalUrl) => {
 .cell-subspecies {
   font-style: italic;
   color: var(--color-text-secondary, #aaa);
+}
+
+.cell-sex {
+  text-align: center;
+}
+
+.sex-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.sex-badge.male {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.sex-badge.female {
+  background: rgba(236, 72, 153, 0.15);
+  color: #f472b6;
 }
 
 .cell-coord {

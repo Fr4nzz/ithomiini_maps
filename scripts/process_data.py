@@ -148,6 +148,29 @@ def normalize_mimicry(value):
     return str(value).strip().title()
 
 
+def normalize_sex(value):
+    """
+    Normalize sex values to standard format: 'male', 'female', or None.
+    Handles variations like 'male ?', 'female_?', 'Male', 'FEMALE', etc.
+    """
+    if pd.isna(value) or value in ['', 'nan', 'NAN', 'NA', 'NOT_COLLECTED', 'Unknown', 'UNKNOWN']:
+        return None
+
+    value_lower = str(value).lower().strip()
+
+    # Check for female (check first to avoid 'female' matching 'male')
+    if 'female' in value_lower or value_lower == 'f':
+        return 'female'
+    # Check for male
+    elif 'male' in value_lower or value_lower == 'm':
+        return 'male'
+    # Hermaphrodite (rare but included in Darwin Core)
+    elif 'hermaphrodite' in value_lower:
+        return 'hermaphrodite'
+    else:
+        return None
+
+
 def get_google_export_url(gid):
     """Generate CSV export URL for a Google Sheet tab."""
     return f"https://docs.google.com/spreadsheets/d/{GOOGLE_SHEET_ID}/export?format=csv&gid={gid}"
@@ -253,12 +276,19 @@ def load_local_data():
         else:
             df['observation_date'] = None
 
+        # Sex field - check if Dore has individual sex data
+        if 'Sex' in df.columns:
+            df['sex'] = df['Sex'].apply(normalize_sex)
+        else:
+            # Dore database has M.mimicry/F.mimicry (species-level), not individual sex
+            df['sex'] = None
+
         # Select final columns
         result = df[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
             'sequencing_status', 'source', 'image_url', 'country',
-            'collection_location', 'observation_date'
+            'collection_location', 'observation_date', 'sex'
         ]].copy()
         
         # Drop rows without coordinates
@@ -401,12 +431,21 @@ def load_sanger_data():
         else:
             df_col['observation_date'] = None
 
+        # Sex from Sanger data (normalize to standard values)
+        if 'Sex' in df_col.columns:
+            df_col['sex'] = df_col['Sex'].apply(normalize_sex)
+            sex_counts = df_col['sex'].value_counts(dropna=False)
+            print(f"   Sex distribution: {sex_counts.to_dict()}")
+        else:
+            df_col['sex'] = None
+            print("   No Sex column found in Sanger data")
+
         # Select final columns
         result = df_col[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
             'sequencing_status', 'source', 'image_url', 'country',
-            'collection_location', 'observation_date'
+            'collection_location', 'observation_date', 'sex'
         ]].copy()
         
         # Drop rows without coordinates or with empty IDs
@@ -505,11 +544,11 @@ def load_gbif_bulk_download():
         required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
                         'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
                         'sequencing_status', 'source', 'image_url', 'country',
-                        'collection_location', 'observation_date', 'observation_url']
+                        'collection_location', 'observation_date', 'observation_url', 'sex']
 
         for col in required_cols:
             if col not in df.columns:
-                df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date', 'observation_url'] else 'Unknown'
+                df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date', 'observation_url', 'sex'] else 'Unknown'
 
         # Preserve source field from download (iNaturalist or GBIF)
         # If source is not set, default to GBIF
@@ -544,7 +583,18 @@ def load_gbif_bulk_download():
             df['observation_url'] = df['observation_url'].apply(
                 lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
             )
-        
+
+        # ═══════════════════════════════════════════════════════════════════
+        # SEX FIELD (from Darwin Core)
+        # ═══════════════════════════════════════════════════════════════════
+        if 'sex' in df.columns:
+            df['sex'] = df['sex'].apply(normalize_sex)
+            sex_counts = df['sex'].value_counts(dropna=False)
+            print(f"   Sex distribution: {dict(sex_counts)}")
+        else:
+            df['sex'] = None
+            print("   No sex column found in GBIF data")
+
         # ═══════════════════════════════════════════════════════════════════
         # MIMICRY RING LOOKUP (from Dore database)
         # ═══════════════════════════════════════════════════════════════════
@@ -754,11 +804,19 @@ def main():
         df_merged['observation_url'] = df_merged['observation_url'].apply(
             lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
         )
-    
+
+    # Handle sex (can be null)
+    if 'sex' not in df_merged.columns:
+        df_merged['sex'] = None
+    else:
+        df_merged['sex'] = df_merged['sex'].apply(
+            lambda x: x if pd.notna(x) and x not in ['None', 'nan', ''] else None
+        )
+
     # ═══════════════════════════════════════════════════════════════════════
     # OUTPUT STATISTICS
     # ═══════════════════════════════════════════════════════════════════════
-    
+
     print("\n" + "=" * 70)
     print("OUTPUT STATISTICS")
     print("=" * 70)
@@ -768,13 +826,21 @@ def main():
     print(f"Unique Mimicry Rings: {df_merged['mimicry_ring'].nunique()}")
     print(f"Records with Known Mimicry: {(df_merged['mimicry_ring'] != 'Unknown').sum():,}")
     print(f"Records with Images: {df_merged['image_url'].notna().sum():,}")
-    
+
     print("\nBy Source:")
     print(df_merged['source'].value_counts().to_string())
-    
+
     print("\nBy Sequencing Status:")
     print(df_merged['sequencing_status'].value_counts().to_string())
-    
+
+    print("\nBy Sex:")
+    sex_counts = df_merged['sex'].value_counts(dropna=False)
+    print(sex_counts.to_string())
+    male_count = (df_merged['sex'] == 'male').sum()
+    female_count = (df_merged['sex'] == 'female').sum()
+    unknown_count = df_merged['sex'].isna().sum()
+    print(f"  Summary: {male_count:,} male, {female_count:,} female, {unknown_count:,} unknown")
+
     print("\nTop 10 Mimicry Rings:")
     mim_counts = df_merged[df_merged['mimicry_ring'] != 'Unknown']['mimicry_ring'].value_counts().head(10)
     print(mim_counts.to_string())

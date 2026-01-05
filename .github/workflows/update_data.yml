@@ -1,16 +1,34 @@
 name: Update Database
 
 on:
-  # Manual trigger only (from Actions tab or via API)
+  # Manual trigger from Actions tab or via API
   workflow_dispatch:
+    inputs:
+      update_sanger:
+        description: 'Update Sanger Institute data'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      update_gbif:
+        description: 'Update GBIF/iNaturalist data (takes ~15 min)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 30  # Allow up to 30 minutes for GBIF download
+
     permissions:
       contents: write  # Needed to commit changes
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,12 +44,23 @@ jobs:
         run: |
           pip install -r scripts/requirements.txt
 
+      - name: Update GBIF data (if requested)
+        if: ${{ inputs.update_gbif == 'true' }}
+        run: |
+          echo "🌐 Downloading fresh GBIF/iNaturalist data..."
+          cd scripts
+          python gbif_download_api.py --force
+        env:
+          GBIF_USERNAME: ${{ secrets.GBIF_USERNAME }}
+          GBIF_PASSWORD: ${{ secrets.GBIF_PASSWORD }}
+          GBIF_EMAIL: ${{ secrets.GBIF_EMAIL }}
+
       - name: Run data processing pipeline
         run: |
+          echo "📊 Processing data from all sources..."
           cd scripts
           python process_data.py
         env:
-          # GBIF credentials (optional - set in repo secrets if needed)
           GBIF_USERNAME: ${{ secrets.GBIF_USERNAME }}
           GBIF_PASSWORD: ${{ secrets.GBIF_PASSWORD }}
           GBIF_EMAIL: ${{ secrets.GBIF_EMAIL }}

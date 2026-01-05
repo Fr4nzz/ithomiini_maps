@@ -136,48 +136,6 @@ export const drawLegendOnCanvas = (ctx, width, height, options) => {
   }
 }
 
-// Draw scale bar on canvas for export
-export const drawScaleBarOnCanvas = (ctx, width, height, options) => {
-  const { legendSettings, exportSettings } = options
-  const uiScale = exportSettings.uiScale || 1
-  const referenceHeight = 650
-  const resolutionScale = height / referenceHeight
-  const scale = uiScale * resolutionScale
-
-  const sidePadding = 15 * resolutionScale * uiScale
-  const bottomPadding = 15 * resolutionScale * uiScale
-
-  const barWidth = 100 * scale
-  const barHeight = 4 * scale
-
-  let x
-  if (legendSettings.position === 'bottom-right' && exportSettings.includeLegend) {
-    x = sidePadding
-  } else {
-    x = width - barWidth - sidePadding
-  }
-  const y = height - bottomPadding - barHeight - 20 * scale
-
-  ctx.fillStyle = '#fff'
-  ctx.fillRect(x, y, barWidth, barHeight)
-
-  ctx.fillRect(x, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
-  ctx.fillRect(x + barWidth - 2 * scale, y - 4 * scale, 2 * scale, barHeight + 8 * scale)
-
-  ctx.fillStyle = '#fff'
-  ctx.font = `bold ${11 * scale}px system-ui, sans-serif`
-  ctx.textAlign = legendSettings.position === 'bottom-right' && exportSettings.includeLegend ? 'left' : 'right'
-  ctx.textBaseline = 'top'
-  ctx.shadowColor = 'rgba(0,0,0,0.7)'
-  ctx.shadowBlur = 3
-  ctx.fillText(
-    'Scale varies with latitude',
-    legendSettings.position === 'bottom-right' && exportSettings.includeLegend ? x : x + barWidth,
-    y + barHeight + 6 * scale
-  )
-  ctx.shadowBlur = 0
-}
-
 // Draw attribution on canvas for export
 export const drawAttributionOnCanvas = (ctx, width, height, options) => {
   const { exportSettings } = options

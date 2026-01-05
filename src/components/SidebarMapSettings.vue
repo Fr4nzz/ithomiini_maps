@@ -69,6 +69,20 @@ const showPointStyle = ref(false)
             />
           </div>
         </div>
+
+        <div class="setting-row">
+          <label>Cluster Count Shows</label>
+          <select v-model="store.clusterSettings.countMode" class="style-select">
+            <option value="individuals">Individuals (records)</option>
+            <option value="subspecies">Subspecies (unique)</option>
+            <option value="species">Species (unique)</option>
+          </select>
+          <p class="count-mode-hint">
+            {{ store.clusterSettings.countMode === 'individuals' ? 'Total specimen records in cluster' :
+               store.clusterSettings.countMode === 'subspecies' ? 'Unique subspecies in cluster' :
+               'Unique species in cluster' }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -499,6 +513,14 @@ const showPointStyle = ref(false)
   font-weight: 400;
   font-size: 0.65rem;
   color: var(--color-text-muted, #666);
+}
+
+.count-mode-hint {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
+  font-style: italic;
+  margin-top: 4px;
+  margin-bottom: 0;
 }
 
 /* Slider Group */

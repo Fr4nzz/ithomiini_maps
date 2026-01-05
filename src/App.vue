@@ -10,11 +10,10 @@ import ImageGallery from './components/ImageGallery.vue'
 import { ASPECT_RATIOS } from './utils/constants'
 import {
   loadImage,
-  roundRect,
-  drawLegendOnCanvas,
-  drawScaleBarOnCanvas,
-  drawAttributionOnCanvas
+  drawAttributionOnCanvas,
 } from './utils/canvasHelpers'
+import { exportForR } from './utils/rExport'
+import { toPng } from 'html-to-image'
 
 const store = useDataStore()
 
@@ -25,6 +24,7 @@ const currentView = ref('map') // 'map' or 'table'
 const showExportPanel = ref(false)
 const showMimicrySelector = ref(false)
 const showImageGallery = ref(false)
+const exportPanelInitialTab = ref('export') // 'export' for data, 'citation' for citation
 
 // Map reference for export
 const mapRef = ref(null)
@@ -35,7 +35,22 @@ const setView = (view) => {
 }
 
 // Modal controls
-const openExport = () => { showExportPanel.value = true }
+const openExport = () => {
+  exportPanelInitialTab.value = 'export'
+  showExportPanel.value = true
+}
+const directExportForR = async () => {
+  if (!mapRef.value) {
+    alert('Map not available. Please ensure you are on the Map view.')
+    return
+  }
+  try {
+    await exportForR(mapRef.value)
+  } catch (e) {
+    console.error('[Export] R export failed:', e)
+    alert('Export failed: ' + e.message)
+  }
+}
 const closeExport = () => { showExportPanel.value = false }
 
 const openMimicrySelector = () => { showMimicrySelector.value = true }
@@ -44,16 +59,18 @@ const closeMimicrySelector = () => { showMimicrySelector.value = false }
 const openImageGallery = () => { showImageGallery.value = true }
 const closeImageGallery = () => { showImageGallery.value = false }
 
-// Direct export function for Export Map button
+// Direct export function - captures the map container which is already sized to aspect ratio
+// Uses MapLibre's setPixelRatio() for true high-resolution rendering
 const directExportMap = async () => {
   if (!mapRef.value) {
     alert('Map not available. Please ensure you are on the Map view.')
     return
   }
 
-  try {
-    const map = mapRef.value
+  const map = mapRef.value
+  let originalPixelRatio = null
 
+  try {
     // Ensure map style is loaded
     if (!map.isStyleLoaded()) {
       await new Promise(resolve => map.once('style.load', resolve))
@@ -64,90 +81,93 @@ const directExportMap = async () => {
       await new Promise(resolve => map.once('idle', resolve))
     }
 
-    // Force a fresh render
-    map.triggerRepaint()
+    // Get the map container - it's already sized to the correct aspect ratio
+    const container = map.getContainer()
 
-    // Wait for GPU to complete using double requestAnimationFrame
-    await new Promise(resolve => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(resolve)
-      })
-    })
-
-    // Get the map canvas
-    const mapCanvas = map.getCanvas()
-
-    // Determine export dimensions
+    // Calculate output dimensions with DPI scale
     const ratio = store.exportSettings.aspectRatio
-    let exportWidth, exportHeight
+    let baseWidth, baseHeight
     if (ratio === 'custom') {
-      exportWidth = store.exportSettings.customWidth
-      exportHeight = store.exportSettings.customHeight
+      baseWidth = store.exportSettings.customWidth
+      baseHeight = store.exportSettings.customHeight
     } else {
       const dims = ASPECT_RATIOS[ratio] || { width: 1920, height: 1080 }
-      exportWidth = dims.width
-      exportHeight = dims.height
+      baseWidth = dims.width
+      baseHeight = dims.height
+    }
+    const dpiScale = store.exportSettings.dpi / 100
+    const exportWidth = Math.round(baseWidth * dpiScale)
+    const exportHeight = Math.round(baseHeight * dpiScale)
+
+    // Calculate the pixel ratio needed for true high-resolution rendering
+    // This makes MapLibre render its canvas at the target resolution
+    const targetPixelRatio = exportWidth / container.clientWidth
+
+    // Save original pixel ratio and set high-resolution mode
+    // Cap at 8 to avoid WebGL limits (some browsers have issues above 9)
+    originalPixelRatio = map.getPixelRatio()
+    const safePixelRatio = Math.min(targetPixelRatio, 8)
+    map.setPixelRatio(safePixelRatio)
+
+    // Wait for map to re-render at high resolution
+    map.triggerRepaint()
+    await new Promise(resolve => map.once('idle', resolve))
+
+    // html-to-image pixelRatio for HTML elements (legend, scale bar)
+    // Since map canvas is now high-res, we match it for HTML overlays
+    const htmlPixelRatio = safePixelRatio
+
+    // Temporarily remove export preview border class for clean capture
+    const hadExportPreviewClass = container.classList.contains('map-export-preview')
+    if (hadExportPreviewClass) {
+      container.classList.remove('map-export-preview')
     }
 
-    // Create output canvas
+    // Capture the map container (canvas + HTML overlays like scale bar, legend)
+    const includeScaleBar = store.exportSettings.includeScaleBar
+    const includeLegend = store.exportSettings.includeLegend
+    let containerDataUrl
+    try {
+      containerDataUrl = await toPng(container, {
+        pixelRatio: htmlPixelRatio,
+        backgroundColor: '#1a1a2e',
+        filter: (node) => {
+          // Exclude navigation controls (zoom buttons, compass, etc.)
+          if (node.classList?.contains('maplibregl-ctrl-top-right')) return false
+          // Exclude export info badge
+          if (node.classList?.contains('export-info-badge')) return false
+          // Exclude scale bar if user disabled it
+          if (!includeScaleBar && node.classList?.contains('maplibregl-ctrl-scale')) return false
+          // Exclude legend if user disabled it
+          if (!includeLegend && node.classList?.contains('legend')) return false
+          // Exclude attribution control (we draw our own)
+          if (node.classList?.contains('maplibregl-ctrl-attrib')) return false
+          return true
+        }
+      })
+    } finally {
+      // Always restore the class
+      if (hadExportPreviewClass) {
+        container.classList.add('map-export-preview')
+      }
+    }
+
+    // Restore original pixel ratio immediately after capture
+    map.setPixelRatio(originalPixelRatio)
+    originalPixelRatio = null // Mark as restored
+    map.triggerRepaint()
+
+    // Load the captured image
+    const containerImage = await loadImage(containerDataUrl)
+
+    // Create output canvas at the desired resolution
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     canvas.width = exportWidth
     canvas.height = exportHeight
 
-    // Fill with dark background
-    ctx.fillStyle = '#1a1a2e'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-    // Capture the map as image
-    const mapDataUrl = mapCanvas.toDataURL('image/png')
-    const mapImage = await loadImage(mapDataUrl)
-
-    // Calculate how to draw the map
-    if (store.exportSettings.enabled) {
-      // Draw the map scaled to fill the export canvas
-      const scale = Math.max(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
-      )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
-
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
-    } else {
-      // Draw the map scaled to fit (letterboxed)
-      const scale = Math.min(
-        canvas.width / mapImage.width,
-        canvas.height / mapImage.height
-      )
-      const scaledWidth = mapImage.width * scale
-      const scaledHeight = mapImage.height * scale
-      const offsetX = (canvas.width - scaledWidth) / 2
-      const offsetY = (canvas.height - scaledHeight) / 2
-
-      ctx.drawImage(mapImage, offsetX, offsetY, scaledWidth, scaledHeight)
-    }
-
-    // Draw legend if enabled
-    if (store.exportSettings.includeLegend && store.legendSettings.showLegend) {
-      drawLegendOnCanvas(ctx, canvas.width, canvas.height, {
-        colorMap: store.activeColorMap,
-        legendSettings: store.legendSettings,
-        exportSettings: store.exportSettings,
-        colorBy: store.colorBy,
-        legendTitle: store.legendTitle,
-      })
-    }
-
-    // Draw scale bar if enabled
-    if (store.exportSettings.includeScaleBar) {
-      drawScaleBarOnCanvas(ctx, canvas.width, canvas.height, {
-        legendSettings: store.legendSettings,
-        exportSettings: store.exportSettings,
-      })
-    }
+    // Draw the captured container scaled to output size
+    ctx.drawImage(containerImage, 0, 0, canvas.width, canvas.height)
 
     // Draw attribution
     drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
@@ -155,15 +175,24 @@ const directExportMap = async () => {
     })
 
     // Download the image
-    const dataUrl = canvas.toDataURL('image/png', 1.0)
+    const format = store.exportSettings.format || 'png'
+    const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png'
+    const quality = format === 'jpg' ? 0.95 : 1.0
+    const dataUrl = canvas.toDataURL(mimeType, quality)
     const link = document.createElement('a')
-    link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.png`
+    link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.${format}`
     link.href = dataUrl
     link.click()
 
   } catch (e) {
     console.error('Image export failed:', e)
     alert('Export failed: ' + e.message)
+  } finally {
+    // Always restore pixel ratio even if export fails
+    if (originalPixelRatio !== null && map) {
+      map.setPixelRatio(originalPixelRatio)
+      map.triggerRepaint()
+    }
   }
 }
 
@@ -195,6 +224,7 @@ onMounted(() => {
       @open-mimicry="openMimicrySelector"
       @open-gallery="openImageGallery"
       @open-map-export="directExportMap"
+      @export-for-r="directExportForR"
       :current-view="currentView"
       @set-view="setView"
     />
@@ -284,7 +314,7 @@ onMounted(() => {
           class="modal-overlay"
           @click.self="closeExport"
         >
-          <ExportPanel :map="mapRef" @close="closeExport" />
+          <ExportPanel :map="mapRef" :initial-tab="exportPanelInitialTab" @close="closeExport" />
         </div>
       </Transition>
     </Teleport>

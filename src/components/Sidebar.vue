@@ -14,7 +14,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'set-view'])
+const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'export-for-r', 'set-view'])
 
 const store = useDataStore()
 
@@ -64,8 +64,58 @@ const showAdvancedTaxonomy = ref(false)
 // Show URL share settings section
 const showUrlSettings = ref(false)
 
-// Show citation section
-const showCitation = ref(false)
+// Database Update section
+const showUpdateDatabase = ref(false)
+const updateSanger = ref(true)  // Default checked
+const updateGbif = ref(false)
+const updatePassword = ref('')
+const updateStatus = ref('') // '', 'loading', 'success', 'error'
+const updateMessage = ref('')
+
+const triggerDatabaseUpdate = async () => {
+  // Verify password
+  if (updatePassword.value !== 'Hyalyris') {
+    updateStatus.value = 'error'
+    updateMessage.value = 'Incorrect password'
+    return
+  }
+
+  // Must select at least one source
+  if (!updateSanger.value && !updateGbif.value) {
+    updateStatus.value = 'error'
+    updateMessage.value = 'Please select at least one data source'
+    return
+  }
+
+  updateStatus.value = 'loading'
+  updateMessage.value = 'Contacting server...'
+
+  try {
+    // Call the Cloudflare Worker to trigger GitHub Action
+    const response = await fetch('https://ithomiini-maps-db-updater.franz-chandi.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        password: updatePassword.value,
+        update_sanger: updateSanger.value,
+        update_gbif: updateGbif.value
+      })
+    })
+
+    if (response.ok) {
+      updateStatus.value = 'success'
+      const estimatedTime = updateGbif.value ? '15-20 minutes' : '2-3 minutes'
+      updateMessage.value = `Update started! The database will refresh in approximately ${estimatedTime}. Check back later.`
+    } else {
+      const error = await response.text()
+      updateStatus.value = 'error'
+      updateMessage.value = `Update failed: ${error}`
+    }
+  } catch (err) {
+    updateStatus.value = 'error'
+    updateMessage.value = `Network error: ${err.message}. Please try again.`
+  }
+}
 
 // Aspect ratio options - derived from shared constants
 const aspectRatioLabels = {
@@ -93,6 +143,16 @@ const currentExportDimensions = computed(() => {
     return { width: option.width, height: option.height }
   }
   return { width: store.exportSettings.customWidth, height: store.exportSettings.customHeight }
+})
+
+// Calculate actual export pixel dimensions based on scale multiplier
+const exportPixelDimensions = computed(() => {
+  const base = currentExportDimensions.value
+  const scale = store.exportSettings.dpi / 100
+  return {
+    width: Math.round(base.width * scale),
+    height: Math.round(base.height * scale)
+  }
 })
 
 // Update export dimensions - switches to custom mode when editing
@@ -273,6 +333,44 @@ const updateExportHeight = (value) => {
           </div>
         </div>
 
+        <!-- Format Selection -->
+        <div class="setting-row" style="margin-top: 12px;">
+          <label>Format</label>
+          <div class="format-toggle">
+            <button
+              :class="{ active: store.exportSettings.format === 'png' }"
+              @click="store.exportSettings.format = 'png'"
+            >PNG</button>
+            <button
+              :class="{ active: store.exportSettings.format === 'jpg' }"
+              @click="store.exportSettings.format = 'jpg'"
+            >JPG</button>
+          </div>
+        </div>
+
+        <!-- DPI/Scale Selection -->
+        <div class="setting-row" style="margin-top: 12px;">
+          <label>Output Scale <span class="setting-hint">({{ exportPixelDimensions.width }}×{{ exportPixelDimensions.height }}px)</span></label>
+          <div class="dpi-toggle">
+            <button
+              :class="{ active: store.exportSettings.dpi === 100 }"
+              @click="store.exportSettings.dpi = 100"
+            >1×</button>
+            <button
+              :class="{ active: store.exportSettings.dpi === 150 }"
+              @click="store.exportSettings.dpi = 150"
+            >1.5×</button>
+            <button
+              :class="{ active: store.exportSettings.dpi === 200 }"
+              @click="store.exportSettings.dpi = 200"
+            >2×</button>
+            <button
+              :class="{ active: store.exportSettings.dpi === 300 }"
+              @click="store.exportSettings.dpi = 300"
+            >3×</button>
+          </div>
+        </div>
+
         <!-- Export Button -->
         <button class="btn-export-now" @click="emit('open-map-export')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -281,6 +379,16 @@ const updateExportHeight = (value) => {
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
           Export Image
+        </button>
+
+        <!-- Export for R Button -->
+        <button class="btn-export-r" @click="emit('export-for-r')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export for R (Vector)
         </button>
       </div>
 
@@ -477,6 +585,24 @@ const updateExportHeight = (value) => {
         />
       </div>
 
+      <!-- Sex Filter -->
+      <div class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="9" r="5"/>
+            <path d="M9 14v7M6 18h6"/>
+            <circle cx="17" cy="15" r="5"/>
+            <path d="M21 11l-2.5 2.5M21 11h-4M21 11v4"/>
+          </svg>
+          Sex
+        </label>
+        <select class="sex-select" v-model="store.filters.sex">
+          <option value="all">All (♂ + ♀)</option>
+          <option value="male">♂ Male only</option>
+          <option value="female">♀ Female only</option>
+        </select>
+      </div>
+
       <!-- UI Preferences -->
       <div class="filter-section">
         <label class="thumbnail-toggle">
@@ -530,45 +656,76 @@ const updateExportHeight = (value) => {
 
     </div>
 
-    <!-- GBIF Citation -->
-    <div v-if="store.gbifCitation" class="citation-section">
-      <button class="citation-toggle" @click="showCitation = !showCitation">
+    <!-- Update Database Section -->
+    <div class="update-database-section">
+      <button
+        class="collapse-toggle update-toggle"
+        @click="showUpdateDatabase = !showUpdateDatabase"
+        :class="{ expanded: showUpdateDatabase }"
+      >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 16v-4"/>
-          <path d="M12 8h.01"/>
+          <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/>
         </svg>
-        <span>Data Citation</span>
-        <svg class="chevron" :class="{ rotated: showCitation }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        Update Database
+        <svg class="chevron" :class="{ rotated: showUpdateDatabase }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="6 9 12 15 18 9"/>
         </svg>
       </button>
+
       <Transition name="slide">
-        <div v-if="showCitation" class="citation-content">
-          <p class="citation-text">{{ store.gbifCitation.citation_text }}</p>
-          <a
-            v-if="store.gbifCitation.doi_url"
-            :href="store.gbifCitation.doi_url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="citation-link"
+        <div v-if="showUpdateDatabase" class="update-content">
+          <p class="filter-hint">
+            Refresh data from external sources. GBIF updates take ~15 minutes.
+          </p>
+
+          <!-- Source checkboxes -->
+          <div class="update-sources">
+            <label class="update-checkbox">
+              <input type="checkbox" v-model="updateSanger" />
+              <span>Sanger Institute</span>
+            </label>
+            <label class="update-checkbox">
+              <input type="checkbox" v-model="updateGbif" />
+              <span>GBIF (includes iNaturalist)</span>
+            </label>
+          </div>
+
+          <!-- Password input -->
+          <div class="update-password">
+            <input
+              type="password"
+              v-model="updatePassword"
+              placeholder="Enter password"
+              :disabled="updateStatus === 'loading'"
+              @keyup.enter="triggerDatabaseUpdate"
+            />
+          </div>
+
+          <!-- Update button -->
+          <button
+            class="update-btn"
+            @click="triggerDatabaseUpdate"
+            :disabled="updateStatus === 'loading'"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              <polyline points="15 3 21 3 21 9"/>
-              <line x1="10" y1="14" x2="21" y2="3"/>
+            <svg v-if="updateStatus !== 'loading'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 0 1-9 9"/>
+              <path d="M21 3v6h-6"/>
+              <path d="M3 12a9 9 0 0 1 9-9"/>
+              <path d="M3 21v-6h6"/>
             </svg>
-            View on GBIF
-          </a>
-          <div class="citation-stats">
-            <div class="stat">
-              <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span>
-              <span class="stat-label">iNaturalist</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span>
-              <span class="stat-label">Other GBIF</span>
-            </div>
+            <svg v-else class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke-dasharray="62" stroke-dashoffset="20"/>
+            </svg>
+            {{ updateStatus === 'loading' ? 'Updating...' : 'Start Update' }}
+          </button>
+
+          <!-- Status message -->
+          <div
+            v-if="updateMessage"
+            class="update-message"
+            :class="{ success: updateStatus === 'success', error: updateStatus === 'error' }"
+          >
+            {{ updateMessage }}
           </div>
         </div>
       </Transition>
@@ -861,6 +1018,70 @@ const updateExportHeight = (value) => {
 .btn-export-now svg {
   width: 18px;
   height: 18px;
+}
+
+.btn-export-r {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin-top: 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid #6366f1;
+  border-radius: 6px;
+  color: #a5b4fc;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-export-r:hover {
+  background: #3730a3;
+  border-color: #818cf8;
+  color: #e0e7ff;
+}
+
+.btn-export-r svg {
+  width: 16px;
+  height: 16px;
+  color: #6366f1;
+}
+
+/* Format and DPI Toggle Buttons */
+.format-toggle,
+.dpi-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.format-toggle button,
+.dpi-toggle button {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.format-toggle button:hover,
+.dpi-toggle button:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.format-toggle button.active,
+.dpi-toggle button.active {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
 }
 
 .section-label {
@@ -1309,6 +1530,29 @@ const updateExportHeight = (value) => {
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
+/* Sex Select */
+.sex-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sex-select:hover {
+  border-color: var(--color-text-muted, #666);
+}
+
+.sex-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
 /* Export Settings */
 .dimension-inputs {
   display: flex;
@@ -1370,121 +1614,159 @@ const updateExportHeight = (value) => {
   font-style: italic;
 }
 
-/* Citation Section */
-.citation-section {
+/* Update Database Section */
+.update-database-section {
+  padding: 0 20px 16px;
   border-top: 1px solid var(--color-border, #3d3d5c);
-  padding: 12px 16px;
 }
 
-.citation-toggle {
+.update-toggle {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 10px;
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.citation-toggle:hover {
-  background: var(--color-bg-primary, #1a1a2e);
+  padding: 12px 0;
+  background: none;
+  border: none;
   color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
-.citation-toggle svg {
+.update-toggle:hover {
+  color: var(--color-accent, #4ade80);
+}
+
+.update-toggle svg:first-child {
+  width: 18px;
+  height: 18px;
+  color: var(--color-accent, #4ade80);
+}
+
+.update-toggle .chevron {
   width: 16px;
   height: 16px;
-  flex-shrink: 0;
-}
-
-.citation-toggle .chevron {
   margin-left: auto;
   transition: transform 0.2s;
 }
 
-.citation-toggle .chevron.rotated {
+.update-toggle .chevron.rotated {
   transform: rotate(180deg);
 }
 
-.citation-content {
-  margin-top: 12px;
-  padding: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 6px;
-  border: 1px solid var(--color-border, #3d3d5c);
+.update-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.citation-text {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
-  line-height: 1.5;
-  margin: 0 0 12px 0;
+.update-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.citation-link {
-  display: inline-flex;
+.update-checkbox {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 4px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.75rem;
-  text-decoration: none;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #b0b0b0);
+}
+
+.update-checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent, #4ade80);
+  cursor: pointer;
+}
+
+.update-checkbox:hover {
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.update-password input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.85rem;
+}
+
+.update-password input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+}
+
+.update-password input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.update-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--color-accent, #4ade80);
+  border: none;
+  border-radius: 6px;
+  color: #1a1a2e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
-.citation-link:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
+.update-btn:hover:not(:disabled) {
+  background: #3fcd73;
+  transform: translateY(-1px);
 }
 
-.citation-link svg {
-  width: 14px;
-  height: 14px;
+.update-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.citation-stats {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+.update-btn svg {
+  width: 18px;
+  height: 18px;
 }
 
-.citation-stats .stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.update-btn .spinner {
+  animation: spin 1s linear infinite;
 }
 
-.citation-stats .stat-value {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-accent, #4ade80);
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.citation-stats .stat-label {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
+.update-message {
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
-/* Slide transition for citation */
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.3s ease;
+.update-message.success {
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: #4ade80;
 }
 
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+.update-message.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
 }
 
 /* Responsive */
