@@ -26,7 +26,8 @@ let popup = null
 
 // Wrapper size (the available space) for accurate export preview calculations
 const wrapperSize = ref({ width: 1600, height: 900 })
-let resizeObserver = null
+let wrapperResizeObserver = null
+let mapContainerResizeObserver = null
 
 // Enhanced popup state for multi-point locations
 const showEnhancedPopup = ref(false)
@@ -202,8 +203,7 @@ onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('click', handleMapLayerClickOutside)
 
-  // Set up ResizeObserver on WRAPPER (not map container) for accurate export preview calculations
-  // The wrapper represents the available space; the map container will resize to fit aspect ratio
+  // Set up ResizeObserver on WRAPPER for calculating export preview dimensions
   if (mapWrapper.value) {
     wrapperSize.value = {
       width: mapWrapper.value.clientWidth,
@@ -211,7 +211,7 @@ onMounted(() => {
     }
     console.log('[Export Preview] Initial wrapper size:', wrapperSize.value)
 
-    resizeObserver = new ResizeObserver((entries) => {
+    wrapperResizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         wrapperSize.value = {
           width: entry.contentRect.width,
@@ -220,9 +220,26 @@ onMounted(() => {
         console.log('[Export Preview] Wrapper resized:', wrapperSize.value)
       }
     })
-    resizeObserver.observe(mapWrapper.value)
-  } else {
-    console.warn('[Export Preview] mapWrapper ref not available!')
+    wrapperResizeObserver.observe(mapWrapper.value)
+  }
+
+  // Set up ResizeObserver on MAP CONTAINER to trigger MapLibre resize when container dimensions change
+  // This is critical: MapLibre needs to resize its canvas when the container size changes
+  if (mapContainer.value) {
+    mapContainerResizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        console.log('[Export Preview] Map container resized to:', {
+          width: entry.contentRect.width,
+          height: entry.contentRect.height
+        })
+        // Tell MapLibre to resize its canvas to match the new container dimensions
+        if (map.value) {
+          map.value.resize()
+          console.log('[Export Preview] Called map.resize()')
+        }
+      }
+    })
+    mapContainerResizeObserver.observe(mapContainer.value)
   }
 })
 
@@ -231,9 +248,13 @@ onUnmounted(() => {
     map.value.remove()
     map.value = null
   }
-  if (resizeObserver) {
-    resizeObserver.disconnect()
-    resizeObserver = null
+  if (wrapperResizeObserver) {
+    wrapperResizeObserver.disconnect()
+    wrapperResizeObserver = null
+  }
+  if (mapContainerResizeObserver) {
+    mapContainerResizeObserver.disconnect()
+    mapContainerResizeObserver = null
   }
   document.removeEventListener('click', handleClickOutside)
   document.removeEventListener('click', handleMapLayerClickOutside)
@@ -339,26 +360,16 @@ watch(
   { deep: true }
 )
 
-// Watch for export settings changes to resize map
+// Watch for export settings changes
+// Note: map.resize() is handled by the mapContainerResizeObserver when container dimensions change
 watch(
   [() => store.exportSettings.enabled, () => store.exportSettings.aspectRatio, () => store.exportSettings.customWidth, () => store.exportSettings.customHeight],
   () => {
-    if (map.value) {
-      // Use nextTick to ensure CSS has been applied before resizing
-      nextTick(() => {
-        // Debug: log actual computed dimensions after style applied
-        if (mapContainer.value) {
-          const computed = window.getComputedStyle(mapContainer.value)
-          console.log('[Export Preview] After style applied - mapContainer computed:', {
-            width: computed.width,
-            height: computed.height,
-            aspectRatio: computed.aspectRatio,
-            inlineStyle: mapContainer.value.style.cssText
-          })
-        }
-        map.value.resize()
-      })
-    }
+    // Debug: log when export settings change
+    console.log('[Export Preview] Export settings changed:', {
+      enabled: store.exportSettings.enabled,
+      aspectRatio: store.exportSettings.aspectRatio
+    })
   }
 )
 
