@@ -64,9 +64,6 @@ const showAdvancedTaxonomy = ref(false)
 // Show URL share settings section
 const showUrlSettings = ref(false)
 
-// Show citation section
-const showCitation = ref(false)
-
 // Database Update section
 const showUpdateDatabase = ref(false)
 const updateSanger = ref(true)  // Default checked
@@ -657,50 +654,6 @@ const updateExportHeight = (value) => {
         </div>
       </div>
 
-    </div>
-
-    <!-- GBIF Citation -->
-    <div v-if="store.gbifCitation" class="citation-section">
-      <button class="citation-toggle" @click="showCitation = !showCitation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 16v-4"/>
-          <path d="M12 8h.01"/>
-        </svg>
-        <span>Data Citation</span>
-        <svg class="chevron" :class="{ rotated: showCitation }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </button>
-      <Transition name="slide">
-        <div v-if="showCitation" class="citation-content">
-          <p class="citation-text">{{ store.gbifCitation.citation_text }}</p>
-          <a
-            v-if="store.gbifCitation.doi_url"
-            :href="store.gbifCitation.doi_url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="citation-link"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              <polyline points="15 3 21 3 21 9"/>
-              <line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-            View on GBIF
-          </a>
-          <div class="citation-stats">
-            <div class="stat">
-              <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span>
-              <span class="stat-label">iNaturalist</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span>
-              <span class="stat-label">Other GBIF</span>
-            </div>
-          </div>
-        </div>
-      </Transition>
     </div>
 
     <!-- Update Database Section -->
@@ -1659,123 +1612,6 @@ const updateExportHeight = (value) => {
   color: var(--color-text-muted, #666);
   margin: -4px 0 4px 26px;
   font-style: italic;
-}
-
-/* Citation Section */
-.citation-section {
-  border-top: 1px solid var(--color-border, #3d3d5c);
-  padding: 12px 16px;
-}
-
-.citation-toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.citation-toggle:hover {
-  background: var(--color-bg-primary, #1a1a2e);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.citation-toggle svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-.citation-toggle .chevron {
-  margin-left: auto;
-  transition: transform 0.2s;
-}
-
-.citation-toggle .chevron.rotated {
-  transform: rotate(180deg);
-}
-
-.citation-content {
-  margin-top: 12px;
-  padding: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-radius: 6px;
-  border: 1px solid var(--color-border, #3d3d5c);
-}
-
-.citation-text {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
-  line-height: 1.5;
-  margin: 0 0 12px 0;
-}
-
-.citation-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  border-radius: 4px;
-  color: var(--color-accent, #4ade80);
-  font-size: 0.75rem;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.citation-link:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
-.citation-link svg {
-  width: 14px;
-  height: 14px;
-}
-
-.citation-stats {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-}
-
-.citation-stats .stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.citation-stats .stat-value {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-accent, #4ade80);
-}
-
-.citation-stats .stat-label {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
-}
-
-/* Slide transition for citation */
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
 }
 
 /* Update Database Section */

@@ -350,6 +350,45 @@ const activeTab = ref(props.initialTab || 'export')
           </p>
         </div>
 
+        <!-- GBIF Data Citation -->
+        <div v-if="store.gbifCitation" class="gbif-citation-section">
+          <label class="citation-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4"/>
+              <path d="M12 8h.01"/>
+            </svg>
+            Data Source Citation
+          </label>
+          <div class="gbif-citation-box">
+            <p class="gbif-citation-text">{{ store.gbifCitation.citation_text }}</p>
+            <a
+              v-if="store.gbifCitation.doi_url"
+              :href="store.gbifCitation.doi_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="gbif-link"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              View on GBIF
+            </a>
+            <div class="gbif-stats">
+              <div class="stat">
+                <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.iNaturalist?.toLocaleString() || 0 }}</span>
+                <span class="stat-label">iNaturalist</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">{{ store.gbifCitation.dataset_breakdown?.['Other GBIF']?.toLocaleString() || 0 }}</span>
+                <span class="stat-label">Other GBIF</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <Transition name="fade">
           <div v-if="citationCopied" class="success-toast">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -822,6 +861,89 @@ const activeTab = ref(props.initialTab || 'export')
 .citation-info p {
   margin: 0;
   line-height: 1.5;
+}
+
+/* GBIF Data Citation */
+.gbif-citation-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.gbif-citation-section .citation-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gbif-citation-section .citation-label svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent, #4ade80);
+}
+
+.gbif-citation-box {
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border-radius: 6px;
+  border: 1px solid var(--color-border, #3d3d5c);
+}
+
+.gbif-citation-text {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #aaa);
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+.gbif-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 4px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.gbif-link:hover {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: rgba(74, 222, 128, 0.5);
+}
+
+.gbif-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+.gbif-stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.gbif-stats .stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gbif-stats .stat-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent, #4ade80);
+}
+
+.gbif-stats .stat-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #666);
 }
 
 /* Success Toast */
