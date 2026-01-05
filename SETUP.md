@@ -137,10 +137,10 @@ Environment variables store sensitive data like your GitHub token securely.
 |---------------|-------|------|
 | `UPDATE_PASSWORD` | `Hyalyris` | Encrypt |
 | `GITHUB_TOKEN` | `ghp_your_token_here` | Encrypt |
-| `GITHUB_OWNER` | `Fr4nzz` (or your org name) | Plain text |
-| `GITHUB_REPO` | `ithomiini_maps` | Plain text |
 
 **Important:** Click **Encrypt** for sensitive values (password and token) to hide them from view.
+
+> **Note:** The owner, repo, and branch are detected automatically by the web app. This allows the same worker to be used for different repositories or branches without reconfiguration.
 
 6. Click **Save and Deploy** after adding all variables
 
@@ -156,27 +156,38 @@ Environment variables store sensitive data like your GitHub token securely.
 #### 2.8 Update the Frontend Code
 
 1. Open `src/components/Sidebar.vue` in your code editor
-2. Find the line containing the Worker URL (around line 98):
+2. Find the `WORKER_URL` constant (around line 76):
    ```javascript
-   const response = 'https://ithomiini-db-updater.YOUR-SUBDOMAIN.workers.dev/'
+   const WORKER_URL = 'https://ithomiini-db-updater.YOUR-SUBDOMAIN.workers.dev/'
    ```
 3. Replace `YOUR-SUBDOMAIN` with your actual Cloudflare subdomain
 4. Commit and push the change
 
-#### 2.9 Test the Worker
+#### 2.9 Dynamic Repository Detection
+
+The web app automatically detects the GitHub owner and repo:
+
+- **GitHub Pages** (`fr4nzz.github.io/ithomiini_maps`): Uses `Fr4nzz` as owner and `ithomiini_maps` as repo
+- **Other deployments**: Defaults to `rapidspeciation/ithomiini_maps`
+
+You can also specify a branch via URL parameter to update a feature branch:
+```
+https://fr4nzz.github.io/ithomiini_maps/?branch=claude/my-feature
+```
+
+This allows testing database updates on feature branches without modifying any configuration.
+
+#### 2.10 Test the Worker
 
 You can test your worker directly:
 
 ```bash
 curl -X POST https://ithomiini-db-updater.<your-subdomain>.workers.dev/ \
   -H "Content-Type: application/json" \
-  -d '{"password": "Hyalyris", "update_sanger": true, "update_gbif": false}'
+  -d '{"password": "Hyalyris", "update_sanger": true, "update_gbif": false, "owner": "Fr4nzz", "repo": "ithomiini_maps", "branch": "main"}'
 ```
 
-Expected response:
-```json
-{"success": true, "message": "Workflow triggered successfully", "run_id": 12345678}
-```
+Expected response: `Update triggered successfully`
 
 ---
 
@@ -463,8 +474,8 @@ VITE_MAPTILER_KEY=your-maptiler-api-key
 After setup, you should have:
 
 - [ ] GitHub Classic Token with `repo` and `workflow` scopes
-- [ ] Cloudflare Worker deployed with 4 environment variables
-- [ ] Worker URL updated in `src/components/Sidebar.vue`
+- [ ] Cloudflare Worker deployed with 2 environment variables (`UPDATE_PASSWORD`, `GITHUB_TOKEN`)
+- [ ] `WORKER_URL` constant updated in `src/components/Sidebar.vue`
 - [ ] (Optional) Stadia Maps API key in `.env.local`
 - [ ] (Optional) MapTiler API key in `.env.local`
 

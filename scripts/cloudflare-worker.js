@@ -14,16 +14,16 @@
  * ENVIRONMENT VARIABLES (set in Worker Settings > Variables):
  * - UPDATE_PASSWORD: "Hyalyris" (or your chosen password)
  * - GITHUB_TOKEN: Your GitHub Personal Access Token with 'repo' scope
- * - GITHUB_OWNER: "Fr4nzz" (your GitHub username)
- * - GITHUB_REPO: "ithomiini_maps" (repository name)
+ *
+ * NOTE: Owner, repo, and branch are sent dynamically by the web app.
+ * This allows testing from different repos/branches without reconfiguring the worker.
  *
  * CREATE A GITHUB PERSONAL ACCESS TOKEN:
- * 1. Go to https://github.com/settings/tokens?type=beta
- * 2. Click "Generate new token" (Fine-grained tokens)
+ * 1. Go to https://github.com/settings/tokens (Classic tokens)
+ * 2. Click "Generate new token (classic)"
  * 3. Name: "Ithomiini DB Updater"
- * 4. Repository access: Select "ithomiini_maps" only
- * 5. Permissions: Actions (Read and write)
- * 6. Generate token and copy it to Cloudflare Worker env vars
+ * 4. Scopes: repo, workflow
+ * 5. Generate token and copy it to Cloudflare Worker env vars
  */
 
 export default {
@@ -50,7 +50,7 @@ export default {
 
     try {
       const body = await request.json();
-      const { password, update_sanger, update_gbif } = body;
+      const { password, update_sanger, update_gbif, owner, repo, branch } = body;
 
       // Verify password
       if (password !== env.UPDATE_PASSWORD) {
@@ -60,10 +60,21 @@ export default {
         });
       }
 
-      // Trigger GitHub Actions workflow
-      const workflowUrl = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/actions/workflows/update_data.yml/dispatches`;
+      // Validate required fields
+      if (!owner || !repo) {
+        return new Response('Missing owner or repo in request', {
+          status: 400,
+          headers: { 'Access-Control-Allow-Origin': '*' },
+        });
+      }
 
-      const response = await fetch(workflowUrl, {
+      // Use provided branch or default to 'main'
+      const targetBranch = branch || 'main';
+
+      // Trigger GitHub Actions workflow
+      const workflowUrl = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/update_data.yml/dispatches`;
+
+      const githubResponse = await fetch(workflowUrl, {
         method: 'POST',
         headers: {
           'Accept': 'application/vnd.github.v3+json',
@@ -72,7 +83,7 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ref: 'main',  // Branch to run on
+          ref: targetBranch,
           inputs: {
             update_sanger: String(update_sanger !== false),
             update_gbif: String(update_gbif === true),
@@ -80,16 +91,16 @@ export default {
         }),
       });
 
-      if (response.status === 204) {
+      if (githubResponse.status === 204) {
         // Success - GitHub returns 204 No Content for successful workflow dispatch
         return new Response('Update triggered successfully', {
           status: 200,
           headers: { 'Access-Control-Allow-Origin': '*' },
         });
       } else {
-        const error = await response.text();
+        const error = await githubResponse.text();
         return new Response(`GitHub API error: ${error}`, {
-          status: response.status,
+          status: githubResponse.status,
           headers: { 'Access-Control-Allow-Origin': '*' },
         });
       }
