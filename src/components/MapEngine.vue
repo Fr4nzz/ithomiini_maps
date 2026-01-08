@@ -307,7 +307,15 @@ watch(
     const dataLengthChanged = newLength !== previousDataLength
     previousDataLength = newLength
 
-    const shouldSkipZoom = !dataLengthChanged || scatterJustToggled
+    const shouldSkipZoom = !dataLengthChanged || scatterJustToggled || clusteringJustToggled
+
+    console.log('📊 displayGeoJSON changed:', {
+      newLength,
+      dataLengthChanged,
+      scatterJustToggled,
+      clusteringJustToggled: clusteringJustToggled,
+      shouldSkipZoom
+    })
 
     addDataLayer({ skipZoom: shouldSkipZoom })
 
@@ -327,12 +335,20 @@ watch(
   }
 )
 
+// Track clustering toggle to prevent zoom
+let previousClusteringState = false
+let clusteringJustToggled = false
+
 // Watch for clustering settings changes
 watch(
   [() => store.clusteringEnabled, () => store.clusterSettings],
   () => {
+    console.log('🔄 Clustering settings changed:', { enabled: store.clusteringEnabled, settings: store.clusterSettings })
     if (!map.value || !map.value.isStyleLoaded()) return
+    clusteringJustToggled = true
     addDataLayer({ skipZoom: true })
+    // Reset the flag after a tick to catch any subsequent triggered watches
+    setTimeout(() => { clusteringJustToggled = false }, 100)
   },
   { deep: true }
 )

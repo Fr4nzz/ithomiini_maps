@@ -538,6 +538,8 @@ export function useDataLayer(map, options = {}) {
   const addDataLayer = (layerOptions = {}) => {
     const { skipZoom = false } = layerOptions
 
+    console.log('🗺️ addDataLayer called', { skipZoom, clusteringEnabled: store.clusteringEnabled })
+
     if (!map.value) return
 
     // Remove existing layers/sources if they exist
@@ -706,37 +708,58 @@ export function useDataLayer(map, options = {}) {
 
       // Cluster click - show enhanced popup with all cluster points
       map.value.on('click', 'clusters', async (e) => {
+        console.log('🔵 Cluster clicked')
         const features = map.value.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-        if (!features.length) return
+        if (!features.length) {
+          console.log('🔵 No cluster features found at click point')
+          return
+        }
 
         const cluster = features[0]
         const coords = cluster.geometry.coordinates
         const clusterId = cluster.properties.cluster_id
         const pointCount = cluster.properties.point_count
 
+        console.log(`🔵 Cluster ID: ${clusterId}, Point count: ${pointCount}, Coords:`, coords)
+
         const clusterLng = coords[0]
         const clusterLat = coords[1]
 
         // Use MapLibre's getClusterLeaves to get actual cluster members
         const source = map.value.getSource('points-source')
-        if (!source) return
+        if (!source) {
+          console.log('🔵 No points-source found')
+          return
+        }
+
+        console.log('🔵 Getting cluster leaves...')
 
         try {
           // Get all leaves (points) in this cluster
           const clusterLeaves = await new Promise((resolve, reject) => {
             source.getClusterLeaves(clusterId, pointCount, 0, (error, features) => {
-              if (error) reject(error)
-              else resolve(features)
+              if (error) {
+                console.error('🔵 getClusterLeaves error:', error)
+                reject(error)
+              } else {
+                console.log(`🔵 Got ${features?.length || 0} cluster leaves`)
+                resolve(features)
+              }
             })
           })
 
-          if (!clusterLeaves || clusterLeaves.length === 0) return
+          if (!clusterLeaves || clusterLeaves.length === 0) {
+            console.log('🔵 No cluster leaves returned')
+            return
+          }
 
           const clusterPoints = clusterLeaves.map(f => f.properties)
+          console.log(`🔵 Cluster has ${clusterPoints.length} points`)
 
           if (clusterPoints.length > 0 && onShowPopup) {
             // Compute cluster statistics including geographic radius
             const clusterStats = computeClusterStats(clusterLeaves, clusterLat, clusterLng)
+            console.log('🔵 Cluster stats:', clusterStats)
 
             // Update the cluster extent circle to show actual geographic radius
             updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
@@ -749,9 +772,11 @@ export function useDataLayer(map, options = {}) {
               isCluster: true,
               clusterStats
             })
+          } else {
+            console.log('🔵 onShowPopup not available or no points:', { hasCallback: !!onShowPopup, pointCount: clusterPoints.length })
           }
         } catch (error) {
-          console.error('Error getting cluster leaves:', error)
+          console.error('🔵 Error getting cluster leaves:', error)
         }
       })
 
