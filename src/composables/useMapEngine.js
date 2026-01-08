@@ -733,19 +733,33 @@ export function useDataLayer(map, options = {}) {
         }
 
         console.log('🔵 Getting cluster leaves...')
+        console.log('🔵 Source type:', source.type, 'Has getClusterLeaves:', typeof source.getClusterLeaves)
 
         try {
-          // Get all leaves (points) in this cluster
+          // Get all leaves (points) in this cluster with timeout
           const clusterLeaves = await new Promise((resolve, reject) => {
-            source.getClusterLeaves(clusterId, pointCount, 0, (error, features) => {
-              if (error) {
-                console.error('🔵 getClusterLeaves error:', error)
-                reject(error)
-              } else {
-                console.log(`🔵 Got ${features?.length || 0} cluster leaves`)
-                resolve(features)
-              }
-            })
+            const timeout = setTimeout(() => {
+              console.error('🔵 getClusterLeaves timed out after 5s')
+              reject(new Error('Timeout'))
+            }, 5000)
+
+            try {
+              source.getClusterLeaves(clusterId, pointCount, 0, (error, features) => {
+                clearTimeout(timeout)
+                if (error) {
+                  console.error('🔵 getClusterLeaves callback error:', error)
+                  reject(error)
+                } else {
+                  console.log(`🔵 Got ${features?.length || 0} cluster leaves`)
+                  resolve(features)
+                }
+              })
+              console.log('🔵 getClusterLeaves called, waiting for callback...')
+            } catch (syncError) {
+              clearTimeout(timeout)
+              console.error('🔵 getClusterLeaves sync error:', syncError)
+              reject(syncError)
+            }
           })
 
           if (!clusterLeaves || clusterLeaves.length === 0) {

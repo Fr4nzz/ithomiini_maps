@@ -317,6 +317,11 @@ watch(
       shouldSkipZoom
     })
 
+    // Reset the clustering flag after we've used it
+    if (clusteringJustToggled) {
+      clusteringJustToggled = false
+    }
+
     addDataLayer({ skipZoom: shouldSkipZoom })
 
     if (store.scatterOverlappingPoints) {
@@ -336,19 +341,25 @@ watch(
 )
 
 // Track clustering toggle to prevent zoom
-let previousClusteringState = false
 let clusteringJustToggled = false
 
-// Watch for clustering settings changes
+// Watch ONLY clusteringEnabled with sync flush to set flag BEFORE displayGeoJSON watcher runs
 watch(
-  [() => store.clusteringEnabled, () => store.clusterSettings],
+  () => store.clusteringEnabled,
   () => {
-    console.log('🔄 Clustering settings changed:', { enabled: store.clusteringEnabled, settings: store.clusterSettings })
-    if (!map.value || !map.value.isStyleLoaded()) return
+    console.log('🔄 Clustering ENABLED changed (sync):', store.clusteringEnabled)
     clusteringJustToggled = true
+  },
+  { flush: 'sync' }
+)
+
+// Watch for clustering settings changes (for radius, countMode, etc.)
+watch(
+  () => store.clusterSettings,
+  () => {
+    console.log('🔄 Clustering SETTINGS changed:', store.clusterSettings)
+    if (!map.value || !map.value.isStyleLoaded()) return
     addDataLayer({ skipZoom: true })
-    // Reset the flag after a tick to catch any subsequent triggered watches
-    setTimeout(() => { clusteringJustToggled = false }, 100)
   },
   { deep: true }
 )
