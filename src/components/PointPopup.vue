@@ -20,6 +20,15 @@ const props = defineProps({
   initialSubspecies: {
     type: String,
     default: null
+  },
+  // Cluster-specific props
+  isCluster: {
+    type: Boolean,
+    default: false
+  },
+  clusterStats: {
+    type: Object, // { locationCount, countries, countriesFormatted, radiusKm, ... }
+    default: null
   }
 })
 
@@ -159,7 +168,45 @@ const initializeSelection = () => {
     return
   }
 
-  // Default behavior: Get first point with photo, or just first point
+  // For clusters or locations: use most common species/subspecies (prioritize those with photos)
+  // This ensures we show the most representative image
+  const speciesWithCounts = speciesList.value
+  if (speciesWithCounts.length > 0) {
+    // speciesList is already sorted by photos first, then by count
+    const topSpecies = speciesWithCounts[0].species
+    selectedSpecies.value = topSpecies
+
+    if (groupedBySpecies.value[topSpecies]) {
+      const speciesGroup = groupedBySpecies.value[topSpecies]
+      // subspeciesList is already sorted by photos first, then by count
+      const subspeciesNames = Object.keys(speciesGroup.subspecies)
+
+      // Sort subspecies by those with photos first, then by count
+      const sortedSubspecies = subspeciesNames
+        .map(name => ({
+          name,
+          data: speciesGroup.subspecies[name],
+          hasPhoto: speciesGroup.subspecies[name].individuals.some(i => i.image_url)
+        }))
+        .sort((a, b) => {
+          if (a.hasPhoto && !b.hasPhoto) return -1
+          if (!a.hasPhoto && b.hasPhoto) return 1
+          return b.data.count - a.data.count
+        })
+
+      if (sortedSubspecies.length > 0) {
+        selectedSubspecies.value = sortedSubspecies[0].name
+
+        // Find individual with photo in this subspecies
+        const individuals = speciesGroup.subspecies[sortedSubspecies[0].name].individuals
+        const photoIdx = individuals.findIndex(ind => ind.image_url)
+        selectedIndividualIndex.value = photoIdx >= 0 ? photoIdx : 0
+      }
+    }
+    return
+  }
+
+  // Fallback: Get first point with photo, or just first point
   const pointsWithPhoto = props.points.filter(p => p.image_url)
   const firstPoint = pointsWithPhoto.length > 0 ? pointsWithPhoto[0] : props.points[0]
 
@@ -411,24 +458,46 @@ const openGallery = () => {
 
         <div class="divider"></div>
 
-        <!-- Location Summary -->
+        <!-- Location/Cluster Summary -->
         <div class="location-summary">
-          <div class="summary-title">Location Summary</div>
+          <div class="summary-title">{{ isCluster ? 'Cluster Summary' : 'Location Summary' }}</div>
 
-          <div v-if="locationName" class="detail-row">
+          <!-- Cluster-specific: Location count -->
+          <div v-if="isCluster && clusterStats" class="detail-row">
+            <span class="detail-label">Locations:</span>
+            <span class="detail-value">{{ clusterStats.locationCount }}</span>
+          </div>
+
+          <!-- Regular location: Location name -->
+          <div v-else-if="locationName" class="detail-row">
             <span class="detail-label">Location:</span>
             <span class="detail-value location-name">{{ locationName }}</span>
           </div>
 
-          <div v-if="currentIndividual?.country && currentIndividual.country !== 'Unknown'" class="detail-row">
+          <!-- Cluster: Countries with codes -->
+          <div v-if="isCluster && clusterStats?.countriesFormatted" class="detail-row">
+            <span class="detail-label">Countries:</span>
+            <span class="detail-value">{{ clusterStats.countriesFormatted }}</span>
+          </div>
+
+          <!-- Regular location: Single country -->
+          <div v-else-if="!isCluster && currentIndividual?.country && currentIndividual.country !== 'Unknown'" class="detail-row">
             <span class="detail-label">Country:</span>
             <span class="detail-value">{{ currentIndividual.country }}</span>
           </div>
 
           <div class="detail-row">
-            <span class="detail-label">Coordinates:</span>
+            <span class="detail-label">{{ isCluster ? 'Center:' : 'Coordinates:' }}</span>
             <span class="detail-value coords">
               {{ coordinates.lat.toFixed(4) }}, {{ coordinates.lng.toFixed(4) }}
+            </span>
+          </div>
+
+          <!-- Cluster: Geographic radius -->
+          <div v-if="isCluster && clusterStats?.radiusKm > 0" class="detail-row">
+            <span class="detail-label">Radius:</span>
+            <span class="detail-value">
+              {{ clusterStats.radiusKm < 1 ? (clusterStats.radiusKm * 1000).toFixed(0) + ' m' : clusterStats.radiusKm.toFixed(1) + ' km' }}
             </span>
           </div>
 

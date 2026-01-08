@@ -33,7 +33,9 @@ let mapContainerResizeObserver = null
 const showEnhancedPopup = ref(false)
 const enhancedPopupData = ref({
   coordinates: { lat: 0, lng: 0 },
-  points: []
+  points: [],
+  isCluster: false,
+  clusterStats: null
 })
 
 // Initialize composables
@@ -62,7 +64,9 @@ const handleShowPopup = (data) => {
     coordinates: data.coordinates,
     points: data.points,
     initialSpecies: data.initialSpecies || null,
-    initialSubspecies: data.initialSubspecies || null
+    initialSubspecies: data.initialSubspecies || null,
+    isCluster: data.isCluster || false,
+    clusterStats: data.clusterStats || null
   }
 
   nextTick(() => {
@@ -82,13 +86,15 @@ const handleShowPopup = (data) => {
 
         popup.on('close', () => {
           showEnhancedPopup.value = false
+          // Clear cluster extent circle when popup is closed by clicking outside
+          if (clearClusterExtentCircle) clearClusterExtentCircle()
         })
       }
     })
   })
 }
 
-const { addDataLayer, fitBoundsToData } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle } = useDataLayer(map, { onShowPopup: handleShowPopup })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer)
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
 
@@ -276,6 +282,8 @@ let previousScatterState = false
 const closeEnhancedPopup = () => {
   if (popup) popup.remove()
   showEnhancedPopup.value = false
+  // Clear the cluster extent circle when popup closes
+  clearClusterExtentCircle()
 }
 
 // Handle open gallery from popup
@@ -445,6 +453,8 @@ watch(
           :points="enhancedPopupData.points"
           :initial-species="enhancedPopupData.initialSpecies"
           :initial-subspecies="enhancedPopupData.initialSubspecies"
+          :is-cluster="enhancedPopupData.isCluster"
+          :cluster-stats="enhancedPopupData.clusterStats"
           @close="closeEnhancedPopup"
           @open-gallery="handleOpenGallery"
         />

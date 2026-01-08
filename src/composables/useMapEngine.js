@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import maplibregl from 'maplibre-gl'
 import { useDataStore } from '../stores/data'
 import { ASPECT_RATIOS } from '../utils/constants'
+import { computeClusterStats, haversineDistance } from '../utils/clusterStats'
 
 // Map style configurations - organized by theme
 export const MAP_STYLES = {
@@ -442,6 +443,98 @@ export function useDataLayer(map, options = {}) {
   let clusterHandlersRegistered = false
   let pointsHandlersRegistered = false
 
+  // Generate a circle polygon for geographic radius display
+  const generateGeoCircle = (centerLng, centerLat, radiusKm, points = 64) => {
+    const coords = []
+    const kmPerDegreeLat = 111.32
+    const kmPerDegreeLng = 111.32 * Math.cos(centerLat * Math.PI / 180)
+
+    for (let i = 0; i <= points; i++) {
+      const angle = (2 * Math.PI * i) / points
+      const latOffset = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
+      const lngOffset = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
+      coords.push([centerLng + lngOffset, centerLat + latOffset])
+    }
+
+    return coords
+  }
+
+  // Update or create the cluster extent circle with actual geographic radius
+  const updateClusterExtentCircle = (centerLat, centerLng, radiusKm) => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+
+    // Remove existing dynamic extent layer if present
+    if (map.value.getLayer('cluster-extent-dynamic')) {
+      map.value.removeLayer('cluster-extent-dynamic')
+    }
+    if (map.value.getLayer('cluster-extent-dynamic-outline')) {
+      map.value.removeLayer('cluster-extent-dynamic-outline')
+    }
+    if (map.value.getSource('cluster-extent-dynamic-source')) {
+      map.value.removeSource('cluster-extent-dynamic-source')
+    }
+
+    // Don't draw if radius is 0 or very small
+    if (radiusKm < 0.1) return
+
+    // Create GeoJSON circle polygon
+    const circleCoords = generateGeoCircle(centerLng, centerLat, radiusKm)
+    const circleGeoJSON = {
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Polygon',
+          coordinates: [circleCoords]
+        }
+      }]
+    }
+
+    // Add source
+    map.value.addSource('cluster-extent-dynamic-source', {
+      type: 'geojson',
+      data: circleGeoJSON
+    })
+
+    // Add fill layer (semi-transparent)
+    map.value.addLayer({
+      id: 'cluster-extent-dynamic',
+      type: 'fill',
+      source: 'cluster-extent-dynamic-source',
+      paint: {
+        'fill-color': 'rgba(74, 222, 128, 0.1)',
+        'fill-opacity': 1
+      }
+    }, 'clusters')
+
+    // Add outline layer
+    map.value.addLayer({
+      id: 'cluster-extent-dynamic-outline',
+      type: 'line',
+      source: 'cluster-extent-dynamic-source',
+      paint: {
+        'line-color': 'rgba(74, 222, 128, 0.5)',
+        'line-width': 2
+      }
+    }, 'clusters')
+  }
+
+  // Clear the dynamic cluster extent circle
+  const clearClusterExtentCircle = () => {
+    if (!map.value) return
+
+    if (map.value.getLayer('cluster-extent-dynamic')) {
+      map.value.removeLayer('cluster-extent-dynamic')
+    }
+    if (map.value.getLayer('cluster-extent-dynamic-outline')) {
+      map.value.removeLayer('cluster-extent-dynamic-outline')
+    }
+    if (map.value.getSource('cluster-extent-dynamic-source')) {
+      map.value.removeSource('cluster-extent-dynamic-source')
+    }
+  }
+
   const addDataLayer = (layerOptions = {}) => {
     const { skipZoom = false } = layerOptions
 
@@ -451,7 +544,8 @@ export function useDataLayer(map, options = {}) {
     const layersToRemove = [
       'clusters',
       'cluster-count',
-      'cluster-extent',
+      'cluster-extent-dynamic',
+      'cluster-extent-dynamic-outline',
       'points-layer',
       'points-highlight'
     ]
@@ -459,6 +553,7 @@ export function useDataLayer(map, options = {}) {
       if (map.value.getLayer(layer)) map.value.removeLayer(layer)
     })
     if (map.value.getSource('points-source')) map.value.removeSource('points-source')
+    if (map.value.getSource('cluster-extent-dynamic-source')) map.value.removeSource('cluster-extent-dynamic-source')
 
     const geojson = store.displayGeoJSON
     if (!geojson) return
@@ -514,20 +609,8 @@ export function useDataLayer(map, options = {}) {
         }
       })
 
-      // Cluster extent circles - shows the clustering radius area
-      map.value.addLayer({
-        id: 'cluster-extent',
-        type: 'circle',
-        source: 'points-source',
-        filter: ['has', 'point_count'],
-        paint: {
-          'circle-radius': clusterRadiusPixels,
-          'circle-color': 'rgba(74, 222, 128, 0.08)',
-          'circle-stroke-width': 1,
-          'circle-stroke-color': 'rgba(74, 222, 128, 0.25)',
-          'circle-stroke-opacity': 1
-        }
-      }, 'clusters')
+      // Note: cluster-extent circles are now drawn dynamically when clicking a cluster
+      // using actual geographic radius instead of pixel-based radius
 
       // Cluster count labels
       map.value.addLayer({
@@ -640,24 +723,31 @@ export function useDataLayer(map, options = {}) {
 
         // Convert pixel radius to approximate km at current zoom
         const kmPerPixel = 156 / Math.pow(2, zoom)
-        const radiusKm = Math.max(20, clusterRadiusPx * kmPerPixel * 2)
+        const searchRadiusKm = Math.max(20, clusterRadiusPx * kmPerPixel * 2)
 
-        const nearbyPoints = allPoints
-          .filter(f => {
-            const [lng, lat] = f.geometry.coordinates
-            const dLat = Math.abs(lat - clusterLat)
-            const dLng = Math.abs(lng - clusterLng) * Math.cos(clusterLat * Math.PI / 180)
-            const distKm = Math.sqrt(dLat * dLat + dLng * dLng) * 111
-            return distKm < radiusKm
-          })
-          .map(f => f.properties)
+        // Filter points near the cluster center
+        const nearbyFeatures = allPoints.filter(f => {
+          const [lng, lat] = f.geometry.coordinates
+          const distKm = haversineDistance(clusterLat, clusterLng, lat, lng)
+          return distKm < searchRadiusKm
+        })
+
+        const nearbyPoints = nearbyFeatures.map(f => f.properties)
 
         if (nearbyPoints.length > 0 && onShowPopup) {
+          // Compute cluster statistics including geographic radius
+          const clusterStats = computeClusterStats(nearbyFeatures, clusterLat, clusterLng)
+
+          // Update the cluster extent circle to show actual geographic radius
+          updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
+
           onShowPopup({
             type: 'cluster',
             coordinates: { lat: clusterLat, lng: clusterLng },
             lngLat: coords,
-            points: nearbyPoints
+            points: nearbyPoints,
+            isCluster: true,
+            clusterStats
           })
         }
       })
@@ -774,7 +864,8 @@ export function useDataLayer(map, options = {}) {
 
   return {
     addDataLayer,
-    fitBoundsToData
+    fitBoundsToData,
+    clearClusterExtentCircle
   }
 }
 
