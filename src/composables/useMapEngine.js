@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import maplibregl from 'maplibre-gl'
 import { useDataStore } from '../stores/data'
 import { ASPECT_RATIOS } from '../utils/constants'
-import { computeClusterStats, haversineDistance } from '../utils/clusterStats'
+import { computeClusterStats } from '../utils/clusterStats'
 
 // Map style configurations - organized by theme
 export const MAP_STYLES = {
@@ -711,44 +711,47 @@ export function useDataLayer(map, options = {}) {
 
         const cluster = features[0]
         const coords = cluster.geometry.coordinates
+        const clusterId = cluster.properties.cluster_id
+        const pointCount = cluster.properties.point_count
 
         const clusterLng = coords[0]
         const clusterLat = coords[1]
 
-        // Get all points from the store and filter by proximity to cluster center
-        const allPoints = store.displayGeoJSON?.features || []
+        // Use MapLibre's getClusterLeaves to get actual cluster members
+        const source = map.value.getSource('points-source')
+        if (!source) return
 
-        const zoom = map.value.getZoom()
-        const clusterRadiusPx = store.clusterSettings.radiusPixels
-
-        // Convert pixel radius to approximate km at current zoom
-        const kmPerPixel = 156 / Math.pow(2, zoom)
-        const searchRadiusKm = Math.max(20, clusterRadiusPx * kmPerPixel * 2)
-
-        // Filter points near the cluster center
-        const nearbyFeatures = allPoints.filter(f => {
-          const [lng, lat] = f.geometry.coordinates
-          const distKm = haversineDistance(clusterLat, clusterLng, lat, lng)
-          return distKm < searchRadiusKm
-        })
-
-        const nearbyPoints = nearbyFeatures.map(f => f.properties)
-
-        if (nearbyPoints.length > 0 && onShowPopup) {
-          // Compute cluster statistics including geographic radius
-          const clusterStats = computeClusterStats(nearbyFeatures, clusterLat, clusterLng)
-
-          // Update the cluster extent circle to show actual geographic radius
-          updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
-
-          onShowPopup({
-            type: 'cluster',
-            coordinates: { lat: clusterLat, lng: clusterLng },
-            lngLat: coords,
-            points: nearbyPoints,
-            isCluster: true,
-            clusterStats
+        try {
+          // Get all leaves (points) in this cluster
+          const clusterLeaves = await new Promise((resolve, reject) => {
+            source.getClusterLeaves(clusterId, pointCount, 0, (error, features) => {
+              if (error) reject(error)
+              else resolve(features)
+            })
           })
+
+          if (!clusterLeaves || clusterLeaves.length === 0) return
+
+          const clusterPoints = clusterLeaves.map(f => f.properties)
+
+          if (clusterPoints.length > 0 && onShowPopup) {
+            // Compute cluster statistics including geographic radius
+            const clusterStats = computeClusterStats(clusterLeaves, clusterLat, clusterLng)
+
+            // Update the cluster extent circle to show actual geographic radius
+            updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
+
+            onShowPopup({
+              type: 'cluster',
+              coordinates: { lat: clusterLat, lng: clusterLng },
+              lngLat: coords,
+              points: clusterPoints,
+              isCluster: true,
+              clusterStats
+            })
+          }
+        } catch (error) {
+          console.error('Error getting cluster leaves:', error)
         }
       })
 
