@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import maplibregl from 'maplibre-gl'
 import { useDataStore } from '../stores/data'
 import { ASPECT_RATIOS } from '../utils/constants'
-import { computeClusterStats } from '../utils/clusterStats'
+import { computeClusterStats, haversineDistance } from '../utils/clusterStats'
 
 // Map style configurations - organized by theme
 export const MAP_STYLES = {
@@ -725,72 +725,94 @@ export function useDataLayer(map, options = {}) {
         const clusterLng = coords[0]
         const clusterLat = coords[1]
 
-        // Use MapLibre's getClusterLeaves to get actual cluster members
-        const source = map.value.getSource('points-source')
-        if (!source) {
-          console.log('🔵 No points-source found')
-          return
+        // Helper function to find cluster points using proximity search
+        const findClusterPointsByProximity = () => {
+          console.log('🔵 Using proximity-based search as fallback')
+          const allPoints = store.displayGeoJSON?.features || []
+          const zoom = map.value.getZoom()
+          const clusterRadiusPx = store.clusterSettings.radiusPixels
+
+          // Calculate search radius based on zoom level
+          // At equator: 1 pixel = 40075km / (256 * 2^zoom)
+          // Adjust for latitude
+          const metersPerPixel = 40075000 * Math.cos(clusterLat * Math.PI / 180) / (256 * Math.pow(2, zoom))
+          const searchRadiusKm = (clusterRadiusPx * metersPerPixel / 1000) * 1.5 // 1.5x to account for clustering algorithm
+
+          console.log(`🔵 Search radius: ${searchRadiusKm.toFixed(2)} km at zoom ${zoom.toFixed(1)}`)
+
+          // Filter points near the cluster center
+          const nearbyFeatures = allPoints.filter(f => {
+            const [lng, lat] = f.geometry.coordinates
+            const distKm = haversineDistance(clusterLat, clusterLng, lat, lng)
+            return distKm <= searchRadiusKm
+          })
+
+          console.log(`🔵 Found ${nearbyFeatures.length} nearby points (expected ~${pointCount})`)
+          return nearbyFeatures
         }
 
-        console.log('🔵 Getting cluster leaves...')
-        console.log('🔵 Source type:', source.type, 'Has getClusterLeaves:', typeof source.getClusterLeaves)
+        // Use MapLibre's getClusterLeaves with short timeout, fallback to proximity search
+        const source = map.value.getSource('points-source')
+        let clusterFeatures = null
 
-        try {
-          // Get all leaves (points) in this cluster with timeout
-          const clusterLeaves = await new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-              console.error('🔵 getClusterLeaves timed out after 5s')
-              reject(new Error('Timeout'))
-            }, 5000)
+        if (source && typeof source.getClusterLeaves === 'function') {
+          console.log('🔵 Trying getClusterLeaves...')
 
-            try {
+          try {
+            clusterFeatures = await new Promise((resolve, reject) => {
+              const timeout = setTimeout(() => {
+                console.log('🔵 getClusterLeaves timed out, using fallback')
+                resolve(null) // Resolve with null to trigger fallback
+              }, 500) // Short 500ms timeout
+
               source.getClusterLeaves(clusterId, pointCount, 0, (error, features) => {
                 clearTimeout(timeout)
                 if (error) {
-                  console.error('🔵 getClusterLeaves callback error:', error)
-                  reject(error)
+                  console.log('🔵 getClusterLeaves error, using fallback:', error.message)
+                  resolve(null)
                 } else {
-                  console.log(`🔵 Got ${features?.length || 0} cluster leaves`)
+                  console.log(`🔵 getClusterLeaves returned ${features?.length || 0} features`)
                   resolve(features)
                 }
               })
-              console.log('🔵 getClusterLeaves called, waiting for callback...')
-            } catch (syncError) {
-              clearTimeout(timeout)
-              console.error('🔵 getClusterLeaves sync error:', syncError)
-              reject(syncError)
-            }
-          })
-
-          if (!clusterLeaves || clusterLeaves.length === 0) {
-            console.log('🔵 No cluster leaves returned')
-            return
-          }
-
-          const clusterPoints = clusterLeaves.map(f => f.properties)
-          console.log(`🔵 Cluster has ${clusterPoints.length} points`)
-
-          if (clusterPoints.length > 0 && onShowPopup) {
-            // Compute cluster statistics including geographic radius
-            const clusterStats = computeClusterStats(clusterLeaves, clusterLat, clusterLng)
-            console.log('🔵 Cluster stats:', clusterStats)
-
-            // Update the cluster extent circle to show actual geographic radius
-            updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
-
-            onShowPopup({
-              type: 'cluster',
-              coordinates: { lat: clusterLat, lng: clusterLng },
-              lngLat: coords,
-              points: clusterPoints,
-              isCluster: true,
-              clusterStats
             })
-          } else {
-            console.log('🔵 onShowPopup not available or no points:', { hasCallback: !!onShowPopup, pointCount: clusterPoints.length })
+          } catch (err) {
+            console.log('🔵 getClusterLeaves exception, using fallback')
+            clusterFeatures = null
           }
-        } catch (error) {
-          console.error('🔵 Error getting cluster leaves:', error)
+        }
+
+        // Fallback to proximity search if getClusterLeaves didn't work
+        if (!clusterFeatures || clusterFeatures.length === 0) {
+          clusterFeatures = findClusterPointsByProximity()
+        }
+
+        if (!clusterFeatures || clusterFeatures.length === 0) {
+          console.log('🔵 No cluster features found')
+          return
+        }
+
+        const clusterPoints = clusterFeatures.map(f => f.properties)
+        console.log(`🔵 Cluster has ${clusterPoints.length} points`)
+
+        if (clusterPoints.length > 0 && onShowPopup) {
+          // Compute cluster statistics including geographic radius
+          const clusterStats = computeClusterStats(clusterFeatures, clusterLat, clusterLng)
+          console.log('🔵 Cluster stats:', clusterStats)
+
+          // Update the cluster extent circle to show actual geographic radius
+          updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
+
+          onShowPopup({
+            type: 'cluster',
+            coordinates: { lat: clusterLat, lng: clusterLng },
+            lngLat: coords,
+            points: clusterPoints,
+            isCluster: true,
+            clusterStats
+          })
+        } else {
+          console.log('🔵 onShowPopup not available or no points:', { hasCallback: !!onShowPopup, pointCount: clusterPoints.length })
         }
       })
 
