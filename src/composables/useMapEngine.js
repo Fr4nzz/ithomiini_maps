@@ -736,19 +736,24 @@ export function useDataLayer(map, options = {}) {
           // At equator: 1 pixel = 40075km / (256 * 2^zoom)
           // Adjust for latitude
           const metersPerPixel = 40075000 * Math.cos(clusterLat * Math.PI / 180) / (256 * Math.pow(2, zoom))
-          const searchRadiusKm = (clusterRadiusPx * metersPerPixel / 1000) * 1.5 // 1.5x to account for clustering algorithm
+          const searchRadiusKm = (clusterRadiusPx * metersPerPixel / 1000) * 2.0 // 2x to ensure we catch all candidates
 
           console.log(`🔵 Search radius: ${searchRadiusKm.toFixed(2)} km at zoom ${zoom.toFixed(1)}`)
 
-          // Filter points near the cluster center
-          const nearbyFeatures = allPoints.filter(f => {
+          // Find points and their distances from cluster center
+          const pointsWithDistance = allPoints.map(f => {
             const [lng, lat] = f.geometry.coordinates
             const distKm = haversineDistance(clusterLat, clusterLng, lat, lng)
-            return distKm <= searchRadiusKm
-          })
+            return { feature: f, distance: distKm }
+          }).filter(p => p.distance <= searchRadiusKm)
 
-          console.log(`🔵 Found ${nearbyFeatures.length} nearby points (expected ~${pointCount})`)
-          return nearbyFeatures
+          // Sort by distance (closest first) and take only pointCount points
+          pointsWithDistance.sort((a, b) => a.distance - b.distance)
+          const limitedPoints = pointsWithDistance.slice(0, pointCount)
+
+          console.log(`🔵 Found ${pointsWithDistance.length} candidates, limited to ${limitedPoints.length} (expected ${pointCount})`)
+
+          return limitedPoints.map(p => p.feature)
         }
 
         // Use MapLibre's getClusterLeaves with short timeout, fallback to proximity search
