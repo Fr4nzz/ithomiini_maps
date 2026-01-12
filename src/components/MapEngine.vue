@@ -33,7 +33,9 @@ let mapContainerResizeObserver = null
 const showEnhancedPopup = ref(false)
 const enhancedPopupData = ref({
   coordinates: { lat: 0, lng: 0 },
-  points: []
+  points: [],
+  isCluster: false,
+  clusterStats: null
 })
 
 // Initialize composables
@@ -62,7 +64,9 @@ const handleShowPopup = (data) => {
     coordinates: data.coordinates,
     points: data.points,
     initialSpecies: data.initialSpecies || null,
-    initialSubspecies: data.initialSubspecies || null
+    initialSubspecies: data.initialSubspecies || null,
+    isCluster: data.isCluster || false,
+    clusterStats: data.clusterStats || null
   }
 
   nextTick(() => {
@@ -82,13 +86,15 @@ const handleShowPopup = (data) => {
 
         popup.on('close', () => {
           showEnhancedPopup.value = false
+          // Clear cluster extent circle when popup is closed by clicking outside
+          if (clearClusterExtentCircle) clearClusterExtentCircle()
         })
       }
     })
   })
 }
 
-const { addDataLayer, fitBoundsToData } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle } = useDataLayer(map, { onShowPopup: handleShowPopup })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer)
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
 
@@ -276,6 +282,8 @@ let previousScatterState = false
 const closeEnhancedPopup = () => {
   if (popup) popup.remove()
   showEnhancedPopup.value = false
+  // Clear the cluster extent circle when popup closes
+  clearClusterExtentCircle()
 }
 
 // Handle open gallery from popup
@@ -299,7 +307,20 @@ watch(
     const dataLengthChanged = newLength !== previousDataLength
     previousDataLength = newLength
 
-    const shouldSkipZoom = !dataLengthChanged || scatterJustToggled
+    const shouldSkipZoom = !dataLengthChanged || scatterJustToggled || clusteringJustToggled
+
+    console.log('📊 displayGeoJSON changed:', {
+      newLength,
+      dataLengthChanged,
+      scatterJustToggled,
+      clusteringJustToggled: clusteringJustToggled,
+      shouldSkipZoom
+    })
+
+    // Reset the clustering flag after we've used it
+    if (clusteringJustToggled) {
+      clusteringJustToggled = false
+    }
 
     addDataLayer({ skipZoom: shouldSkipZoom })
 
@@ -319,10 +340,24 @@ watch(
   }
 )
 
-// Watch for clustering settings changes
+// Track clustering toggle to prevent zoom
+let clusteringJustToggled = false
+
+// Watch ONLY clusteringEnabled with sync flush to set flag BEFORE displayGeoJSON watcher runs
 watch(
-  [() => store.clusteringEnabled, () => store.clusterSettings],
+  () => store.clusteringEnabled,
   () => {
+    console.log('🔄 Clustering ENABLED changed (sync):', store.clusteringEnabled)
+    clusteringJustToggled = true
+  },
+  { flush: 'sync' }
+)
+
+// Watch for clustering settings changes (for radius, countMode, etc.)
+watch(
+  () => store.clusterSettings,
+  () => {
+    console.log('🔄 Clustering SETTINGS changed:', store.clusterSettings)
     if (!map.value || !map.value.isStyleLoaded()) return
     addDataLayer({ skipZoom: true })
   },
@@ -445,6 +480,8 @@ watch(
           :points="enhancedPopupData.points"
           :initial-species="enhancedPopupData.initialSpecies"
           :initial-subspecies="enhancedPopupData.initialSubspecies"
+          :is-cluster="enhancedPopupData.isCluster"
+          :cluster-stats="enhancedPopupData.clusterStats"
           @close="closeEnhancedPopup"
           @open-gallery="handleOpenGallery"
         />

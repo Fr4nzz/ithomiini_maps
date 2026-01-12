@@ -72,35 +72,16 @@ const updatePassword = ref('')
 const updateStatus = ref('') // '', 'loading', 'success', 'error'
 const updateMessage = ref('')
 
-// Cloudflare Worker URL - update this to your worker URL
+// ============================================
+// DATABASE UPDATE CONFIGURATION
+// Update these values when deploying to a different repository
+// ============================================
 const WORKER_URL = 'https://ithomiini-maps-db-updater.franz-chandi.workers.dev/'
-
-// Check if running on GitHub Pages (database update only works there)
-const isGitHubPages = computed(() => window.location.hostname.endsWith('.github.io'))
-
-// Detect GitHub owner/repo from GitHub Pages URL
-const getRepoInfo = () => {
-  const hostname = window.location.hostname
-  const pathname = window.location.pathname
-
-  // GitHub Pages format: <owner>.github.io/<repo>/
-  if (hostname.endsWith('.github.io')) {
-    const owner = hostname.replace('.github.io', '')
-    const repo = pathname.split('/')[1] || 'ithomiini_maps'
-    return { owner, repo }
-  }
-
-  return null
-}
+const GITHUB_OWNER = 'Fr4nzz'
+const GITHUB_REPO = 'ithomiini_maps'
+// ============================================
 
 const triggerDatabaseUpdate = async () => {
-  // Check if on GitHub Pages
-  if (!isGitHubPages.value) {
-    updateStatus.value = 'error'
-    updateMessage.value = 'Database update is only available when running on GitHub Pages'
-    return
-  }
-
   // Verify password
   if (updatePassword.value !== 'Hyalyris') {
     updateStatus.value = 'error'
@@ -119,15 +100,6 @@ const triggerDatabaseUpdate = async () => {
   updateMessage.value = 'Contacting server...'
 
   try {
-    const repoInfo = getRepoInfo()
-    if (!repoInfo) {
-      updateStatus.value = 'error'
-      updateMessage.value = 'Could not detect repository info from URL'
-      return
-    }
-
-    const { owner, repo } = repoInfo
-
     // Call the Cloudflare Worker to trigger GitHub Action
     const response = await fetch(WORKER_URL, {
       method: 'POST',
@@ -136,15 +108,15 @@ const triggerDatabaseUpdate = async () => {
         password: updatePassword.value,
         update_sanger: updateSanger.value,
         update_gbif: updateGbif.value,
-        owner,
-        repo
+        owner: GITHUB_OWNER,
+        repo: GITHUB_REPO
       })
     })
 
     if (response.ok) {
       updateStatus.value = 'success'
       const estimatedTime = updateGbif.value ? '15-20 minutes' : '2-3 minutes'
-      updateMessage.value = `Update started on ${owner}/${repo}! The database will refresh in approximately ${estimatedTime}. Check back later.`
+      updateMessage.value = `Update started on ${GITHUB_OWNER}/${GITHUB_REPO}! The database will refresh in approximately ${estimatedTime}. Check back later.`
     } else {
       const error = await response.text()
       updateStatus.value = 'error'
