@@ -1,13 +1,21 @@
 <script setup>
 import { ref } from 'vue'
 import { useDataStore } from '../stores/data'
+import { useLegendStore } from '../stores/legend'
+import { MapPin, Eye, EyeOff } from 'lucide-vue-next'
 
 const store = useDataStore()
+const legendStore = useLegendStore()
 
 // UI state for collapsible sections
 const showClusterSettings = ref(false)
-const showAdvancedLegend = ref(false)
 const showPointStyle = ref(false)
+
+// Toggle legend visibility
+function toggleLegend() {
+  legendStore.showLegend = !legendStore.showLegend
+  store.legendSettings.showLegend = legendStore.showLegend
+}
 </script>
 
 <template>
@@ -87,100 +95,21 @@ const showPointStyle = ref(false)
     </div>
   </div>
 
-  <!-- Legend Settings -->
+  <!-- Legend Toggle -->
   <div class="filter-section">
-    <label class="section-label">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <line x1="8" y1="9" x2="8" y2="9.01"/>
-        <line x1="8" y1="13" x2="8" y2="13.01"/>
-        <line x1="8" y1="17" x2="8" y2="17.01"/>
-        <line x1="12" y1="9" x2="18" y2="9"/>
-        <line x1="12" y1="13" x2="18" y2="13"/>
-        <line x1="12" y1="17" x2="18" y2="17"/>
-      </svg>
-      Legend Settings
+    <label class="toggle-row legend-toggle" @click="toggleLegend">
+      <component :is="legendStore.showLegend ? Eye : EyeOff" :size="18" />
+      <span>Show Legend</span>
       <span
         class="toggle-badge-inline"
-        :class="{ active: store.legendSettings.showLegend }"
-        @click.stop="store.legendSettings.showLegend = !store.legendSettings.showLegend"
-        title="Click to toggle legend"
+        :class="{ active: legendStore.showLegend }"
       >
-        {{ store.legendSettings.showLegend ? 'ON' : 'OFF' }}
+        {{ legendStore.showLegend ? 'ON' : 'OFF' }}
       </span>
     </label>
-
-    <!-- Color By -->
-    <div class="setting-row">
-      <label>Color by</label>
-      <select v-model="store.colorBy" class="style-select">
-        <option value="subspecies">Subspecies</option>
-        <option value="species">Species</option>
-        <option value="genus">Genus</option>
-        <option value="status">Sequencing Status</option>
-        <option value="mimicry">Mimicry Ring</option>
-        <option value="source">Data Source</option>
-      </select>
-    </div>
-
-    <!-- Advanced Legend Settings Toggle -->
-    <button
-      class="subsection-toggle"
-      @click="showAdvancedLegend = !showAdvancedLegend"
-      :class="{ expanded: showAdvancedLegend }"
-    >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m9 18 6-6-6-6"/>
-      </svg>
-      Position / Text Size / Max Items
-    </button>
-
-    <div v-show="showAdvancedLegend" class="subsection-content">
-      <div class="setting-row">
-        <label>Position</label>
-        <select v-model="store.legendSettings.position" class="style-select">
-          <option value="bottom-left">Bottom Left</option>
-          <option value="bottom-right">Bottom Right</option>
-          <option value="top-left">Top Left</option>
-          <option value="top-right">Top Right</option>
-        </select>
-      </div>
-
-      <div class="setting-row">
-        <label>Text Size</label>
-        <div class="slider-group">
-          <input
-            type="range"
-            min="0.6"
-            max="1.2"
-            step="0.05"
-            v-model.number="store.legendSettings.textSize"
-          />
-          <span class="slider-value">{{ Math.round(store.legendSettings.textSize * 100) }}%</span>
-        </div>
-      </div>
-
-      <div class="setting-row">
-        <label>Max Items Shown</label>
-        <div class="slider-group">
-          <input
-            type="range"
-            min="5"
-            max="30"
-            step="1"
-            v-model.number="store.legendSettings.maxItems"
-          />
-          <input
-            type="number"
-            class="setting-input"
-            min="3"
-            max="50"
-            v-model.number.lazy="store.legendSettings.maxItems"
-            @keydown.enter="$event.target.blur()"
-          />
-        </div>
-      </div>
-    </div>
+    <p class="filter-hint">
+      Hover over legend on map for customization options (colors, labels, position)
+    </p>
   </div>
 
   <!-- Point Style -->
@@ -344,6 +273,16 @@ const showPointStyle = ref(false)
   border-color: rgba(59, 130, 246, 0.3);
 }
 
+.legend-toggle {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.legend-toggle:hover {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(74, 222, 128, 0.08) 100%);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
 /* Collapsible Sections */
 .collapsible {
   border: 1px solid var(--color-border, #3d3d5c);
@@ -444,48 +383,6 @@ const showPointStyle = ref(false)
   border-color: rgba(74, 222, 128, 0.5);
 }
 
-/* Subsection Toggle */
-.subsection-toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 12px;
-  margin-top: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-muted, #666);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.subsection-toggle:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-secondary, #aaa);
-  border-color: var(--color-text-muted, #666);
-}
-
-.subsection-toggle svg {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.2s;
-  flex-shrink: 0;
-}
-
-.subsection-toggle.expanded svg {
-  transform: rotate(90deg);
-}
-
-.subsection-content {
-  padding: 12px;
-  margin-top: 8px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-}
 
 /* Settings Panel & Rows */
 .settings-panel {

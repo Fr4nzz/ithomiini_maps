@@ -3,7 +3,9 @@ import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
+import { useLegendStore } from '../stores/legend'
 import PointPopup from './PointPopup.vue'
+import { Legend } from './Legend'
 import { ASPECT_RATIOS } from '../utils/constants'
 import {
   MAP_STYLES,
@@ -17,6 +19,7 @@ import {
 } from '../composables/useMapEngine'
 
 const store = useDataStore()
+const legendStore = useLegendStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
@@ -127,10 +130,10 @@ const handleMapLayerClickOutside = (event) => {
   }
 }
 
-// Legend position class based on store settings
-const legendPositionClass = computed(() => {
-  return `legend-${store.legendSettings.position}`
-})
+// Sync legendStore showLegend with dataStore legendSettings
+watch(() => store.legendSettings.showLegend, (show) => {
+  legendStore.showLegend = show
+}, { immediate: true })
 
 // Compute map container styles for export aspect ratio
 const mapContainerStyle = computed(() => {
@@ -174,22 +177,6 @@ const mapContainerStyle = computed(() => {
   }
 })
 
-// Limit color map items for legend display
-const limitedColorMap = computed(() => {
-  const colorMap = store.activeColorMap
-  const maxItems = store.legendSettings.maxItems
-  const entries = Object.entries(colorMap)
-
-  if (entries.length <= maxItems) {
-    return colorMap
-  }
-
-  const limited = {}
-  entries.slice(0, maxItems).forEach(([key, value]) => {
-    limited[key] = value
-  })
-  return limited
-})
 
 // Lifecycle
 onMounted(() => {
@@ -465,33 +452,15 @@ watch(
       :class="{ 'map-export-preview': store.exportSettings.enabled }"
       :style="mapContainerStyle"
     >
-      <!-- Legend INSIDE map container so it gets captured in export -->
-      <div
-        v-if="store.legendSettings.showLegend"
-        class="legend"
-        :class="[legendPositionClass, { 'legend-export': store.exportSettings.enabled && store.exportSettings.includeLegend }]"
+      <!-- Legend Component (customizable, draggable) -->
+      <Legend
+        v-if="store.exportSettings.includeLegend || !store.exportSettings.enabled"
+        :container-ref="mapContainer"
         :style="{
-          fontSize: store.exportSettings.enabled
-            ? (store.legendSettings.textSize * store.exportSettings.uiScale) + 'rem'
-            : store.legendSettings.textSize + 'rem',
           transform: store.exportSettings.enabled ? 'scale(' + store.exportSettings.uiScale + ')' : 'none',
-          transformOrigin: legendTransformOrigin,
-          display: store.exportSettings.enabled && !store.exportSettings.includeLegend ? 'none' : 'block'
+          transformOrigin: legendTransformOrigin
         }"
-      >
-        <div class="legend-title">{{ store.legendTitle }}</div>
-        <div
-          v-for="(color, label) in limitedColorMap"
-          :key="label"
-          class="legend-item"
-        >
-          <span class="legend-dot" :style="{ backgroundColor: color }"></span>
-          <span :class="{ 'legend-label-italic': store.colorBy === 'species' || store.colorBy === 'subspecies' || store.colorBy === 'genus' }">{{ label }}</span>
-        </div>
-        <div v-if="Object.keys(store.activeColorMap).length > store.legendSettings.maxItems" class="legend-more">
-          + {{ Object.keys(store.activeColorMap).length - store.legendSettings.maxItems }} more
-        </div>
-      </div>
+      />
     </div>
 
     <!-- Export info badge (shown when in export mode) -->
@@ -1150,65 +1119,6 @@ watch(
   transform: translateY(-8px);
 }
 
-/* Legend */
-.legend {
-  position: absolute;
-  background: rgba(26, 26, 46, 0.95);
-  padding: 12px 16px;
-  border-radius: 8px;
-  z-index: 10;
-  min-width: 160px;
-  max-width: 220px;
-  max-height: 400px;
-  overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-}
-
-.legend-bottom-left { bottom: 30px; left: 10px; }
-.legend-bottom-right { bottom: 30px; right: 10px; }
-.legend-top-left { top: 60px; left: 10px; }
-.legend-top-right { top: 60px; right: 10px; }
-
-.legend-title {
-  font-size: 0.875em;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #3d3d5c;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1em;
-  color: #e0e0e0;
-  margin-bottom: 6px;
-}
-
-.legend-item:last-child { margin-bottom: 0; }
-.legend-label-italic { font-style: italic; }
-
-.legend-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
-}
-
-.legend-more {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #3d3d5c;
-  font-size: 0.85em;
-  color: #666;
-  font-style: italic;
-}
 
 /* Popup Styles */
 :deep(.maplibregl-popup-content) {
@@ -1328,11 +1238,6 @@ watch(
 
   .dropdown-menu {
     min-width: 160px;
-  }
-
-  .legend {
-    bottom: 100px;
-    font-size: 0.9em;
   }
 }
 

@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
 import { parseDate, getDateOffset } from '../utils/dateHelpers'
+import { Calendar, Filter, Info } from 'lucide-vue-next'
 
 const store = useDataStore()
 
@@ -89,12 +90,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
     <!-- Header with stats -->
     <div class="filter-header">
       <div class="header-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>
+        <Calendar :size="16" />
         <span>Date Filter</span>
       </div>
       <div class="date-coverage">
@@ -157,9 +153,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
     <!-- Active filter indicator -->
     <div v-if="isFilterActive" class="active-filter">
       <span class="filter-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
-        </svg>
+        <Filter :size="12" />
         Date filter active
       </span>
       <button class="btn-clear" @click="clearFilter">
@@ -169,11 +163,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 
     <!-- Note about missing dates -->
     <p class="filter-note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="12" y1="16" x2="12" y2="12"/>
-        <line x1="12" y1="8" x2="12.01" y2="8"/>
-      </svg>
+      <Info :size="14" />
       Records without dates are hidden when a date filter is active.
     </p>
   </div>
