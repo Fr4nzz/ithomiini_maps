@@ -273,10 +273,15 @@ const initMap = () => {
     emit('map-ready', map.value)
   })
 
-  // Close cluster popup when zoom changes (clusters get recalculated)
-  map.value.on('zoomstart', () => {
-    if (store.clusteringEnabled && showEnhancedPopup.value && enhancedPopupData.value.isCluster) {
-      closeEnhancedPopup()
+  // Close cluster popup when cluster data is recalculated
+  map.value.on('sourcedata', (e) => {
+    // Only care about our points source when clustering is enabled
+    if (e.sourceId === 'points-source' && e.isSourceLoaded && store.clusteringEnabled) {
+      // If a cluster popup is open, close it since clusters may have changed
+      if (showEnhancedPopup.value && enhancedPopupData.value.isCluster) {
+        console.log('🔄 Clusters recalculated, closing popup')
+        closeEnhancedPopup()
+      }
     }
   })
 }
