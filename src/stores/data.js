@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
+import { useLegendStore } from './legend'
 
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1136,7 +1137,9 @@ export const useDataStore = defineStore('data', () => {
 
   // Get the color map based on current colorBy setting
   // This now derives colors from DISPLAYED data only (for accurate legend)
+  // Also applies custom colors from legend store
   const activeColorMap = computed(() => {
+    const legendStore = useLegendStore()
     const mode = colorBy.value
     const attr = colorByAttribute.value
     const geo = displayGeoJSON.value
@@ -1155,28 +1158,42 @@ export const useDataStore = defineStore('data', () => {
         )].sort()
       : []
 
+    let baseColorMap = {}
+
     // Use predefined palettes for status and source (filtered to displayed values)
     if (mode === 'status') {
-      const filtered = {}
       for (const val of displayedValues) {
         if (COLOR_PALETTES.status[val]) {
-          filtered[val] = COLOR_PALETTES.status[val]
+          baseColorMap[val] = COLOR_PALETTES.status[val]
         }
       }
-      return Object.keys(filtered).length > 0 ? filtered : COLOR_PALETTES.status
-    }
-    if (mode === 'source') {
-      const filtered = {}
+      if (Object.keys(baseColorMap).length === 0) {
+        baseColorMap = { ...COLOR_PALETTES.status }
+      }
+    } else if (mode === 'source') {
       for (const val of displayedValues) {
         if (COLOR_PALETTES.source[val]) {
-          filtered[val] = COLOR_PALETTES.source[val]
+          baseColorMap[val] = COLOR_PALETTES.source[val]
         }
       }
-      return Object.keys(filtered).length > 0 ? filtered : COLOR_PALETTES.source
+      if (Object.keys(baseColorMap).length === 0) {
+        baseColorMap = { ...COLOR_PALETTES.source }
+      }
+    } else {
+      // Generate dynamic palette for taxonomy and mimicry using displayed values
+      baseColorMap = generateColorPalette(displayedValues)
     }
 
-    // Generate dynamic palette for taxonomy and mimicry using displayed values
-    return generateColorPalette(displayedValues)
+    // Apply legend custom colors on top of base color map
+    // This allows legend color changes to reflect on the map
+    const legendCustomColors = legendStore.customColors
+    for (const [label, customColor] of Object.entries(legendCustomColors)) {
+      if (baseColorMap[label] && customColor) {
+        baseColorMap[label] = customColor
+      }
+    }
+
+    return baseColorMap
   })
 
   // Get the attribute key for the current colorBy mode

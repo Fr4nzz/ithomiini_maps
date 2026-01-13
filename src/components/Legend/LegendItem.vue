@@ -44,6 +44,14 @@ const props = defineProps({
   fontSize: {
     type: Number,
     default: 14
+  },
+  borderColor: {
+    type: String,
+    default: '#ffffff'
+  },
+  borderWidth: {
+    type: Number,
+    default: 1.5
   }
 })
 
@@ -51,7 +59,9 @@ const emit = defineEmits([
   'update:customLabel',
   'update:customColor',
   'toggle-visibility',
-  'reset-color'
+  'reset-color',
+  'picker-open',
+  'picker-close'
 ])
 
 // The color to display (custom or original)
@@ -82,18 +92,22 @@ function toggleVisibility() {
     class="legend-item"
     :class="{
       'is-hidden': !visible,
-      'is-editable': editable && !isExportMode,
-      'is-export': isExportMode
+      'is-editable': editable,
+      'is-export': isExportMode && !editable
     }"
   >
     <!-- Color dot / picker -->
     <LegendColorPicker
-      v-if="editable && !isExportMode"
+      v-if="editable"
       :color="displayColor"
       :default-color="originalColor"
       :size="dotSize"
+      :border-color="borderColor"
+      :border-width="borderWidth"
       @update:color="handleColorUpdate"
       @reset="handleColorReset"
+      @picker-open="emit('picker-open')"
+      @picker-close="emit('picker-close')"
     />
     <span
       v-else
@@ -102,13 +116,14 @@ function toggleVisibility() {
         backgroundColor: displayColor,
         width: dotSize + 'px',
         height: dotSize + 'px',
-        boxShadow: `0 0 4px ${displayColor}`
+        boxShadow: `0 0 4px ${displayColor}`,
+        border: `${borderWidth}px solid ${borderColor}`
       }"
     />
 
     <!-- Label -->
     <LegendEditableLabel
-      v-if="editable && !isExportMode"
+      v-if="editable"
       :label="label"
       :custom-label="customLabel"
       :editable="editable"
@@ -126,7 +141,7 @@ function toggleVisibility() {
 
     <!-- Visibility toggle (only in edit mode) -->
     <button
-      v-if="editable && !isExportMode"
+      v-if="editable"
       class="visibility-toggle"
       :title="visible ? 'Hide from legend' : 'Show in legend'"
       @click.stop="toggleVisibility"

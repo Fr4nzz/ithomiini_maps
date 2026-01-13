@@ -390,6 +390,16 @@ watch(
   { deep: true }
 )
 
+// Watch for legend custom colors changes (to update map points)
+watch(
+  () => legendStore.customColors,
+  () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
 
 // Watch for focusPoint changes
 watch(

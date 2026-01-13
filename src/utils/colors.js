@@ -220,9 +220,9 @@ export const COLOR_PICKER_PALETTE = [
   '#86efac', '#6ee7b7', '#5eead4', '#67e8f9', '#7dd3fc',
   '#93c5fd', '#a5b4fc', '#c4b5fd', '#d8b4fe', '#f0abfc',
   '#f9a8d4', '#fda4af',
-  // Neutral row
-  '#000000', '#262626', '#404040', '#525252', '#737373',
-  '#a3a3a3', '#d4d4d4', '#e5e5e5', '#f5f5f5', '#ffffff'
+  // Neutral row (grays, with dark colors at end)
+  '#404040', '#525252', '#737373', '#a3a3a3', '#d4d4d4',
+  '#e5e5e5', '#f5f5f5', '#ffffff', '#262626', '#000000'
 ]
 
 /**

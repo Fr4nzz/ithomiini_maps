@@ -20,10 +20,18 @@ const props = defineProps({
   showReset: {
     type: Boolean,
     default: true
+  },
+  borderColor: {
+    type: String,
+    default: '#ffffff'
+  },
+  borderWidth: {
+    type: Number,
+    default: 1.5
   }
 })
 
-const emit = defineEmits(['update:color', 'reset'])
+const emit = defineEmits(['update:color', 'reset', 'picker-open', 'picker-close'])
 
 const isOpen = ref(false)
 const pickerRef = ref(null)
@@ -43,17 +51,54 @@ const isCustomColor = computed(() => {
 
 function togglePicker(e) {
   e.stopPropagation()
-  isOpen.value = !isOpen.value
+  if (!isOpen.value) {
+    updatePickerPosition()
+    isOpen.value = true
+    emit('picker-open')
+  } else {
+    isOpen.value = false
+    emit('picker-close')
+  }
 }
 
 function closePicker() {
-  isOpen.value = false
+  if (isOpen.value) {
+    isOpen.value = false
+    emit('picker-close')
+  }
 }
 
 function handleColorChange(color) {
   const hexColor = color.hex || color
   pickerColor.value = hexColor
   emit('update:color', hexColor)
+}
+
+// Handle hex input change
+function handleHexInput(e) {
+  let value = e.target.value.trim()
+  // Add # if missing
+  if (value && !value.startsWith('#')) {
+    value = '#' + value
+  }
+  // Validate hex format
+  if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+    pickerColor.value = value.toUpperCase()
+    emit('update:color', pickerColor.value)
+  }
+}
+
+// Picker position
+const pickerStyle = ref({})
+
+function updatePickerPosition() {
+  if (dotRef.value) {
+    const rect = dotRef.value.getBoundingClientRect()
+    pickerStyle.value = {
+      top: `${rect.top}px`,
+      left: `${rect.right + 10}px`
+    }
+  }
 }
 
 function resetColor(e) {
@@ -91,7 +136,8 @@ onUnmounted(() => {
         backgroundColor: color,
         width: size + 'px',
         height: size + 'px',
-        boxShadow: `0 0 4px ${color}`
+        boxShadow: `0 0 4px ${color}`,
+        border: `${borderWidth}px solid ${borderColor}`
       }"
       :title="isCustomColor ? 'Custom color (click to change)' : 'Click to change color'"
       @click="togglePicker"
@@ -99,44 +145,58 @@ onUnmounted(() => {
       <span v-if="isCustomColor" class="custom-indicator" />
     </button>
 
-    <!-- Color picker popover -->
-    <Transition name="picker-fade">
-      <div
-        v-if="isOpen"
-        ref="pickerRef"
-        class="picker-popover"
-        @click.stop
-      >
-        <div class="picker-header">
-          <span class="picker-title">Choose Color</span>
-          <button
-            v-if="showReset && isCustomColor"
-            class="reset-button"
-            title="Reset to default color"
-            @click="resetColor"
-          >
-            <RotateCcw :size="14" />
+    <!-- Color picker popover (teleported to body to overflow legend) -->
+    <Teleport to="body">
+      <Transition name="picker-fade">
+        <div
+          v-if="isOpen"
+          ref="pickerRef"
+          class="picker-popover"
+          :style="pickerStyle"
+          @click.stop
+        >
+          <div class="picker-header">
+            <span class="picker-title">CHOOSE COLOR</span>
+            <button
+              v-if="showReset && isCustomColor"
+              class="reset-button"
+              title="Reset to default color"
+              @click="resetColor"
+            >
+              <RotateCcw :size="14" />
+            </button>
+          </div>
+
+          <Compact
+            :model-value="pickerColor"
+            :palette="COLOR_PICKER_PALETTE"
+            @update:model-value="handleColorChange"
+          />
+
+          <div class="picker-footer">
+            <div class="color-preview">
+              <span class="preview-label">Selected:</span>
+              <span
+                class="preview-swatch"
+                :style="{ backgroundColor: pickerColor }"
+              />
+              <input
+                type="text"
+                class="hex-input"
+                :value="pickerColor"
+                @change="handleHexInput"
+                @keydown.enter="$event.target.blur()"
+                placeholder="#000000"
+              />
+            </div>
+          </div>
+          <!-- Close button -->
+          <button class="picker-close" @click="closePicker" title="Close">
+            &times;
           </button>
         </div>
-
-        <Compact
-          :model-value="pickerColor"
-          :palette="COLOR_PICKER_PALETTE"
-          @update:model-value="handleColorChange"
-        />
-
-        <div class="picker-footer">
-          <div class="color-preview">
-            <span class="preview-label">Selected:</span>
-            <span
-              class="preview-swatch"
-              :style="{ backgroundColor: pickerColor }"
-            />
-            <span class="preview-hex">{{ pickerColor }}</span>
-          </div>
-        </div>
-      </div>
-    </Transition>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -173,18 +233,32 @@ onUnmounted(() => {
 }
 
 .picker-popover {
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 8px;
+  position: fixed;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
   padding: 12px;
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   z-index: 1000;
-  min-width: 240px;
+  min-width: 260px;
+}
+
+.picker-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted, #666);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.picker-close:hover {
+  color: var(--color-text-primary, #e0e0e0);
 }
 
 .picker-header {
@@ -248,9 +322,21 @@ onUnmounted(() => {
   border: 1px solid var(--color-border, #3d3d5c);
 }
 
-.preview-hex {
+.hex-input {
+  flex: 1;
+  padding: 4px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
   font-family: var(--font-family-mono, monospace);
-  color: var(--color-text-secondary, #aaa);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.hex-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
 }
 
 /* Picker component styling */
@@ -286,6 +372,6 @@ onUnmounted(() => {
 .picker-fade-enter-from,
 .picker-fade-leave-to {
   opacity: 0;
-  transform: translateY(-50%) translateX(-10px);
+  transform: scale(0.95);
 }
 </style>

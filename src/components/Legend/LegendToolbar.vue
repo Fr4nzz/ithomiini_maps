@@ -9,7 +9,8 @@ import {
   ChevronDown,
   Palette,
   Type,
-  Circle
+  Circle,
+  MapPin
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
@@ -21,13 +22,15 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['reset-customizations'])
+const emit = defineEmits(['reset-customizations', 'settings-open', 'settings-close'])
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
 
 // Settings panel visibility
 const showSettings = ref(false)
+const settingsButtonRef = ref(null)
+const settingsPanelStyle = ref({})
 
 // Color by options
 const colorByOptions = [
@@ -47,12 +50,37 @@ const colorBy = computed({
 
 // Toggle settings
 function toggleSettings() {
-  showSettings.value = !showSettings.value
+  if (!showSettings.value && settingsButtonRef.value) {
+    // Position the panel near the button
+    const rect = settingsButtonRef.value.getBoundingClientRect()
+    settingsPanelStyle.value = {
+      top: `${rect.bottom + 8}px`,
+      left: `${Math.max(10, rect.left - 100)}px`
+    }
+    showSettings.value = true
+    emit('settings-open')
+  } else {
+    showSettings.value = false
+    emit('settings-close')
+  }
+}
+
+// Close settings panel
+function closeSettings() {
+  if (showSettings.value) {
+    showSettings.value = false
+    emit('settings-close')
+  }
 }
 
 // Handle reset
 function handleReset() {
   legendStore.resetCustomizations()
+  // Reset map style to defaults
+  dataStore.mapStyle.pointSize = 8
+  dataStore.mapStyle.borderWidth = 1.5
+  dataStore.mapStyle.fillOpacity = 0.85
+  dataStore.mapStyle.borderColor = '#ffffff'
   emit('reset-customizations')
 }
 
@@ -66,9 +94,24 @@ function updateTextScale(e) {
   legendStore.setTextScale(parseFloat(e.target.value))
 }
 
-// Update dot scale
-function updateDotScale(e) {
+// Update legend dot scale
+function updateLegendDotScale(e) {
   legendStore.setDotScale(parseFloat(e.target.value))
+}
+
+// Update map point size
+function updateMapPointSize(e) {
+  dataStore.mapStyle.pointSize = parseInt(e.target.value)
+}
+
+// Update map border width
+function updateMapBorderWidth(e) {
+  dataStore.mapStyle.borderWidth = parseFloat(e.target.value)
+}
+
+// Update map fill opacity
+function updateMapFillOpacity(e) {
+  dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
 }
 
 // Update max items
@@ -79,7 +122,6 @@ function updateMaxItems(e) {
 
 <template>
   <div
-    v-if="!isExportMode"
     class="legend-toolbar"
   >
     <!-- Drag handle -->
@@ -115,6 +157,7 @@ function updateMaxItems(e) {
 
     <!-- Settings toggle -->
     <button
+      ref="settingsButtonRef"
       class="toolbar-button"
       :class="{ active: showSettings }"
       title="Legend settings"
@@ -133,17 +176,18 @@ function updateMaxItems(e) {
       <RotateCcw :size="14" />
     </button>
 
-    <!-- Settings panel -->
-    <Transition name="settings-slide">
-      <div v-if="showSettings" class="settings-panel">
+    <!-- Settings panel (popup window that can overflow legend) -->
+    <Teleport to="body">
+      <Transition name="settings-slide">
+        <div v-if="showSettings" class="settings-panel" :style="settingsPanelStyle" @click.stop>
         <div class="settings-header">
-          <span>Legend Settings</span>
-          <button class="close-button" @click="showSettings = false">
+          <span>LEGEND SETTINGS</span>
+          <button class="close-button" @click="closeSettings">
             &times;
           </button>
         </div>
 
-        <!-- Text size -->
+        <!-- Legend Text size -->
         <div class="settings-row">
           <label class="settings-label">
             <Type :size="14" />
@@ -162,7 +206,7 @@ function updateMaxItems(e) {
           </div>
         </div>
 
-        <!-- Dot size -->
+        <!-- Legend Dot size -->
         <div class="settings-row">
           <label class="settings-label">
             <Circle :size="14" />
@@ -175,7 +219,7 @@ function updateMaxItems(e) {
               max="2"
               step="0.1"
               :value="legendStore.dotScale"
-              @input="updateDotScale"
+              @input="updateLegendDotScale"
             />
             <span class="value-display">{{ (legendStore.dotScale * 100).toFixed(0) }}%</span>
           </div>
@@ -199,6 +243,89 @@ function updateMaxItems(e) {
           </div>
         </div>
 
+        <!-- Divider -->
+        <div class="settings-divider"></div>
+
+        <!-- Map Point Style Section -->
+        <div class="settings-section-header">
+          <MapPin :size="14" />
+          <span>MAP POINTS</span>
+        </div>
+
+        <!-- Map Point Size -->
+        <div class="settings-row">
+          <label class="settings-label">
+            Point Size
+          </label>
+          <div class="settings-control">
+            <input
+              type="range"
+              min="4"
+              max="20"
+              step="1"
+              :value="dataStore.mapStyle.pointSize"
+              @input="updateMapPointSize"
+            />
+            <span class="value-display">{{ dataStore.mapStyle.pointSize }}</span>
+          </div>
+        </div>
+
+        <!-- Map Border Width -->
+        <div class="settings-row">
+          <label class="settings-label">
+            Border Width
+          </label>
+          <div class="settings-control">
+            <input
+              type="range"
+              min="0"
+              max="5"
+              step="0.5"
+              :value="dataStore.mapStyle.borderWidth"
+              @input="updateMapBorderWidth"
+            />
+            <span class="value-display">{{ dataStore.mapStyle.borderWidth.toFixed(1) }}</span>
+          </div>
+        </div>
+
+        <!-- Map Fill Opacity -->
+        <div class="settings-row">
+          <label class="settings-label">
+            Fill Opacity
+          </label>
+          <div class="settings-control">
+            <input
+              type="range"
+              min="0.1"
+              max="1"
+              step="0.05"
+              :value="dataStore.mapStyle.fillOpacity"
+              @input="updateMapFillOpacity"
+            />
+            <span class="value-display">{{ Math.round(dataStore.mapStyle.fillOpacity * 100) }}%</span>
+          </div>
+        </div>
+
+        <!-- Map Border Color -->
+        <div class="settings-row">
+          <label class="settings-label">
+            Border Color
+          </label>
+          <div class="settings-control color-control">
+            <input
+              type="color"
+              v-model="dataStore.mapStyle.borderColor"
+              class="color-picker"
+            />
+            <input
+              type="text"
+              class="color-input"
+              v-model="dataStore.mapStyle.borderColor"
+              @keydown.enter="$event.target.blur()"
+            />
+          </div>
+        </div>
+
         <!-- Quick reset -->
         <div class="settings-actions">
           <button
@@ -209,8 +336,9 @@ function updateMaxItems(e) {
             Reset All
           </button>
         </div>
-      </div>
-    </Transition>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -313,19 +441,18 @@ function updateMaxItems(e) {
   color: var(--color-warning, #f59e0b);
 }
 
-/* Settings Panel */
+/* Settings Panel - Now a floating popup that can overflow */
 .settings-panel {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  position: fixed;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px;
   padding: 12px;
-  z-index: 10;
-  box-shadow: 0 4px 12px var(--color-shadow-color, rgba(0, 0, 0, 0.2));
+  z-index: 1000;
+  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
+  min-width: 280px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .settings-header {
@@ -428,6 +555,81 @@ function updateMaxItems(e) {
   background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
   border-color: var(--color-warning, #f59e0b);
   color: var(--color-warning, #f59e0b);
+}
+
+/* Settings divider */
+.settings-divider {
+  height: 1px;
+  background: var(--color-border, #3d3d5c);
+  margin: 12px 0;
+}
+
+/* Settings section header */
+.settings-section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted, #666);
+  margin-bottom: 12px;
+}
+
+/* Color control */
+.color-control {
+  gap: 8px;
+}
+
+.color-picker {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.color-picker::-webkit-color-swatch {
+  border-radius: 2px;
+  border: none;
+}
+
+.color-input {
+  flex: 1;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-family: monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.color-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+/* Scrollbar for settings panel */
+.settings-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.settings-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-panel::-webkit-scrollbar-thumb {
+  background: var(--color-border, #3d3d5c);
+  border-radius: 3px;
 }
 
 /* Transitions */

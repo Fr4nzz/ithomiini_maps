@@ -21,6 +21,7 @@ const legendRef = ref(null)
 const isHovered = ref(false)
 const isDragging = ref(false)
 const isResizing = ref(false)
+const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
 
 // Current size
 const currentWidth = ref(legendStore.size.width || 200)
@@ -37,8 +38,11 @@ const dragStartPos = ref({ x: 0, y: 0 })
 // Is export mode active?
 const isExportMode = computed(() => dataStore.exportSettings.enabled)
 
-// Should show edit UI?
-const showEditUI = computed(() => isHovered.value && !isExportMode.value)
+// Should show toolbar? (hidden by default, shown on hover OR when popup is open)
+const showToolbar = computed(() => isHovered.value || hasOpenPopup.value)
+
+// Should show edit UI? (editable on hover OR when popup is open)
+const showEditUI = computed(() => isHovered.value || hasOpenPopup.value)
 
 // Get container dimensions
 const containerBounds = computed(() => {
@@ -135,9 +139,9 @@ const positionStyle = computed(() => {
   // X position
   style.left = posX.value + 'px'
 
-  // Height if set
-  if (currentHeight.value) {
-    style.maxHeight = currentHeight.value + 'px'
+  // Height if set (allows vertical resize)
+  if (currentHeight.value && currentHeight.value !== 'auto') {
+    style.height = currentHeight.value + 'px'
   }
 
   return style
@@ -331,10 +335,13 @@ watch(() => legendStore.size, (newSize) => {
     @mousedown="startDrag"
     @touchstart="startDrag"
   >
-    <!-- Toolbar (hidden in export mode) -->
+    <!-- Toolbar (hidden by default, shown on hover) -->
     <LegendToolbar
+      v-show="showToolbar"
       :is-export-mode="isExportMode"
       @reset-customizations="handleResetCustomizations"
+      @settings-open="hasOpenPopup = true"
+      @settings-close="hasOpenPopup = false"
     />
 
     <!-- Legend content -->
@@ -359,10 +366,14 @@ watch(() => legendStore.size, (newSize) => {
           :is-export-mode="isExportMode"
           :dot-size="dotSize"
           :font-size="fontSize"
+          :border-color="dataStore.mapStyle.borderColor"
+          :border-width="dataStore.mapStyle.borderWidth"
           @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
           @update:custom-color="(val) => handleColorUpdate(item.label, val)"
           @toggle-visibility="() => handleToggleVisibility(item.label)"
           @reset-color="() => handleResetColor(item.label)"
+          @picker-open="hasOpenPopup = true"
+          @picker-close="hasOpenPopup = false"
         />
       </div>
 
@@ -376,9 +387,9 @@ watch(() => legendStore.size, (newSize) => {
       </div>
     </div>
 
-    <!-- Resize handle (hidden in export mode) -->
+    <!-- Resize handle (shown on hover) -->
     <LegendResizeHandle
-      v-if="!isExportMode"
+      v-show="showToolbar"
       :min-width="150"
       :max-width="400"
       :min-height="100"
@@ -393,12 +404,16 @@ watch(() => legendStore.size, (newSize) => {
 <style scoped>
 .legend-container {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
   z-index: 10;
   min-width: 150px;
   max-width: 400px;
+  min-height: 100px;
+  max-height: 600px;
   overflow: hidden;
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
@@ -428,17 +443,12 @@ watch(() => legendStore.size, (newSize) => {
 
 .legend-content {
   padding: 12px 16px;
-  max-height: 350px;
   overflow-y: auto;
+  flex: 1;
 }
 
 .legend-container.is-export .legend-content {
   padding: 10px 14px;
-}
-
-/* Hide toolbar in export mode */
-.legend-container.is-export :deep(.legend-toolbar) {
-  display: none;
 }
 
 .legend-title {

@@ -2,14 +2,13 @@
 import { ref } from 'vue'
 import { useDataStore } from '../stores/data'
 import { useLegendStore } from '../stores/legend'
-import { MapPin, Eye, EyeOff } from 'lucide-vue-next'
+import { Eye, EyeOff } from 'lucide-vue-next'
 
 const store = useDataStore()
 const legendStore = useLegendStore()
 
 // UI state for collapsible sections
 const showClusterSettings = ref(false)
-const showPointStyle = ref(false)
 
 // Toggle legend visibility
 function toggleLegend() {
@@ -108,98 +107,8 @@ function toggleLegend() {
       </span>
     </label>
     <p class="filter-hint">
-      Hover over legend on map for customization options (colors, labels, position)
+      Hover over legend on map for customization options (colors, labels, position, point styles)
     </p>
-  </div>
-
-  <!-- Point Style -->
-  <div class="filter-section collapsible">
-    <button
-      class="collapse-toggle"
-      @click="showPointStyle = !showPointStyle"
-      :class="{ expanded: showPointStyle }"
-    >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m9 18 6-6-6-6"/>
-      </svg>
-      Point Style
-    </button>
-
-    <div v-show="showPointStyle" class="collapse-content">
-      <div class="setting-row">
-        <label>Point Size</label>
-        <div class="slider-group">
-          <input
-            type="range"
-            min="4"
-            max="20"
-            step="1"
-            v-model.number="store.mapStyle.pointSize"
-          />
-          <input
-            type="number"
-            class="setting-input"
-            min="2"
-            max="30"
-            v-model.number.lazy="store.mapStyle.pointSize"
-            @keydown.enter="$event.target.blur()"
-          />
-        </div>
-      </div>
-
-      <div class="setting-row">
-        <label>Border Width</label>
-        <div class="slider-group">
-          <input
-            type="range"
-            min="0"
-            max="5"
-            step="0.5"
-            v-model.number="store.mapStyle.borderWidth"
-          />
-          <input
-            type="number"
-            class="setting-input"
-            min="0"
-            max="10"
-            step="0.5"
-            v-model.number.lazy="store.mapStyle.borderWidth"
-            @keydown.enter="$event.target.blur()"
-          />
-        </div>
-      </div>
-
-      <div class="setting-row">
-        <label>Fill Opacity</label>
-        <div class="slider-group">
-          <input
-            type="range"
-            min="0.1"
-            max="1"
-            step="0.05"
-            v-model.number="store.mapStyle.fillOpacity"
-          />
-          <span class="slider-value">{{ Math.round(store.mapStyle.fillOpacity * 100) }}%</span>
-        </div>
-      </div>
-
-      <div class="setting-row">
-        <label>Border Color</label>
-        <div class="color-picker-row">
-          <input
-            type="color"
-            v-model="store.mapStyle.borderColor"
-            class="color-picker"
-          />
-          <input
-            type="text"
-            class="setting-input color-input"
-            v-model="store.mapStyle.borderColor"
-            @keydown.enter="$event.target.blur()"
-          />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
