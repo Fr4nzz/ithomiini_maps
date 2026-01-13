@@ -272,6 +272,35 @@ const initMap = () => {
     addDataLayer()
     emit('map-ready', map.value)
   })
+
+  // Close cluster popup when cluster data is recalculated
+  // When zooming, MapLibre fires sourcedata events with tile property - we detect when
+  // new tiles are loaded at a different zoom level than when popup was opened
+  let clusterPopupZoom = null
+
+  map.value.on('sourcedata', (e) => {
+    if (e.sourceId !== 'points-source') return
+
+    // If clustering is on and we have a cluster popup open, check for tile zoom changes
+    if (store.clusteringEnabled && showEnhancedPopup.value && enhancedPopupData.value.isCluster) {
+      if (e.tile && e.isSourceLoaded) {
+        const tileZoom = e.tile.tileID?.overscaledZ
+        if (clusterPopupZoom !== null && tileZoom !== clusterPopupZoom) {
+          closeEnhancedPopup()
+          clusterPopupZoom = null
+        }
+      }
+    }
+  })
+
+  // Track zoom level when cluster popup opens
+  watch(showEnhancedPopup, (isOpen) => {
+    if (isOpen && enhancedPopupData.value.isCluster) {
+      clusterPopupZoom = Math.floor(map.value.getZoom())
+    } else {
+      clusterPopupZoom = null
+    }
+  })
 }
 
 // Track previous data length to detect actual data changes
