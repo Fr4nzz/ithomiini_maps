@@ -272,6 +272,13 @@ const initMap = () => {
     addDataLayer()
     emit('map-ready', map.value)
   })
+
+  // Close cluster popup when zoom changes (clusters get recalculated)
+  map.value.on('zoomstart', () => {
+    if (store.clusteringEnabled && showEnhancedPopup.value && enhancedPopupData.value.isCluster) {
+      closeEnhancedPopup()
+    }
+  })
 }
 
 // Track previous data length to detect actual data changes
