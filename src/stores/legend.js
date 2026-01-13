@@ -1,22 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { usePersistenceStore } from './persistence'
 
-// Helper to get/set localStorage with fallback
+// Helper to get/set localStorage with fallback (uses persistence store)
 const getStorage = (key, defaultValue) => {
-  try {
-    const stored = localStorage.getItem(key)
-    return stored ? JSON.parse(stored) : defaultValue
-  } catch {
-    return defaultValue
-  }
+  const persistenceStore = usePersistenceStore()
+  return persistenceStore.get(key, defaultValue)
 }
 
 const setStorage = (key, value) => {
-  try {
-    localStorage.setItem(key, JSON.stringify(value))
-  } catch {
-    // Storage full or unavailable
-  }
+  const persistenceStore = usePersistenceStore()
+  persistenceStore.set(key, value)
 }
 
 export const useLegendStore = defineStore('legend', () => {

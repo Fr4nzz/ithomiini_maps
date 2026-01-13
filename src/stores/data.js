@@ -3,18 +3,28 @@ import { ref, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
 import { useLegendStore } from './legend'
+import { usePersistenceStore } from './persistence'
 
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
+  // PERSISTENCE HELPERS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const persistenceStore = usePersistenceStore()
+
+  const getStorage = (key, defaultValue) => persistenceStore.get(key, defaultValue)
+  const setStorage = (key, value) => persistenceStore.set(key, value)
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════════════════
-  
+
   const allFeatures = ref([])
   const loading = ref(true)
 
   // Filter visibility state (for expand/collapse)
-  const showAdvancedFilters = ref(false)
-  const showMimicryFilter = ref(false)
+  const showAdvancedFilters = ref(getStorage('app-show-advanced-filters', false))
+  const showMimicryFilter = ref(getStorage('app-show-mimicry-filter', false))
 
   // UI preferences
   const showThumbnail = ref(true)
@@ -28,25 +38,25 @@ export const useDataStore = defineStore('data', () => {
   const gallerySelection = ref(null)
 
   // Clustering settings
-  const clusteringEnabled = ref(false)
-  const clusterSettings = ref({
+  const clusteringEnabled = ref(getStorage('app-clustering-enabled', false))
+  const clusterSettings = ref(getStorage('app-cluster-settings', {
     radiusPixels: 80,  // Cluster radius in pixels (default 80px)
     countMode: 'subspecies',  // What clusters count: 'species', 'subspecies', 'individuals'
-  })
+  }))
 
   // Scatter overlapping points settings
-  const scatterOverlappingPoints = ref(false)  // When enabled, evenly distributes overlapping points
+  const scatterOverlappingPoints = ref(getStorage('app-scatter-overlapping', false))
 
   // Map styling settings
-  const colorBy = ref('subspecies')  // What attribute to color points by: 'status', 'subspecies', 'species', 'genus', 'mimicry', 'source'
+  const colorBy = ref(getStorage('map-color-by', 'subspecies'))
 
-  const mapStyle = ref({
+  const mapStyle = ref(getStorage('map-style', {
     pointSize: 8,           // Base point size in pixels
     borderWidth: 1.5,       // Point border width
     borderColor: '#ffffff', // Point border color
     fillOpacity: 0.85,      // Point fill opacity (0-1)
     borderOpacity: 0.6      // Point border opacity (0-1)
-  })
+  }))
 
   const legendSettings = ref({
     position: 'bottom-left',  // 'top-left', 'top-right', 'bottom-left', 'bottom-right'
@@ -55,27 +65,30 @@ export const useDataStore = defineStore('data', () => {
     maxItems: 15              // Max items before "more" indicator
   })
 
-  // Export settings
-  const exportSettings = ref({
-    enabled: false,           // Whether export preview mode is active
-    aspectRatio: '16:9',      // '16:9', '4:3', '1:1', '3:2', 'A4', 'custom'
+  // Export settings (don't persist 'enabled' - always start with export mode off)
+  const defaultExportSettings = {
+    enabled: false,
+    aspectRatio: '16:9',
     customWidth: 1920,
     customHeight: 1080,
-    showCoordinates: true,    // Show export area coordinates
+    showCoordinates: true,
     includeLegend: true,
     includeScaleBar: true,
-    uiScale: 1.0,             // Scale factor for UI elements in export (0.5 to 2.0)
-    format: 'png',            // 'png' or 'jpg'
-    dpi: 150                  // Export DPI multiplier (1x=100%, 1.5x=150%, 2x=200%, 3x=300%)
-  })
+    uiScale: 1.0,
+    format: 'png',
+    dpi: 150
+  }
+  const storedExportSettings = getStorage('app-export-settings', defaultExportSettings)
+  storedExportSettings.enabled = false // Always start with export mode off
+  const exportSettings = ref(storedExportSettings)
 
   // Map view state (for URL sync)
-  const mapView = ref({
+  const mapView = ref(getStorage('map-view', {
     center: [-60, -5],        // [lng, lat]
     zoom: 4,
     bearing: 0,
     pitch: 0
-  })
+  }))
 
   // URL sharing settings
   const urlSettings = ref({
@@ -1250,13 +1263,40 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.dateStart) params.set('from', newFilters.dateStart)
       if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)
 
-      const newURL = params.toString() 
-        ? `${window.location.pathname}?${params}` 
+      const newURL = params.toString()
+        ? `${window.location.pathname}?${params}`
         : window.location.pathname
       window.history.replaceState({}, '', newURL)
     },
     { deep: true }
   )
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PERSISTENCE WATCHERS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Watch and persist UI visibility state
+  watch(showAdvancedFilters, (val) => setStorage('app-show-advanced-filters', val))
+  watch(showMimicryFilter, (val) => setStorage('app-show-mimicry-filter', val))
+
+  // Watch and persist clustering settings
+  watch(clusteringEnabled, (val) => setStorage('app-clustering-enabled', val))
+  watch(clusterSettings, (val) => setStorage('app-cluster-settings', val), { deep: true })
+  watch(scatterOverlappingPoints, (val) => setStorage('app-scatter-overlapping', val))
+
+  // Watch and persist map styling
+  watch(colorBy, (val) => setStorage('map-color-by', val))
+  watch(mapStyle, (val) => setStorage('map-style', val), { deep: true })
+
+  // Watch and persist map view
+  watch(mapView, (val) => setStorage('map-view', val), { deep: true })
+
+  // Watch and persist export settings (but not 'enabled' state)
+  watch(exportSettings, (val) => {
+    const toStore = { ...val }
+    toStore.enabled = false // Never persist export mode as enabled
+    setStorage('app-export-settings', toStore)
+  }, { deep: true })
 
   // ═══════════════════════════════════════════════════════════════════════════
   // EXPORT

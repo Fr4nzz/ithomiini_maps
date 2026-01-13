@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   Settings,
   RotateCcw,
@@ -10,10 +10,12 @@ import {
   Palette,
   Type,
   Circle,
-  MapPin
+  MapPin,
+  Save
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
+import { usePersistenceStore } from '../../stores/persistence'
 
 const props = defineProps({
   isExportMode: {
@@ -26,10 +28,12 @@ const emit = defineEmits(['reset-customizations', 'settings-open', 'settings-clo
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
+const persistenceStore = usePersistenceStore()
 
 // Settings panel visibility
 const showSettings = ref(false)
 const settingsButtonRef = ref(null)
+const settingsPanelRef = ref(null)
 const settingsPanelStyle = ref({})
 
 // Color by options
@@ -118,6 +122,42 @@ function updateMapFillOpacity(e) {
 function updateMaxItems(e) {
   legendStore.setMaxItems(parseInt(e.target.value))
 }
+
+// Toggle persistence
+function togglePersistence() {
+  const newValue = !persistenceStore.enabled
+  persistenceStore.setEnabled(newValue)
+
+  // If enabling, save all current state
+  if (newValue) {
+    persistenceStore.saveAllState({
+      legendStore,
+      dataStore
+    })
+  }
+}
+
+// Click outside handler
+function handleClickOutside(e) {
+  if (!showSettings.value) return
+
+  // Check if click is inside the settings panel or the settings button
+  const clickedInsidePanel = settingsPanelRef.value?.contains(e.target)
+  const clickedInsideButton = settingsButtonRef.value?.contains(e.target)
+
+  if (!clickedInsidePanel && !clickedInsideButton) {
+    closeSettings()
+  }
+}
+
+// Add/remove click outside listener
+onMounted(() => {
+  document.addEventListener('mousedown', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('mousedown', handleClickOutside)
+})
 </script>
 
 <template>
@@ -179,7 +219,7 @@ function updateMaxItems(e) {
     <!-- Settings panel (popup window that can overflow legend) -->
     <Teleport to="body">
       <Transition name="settings-slide">
-        <div v-if="showSettings" class="settings-panel" :style="settingsPanelStyle" @click.stop>
+        <div v-if="showSettings" ref="settingsPanelRef" class="settings-panel" :style="settingsPanelStyle" @click.stop>
         <div class="settings-header">
           <span>LEGEND SETTINGS</span>
           <button class="close-button" @click="closeSettings">
@@ -241,6 +281,22 @@ function updateMaxItems(e) {
             />
             <span class="value-display">{{ legendStore.maxItems }}</span>
           </div>
+        </div>
+
+        <!-- Remember Settings toggle -->
+        <div class="settings-row toggle-row">
+          <label class="settings-label">
+            <Save :size="14" />
+            Remember Settings
+          </label>
+          <button
+            class="toggle-button"
+            :class="{ active: persistenceStore.enabled }"
+            @click="togglePersistence"
+            :title="persistenceStore.enabled ? 'All settings will be saved on page refresh' : 'All settings will reset on page refresh'"
+          >
+            {{ persistenceStore.enabled ? 'ON' : 'OFF' }}
+          </button>
         </div>
 
         <!-- Divider -->
@@ -352,6 +408,11 @@ function updateMaxItems(e) {
   background: var(--color-bg-tertiary, rgba(255,255,255,0.02));
   border-radius: 8px 8px 0 0;
   position: relative;
+  cursor: grab;
+}
+
+.legend-toolbar:active {
+  cursor: grabbing;
 }
 
 .drag-handle {
@@ -616,6 +677,36 @@ function updateMaxItems(e) {
 .color-input:focus {
   outline: none;
   border-color: var(--color-accent, #4ade80);
+}
+
+/* Toggle row */
+.toggle-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggle-button {
+  padding: 4px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-muted, #666);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.toggle-button:hover {
+  border-color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary, #aaa);
+}
+
+.toggle-button.active {
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
 }
 
 /* Scrollbar for settings panel */

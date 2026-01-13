@@ -152,8 +152,15 @@ const positionStyle = computed(() => {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function startDrag(e) {
-  // Only start drag from toolbar drag handle
-  if (!e.target.closest('.drag-handle')) return
+  // Allow drag from toolbar area (but not from buttons, dropdowns, or other interactive elements)
+  const toolbar = e.target.closest('.legend-toolbar')
+  if (!toolbar) return
+
+  // Don't start drag if clicking on interactive elements
+  if (e.target.closest('button') ||
+      e.target.closest('select') ||
+      e.target.closest('input') ||
+      e.target.closest('.color-by-select')) return
 
   e.preventDefault()
   isDragging.value = true
@@ -192,35 +199,28 @@ function onDrag(e) {
   let newX = dragStartPos.value.x + deltaX
   let newY = dragStartPos.value.y + deltaY
 
-  // Apply sticky edges if enabled
+  // Apply sticky edges if enabled (soft snapping, not constraint)
   if (legendStore.stickyEdges) {
     const threshold = legendStore.snapThreshold
     const bounds = containerBounds.value
     const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
     const legendHeight = legendRef.value?.offsetHeight || 200
 
-    // Snap to left
-    if (newX < threshold) newX = 10
-    // Snap to right
-    if (newX > bounds.width - legendWidth - threshold) {
+    // Snap to left edge
+    if (newX >= 0 && newX < threshold) newX = 10
+    // Snap to right edge
+    if (newX > bounds.width - legendWidth - threshold && newX <= bounds.width - legendWidth) {
       newX = bounds.width - legendWidth - 10
     }
-    // Snap to top
-    if (newY < threshold + 60) newY = 70 // Account for controls
-    // Snap to bottom
-    if (newY > bounds.height - legendHeight - threshold) {
+    // Snap to top edge
+    if (newY >= 60 && newY < threshold + 60) newY = 70 // Account for controls
+    // Snap to bottom edge
+    if (newY > bounds.height - legendHeight - threshold && newY <= bounds.height - legendHeight) {
       newY = bounds.height - legendHeight - 30
     }
   }
 
-  // Constrain to container
-  const bounds = containerBounds.value
-  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
-  const legendHeight = legendRef.value?.offsetHeight || 200
-
-  newX = Math.max(10, Math.min(bounds.width - legendWidth - 10, newX))
-  newY = Math.max(10, Math.min(bounds.height - legendHeight - 10, newY))
-
+  // No constraint - allow legend to be positioned outside visible area
   posX.value = newX
   posY.value = newY
 }
