@@ -69,10 +69,14 @@ export const useLegendStore = defineStore('legend', () => {
   // GROUPING SETTINGS (for subspecies grouped by species)
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Grouping options
+  // Extended grouping options
   const groupingSettings = ref(getStorage('legend-grouping', {
-    enabled: true,                     // Default: grouped view when applicable
-    labelFormat: 'subspecies-only',    // 'subspecies-only' | 'abbreviated' (M. p. casabranca)
+    enabled: true,                     // Enable grouping
+    groupBy: 'species',                // 'none' | 'species' | 'genus' | 'tribe' | 'subfamily' | 'family'
+    labelFormat: 'abbreviated',        // 'full' | 'abbreviated'
+    abbreviationStyle: 'first-letter', // 'first-letter' | 'first-three'
+    showHeaders: false,                // Headers visible (default hidden)
+    prefixEnabled: 'auto',             // true | false | 'auto' (smart default)
   }))
 
   // Species-level styling options
@@ -89,22 +93,86 @@ export const useLegendStore = defineStore('legend', () => {
   // Format: { 'Mechanitis polymnia': 210, ... } (hue values 0-360)
   const speciesBaseHues = ref(getStorage('legend-species-hues', {}))
 
+  // Per-species custom abbreviations
+  // Format: { 'Mechanitis polymnia': 'M. p.', ... }
+  const speciesAbbreviations = ref(getStorage('legend-species-abbreviations', {}))
+
+  // Per-species abbreviation visibility (whether to show prefix for subspecies)
+  // Format: { 'Mechanitis polymnia': true, ... } - true = show abbreviation prefix
+  const speciesAbbreviationVisible = ref(getStorage('legend-species-abbrev-visible', {}))
+
   // Track which species groups are expanded/collapsed
   // Format: { 'Mechanitis polymnia': true, ... }
   const expandedGroups = ref({})
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // SHAPE SETTINGS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Shape configuration
+  const shapeSettings = ref(getStorage('legend-shape-settings', {
+    enabled: false,                    // Use shapes on map
+    assignBy: 'species',               // 'species' | 'genus' | 'mimicry' | 'custom'
+  }))
+
+  // Per-group shapes (custom assignments)
+  // Format: { 'Mechanitis polymnia': 'triangle', ... }
+  const groupShapes = ref(getStorage('legend-group-shapes', {}))
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Check if grouping is applicable (only for subspecies mode)
+  // Check if grouping is applicable - only when colorBy is subspecies
   const canGroup = computed(() => {
     const dataStore = getDataStore()
-    return dataStore.colorBy === 'subspecies'
+    return dataStore.colorBy === 'subspecies' && groupingSettings.value.enabled
   })
 
-  // Should display grouped
-  const isGrouped = computed(() => canGroup.value && groupingSettings.value.enabled)
+  // Should display grouped - only subspecies can be grouped by species
+  const isGrouped = computed(() => canGroup.value)
+
+  // Available groupBy options based on current colorBy
+  const groupByOptions = computed(() => {
+    const dataStore = getDataStore()
+    const colorBy = dataStore.colorBy
+    const options = [{ value: 'none', label: 'None' }]
+
+    if (colorBy === 'subspecies') {
+      options.push(
+        { value: 'species', label: 'Species' },
+        { value: 'genus', label: 'Genus' },
+        { value: 'tribe', label: 'Tribe' },
+        { value: 'subfamily', label: 'Subfamily' },
+        { value: 'family', label: 'Family' }
+      )
+    } else if (colorBy === 'species') {
+      options.push(
+        { value: 'genus', label: 'Genus' },
+        { value: 'tribe', label: 'Tribe' },
+        { value: 'subfamily', label: 'Subfamily' },
+        { value: 'family', label: 'Family' }
+      )
+    } else if (colorBy === 'genus') {
+      options.push(
+        { value: 'tribe', label: 'Tribe' },
+        { value: 'subfamily', label: 'Subfamily' },
+        { value: 'family', label: 'Family' }
+      )
+    }
+
+    return options
+  })
+
+  // Smart prefix behavior: show prefix when headers are hidden (auto mode)
+  const shouldShowPrefix = computed(() => {
+    const prefixEnabled = groupingSettings.value.prefixEnabled
+    if (prefixEnabled === 'auto') {
+      // Auto: show prefix when headers hidden
+      return !groupingSettings.value.showHeaders
+    }
+    return prefixEnabled === true
+  })
 
   // Check if there are any customizations
   const hasCustomizations = computed(() => {
@@ -220,11 +288,19 @@ export const useLegendStore = defineStore('legend', () => {
     resetPosition()
     resetSize()
     resetSpeciesStyling()
+    resetShapeSettings()
     textScale.value = 1
     dotScale.value = 1
     maxItems.value = 15
     stickyEdges.value = true
-    groupingSettings.value = { enabled: true, labelFormat: 'subspecies-only' }
+    groupingSettings.value = {
+      enabled: true,
+      groupBy: 'species',
+      labelFormat: 'abbreviated',
+      abbreviationStyle: 'first-letter',
+      showHeaders: false,
+      prefixEnabled: 'auto',
+    }
     setStorage('legend-text-scale', 1)
     setStorage('legend-dot-scale', 1)
     setStorage('legend-max-items', 15)
@@ -241,28 +317,54 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-grouping', groupingSettings.value)
   }
 
+  function setGroupBy(value) {
+    groupingSettings.value.groupBy = value
+    setStorage('legend-grouping', groupingSettings.value)
+  }
+
   function setLabelFormat(format) {
     groupingSettings.value.labelFormat = format
     setStorage('legend-grouping', groupingSettings.value)
   }
 
-  function toggleGroupExpanded(species) {
-    expandedGroups.value[species] = !expandedGroups.value[species]
+  function setAbbreviationStyle(style) {
+    groupingSettings.value.abbreviationStyle = style
+    setStorage('legend-grouping', groupingSettings.value)
   }
 
-  function isGroupExpanded(species) {
+  function setShowHeaders(show) {
+    groupingSettings.value.showHeaders = show
+    setStorage('legend-grouping', groupingSettings.value)
+  }
+
+  function toggleHeaders() {
+    groupingSettings.value.showHeaders = !groupingSettings.value.showHeaders
+    setStorage('legend-grouping', groupingSettings.value)
+  }
+
+  function setPrefixEnabled(value) {
+    // value can be true, false, or 'auto'
+    groupingSettings.value.prefixEnabled = value
+    setStorage('legend-grouping', groupingSettings.value)
+  }
+
+  function toggleGroupExpanded(groupKey) {
+    expandedGroups.value[groupKey] = !expandedGroups.value[groupKey]
+  }
+
+  function isGroupExpanded(groupKey) {
     // Default to expanded if not set
-    return expandedGroups.value[species] !== false
+    return expandedGroups.value[groupKey] !== false
   }
 
   function expandAllGroups() {
     expandedGroups.value = {}
   }
 
-  function collapseAllGroups(speciesList) {
+  function collapseAllGroups(groupList) {
     const collapsed = {}
-    speciesList.forEach(species => {
-      collapsed[species] = false
+    groupList.forEach(group => {
+      collapsed[group] = false
     })
     expandedGroups.value = collapsed
   }
@@ -303,10 +405,101 @@ export const useLegendStore = defineStore('legend', () => {
     speciesStyling.value = { borderColor: false, colorGradient: false }
     speciesBorderColors.value = {}
     speciesBaseHues.value = {}
+    speciesAbbreviations.value = {}
+    speciesAbbreviationVisible.value = {}
     expandedGroups.value = {}
     setStorage('legend-species-styling', speciesStyling.value)
     setStorage('legend-species-borders', {})
     setStorage('legend-species-hues', {})
+    setStorage('legend-species-abbreviations', {})
+    setStorage('legend-species-abbrev-visible', {})
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ABBREVIATION ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Get default abbreviation for a species (first letter of each word)
+  function getDefaultAbbreviation(species) {
+    const parts = species.split(' ')
+    if (parts.length >= 2) {
+      return `${parts[0][0]}. ${parts[1][0]}.`
+    }
+    return species.slice(0, 3) + '.'
+  }
+
+  // Get the abbreviation for a species (custom or default)
+  function getSpeciesAbbreviation(species) {
+    return speciesAbbreviations.value[species] || getDefaultAbbreviation(species)
+  }
+
+  // Set a custom abbreviation for a species
+  function setSpeciesAbbreviation(species, abbrev) {
+    const defaultAbbrev = getDefaultAbbreviation(species)
+    if (abbrev && abbrev !== defaultAbbrev) {
+      speciesAbbreviations.value[species] = abbrev
+    } else {
+      // Remove custom abbreviation to use default
+      delete speciesAbbreviations.value[species]
+    }
+    setStorage('legend-species-abbreviations', speciesAbbreviations.value)
+  }
+
+  // Check if abbreviation prefix should be shown for a species
+  function isAbbreviationVisible(species) {
+    // If not explicitly set, default based on whether headers are shown
+    if (speciesAbbreviationVisible.value[species] === undefined) {
+      // Default: show abbreviation when headers are hidden
+      return !groupingSettings.value.showHeaders
+    }
+    return speciesAbbreviationVisible.value[species]
+  }
+
+  // Set abbreviation visibility for a species
+  function setAbbreviationVisible(species, visible) {
+    speciesAbbreviationVisible.value[species] = visible
+    setStorage('legend-species-abbrev-visible', speciesAbbreviationVisible.value)
+  }
+
+  // Toggle abbreviation visibility for a species
+  function toggleAbbreviationVisible(species) {
+    const current = isAbbreviationVisible(species)
+    setAbbreviationVisible(species, !current)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SHAPE ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setShapesEnabled(enabled) {
+    shapeSettings.value.enabled = enabled
+    setStorage('legend-shape-settings', shapeSettings.value)
+  }
+
+  function setShapeAssignBy(assignBy) {
+    shapeSettings.value.assignBy = assignBy
+    setStorage('legend-shape-settings', shapeSettings.value)
+  }
+
+  function setGroupShape(groupKey, shape) {
+    if (shape && shape !== 'circle') {
+      groupShapes.value[groupKey] = shape
+    } else {
+      // Remove to use default circle
+      delete groupShapes.value[groupKey]
+    }
+    setStorage('legend-group-shapes', groupShapes.value)
+  }
+
+  function getGroupShape(groupKey) {
+    return groupShapes.value[groupKey] || 'circle'
+  }
+
+  function resetShapeSettings() {
+    shapeSettings.value = { enabled: false, assignBy: 'species' }
+    groupShapes.value = {}
+    setStorage('legend-shape-settings', shapeSettings.value)
+    setStorage('legend-group-shapes', {})
   }
 
   return {
@@ -329,12 +522,20 @@ export const useLegendStore = defineStore('legend', () => {
     speciesStyling,
     speciesBorderColors,
     speciesBaseHues,
+    speciesAbbreviations,
+    speciesAbbreviationVisible,
     expandedGroups,
+
+    // Shape state
+    shapeSettings,
+    groupShapes,
 
     // Computed
     hasCustomizations,
     canGroup,
     isGrouped,
+    groupByOptions,
+    shouldShowPrefix,
 
     // Actions
     updatePosition,
@@ -357,7 +558,12 @@ export const useLegendStore = defineStore('legend', () => {
 
     // Grouping actions
     setGroupingEnabled,
+    setGroupBy,
     setLabelFormat,
+    setAbbreviationStyle,
+    setShowHeaders,
+    toggleHeaders,
+    setPrefixEnabled,
     toggleGroupExpanded,
     isGroupExpanded,
     expandAllGroups,
@@ -368,6 +574,21 @@ export const useLegendStore = defineStore('legend', () => {
     setSpeciesGradientEnabled,
     setSpeciesBorderColor,
     setSpeciesBaseHue,
-    resetSpeciesStyling
+    resetSpeciesStyling,
+
+    // Abbreviation actions
+    getDefaultAbbreviation,
+    getSpeciesAbbreviation,
+    setSpeciesAbbreviation,
+    isAbbreviationVisible,
+    setAbbreviationVisible,
+    toggleAbbreviationVisible,
+
+    // Shape actions
+    setShapesEnabled,
+    setShapeAssignBy,
+    setGroupShape,
+    getGroupShape,
+    resetShapeSettings
   }
 })

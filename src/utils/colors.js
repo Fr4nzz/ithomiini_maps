@@ -332,7 +332,8 @@ export function generateSpeciesBaseHues(speciesList, existing = {}) {
 }
 
 /**
- * Generate subspecies colors within a species color family (gradient)
+ * Generate subspecies colors using a 3-point gradient (light → medium → dark)
+ * This provides better color distinction than 2-point gradients
  * @param {string[]} subspeciesList - List of subspecies in this species
  * @param {number} baseHue - Base hue for the species (0-360)
  * @returns {Object} Map of subspecies -> hex color
@@ -340,23 +341,51 @@ export function generateSpeciesBaseHues(speciesList, existing = {}) {
 export function generateSpeciesGradientColors(subspeciesList, baseHue) {
   const colors = {}
   const count = subspeciesList.length
-  const hueRange = Math.min(40, 15 * count) // Wider range for more subspecies
   const saturation = 70
 
-  subspeciesList.forEach((subspecies, index) => {
-    // Distribute hues around the base hue
-    const hueOffset = count > 1
-      ? ((index / (count - 1)) - 0.5) * hueRange
-      : 0
-    const hue = (baseHue + hueOffset + 360) % 360
+  // 3-point gradient: light (60) → medium (45) → dark (30)
+  const lightnessRange = [60, 45, 30]
 
-    // Vary lightness for additional distinction
-    const lightness = 45 + (index / Math.max(count - 1, 1)) * 15
+  subspeciesList.forEach((subspecies, index) => {
+    // Distribute across 3-point gradient
+    const position = count > 1 ? index / (count - 1) : 0.5
+
+    // Interpolate lightness between the 3 points
+    let lightness
+    if (position <= 0.5) {
+      // Light to medium (0 → 0.5)
+      const t = position * 2
+      lightness = lightnessRange[0] + (lightnessRange[1] - lightnessRange[0]) * t
+    } else {
+      // Medium to dark (0.5 → 1)
+      const t = (position - 0.5) * 2
+      lightness = lightnessRange[1] + (lightnessRange[2] - lightnessRange[1]) * t
+    }
+
+    // Small hue variation for additional distinction (±15 degrees max)
+    const hueOffset = (position - 0.5) * 30
+    const hue = (baseHue + hueOffset + 360) % 360
 
     colors[subspecies] = hslToHex(hue, saturation, lightness)
   })
 
   return colors
+}
+
+/**
+ * Generate a preview of 3 colors for a gradient (for UI display)
+ * @param {number} baseHue - Base hue (0-360)
+ * @returns {string[]} Array of 3 hex colors [light, medium, dark]
+ */
+export function generate3ColorPreview(baseHue) {
+  const saturation = 70
+  const lightnessRange = [60, 45, 30]
+  const hueOffsets = [-15, 0, 15]
+
+  return lightnessRange.map((lightness, i) => {
+    const hue = (baseHue + hueOffsets[i] + 360) % 360
+    return hslToHex(hue, saturation, lightness)
+  })
 }
 
 /**

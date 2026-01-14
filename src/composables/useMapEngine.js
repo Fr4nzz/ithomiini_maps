@@ -5,6 +5,7 @@ import { useLegendStore } from '../stores/legend'
 import { generateSpeciesBorderColors } from '../utils/colors'
 import { ASPECT_RATIOS } from '../utils/constants'
 import { computeClusterStats, haversineDistance } from '../utils/clusterStats'
+import { loadShapeImages, buildShapeExpression } from '../utils/shapes'
 
 // Map style configurations - organized by theme
 export const MAP_STYLES = {
@@ -672,24 +673,67 @@ export function useDataLayer(map, options = {}) {
       borderColorExpression.push(style.borderColor) // default fallback
     }
 
-    map.value.addLayer({
-      id: 'points-layer',
-      type: 'circle',
-      source: 'points-source',
-      filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'],
-      paint: {
-        'circle-radius': sizeExpression,
-        'circle-color': colorExpression,
-        'circle-opacity': style.fillOpacity,
-        'circle-stroke-width': [
-          'interpolate', ['linear'], ['zoom'],
-          3, style.borderWidth * 0.33,
-          10, style.borderWidth
-        ],
-        'circle-stroke-color': borderColorExpression,
-        'circle-stroke-opacity': style.borderOpacity
-      }
-    })
+    // Check if shapes are enabled
+    const useShapes = legendStore.shapeSettings.enabled
+
+    if (useShapes) {
+      // Symbol layer with shapes
+      // Determine which attribute to use for shape assignment
+      const shapeAttr = legendStore.shapeSettings.assignBy === 'genus'
+        ? 'genus'
+        : legendStore.shapeSettings.assignBy === 'mimicry'
+          ? 'mimicry_ring'
+          : 'scientific_name' // default to species
+
+      // Build shape expression
+      const shapeExpression = buildShapeExpression(shapeAttr, legendStore.groupShapes, 'circle')
+
+      // Calculate icon size expression (symbols use different scale than circles)
+      const iconSizeExpression = [
+        'interpolate', ['linear'], ['zoom'],
+        3, baseSize * 0.03,
+        6, baseSize * 0.05,
+        10, baseSize * 0.08,
+        14, baseSize * 0.12
+      ]
+
+      map.value.addLayer({
+        id: 'points-layer',
+        type: 'symbol',
+        source: 'points-source',
+        filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'],
+        layout: {
+          'icon-image': shapeExpression,
+          'icon-size': iconSizeExpression,
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true
+        },
+        paint: {
+          'icon-color': colorExpression,
+          'icon-opacity': style.fillOpacity
+        }
+      })
+    } else {
+      // Standard circle layer
+      map.value.addLayer({
+        id: 'points-layer',
+        type: 'circle',
+        source: 'points-source',
+        filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'],
+        paint: {
+          'circle-radius': sizeExpression,
+          'circle-color': colorExpression,
+          'circle-opacity': style.fillOpacity,
+          'circle-stroke-width': [
+            'interpolate', ['linear'], ['zoom'],
+            3, style.borderWidth * 0.33,
+            10, style.borderWidth
+          ],
+          'circle-stroke-color': borderColorExpression,
+          'circle-stroke-opacity': style.borderOpacity
+        }
+      })
+    }
 
     // Highlight layer (for hover on individual points)
     const highlightSizeExpression = [
@@ -949,10 +993,24 @@ export function useDataLayer(map, options = {}) {
     })
   }
 
+  // Load shape images into the map
+  const ensureShapeImages = async () => {
+    if (!map.value || !map.value.isStyleLoaded()) return false
+
+    try {
+      await loadShapeImages(map.value)
+      return true
+    } catch (error) {
+      console.error('Failed to load shape images:', error)
+      return false
+    }
+  }
+
   return {
     addDataLayer,
     fitBoundsToData,
-    clearClusterExtentCircle
+    clearClusterExtentCircle,
+    ensureShapeImages
   }
 }
 

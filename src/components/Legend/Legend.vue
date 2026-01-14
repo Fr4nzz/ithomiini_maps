@@ -2,11 +2,12 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
-import { generateSpeciesBorderColors } from '../../utils/colors'
+import { generateSpeciesBorderColors, generateSpeciesBaseHues } from '../../utils/colors'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
 import LegendResizeHandle from './LegendResizeHandle.vue'
 import LegendGroupHeader from './LegendGroupHeader.vue'
+import LegendGroupStylePopup from './LegendGroupStylePopup.vue'
 
 const props = defineProps({
   containerRef: {
@@ -24,6 +25,13 @@ const isHovered = ref(false)
 const isDragging = ref(false)
 const isResizing = ref(false)
 const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
+
+// Popup state
+const stylePopupState = ref({
+  open: false,
+  groupName: '',
+  position: { x: 0, y: 0 }
+})
 
 // Current size
 const currentWidth = ref(legendStore.size.width || 200)
@@ -45,6 +53,9 @@ const showToolbar = computed(() => isHovered.value || hasOpenPopup.value)
 
 // Should show edit UI? (editable on hover OR when popup is open)
 const showEditUI = computed(() => isHovered.value || hasOpenPopup.value)
+
+// Track if any popup is open (keeps legend interactive)
+const hasModalOpen = computed(() => stylePopupState.value.open)
 
 // Get container dimensions
 const containerBounds = computed(() => {
@@ -97,6 +108,11 @@ const speciesBorderColors = computed(() => {
   return generateSpeciesBorderColors(speciesList.value, legendStore.speciesBorderColors)
 })
 
+// Generate base hues for species gradients
+const speciesBaseHues = computed(() => {
+  return generateSpeciesBaseHues(speciesList.value, legendStore.speciesBaseHues)
+})
+
 // Get border color for a species
 function getSpeciesBorderColor(species) {
   return speciesBorderColors.value[species] || dataStore.mapStyle.borderColor
@@ -112,16 +128,16 @@ function getSpeciesForSubspecies(subspecies) {
   return null
 }
 
-// Format label based on settings
+// Format label based on per-species abbreviation visibility
 function formatLabel(subspecies, species) {
-  if (legendStore.groupingSettings.labelFormat === 'abbreviated' && species) {
-    const parts = species.split(' ')
-    if (parts.length >= 2) {
-      // "M. p. casabranca" format
-      return `${parts[0][0]}. ${parts[1][0]}. ${subspecies}`
-    }
+  // Check if abbreviation should be shown for this species
+  if (!species || !legendStore.isAbbreviationVisible(species)) {
+    return subspecies
   }
-  return subspecies
+
+  // Get the abbreviation for this species (custom or default)
+  const abbreviation = legendStore.getSpeciesAbbreviation(species)
+  return `${abbreviation} ${subspecies}`
 }
 
 // Get items with visibility and custom settings applied
@@ -199,7 +215,11 @@ const groupedLegendData = computed(() => {
     groups.push({
       species,
       borderColor: getSpeciesBorderColor(species),
-      expanded: legendStore.isGroupExpanded(species),
+      baseHue: speciesBaseHues.value[species] || 210,
+      shape: legendStore.getGroupShape(species),
+      abbreviation: legendStore.getSpeciesAbbreviation(species),
+      abbreviationVisible: legendStore.isAbbreviationVisible(species),
+      customLabel: legendStore.customLabels[species] || '',
       items: items.map(item => ({
         ...item,
         displayLabel: formatLabel(item.label, species)
@@ -389,8 +409,59 @@ function handleResetCustomizations() {
   // Reset is handled by store
 }
 
-function handleToggleGroup(species) {
-  legendStore.toggleGroupExpanded(species)
+// ═══════════════════════════════════════════════════════════════════════════
+// GROUP STYLE POPUP HANDLERS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function openGroupStylePopup(species, event) {
+  // Position popup near the click
+  const rect = event.target.getBoundingClientRect()
+  stylePopupState.value = {
+    open: true,
+    groupName: species,
+    position: {
+      x: Math.min(rect.left + 20, window.innerWidth - 280),
+      y: Math.min(rect.bottom + 5, window.innerHeight - 400)
+    }
+  }
+  hasOpenPopup.value = true
+}
+
+function closeGroupStylePopup() {
+  stylePopupState.value.open = false
+  hasOpenPopup.value = false
+}
+
+function handleUpdateShape(shape) {
+  legendStore.setGroupShape(stylePopupState.value.groupName, shape)
+}
+
+function handleUpdateBorderColor(color) {
+  legendStore.setSpeciesBorderColor(stylePopupState.value.groupName, color)
+}
+
+function handleUpdateHue(hue) {
+  legendStore.setSpeciesBaseHue(stylePopupState.value.groupName, parseInt(hue))
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ABBREVIATION HANDLERS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function handleUpdateAbbreviation(species, abbreviation) {
+  legendStore.setSpeciesAbbreviation(species, abbreviation)
+}
+
+function handleToggleAbbreviationVisible(species) {
+  legendStore.toggleAbbreviationVisible(species)
+}
+
+function handleUpdateSpeciesCustomLabel(species, customLabel) {
+  legendStore.setCustomLabel(species, customLabel)
+}
+
+function handleShowHeaders() {
+  legendStore.setShowHeaders(true)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -499,16 +570,25 @@ watch(() => legendStore.size, (newSize) => {
           <!-- Group header -->
           <LegendGroupHeader
             :species-name="group.species"
-            :expanded="group.expanded"
+            :abbreviation="group.abbreviation"
+            :abbreviation-visible="group.abbreviationVisible"
+            :custom-label="group.customLabel"
             :border-color="group.borderColor"
             :count="group.items.length"
             :dot-size="dotSize"
             :is-export-mode="isExportMode"
-            @toggle="handleToggleGroup(group.species)"
+            :headers-hidden="!legendStore.groupingSettings.showHeaders"
+            :is-legend-hovered="isHovered || hasModalOpen"
+            :shape="group.shape"
+            @open-style-popup="openGroupStylePopup(group.species, $event)"
+            @show-headers="handleShowHeaders"
+            @update:abbreviation="(val) => handleUpdateAbbreviation(group.species, val)"
+            @update:abbreviation-visible="(val) => legendStore.setAbbreviationVisible(group.species, val)"
+            @update:custom-label="(val) => handleUpdateSpeciesCustomLabel(group.species, val)"
           />
 
-          <!-- Group items (shown when expanded) -->
-          <div v-show="group.expanded" class="legend-group-items">
+          <!-- Group items (always shown) -->
+          <div class="legend-group-items">
             <LegendItem
               v-for="item in group.items"
               :key="item.label"
@@ -524,7 +604,7 @@ watch(() => legendStore.size, (newSize) => {
               :font-size="fontSize"
               :border-color="group.borderColor"
               :border-width="dataStore.mapStyle.borderWidth"
-              :indented="true"
+              :indented="legendStore.groupingSettings.showHeaders"
               @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
               @update:custom-color="(val) => handleColorUpdate(item.label, val)"
               @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -556,6 +636,20 @@ watch(() => legendStore.size, (newSize) => {
       @resize-start="onResizeStart"
       @resize="onResize"
       @resize-end="onResizeEnd"
+    />
+
+    <!-- Group Style Popup -->
+    <LegendGroupStylePopup
+      :open="stylePopupState.open"
+      :group-name="stylePopupState.groupName"
+      :current-shape="legendStore.getGroupShape(stylePopupState.groupName)"
+      :border-color="speciesBorderColors[stylePopupState.groupName] || dataStore.mapStyle.borderColor"
+      :base-hue="speciesBaseHues[stylePopupState.groupName] || 210"
+      :position="stylePopupState.position"
+      @close="closeGroupStylePopup"
+      @update:shape="handleUpdateShape"
+      @update:border-color="handleUpdateBorderColor"
+      @update:hue="handleUpdateHue"
     />
   </div>
 </template>
@@ -669,8 +763,7 @@ watch(() => legendStore.size, (newSize) => {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-left: 8px;
-  padding-left: 12px;
-  border-left: 1px solid var(--color-border, #3d3d5c);
+  margin-left: 16px;
+  padding-left: 4px;
 }
 </style>

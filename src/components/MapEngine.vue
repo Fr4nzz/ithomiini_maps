@@ -97,7 +97,7 @@ const handleShowPopup = (data) => {
   })
 }
 
-const { addDataLayer, fitBoundsToData, clearClusterExtentCircle } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, ensureShapeImages } = useDataLayer(map, { onShowPopup: handleShowPopup })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer)
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
 
@@ -255,7 +255,11 @@ const initMap = () => {
   map.value.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
   map.value.addControl(new maplibregl.FullscreenControl(), 'top-right')
 
-  map.value.on('load', () => {
+  map.value.on('load', async () => {
+    // Load shape images if shapes are enabled
+    if (legendStore.shapeSettings.enabled) {
+      await ensureShapeImages()
+    }
     addDataLayer()
     emit('map-ready', map.value)
   })
@@ -426,6 +430,40 @@ watch(
   () => {
     if (!map.value || !map.value.isStyleLoaded()) return
     addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
+// Watch for shape settings changes
+watch(
+  () => legendStore.shapeSettings,
+  async () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+    // Load shape images if shapes are being enabled
+    if (legendStore.shapeSettings.enabled) {
+      await ensureShapeImages()
+    }
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
+// Watch for group shape assignments
+watch(
+  () => legendStore.groupShapes,
+  () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
+// Watch for grouping settings changes (to update labels)
+watch(
+  () => legendStore.groupingSettings,
+  () => {
+    // No need to update map layers for grouping changes
+    // The legend handles its own rendering
   },
   { deep: true }
 )

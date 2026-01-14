@@ -52,6 +52,12 @@ export const usePersistenceStore = defineStore('persistence', () => {
       'legend-species-styling',
       'legend-species-borders',
       'legend-species-hues',
+      // Legend abbreviation settings
+      'legend-species-abbreviations',
+      'legend-species-abbrev-visible',
+      // Legend shape settings
+      'legend-shape-settings',
+      'legend-group-shapes',
       // Map settings
       'map-view',
       'map-style',
@@ -126,6 +132,10 @@ export const usePersistenceStore = defineStore('persistence', () => {
       set('legend-species-styling', legendStore.speciesStyling)
       set('legend-species-borders', legendStore.speciesBorderColors)
       set('legend-species-hues', legendStore.speciesBaseHues)
+      set('legend-species-abbreviations', legendStore.speciesAbbreviations)
+      set('legend-species-abbrev-visible', legendStore.speciesAbbreviationVisible)
+      set('legend-shape-settings', legendStore.shapeSettings)
+      set('legend-group-shapes', legendStore.groupShapes)
     }
 
     // Save data store state
