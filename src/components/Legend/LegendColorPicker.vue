@@ -28,6 +28,11 @@ const props = defineProps({
   borderWidth: {
     type: Number,
     default: 1.5
+  },
+  shape: {
+    type: String,
+    default: 'circle',
+    validator: (v) => ['circle', 'square', 'triangle', 'rhombus'].includes(v)
   }
 })
 
@@ -127,21 +132,48 @@ onUnmounted(() => {
 
 <template>
   <div class="legend-color-picker">
-    <!-- Color dot trigger -->
+    <!-- Color shape trigger -->
     <button
       ref="dotRef"
       class="color-dot"
       :class="{ 'is-custom': isCustomColor }"
-      :style="{
-        backgroundColor: color,
-        width: size + 'px',
-        height: size + 'px',
-        boxShadow: `0 0 4px ${color}`,
-        border: `${borderWidth}px solid ${borderColor}`
-      }"
       :title="isCustomColor ? 'Custom color (click to change)' : 'Click to change color'"
       @click="togglePicker"
     >
+      <svg :width="size" :height="size" viewBox="0 0 32 32">
+        <!-- Circle -->
+        <circle
+          v-if="shape === 'circle'"
+          cx="16" cy="16" r="12"
+          :fill="color"
+          :stroke="borderColor"
+          :stroke-width="borderWidth * 2"
+        />
+        <!-- Square -->
+        <rect
+          v-else-if="shape === 'square'"
+          x="5" y="5" width="22" height="22"
+          :fill="color"
+          :stroke="borderColor"
+          :stroke-width="borderWidth * 2"
+        />
+        <!-- Triangle -->
+        <polygon
+          v-else-if="shape === 'triangle'"
+          points="16,4 29,27 3,27"
+          :fill="color"
+          :stroke="borderColor"
+          :stroke-width="borderWidth * 2"
+        />
+        <!-- Rhombus (Diamond) -->
+        <polygon
+          v-else-if="shape === 'rhombus'"
+          points="16,4 28,16 16,28 4,16"
+          :fill="color"
+          :stroke="borderColor"
+          :stroke-width="borderWidth * 2"
+        />
+      </svg>
       <span v-if="isCustomColor" class="custom-indicator" />
     </button>
 
@@ -208,20 +240,22 @@ onUnmounted(() => {
 
 .color-dot {
   flex-shrink: 0;
-  border-radius: 50%;
+  background: transparent;
   border: none;
   cursor: pointer;
   transition: all 0.15s ease;
   position: relative;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .color-dot:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 8px currentColor !important;
 }
 
-.color-dot.is-custom::after {
-  content: '';
+.custom-indicator {
   position: absolute;
   top: -2px;
   right: -2px;

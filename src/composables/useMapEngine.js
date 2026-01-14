@@ -5,7 +5,7 @@ import { useLegendStore } from '../stores/legend'
 import { generateSpeciesBorderColors } from '../utils/colors'
 import { ASPECT_RATIOS } from '../utils/constants'
 import { computeClusterStats, haversineDistance } from '../utils/clusterStats'
-import { loadShapeImages, buildShapeExpression } from '../utils/shapes'
+import { loadShapeImages, buildShapeExpression, areShapeImagesLoaded } from '../utils/shapes'
 
 // Map style configurations - organized by theme
 export const MAP_STYLES = {
@@ -542,8 +542,6 @@ export function useDataLayer(map, options = {}) {
   const addDataLayer = (layerOptions = {}) => {
     const { skipZoom = false } = layerOptions
 
-    console.log('🗺️ addDataLayer called', { skipZoom, clusteringEnabled: store.clusteringEnabled })
-
     if (!map.value) return
 
     // Remove existing layers/sources if they exist
@@ -673,8 +671,14 @@ export function useDataLayer(map, options = {}) {
       borderColorExpression.push(style.borderColor) // default fallback
     }
 
-    // Check if shapes are enabled
-    const useShapes = legendStore.shapeSettings.enabled
+    // Check if shapes are enabled and images are ready
+    let useShapes = legendStore.shapeSettings.enabled
+
+    // Verify shape images are actually loaded before using symbol layer
+    if (useShapes && !areShapeImagesLoaded(map.value)) {
+      console.warn('[Shapes] Shape images not loaded, falling back to circles')
+      useShapes = false
+    }
 
     if (useShapes) {
       // Symbol layer with shapes
@@ -709,8 +713,16 @@ export function useDataLayer(map, options = {}) {
           'icon-ignore-placement': true
         },
         paint: {
+          // icon-color only works with SDF images (sdf: true in addImage)
+          // @see https://maplibre.org/maplibre-style-spec/layers/
           'icon-color': colorExpression,
-          'icon-opacity': style.fillOpacity
+          'icon-opacity': style.fillOpacity,
+          // icon-halo provides border effect for SDF icons
+          // Note: halo width units depend on SDF blur radius (8 for standard sprites)
+          // We use a larger value since our runtime-generated SDFs may have different characteristics
+          'icon-halo-color': borderColorExpression,
+          'icon-halo-width': style.borderWidth * 2,
+          'icon-halo-blur': 0.5
         }
       })
     } else {
@@ -770,26 +782,19 @@ export function useDataLayer(map, options = {}) {
 
       // Cluster click - show enhanced popup with all cluster points
       map.value.on('click', 'clusters', async (e) => {
-        console.log('🔵 Cluster clicked')
         const features = map.value.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-        if (!features.length) {
-          console.log('🔵 No cluster features found at click point')
-          return
-        }
+        if (!features.length) return
 
         const cluster = features[0]
         const coords = cluster.geometry.coordinates
         const clusterId = cluster.properties.cluster_id
         const pointCount = cluster.properties.point_count
 
-        console.log(`🔵 Cluster ID: ${clusterId}, Point count: ${pointCount}, Coords:`, coords)
-
         const clusterLng = coords[0]
         const clusterLat = coords[1]
 
         // Helper function to find cluster points using proximity search
         const findClusterPointsByProximity = () => {
-          console.log('🔵 Using proximity-based search as fallback')
           const allPoints = store.displayGeoJSON?.features || []
           const zoom = map.value.getZoom()
           const clusterRadiusPx = store.clusterSettings.radiusPixels
@@ -799,8 +804,6 @@ export function useDataLayer(map, options = {}) {
           // Adjust for latitude
           const metersPerPixel = 40075000 * Math.cos(clusterLat * Math.PI / 180) / (256 * Math.pow(2, zoom))
           const searchRadiusKm = (clusterRadiusPx * metersPerPixel / 1000) * 2.0 // 2x to ensure we catch all candidates
-
-          console.log(`🔵 Search radius: ${searchRadiusKm.toFixed(2)} km at zoom ${zoom.toFixed(1)}`)
 
           // Find points and their distances from cluster center
           const pointsWithDistance = allPoints.map(f => {
@@ -813,8 +816,6 @@ export function useDataLayer(map, options = {}) {
           pointsWithDistance.sort((a, b) => a.distance - b.distance)
           const limitedPoints = pointsWithDistance.slice(0, pointCount)
 
-          console.log(`🔵 Found ${pointsWithDistance.length} candidates, limited to ${limitedPoints.length} (expected ${pointCount})`)
-
           return limitedPoints.map(p => p.feature)
         }
 
@@ -823,28 +824,22 @@ export function useDataLayer(map, options = {}) {
         let clusterFeatures = null
 
         if (source && typeof source.getClusterLeaves === 'function') {
-          console.log('🔵 Trying getClusterLeaves...')
-
           try {
             clusterFeatures = await new Promise((resolve, reject) => {
               const timeout = setTimeout(() => {
-                console.log('🔵 getClusterLeaves timed out, using fallback')
                 resolve(null) // Resolve with null to trigger fallback
               }, 500) // Short 500ms timeout
 
               source.getClusterLeaves(clusterId, pointCount, 0, (error, features) => {
                 clearTimeout(timeout)
                 if (error) {
-                  console.log('🔵 getClusterLeaves error, using fallback:', error.message)
                   resolve(null)
                 } else {
-                  console.log(`🔵 getClusterLeaves returned ${features?.length || 0} features`)
                   resolve(features)
                 }
               })
             })
           } catch (err) {
-            console.log('🔵 getClusterLeaves exception, using fallback')
             clusterFeatures = null
           }
         }
@@ -854,18 +849,13 @@ export function useDataLayer(map, options = {}) {
           clusterFeatures = findClusterPointsByProximity()
         }
 
-        if (!clusterFeatures || clusterFeatures.length === 0) {
-          console.log('🔵 No cluster features found')
-          return
-        }
+        if (!clusterFeatures || clusterFeatures.length === 0) return
 
         const clusterPoints = clusterFeatures.map(f => f.properties)
-        console.log(`🔵 Cluster has ${clusterPoints.length} points`)
 
         if (clusterPoints.length > 0 && onShowPopup) {
           // Compute cluster statistics including geographic radius
           const clusterStats = computeClusterStats(clusterFeatures, clusterLat, clusterLng)
-          console.log('🔵 Cluster stats:', clusterStats)
 
           // Update the cluster extent circle to show actual geographic radius
           updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
@@ -878,8 +868,6 @@ export function useDataLayer(map, options = {}) {
             isCluster: true,
             clusterStats
           })
-        } else {
-          console.log('🔵 onShowPopup not available or no points:', { hasCallback: !!onShowPopup, pointCount: clusterPoints.length })
         }
       })
 
@@ -957,13 +945,6 @@ export function useDataLayer(map, options = {}) {
     if (!skipZoom) {
       fitBoundsToData(geojson)
     }
-
-    // Log clustering status
-    if (shouldCluster) {
-      console.log(`📍 ${pointCount} points loaded. Clustering: ON (radius: ${clusterRadiusPixels}px)`)
-    } else {
-      console.log(`📍 ${pointCount} points loaded. Clustering: OFF`)
-    }
   }
 
   const fitBoundsToData = (geojson) => {
@@ -1015,10 +996,11 @@ export function useDataLayer(map, options = {}) {
 }
 
 // Style switcher
-export function useStyleSwitcher(map, addDataLayer) {
+export function useStyleSwitcher(map, addDataLayer, ensureShapeImages) {
+  const legendStore = useLegendStore()
   const currentStyle = ref('dark')
 
-  const switchStyle = (styleName) => {
+  const switchStyle = async (styleName) => {
     if (!map.value || !MAP_STYLES[styleName]) return
 
     // Save current view state before style change
@@ -1033,9 +1015,13 @@ export function useStyleSwitcher(map, addDataLayer) {
     map.value.setStyle(styleConfig.style)
 
     // Wait for style to be fully loaded
-    const waitForStyleAndAddLayer = () => {
+    const waitForStyleAndAddLayer = async () => {
       if (map.value.isStyleLoaded()) {
         map.value.jumpTo({ center, zoom, bearing, pitch })
+        // Reload shape images after style change (they are lost when style changes)
+        if (legendStore.shapeSettings.enabled && ensureShapeImages) {
+          await ensureShapeImages()
+        }
         addDataLayer({ skipZoom: true })
       } else {
         setTimeout(waitForStyleAndAddLayer, 50)
@@ -1046,9 +1032,13 @@ export function useStyleSwitcher(map, addDataLayer) {
       setTimeout(waitForStyleAndAddLayer, 100)
     })
 
-    map.value.once('idle', () => {
+    map.value.once('idle', async () => {
       if (!map.value.getSource('points-source')) {
         map.value.jumpTo({ center, zoom, bearing, pitch })
+        // Reload shape images after style change
+        if (legendStore.shapeSettings.enabled && ensureShapeImages) {
+          await ensureShapeImages()
+        }
         addDataLayer({ skipZoom: true })
       }
     })

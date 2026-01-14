@@ -93,6 +93,10 @@ export const useLegendStore = defineStore('legend', () => {
   // Format: { 'Mechanitis polymnia': 210, ... } (hue values 0-360)
   const speciesBaseHues = ref(getStorage('legend-species-hues', {}))
 
+  // Per-species gradient enabled (whether to use color gradient for subspecies)
+  // Format: { 'Mechanitis polymnia': true, ... }
+  const speciesGradientEnabled = ref(getStorage('legend-species-gradient-enabled', {}))
+
   // Per-species custom abbreviations
   // Format: { 'Mechanitis polymnia': 'M. p.', ... }
   const speciesAbbreviations = ref(getStorage('legend-species-abbreviations', {}))
@@ -386,6 +390,11 @@ export const useLegendStore = defineStore('legend', () => {
   function setSpeciesBorderColor(species, color) {
     if (color) {
       speciesBorderColors.value[species] = color
+      // Auto-enable per-species border colors when user sets one
+      if (!speciesStyling.value.borderColor) {
+        speciesStyling.value.borderColor = true
+        setStorage('legend-species-styling', speciesStyling.value)
+      }
     } else {
       delete speciesBorderColors.value[species]
     }
@@ -401,16 +410,33 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-species-hues', speciesBaseHues.value)
   }
 
+  // Set whether gradient is enabled for a specific species
+  function setSpeciesGradientEnabledForSpecies(species, enabled) {
+    if (enabled) {
+      speciesGradientEnabled.value[species] = true
+    } else {
+      delete speciesGradientEnabled.value[species]
+    }
+    setStorage('legend-species-gradient-enabled', speciesGradientEnabled.value)
+  }
+
+  // Check if gradient is enabled for a specific species
+  function isSpeciesGradientEnabled(species) {
+    return speciesGradientEnabled.value[species] === true
+  }
+
   function resetSpeciesStyling() {
     speciesStyling.value = { borderColor: false, colorGradient: false }
     speciesBorderColors.value = {}
     speciesBaseHues.value = {}
+    speciesGradientEnabled.value = {}
     speciesAbbreviations.value = {}
     speciesAbbreviationVisible.value = {}
     expandedGroups.value = {}
     setStorage('legend-species-styling', speciesStyling.value)
     setStorage('legend-species-borders', {})
     setStorage('legend-species-hues', {})
+    setStorage('legend-species-gradient-enabled', {})
     setStorage('legend-species-abbreviations', {})
     setStorage('legend-species-abbrev-visible', {})
   }
@@ -484,6 +510,11 @@ export const useLegendStore = defineStore('legend', () => {
   function setGroupShape(groupKey, shape) {
     if (shape && shape !== 'circle') {
       groupShapes.value[groupKey] = shape
+      // Auto-enable shapes when user assigns a non-circle shape
+      if (!shapeSettings.value.enabled) {
+        shapeSettings.value.enabled = true
+        setStorage('legend-shape-settings', shapeSettings.value)
+      }
     } else {
       // Remove to use default circle
       delete groupShapes.value[groupKey]
@@ -522,6 +553,7 @@ export const useLegendStore = defineStore('legend', () => {
     speciesStyling,
     speciesBorderColors,
     speciesBaseHues,
+    speciesGradientEnabled,
     speciesAbbreviations,
     speciesAbbreviationVisible,
     expandedGroups,
@@ -574,6 +606,8 @@ export const useLegendStore = defineStore('legend', () => {
     setSpeciesGradientEnabled,
     setSpeciesBorderColor,
     setSpeciesBaseHue,
+    setSpeciesGradientEnabledForSpecies,
+    isSpeciesGradientEnabled,
     resetSpeciesStyling,
 
     // Abbreviation actions

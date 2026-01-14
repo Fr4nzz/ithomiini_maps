@@ -52,6 +52,7 @@ export const usePersistenceStore = defineStore('persistence', () => {
       'legend-species-styling',
       'legend-species-borders',
       'legend-species-hues',
+      'legend-species-gradient-enabled',
       // Legend abbreviation settings
       'legend-species-abbreviations',
       'legend-species-abbrev-visible',
@@ -132,6 +133,7 @@ export const usePersistenceStore = defineStore('persistence', () => {
       set('legend-species-styling', legendStore.speciesStyling)
       set('legend-species-borders', legendStore.speciesBorderColors)
       set('legend-species-hues', legendStore.speciesBaseHues)
+      set('legend-species-gradient-enabled', legendStore.speciesGradientEnabled)
       set('legend-species-abbreviations', legendStore.speciesAbbreviations)
       set('legend-species-abbrev-visible', legendStore.speciesAbbreviationVisible)
       set('legend-shape-settings', legendStore.shapeSettings)

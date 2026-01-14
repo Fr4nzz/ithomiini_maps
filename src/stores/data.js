@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
-import { generateGroupedColorMap, generateSpeciesBaseHues } from '../utils/colors'
+import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
 import { useLegendStore } from './legend'
 import { usePersistenceStore } from './persistence'
 
@@ -1221,13 +1221,40 @@ export const useDataStore = defineStore('data', () => {
       if (Object.keys(baseColorMap).length === 0) {
         baseColorMap = { ...COLOR_PALETTES.source }
       }
-    } else if (mode === 'subspecies' && legendStore.speciesStyling.colorGradient) {
-      // Generate species-based gradient colors when gradient mode is enabled
+    } else if (mode === 'subspecies') {
+      // Check if any species has gradient enabled
       const speciesList = Object.keys(speciesSubspeciesMap.value).sort()
-      const hueAssignments = generateSpeciesBaseHues(speciesList, legendStore.speciesBaseHues)
-      baseColorMap = generateGroupedColorMap(speciesSubspeciesMap.value, hueAssignments, legendStore.customColors)
-      // Return early since custom colors are already applied in generateGroupedColorMap
-      return baseColorMap
+      const hasAnyGradient = speciesList.some(species => legendStore.isSpeciesGradientEnabled(species))
+
+      if (hasAnyGradient || legendStore.speciesStyling.colorGradient) {
+        // Generate species-based gradient colors for species with gradient enabled
+        const hueAssignments = generateSpeciesBaseHues(speciesList, legendStore.speciesBaseHues)
+
+        // Build color map, using gradient for enabled species, regular colors for others
+        for (const species of speciesList) {
+          const subspecies = speciesSubspeciesMap.value[species]
+          const useGradient = legendStore.isSpeciesGradientEnabled(species) || legendStore.speciesStyling.colorGradient
+
+          if (useGradient) {
+            // Use gradient colors
+            const speciesColors = generateSpeciesGradientColors(subspecies, hueAssignments[species])
+            for (const ssp of subspecies) {
+              baseColorMap[ssp] = legendStore.customColors[ssp] || speciesColors[ssp]
+            }
+          } else {
+            // Use regular dynamic palette colors for subspecies without gradient
+            const subPalette = generateColorPalette(subspecies)
+            for (const ssp of subspecies) {
+              baseColorMap[ssp] = legendStore.customColors[ssp] || subPalette[ssp]
+            }
+          }
+        }
+        // Return early since custom colors are already applied
+        return baseColorMap
+      } else {
+        // No gradients - use dynamic palette for all
+        baseColorMap = generateColorPalette(displayedValues)
+      }
     } else {
       // Generate dynamic palette for taxonomy and mimicry using displayed values
       baseColorMap = generateColorPalette(displayedValues)

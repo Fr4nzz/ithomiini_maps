@@ -1,31 +1,39 @@
 /**
  * Shape utilities for MapLibre GL marker visualization
  * Provides SVG definitions and loading utilities for custom marker shapes
+ *
+ * IMPORTANT: These shapes use SDF (Signed Distance Field) rendering which allows
+ * dynamic coloring via icon-color paint property. SDF images must be single-color
+ * (white) with transparent background.
+ *
+ * @see https://maplibre.org/maplibre-style-spec/layers/ - icon-color only works with SDF
+ * @see https://docs.mapbox.com/help/troubleshooting/using-recolorable-images-in-mapbox-maps/
  */
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SHAPE SVG DEFINITIONS
+// SHAPE SVG DEFINITIONS (SDF-compatible: solid white, transparent background)
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
  * SVG shape definitions (32x32 viewBox)
- * Each shape has a fill area and a white stroke for visibility
+ * All shapes are solid white (#ffffff) for SDF compatibility.
+ * Color is applied at runtime via MapLibre's icon-color paint property.
  */
 export const SHAPE_SVGS = {
   circle: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="16" r="12" fill="#4ade80"/>
+    <circle cx="16" cy="16" r="12" fill="#ffffff"/>
   </svg>`,
 
   square: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <rect x="5" y="5" width="22" height="22" fill="#4ade80"/>
+    <rect x="5" y="5" width="22" height="22" fill="#ffffff"/>
   </svg>`,
 
   triangle: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="16,3 30,28 2,28" fill="#4ade80"/>
+    <polygon points="16,3 30,28 2,28" fill="#ffffff"/>
   </svg>`,
 
   rhombus: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="16,3 29,16 16,29 3,16" fill="#4ade80"/>
+    <polygon points="16,3 29,16 16,29 3,16" fill="#ffffff"/>
   </svg>`
 }
 
@@ -49,10 +57,16 @@ export const SHAPE_ROTATION = ['circle', 'triangle', 'square', 'rhombus']
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Convert SVG string to canvas-based ImageData for MapLibre
+ * Convert SVG string to ImageData for MapLibre addImage
+ *
+ * MapLibre's addImage() accepts: HTMLImageElement, ImageData, ImageBitmap,
+ * or {width, height, data: Uint8Array}. We return ImageData from getImageData().
+ *
  * @param {string} svgString - SVG markup string
  * @param {number} size - Image size in pixels (square)
- * @returns {Promise<HTMLCanvasElement>} Canvas element with rendered SVG
+ * @returns {Promise<ImageData>} ImageData object for MapLibre addImage
+ *
+ * @see https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/ - addImage method
  */
 export async function svgToMapImage(svgString, size = 32) {
   const canvas = document.createElement('canvas')
@@ -68,7 +82,9 @@ export async function svgToMapImage(svgString, size = 32) {
     img.onload = () => {
       ctx.drawImage(img, 0, 0, size, size)
       URL.revokeObjectURL(url)
-      resolve(canvas)
+      // Return ImageData, not canvas - MapLibre requires this format
+      // @see https://maplibre.org/maplibre-gl-js/docs/API/interfaces/StyleImageInterface/
+      resolve(ctx.getImageData(0, 0, size, size))
     }
     img.onerror = (err) => {
       URL.revokeObjectURL(url)
@@ -113,26 +129,43 @@ export function getColoredShapeSVG(shapeName, fillColor = '#4ade80', strokeColor
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Load all shape images into a MapLibre map instance
+ * Load all shape images into a MapLibre map instance as SDF images.
+ * SDF (Signed Distance Field) images allow dynamic coloring via icon-color.
+ *
  * @param {maplibregl.Map} map - MapLibre map instance
  * @param {Object} options - Loading options
  * @param {number} options.size - Image size (default 64 for retina)
  * @param {number} options.pixelRatio - Pixel ratio for retina displays (default 2)
  * @returns {Promise<void>}
+ *
+ * @see https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/StyleImageMetadata/
  */
 export async function loadShapeImages(map, options = {}) {
   const { size = 64, pixelRatio = 2 } = options
 
-  for (const [shapeName, svgContent] of Object.entries(SHAPE_SVGS)) {
+  const shapesToLoad = Object.entries(SHAPE_SVGS).filter(
+    ([shapeName]) => !map.hasImage(`shape-${shapeName}`)
+  )
+
+  if (shapesToLoad.length > 0) {
+    console.log(`[Shapes] Loading ${shapesToLoad.length} shape images...`)
+  }
+
+  for (const [shapeName, svgContent] of shapesToLoad) {
     const imageName = `shape-${shapeName}`
-    if (!map.hasImage(imageName)) {
-      try {
-        const canvas = await svgToMapImage(svgContent, size)
-        map.addImage(imageName, canvas, { pixelRatio })
-      } catch (err) {
-        console.warn(`Failed to load shape image: ${imageName}`, err)
-      }
+    try {
+      const imageData = await svgToMapImage(svgContent, size)
+      // Add as SDF image to enable icon-color paint property
+      // @see https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/StyleImageMetadata/
+      map.addImage(imageName, imageData, { pixelRatio, sdf: true })
+      console.log(`[Shapes] Loaded: ${imageName}`)
+    } catch (err) {
+      console.warn(`[Shapes] Failed to load: ${imageName}`, err)
     }
+  }
+
+  if (shapesToLoad.length > 0) {
+    console.log(`[Shapes] All shape images loaded`)
   }
 }
 
@@ -189,12 +222,20 @@ export function generateShapeAssignments(groupList, existing = {}) {
  * @param {string} attributeName - GeoJSON property name to match against
  * @param {Object} shapeAssignments - Map of attributeValue -> shapeName
  * @param {string} defaultShape - Default shape if no match (default: 'circle')
- * @returns {Array} MapLibre match expression
+ * @returns {Array|string} MapLibre match expression or literal string if no assignments
  */
 export function buildShapeExpression(attributeName, shapeAssignments, defaultShape = 'circle') {
+  const entries = Object.entries(shapeAssignments)
+
+  // If no custom assignments, return a literal string (not a match expression)
+  // MapLibre's match expression requires at least one value-output pair
+  if (entries.length === 0) {
+    return `shape-${defaultShape}`
+  }
+
   const expression = ['match', ['get', attributeName]]
 
-  for (const [value, shape] of Object.entries(shapeAssignments)) {
+  for (const [value, shape] of entries) {
     expression.push(value, `shape-${shape}`)
   }
 

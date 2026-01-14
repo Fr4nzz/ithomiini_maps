@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onMounted, onUnmounted, watch } from 'vue'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
 import { generate3ColorPreview } from '../../utils/colors'
 
@@ -24,6 +24,10 @@ const props = defineProps({
     type: Number,
     default: 210
   },
+  useGradient: {
+    type: Boolean,
+    default: false
+  },
   position: {
     type: Object,
     default: () => ({ x: 0, y: 0 })
@@ -34,7 +38,8 @@ const emit = defineEmits([
   'close',
   'update:shape',
   'update:borderColor',
-  'update:hue'
+  'update:hue',
+  'update:useGradient'
 ])
 
 // Local hue for slider (updates on input, emits on change)
@@ -144,19 +149,32 @@ onUnmounted(() => {
 
         <!-- Gradient picker -->
         <div class="style-section">
-          <label class="section-label">Color Gradient</label>
-          <div class="gradient-preview" :style="gradientStyle"></div>
-          <div class="hue-slider-row">
-            <input
-              type="range"
-              class="hue-slider"
-              min="0"
-              max="360"
-              :value="localHue"
-              @input="handleHueInput"
-              @change="handleHueChange"
-            />
-            <span class="hue-value">{{ localHue }}°</span>
+          <div class="section-header">
+            <label class="section-label">Color Gradient</label>
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                :checked="useGradient"
+                @change="emit('update:useGradient', $event.target.checked)"
+              />
+              <span>Enable</span>
+            </label>
+          </div>
+          <div class="gradient-controls" :class="{ disabled: !useGradient }">
+            <div class="gradient-preview" :style="gradientStyle"></div>
+            <div class="hue-slider-row">
+              <input
+                type="range"
+                class="hue-slider"
+                min="0"
+                max="360"
+                :value="localHue"
+                :disabled="!useGradient"
+                @input="handleHueInput"
+                @change="handleHueChange"
+              />
+              <span class="hue-value">{{ localHue }}°</span>
+            </div>
           </div>
         </div>
       </div>
@@ -225,6 +243,40 @@ onUnmounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--color-text-muted, #666);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--color-text-secondary, #aaa);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  accent-color: var(--color-accent, #4ade80);
+}
+
+.gradient-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: opacity 0.15s ease;
+}
+
+.gradient-controls.disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 /* Shape options */

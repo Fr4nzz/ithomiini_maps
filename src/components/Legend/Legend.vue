@@ -444,6 +444,10 @@ function handleUpdateHue(hue) {
   legendStore.setSpeciesBaseHue(stylePopupState.value.groupName, parseInt(hue))
 }
 
+function handleUpdateUseGradient(enabled) {
+  legendStore.setSpeciesGradientEnabledForSpecies(stylePopupState.value.groupName, enabled)
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // ABBREVIATION HANDLERS
 // ═══════════════════════════════════════════════════════════════════════════
@@ -605,6 +609,7 @@ watch(() => legendStore.size, (newSize) => {
               :border-color="group.borderColor"
               :border-width="dataStore.mapStyle.borderWidth"
               :indented="legendStore.groupingSettings.showHeaders"
+              :shape="group.shape"
               @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
               @update:custom-color="(val) => handleColorUpdate(item.label, val)"
               @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -643,13 +648,15 @@ watch(() => legendStore.size, (newSize) => {
       :open="stylePopupState.open"
       :group-name="stylePopupState.groupName"
       :current-shape="legendStore.getGroupShape(stylePopupState.groupName)"
-      :border-color="speciesBorderColors[stylePopupState.groupName] || dataStore.mapStyle.borderColor"
+      :border-color="legendStore.speciesBorderColors[stylePopupState.groupName] || dataStore.mapStyle.borderColor"
       :base-hue="speciesBaseHues[stylePopupState.groupName] || 210"
+      :use-gradient="legendStore.isSpeciesGradientEnabled(stylePopupState.groupName)"
       :position="stylePopupState.position"
       @close="closeGroupStylePopup"
       @update:shape="handleUpdateShape"
       @update:border-color="handleUpdateBorderColor"
       @update:hue="handleUpdateHue"
+      @update:use-gradient="handleUpdateUseGradient"
     />
   </div>
 </template>

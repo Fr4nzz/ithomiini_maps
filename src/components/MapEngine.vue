@@ -98,7 +98,7 @@ const handleShowPopup = (data) => {
 }
 
 const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, ensureShapeImages } = useDataLayer(map, { onShowPopup: handleShowPopup })
-const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer)
+const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, ensureShapeImages)
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
 
 // Map layer dropdown
@@ -329,14 +329,6 @@ watch(
 
     const shouldSkipZoom = !dataLengthChanged || scatterJustToggled || clusteringJustToggled
 
-    console.log('📊 displayGeoJSON changed:', {
-      newLength,
-      dataLengthChanged,
-      scatterJustToggled,
-      clusteringJustToggled: clusteringJustToggled,
-      shouldSkipZoom
-    })
-
     // Reset the clustering flag after we've used it
     if (clusteringJustToggled) {
       clusteringJustToggled = false
@@ -367,7 +359,6 @@ let clusteringJustToggled = false
 watch(
   () => store.clusteringEnabled,
   () => {
-    console.log('🔄 Clustering ENABLED changed (sync):', store.clusteringEnabled)
     clusteringJustToggled = true
   },
   { flush: 'sync' }
@@ -377,7 +368,6 @@ watch(
 watch(
   () => store.clusterSettings,
   () => {
-    console.log('🔄 Clustering SETTINGS changed:', store.clusterSettings)
     if (!map.value || !map.value.isStyleLoaded()) return
     addDataLayer({ skipZoom: true })
   },
@@ -434,6 +424,16 @@ watch(
   { deep: true }
 )
 
+// Watch for per-species gradient enabled settings
+watch(
+  () => legendStore.speciesGradientEnabled,
+  () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
 // Watch for shape settings changes
 watch(
   () => legendStore.shapeSettings,
@@ -451,8 +451,12 @@ watch(
 // Watch for group shape assignments
 watch(
   () => legendStore.groupShapes,
-  () => {
+  async () => {
     if (!map.value || !map.value.isStyleLoaded()) return
+    // Ensure shape images are loaded when shapes are enabled
+    if (legendStore.shapeSettings.enabled) {
+      await ensureShapeImages()
+    }
     addDataLayer({ skipZoom: true })
   },
   { deep: true }
