@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { usePersistenceStore } from './persistence'
+import { useDataStore } from './data'
 
 // Helper to get/set localStorage with fallback (uses persistence store)
 const getStorage = (key, defaultValue) => {
@@ -14,6 +15,12 @@ const setStorage = (key, value) => {
 }
 
 export const useLegendStore = defineStore('legend', () => {
+  // Lazy getter for data store (avoid circular dependency)
+  let _dataStore = null
+  const getDataStore = () => {
+    if (!_dataStore) _dataStore = useDataStore()
+    return _dataStore
+  }
   // ═══════════════════════════════════════════════════════════════════════════
   // POSITION & SIZE STATE
   // ═══════════════════════════════════════════════════════════════════════════
@@ -59,8 +66,45 @@ export const useLegendStore = defineStore('legend', () => {
   const itemOrder = ref(getStorage('legend-item-order', []))
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // GROUPING SETTINGS (for subspecies grouped by species)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Grouping options
+  const groupingSettings = ref(getStorage('legend-grouping', {
+    enabled: true,                     // Default: grouped view when applicable
+    labelFormat: 'subspecies-only',    // 'subspecies-only' | 'abbreviated' (M. p. casabranca)
+  }))
+
+  // Species-level styling options
+  const speciesStyling = ref(getStorage('legend-species-styling', {
+    borderColor: false,                // Per-species border colors on map
+    colorGradient: false,              // Color families per species
+  }))
+
+  // Per-species border colors (auto-generated or custom)
+  // Format: { 'Mechanitis polymnia': '#ffffff', ... }
+  const speciesBorderColors = ref(getStorage('legend-species-borders', {}))
+
+  // Per-species base hues for gradient generation
+  // Format: { 'Mechanitis polymnia': 210, ... } (hue values 0-360)
+  const speciesBaseHues = ref(getStorage('legend-species-hues', {}))
+
+  // Track which species groups are expanded/collapsed
+  // Format: { 'Mechanitis polymnia': true, ... }
+  const expandedGroups = ref({})
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
+
+  // Check if grouping is applicable (only for subspecies mode)
+  const canGroup = computed(() => {
+    const dataStore = getDataStore()
+    return dataStore.colorBy === 'subspecies'
+  })
+
+  // Should display grouped
+  const isGrouped = computed(() => canGroup.value && groupingSettings.value.enabled)
 
   // Check if there are any customizations
   const hasCustomizations = computed(() => {
@@ -175,14 +219,94 @@ export const useLegendStore = defineStore('legend', () => {
     resetCustomizations()
     resetPosition()
     resetSize()
+    resetSpeciesStyling()
     textScale.value = 1
     dotScale.value = 1
     maxItems.value = 15
     stickyEdges.value = true
+    groupingSettings.value = { enabled: true, labelFormat: 'subspecies-only' }
     setStorage('legend-text-scale', 1)
     setStorage('legend-dot-scale', 1)
     setStorage('legend-max-items', 15)
     setStorage('legend-sticky', true)
+    setStorage('legend-grouping', groupingSettings.value)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GROUPING ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setGroupingEnabled(enabled) {
+    groupingSettings.value.enabled = enabled
+    setStorage('legend-grouping', groupingSettings.value)
+  }
+
+  function setLabelFormat(format) {
+    groupingSettings.value.labelFormat = format
+    setStorage('legend-grouping', groupingSettings.value)
+  }
+
+  function toggleGroupExpanded(species) {
+    expandedGroups.value[species] = !expandedGroups.value[species]
+  }
+
+  function isGroupExpanded(species) {
+    // Default to expanded if not set
+    return expandedGroups.value[species] !== false
+  }
+
+  function expandAllGroups() {
+    expandedGroups.value = {}
+  }
+
+  function collapseAllGroups(speciesList) {
+    const collapsed = {}
+    speciesList.forEach(species => {
+      collapsed[species] = false
+    })
+    expandedGroups.value = collapsed
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SPECIES STYLING ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setSpeciesBorderColorEnabled(enabled) {
+    speciesStyling.value.borderColor = enabled
+    setStorage('legend-species-styling', speciesStyling.value)
+  }
+
+  function setSpeciesGradientEnabled(enabled) {
+    speciesStyling.value.colorGradient = enabled
+    setStorage('legend-species-styling', speciesStyling.value)
+  }
+
+  function setSpeciesBorderColor(species, color) {
+    if (color) {
+      speciesBorderColors.value[species] = color
+    } else {
+      delete speciesBorderColors.value[species]
+    }
+    setStorage('legend-species-borders', speciesBorderColors.value)
+  }
+
+  function setSpeciesBaseHue(species, hue) {
+    if (hue !== null && hue !== undefined) {
+      speciesBaseHues.value[species] = hue
+    } else {
+      delete speciesBaseHues.value[species]
+    }
+    setStorage('legend-species-hues', speciesBaseHues.value)
+  }
+
+  function resetSpeciesStyling() {
+    speciesStyling.value = { borderColor: false, colorGradient: false }
+    speciesBorderColors.value = {}
+    speciesBaseHues.value = {}
+    expandedGroups.value = {}
+    setStorage('legend-species-styling', speciesStyling.value)
+    setStorage('legend-species-borders', {})
+    setStorage('legend-species-hues', {})
   }
 
   return {
@@ -200,8 +324,17 @@ export const useLegendStore = defineStore('legend', () => {
     hiddenItems,
     itemOrder,
 
+    // Grouping state
+    groupingSettings,
+    speciesStyling,
+    speciesBorderColors,
+    speciesBaseHues,
+    expandedGroups,
+
     // Computed
     hasCustomizations,
+    canGroup,
+    isGrouped,
 
     // Actions
     updatePosition,
@@ -220,6 +353,21 @@ export const useLegendStore = defineStore('legend', () => {
     resetCustomizations,
     resetPosition,
     resetSize,
-    resetAll
+    resetAll,
+
+    // Grouping actions
+    setGroupingEnabled,
+    setLabelFormat,
+    toggleGroupExpanded,
+    isGroupExpanded,
+    expandAllGroups,
+    collapseAllGroups,
+
+    // Species styling actions
+    setSpeciesBorderColorEnabled,
+    setSpeciesGradientEnabled,
+    setSpeciesBorderColor,
+    setSpeciesBaseHue,
+    resetSpeciesStyling
   }
 })

@@ -11,7 +11,9 @@ import {
   Type,
   Circle,
   MapPin,
-  Save
+  Save,
+  Layers,
+  Paintbrush
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
@@ -135,6 +137,32 @@ function togglePersistence() {
       dataStore
     })
   }
+}
+
+// Label format options
+const labelFormatOptions = [
+  { value: 'subspecies-only', label: 'Subspecies only' },
+  { value: 'abbreviated', label: 'Abbreviated (M. p. ssp)' }
+]
+
+// Toggle grouping
+function toggleGrouping() {
+  legendStore.setGroupingEnabled(!legendStore.groupingSettings.enabled)
+}
+
+// Update label format
+function updateLabelFormat(e) {
+  legendStore.setLabelFormat(e.target.value)
+}
+
+// Toggle species border colors
+function toggleSpeciesBorders() {
+  legendStore.setSpeciesBorderColorEnabled(!legendStore.speciesStyling.borderColor)
+}
+
+// Toggle species color gradients
+function toggleSpeciesGradients() {
+  legendStore.setSpeciesGradientEnabled(!legendStore.speciesStyling.colorGradient)
 }
 
 // Click outside handler
@@ -298,6 +326,91 @@ onUnmounted(() => {
             {{ persistenceStore.enabled ? 'ON' : 'OFF' }}
           </button>
         </div>
+
+        <!-- Grouping Options (only shown when colorBy = subspecies) -->
+        <template v-if="legendStore.canGroup">
+          <!-- Divider -->
+          <div class="settings-divider"></div>
+
+          <!-- Grouping Section Header -->
+          <div class="settings-section-header">
+            <Layers :size="14" />
+            <span>GROUPING</span>
+          </div>
+
+          <!-- Group by Species toggle -->
+          <div class="settings-row toggle-row">
+            <label class="settings-label">
+              Group by Species
+            </label>
+            <button
+              class="toggle-button"
+              :class="{ active: legendStore.groupingSettings.enabled }"
+              @click="toggleGrouping"
+              title="Group subspecies under species headers"
+            >
+              {{ legendStore.groupingSettings.enabled ? 'ON' : 'OFF' }}
+            </button>
+          </div>
+
+          <!-- Label format (only when grouping is enabled) -->
+          <div v-if="legendStore.groupingSettings.enabled" class="settings-row">
+            <label class="settings-label">
+              Label Format
+            </label>
+            <div class="settings-control">
+              <select
+                class="format-select"
+                :value="legendStore.groupingSettings.labelFormat"
+                @change="updateLabelFormat"
+              >
+                <option
+                  v-for="option in labelFormatOptions"
+                  :key="option.value"
+                  :value="option.value"
+                >
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Species Styling Section -->
+          <div class="settings-section-header" style="margin-top: 8px;">
+            <Paintbrush :size="14" />
+            <span>SPECIES STYLING</span>
+          </div>
+
+          <!-- Border colors toggle -->
+          <div class="settings-row toggle-row">
+            <label class="settings-label">
+              Border Colors
+            </label>
+            <button
+              class="toggle-button"
+              :class="{ active: legendStore.speciesStyling.borderColor }"
+              @click="toggleSpeciesBorders"
+              title="Each species gets a unique border color"
+            >
+              {{ legendStore.speciesStyling.borderColor ? 'ON' : 'OFF' }}
+            </button>
+          </div>
+
+          <!-- Color gradients toggle -->
+          <div class="settings-row toggle-row">
+            <label class="settings-label">
+              Color Gradients
+            </label>
+            <button
+              class="toggle-button"
+              :class="{ active: legendStore.speciesStyling.colorGradient }"
+              @click="toggleSpeciesGradients"
+              title="Subspecies within a species use similar hues"
+            >
+              {{ legendStore.speciesStyling.colorGradient ? 'ON' : 'OFF' }}
+            </button>
+          </div>
+        </template>
 
         <!-- Divider -->
         <div class="settings-divider"></div>
@@ -707,6 +820,28 @@ onUnmounted(() => {
   background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
   border-color: var(--color-accent, #4ade80);
   color: var(--color-accent, #4ade80);
+}
+
+/* Format select dropdown */
+.format-select {
+  width: 100%;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.format-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+.format-select option {
+  background: var(--color-bg-secondary, #252540);
+  color: var(--color-text-primary, #e0e0e0);
 }
 
 /* Scrollbar for settings panel */

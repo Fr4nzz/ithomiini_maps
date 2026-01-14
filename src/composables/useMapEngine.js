@@ -1,6 +1,8 @@
 import { ref, computed } from 'vue'
 import maplibregl from 'maplibre-gl'
 import { useDataStore } from '../stores/data'
+import { useLegendStore } from '../stores/legend'
+import { generateSpeciesBorderColors } from '../utils/colors'
 import { ASPECT_RATIOS } from '../utils/constants'
 import { computeClusterStats, haversineDistance } from '../utils/clusterStats'
 
@@ -434,6 +436,7 @@ export function useScatterVisualization(map) {
 // Data layer management
 export function useDataLayer(map, options = {}) {
   const store = useDataStore()
+  const legendStore = useLegendStore()
   const { onShowPopup } = options
 
   // Hover popup for cluster preview
@@ -654,6 +657,21 @@ export function useDataLayer(map, options = {}) {
       14, baseSize * 1.5
     ]
 
+    // Build border color expression (per-species or single color)
+    let borderColorExpression = style.borderColor
+    if (legendStore.speciesStyling.borderColor && store.colorBy === 'subspecies') {
+      // Generate border colors for species
+      const speciesList = Object.keys(store.speciesSubspeciesMap).sort()
+      const speciesBorderColors = generateSpeciesBorderColors(speciesList, legendStore.speciesBorderColors)
+
+      // Build MapLibre match expression for per-species borders
+      borderColorExpression = ['match', ['get', 'scientific_name']]
+      for (const [species, color] of Object.entries(speciesBorderColors)) {
+        borderColorExpression.push(species, color)
+      }
+      borderColorExpression.push(style.borderColor) // default fallback
+    }
+
     map.value.addLayer({
       id: 'points-layer',
       type: 'circle',
@@ -668,7 +686,7 @@ export function useDataLayer(map, options = {}) {
           3, style.borderWidth * 0.33,
           10, style.borderWidth
         ],
-        'circle-stroke-color': style.borderColor,
+        'circle-stroke-color': borderColorExpression,
         'circle-stroke-opacity': style.borderOpacity
       }
     })

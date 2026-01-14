@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
+import { generateGroupedColorMap, generateSpeciesBaseHues } from '../utils/colors'
 import { useLegendStore } from './legend'
 import { usePersistenceStore } from './persistence'
 
@@ -1148,6 +1149,34 @@ export const useDataStore = defineStore('data', () => {
     return palette
   }
 
+  // Build species-subspecies mapping from displayed data (for gradient coloring)
+  const speciesSubspeciesMap = computed(() => {
+    const geo = displayGeoJSON.value
+    if (!geo?.features) return {}
+
+    const map = {}
+    for (const feature of geo.features) {
+      const species = feature.properties.scientific_name
+      const subspecies = feature.properties.subspecies
+
+      if (!species || !subspecies) continue
+      if (subspecies === 'Unknown' || subspecies === 'NA') continue
+
+      if (!map[species]) {
+        map[species] = new Set()
+      }
+      map[species].add(subspecies)
+    }
+
+    // Convert sets to sorted arrays
+    const result = {}
+    for (const [species, subspeciesSet] of Object.entries(map)) {
+      result[species] = [...subspeciesSet].sort()
+    }
+
+    return result
+  })
+
   // Get the color map based on current colorBy setting
   // This now derives colors from DISPLAYED data only (for accurate legend)
   // Also applies custom colors from legend store
@@ -1192,6 +1221,13 @@ export const useDataStore = defineStore('data', () => {
       if (Object.keys(baseColorMap).length === 0) {
         baseColorMap = { ...COLOR_PALETTES.source }
       }
+    } else if (mode === 'subspecies' && legendStore.speciesStyling.colorGradient) {
+      // Generate species-based gradient colors when gradient mode is enabled
+      const speciesList = Object.keys(speciesSubspeciesMap.value).sort()
+      const hueAssignments = generateSpeciesBaseHues(speciesList, legendStore.speciesBaseHues)
+      baseColorMap = generateGroupedColorMap(speciesSubspeciesMap.value, hueAssignments, legendStore.customColors)
+      // Return early since custom colors are already applied in generateGroupedColorMap
+      return baseColorMap
     } else {
       // Generate dynamic palette for taxonomy and mimicry using displayed values
       baseColorMap = generateColorPalette(displayedValues)
@@ -1358,6 +1394,7 @@ export const useDataStore = defineStore('data', () => {
     activeColorMap,
     colorByAttribute,
     legendTitle,
+    speciesSubspeciesMap,
 
     // Final output
     filteredGeoJSON,

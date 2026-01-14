@@ -400,6 +400,35 @@ watch(
   { deep: true }
 )
 
+// Watch for species styling changes (border colors, gradient mode)
+watch(
+  () => legendStore.speciesStyling,
+  () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
+// Watch for species border color assignments
+watch(
+  () => legendStore.speciesBorderColors,
+  () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
+
+// Watch for species hue assignments (gradient mode)
+watch(
+  () => legendStore.speciesBaseHues,
+  () => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+    addDataLayer({ skipZoom: true })
+  },
+  { deep: true }
+)
 
 // Watch for focusPoint changes
 watch(

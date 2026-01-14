@@ -47,6 +47,11 @@ export const usePersistenceStore = defineStore('persistence', () => {
       'legend-custom-colors',
       'legend-hidden-items',
       'legend-item-order',
+      // Legend grouping settings
+      'legend-grouping',
+      'legend-species-styling',
+      'legend-species-borders',
+      'legend-species-hues',
       // Map settings
       'map-view',
       'map-style',
@@ -117,6 +122,10 @@ export const usePersistenceStore = defineStore('persistence', () => {
       set('legend-custom-colors', legendStore.customColors)
       set('legend-hidden-items', legendStore.hiddenItems)
       set('legend-item-order', legendStore.itemOrder)
+      set('legend-grouping', legendStore.groupingSettings)
+      set('legend-species-styling', legendStore.speciesStyling)
+      set('legend-species-borders', legendStore.speciesBorderColors)
+      set('legend-species-hues', legendStore.speciesBaseHues)
     }
 
     // Save data store state

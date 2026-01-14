@@ -52,6 +52,10 @@ const props = defineProps({
   borderWidth: {
     type: Number,
     default: 1.5
+  },
+  indented: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -93,7 +97,8 @@ function toggleVisibility() {
     :class="{
       'is-hidden': !visible,
       'is-editable': editable,
-      'is-export': isExportMode && !editable
+      'is-export': isExportMode && !editable,
+      'is-indented': indented
     }"
   >
     <!-- Color dot / picker -->
@@ -219,5 +224,14 @@ function toggleVisibility() {
 
 .legend-item.is-export .legend-label {
   font-size: inherit;
+}
+
+/* Indented style for grouped items */
+.legend-item.is-indented {
+  padding-left: 4px;
+}
+
+.legend-item.is-indented .legend-label {
+  font-size: 12px;
 }
 </style>

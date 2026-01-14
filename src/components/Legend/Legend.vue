@@ -2,9 +2,11 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
+import { generateSpeciesBorderColors } from '../../utils/colors'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
 import LegendResizeHandle from './LegendResizeHandle.vue'
+import LegendGroupHeader from './LegendGroupHeader.vue'
 
 const props = defineProps({
   containerRef: {
@@ -58,6 +60,70 @@ const containerBounds = computed(() => {
 // Color map from data store
 const colorMap = computed(() => dataStore.activeColorMap)
 
+// Build species-subspecies mapping from displayed data
+const speciesSubspeciesMap = computed(() => {
+  const geo = dataStore.displayGeoJSON
+  if (!geo?.features) return {}
+
+  const map = {}
+  for (const feature of geo.features) {
+    const species = feature.properties.scientific_name
+    const subspecies = feature.properties.subspecies
+
+    if (!species || !subspecies) continue
+    if (subspecies === 'Unknown' || subspecies === 'NA') continue
+
+    if (!map[species]) {
+      map[species] = new Set()
+    }
+    map[species].add(subspecies)
+  }
+
+  // Convert sets to sorted arrays
+  const result = {}
+  for (const [species, subspeciesSet] of Object.entries(map)) {
+    result[species] = [...subspeciesSet].sort()
+  }
+
+  return result
+})
+
+// Get list of species (sorted)
+const speciesList = computed(() => Object.keys(speciesSubspeciesMap.value).sort())
+
+// Generate border colors for species
+const speciesBorderColors = computed(() => {
+  if (!legendStore.speciesStyling.borderColor) return {}
+  return generateSpeciesBorderColors(speciesList.value, legendStore.speciesBorderColors)
+})
+
+// Get border color for a species
+function getSpeciesBorderColor(species) {
+  return speciesBorderColors.value[species] || dataStore.mapStyle.borderColor
+}
+
+// Get species for a subspecies
+function getSpeciesForSubspecies(subspecies) {
+  for (const [species, subspeciesList] of Object.entries(speciesSubspeciesMap.value)) {
+    if (subspeciesList.includes(subspecies)) {
+      return species
+    }
+  }
+  return null
+}
+
+// Format label based on settings
+function formatLabel(subspecies, species) {
+  if (legendStore.groupingSettings.labelFormat === 'abbreviated' && species) {
+    const parts = species.split(' ')
+    if (parts.length >= 2) {
+      // "M. p. casabranca" format
+      return `${parts[0][0]}. ${parts[1][0]}. ${subspecies}`
+    }
+  }
+  return subspecies
+}
+
 // Get items with visibility and custom settings applied
 const legendItems = computed(() => {
   const items = []
@@ -100,6 +166,48 @@ const legendItems = computed(() => {
   }
 
   return items
+})
+
+// Grouped legend data structure
+const groupedLegendData = computed(() => {
+  // If not grouped mode or not in subspecies colorBy, return flat
+  if (!legendStore.isGrouped) {
+    return { type: 'flat', items: legendItems.value }
+  }
+
+  // Group items by species
+  const groups = []
+  const itemsBySpecies = {}
+
+  // First, categorize items by species
+  for (const item of legendItems.value) {
+    const species = getSpeciesForSubspecies(item.label)
+    if (species) {
+      if (!itemsBySpecies[species]) {
+        itemsBySpecies[species] = []
+      }
+      itemsBySpecies[species].push(item)
+    }
+  }
+
+  // Sort species alphabetically
+  const sortedSpecies = Object.keys(itemsBySpecies).sort()
+
+  // Build groups
+  for (const species of sortedSpecies) {
+    const items = itemsBySpecies[species]
+    groups.push({
+      species,
+      borderColor: getSpeciesBorderColor(species),
+      expanded: legendStore.isGroupExpanded(species),
+      items: items.map(item => ({
+        ...item,
+        displayLabel: formatLabel(item.label, species)
+      }))
+    })
+  }
+
+  return { type: 'grouped', groups }
 })
 
 // Count of hidden items
@@ -281,6 +389,10 @@ function handleResetCustomizations() {
   // Reset is handled by store
 }
 
+function handleToggleGroup(species) {
+  legendStore.toggleGroupExpanded(species)
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // LIFECYCLE
 // ═══════════════════════════════════════════════════════════════════════════
@@ -351,10 +463,10 @@ watch(() => legendStore.size, (newSize) => {
         {{ dataStore.legendTitle }}
       </div>
 
-      <!-- Items -->
-      <div class="legend-items">
+      <!-- Items (Flat view) -->
+      <div v-if="groupedLegendData.type === 'flat'" class="legend-items">
         <LegendItem
-          v-for="item in legendItems"
+          v-for="item in groupedLegendData.items"
           :key="item.label"
           :label="item.label"
           :color="item.color"
@@ -375,6 +487,53 @@ watch(() => legendStore.size, (newSize) => {
           @picker-open="hasOpenPopup = true"
           @picker-close="hasOpenPopup = false"
         />
+      </div>
+
+      <!-- Items (Grouped view) -->
+      <div v-else class="legend-items grouped">
+        <div
+          v-for="group in groupedLegendData.groups"
+          :key="group.species"
+          class="legend-group"
+        >
+          <!-- Group header -->
+          <LegendGroupHeader
+            :species-name="group.species"
+            :expanded="group.expanded"
+            :border-color="group.borderColor"
+            :count="group.items.length"
+            :dot-size="dotSize"
+            :is-export-mode="isExportMode"
+            @toggle="handleToggleGroup(group.species)"
+          />
+
+          <!-- Group items (shown when expanded) -->
+          <div v-show="group.expanded" class="legend-group-items">
+            <LegendItem
+              v-for="item in group.items"
+              :key="item.label"
+              :label="item.displayLabel || item.label"
+              :color="item.color"
+              :default-color="item.defaultColor"
+              :custom-label="item.customLabel"
+              :custom-color="item.customColor"
+              :visible="item.visible"
+              :editable="showEditUI"
+              :is-export-mode="isExportMode"
+              :dot-size="dotSize"
+              :font-size="fontSize"
+              :border-color="group.borderColor"
+              :border-width="dataStore.mapStyle.borderWidth"
+              :indented="true"
+              @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
+              @update:custom-color="(val) => handleColorUpdate(item.label, val)"
+              @toggle-visibility="() => handleToggleVisibility(item.label)"
+              @reset-color="() => handleResetColor(item.label)"
+              @picker-open="hasOpenPopup = true"
+              @picker-close="hasOpenPopup = false"
+            />
+          </div>
+        </div>
       </div>
 
       <!-- More indicator -->
@@ -492,5 +651,26 @@ watch(() => legendStore.size, (newSize) => {
 
 .legend-content::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-muted, #666);
+}
+
+/* Grouped view styles */
+.legend-items.grouped {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.legend-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--color-border, #3d3d5c);
 }
 </style>
