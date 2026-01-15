@@ -129,11 +129,11 @@ export const useLegendStore = defineStore('legend', () => {
 
   // Global format for display names in group headers
   // Values: 'firstLetterGenus' | 'syllableGenus' | 'full' | 'custom' (per-species)
-  const displayNameFormat = ref(getStorage('legend-display-name-format', 'firstLetterGenus'))
+  const displayNameFormat = ref(getStorage('legend-display-name-format', 'full'))
 
   // Global format for prefix abbreviations (shown before subspecies)
   // Values: 'firstLetterBoth' | 'syllableBoth' | 'none' | 'custom' (per-species)
-  const prefixFormat = ref(getStorage('legend-prefix-format', 'firstLetterBoth'))
+  const prefixFormat = ref(getStorage('legend-prefix-format', 'syllableBoth'))
 
   // Per-species custom display names (overrides global format)
   // Format: { 'Mechanitis polymnia': 'M. polymnia', ... }
@@ -215,8 +215,8 @@ export const useLegendStore = defineStore('legend', () => {
            speciesStyling.value.borderColor !== false ||
            speciesStyling.value.colorGradient !== false ||
            // Display name/prefix formats changed from defaults
-           displayNameFormat.value !== 'firstLetterGenus' ||
-           prefixFormat.value !== 'firstLetterBoth'
+           displayNameFormat.value !== 'full' ||
+           prefixFormat.value !== 'syllableBoth'
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -336,11 +336,11 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-species-styling', speciesStyling.value)
 
     // Reset display name format settings
-    displayNameFormat.value = 'firstLetterGenus'
-    prefixFormat.value = 'firstLetterBoth'
+    displayNameFormat.value = 'full'
+    prefixFormat.value = 'syllableBoth'
     speciesDisplayNames.value = {}
-    setStorage('legend-display-name-format', 'firstLetterGenus')
-    setStorage('legend-prefix-format', 'firstLetterBoth')
+    setStorage('legend-display-name-format', 'full')
+    setStorage('legend-prefix-format', 'syllableBoth')
     setStorage('legend-species-display-names', {})
   }
 

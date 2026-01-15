@@ -77,15 +77,10 @@ const showPrefixDropdown = ref(false)
 const displayNameDropdownPosition = ref({ x: 0, y: 0 })
 const prefixDropdownPosition = ref({ x: 0, y: 0 })
 
-// Format species name for display - use custom label if set, otherwise show abbreviation
+// Format species name for display - use custom label if set, otherwise show full name
 const displayName = computed(() => {
   if (props.customLabel) return props.customLabel
-
-  // Default format: first letter of genus + full epithet
-  const parts = props.speciesName.split(' ')
-  if (parts.length >= 2) {
-    return `${parts[0][0]}. ${parts.slice(1).join(' ')}`
-  }
+  // Default format: full species name
   return props.speciesName
 })
 
