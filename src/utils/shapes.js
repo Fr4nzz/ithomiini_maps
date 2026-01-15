@@ -2,40 +2,22 @@
  * Shape utilities for MapLibre GL marker visualization
  * Provides SVG definitions and loading utilities for custom marker shapes
  *
- * IMPORTANT: These shapes use SDF (Signed Distance Field) rendering which allows
- * dynamic coloring via icon-color paint property. SDF images must be single-color
- * (white) with transparent background.
+ * APPROACH: We generate colored shape images with borders baked in (non-SDF),
+ * rather than using SDF icons with icon-halo. This is because icon-halo has
+ * known bugs in MapLibre where borders don't scale properly with zoom.
  *
- * @see https://maplibre.org/maplibre-style-spec/layers/ - icon-color only works with SDF
- * @see https://docs.mapbox.com/help/troubleshooting/using-recolorable-images-in-mapbox-maps/
+ * @see https://github.com/maplibre/maplibre-native/issues/2175 - icon halo bugs
+ * @see https://maplibre.org/maplibre-gl-js/docs/examples/add-a-generated-icon-to-the-map/
  */
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SHAPE SVG DEFINITIONS (SDF-compatible: solid white, transparent background)
+// SHAPE DEFINITIONS
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * SVG shape definitions (32x32 viewBox)
- * All shapes are solid white (#ffffff) for SDF compatibility.
- * Color is applied at runtime via MapLibre's icon-color paint property.
+ * Available shape names
  */
-export const SHAPE_SVGS = {
-  circle: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="16" r="12" fill="#ffffff"/>
-  </svg>`,
-
-  square: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <rect x="5" y="5" width="22" height="22" fill="#ffffff"/>
-  </svg>`,
-
-  triangle: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="16,3 30,28 2,28" fill="#ffffff"/>
-  </svg>`,
-
-  rhombus: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="16,3 29,16 16,29 3,16" fill="#ffffff"/>
-  </svg>`
-}
+export const SHAPE_NAMES = ['circle', 'square', 'triangle', 'rhombus']
 
 /**
  * Shape options for UI selection
@@ -53,75 +35,125 @@ export const SHAPE_OPTIONS = [
 export const SHAPE_ROTATION = ['circle', 'triangle', 'square', 'rhombus']
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SVG TO MAP IMAGE CONVERSION
+// CANVAS SHAPE RENDERING (for baked-color images)
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Convert SVG string to ImageData for MapLibre addImage
+ * Draw a shape on a canvas context with fill and stroke baked in.
+ * This is the preferred approach because MapLibre's icon-halo has bugs
+ * that cause borders to not scale properly with zoom.
  *
- * MapLibre's addImage() accepts: HTMLImageElement, ImageData, ImageBitmap,
- * or {width, height, data: Uint8Array}. We return ImageData from getImageData().
- *
- * @param {string} svgString - SVG markup string
- * @param {number} size - Image size in pixels (square)
- * @returns {Promise<ImageData>} ImageData object for MapLibre addImage
- *
- * @see https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/ - addImage method
+ * @param {CanvasRenderingContext2D} ctx - Canvas 2D context
+ * @param {string} shapeName - Shape name (circle, square, triangle, rhombus)
+ * @param {number} size - Canvas size in pixels
+ * @param {string} fillColor - Fill color (hex or CSS color)
+ * @param {string} strokeColor - Stroke/border color
+ * @param {number} strokeWidth - Stroke width in pixels (relative to size)
  */
-export async function svgToMapImage(svgString, size = 32) {
-  const canvas = document.createElement('canvas')
-  canvas.width = size
-  canvas.height = size
+function drawShape(ctx, shapeName, size, fillColor, strokeColor, strokeWidth) {
+  const center = size / 2
+  const padding = strokeWidth + 2 // Padding from edge for stroke
+  const innerSize = size - padding * 2
 
-  const ctx = canvas.getContext('2d')
-  const svg = new Blob([svgString], { type: 'image/svg+xml' })
-  const url = URL.createObjectURL(svg)
+  ctx.fillStyle = fillColor
+  ctx.strokeStyle = strokeColor
+  ctx.lineWidth = strokeWidth
+  ctx.lineCap = 'round'
+  ctx.lineJoin = 'round'
 
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, size, size)
-      URL.revokeObjectURL(url)
-      // Return ImageData, not canvas - MapLibre requires this format
-      // @see https://maplibre.org/maplibre-gl-js/docs/API/interfaces/StyleImageInterface/
-      resolve(ctx.getImageData(0, 0, size, size))
+  ctx.beginPath()
+
+  switch (shapeName) {
+    case 'circle': {
+      const radius = innerSize / 2
+      ctx.arc(center, center, radius, 0, Math.PI * 2)
+      break
     }
-    img.onerror = (err) => {
-      URL.revokeObjectURL(url)
-      reject(err)
+    case 'square': {
+      const halfSize = innerSize / 2
+      ctx.rect(center - halfSize, center - halfSize, innerSize, innerSize)
+      break
     }
-    img.src = url
-  })
+    case 'triangle': {
+      // Equilateral-ish triangle pointing up
+      const h = innerSize * 0.866 // height = side * sqrt(3)/2
+      const top = center - h / 2
+      const bottom = center + h / 2
+      const halfBase = innerSize / 2
+      ctx.moveTo(center, top)
+      ctx.lineTo(center + halfBase, bottom)
+      ctx.lineTo(center - halfBase, bottom)
+      ctx.closePath()
+      break
+    }
+    case 'rhombus': {
+      // Diamond shape
+      const half = innerSize / 2
+      ctx.moveTo(center, center - half) // top
+      ctx.lineTo(center + half, center) // right
+      ctx.lineTo(center, center + half) // bottom
+      ctx.lineTo(center - half, center) // left
+      ctx.closePath()
+      break
+    }
+    default:
+      // Default to circle
+      ctx.arc(center, center, innerSize / 2, 0, Math.PI * 2)
+  }
+
+  ctx.fill()
+  if (strokeWidth > 0) {
+    ctx.stroke()
+  }
 }
 
 /**
- * Generate a colored version of a shape SVG
- * @param {string} shapeName - Name of shape (circle, square, triangle, rhombus)
- * @param {string} fillColor - Hex color for fill
- * @param {string} strokeColor - Hex color for stroke (border)
- * @param {number} strokeWidth - Stroke width in pixels
- * @returns {string} SVG string with applied colors
+ * Generate a colored shape image with border baked in.
+ * Returns data in the format MapLibre's addImage() expects.
+ *
+ * @param {string} shapeName - Shape name
+ * @param {string} fillColor - Fill color
+ * @param {string} strokeColor - Border color
+ * @param {number} strokeWidth - Border width (will be scaled to image size)
+ * @param {number} size - Image size in pixels (default 64 for retina)
+ * @returns {{width: number, height: number, data: Uint8Array}} Image data for MapLibre
+ *
+ * @see https://maplibre.org/maplibre-gl-js/docs/examples/add-a-generated-icon-to-the-map/
  */
-export function getColoredShapeSVG(shapeName, fillColor = '#4ade80', strokeColor = '#ffffff', strokeWidth = 2) {
-  const shapes = {
-    circle: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="16" cy="16" r="11" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>
-    </svg>`,
+export function generateColoredShapeImage(shapeName, fillColor, strokeColor, strokeWidth = 3, size = 64) {
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
 
-    square: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <rect x="5" y="5" width="22" height="22" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>
-    </svg>`,
+  // Scale stroke width relative to image size
+  const scaledStrokeWidth = (strokeWidth / 32) * size
 
-    triangle: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="16,4 29,27 3,27" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>
-    </svg>`,
+  drawShape(ctx, shapeName, size, fillColor, strokeColor, scaledStrokeWidth)
 
-    rhombus: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="16,4 28,16 16,28 4,16" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>
-    </svg>`
+  const imageData = ctx.getImageData(0, 0, size, size)
+  return {
+    width: size,
+    height: size,
+    data: new Uint8Array(imageData.data.buffer)
   }
+}
 
-  return shapes[shapeName] || shapes.circle
+/**
+ * Generate a unique image name for a colored shape
+ * @param {string} shapeName - Shape name
+ * @param {string} fillColor - Fill color (hex)
+ * @param {string} strokeColor - Stroke color (hex)
+ * @param {number} strokeWidth - Stroke width (included in name for cache invalidation)
+ * @returns {string} Unique image name for MapLibre
+ */
+export function getColoredShapeImageName(shapeName, fillColor, strokeColor, strokeWidth = 3) {
+  // Normalize colors (remove # and lowercase)
+  const fill = fillColor.replace('#', '').toLowerCase()
+  const stroke = strokeColor.replace('#', '').toLowerCase()
+  // Include stroke width (rounded to 1 decimal) for cache invalidation when border changes
+  const sw = Math.round(strokeWidth * 10) / 10
+  return `shape-${shapeName}-${fill}-${stroke}-w${sw}`
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -129,68 +161,80 @@ export function getColoredShapeSVG(shapeName, fillColor = '#4ade80', strokeColor
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Load all shape images into a MapLibre map instance as SDF images.
- * SDF (Signed Distance Field) images allow dynamic coloring via icon-color.
+ * Ensure a colored shape image exists in the map.
+ * Creates it on-demand if not already loaded.
  *
  * @param {maplibregl.Map} map - MapLibre map instance
- * @param {Object} options - Loading options
- * @param {number} options.size - Image size (default 64 for retina)
- * @param {number} options.pixelRatio - Pixel ratio for retina displays (default 2)
- * @returns {Promise<void>}
- *
- * @see https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/StyleImageMetadata/
+ * @param {string} shapeName - Shape name
+ * @param {string} fillColor - Fill color (hex)
+ * @param {string} strokeColor - Border color (hex)
+ * @param {number} strokeWidth - Border width
+ * @param {Object} options - Options
+ * @param {number} options.size - Image size (default 64)
+ * @param {number} options.pixelRatio - Pixel ratio (default 2)
+ * @returns {string} The image name that was loaded/exists
  */
-export async function loadShapeImages(map, options = {}) {
+export function ensureColoredShapeImage(map, shapeName, fillColor, strokeColor, strokeWidth = 3, options = {}) {
   const { size = 64, pixelRatio = 2 } = options
+  const imageName = getColoredShapeImageName(shapeName, fillColor, strokeColor)
 
-  const shapesToLoad = Object.entries(SHAPE_SVGS).filter(
-    ([shapeName]) => !map.hasImage(`shape-${shapeName}`)
-  )
-
-  if (shapesToLoad.length > 0) {
-    console.log(`[Shapes] Loading ${shapesToLoad.length} shape images...`)
+  if (!map.hasImage(imageName)) {
+    const imageData = generateColoredShapeImage(shapeName, fillColor, strokeColor, strokeWidth, size)
+    map.addImage(imageName, imageData, { pixelRatio })
   }
 
-  for (const [shapeName, svgContent] of shapesToLoad) {
-    const imageName = `shape-${shapeName}`
-    try {
-      const imageData = await svgToMapImage(svgContent, size)
-      // Add as SDF image to enable icon-color paint property
-      // @see https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/StyleImageMetadata/
-      map.addImage(imageName, imageData, { pixelRatio, sdf: true })
-      console.log(`[Shapes] Loaded: ${imageName}`)
-    } catch (err) {
-      console.warn(`[Shapes] Failed to load: ${imageName}`, err)
-    }
-  }
-
-  if (shapesToLoad.length > 0) {
-    console.log(`[Shapes] All shape images loaded`)
-  }
+  return imageName
 }
 
 /**
- * Check if all shape images are loaded in the map
+ * Load all required colored shape images for the current data.
+ * This generates unique images for each color+shape combination.
+ *
  * @param {maplibregl.Map} map - MapLibre map instance
- * @returns {boolean} True if all shapes are loaded
+ * @param {Array<{shape: string, fillColor: string, strokeColor: string}>} colorShapePairs - Required shape/color combinations
+ * @param {number} strokeWidth - Border width
+ * @param {Object} options - Loading options
+ * @returns {Map<string, string>} Map of "fillColor" -> imageName for lookups
  */
-export function areShapeImagesLoaded(map) {
-  return Object.keys(SHAPE_SVGS).every(shapeName =>
-    map.hasImage(`shape-${shapeName}`)
-  )
+export function loadColoredShapeImages(map, colorShapePairs, strokeWidth = 3, options = {}) {
+  const { size = 64, pixelRatio = 2 } = options
+  const colorToImageMap = new Map()
+  let loadedCount = 0
+
+  for (const { shape, fillColor, strokeColor } of colorShapePairs) {
+    const imageName = getColoredShapeImageName(shape, fillColor, strokeColor)
+
+    if (!map.hasImage(imageName)) {
+      const imageData = generateColoredShapeImage(shape, fillColor, strokeColor, strokeWidth, size)
+      map.addImage(imageName, imageData, { pixelRatio })
+      loadedCount++
+    }
+
+    // Map the fill color to the image name for building expressions
+    colorToImageMap.set(fillColor, imageName)
+  }
+
+  if (loadedCount > 0) {
+    console.log(`[Shapes] Generated ${loadedCount} colored shape images`)
+  }
+
+  return colorToImageMap
 }
 
 /**
- * Remove all shape images from the map
+ * Remove colored shape images that are no longer needed.
+ * Call this when data changes to clean up unused images.
+ *
  * @param {maplibregl.Map} map - MapLibre map instance
+ * @param {Set<string>} keepImages - Set of image names to keep
  */
-export function removeShapeImages(map) {
-  for (const shapeName of Object.keys(SHAPE_SVGS)) {
-    const imageName = `shape-${shapeName}`
-    if (map.hasImage(imageName)) {
-      map.removeImage(imageName)
-    }
-  }
+export function cleanupUnusedShapeImages(map, keepImages) {
+  // Get all current images that match our pattern
+  const style = map.getStyle()
+  if (!style || !style.images) return
+
+  // Note: MapLibre doesn't expose a list of image names easily,
+  // so we track them ourselves or skip cleanup for now
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -218,29 +262,27 @@ export function generateShapeAssignments(groupList, existing = {}) {
 }
 
 /**
- * Build a MapLibre expression for icon-image based on shape assignments
- * @param {string} attributeName - GeoJSON property name to match against
- * @param {Object} shapeAssignments - Map of attributeValue -> shapeName
- * @param {string} defaultShape - Default shape if no match (default: 'circle')
- * @returns {Array|string} MapLibre match expression or literal string if no assignments
+ * Build a MapLibre expression for icon-image based on colored shape images.
+ * Each unique color gets its own pre-rendered image with border baked in.
+ *
+ * @param {Map<string, string>} colorToImageMap - Map of fillColor -> imageName
+ * @param {string} colorAttributeName - GeoJSON property for color lookup
+ * @param {string} defaultImageName - Default image if no match
+ * @returns {Array|string} MapLibre match expression
  */
-export function buildShapeExpression(attributeName, shapeAssignments, defaultShape = 'circle') {
-  const entries = Object.entries(shapeAssignments)
-
-  // If no custom assignments, return a literal string (not a match expression)
-  // MapLibre's match expression requires at least one value-output pair
-  if (entries.length === 0) {
-    return `shape-${defaultShape}`
+export function buildColoredShapeExpression(colorToImageMap, colorAttributeName, defaultImageName) {
+  if (colorToImageMap.size === 0) {
+    return defaultImageName
   }
 
-  const expression = ['match', ['get', attributeName]]
+  const expression = ['match', ['get', colorAttributeName]]
 
-  for (const [value, shape] of entries) {
-    expression.push(value, `shape-${shape}`)
+  for (const [color, imageName] of colorToImageMap) {
+    expression.push(color, imageName)
   }
 
   // Default fallback
-  expression.push(`shape-${defaultShape}`)
+  expression.push(defaultImageName)
 
   return expression
 }

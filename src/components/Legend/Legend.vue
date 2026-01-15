@@ -45,6 +45,17 @@ const posY = ref(legendStore.position.y)
 const dragStart = ref({ x: 0, y: 0 })
 const dragStartPos = ref({ x: 0, y: 0 })
 
+// Sticky edge state (which edges legend is stuck to)
+const stickyEdge = ref({
+  left: false,
+  right: false,
+  top: false,
+  bottom: false
+})
+
+// Previous container bounds (for detecting changes)
+const prevContainerBounds = ref({ width: 0, height: 0 })
+
 // Is export mode active?
 const isExportMode = computed(() => dataStore.exportSettings.enabled)
 
@@ -137,7 +148,8 @@ function formatLabel(subspecies, species) {
 
   // Get the abbreviation for this species (custom or default)
   const abbreviation = legendStore.getSpeciesAbbreviation(species)
-  return `${abbreviation} ${subspecies}`
+  // Show subspecies name first, then abbreviation on the right
+  return `${subspecies} ${abbreviation}`
 }
 
 // Get items with visibility and custom settings applied
@@ -327,24 +339,36 @@ function onDrag(e) {
   let newX = dragStartPos.value.x + deltaX
   let newY = dragStartPos.value.y + deltaY
 
+  // Reset sticky edges
+  stickyEdge.value = { left: false, right: false, top: false, bottom: false }
+
   // Apply sticky edges if enabled (soft snapping, not constraint)
   if (legendStore.stickyEdges) {
     const threshold = legendStore.snapThreshold
     const bounds = containerBounds.value
     const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
     const legendHeight = legendRef.value?.offsetHeight || 200
+    const margin = 10
 
     // Snap to left edge
-    if (newX >= 0 && newX < threshold) newX = 10
+    if (newX >= 0 && newX < threshold) {
+      newX = margin
+      stickyEdge.value.left = true
+    }
     // Snap to right edge
     if (newX > bounds.width - legendWidth - threshold && newX <= bounds.width - legendWidth) {
-      newX = bounds.width - legendWidth - 10
+      newX = bounds.width - legendWidth - margin
+      stickyEdge.value.right = true
     }
     // Snap to top edge
-    if (newY >= 60 && newY < threshold + 60) newY = 70 // Account for controls
+    if (newY >= 0 && newY < threshold) {
+      newY = margin
+      stickyEdge.value.top = true
+    }
     // Snap to bottom edge
     if (newY > bounds.height - legendHeight - threshold && newY <= bounds.height - legendHeight) {
-      newY = bounds.height - legendHeight - 30
+      newY = bounds.height - legendHeight - margin
+      stickyEdge.value.bottom = true
     }
   }
 
@@ -383,6 +407,81 @@ function onResize({ width, height }) {
 function onResizeEnd() {
   isResizing.value = false
   legendStore.updateSize(currentWidth.value, currentHeight.value || 'auto')
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CONTAINER BOUNDS CHANGE HANDLING
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Recalculate legend position when container bounds change.
+ * Maintains relative sticky edge positions when switching export modes.
+ */
+function adjustPositionForNewBounds(oldBounds, newBounds) {
+  if (!oldBounds.width || !newBounds.width) return
+
+  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+  const legendHeight = legendRef.value?.offsetHeight || 200
+  const margin = 10
+
+  let newX = posX.value
+  let newY = posY.value
+
+  // If stuck to right edge, maintain right-edge position
+  if (stickyEdge.value.right) {
+    newX = newBounds.width - legendWidth - margin
+  }
+  // If stuck to left edge, keep at left
+  else if (stickyEdge.value.left) {
+    newX = margin
+  }
+  // Otherwise, scale proportionally to new width
+  else if (oldBounds.width > 0) {
+    const relativeX = posX.value / oldBounds.width
+    newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, relativeX * newBounds.width))
+  }
+
+  // If stuck to bottom edge, maintain bottom-edge position
+  if (stickyEdge.value.bottom) {
+    newY = newBounds.height - legendHeight - margin
+  }
+  // If stuck to top edge, keep at top
+  else if (stickyEdge.value.top) {
+    newY = margin
+  }
+  // Otherwise, scale proportionally to new height
+  else if (oldBounds.height > 0) {
+    const relativeY = posY.value / oldBounds.height
+    newY = Math.max(margin, Math.min(newBounds.height - legendHeight - margin, relativeY * newBounds.height))
+  }
+
+  // Ensure legend stays within bounds
+  newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
+  newY = Math.max(margin, Math.min(newBounds.height - legendHeight - margin, newY))
+
+  posX.value = newX
+  posY.value = newY
+  legendStore.updatePosition(newX, newY)
+}
+
+/**
+ * Detect current sticky edge state based on current position.
+ * Used to initialize sticky state when component mounts or bounds change.
+ */
+function detectStickyEdges() {
+  const bounds = containerBounds.value
+  if (!bounds.width || !bounds.height) return
+
+  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+  const legendHeight = legendRef.value?.offsetHeight || 200
+  const threshold = 20 // Detection threshold
+
+  stickyEdge.value = {
+    left: posX.value <= threshold,
+    right: posX.value >= bounds.width - legendWidth - threshold,
+    top: posY.value <= threshold,
+    bottom: posY.value >= bounds.height - legendHeight - threshold
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -478,6 +577,18 @@ onMounted(() => {
     const containerHeight = props.containerRef.clientHeight || 600
     posY.value = containerHeight - 250 // Approximate legend height + margin
   }
+
+  // Initialize previous bounds and detect sticky edges after a short delay
+  // to let the DOM settle
+  setTimeout(() => {
+    if (props.containerRef) {
+      prevContainerBounds.value = {
+        width: props.containerRef.clientWidth || 800,
+        height: props.containerRef.clientHeight || 600
+      }
+      detectStickyEdges()
+    }
+  }, 100)
 })
 
 onUnmounted(() => {
@@ -502,6 +613,43 @@ watch(() => legendStore.size, (newSize) => {
     currentHeight.value = newSize.height === 'auto' ? null : newSize.height
   }
 }, { deep: true })
+
+// Watch for container bounds changes (triggered by export mode toggle)
+watch(containerBounds, (newBounds, oldBounds) => {
+  // Only adjust if we have valid previous bounds and not currently dragging
+  if (isDragging.value || !prevContainerBounds.value.width) {
+    prevContainerBounds.value = { ...newBounds }
+    return
+  }
+
+  // Detect sticky state before adjusting
+  if (!stickyEdge.value.left && !stickyEdge.value.right &&
+      !stickyEdge.value.top && !stickyEdge.value.bottom) {
+    detectStickyEdges()
+  }
+
+  // Adjust position for new bounds
+  adjustPositionForNewBounds(prevContainerBounds.value, newBounds)
+
+  // Update previous bounds
+  prevContainerBounds.value = { ...newBounds }
+}, { deep: true })
+
+// Watch for export mode changes to force bounds recalculation
+watch(isExportMode, () => {
+  // Small delay to let the container resize first
+  setTimeout(() => {
+    const bounds = containerBounds.value
+    if (bounds.width && bounds.height) {
+      detectStickyEdges()
+      // Force position adjustment by setting prev bounds
+      if (prevContainerBounds.value.width) {
+        adjustPositionForNewBounds(prevContainerBounds.value, bounds)
+      }
+      prevContainerBounds.value = { ...bounds }
+    }
+  }, 50)
+})
 </script>
 
 <template>
@@ -674,7 +822,7 @@ watch(() => legendStore.size, (newSize) => {
   max-width: 400px;
   min-height: 100px;
   max-height: 600px;
-  overflow: hidden;
+  overflow: visible; /* Allow toolbar to overflow upwards */
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
@@ -684,6 +832,7 @@ watch(() => legendStore.size, (newSize) => {
 .legend-container.is-hovered:not(.is-export) {
   border-color: var(--color-accent, #4ade80);
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
+  border-radius: 0 0 8px 8px; /* Remove top corners when toolbar visible */
 }
 
 .legend-container.is-dragging {
@@ -704,7 +853,9 @@ watch(() => legendStore.size, (newSize) => {
 .legend-content {
   padding: 12px 16px;
   overflow-y: auto;
+  overflow-x: hidden;
   flex: 1;
+  max-height: 100%;
 }
 
 .legend-container.is-export .legend-content {

@@ -517,11 +517,17 @@ onUnmounted(() => {
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.02));
-  border-radius: 8px 8px 0 0;
-  position: relative;
+  border: 1px solid var(--color-accent, #4ade80); /* Accent border when visible */
+  border-bottom: none; /* Merge with legend below */
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border-radius: 8px 8px 0 0; /* Only round top corners */
+  position: absolute;
+  bottom: 100%; /* Position above the legend */
+  left: -1px; /* Align with legend border */
+  right: -1px;
   cursor: grab;
+  box-shadow: 0 -2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(4px);
 }
 
 .legend-toolbar:active {

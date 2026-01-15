@@ -5,7 +5,11 @@ import { useLegendStore } from '../stores/legend'
 import { generateSpeciesBorderColors } from '../utils/colors'
 import { ASPECT_RATIOS } from '../utils/constants'
 import { computeClusterStats, haversineDistance } from '../utils/clusterStats'
-import { loadShapeImages, buildShapeExpression, areShapeImagesLoaded } from '../utils/shapes'
+import {
+  generateColoredShapeImage,
+  getColoredShapeImageName,
+  buildColoredShapeExpression
+} from '../utils/shapes'
 
 // Map style configurations - organized by theme
 export const MAP_STYLES = {
@@ -671,26 +675,62 @@ export function useDataLayer(map, options = {}) {
       borderColorExpression.push(style.borderColor) // default fallback
     }
 
-    // Check if shapes are enabled and images are ready
-    let useShapes = legendStore.shapeSettings.enabled
-
-    // Verify shape images are actually loaded before using symbol layer
-    if (useShapes && !areShapeImagesLoaded(map.value)) {
-      console.warn('[Shapes] Shape images not loaded, falling back to circles')
-      useShapes = false
-    }
+    // Check if shapes are enabled
+    const useShapes = legendStore.shapeSettings.enabled
 
     if (useShapes) {
-      // Symbol layer with shapes
-      // Determine which attribute to use for shape assignment
-      const shapeAttr = legendStore.shapeSettings.assignBy === 'genus'
-        ? 'genus'
-        : legendStore.shapeSettings.assignBy === 'mimicry'
-          ? 'mimicry_ring'
-          : 'scientific_name' // default to species
+      // BAKED-COLOR APPROACH: Generate pre-rendered images with borders baked in
+      // This avoids MapLibre's buggy icon-halo which doesn't scale properly with zoom
+      // @see https://github.com/maplibre/maplibre-native/issues/2175
 
-      // Build shape expression
-      const shapeExpression = buildShapeExpression(shapeAttr, legendStore.groupShapes, 'circle')
+      // Build a map from colorAttr value (e.g., subspecies) to image name
+      // We need an image for each unique colorAttr value
+      const attrToImageMap = new Map()
+
+      // Generate images for each subspecies/color combination
+      Object.entries(colorMap).forEach(([attrValue, fillColor]) => {
+        // Get species from subspecies (for shape lookup)
+        // Subspecies format: "casabranca", species stored in speciesSubspeciesMap
+        let species = null
+        for (const [sp, subs] of Object.entries(store.speciesSubspeciesMap || {})) {
+          if (subs.includes(attrValue)) {
+            species = sp
+            break
+          }
+        }
+        // If colorBy is not subspecies, attrValue might be the species itself
+        if (!species && store.colorBy !== 'subspecies') {
+          species = attrValue
+        }
+
+        const shape = legendStore.getGroupShape(species) || 'circle'
+        const strokeColor = legendStore.speciesBorderColors[species] || style.borderColor
+        const imageName = getColoredShapeImageName(shape, fillColor, strokeColor, style.borderWidth)
+
+        // Generate image if not exists
+        if (!map.value.hasImage(imageName)) {
+          const imageData = generateColoredShapeImage(shape, fillColor, strokeColor, style.borderWidth, 64)
+          map.value.addImage(imageName, imageData, { pixelRatio: 2 })
+        }
+
+        attrToImageMap.set(attrValue, imageName)
+      })
+
+      // Default image for fallback
+      const defaultShape = 'circle'
+      const defaultColor = '#6b7280'
+      const defaultImageName = getColoredShapeImageName(defaultShape, defaultColor, style.borderColor, style.borderWidth)
+      if (!map.value.hasImage(defaultImageName)) {
+        const imageData = generateColoredShapeImage(defaultShape, defaultColor, style.borderColor, style.borderWidth, 64)
+        map.value.addImage(defaultImageName, imageData, { pixelRatio: 2 })
+      }
+
+      // Build icon-image expression mapping colorAttr -> imageName
+      const iconImageExpression = buildColoredShapeExpression(
+        attrToImageMap,
+        colorAttr,
+        defaultImageName
+      )
 
       // Calculate icon size expression (symbols use different scale than circles)
       const iconSizeExpression = [
@@ -707,22 +747,14 @@ export function useDataLayer(map, options = {}) {
         source: 'points-source',
         filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'],
         layout: {
-          'icon-image': shapeExpression,
+          'icon-image': iconImageExpression,
           'icon-size': iconSizeExpression,
           'icon-allow-overlap': true,
           'icon-ignore-placement': true
         },
         paint: {
-          // icon-color only works with SDF images (sdf: true in addImage)
-          // @see https://maplibre.org/maplibre-style-spec/layers/
-          'icon-color': colorExpression,
-          'icon-opacity': style.fillOpacity,
-          // icon-halo provides border effect for SDF icons
-          // Note: halo width units depend on SDF blur radius (8 for standard sprites)
-          // We use a larger value since our runtime-generated SDFs may have different characteristics
-          'icon-halo-color': borderColorExpression,
-          'icon-halo-width': style.borderWidth * 2,
-          'icon-halo-blur': 0.5
+          // No icon-color or icon-halo needed - colors are baked into images
+          'icon-opacity': style.fillOpacity
         }
       })
     } else {
@@ -974,30 +1006,15 @@ export function useDataLayer(map, options = {}) {
     })
   }
 
-  // Load shape images into the map
-  const ensureShapeImages = async () => {
-    if (!map.value || !map.value.isStyleLoaded()) return false
-
-    try {
-      await loadShapeImages(map.value)
-      return true
-    } catch (error) {
-      console.error('Failed to load shape images:', error)
-      return false
-    }
-  }
-
   return {
     addDataLayer,
     fitBoundsToData,
-    clearClusterExtentCircle,
-    ensureShapeImages
+    clearClusterExtentCircle
   }
 }
 
 // Style switcher
-export function useStyleSwitcher(map, addDataLayer, ensureShapeImages) {
-  const legendStore = useLegendStore()
+export function useStyleSwitcher(map, addDataLayer) {
   const currentStyle = ref('dark')
 
   const switchStyle = async (styleName) => {
@@ -1015,13 +1032,10 @@ export function useStyleSwitcher(map, addDataLayer, ensureShapeImages) {
     map.value.setStyle(styleConfig.style)
 
     // Wait for style to be fully loaded
+    // Note: Shape images are generated on-demand in addDataLayer, no pre-loading needed
     const waitForStyleAndAddLayer = async () => {
       if (map.value.isStyleLoaded()) {
         map.value.jumpTo({ center, zoom, bearing, pitch })
-        // Reload shape images after style change (they are lost when style changes)
-        if (legendStore.shapeSettings.enabled && ensureShapeImages) {
-          await ensureShapeImages()
-        }
         addDataLayer({ skipZoom: true })
       } else {
         setTimeout(waitForStyleAndAddLayer, 50)
@@ -1035,10 +1049,6 @@ export function useStyleSwitcher(map, addDataLayer, ensureShapeImages) {
     map.value.once('idle', async () => {
       if (!map.value.getSource('points-source')) {
         map.value.jumpTo({ center, zoom, bearing, pitch })
-        // Reload shape images after style change
-        if (legendStore.shapeSettings.enabled && ensureShapeImages) {
-          await ensureShapeImages()
-        }
         addDataLayer({ skipZoom: true })
       }
     })
