@@ -228,6 +228,7 @@ function toggleVisibility() {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--color-text-primary, #e0e0e0);
+  font-style: italic;
 }
 
 .visibility-toggle {

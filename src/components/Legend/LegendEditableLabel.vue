@@ -155,14 +155,11 @@ function handleBlur() {
   padding: 2px 0;
   border-radius: 2px;
   transition: background-color 0.15s ease;
+  font-style: italic;
 }
 
 .legend-editable-label:hover .label-text {
   background-color: var(--color-bg-tertiary, rgba(255,255,255,0.05));
-}
-
-.is-custom .label-text {
-  font-style: italic;
 }
 
 .label-input {
@@ -174,6 +171,7 @@ function handleBlur() {
   background: var(--color-bg-primary, #1a1a2e);
   color: var(--color-text-primary, #e0e0e0);
   font-family: inherit;
+  font-style: italic;
   outline: none;
 }
 
