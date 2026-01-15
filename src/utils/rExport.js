@@ -1,5 +1,8 @@
 import JSZip from 'jszip'
 import { useDataStore } from '../stores/data'
+import { useLegendStore } from '../stores/legend'
+import { generateAbbreviationOptions, applyAbbreviationFormat } from './abbreviations'
+import { SHAPE_OPTIONS } from './shapes'
 
 // Build info (injected by Vite)
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
@@ -21,8 +24,16 @@ const getCitationText = (recordCount) => {
 }
 
 // Generate R script that recreates the map view
-const generateRScript = (colorBy) => {
+const generateRScript = (colorBy, legendSettings) => {
   const isItalic = colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' || colorBy === 'scientific_name'
+
+  // Extract legend position for R (normalize to 0-1 scale)
+  const legendPosX = legendSettings.position?.x ?? 40
+  const legendPosY = legendSettings.position?.y ?? null
+  // Convert pixel position to normalized (0-1) coordinates
+  // Default bottom-left positioning
+  const rLegendX = 0.02  // Will be overridden by legendSettings if available
+  const rLegendY = 0.08  // Will be overridden by legendSettings if available
 
   return `# ════════════════════════════════════════════════════════════════════════════════
 # Ithomiini Distribution Map - R Script for Publication-Quality Export
@@ -31,9 +42,10 @@ const generateRScript = (colorBy) => {
 #
 # This script creates a map matching the web app preview with:
 #   - Configurable basemap (via maptiles package)
-#   - Styled legend with rounded corners
+#   - Styled legend with rounded corners and optional shapes
 #   - Scale bar
-#   - Point styling with stroke
+#   - Point styling with stroke and optional shapes per group
+#   - Display name formatting (predefined or custom)
 #
 # Output: PDF, PNG, and SVG files suitable for publications
 # ════════════════════════════════════════════════════════════════════════════════
@@ -53,7 +65,8 @@ packages <- c(
   "tidyterra",    # Plot raster tiles with ggplot2
   "ggspatial",    # Scale bar and north arrow
   "grid",         # Custom legend grobs
-  "png"           # Read fallback basemap image
+  "png",          # Read fallback basemap image
+  "stringr"       # String manipulation for abbreviations
 )
 
 # Install missing packages
@@ -171,7 +184,189 @@ legend_df$order_idx <- seq_len(nrow(legend_df))
 cat(sprintf("\\nLegend: %d categories (showing max %d)\\n", nrow(legend_df), legend_max_items))
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 5. STYLING CONFIGURATION (easy to customize!)
+# 5. DISPLAY NAME FORMATTING FUNCTIONS
+# ──────────────────────────────────────────────────────────────────────────────
+# These functions generate abbreviated names for scientific names.
+# You can change display_name_format and prefix_format in the SETTINGS section below.
+#
+# Available display_name_format options:
+#   "full"             - Full species name: "Mechanitis polymnia"
+#   "firstLetterGenus" - First letter + epithet: "M. polymnia"
+#   "syllableGenus"    - First syllable + epithet: "Mec. polymnia"
+#   "custom"           - Use custom names from legend_data$displayNames
+#
+# Available prefix_format options:
+#   "none"             - No prefix: "casabranca"
+#   "firstLetterBoth"  - First letters: "M. p. casabranca"
+#   "syllableBoth"     - First syllables: "Mec. pol. casabranca"
+#   "custom"           - Use custom prefixes from legend_data$abbreviations
+
+# Get first syllable of a word (smart syllable detection)
+# Finds first vowel cluster, includes consonants after, minimum 2-3 chars
+get_first_syllable <- function(word) {
+  if (is.null(word) || nchar(word) <= 3) return(word)
+
+  vowels <- c("a", "e", "i", "o", "u", "y")
+  lower <- tolower(word)
+  chars <- strsplit(lower, "")[[1]]
+
+  result <- ""
+  found_vowel <- FALSE
+  vowel_ended <- FALSE
+
+
+  for (i in seq_along(chars)) {
+    char <- chars[i]
+    is_vowel <- char %in% vowels
+
+    if (!found_vowel) {
+      result <- paste0(result, char)
+      if (is_vowel) found_vowel <- TRUE
+    } else if (!vowel_ended) {
+      if (is_vowel) {
+        result <- paste0(result, char)
+      } else {
+        vowel_ended <- TRUE
+        result <- paste0(result, char)
+        if (nchar(result) >= 3) break
+      }
+    } else {
+      if (is_vowel) break
+      result <- paste0(result, char)
+      if (nchar(result) >= 4) break
+    }
+  }
+
+  if (nchar(result) < 2) {
+    result <- substr(lower, 1, min(3, nchar(lower)))
+  }
+
+  # Capitalize first letter and add period
+  paste0(toupper(substr(result, 1, 1)), substr(result, 2, nchar(result)), ".")
+}
+
+# Generate abbreviation options for a species name
+generate_abbreviations <- function(species_name) {
+  if (is.null(species_name) || species_name == "") return(list(full = species_name))
+
+  parts <- strsplit(trimws(species_name), "\\\\s+")[[1]]
+  if (length(parts) < 2) {
+    return(list(full = species_name, firstLetterGenus = species_name, syllableGenus = species_name))
+  }
+
+  genus <- parts[1]
+  epithet <- paste(parts[-1], collapse = " ")
+  first_epithet <- parts[2]
+
+  # First letter abbreviations
+  genus_first <- paste0(toupper(substr(genus, 1, 1)), ".")
+  epithet_first <- paste0(tolower(substr(first_epithet, 1, 1)), ".")
+
+  # Syllable abbreviations
+  genus_syll <- get_first_syllable(genus)
+  epithet_syll <- tolower(get_first_syllable(first_epithet))
+
+  list(
+    full = species_name,
+    firstLetterGenus = paste(genus_first, epithet),
+    firstLetterBoth = paste(genus_first, epithet_first),
+    syllableGenus = paste(genus_syll, epithet),
+    syllableBoth = paste(genus_syll, epithet_syll)
+  )
+}
+
+# Apply display name format to a species name
+apply_display_format <- function(species_name, format, custom_names = NULL) {
+  if (format == "custom" && !is.null(custom_names) && species_name %in% names(custom_names)) {
+    return(custom_names[[species_name]])
+  }
+
+  abbrevs <- generate_abbreviations(species_name)
+
+  switch(format,
+    "full" = abbrevs$full,
+    "firstLetterGenus" = abbrevs$firstLetterGenus,
+    "syllableGenus" = abbrevs$syllableGenus,
+    abbrevs$full  # default
+  )
+}
+
+# Apply prefix format to get abbreviation prefix
+apply_prefix_format <- function(species_name, format, custom_abbrevs = NULL) {
+  if (format == "none") return("")
+
+  if (format == "custom" && !is.null(custom_abbrevs) && species_name %in% names(custom_abbrevs)) {
+    return(custom_abbrevs[[species_name]])
+  }
+
+  abbrevs <- generate_abbreviations(species_name)
+
+  switch(format,
+    "firstLetterBoth" = abbrevs$firstLetterBoth,
+    "syllableBoth" = abbrevs$syllableBoth,
+    "none" = "",
+    abbrevs$syllableBoth  # default
+  )
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 6. SHAPE UTILITIES FOR GGPLOT2
+# ──────────────────────────────────────────────────────────────────────────────
+# ggplot2 shape codes for common shapes:
+#   21 = circle (filled, with border)      ●
+#   22 = square (filled, with border)      ■
+#   24 = triangle up (filled, with border) ▲
+#   23 = diamond (filled, with border)     ◆
+#
+# To change a group's shape, modify the shape_map list below or
+# change the shape column in the data.
+#
+# Shape reference (all filled shapes that support fill + color):
+#   21 = circle, 22 = square, 23 = diamond, 24 = triangle up, 25 = triangle down
+
+SHAPE_CODES <- list(
+  circle = 21,    # Filled circle with border
+  square = 22,    # Filled square with border
+  triangle = 24,  # Filled triangle (up) with border
+  rhombus = 23    # Filled diamond with border
+)
+
+# Convert shape name to ggplot2 shape code
+get_shape_code <- function(shape_name) {
+  code <- SHAPE_CODES[[shape_name]]
+  if (is.null(code)) return(21)  # default to circle
+  code
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 7. LEGEND SETTINGS (from web app export)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Load legend settings from JSON
+show_headers <- if (!is.null(legend_data$showHeaders)) legend_data$showHeaders else FALSE
+display_name_format <- if (!is.null(legend_data$displayNameFormat)) legend_data$displayNameFormat else "full"
+prefix_format <- if (!is.null(legend_data$prefixFormat)) legend_data$prefixFormat else "syllableBoth"
+shapes_enabled <- if (!is.null(legend_data$shapesEnabled)) legend_data$shapesEnabled else FALSE
+
+# Custom names/abbreviations (if format is "custom")
+custom_display_names <- legend_data$displayNames
+custom_abbreviations <- legend_data$abbreviations
+
+# Per-group shape assignments
+group_shapes <- legend_data$groupShapes
+if (is.null(group_shapes)) group_shapes <- list()
+
+# Legend position (normalized 0-1 coordinates)
+legend_pos_x <- if (!is.null(legend_data$position$x)) legend_data$position$x else 0.02
+legend_pos_y <- if (!is.null(legend_data$position$y)) legend_data$position$y else 0.08
+
+cat(sprintf("  Display name format: %s\\n", display_name_format))
+cat(sprintf("  Prefix format: %s\\n", prefix_format))
+cat(sprintf("  Show headers: %s\\n", show_headers))
+cat(sprintf("  Shapes enabled: %s\\n", shapes_enabled))
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 8. STYLING CONFIGURATION (easy to customize!)
 # ──────────────────────────────────────────────────────────────────────────────
 
 STYLE <- list(
@@ -224,10 +419,28 @@ if (aspect_ratio >= 1) {
 cat(sprintf("  Output size: %.1f x %.1f inches\\n", output_width, output_height))
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 6. CREATE LEGEND GROB (with rounded corners)
+# 9. CREATE LEGEND GROB (with rounded corners, shapes, and grouping)
 # ──────────────────────────────────────────────────────────────────────────────
 
-create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE) {
+# Helper function to draw a shape in a grob
+create_shape_grob <- function(x, y, shape, fill_color, stroke_color = "white", stroke_alpha = 0.3, size = 0.006) {
+  shape_code <- get_shape_code(shape)
+
+  # Use pointsGrob for consistent shape rendering
+  pointsGrob(
+    x = x, y = y,
+    pch = shape_code,
+    size = unit(size * 2, "npc"),
+    gp = gpar(
+      fill = fill_color,
+      col = alpha(stroke_color, stroke_alpha),
+      lwd = 0.5
+    )
+  )
+}
+
+create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE,
+                          pos_x = 0.02, pos_y = 0.08, use_shapes = FALSE) {
   n_items <- min(nrow(items), max_items)
   has_more <- nrow(items) > max_items
 
@@ -242,9 +455,9 @@ create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE
   max_label_len <- max(nchar(visible_items))
   legend_w <- max(style$legend_width, 0.01 * max_label_len + 0.06)
 
-  # Position (bottom-left with padding)
-  x0 <- 0.02
-  y0 <- 0.08
+  # Position (from parameters, defaults to bottom-left)
+  x0 <- pos_x
+  y0 <- pos_y
 
   grobs <- list()
 
@@ -278,17 +491,31 @@ create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE
   for (i in seq_len(n_items)) {
     item_y <- y0 + total_h - title_h - style$legend_padding - (i - 0.5) * style$legend_item_height
 
-    # Color dot with white stroke
-    grobs[[paste0("dot_", i)]] <- circleGrob(
-      x = x0 + style$legend_padding + 0.012,
-      y = item_y,
-      r = 0.006,
-      gp = gpar(
-        fill = items$color[i],
-        col = alpha("white", 0.3),
-        lwd = 0.5
+    # Get shape for this item (default to circle)
+    item_shape <- if (use_shapes && "shape" %in% names(items)) items$shape[i] else "circle"
+
+    # Shape/dot indicator
+    if (use_shapes && item_shape != "circle") {
+      # Use shape grob for non-circle shapes
+      grobs[[paste0("shape_", i)]] <- create_shape_grob(
+        x = x0 + style$legend_padding + 0.012,
+        y = item_y,
+        shape = item_shape,
+        fill_color = items$color[i]
       )
-    )
+    } else {
+      # Default circle
+      grobs[[paste0("dot_", i)]] <- circleGrob(
+        x = x0 + style$legend_padding + 0.012,
+        y = item_y,
+        r = 0.006,
+        gp = gpar(
+          fill = items$color[i],
+          col = alpha("white", 0.3),
+          lwd = 0.5
+        )
+      )
+    }
 
     # Label
     grobs[[paste0("label_", i)]] <- textGrob(
@@ -323,7 +550,44 @@ create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 7. BUILD THE MAP
+# 10. PREPARE DATA WITH SHAPES (if enabled)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Add shape column to points based on species (or other grouping)
+if (shapes_enabled && length(group_shapes) > 0) {
+  cat("\\nApplying shapes to data points...\\n")
+
+  # Get the grouping column (usually species for subspecies coloring)
+  # The shape is assigned per species, so we need to map species -> shape
+  points$shape_code <- sapply(points$species, function(sp) {
+    shape_name <- group_shapes[[sp]]
+    if (is.null(shape_name)) shape_name <- "circle"
+    get_shape_code(shape_name)
+  })
+
+  # Also add shape column to legend_df for legend rendering
+  if ("species" %in% names(legend_df)) {
+    legend_df$shape <- sapply(legend_df$species, function(sp) {
+      shape_name <- group_shapes[[sp]]
+      if (is.null(shape_name)) "circle" else shape_name
+    })
+  } else {
+    # If no species column, try to match by label
+    legend_df$shape <- sapply(legend_df$label, function(lbl) {
+      # Try to extract species from label (may be subspecies name with prefix)
+      shape_name <- group_shapes[[lbl]]
+      if (is.null(shape_name)) "circle" else shape_name
+    })
+  }
+
+  cat(sprintf("  Shapes assigned: %d unique shapes\\n", length(unique(points$shape_code))))
+} else {
+  points$shape_code <- 21  # Default to circle
+  legend_df$shape <- "circle"
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 11. BUILD THE MAP
 # ──────────────────────────────────────────────────────────────────────────────
 
 cat("\\nCreating map...\\n")
@@ -343,17 +607,38 @@ if (!is.null(basemap)) {
 }
 
 # Add data points with stroke (matching web app style)
-p <- p +
-  geom_sf(
-    data = points,
-    aes(fill = display_color),
-    color = alpha(STYLE$point_stroke_color, STYLE$point_stroke_alpha),
-    size = STYLE$point_size,
-    alpha = STYLE$point_alpha,
-    stroke = STYLE$point_stroke_width,
-    shape = 21
-  ) +
-  scale_fill_identity()
+# If shapes are enabled, use shape aesthetic; otherwise use fixed circle
+if (shapes_enabled && "shape_code" %in% names(points)) {
+  # Use per-point shapes
+  # Note: shape must be mapped to a numeric for filled shapes (21-25)
+  p <- p +
+    geom_sf(
+      data = points,
+      aes(fill = display_color, shape = factor(shape_code)),
+      color = alpha(STYLE$point_stroke_color, STYLE$point_stroke_alpha),
+      size = STYLE$point_size,
+      alpha = STYLE$point_alpha,
+      stroke = STYLE$point_stroke_width
+    ) +
+    scale_fill_identity() +
+    scale_shape_manual(
+      values = c("21" = 21, "22" = 22, "23" = 23, "24" = 24, "25" = 25),
+      guide = "none"  # Hide from ggplot's built-in legend (we use custom legend)
+    )
+} else {
+  # Default: all circles
+  p <- p +
+    geom_sf(
+      data = points,
+      aes(fill = display_color),
+      color = alpha(STYLE$point_stroke_color, STYLE$point_stroke_alpha),
+      size = STYLE$point_size,
+      alpha = STYLE$point_alpha,
+      stroke = STYLE$point_stroke_width,
+      shape = 21
+    ) +
+    scale_fill_identity()
+}
 
 # Set coordinate system and bounds
 p <- p +
@@ -383,15 +668,24 @@ p <- p +
     panel.background = element_rect(fill = STYLE$bg_color, color = NA)
   )
 
-# Add custom legend
+# Add custom legend with position and shape support
 p_final <- p +
   annotation_custom(
-    create_legend(legend_df, legend_data$title, legend_max_items, ${isItalic ? 'TRUE' : 'FALSE'}),
+    create_legend(
+      legend_df,
+      legend_data$title,
+      legend_max_items,
+      ${isItalic ? 'TRUE' : 'FALSE'},
+      style = STYLE,
+      pos_x = legend_pos_x,
+      pos_y = legend_pos_y,
+      use_shapes = shapes_enabled
+    ),
     xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
   )
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 8. SAVE OUTPUTS
+# 12. SAVE OUTPUTS
 # ──────────────────────────────────────────────────────────────────────────────
 
 cat("\\nSaving outputs...\\n")
@@ -736,23 +1030,90 @@ export async function exportForR(map) {
     aspectRatio: aspectRatio  // Used by R to set correct output dimensions
   }
 
+  // Get legend store settings
+  const legendStore = useLegendStore()
+
   // Legend configuration - preserve order from colorMap (which matches web app display order)
   // Get legend items in the same order as they appear in the web app
-  const legendItems = Object.entries(colorMap).map(([label, color]) => ({
-    label,
-    color
-  }))
+  // Include species name for shape lookup
+  const legendItems = Object.entries(colorMap).map(([label, color]) => {
+    // Try to determine species from the label (for subspecies coloring)
+    const parts = label.split(' ')
+    const species = colorBy === 'subspecies' && parts.length >= 2
+      ? `${parts[0]} ${parts[1]}` // First two words are usually genus + epithet
+      : label
+
+    return {
+      label,
+      color,
+      species,
+      // Include shape if shapes are enabled
+      shape: legendStore.getGroupShape(species)
+    }
+  })
+
+  // Build abbreviations map for all species
+  const speciesSet = new Set(legendItems.map(item => item.species))
+  const abbreviationsMap = {}
+  const displayNamesMap = {}
+
+  for (const species of speciesSet) {
+    // Get abbreviation (prefix for subspecies)
+    const abbrev = legendStore.speciesAbbreviations[species] ||
+      applyAbbreviationFormat(species, legendStore.prefixFormat)
+    if (abbrev) abbreviationsMap[species] = abbrev
+
+    // Get display name (for group headers)
+    const displayName = legendStore.speciesDisplayNames[species] ||
+      applyAbbreviationFormat(species, legendStore.displayNameFormat)
+    if (displayName) displayNamesMap[species] = displayName
+  }
+
+  // Build group shapes map
+  const groupShapesMap = { ...legendStore.groupShapes }
+
+  // Normalize legend position to 0-1 scale for R
+  // Web app uses pixel positions, R uses normalized coordinates
+  // Note: 'container' was already declared above for aspect ratio calculation
+  const containerWidth = container.clientWidth
+  const containerHeight = container.clientHeight
+  const legendPosX = legendStore.position.x !== null
+    ? Math.max(0.01, Math.min(0.9, legendStore.position.x / containerWidth))
+    : 0.02
+  const legendPosY = legendStore.position.y !== null
+    ? Math.max(0.05, Math.min(0.9, 1 - (legendStore.position.y / containerHeight)))
+    : 0.08
 
   const legendConfig = {
     title: store.legendTitle,
     colorBy: colorBy,
-    maxItems: store.legendSettings.maxItems,  // Pass max items setting to R
+    maxItems: legendStore.maxItems || store.legendSettings.maxItems,
     colors: colorMap,
-    items: legendItems
+    items: legendItems,
+    // Legend customization settings
+    showHeaders: legendStore.groupingSettings.showHeaders,
+    displayNameFormat: legendStore.displayNameFormat,
+    prefixFormat: legendStore.prefixFormat,
+    shapesEnabled: legendStore.shapeSettings.enabled,
+    // Custom values
+    displayNames: displayNamesMap,
+    abbreviations: abbreviationsMap,
+    groupShapes: groupShapesMap,
+    // Position (normalized 0-1)
+    position: {
+      x: legendPosX,
+      y: legendPosY
+    }
   }
 
-  // Generate R script
-  const rScript = generateRScript(colorBy)
+  // Generate R script with legend settings
+  const rScript = generateRScript(colorBy, {
+    position: legendStore.position,
+    showHeaders: legendStore.groupingSettings.showHeaders,
+    displayNameFormat: legendStore.displayNameFormat,
+    prefixFormat: legendStore.prefixFormat,
+    shapesEnabled: legendStore.shapeSettings.enabled
+  })
 
   // Capture basemap as raster (without data points)
   let basemapDataUrl = null
