@@ -135,7 +135,7 @@ const exportGeoJSON = () => {
         version: shortHash,
         exportDate: new Date().toISOString(),
         recordCount: geo.features.length,
-        source: 'https://fr4nzz.github.io/ithomiini_maps/'
+        source: 'https://rapidspeciation.github.io/ithomiini_maps/'
       },
       features: geo.features
     }

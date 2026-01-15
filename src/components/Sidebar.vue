@@ -95,7 +95,7 @@ const updateMessage = ref('')
 // Update these values when deploying to a different repository
 // ============================================
 const WORKER_URL = 'https://ithomiini-maps-db-updater.franz-chandi.workers.dev/'
-const GITHUB_OWNER = 'Fr4nzz'
+const GITHUB_OWNER = 'rapidspeciation'
 const GITHUB_REPO = 'ithomiini_maps'
 // ============================================
 
@@ -206,7 +206,7 @@ const updateExportHeight = (value) => {
   <aside class="sidebar">
     <!-- Header -->
     <header class="sidebar-header">
-      <a href="https://github.com/Fr4nzz/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="logo">
+      <a href="https://github.com/rapidspeciation/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="logo">
         <img src="../assets/Map_icon.svg" alt="Ithomiini Maps" class="logo-icon" />
         <div class="logo-text">
           <span class="title">Ithomiini</span>
