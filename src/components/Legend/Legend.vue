@@ -160,8 +160,8 @@ function formatLabel(subspecies, species) {
 
   // Get the abbreviation for this species (custom or default)
   const abbreviation = legendStore.getSpeciesAbbreviation(species)
-  // Show subspecies name first, then abbreviation on the right
-  return `${subspecies} ${abbreviation}`
+  // Show abbreviation as prefix before subspecies name (e.g., "M. p. casabranca")
+  return `${abbreviation} ${subspecies}`
 }
 
 // Get items with visibility and custom settings applied
