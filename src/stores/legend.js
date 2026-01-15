@@ -124,6 +124,22 @@ export const useLegendStore = defineStore('legend', () => {
   const groupShapes = ref(getStorage('legend-group-shapes', {}))
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // DISPLAY NAME FORMAT SETTINGS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Global format for display names in group headers
+  // Values: 'firstLetterGenus' | 'syllableGenus' | 'full' | 'custom' (per-species)
+  const displayNameFormat = ref(getStorage('legend-display-name-format', 'firstLetterGenus'))
+
+  // Global format for prefix abbreviations (shown before subspecies)
+  // Values: 'firstLetterBoth' | 'syllableBoth' | 'none' | 'custom' (per-species)
+  const prefixFormat = ref(getStorage('legend-prefix-format', 'firstLetterBoth'))
+
+  // Per-species custom display names (overrides global format)
+  // Format: { 'Mechanitis polymnia': 'M. polymnia', ... }
+  const speciesDisplayNames = ref(getStorage('legend-species-display-names', {}))
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -183,7 +199,24 @@ export const useLegendStore = defineStore('legend', () => {
     return Object.keys(customLabels.value).length > 0 ||
            Object.keys(customColors.value).length > 0 ||
            hiddenItems.value.length > 0 ||
-           itemOrder.value.length > 0
+           itemOrder.value.length > 0 ||
+           Object.keys(speciesBorderColors.value).length > 0 ||
+           Object.keys(speciesBaseHues.value).length > 0 ||
+           Object.keys(speciesGradientEnabled.value).length > 0 ||
+           Object.keys(speciesAbbreviations.value).length > 0 ||
+           Object.keys(speciesAbbreviationVisible.value).length > 0 ||
+           Object.keys(groupShapes.value).length > 0 ||
+           Object.keys(speciesDisplayNames.value).length > 0 ||
+           // Grouping settings changed from defaults
+           groupingSettings.value.showHeaders !== false ||
+           groupingSettings.value.prefixEnabled !== 'auto' ||
+           groupingSettings.value.abbreviationStyle !== 'first-letter' ||
+           // Species styling enabled
+           speciesStyling.value.borderColor !== false ||
+           speciesStyling.value.colorGradient !== false ||
+           // Display name/prefix formats changed from defaults
+           displayNameFormat.value !== 'firstLetterGenus' ||
+           prefixFormat.value !== 'firstLetterBoth'
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -267,6 +300,7 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   function resetCustomizations() {
+    // Reset label/color customizations
     customLabels.value = {}
     customColors.value = {}
     hiddenItems.value = []
@@ -275,6 +309,39 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-custom-colors', {})
     setStorage('legend-hidden-items', [])
     setStorage('legend-item-order', [])
+
+    // Reset species styling customizations
+    speciesBorderColors.value = {}
+    speciesBaseHues.value = {}
+    speciesGradientEnabled.value = {}
+    speciesAbbreviations.value = {}
+    speciesAbbreviationVisible.value = {}
+    groupShapes.value = {}
+    setStorage('legend-species-borders', {})
+    setStorage('legend-species-hues', {})
+    setStorage('legend-species-gradient-enabled', {})
+    setStorage('legend-species-abbreviations', {})
+    setStorage('legend-species-abbrev-visible', {})
+    setStorage('legend-group-shapes', {})
+
+    // Reset grouping settings to defaults
+    groupingSettings.value.showHeaders = false
+    groupingSettings.value.prefixEnabled = 'auto'
+    groupingSettings.value.abbreviationStyle = 'first-letter'
+    setStorage('legend-grouping', groupingSettings.value)
+
+    // Reset species styling flags
+    speciesStyling.value.borderColor = false
+    speciesStyling.value.colorGradient = false
+    setStorage('legend-species-styling', speciesStyling.value)
+
+    // Reset display name format settings
+    displayNameFormat.value = 'firstLetterGenus'
+    prefixFormat.value = 'firstLetterBoth'
+    speciesDisplayNames.value = {}
+    setStorage('legend-display-name-format', 'firstLetterGenus')
+    setStorage('legend-prefix-format', 'firstLetterBoth')
+    setStorage('legend-species-display-names', {})
   }
 
   function resetPosition() {
@@ -494,6 +561,55 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // DISPLAY NAME FORMAT ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Set global display name format (applies to all species)
+  function setDisplayNameFormat(format) {
+    displayNameFormat.value = format
+    // When changing to a preset format, clear all custom display names
+    if (format !== 'custom') {
+      speciesDisplayNames.value = {}
+      setStorage('legend-species-display-names', {})
+    }
+    setStorage('legend-display-name-format', format)
+  }
+
+  // Set global prefix format (applies to all species)
+  function setPrefixFormat(format) {
+    prefixFormat.value = format
+    // When changing to a preset format, clear all custom abbreviations
+    if (format !== 'custom') {
+      speciesAbbreviations.value = {}
+      setStorage('legend-species-abbreviations', {})
+    }
+    setStorage('legend-prefix-format', format)
+  }
+
+  // Set custom display name for a single species
+  function setSpeciesDisplayName(species, displayName) {
+    if (displayName && displayName.trim()) {
+      speciesDisplayNames.value[species] = displayName.trim()
+      // When setting custom per-species, switch to custom mode
+      displayNameFormat.value = 'custom'
+      setStorage('legend-display-name-format', 'custom')
+    } else {
+      delete speciesDisplayNames.value[species]
+    }
+    setStorage('legend-species-display-names', speciesDisplayNames.value)
+  }
+
+  // Get display name for a species (uses global format or custom per-species)
+  function getSpeciesDisplayName(species) {
+    // First check for per-species custom name
+    if (speciesDisplayNames.value[species]) {
+      return speciesDisplayNames.value[species]
+    }
+    // If no custom name, return null to indicate use global format
+    return null
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // SHAPE ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -562,6 +678,11 @@ export const useLegendStore = defineStore('legend', () => {
     shapeSettings,
     groupShapes,
 
+    // Display name format state
+    displayNameFormat,
+    prefixFormat,
+    speciesDisplayNames,
+
     // Computed
     hasCustomizations,
     canGroup,
@@ -623,6 +744,12 @@ export const useLegendStore = defineStore('legend', () => {
     setShapeAssignBy,
     setGroupShape,
     getGroupShape,
-    resetShapeSettings
+    resetShapeSettings,
+
+    // Display name format actions
+    setDisplayNameFormat,
+    setPrefixFormat,
+    setSpeciesDisplayName,
+    getSpeciesDisplayName
   }
 })

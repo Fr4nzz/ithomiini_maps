@@ -3,6 +3,7 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { generateSpeciesBorderColors, generateSpeciesBaseHues } from '../../utils/colors'
+import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
 import LegendResizeHandle from './LegendResizeHandle.vue'
@@ -21,10 +22,12 @@ const dataStore = useDataStore()
 
 // Refs
 const legendRef = ref(null)
+const contentRef = ref(null) // Reference to legend-content for height locking
 const isHovered = ref(false)
 const isDragging = ref(false)
 const isResizing = ref(false)
 const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
+const contentMaxHeight = ref(null) // Max height for content during hover to prevent growing
 
 // Popup state
 const stylePopupState = ref({
@@ -141,6 +144,11 @@ function hasCustomizedStyle(species) {
   return hasCustomShape || hasCustomBorder
 }
 
+// Check if ANY group has customized style (for showing all indicators when one is customized)
+const anyGroupHasCustomStyle = computed(() => {
+  return speciesList.value.some(species => hasCustomizedStyle(species))
+})
+
 // Get species for a subspecies
 function getSpeciesForSubspecies(subspecies) {
   for (const [species, subspeciesList] of Object.entries(speciesSubspeciesMap.value)) {
@@ -236,6 +244,14 @@ const groupedLegendData = computed(() => {
   // Build groups
   for (const species of sortedSpecies) {
     const items = itemsBySpecies[species]
+
+    // Get custom display name - either per-species or apply global format
+    let customLabel = legendStore.getSpeciesDisplayName(species)
+    if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
+      // If global format is not default, apply it
+      customLabel = applyAbbreviationFormat(species, legendStore.displayNameFormat)
+    }
+
     groups.push({
       species,
       borderColor: getSpeciesBorderColor(species),
@@ -243,7 +259,7 @@ const groupedLegendData = computed(() => {
       shape: legendStore.getGroupShape(species),
       abbreviation: legendStore.getSpeciesAbbreviation(species),
       abbreviationVisible: legendStore.isAbbreviationVisible(species),
-      customLabel: legendStore.customLabels[species] || '',
+      customLabel: customLabel || '',
       hasCustomizedStyle: hasCustomizedStyle(species),
       items: items.map(item => ({
         ...item,
@@ -299,6 +315,25 @@ const positionStyle = computed(() => {
 
   return style
 })
+
+// ═══════════════════════════════════════════════════════════════════════════
+// HOVER HANDLING (Lock content height to prevent growing when headers appear)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function handleMouseEnter() {
+  // Capture the current content height before hover effects cause growth
+  // This prevents the legend from expanding when group headers appear on hover
+  if (contentRef.value && !contentMaxHeight.value) {
+    contentMaxHeight.value = contentRef.value.offsetHeight
+  }
+  isHovered.value = true
+}
+
+function handleMouseLeave() {
+  isHovered.value = false
+  // Release the height constraint when mouse leaves
+  contentMaxHeight.value = null
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DRAG HANDLING
@@ -517,9 +552,6 @@ function handleResetColor(label) {
   legendStore.setCustomColor(label, '')
 }
 
-function handleResetCustomizations() {
-  // Reset is handled by store
-}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // GROUP STYLE POPUP HANDLERS
@@ -573,7 +605,8 @@ function handleToggleAbbreviationVisible(species) {
 }
 
 function handleUpdateSpeciesCustomLabel(species, customLabel) {
-  legendStore.setCustomLabel(species, customLabel)
+  // Use the new species display name setter
+  legendStore.setSpeciesDisplayName(species, customLabel)
 }
 
 function handleShowHeaders() {
@@ -582,6 +615,31 @@ function handleShowHeaders() {
 
 function handleHideHeaders() {
   legendStore.setShowHeaders(false)
+}
+
+// Handle applying display name format to all species
+function handleApplyDisplayFormatToAll(format) {
+  // Set global format
+  legendStore.setDisplayNameFormat(format)
+
+  // Apply format to all species (clear individual customizations, use global)
+  // The format will be applied via computed in groupedLegendData
+}
+
+// Handle applying prefix format to all species
+function handleApplyPrefixFormatToAll(format) {
+  // Set global format
+  legendStore.setPrefixFormat(format)
+
+  // Apply format to all species
+  for (const species of speciesList.value) {
+    const formatted = applyAbbreviationFormat(species, format)
+    if (format === 'none') {
+      legendStore.setSpeciesAbbreviation(species, '')
+    } else {
+      legendStore.setSpeciesAbbreviation(species, formatted)
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -682,8 +740,8 @@ watch(isExportMode, () => {
       'show-edit-ui': showEditUI
     }"
     :style="positionStyle"
-    @mouseenter="isHovered = true"
-    @mouseleave="isHovered = false"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
     @mousedown="startDrag"
     @touchstart="startDrag"
   >
@@ -691,13 +749,16 @@ watch(isExportMode, () => {
     <LegendToolbar
       v-show="showToolbar"
       :is-export-mode="isExportMode"
-      @reset-customizations="handleResetCustomizations"
       @settings-open="hasOpenPopup = true"
       @settings-close="hasOpenPopup = false"
     />
 
     <!-- Legend content -->
-    <div class="legend-content">
+    <div
+      ref="contentRef"
+      class="legend-content"
+      :style="contentMaxHeight ? { maxHeight: contentMaxHeight + 'px' } : {}"
+    >
       <!-- Title -->
       <div class="legend-title">
         {{ dataStore.legendTitle }}
@@ -750,12 +811,15 @@ watch(isExportMode, () => {
             :is-legend-hovered="isHovered || hasModalOpen"
             :shape="group.shape"
             :has-customized-style="group.hasCustomizedStyle"
+            :any-group-has-custom-style="anyGroupHasCustomStyle"
             @open-style-popup="openGroupStylePopup(group.species, $event)"
             @show-headers="handleShowHeaders"
             @hide-headers="handleHideHeaders"
             @update:abbreviation="(val) => handleUpdateAbbreviation(group.species, val)"
             @update:abbreviation-visible="(val) => legendStore.setAbbreviationVisible(group.species, val)"
             @update:custom-label="(val) => handleUpdateSpeciesCustomLabel(group.species, val)"
+            @apply-display-format-to-all="handleApplyDisplayFormatToAll"
+            @apply-prefix-format-to-all="handleApplyPrefixFormatToAll"
           />
 
           <!-- Group items (always shown) -->

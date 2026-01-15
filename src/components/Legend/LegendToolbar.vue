@@ -22,7 +22,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['reset-customizations', 'settings-open', 'settings-close'])
+const emit = defineEmits(['settings-open', 'settings-close'])
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
@@ -74,15 +74,9 @@ function closeSettings() {
   }
 }
 
-// Handle reset
+// Handle reset - resets all legend customizations
 function handleReset() {
   legendStore.resetCustomizations()
-  // Reset map style to defaults
-  dataStore.mapStyle.pointSize = 8
-  dataStore.mapStyle.borderWidth = 1.5
-  dataStore.mapStyle.fillOpacity = 0.85
-  dataStore.mapStyle.borderColor = '#ffffff'
-  emit('reset-customizations')
 }
 
 // Toggle sticky edges

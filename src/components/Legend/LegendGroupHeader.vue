@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
+import { generateAbbreviationOptions } from '../../utils/abbreviations'
+import AbbreviationDropdown from './AbbreviationDropdown.vue'
 
 const props = defineProps({
   speciesName: {
@@ -51,6 +53,10 @@ const props = defineProps({
   hasCustomizedStyle: {
     type: Boolean,
     default: false
+  },
+  anyGroupHasCustomStyle: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -60,22 +66,22 @@ const emit = defineEmits([
   'hide-headers',
   'update:abbreviation',
   'update:abbreviation-visible',
-  'update:custom-label'
+  'update:custom-label',
+  'apply-display-format-to-all',
+  'apply-prefix-format-to-all'
 ])
 
-// Editing states
-const isEditingAbbrev = ref(false)
-const isEditingName = ref(false)
-const editAbbrevInput = ref(null)
-const editNameInput = ref(null)
-const tempAbbrev = ref('')
-const tempName = ref('')
+// Dropdown states
+const showDisplayNameDropdown = ref(false)
+const showPrefixDropdown = ref(false)
+const displayNameDropdownPosition = ref({ x: 0, y: 0 })
+const prefixDropdownPosition = ref({ x: 0, y: 0 })
 
-// Format species name for display (e.g., "Mechanitis polymnia" -> "M. polymnia")
+// Format species name for display - use custom label if set, otherwise show abbreviation
 const displayName = computed(() => {
-  // Use custom label if set
   if (props.customLabel) return props.customLabel
 
+  // Default format: first letter of genus + full epithet
   const parts = props.speciesName.split(' ')
   if (parts.length >= 2) {
     return `${parts[0][0]}. ${parts.slice(1).join(' ')}`
@@ -128,62 +134,78 @@ function handleHideHeaders(e) {
   emit('hide-headers')
 }
 
-// Start editing abbreviation
-function startEditAbbrev(e) {
-  e.stopPropagation()
-  tempAbbrev.value = props.abbreviation
-  isEditingAbbrev.value = true
-  nextTick(() => {
-    editAbbrevInput.value?.focus()
-    editAbbrevInput.value?.select()
-  })
-}
-
-// Finish editing abbreviation
-function finishEditAbbrev() {
-  if (tempAbbrev.value !== props.abbreviation) {
-    emit('update:abbreviation', tempAbbrev.value)
-  }
-  isEditingAbbrev.value = false
-}
-
-// Cancel editing abbreviation
-function cancelEditAbbrev() {
-  isEditingAbbrev.value = false
-}
-
 // Toggle abbreviation visibility
 function toggleAbbrevVisibility(e) {
   e.stopPropagation()
   emit('update:abbreviation-visible', !props.abbreviationVisible)
 }
 
-// Start editing species name
-function startEditName(e) {
+// Open display name dropdown
+function openDisplayNameDropdown(e) {
   e.stopPropagation()
-  tempName.value = props.customLabel || props.speciesName
-  isEditingName.value = true
-  nextTick(() => {
-    editNameInput.value?.focus()
-    editNameInput.value?.select()
-  })
-}
-
-// Finish editing species name
-function finishEditName() {
-  // Only emit if changed from original
-  const newName = tempName.value.trim()
-  if (newName !== props.speciesName) {
-    emit('update:custom-label', newName)
-  } else {
-    emit('update:custom-label', '') // Reset to default
+  const rect = e.target.getBoundingClientRect()
+  displayNameDropdownPosition.value = {
+    x: rect.left,
+    y: rect.bottom + 4
   }
-  isEditingName.value = false
+  showDisplayNameDropdown.value = true
 }
 
-// Cancel editing species name
-function cancelEditName() {
-  isEditingName.value = false
+// Close display name dropdown
+function closeDisplayNameDropdown() {
+  showDisplayNameDropdown.value = false
+}
+
+// Handle display name selection
+function handleDisplayNameSelect(result) {
+  // If it's a predefined format (not custom), apply to ALL group headers
+  if (result.format !== 'custom') {
+    emit('apply-display-format-to-all', result.format)
+  } else {
+    // Custom value - only apply to this species
+    emit('update:custom-label', result.value)
+  }
+  closeDisplayNameDropdown()
+}
+
+// Handle apply display format to all (explicit button click)
+function handleDisplayNameApplyToAll(format) {
+  emit('apply-display-format-to-all', format)
+  closeDisplayNameDropdown()
+}
+
+// Open prefix dropdown
+function openPrefixDropdown(e) {
+  e.stopPropagation()
+  const rect = e.target.getBoundingClientRect()
+  prefixDropdownPosition.value = {
+    x: rect.left,
+    y: rect.bottom + 4
+  }
+  showPrefixDropdown.value = true
+}
+
+// Close prefix dropdown
+function closePrefixDropdown() {
+  showPrefixDropdown.value = false
+}
+
+// Handle prefix selection
+function handlePrefixSelect(result) {
+  // If it's a predefined format (not custom), apply to ALL group headers
+  if (result.format !== 'custom') {
+    emit('apply-prefix-format-to-all', result.format)
+  } else {
+    // Custom value - only apply to this species
+    emit('update:abbreviation', result.value)
+  }
+  closePrefixDropdown()
+}
+
+// Handle apply prefix format to all (explicit button click)
+function handlePrefixApplyToAll(format) {
+  emit('apply-prefix-format-to-all', format)
+  closePrefixDropdown()
 }
 </script>
 
@@ -206,9 +228,9 @@ function cancelEditName() {
     >
       <span class="shape-icon" :style="{ color: shapeColor }">{{ shapeIcon }}</span>
     </button>
-    <!-- Static indicator (only show when user has customized style and not hovered) -->
+    <!-- Static indicator (show when ANY group has customized style, so all are visible for comparison) -->
     <span
-      v-else-if="hasCustomizedStyle && !isExportMode"
+      v-else-if="anyGroupHasCustomStyle && !isExportMode"
       class="species-indicator"
       :style="{
         ...indicatorStyle,
@@ -218,60 +240,32 @@ function cancelEditName() {
       }"
     />
 
-    <!-- Species name (editable, greyed when headers hidden) -->
+    <!-- Species name (clickable to open dropdown when hovered) -->
     <span class="species-name-container">
-      <!-- Editing mode -->
-      <input
-        v-if="isEditingName"
-        ref="editNameInput"
-        v-model="tempName"
-        type="text"
-        class="name-input"
-        @blur="finishEditName"
-        @keydown.enter="finishEditName"
-        @keydown.escape="cancelEditName"
-        @click.stop
-      />
-      <!-- Display mode -->
       <span
-        v-else
         class="species-name"
         :class="{
           'is-greyed': headersHidden,
           'is-editable': isLegendHovered && !isExportMode
         }"
-        @click="isLegendHovered && !isExportMode && startEditName($event)"
-        :title="isLegendHovered ? 'Click to edit name' : ''"
+        @click="isLegendHovered && !isExportMode && openDisplayNameDropdown($event)"
+        :title="isLegendHovered ? 'Click to change display format' : ''"
       >
         {{ displayName }}
       </span>
     </span>
 
-    <!-- Abbreviation (editable, shown on hover regardless of header visibility) -->
+    <!-- Abbreviation (clickable to open dropdown when hovered) -->
     <span
       v-if="isLegendHovered && !isExportMode"
       class="abbreviation-container"
       :class="{ 'is-disabled': !abbreviationVisible }"
     >
-      <!-- Editing mode -->
-      <input
-        v-if="isEditingAbbrev"
-        ref="editAbbrevInput"
-        v-model="tempAbbrev"
-        type="text"
-        class="abbrev-input"
-        @blur="finishEditAbbrev"
-        @keydown.enter="finishEditAbbrev"
-        @keydown.escape="cancelEditAbbrev"
-        @click.stop
-      />
-      <!-- Display mode -->
       <span
-        v-else
         class="abbreviation"
         :class="{ 'is-editable': true }"
-        @click="startEditAbbrev($event)"
-        title="Click to edit abbreviation"
+        @click="openPrefixDropdown($event)"
+        title="Click to change prefix format"
       >
         {{ abbreviation }}
       </span>
@@ -309,6 +303,30 @@ function cancelEditName() {
     >
       <EyeOff :size="12" />
     </button>
+
+    <!-- Display name dropdown -->
+    <AbbreviationDropdown
+      v-if="showDisplayNameDropdown"
+      :species-name="speciesName"
+      :current-value="displayName"
+      type="displayName"
+      :position="displayNameDropdownPosition"
+      @select="handleDisplayNameSelect"
+      @apply-to-all="handleDisplayNameApplyToAll"
+      @close="closeDisplayNameDropdown"
+    />
+
+    <!-- Prefix dropdown -->
+    <AbbreviationDropdown
+      v-if="showPrefixDropdown"
+      :species-name="speciesName"
+      :current-value="abbreviation"
+      type="prefix"
+      :position="prefixDropdownPosition"
+      @select="handlePrefixSelect"
+      @apply-to-all="handlePrefixApplyToAll"
+      @close="closePrefixDropdown"
+    />
   </div>
 </template>
 
@@ -401,19 +419,6 @@ function cancelEditName() {
   color: var(--color-text-secondary, #aaa);
 }
 
-.abbrev-input {
-  width: 50px;
-  font-size: 11px;
-  font-weight: 500;
-  font-style: italic;
-  padding: 1px 4px;
-  border: 1px solid var(--color-accent, #4ade80);
-  border-radius: 3px;
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
-  outline: none;
-}
-
 .abbrev-eye-toggle {
   display: flex;
   align-items: center;
@@ -466,20 +471,6 @@ function cancelEditName() {
 
 .species-name.is-editable:hover {
   background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
-}
-
-.name-input {
-  flex: 1;
-  font-size: 12px;
-  font-weight: 600;
-  font-style: italic;
-  padding: 1px 4px;
-  border: 1px solid var(--color-accent, #4ade80);
-  border-radius: 3px;
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
-  outline: none;
-  min-width: 0;
 }
 
 .subspecies-count {
