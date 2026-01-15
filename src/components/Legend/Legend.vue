@@ -489,8 +489,12 @@ function adjustPositionForNewBounds(oldBounds, newBounds) {
     newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, relativeX * newBounds.width))
   }
 
-  // If stuck to bottom edge, maintain bottom-edge position
-  if (stickyEdge.value.bottom) {
+  // Handle Y position - if posY is null, legend uses CSS bottom positioning
+  // Treat null posY as "sticky to bottom" since that's the default position
+  const isUsingBottomPosition = posY.value === null
+
+  // If stuck to bottom edge OR using default bottom positioning, maintain bottom-edge position
+  if (stickyEdge.value.bottom || isUsingBottomPosition) {
     newY = newBounds.height - legendHeight - margin
   }
   // If stuck to top edge, keep at top
@@ -498,7 +502,7 @@ function adjustPositionForNewBounds(oldBounds, newBounds) {
     newY = margin
   }
   // Otherwise, scale proportionally to new height
-  else if (oldBounds.height > 0) {
+  else if (oldBounds.height > 0 && posY.value !== null) {
     const relativeY = posY.value / oldBounds.height
     newY = Math.max(margin, Math.min(newBounds.height - legendHeight - margin, relativeY * newBounds.height))
   }
