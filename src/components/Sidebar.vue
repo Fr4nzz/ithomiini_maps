@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
+import { usePersistenceStore } from '../stores/persistence'
+import { useLegendStore } from '../stores/legend'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
@@ -17,6 +19,22 @@ const props = defineProps({
 const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'export-for-r', 'set-view'])
 
 const store = useDataStore()
+const persistenceStore = usePersistenceStore()
+const legendStore = useLegendStore()
+
+// Toggle persistence
+function togglePersistence() {
+  const newValue = !persistenceStore.enabled
+  persistenceStore.setEnabled(newValue)
+
+  // If enabling, save all current state
+  if (newValue) {
+    persistenceStore.saveAllState({
+      legendStore,
+      dataStore: store
+    })
+  }
+}
 
 // CAMID autocomplete from composable
 const {
@@ -624,6 +642,31 @@ const updateExportHeight = (value) => {
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->
       <SidebarMapSettings v-if="currentView === 'map'" />
+
+      <!-- Remember Settings -->
+      <div class="filter-section remember-settings">
+        <div class="setting-row toggle-row">
+          <div class="setting-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            <span>Remember Settings</span>
+          </div>
+          <button
+            class="toggle-button"
+            :class="{ active: persistenceStore.enabled }"
+            @click="togglePersistence"
+            :title="persistenceStore.enabled ? 'Settings will be saved on page refresh' : 'Settings will reset on page refresh'"
+          >
+            {{ persistenceStore.enabled ? 'ON' : 'OFF' }}
+          </button>
+        </div>
+        <p class="filter-hint" style="margin-top: 4px;">
+          {{ persistenceStore.enabled ? 'All settings saved to browser' : 'Settings reset on refresh' }}
+        </p>
+      </div>
 
       <!-- URL Share Settings -->
       <div class="filter-section collapsible">
@@ -1623,6 +1666,59 @@ const updateExportHeight = (value) => {
   color: var(--color-text-muted, #666);
   margin: -4px 0 4px 26px;
   font-style: italic;
+}
+
+/* Remember Settings Toggle */
+.remember-settings {
+  border-bottom: 1px solid var(--color-border, #3d3d5c);
+}
+
+.toggle-row {
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #e0e0e0);
+  font-weight: 500;
+}
+
+.setting-label svg {
+  color: var(--color-accent, #4ade80);
+  flex-shrink: 0;
+}
+
+.toggle-button {
+  padding: 4px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-muted, #666);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 45px;
+}
+
+.toggle-button:hover {
+  border-color: var(--color-text-muted, #666);
+  color: var(--color-text-secondary, #aaa);
+}
+
+.toggle-button.active {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
+}
+
+.toggle-button.active:hover {
+  background: rgba(74, 222, 128, 0.25);
 }
 
 /* Update Database Section */

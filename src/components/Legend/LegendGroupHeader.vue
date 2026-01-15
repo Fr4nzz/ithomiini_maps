@@ -47,12 +47,17 @@ const props = defineProps({
   shape: {
     type: String,
     default: 'circle'
+  },
+  hasCustomizedStyle: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits([
   'open-style-popup',
   'show-headers',
+  'hide-headers',
   'update:abbreviation',
   'update:abbreviation-visible',
   'update:custom-label'
@@ -115,6 +120,12 @@ function handleIndicatorClick(e) {
 function handleShowHeaders(e) {
   e.stopPropagation()
   emit('show-headers')
+}
+
+// Handle hide headers click
+function handleHideHeaders(e) {
+  e.stopPropagation()
+  emit('hide-headers')
 }
 
 // Start editing abbreviation
@@ -185,7 +196,7 @@ function cancelEditName() {
       'is-hovered': isLegendHovered
     }"
   >
-    <!-- Clickable style indicator (visible on hover) -->
+    <!-- Clickable style indicator (visible on hover so users can customize) -->
     <button
       v-if="showClickableIndicator"
       class="style-indicator-button"
@@ -195,9 +206,9 @@ function cancelEditName() {
     >
       <span class="shape-icon" :style="{ color: shapeColor }">{{ shapeIcon }}</span>
     </button>
-    <!-- Static indicator (when not hovered or hidden headers) -->
+    <!-- Static indicator (only show when user has customized style and not hovered) -->
     <span
-      v-else-if="!headersHidden || isLegendHovered"
+      v-else-if="hasCustomizedStyle && !isExportMode"
       class="species-indicator"
       :style="{
         ...indicatorStyle,
@@ -206,47 +217,6 @@ function cancelEditName() {
         border: `2px solid ${shapeColor}`
       }"
     />
-
-    <!-- Abbreviation (editable, with eye toggle) -->
-    <span
-      v-if="!headersHidden"
-      class="abbreviation-container"
-      :class="{ 'is-disabled': !abbreviationVisible }"
-    >
-      <!-- Editing mode -->
-      <input
-        v-if="isEditingAbbrev"
-        ref="editAbbrevInput"
-        v-model="tempAbbrev"
-        type="text"
-        class="abbrev-input"
-        @blur="finishEditAbbrev"
-        @keydown.enter="finishEditAbbrev"
-        @keydown.escape="cancelEditAbbrev"
-        @click.stop
-      />
-      <!-- Display mode -->
-      <span
-        v-else
-        class="abbreviation"
-        :class="{ 'is-editable': isLegendHovered && !isExportMode }"
-        @click="isLegendHovered && !isExportMode && startEditAbbrev($event)"
-        :title="isLegendHovered ? 'Click to edit abbreviation' : ''"
-      >
-        {{ abbreviation }}
-      </span>
-
-      <!-- Eye toggle for abbreviation visibility -->
-      <button
-        v-if="isLegendHovered && !isExportMode"
-        class="abbrev-eye-toggle"
-        @click="toggleAbbrevVisibility"
-        :title="abbreviationVisible ? 'Hide prefix for subspecies' : 'Show prefix for subspecies'"
-      >
-        <Eye v-if="abbreviationVisible" :size="10" />
-        <EyeOff v-else :size="10" />
-      </button>
-    </span>
 
     <!-- Species name (editable, greyed when headers hidden) -->
     <span class="species-name-container">
@@ -277,8 +247,58 @@ function cancelEditName() {
       </span>
     </span>
 
+    <!-- Abbreviation (editable, shown on hover regardless of header visibility) -->
+    <span
+      v-if="isLegendHovered && !isExportMode"
+      class="abbreviation-container"
+      :class="{ 'is-disabled': !abbreviationVisible }"
+    >
+      <!-- Editing mode -->
+      <input
+        v-if="isEditingAbbrev"
+        ref="editAbbrevInput"
+        v-model="tempAbbrev"
+        type="text"
+        class="abbrev-input"
+        @blur="finishEditAbbrev"
+        @keydown.enter="finishEditAbbrev"
+        @keydown.escape="cancelEditAbbrev"
+        @click.stop
+      />
+      <!-- Display mode -->
+      <span
+        v-else
+        class="abbreviation"
+        :class="{ 'is-editable': true }"
+        @click="startEditAbbrev($event)"
+        title="Click to edit abbreviation"
+      >
+        {{ abbreviation }}
+      </span>
+
+      <!-- Eye toggle for abbreviation visibility -->
+      <button
+        class="abbrev-eye-toggle"
+        @click="toggleAbbrevVisibility"
+        :title="abbreviationVisible ? 'Hide prefix for subspecies' : 'Show prefix for subspecies'"
+      >
+        <Eye v-if="abbreviationVisible" :size="10" />
+        <EyeOff v-else :size="10" />
+      </button>
+    </span>
+
     <!-- Count badge -->
     <span class="subspecies-count">({{ count }})</span>
+
+    <!-- Hide headers button (when headers are visible and legend is hovered) -->
+    <button
+      v-if="!headersHidden && isLegendHovered && !isExportMode"
+      class="hide-headers-button"
+      @click="handleHideHeaders"
+      title="Hide group headers"
+    >
+      <Eye :size="12" />
+    </button>
 
     <!-- Show headers button (when headers are hidden and legend is hovered) -->
     <button
@@ -468,7 +488,8 @@ function cancelEditName() {
   flex-shrink: 0;
 }
 
-/* Show headers button */
+/* Hide/Show headers buttons */
+.hide-headers-button,
 .show-headers-button {
   display: flex;
   align-items: center;
@@ -476,13 +497,21 @@ function cancelEditName() {
   padding: 2px;
   background: transparent;
   border: none;
-  color: var(--color-warning, #f59e0b);
   cursor: pointer;
   border-radius: 4px;
   opacity: 0.7;
   transition: all 0.15s ease;
 }
 
+.hide-headers-button {
+  color: var(--color-text-muted, #888);
+}
+
+.show-headers-button {
+  color: var(--color-warning, #f59e0b);
+}
+
+.hide-headers-button:hover,
 .show-headers-button:hover {
   opacity: 1;
   background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));

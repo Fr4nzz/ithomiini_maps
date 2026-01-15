@@ -129,6 +129,18 @@ function getSpeciesBorderColor(species) {
   return speciesBorderColors.value[species] || dataStore.mapStyle.borderColor
 }
 
+// Check if species has customized style (shape or border color)
+function hasCustomizedStyle(species) {
+  // Check if user set a custom shape (not default 'circle')
+  const shape = legendStore.getGroupShape(species)
+  const hasCustomShape = shape && shape !== 'circle'
+
+  // Check if user set a custom border color
+  const hasCustomBorder = !!legendStore.speciesBorderColors[species]
+
+  return hasCustomShape || hasCustomBorder
+}
+
 // Get species for a subspecies
 function getSpeciesForSubspecies(subspecies) {
   for (const [species, subspeciesList] of Object.entries(speciesSubspeciesMap.value)) {
@@ -232,6 +244,7 @@ const groupedLegendData = computed(() => {
       abbreviation: legendStore.getSpeciesAbbreviation(species),
       abbreviationVisible: legendStore.isAbbreviationVisible(species),
       customLabel: legendStore.customLabels[species] || '',
+      hasCustomizedStyle: hasCustomizedStyle(species),
       items: items.map(item => ({
         ...item,
         displayLabel: formatLabel(item.label, species)
@@ -567,6 +580,10 @@ function handleShowHeaders() {
   legendStore.setShowHeaders(true)
 }
 
+function handleHideHeaders() {
+  legendStore.setShowHeaders(false)
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // LIFECYCLE
 // ═══════════════════════════════════════════════════════════════════════════
@@ -732,8 +749,10 @@ watch(isExportMode, () => {
             :headers-hidden="!legendStore.groupingSettings.showHeaders"
             :is-legend-hovered="isHovered || hasModalOpen"
             :shape="group.shape"
+            :has-customized-style="group.hasCustomizedStyle"
             @open-style-popup="openGroupStylePopup(group.species, $event)"
             @show-headers="handleShowHeaders"
+            @hide-headers="handleHideHeaders"
             @update:abbreviation="(val) => handleUpdateAbbreviation(group.species, val)"
             @update:abbreviation-visible="(val) => legendStore.setAbbreviationVisible(group.species, val)"
             @update:custom-label="(val) => handleUpdateSpeciesCustomLabel(group.species, val)"
