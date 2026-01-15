@@ -104,6 +104,11 @@ bounds <- list(
 aspect_ratio <- config$aspectRatio
 if (is.null(aspect_ratio)) aspect_ratio <- 16/9  # fallback to 16:9
 
+# Ensure 'species' column exists (may be named 'scientific_name' in GeoJSON)
+if (!"species" %in% names(points) && "scientific_name" %in% names(points)) {
+  points$species <- points$scientific_name
+}
+
 cat(sprintf("  %d points loaded\\n", nrow(points)))
 cat(sprintf("  Bounds: [%.2f, %.2f] to [%.2f, %.2f]\\n",
             bounds$xmin, bounds$ymin, bounds$xmax, bounds$ymax))
@@ -344,6 +349,7 @@ get_shape_code <- function(shape_name) {
 
 # Load legend settings from JSON
 show_headers <- if (!is.null(legend_data$showHeaders)) legend_data$showHeaders else FALSE
+group_by <- if (!is.null(legend_data$groupBy)) legend_data$groupBy else "species"
 display_name_format <- if (!is.null(legend_data$displayNameFormat)) legend_data$displayNameFormat else "full"
 prefix_format <- if (!is.null(legend_data$prefixFormat)) legend_data$prefixFormat else "syllableBoth"
 shapes_enabled <- if (!is.null(legend_data$shapesEnabled)) legend_data$shapesEnabled else FALSE
@@ -356,13 +362,21 @@ custom_abbreviations <- legend_data$abbreviations
 group_shapes <- legend_data$groupShapes
 if (is.null(group_shapes)) group_shapes <- list()
 
+# Grouping information (species -> subspecies list)
+legend_groups <- legend_data$groups
+if (is.null(legend_groups)) legend_groups <- list()
+use_grouped_legend <- group_by != "none" && length(legend_groups) > 0
+
 # Legend position (normalized 0-1 coordinates)
+# pos_x: left edge (0 = left, 1 = right)
+# pos_y: TOP edge (0 = bottom, 1 = top) - note: this is TOP of legend, not bottom
 legend_pos_x <- if (!is.null(legend_data$position$x)) legend_data$position$x else 0.02
-legend_pos_y <- if (!is.null(legend_data$position$y)) legend_data$position$y else 0.08
+legend_pos_y <- if (!is.null(legend_data$position$y)) legend_data$position$y else 0.92  # Default to near top
 
 cat(sprintf("  Display name format: %s\\n", display_name_format))
 cat(sprintf("  Prefix format: %s\\n", prefix_format))
 cat(sprintf("  Show headers: %s\\n", show_headers))
+cat(sprintf("  Group by: %s\\n", group_by))
 cat(sprintf("  Shapes enabled: %s\\n", shapes_enabled))
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -440,7 +454,10 @@ create_shape_grob <- function(x, y, shape, fill_color, stroke_color = "white", s
 }
 
 create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE,
-                          pos_x = 0.02, pos_y = 0.08, use_shapes = FALSE) {
+                          pos_x = 0.02, pos_y = 0.92, use_shapes = FALSE) {
+  # pos_x: left edge of legend (0-1, from left)
+  # pos_y: TOP edge of legend (0-1, from bottom) - web app passes top position
+
   n_items <- min(nrow(items), max_items)
   has_more <- nrow(items) > max_items
 
@@ -453,11 +470,13 @@ create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE
   # Find max label width using ONLY VISIBLE items (first n_items)
   visible_items <- items$label[1:n_items]
   max_label_len <- max(nchar(visible_items))
-  legend_w <- max(style$legend_width, 0.01 * max_label_len + 0.06)
+  # Tighter width calculation: 0.006 per character + small padding
+  legend_w <- max(0.12, 0.006 * max_label_len + 0.05)
 
-  # Position (from parameters, defaults to bottom-left)
+  # Position: convert from top-edge to bottom-edge for grob placement
+  # pos_y is the TOP of the legend, y0 needs to be the BOTTOM
   x0 <- pos_x
-  y0 <- pos_y
+  y0 <- pos_y - total_h  # Convert top position to bottom position
 
   grobs <- list()
 
@@ -549,17 +568,282 @@ create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE
   do.call(grobTree, grobs)
 }
 
+# Create a grouped legend (species headers with subspecies underneath)
+create_grouped_legend <- function(items, groups, title, max_items, style = STYLE,
+                                   pos_x = 0.02, pos_y = 0.92, use_shapes = FALSE,
+                                   show_headers = TRUE, display_names = NULL, group_shapes = NULL) {
+  # pos_x: left edge of legend (0-1, from left)
+  # pos_y: TOP edge of legend (0-1, from bottom)
+
+  # Sort species alphabetically
+  sorted_species <- sort(names(groups))
+
+  # Count total items and calculate what fits in max_items
+  total_items <- nrow(items)
+  n_headers <- length(sorted_species)
+
+  # Calculate how many items we can show (including headers if visible)
+  items_shown <- 0
+  headers_shown <- 0
+  truncated <- FALSE
+
+  for (sp in sorted_species) {
+    subspecies_list <- groups[[sp]]
+    if (show_headers) {
+      if (items_shown + 1 + length(subspecies_list) <= max_items) {
+        items_shown <- items_shown + length(subspecies_list)
+        headers_shown <- headers_shown + 1
+      } else {
+        truncated <- TRUE
+        break
+      }
+    } else {
+      remaining <- max_items - items_shown
+      if (remaining >= length(subspecies_list)) {
+        items_shown <- items_shown + length(subspecies_list)
+      } else {
+        items_shown <- items_shown + remaining
+        truncated <- TRUE
+        break
+      }
+    }
+  }
+
+  # Calculate dimensions
+  title_h <- style$legend_item_height * 1.8
+  header_h <- if (show_headers) style$legend_item_height * 1.4 else 0
+  item_h <- style$legend_item_height
+  more_h <- if (truncated) style$legend_item_height * 1.2 else 0
+
+  # Total content height
+  content_h <- if (show_headers) {
+    headers_shown * header_h + items_shown * item_h
+  } else {
+    items_shown * item_h
+  }
+
+  total_h <- title_h + content_h + more_h + style$legend_padding * 3
+
+  # Find max label width - use tighter calculation for compact legend
+  max_label_len <- max(nchar(items$label))
+  if (show_headers && !is.null(display_names)) {
+    max_header_len <- max(nchar(unlist(display_names)))
+    max_label_len <- max(max_label_len, max_header_len)
+  }
+  # Tighter width calculation: 0.006 per character + small padding
+  legend_w <- max(0.12, 0.006 * max_label_len + 0.05)
+
+  # Position: convert from top-edge to bottom-edge
+  x0 <- pos_x
+  y0 <- pos_y - total_h
+
+  grobs <- list()
+
+  # Background
+  grobs$bg <- roundrectGrob(
+    x = x0, y = y0,
+    width = legend_w, height = total_h,
+    just = c("left", "bottom"),
+    r = unit(8, "pt"),
+    gp = gpar(
+      fill = alpha(style$legend_bg, style$legend_bg_alpha),
+      col = style$legend_border,
+      lwd = 1
+    )
+  )
+
+  # Title
+  grobs$title <- textGrob(
+    toupper(title),
+    x = x0 + style$legend_padding,
+    y = y0 + total_h - style$legend_padding - title_h/2,
+    just = c("left", "center"),
+    gp = gpar(
+      col = style$legend_title_color,
+      fontsize = style$legend_title_size,
+      fontface = "bold"
+    )
+  )
+
+  # Current Y position (starting after title)
+  current_y <- y0 + total_h - title_h - style$legend_padding
+  item_idx <- 1
+  grob_idx <- 1
+
+  for (sp in sorted_species) {
+    subspecies_list <- groups[[sp]]
+    if (items_shown <= 0) break
+
+    # Get species display name
+    sp_display <- if (!is.null(display_names) && sp %in% names(display_names)) {
+      display_names[[sp]]
+    } else {
+      sp
+    }
+
+    # Get shape for this species
+    sp_shape <- if (!is.null(group_shapes) && sp %in% names(group_shapes)) {
+      group_shapes[[sp]]
+    } else {
+      "circle"
+    }
+
+    # Draw species header if enabled
+    if (show_headers) {
+      current_y <- current_y - header_h / 2
+
+      # Shape indicator for species header
+      if (use_shapes && sp_shape != "circle") {
+        grobs[[paste0("header_shape_", grob_idx)]] <- create_shape_grob(
+          x = x0 + style$legend_padding + 0.010,
+          y = current_y,
+          shape = sp_shape,
+          fill_color = "transparent",
+          stroke_color = style$legend_text_color,
+          stroke_alpha = 0.6,
+          size = 0.005
+        )
+      }
+
+      # Species name (header)
+      header_x <- if (use_shapes) x0 + style$legend_padding + 0.024 else x0 + style$legend_padding
+      grobs[[paste0("header_", grob_idx)]] <- textGrob(
+        sp_display,
+        x = header_x,
+        y = current_y,
+        just = c("left", "center"),
+        gp = gpar(
+          col = style$legend_text_color,
+          fontsize = style$legend_font_size,
+          fontface = "bold.italic"
+        )
+      )
+
+      current_y <- current_y - header_h / 2
+      grob_idx <- grob_idx + 1
+    }
+
+    # Draw subspecies items
+    for (subsp in subspecies_list) {
+      if (item_idx > nrow(items)) break
+
+      # Find this subspecies in items
+      item_row <- which(items$label == subsp | grepl(paste0(subsp, "$"), items$label))[1]
+      if (is.na(item_row)) next
+
+      current_y <- current_y - item_h / 2
+
+      # Color dot
+      indent <- if (show_headers) 0.016 else 0
+      grobs[[paste0("dot_", grob_idx)]] <- circleGrob(
+        x = x0 + style$legend_padding + indent + 0.012,
+        y = current_y,
+        r = 0.006,
+        gp = gpar(
+          fill = items$color[item_row],
+          col = alpha("white", 0.3),
+          lwd = 0.5
+        )
+      )
+
+      # Label
+      grobs[[paste0("label_", grob_idx)]] <- textGrob(
+        items$label[item_row],
+        x = x0 + style$legend_padding + indent + 0.028,
+        y = current_y,
+        just = c("left", "center"),
+        gp = gpar(
+          col = style$legend_text_color,
+          fontsize = style$legend_font_size,
+          fontface = "italic"
+        )
+      )
+
+      current_y <- current_y - item_h / 2
+      item_idx <- item_idx + 1
+      grob_idx <- grob_idx + 1
+
+      if (item_idx > items_shown) break
+    }
+
+    if (item_idx > items_shown) break
+  }
+
+  # "More" indicator if truncated
+  if (truncated) {
+    remaining <- total_items - items_shown
+    grobs$more <- textGrob(
+      sprintf("+ %d more...", remaining),
+      x = x0 + style$legend_padding,
+      y = y0 + style$legend_padding + more_h/2,
+      just = c("left", "center"),
+      gp = gpar(
+        col = style$legend_title_color,
+        fontsize = style$legend_font_size - 1,
+        fontface = "italic"
+      )
+    )
+  }
+
+  do.call(grobTree, grobs)
+}
+
 # ──────────────────────────────────────────────────────────────────────────────
-# 10. PREPARE DATA WITH SHAPES (if enabled)
+# 10. APPLY PREFIX FORMAT TO LEGEND LABELS
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Apply the selected prefix format to legend labels
+# The 'label' column contains raw subspecies names, 'species' column has the parent species
+cat("\\nFormatting legend labels...\\n")
+cat(sprintf("  Prefix format: %s\\n", prefix_format))
+
+if (prefix_format != "none" && "species" %in% names(legend_df)) {
+  legend_df$display_label <- sapply(seq_len(nrow(legend_df)), function(i) {
+    subspecies_name <- legend_df$label[i]
+    species_name <- legend_df$species[i]
+
+    # Get the prefix for this species
+    prefix <- apply_prefix_format(species_name, prefix_format, custom_abbreviations)
+
+    if (prefix == "" || is.null(prefix)) {
+      subspecies_name
+    } else {
+      paste(prefix, subspecies_name)
+    }
+  })
+} else {
+  # No prefix - use raw label
+  legend_df$display_label <- legend_df$label
+}
+
+# Update the label column with formatted labels for legend rendering
+legend_df$label <- legend_df$display_label
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 11. PREPARE DATA WITH SHAPES (if enabled)
 # ──────────────────────────────────────────────────────────────────────────────
 
 # Add shape column to points based on species (or other grouping)
-if (shapes_enabled && length(group_shapes) > 0) {
+if (shapes_enabled) {
   cat("\\nApplying shapes to data points...\\n")
+
+  # Debug: show what group_shapes contains
+  if (length(group_shapes) > 0) {
+    cat("  Group shapes mapping:\\n")
+    for (sp_name in names(group_shapes)) {
+      cat(sprintf("    %s -> %s\\n", sp_name, group_shapes[[sp_name]]))
+    }
+  } else {
+    cat("  No custom shapes defined (all circles)\\n")
+  }
 
   # Get the grouping column (usually species for subspecies coloring)
   # The shape is assigned per species, so we need to map species -> shape
-  points$shape_code <- sapply(points$species, function(sp) {
+  # Use 'scientific_name' column which contains the species name
+  shape_column <- if ("scientific_name" %in% names(points)) "scientific_name" else "species"
+  cat(sprintf("  Using column '%s' for shape mapping\\n", shape_column))
+
+  points$shape_code <- sapply(points[[shape_column]], function(sp) {
     shape_name <- group_shapes[[sp]]
     if (is.null(shape_name)) shape_name <- "circle"
     get_shape_code(shape_name)
@@ -572,22 +856,18 @@ if (shapes_enabled && length(group_shapes) > 0) {
       if (is.null(shape_name)) "circle" else shape_name
     })
   } else {
-    # If no species column, try to match by label
-    legend_df$shape <- sapply(legend_df$label, function(lbl) {
-      # Try to extract species from label (may be subspecies name with prefix)
-      shape_name <- group_shapes[[lbl]]
-      if (is.null(shape_name)) "circle" else shape_name
-    })
+    legend_df$shape <- "circle"
   }
 
   cat(sprintf("  Shapes assigned: %d unique shapes\\n", length(unique(points$shape_code))))
+  cat(sprintf("  Shape codes in data: %s\\n", paste(unique(points$shape_code), collapse = ", ")))
 } else {
   points$shape_code <- 21  # Default to circle
   legend_df$shape <- "circle"
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 11. BUILD THE MAP
+# 12. BUILD THE MAP
 # ──────────────────────────────────────────────────────────────────────────────
 
 cat("\\nCreating map...\\n")
@@ -668,24 +948,45 @@ p <- p +
     panel.background = element_rect(fill = STYLE$bg_color, color = NA)
   )
 
-# Add custom legend with position and shape support
+# Add custom legend with position, shape, and grouping support
+# Use grouped legend if groupBy is set and we have grouping data
+if (use_grouped_legend) {
+  cat("  Using grouped legend (grouped by species)\\n")
+  legend_grob <- create_grouped_legend(
+    legend_df,
+    legend_groups,
+    legend_data$title,
+    legend_max_items,
+    style = STYLE,
+    pos_x = legend_pos_x,
+    pos_y = legend_pos_y,
+    use_shapes = shapes_enabled,
+    show_headers = show_headers,
+    display_names = custom_display_names,
+    group_shapes = group_shapes
+  )
+} else {
+  cat("  Using flat legend (no grouping)\\n")
+  legend_grob <- create_legend(
+    legend_df,
+    legend_data$title,
+    legend_max_items,
+    ${isItalic ? 'TRUE' : 'FALSE'},
+    style = STYLE,
+    pos_x = legend_pos_x,
+    pos_y = legend_pos_y,
+    use_shapes = shapes_enabled
+  )
+}
+
 p_final <- p +
   annotation_custom(
-    create_legend(
-      legend_df,
-      legend_data$title,
-      legend_max_items,
-      ${isItalic ? 'TRUE' : 'FALSE'},
-      style = STYLE,
-      pos_x = legend_pos_x,
-      pos_y = legend_pos_y,
-      use_shapes = shapes_enabled
-    ),
+    legend_grob,
     xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
   )
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 12. SAVE OUTPUTS
+# 13. SAVE OUTPUTS
 # ──────────────────────────────────────────────────────────────────────────────
 
 cat("\\nSaving outputs...\\n")
@@ -1033,22 +1334,44 @@ export async function exportForR(map) {
   // Get legend store settings
   const legendStore = useLegendStore()
 
+  // Helper function to format label with prefix (same as web app Legend.vue)
+  function formatLabelWithPrefix(subspeciesName, species) {
+    if (!species || !legendStore.isAbbreviationVisible(species)) {
+      return subspeciesName
+    }
+    const abbreviation = legendStore.getSpeciesAbbreviation(species)
+    return `${abbreviation} ${subspeciesName}`
+  }
+
   // Legend configuration - preserve order from colorMap (which matches web app display order)
   // Get legend items in the same order as they appear in the web app
   // Include species name for shape lookup
+  // Pass raw subspecies name - let R script calculate prefix based on format choice
   const legendItems = Object.entries(colorMap).map(([label, color]) => {
-    // Try to determine species from the label (for subspecies coloring)
-    const parts = label.split(' ')
-    const species = colorBy === 'subspecies' && parts.length >= 2
-      ? `${parts[0]} ${parts[1]}` // First two words are usually genus + epithet
-      : label
+    // For subspecies coloring, the label is the subspecies name
+    // We need to find the parent species to get the shape
+    let species = label
+    let subspeciesName = label
+
+    if (colorBy === 'subspecies') {
+      // Find the species for this subspecies from the GeoJSON
+      const feature = store.displayGeoJSON?.features?.find(
+        f => f.properties.subspecies === label
+      )
+      if (feature) {
+        species = feature.properties.scientific_name
+        subspeciesName = label
+      }
+    }
+
+    // Get shape for this species
+    const shape = legendStore.getGroupShape(species) || 'circle'
 
     return {
-      label,
+      label: subspeciesName,  // Raw subspecies name - R will apply prefix formatting
       color,
       species,
-      // Include shape if shapes are enabled
-      shape: legendStore.getGroupShape(species)
+      shape
     }
   })
 
@@ -1069,8 +1392,17 @@ export async function exportForR(map) {
     if (displayName) displayNamesMap[species] = displayName
   }
 
-  // Build group shapes map
-  const groupShapesMap = { ...legendStore.groupShapes }
+  // Build group shapes map - include ALL species with their shapes
+  // R script needs to know shapes for ALL species to render points correctly
+  const groupShapesMap = {}
+  for (const item of legendItems) {
+    // Include all shapes, not just non-circles
+    if (item.shape) {
+      groupShapesMap[item.species] = item.shape
+    }
+  }
+  // Also include any explicitly set shapes from the store (overrides)
+  Object.assign(groupShapesMap, legendStore.groupShapes)
 
   // Normalize legend position to 0-1 scale for R
   // Web app uses pixel positions, R uses normalized coordinates
@@ -1084,6 +1416,15 @@ export async function exportForR(map) {
     ? Math.max(0.05, Math.min(0.9, 1 - (legendStore.position.y / containerHeight)))
     : 0.08
 
+  // Build grouping info (which subspecies belong to which species)
+  const groupingInfo = {}
+  for (const item of legendItems) {
+    if (!groupingInfo[item.species]) {
+      groupingInfo[item.species] = []
+    }
+    groupingInfo[item.species].push(item.label)  // Raw subspecies name
+  }
+
   const legendConfig = {
     title: store.legendTitle,
     colorBy: colorBy,
@@ -1092,6 +1433,7 @@ export async function exportForR(map) {
     items: legendItems,
     // Legend customization settings
     showHeaders: legendStore.groupingSettings.showHeaders,
+    groupBy: legendStore.groupingSettings.enabled ? 'species' : 'none',
     displayNameFormat: legendStore.displayNameFormat,
     prefixFormat: legendStore.prefixFormat,
     shapesEnabled: legendStore.shapeSettings.enabled,
@@ -1099,6 +1441,8 @@ export async function exportForR(map) {
     displayNames: displayNamesMap,
     abbreviations: abbreviationsMap,
     groupShapes: groupShapesMap,
+    // Grouping information (species -> subspecies list)
+    groups: groupingInfo,
     // Position (normalized 0-1)
     position: {
       x: legendPosX,

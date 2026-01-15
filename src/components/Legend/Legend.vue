@@ -50,14 +50,17 @@ const dragStartPos = ref({ x: 0, y: 0 })
 
 // Sticky edge state (which edges legend is stuck to)
 const stickyEdge = ref({
-  left: false,
+  left: true,  // Default to left-bottom sticky
   right: false,
   top: false,
-  bottom: false
+  bottom: true  // Default to left-bottom sticky
 })
 
 // Previous container bounds (for detecting changes)
 const prevContainerBounds = ref({ width: 0, height: 0 })
+
+// Attribution height (space reserved at bottom for map attribution)
+const ATTRIBUTION_HEIGHT = 24  // Height of the collapsed attribution info button
 
 // Is export mode active?
 const isExportMode = computed(() => dataStore.exportSettings.enabled)
@@ -340,15 +343,16 @@ function handleMouseLeave() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function startDrag(e) {
-  // Allow drag from toolbar area (but not from buttons, dropdowns, or other interactive elements)
-  const toolbar = e.target.closest('.legend-toolbar')
-  if (!toolbar) return
-
+  // Allow drag from anywhere in the legend except interactive elements
   // Don't start drag if clicking on interactive elements
   if (e.target.closest('button') ||
       e.target.closest('select') ||
       e.target.closest('input') ||
-      e.target.closest('.color-by-select')) return
+      e.target.closest('.color-by-select') ||
+      e.target.closest('.legend-item') ||
+      e.target.closest('.legend-group-header') ||
+      e.target.closest('.color-picker-portal') ||
+      e.target.closest('.abbreviation-dropdown')) return
 
   e.preventDefault()
   isDragging.value = true
@@ -519,21 +523,107 @@ function adjustPositionForNewBounds(oldBounds, newBounds) {
 /**
  * Detect current sticky edge state based on current position.
  * Used to initialize sticky state when component mounts or bounds change.
+ * @param {boolean} wasExportMode - Optional: the export mode state BEFORE a mode change (for transitions)
+ * @param {Object} useBounds - Optional: specific bounds to use instead of reading from DOM
  */
-function detectStickyEdges() {
-  const bounds = containerBounds.value
+function detectStickyEdges(wasExportMode = null, useBounds = null) {
+  // Use provided bounds, or prevContainerBounds (stable), or fall back to computed (may be stale during transitions)
+  const bounds = useBounds || (prevContainerBounds.value.width ? prevContainerBounds.value : containerBounds.value)
   if (!bounds.width || !bounds.height) return
 
   const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
   const legendHeight = legendRef.value?.offsetHeight || 200
   const threshold = 20 // Detection threshold
+  const margin = 10
+
+  // Handle null posY (default bottom positioning via CSS)
+  const effectiveY = posY.value !== null ? posY.value : bounds.height - legendHeight - 30
+
+  // Use the provided wasExportMode if available (for mode transitions), otherwise use current
+  const useExportMode = wasExportMode !== null ? wasExportMode : isExportMode.value
+
+  // Calculate bottom edge position (where legend would be if at bottom)
+  // The legend is considered "at bottom" if it's within threshold of:
+  // - In export mode: bounds.height - legendHeight - margin
+  // - Not in export mode: bounds.height - legendHeight - margin - ATTRIBUTION_HEIGHT
+  const bottomMargin = useExportMode ? margin : margin + ATTRIBUTION_HEIGHT
+  const bottomEdgeY = bounds.height - legendHeight - bottomMargin
+
+  // Legend is at bottom if within threshold of where it should be
+  const isAtBottom = effectiveY >= bottomEdgeY - threshold
 
   stickyEdge.value = {
     left: posX.value <= threshold,
     right: posX.value >= bounds.width - legendWidth - threshold,
-    top: posY.value <= threshold,
-    bottom: posY.value >= bounds.height - legendHeight - threshold
+    top: effectiveY <= threshold,
+    // If posY is null, it's using CSS bottom positioning, so it's sticky to bottom
+    bottom: posY.value === null || isAtBottom
   }
+}
+
+/**
+ * Apply position for new bounds while preserving sticky edges.
+ * Used for window resize and export mode changes.
+ * Also constrains legend height if too tall for new bounds.
+ */
+function applyPositionForBounds(oldBounds, newBounds) {
+  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+  let legendHeight = legendRef.value?.offsetHeight || 200
+  const margin = 10
+  const minHeight = 100
+
+  // Calculate bottom margin (include attribution space when not in export mode)
+  const bottomMargin = isExportMode.value ? margin : margin + ATTRIBUTION_HEIGHT
+
+  // Calculate maximum allowed height
+  const maxAllowedHeight = newBounds.height - margin - bottomMargin
+
+  // If legend is too tall, constrain it
+  if (legendHeight > maxAllowedHeight && maxAllowedHeight >= minHeight) {
+    currentHeight.value = maxAllowedHeight
+    legendHeight = maxAllowedHeight
+    legendStore.updateSize(currentWidth.value, maxAllowedHeight)
+  }
+
+  let newX = posX.value
+  let newY = posY.value
+
+  // Apply sticky edges to new bounds
+  if (stickyEdge.value.left) {
+    newX = margin
+  } else if (stickyEdge.value.right) {
+    newX = newBounds.width - legendWidth - margin
+  } else {
+    // Scale proportionally
+    if (oldBounds.width > 0) {
+      const relativeX = posX.value / oldBounds.width
+      newX = relativeX * newBounds.width
+    }
+    // Clamp to visible area
+    newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
+  }
+
+  if (stickyEdge.value.top) {
+    newY = margin
+  } else if (stickyEdge.value.bottom) {
+    newY = newBounds.height - legendHeight - bottomMargin
+  } else {
+    // Scale proportionally
+    if (oldBounds.height > 0) {
+      const relativeY = posY.value / oldBounds.height
+      newY = relativeY * newBounds.height
+    }
+    // Clamp to visible area
+    newY = Math.max(margin, Math.min(newBounds.height - legendHeight - bottomMargin, newY))
+  }
+
+  // Final safety check
+  newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
+  newY = Math.max(margin, Math.min(newBounds.height - legendHeight - bottomMargin, newY))
+
+  posX.value = newX
+  posY.value = newY
+  legendStore.updatePosition(newX, newY)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -651,23 +741,40 @@ function handleApplyPrefixFormatToAll(format) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 onMounted(() => {
-  // If no Y position set, calculate based on container
-  if (posY.value === null && props.containerRef) {
-    const containerHeight = props.containerRef.clientHeight || 600
-    posY.value = containerHeight - 250 // Approximate legend height + margin
-  }
-
-  // Initialize previous bounds and detect sticky edges after a short delay
-  // to let the DOM settle
+  // Initialize previous bounds and position after a short delay to let the DOM settle
   setTimeout(() => {
     if (props.containerRef) {
-      prevContainerBounds.value = {
+      const bounds = {
         width: props.containerRef.clientWidth || 800,
         height: props.containerRef.clientHeight || 600
       }
-      detectStickyEdges()
+      prevContainerBounds.value = { ...bounds }
+
+      const legendHeight = legendRef.value?.offsetHeight || 200
+      const margin = 10
+
+      // Check if legend is at default position (never been moved) or outside visible bounds
+      const isDefaultPosition = posY.value === null || (posX.value === 40 && posY.value === legendStore.position.y)
+      const isOutsideBounds = posY.value !== null && (
+        posY.value < 0 ||
+        posY.value > bounds.height - legendHeight - margin
+      )
+
+      if (isDefaultPosition || isOutsideBounds) {
+        // Initialize to bottom-left, above attribution
+        posX.value = margin
+        posY.value = bounds.height - legendHeight - margin - ATTRIBUTION_HEIGHT
+        stickyEdge.value = { left: true, right: false, top: false, bottom: true }
+        legendStore.updatePosition(posX.value, posY.value)
+      } else {
+        // Detect sticky edges from existing position
+        detectStickyEdges()
+      }
     }
-  }, 100)
+  }, 150)
+
+  // Add window resize listener
+  window.addEventListener('resize', handleWindowResize)
 })
 
 onUnmounted(() => {
@@ -675,7 +782,32 @@ onUnmounted(() => {
   document.removeEventListener('mouseup', endDrag)
   document.removeEventListener('touchmove', onDrag)
   document.removeEventListener('touchend', endDrag)
+  window.removeEventListener('resize', handleWindowResize)
 })
+
+// Debounced window resize handler
+let resizeTimeout = null
+function handleWindowResize() {
+  if (resizeTimeout) clearTimeout(resizeTimeout)
+  resizeTimeout = setTimeout(() => {
+    if (!props.containerRef) return
+
+    const newBounds = {
+      width: props.containerRef.clientWidth || 800,
+      height: props.containerRef.clientHeight || 600
+    }
+
+    // Skip if bounds haven't actually changed
+    if (newBounds.width === prevContainerBounds.value.width &&
+        newBounds.height === prevContainerBounds.value.height) {
+      return
+    }
+
+    // Apply sticky edges to new bounds
+    applyPositionForBounds(prevContainerBounds.value, newBounds)
+    prevContainerBounds.value = { ...newBounds }
+  }, 100)
+}
 
 // Watch for position changes from store
 watch(() => legendStore.position, (newPos) => {
@@ -693,42 +825,46 @@ watch(() => legendStore.size, (newSize) => {
   }
 }, { deep: true })
 
-// Watch for container bounds changes (triggered by export mode toggle)
-watch(containerBounds, (newBounds, oldBounds) => {
-  // Only adjust if we have valid previous bounds and not currently dragging
-  if (isDragging.value || !prevContainerBounds.value.width) {
-    prevContainerBounds.value = { ...newBounds }
-    return
-  }
+// Watch for container bounds changes (triggered by export mode toggle or other factors)
+// Note: This is a backup - main handling is in handleWindowResize and isExportMode watcher
+watch(containerBounds, (newBounds) => {
+  // Only update if not currently dragging
+  if (isDragging.value) return
 
-  // Detect sticky state before adjusting
-  if (!stickyEdge.value.left && !stickyEdge.value.right &&
-      !stickyEdge.value.top && !stickyEdge.value.bottom) {
-    detectStickyEdges()
-  }
-
-  // Adjust position for new bounds
-  adjustPositionForNewBounds(prevContainerBounds.value, newBounds)
-
-  // Update previous bounds
-  prevContainerBounds.value = { ...newBounds }
+  // Just track bounds changes, don't reposition here
+  // Repositioning is handled by handleWindowResize and isExportMode watcher
 }, { deep: true })
 
 // Watch for export mode changes to force bounds recalculation
-watch(isExportMode, () => {
-  // Small delay to let the container resize first
-  setTimeout(() => {
-    const bounds = containerBounds.value
-    if (bounds.width && bounds.height) {
-      detectStickyEdges()
-      // Force position adjustment by setting prev bounds
-      if (prevContainerBounds.value.width) {
-        adjustPositionForNewBounds(prevContainerBounds.value, bounds)
+watch(isExportMode, (enabled, wasEnabled) => {
+  // Capture current sticky state BEFORE container resizes
+  // IMPORTANT: Pass the OLD export mode state since the container hasn't resized yet
+  detectStickyEdges(wasEnabled)
+
+  // Save pre-resize bounds for interpolation
+  const oldBounds = { ...prevContainerBounds.value }
+
+  // Wait for the CSS styles to be applied and the browser to reflow
+  // Use requestAnimationFrame + setTimeout to ensure the container has been resized
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      if (!props.containerRef) return
+
+      // Get fresh bounds AFTER container has resized
+      const newBounds = {
+        width: props.containerRef.clientWidth || 800,
+        height: props.containerRef.clientHeight || 600
       }
-      prevContainerBounds.value = { ...bounds }
-    }
-  }, 50)
+
+      if (newBounds.width && newBounds.height) {
+        // Apply position for new bounds while preserving sticky edges
+        applyPositionForBounds(oldBounds, newBounds)
+        prevContainerBounds.value = { ...newBounds }
+      }
+    }, 250) // Delay for CSS transitions
+  })
 })
+
 </script>
 
 <template>
@@ -914,6 +1050,7 @@ watch(isExportMode, () => {
   backdrop-filter: blur(4px);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
   user-select: none;
+  cursor: grab; /* Indicate draggable */
 }
 
 .legend-container.is-hovered:not(.is-export) {

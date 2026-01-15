@@ -106,9 +106,10 @@ const shapeIcon = computed(() => {
 // Shape color (border color or default)
 const shapeColor = computed(() => props.borderColor || 'var(--color-text-muted, #888)')
 
-// Should show clickable indicator (when legend is hovered and not in export mode)
+// Should show clickable indicator (when legend is hovered)
+// Allow in export mode too so legend behaves consistently
 const showClickableIndicator = computed(() =>
-  props.isLegendHovered && !props.isExportMode
+  props.isLegendHovered
 )
 
 // Handle indicator click (open style popup)
@@ -225,7 +226,7 @@ function handlePrefixApplyToAll(format) {
     </button>
     <!-- Static indicator (show when ANY group has customized style, so all are visible for comparison) -->
     <span
-      v-else-if="anyGroupHasCustomStyle && !isExportMode"
+      v-else-if="anyGroupHasCustomStyle"
       class="species-indicator"
       :style="{
         ...indicatorStyle,
@@ -241,9 +242,9 @@ function handlePrefixApplyToAll(format) {
         class="species-name"
         :class="{
           'is-greyed': headersHidden,
-          'is-editable': isLegendHovered && !isExportMode
+          'is-editable': isLegendHovered
         }"
-        @click="isLegendHovered && !isExportMode && openDisplayNameDropdown($event)"
+        @click="isLegendHovered && openDisplayNameDropdown($event)"
         :title="isLegendHovered ? 'Click to change display format' : ''"
       >
         {{ displayName }}
@@ -252,7 +253,7 @@ function handlePrefixApplyToAll(format) {
 
     <!-- Abbreviation (clickable to open dropdown when hovered) -->
     <span
-      v-if="isLegendHovered && !isExportMode"
+      v-if="isLegendHovered"
       class="abbreviation-container"
       :class="{ 'is-disabled': !abbreviationVisible }"
     >
@@ -281,7 +282,7 @@ function handlePrefixApplyToAll(format) {
 
     <!-- Hide headers button (when headers are visible and legend is hovered) -->
     <button
-      v-if="!headersHidden && isLegendHovered && !isExportMode"
+      v-if="!headersHidden && isLegendHovered"
       class="hide-headers-button"
       @click="handleHideHeaders"
       title="Hide group headers"
@@ -291,7 +292,7 @@ function handlePrefixApplyToAll(format) {
 
     <!-- Show headers button (when headers are hidden and legend is hovered) -->
     <button
-      v-if="headersHidden && isLegendHovered && !isExportMode"
+      v-if="headersHidden && isLegendHovered"
       class="show-headers-button"
       @click="handleShowHeaders"
       title="Show group headers"
