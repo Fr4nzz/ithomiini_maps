@@ -1,7 +1,6 @@
 # Vue to React + shadcn/ui + tweakcn Migration PRD
 
 **Project:** Ithomiini Maps
-**Branch:** `main` (work here)
 **Goal:** Migrate from Vue 3 to React + Vite + shadcn/ui + Tailwind, implement real-time theme customization with tweakcn presets
 
 ---
@@ -261,10 +260,9 @@ src/
 ## Important Notes
 
 1. **Verify documentation before implementing** - APIs may have changed
-2. **Work on `main` branch**
-3. **Visual quality is critical** - UI must not look worse
-4. **Iterate until correct** - Fix issues before moving on
-5. **Preserve data files** - Excel, GeoJSON, credentials untouched
+2. **Visual quality is critical** - UI must not look worse
+3. **Iterate until correct** - Fix issues before moving on
+4. **Preserve data files** - Excel, GeoJSON, credentials untouched
 
 ---
 
