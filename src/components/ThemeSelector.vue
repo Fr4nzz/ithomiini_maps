@@ -1,174 +1,170 @@
 <script setup>
 import { computed } from 'vue'
-import { Palette, ChevronDown, Check } from 'lucide-vue-next'
+import { Sun, Moon, Palette, Check } from 'lucide-vue-next'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
 
-const themeStore = useThemeStore()
+// shadcn-vue components
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
+import { Separator } from '@/components/ui/separator'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 
+const themeStore = useThemeStore()
 const themeOptions = getThemeOptions()
 
-const currentThemeName = computed(() => {
-  const theme = themeStore.availableThemes[themeStore.currentTheme]
-  return theme?.name || 'Unknown'
-})
+// Check if current theme is light mode
+const isLightMode = computed(() => themeStore.currentTheme === 'light')
 
-function selectTheme(themeName) {
-  themeStore.setTheme(themeName)
+// Toggle between light and dark
+function toggleLightDark(checked) {
+  if (checked) {
+    themeStore.setTheme('light')
+  } else {
+    // If currently light, go to dark. Otherwise stay on current dark theme
+    if (themeStore.currentTheme === 'light') {
+      themeStore.setTheme('dark')
+    }
+  }
+}
+
+// Handle theme selection from dropdown
+function handleThemeChange(value) {
+  themeStore.setTheme(value)
+}
+
+// Get theme background color for swatch
+function getThemeBgColor(themeName) {
+  const theme = themeStore.availableThemes[themeName]
+  return theme?.colors?.bgPrimary || '#1a1a2e'
+}
+
+// Get theme accent color for swatch
+function getThemeAccentColor(themeName) {
+  const theme = themeStore.availableThemes[themeName]
+  return theme?.colors?.accent || '#4ade80'
 }
 </script>
 
 <template>
-  <div class="theme-selector">
-    <label class="selector-label">
-      <Palette :size="14" />
-      <span>Theme</span>
-    </label>
-
-    <div class="theme-dropdown">
-      <select
-        :value="themeStore.currentTheme"
-        class="theme-select"
-        @change="selectTheme($event.target.value)"
-      >
-        <option
-          v-for="option in themeOptions"
-          :key="option.value"
-          :value="option.value"
-        >
-          {{ option.label }}
-        </option>
-      </select>
-      <ChevronDown :size="14" class="dropdown-icon" />
+  <div class="theme-selector space-y-4">
+    <!-- Header -->
+    <div class="flex items-center gap-2 text-muted-foreground">
+      <Palette class="h-4 w-4" />
+      <span class="text-xs font-medium uppercase tracking-wide">Theme</span>
     </div>
 
-    <!-- Theme preview swatches -->
-    <div class="theme-preview">
-      <div
+    <!-- Light/Dark Toggle -->
+    <div class="flex items-center justify-between">
+      <Label class="flex items-center gap-2 text-sm cursor-pointer">
+        <component :is="isLightMode ? Sun : Moon" class="h-4 w-4" />
+        <span>{{ isLightMode ? 'Light' : 'Dark' }} Mode</span>
+      </Label>
+      <Switch
+        :checked="isLightMode"
+        @update:checked="toggleLightDark"
+      />
+    </div>
+
+    <Separator />
+
+    <!-- Theme Preset Dropdown -->
+    <div class="space-y-2">
+      <Label class="text-sm text-muted-foreground">Theme Preset</Label>
+      <Select
+        :model-value="themeStore.currentTheme"
+        @update:model-value="handleThemeChange"
+      >
+        <SelectTrigger class="w-full">
+          <SelectValue placeholder="Select theme" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem
+            v-for="option in themeOptions"
+            :key="option.value"
+            :value="option.value"
+          >
+            <div class="flex items-center gap-2">
+              <div
+                class="h-4 w-4 rounded-full border border-border"
+                :style="{ backgroundColor: getThemeBgColor(option.value) }"
+              >
+                <div
+                  class="h-1.5 w-1.5 rounded-full absolute bottom-0.5 right-0.5"
+                  :style="{ backgroundColor: getThemeAccentColor(option.value) }"
+                />
+              </div>
+              <span>{{ option.label }}</span>
+              <span v-if="option.value === 'dark'" class="text-xs text-muted-foreground">(Default)</span>
+            </div>
+          </SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+
+    <!-- Theme Preview Swatches -->
+    <div class="flex gap-2 flex-wrap pt-1">
+      <button
         v-for="option in themeOptions"
         :key="option.value"
         class="theme-swatch"
-        :class="{ active: themeStore.currentTheme === option.value }"
+        :class="{ 'ring-2 ring-primary ring-offset-2 ring-offset-background': themeStore.currentTheme === option.value }"
         :title="option.label"
         :style="{
-          '--swatch-bg': themeStore.availableThemes[option.value]?.colors.bgPrimary,
-          '--swatch-accent': themeStore.availableThemes[option.value]?.colors.accent
+          backgroundColor: getThemeBgColor(option.value),
         }"
-        @click="selectTheme(option.value)"
+        @click="themeStore.setTheme(option.value)"
       >
+        <div
+          class="accent-dot"
+          :style="{ backgroundColor: getThemeAccentColor(option.value) }"
+        />
         <Check
           v-if="themeStore.currentTheme === option.value"
-          :size="10"
           class="check-icon"
+          :style="{ color: getThemeAccentColor(option.value) }"
         />
-      </div>
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.theme-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.selector-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary, #aaa);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.theme-dropdown {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.theme-select {
-  width: 100%;
-  padding: 8px 32px 8px 12px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 14px;
-  cursor: pointer;
-  appearance: none;
-  transition: all 0.15s ease;
-}
-
-.theme-select:hover {
-  border-color: var(--color-accent, #4ade80);
-}
-
-.theme-select:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 2px var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
-}
-
-.theme-select option {
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
-  padding: 8px;
-}
-
-.dropdown-icon {
-  position: absolute;
-  right: 10px;
-  pointer-events: none;
-  color: var(--color-text-muted, #666);
-}
-
-.theme-preview {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
 .theme-swatch {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 6px;
-  background: var(--swatch-bg, #1a1a2e);
-  border: 2px solid transparent;
+  border: 1px solid hsl(var(--border));
   cursor: pointer;
   position: relative;
-  transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.theme-swatch::after {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--swatch-accent, #4ade80);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .theme-swatch:hover {
   transform: scale(1.1);
-  border-color: var(--color-text-muted, #666);
 }
 
-.theme-swatch.active {
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 8px var(--swatch-accent, rgba(74, 222, 128, 0.4));
+.accent-dot {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
 .check-icon {
-  color: var(--swatch-accent, #4ade80);
+  width: 12px;
+  height: 12px;
   z-index: 1;
 }
 </style>

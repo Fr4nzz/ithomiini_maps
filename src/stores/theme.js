@@ -58,6 +58,9 @@ export const useThemeStore = defineStore('theme', () => {
     root.classList.remove(...themeClasses)
     root.classList.add(`theme-${themeName}`)
 
+    // Set data-theme attribute for shadcn-vue CSS variable themes
+    root.setAttribute('data-theme', themeName)
+
     console.log(`Applied theme: ${themeName}`)
   }
 
