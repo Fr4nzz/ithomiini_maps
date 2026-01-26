@@ -9,43 +9,9 @@
   box-sizing: border-box;
 }
 
-/* Root Variables - Dark Scientific Theme (Default) */
-/* These values are overridden by the theme store when a theme is applied */
+/* Root Variables - Non-color values only */
+/* Color variables are now managed in index.css with theme support */
 :root {
-  /* Background Colors */
-  --color-bg-primary: #1a1a2e;
-  --color-bg-secondary: #252540;
-  --color-bg-tertiary: #2d2d4a;
-  --color-bg-overlay: rgba(26, 26, 46, 0.95);
-  --color-border: #3d3d5c;
-  --color-border-light: #4a4a6a;
-
-  /* Text Colors */
-  --color-text-primary: #e0e0e0;
-  --color-text-secondary: #aaa;
-  --color-text-muted: #666;
-
-  /* Accent Colors */
-  --color-accent: #4ade80;
-  --color-accent-hover: #5eeb94;
-  --color-accent-subtle: rgba(74, 222, 128, 0.1);
-  --color-danger: #ef4444;
-  --color-danger-hover: #f87171;
-  --color-warning: #f59e0b;
-  --color-info: #3b82f6;
-  --color-success: #10b981;
-
-  /* Shadow Colors (for theme compatibility) */
-  --color-shadow-color: rgba(0, 0, 0, 0.3);
-  --color-shadow-color-light: rgba(0, 0, 0, 0.15);
-
-  /* Status Colors (Sequencing) */
-  --color-sequenced: #3b82f6;
-  --color-tissue: #10b981;
-  --color-preserved: #f59e0b;
-  --color-published: #a855f7;
-  --color-gbif: #6b7280;
-
   /* Typography */
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
                  'Helvetica Neue', Arial, sans-serif;
