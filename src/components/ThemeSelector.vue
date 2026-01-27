@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from 'vue'
 import { Sun, Moon, Palette, Check } from 'lucide-vue-next'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
@@ -19,14 +18,13 @@ import {
 const themeStore = useThemeStore()
 const themeOptions = getThemeOptions()
 
-// Computed for v-model binding with Switch
-const isLightMode = computed({
-  get: () => !themeStore.isDarkMode,
-  set: (value) => {
-    console.log('Switch toggled, isLightMode:', value)
-    themeStore.setMode(value ? 'light' : 'dark')
-  }
-})
+// Toggle light/dark mode
+function handleModeToggle(checked) {
+  console.log('handleModeToggle called with checked:', checked)
+  const newMode = checked ? 'light' : 'dark'
+  console.log('Setting mode to:', newMode)
+  themeStore.setMode(newMode)
+}
 
 // Handle theme selection from dropdown
 function handleThemeChange(value) {
@@ -58,7 +56,10 @@ function getThemeAccentColor(option) {
         <component :is="themeStore.isDarkMode ? Moon : Sun" class="h-4 w-4" />
         <span>{{ themeStore.isDarkMode ? 'Dark' : 'Light' }} Mode</span>
       </Label>
-      <Switch v-model:checked="isLightMode" />
+      <Switch
+        :model-value="!themeStore.isDarkMode"
+        @update:model-value="handleModeToggle"
+      />
     </div>
 
     <Separator />
