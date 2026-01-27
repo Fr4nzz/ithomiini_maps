@@ -630,42 +630,26 @@ export function useDataLayer(map, options = {}) {
   let isStyleChanging = false
 
   // Recreate cluster extent circle from stored params (called after style change)
-  // Returns true if successfully recreated, false if needs retry
-  const recreateClusterExtentCircle = (retryCount = 0) => {
-    console.log('[ClusterExtent] recreateClusterExtentCircle called, retry:', retryCount)
+  // Uses map.once('idle') to wait for map to be fully ready
+  const recreateClusterExtentCircle = () => {
+    console.log('[ClusterExtent] recreateClusterExtentCircle called')
     console.log('[ClusterExtent] currentExtentParams:', currentExtentParams.value)
 
     if (!currentExtentParams.value) {
       console.log('[ClusterExtent] No params stored, nothing to recreate')
-      return true // Nothing to do, consider it success
+      return
     }
 
-    // Check if style is loaded
-    if (!map.value || !map.value.isStyleLoaded()) {
-      console.log('[ClusterExtent] Style not loaded, scheduling retry')
-      if (retryCount < 20) { // Max 20 retries (1 second total)
-        setTimeout(() => recreateClusterExtentCircle(retryCount + 1), 50)
-      } else {
-        console.log('[ClusterExtent] Max retries reached, giving up')
+    // Wait for map to be idle (all rendering complete) before recreating
+    // This is the MapLibre-recommended way to ensure layers are ready
+    map.value.once('idle', () => {
+      console.log('[ClusterExtent] Map idle - recreating extent circle')
+      if (currentExtentParams.value) {
+        const { centerLat, centerLng, radiusKm } = currentExtentParams.value
+        console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
+        updateClusterExtentCircle(centerLat, centerLng, radiusKm)
       }
-      return false
-    }
-
-    // Check if clusters layer exists (needed for positioning)
-    if (!map.value.getLayer('clusters')) {
-      console.log('[ClusterExtent] Clusters layer not ready, scheduling retry')
-      if (retryCount < 20) {
-        setTimeout(() => recreateClusterExtentCircle(retryCount + 1), 50)
-      } else {
-        console.log('[ClusterExtent] Max retries reached, giving up')
-      }
-      return false
-    }
-
-    const { centerLat, centerLng, radiusKm } = currentExtentParams.value
-    console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
-    updateClusterExtentCircle(centerLat, centerLng, radiusKm)
-    return true
+    })
   }
 
   // Set style changing flag
@@ -1203,56 +1187,27 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
     console.log('[StyleSwitcher] Setting style:', styleConfig.name)
     map.value.setStyle(styleConfig.style)
 
-    // Wait for style to be fully loaded
-    // Note: Shape images are generated on-demand in addDataLayer, no pre-loading needed
-    const waitForStyleAndAddLayer = async () => {
-      console.log('[StyleSwitcher] waitForStyleAndAddLayer - isStyleLoaded:', map.value.isStyleLoaded())
-      if (map.value.isStyleLoaded()) {
-        map.value.jumpTo({ center, zoom, bearing, pitch })
-        console.log('[StyleSwitcher] Calling addDataLayer')
-        addDataLayer({ skipZoom: true })
-        // Recreate cluster extent circle if one was showing
-        // Note: recreateClusterExtentCircle will retry internally if needed
-        if (recreateClusterExtentCircle) {
-          console.log('[StyleSwitcher] Calling recreateClusterExtentCircle')
-          recreateClusterExtentCircle()
-        }
-        // Mark style change as complete after a delay to handle popup close events
-        if (setStyleChanging) {
-          setTimeout(() => {
-            console.log('[StyleSwitcher] Style change complete, clearing flag (delayed)')
-            setStyleChanging(false)
-          }, 500) // Wait 500ms for popup events to settle
-        }
-      } else {
-        setTimeout(waitForStyleAndAddLayer, 50)
-      }
-    }
-
+    // Use style.load event to add data layer, then idle event to recreate extent circle
     map.value.once('style.load', () => {
       console.log('[StyleSwitcher] style.load event fired')
-      setTimeout(waitForStyleAndAddLayer, 100)
-    })
+      map.value.jumpTo({ center, zoom, bearing, pitch })
+      console.log('[StyleSwitcher] Calling addDataLayer')
+      addDataLayer({ skipZoom: true })
 
-    map.value.once('idle', async () => {
-      console.log('[StyleSwitcher] idle event fired')
-      if (!map.value.getSource('points-source')) {
-        console.log('[StyleSwitcher] No points-source, calling addDataLayer from idle')
-        map.value.jumpTo({ center, zoom, bearing, pitch })
-        addDataLayer({ skipZoom: true })
-        // Recreate cluster extent circle if one was showing
-        if (recreateClusterExtentCircle) {
-          console.log('[StyleSwitcher] Calling recreateClusterExtentCircle from idle')
-          recreateClusterExtentCircle()
-        }
-        // Mark style change as complete after a delay
-        if (setStyleChanging) {
-          setTimeout(() => {
-            console.log('[StyleSwitcher] Style change complete (from idle), clearing flag (delayed)')
-            setStyleChanging(false)
-          }, 500)
-        }
+      // Recreate cluster extent circle after map becomes idle (all layers ready)
+      if (recreateClusterExtentCircle) {
+        console.log('[StyleSwitcher] Scheduling recreateClusterExtentCircle on idle')
+        recreateClusterExtentCircle()
       }
+
+      // Clear the style changing flag after map is idle
+      // This ensures popup close events during style change are ignored
+      map.value.once('idle', () => {
+        console.log('[StyleSwitcher] Map idle after style change, clearing flag')
+        if (setStyleChanging) {
+          setStyleChanging(false)
+        }
+      })
     })
   }
 
