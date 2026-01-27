@@ -67,8 +67,9 @@ const isAttributionOpen = ref(true)  // Track if attribution is expanded
 const isExportMode = computed(() => dataStore.exportSettings.enabled)
 
 // Get the actual bottom margin needed based on attribution state
+// If attribution is open/visible, we need space above it (even in export mode, since it will be in the export)
+// If attribution is collapsed, no extra space needed (it won't be in export either)
 const bottomAttributionMargin = computed(() => {
-  if (isExportMode.value) return 0  // No attribution in export mode
   if (!isAttributionOpen.value) return 0  // Attribution collapsed, no extra space needed
   return attributionHeight.value
 })
