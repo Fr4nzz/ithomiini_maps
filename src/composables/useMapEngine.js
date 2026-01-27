@@ -626,6 +626,9 @@ export function useDataLayer(map, options = {}) {
     }
   }
 
+  // Track if we're in the middle of a style change (to prevent clearing extent circle)
+  let isStyleChanging = false
+
   // Recreate cluster extent circle from stored params (called after style change)
   const recreateClusterExtentCircle = () => {
     console.log('[ClusterExtent] recreateClusterExtentCircle called')
@@ -639,9 +642,24 @@ export function useDataLayer(map, options = {}) {
     }
   }
 
+  // Set style changing flag
+  const setStyleChanging = (value) => {
+    console.log('[ClusterExtent] setStyleChanging:', value)
+    isStyleChanging = value
+  }
+
   // Clear the dynamic cluster extent circle
   const clearClusterExtentCircle = () => {
     console.log('[ClusterExtent] clearClusterExtentCircle called')
+    console.log('[ClusterExtent] isStyleChanging:', isStyleChanging)
+    console.log('[ClusterExtent] Call stack:', new Error().stack)
+
+    // Don't clear during style change - the circle will be recreated
+    if (isStyleChanging) {
+      console.log('[ClusterExtent] Skipping clear during style change')
+      return
+    }
+
     // Clear stored params
     currentExtentParams.value = null
 
@@ -1125,19 +1143,27 @@ export function useDataLayer(map, options = {}) {
     addDataLayer,
     fitBoundsToData,
     clearClusterExtentCircle,
-    recreateClusterExtentCircle
+    recreateClusterExtentCircle,
+    setStyleChanging
   }
 }
 
 // Style switcher
-export function useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle = null) {
+export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null) {
   const currentStyle = ref('dark')
+  const { recreateClusterExtentCircle, setStyleChanging } = extentCircleCallbacks || {}
 
   const switchStyle = async (styleName) => {
     console.log('[StyleSwitcher] switchStyle called:', styleName)
     console.log('[StyleSwitcher] recreateClusterExtentCircle function provided:', !!recreateClusterExtentCircle)
+    console.log('[StyleSwitcher] setStyleChanging function provided:', !!setStyleChanging)
 
     if (!map.value || !MAP_STYLES[styleName]) return
+
+    // Mark that we're changing styles - prevents clearing extent circle during popup close
+    if (setStyleChanging) {
+      setStyleChanging(true)
+    }
 
     // Save current view state before style change
     const center = map.value.getCenter()
@@ -1164,6 +1190,11 @@ export function useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle 
           console.log('[StyleSwitcher] Calling recreateClusterExtentCircle')
           recreateClusterExtentCircle()
         }
+        // Mark style change as complete
+        if (setStyleChanging) {
+          console.log('[StyleSwitcher] Style change complete, clearing flag')
+          setStyleChanging(false)
+        }
       } else {
         setTimeout(waitForStyleAndAddLayer, 50)
       }
@@ -1184,6 +1215,11 @@ export function useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle 
         if (recreateClusterExtentCircle) {
           console.log('[StyleSwitcher] Calling recreateClusterExtentCircle from idle')
           recreateClusterExtentCircle()
+        }
+        // Mark style change as complete
+        if (setStyleChanging) {
+          console.log('[StyleSwitcher] Style change complete (from idle), clearing flag')
+          setStyleChanging(false)
         }
       }
     })

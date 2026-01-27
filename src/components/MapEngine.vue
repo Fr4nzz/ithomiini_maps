@@ -102,8 +102,8 @@ const handleShowPopup = (data) => {
   })
 }
 
-const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle } = useDataLayer(map, { onShowPopup: handleShowPopup })
-const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle)
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, { recreateClusterExtentCircle, setStyleChanging })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
 
 // Map layer dropdown
