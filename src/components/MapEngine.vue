@@ -1129,6 +1129,9 @@ watch(
   top: 10px;
   left: 10px;
   z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .map-layer-dropdown {
