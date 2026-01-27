@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
-import { themes, DEFAULT_THEME, getTheme } from '../themes/presets'
-
-// Helper to convert camelCase to kebab-case
-function kebabCase(str) {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-}
+import { ref, computed } from 'vue'
+import { themes, DEFAULT_THEME, DEFAULT_MODE, getTheme } from '../themes/presets'
 
 // Get stored theme or default
 function getStoredTheme() {
@@ -16,52 +11,64 @@ function getStoredTheme() {
   }
 }
 
+// Get stored mode or default
+function getStoredMode() {
+  try {
+    return localStorage.getItem('app-mode') || DEFAULT_MODE
+  } catch {
+    return DEFAULT_MODE
+  }
+}
+
 export const useThemeStore = defineStore('theme', () => {
-  // Current theme name
+  // Current theme name (scientific, ocean, forest, sunset, lavender)
   const currentTheme = ref(getStoredTheme())
+
+  // Current mode (light or dark)
+  const currentMode = ref(getStoredMode())
 
   // Available themes (for UI)
   const availableThemes = themes
 
+  // Computed: is dark mode
+  const isDarkMode = computed(() => currentMode.value === 'dark')
+
   /**
-   * Apply a theme by setting CSS variables on :root
-   * @param {string} themeName - Name of the theme to apply
+   * Apply theme and mode by setting data attributes on document
    */
-  function applyTheme(themeName) {
+  function applyTheme() {
+    const themeName = currentTheme.value
+    const mode = currentMode.value
+
     const theme = getTheme(themeName)
     if (!theme) {
       console.warn(`Theme '${themeName}' not found, using default`)
-      themeName = DEFAULT_THEME
+      currentTheme.value = DEFAULT_THEME
     }
 
-    currentTheme.value = themeName
-
-    // Store preference
+    // Store preferences
     try {
-      localStorage.setItem('app-theme', themeName)
+      localStorage.setItem('app-theme', currentTheme.value)
+      localStorage.setItem('app-mode', currentMode.value)
     } catch {
       // Storage unavailable
     }
 
-    // Apply CSS variables to root
+    // Apply data attributes to root - CSS handles the rest via selectors
     const root = document.documentElement
-    const themeColors = getTheme(themeName).colors
+    root.setAttribute('data-theme', currentTheme.value)
+    root.setAttribute('data-mode', currentMode.value)
 
-    Object.entries(themeColors).forEach(([key, value]) => {
-      const cssVar = `--color-${kebabCase(key)}`
-      root.style.setProperty(cssVar, value)
-    })
-
-    // Add theme class for potential CSS selectors
-    // Remove old theme classes first
+    // Also set classes for potential CSS selectors
     const themeClasses = Object.keys(themes).map(t => `theme-${t}`)
     root.classList.remove(...themeClasses)
-    root.classList.add(`theme-${themeName}`)
+    root.classList.add(`theme-${currentTheme.value}`)
 
-    // Set data-theme attribute for shadcn-vue CSS variable themes
-    root.setAttribute('data-theme', themeName)
+    // Set dark/light class
+    root.classList.remove('dark', 'light')
+    root.classList.add(currentMode.value)
 
-    console.log(`Applied theme: ${themeName}`)
+    console.log(`Applied theme: ${currentTheme.value}, mode: ${currentMode.value}`)
   }
 
   /**
@@ -70,8 +77,28 @@ export const useThemeStore = defineStore('theme', () => {
    */
   function setTheme(themeName) {
     if (themes[themeName]) {
-      applyTheme(themeName)
+      currentTheme.value = themeName
+      applyTheme()
     }
+  }
+
+  /**
+   * Set mode (light or dark)
+   * @param {string} mode - 'light' or 'dark'
+   */
+  function setMode(mode) {
+    if (mode === 'light' || mode === 'dark') {
+      currentMode.value = mode
+      applyTheme()
+    }
+  }
+
+  /**
+   * Toggle between light and dark mode
+   */
+  function toggleMode() {
+    currentMode.value = currentMode.value === 'dark' ? 'light' : 'dark'
+    applyTheme()
   }
 
   /**
@@ -92,12 +119,16 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   // Apply theme on initialization
-  applyTheme(currentTheme.value)
+  applyTheme()
 
   return {
     currentTheme,
+    currentMode,
+    isDarkMode,
     availableThemes,
     setTheme,
+    setMode,
+    toggleMode,
     applyTheme,
     cycleTheme,
     getCurrentThemeData

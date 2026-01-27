@@ -19,19 +19,9 @@ import {
 const themeStore = useThemeStore()
 const themeOptions = getThemeOptions()
 
-// Check if current theme is light mode
-const isLightMode = computed(() => themeStore.currentTheme === 'light')
-
-// Toggle between light and dark
+// Toggle between light and dark mode
 function toggleLightDark(checked) {
-  if (checked) {
-    themeStore.setTheme('light')
-  } else {
-    // If currently light, go to dark. Otherwise stay on current dark theme
-    if (themeStore.currentTheme === 'light') {
-      themeStore.setTheme('dark')
-    }
-  }
+  themeStore.setMode(checked ? 'light' : 'dark')
 }
 
 // Handle theme selection from dropdown
@@ -39,16 +29,14 @@ function handleThemeChange(value) {
   themeStore.setTheme(value)
 }
 
-// Get theme background color for swatch
-function getThemeBgColor(themeName) {
-  const theme = themeStore.availableThemes[themeName]
-  return theme?.colors?.bgPrimary || '#1a1a2e'
+// Get theme background color for swatch (based on current mode)
+function getThemeBgColor(option) {
+  return themeStore.isDarkMode ? option.previewBgDark : option.previewBgLight
 }
 
 // Get theme accent color for swatch
-function getThemeAccentColor(themeName) {
-  const theme = themeStore.availableThemes[themeName]
-  return theme?.colors?.accent || '#4ade80'
+function getThemeAccentColor(option) {
+  return option.accentColor
 }
 </script>
 
@@ -63,11 +51,11 @@ function getThemeAccentColor(themeName) {
     <!-- Light/Dark Toggle -->
     <div class="flex items-center justify-between">
       <Label class="flex items-center gap-2 text-sm cursor-pointer">
-        <component :is="isLightMode ? Sun : Moon" class="h-4 w-4" />
-        <span>{{ isLightMode ? 'Light' : 'Dark' }} Mode</span>
+        <component :is="themeStore.isDarkMode ? Moon : Sun" class="h-4 w-4" />
+        <span>{{ themeStore.isDarkMode ? 'Dark' : 'Light' }} Mode</span>
       </Label>
       <Switch
-        :checked="isLightMode"
+        :checked="!themeStore.isDarkMode"
         @update:checked="toggleLightDark"
       />
     </div>
@@ -90,18 +78,18 @@ function getThemeAccentColor(themeName) {
             :key="option.value"
             :value="option.value"
           >
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-3">
               <div
-                class="h-4 w-4 rounded-full border border-border"
-                :style="{ backgroundColor: getThemeBgColor(option.value) }"
+                class="theme-preview-swatch"
+                :style="{ backgroundColor: getThemeBgColor(option) }"
               >
                 <div
-                  class="h-1.5 w-1.5 rounded-full absolute bottom-0.5 right-0.5"
-                  :style="{ backgroundColor: getThemeAccentColor(option.value) }"
+                  class="accent-indicator"
+                  :style="{ backgroundColor: getThemeAccentColor(option) }"
                 />
               </div>
               <span>{{ option.label }}</span>
-              <span v-if="option.value === 'dark'" class="text-xs text-muted-foreground">(Default)</span>
+              <span v-if="option.value === 'scientific'" class="text-xs text-muted-foreground ml-auto">(Default)</span>
             </div>
           </SelectItem>
         </SelectContent>
@@ -114,57 +102,87 @@ function getThemeAccentColor(themeName) {
         v-for="option in themeOptions"
         :key="option.value"
         class="theme-swatch"
-        :class="{ 'ring-2 ring-primary ring-offset-2 ring-offset-background': themeStore.currentTheme === option.value }"
-        :title="option.label"
+        :class="{ 'active': themeStore.currentTheme === option.value }"
+        :title="`${option.label} - ${option.description}`"
         :style="{
-          backgroundColor: getThemeBgColor(option.value),
+          backgroundColor: getThemeBgColor(option),
         }"
         @click="themeStore.setTheme(option.value)"
       >
         <div
           class="accent-dot"
-          :style="{ backgroundColor: getThemeAccentColor(option.value) }"
+          :style="{ backgroundColor: getThemeAccentColor(option) }"
         />
         <Check
           v-if="themeStore.currentTheme === option.value"
           class="check-icon"
-          :style="{ color: getThemeAccentColor(option.value) }"
+          :style="{ color: getThemeAccentColor(option) }"
         />
       </button>
+    </div>
+
+    <!-- Current Selection Info -->
+    <div class="text-xs text-muted-foreground pt-2">
+      <span class="font-medium">{{ themeStore.availableThemes[themeStore.currentTheme]?.name }}</span>
+      <span> - {{ themeStore.isDarkMode ? 'Dark' : 'Light' }}</span>
     </div>
   </div>
 </template>
 
 <style scoped>
-.theme-swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+.theme-preview-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
   border: 1px solid hsl(var(--border));
-  cursor: pointer;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  flex-shrink: 0;
 }
 
-.theme-swatch:hover {
-  transform: scale(1.1);
-}
-
-.accent-dot {
+.theme-preview-swatch .accent-indicator {
   position: absolute;
-  bottom: 3px;
-  right: 3px;
+  bottom: 2px;
+  right: 2px;
   width: 6px;
   height: 6px;
   border-radius: 50%;
 }
 
+.theme-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid hsl(var(--border));
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-swatch:hover {
+  transform: scale(1.1);
+  border-color: hsl(var(--primary) / 0.5);
+}
+
+.theme-swatch.active {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary));
+}
+
+.accent-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
 .check-icon {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   z-index: 1;
 }
 </style>
