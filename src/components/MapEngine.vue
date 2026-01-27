@@ -1466,7 +1466,14 @@ watch(
   border-radius: 4px !important;
 }
 
-:deep(.maplibregl-ctrl-attrib.maplibregl-compact) {
+/* Bottom-left attribution: button is on LEFT, so padding-left needs space */
+:deep(.maplibregl-ctrl-bottom-left > .maplibregl-ctrl-attrib.maplibregl-compact) {
+  padding: 2px 8px 2px 28px !important;
+  min-height: 20px !important;
+}
+
+/* Bottom-right attribution: button is on RIGHT, so padding-right needs space */
+:deep(.maplibregl-ctrl-bottom-right > .maplibregl-ctrl-attrib.maplibregl-compact) {
   padding: 2px 28px 2px 8px !important;
   min-height: 20px !important;
 }
