@@ -1466,16 +1466,41 @@ watch(
   border-radius: 4px !important;
 }
 
-/* Bottom-left attribution: button is on LEFT, so padding-left needs space */
-:deep(.maplibregl-ctrl-bottom-left > .maplibregl-ctrl-attrib.maplibregl-compact) {
-  padding: 2px 8px 2px 28px !important;
+/* Compact attribution styling */
+:deep(.maplibregl-ctrl-attrib.maplibregl-compact) {
   min-height: 20px !important;
+  padding: 2px 8px !important;
+  position: relative !important;
 }
 
-/* Bottom-right attribution: button is on RIGHT, so padding-right needs space */
-:deep(.maplibregl-ctrl-bottom-right > .maplibregl-ctrl-attrib.maplibregl-compact) {
-  padding: 2px 28px 2px 8px !important;
-  min-height: 20px !important;
+/* Attribution button (info icon) - position to avoid overlapping text */
+:deep(.maplibregl-ctrl-attrib-button) {
+  background-color: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 24px !important;
+  margin: 0 !important;
+}
+
+/* Bottom-left: button on left side, text needs left margin */
+:deep(.maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib-button) {
+  left: 0 !important;
+  right: auto !important;
+}
+
+:deep(.maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib.maplibregl-compact) {
+  padding-left: 28px !important;
+}
+
+/* Bottom-right: button on right side, text needs right margin */
+:deep(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib-button) {
+  right: 0 !important;
+  left: auto !important;
+}
+
+:deep(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib.maplibregl-compact) {
+  padding-right: 28px !important;
 }
 
 :deep(.maplibregl-ctrl-attrib a) {
@@ -1484,10 +1509,6 @@ watch(
 
 :deep(.maplibregl-ctrl-attrib a:hover) {
   color: var(--color-accent-hover, #6ee7a0) !important;
-}
-
-:deep(.maplibregl-ctrl-attrib-button) {
-  background-color: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;
 }
 
 /* Theme Dropdown */
