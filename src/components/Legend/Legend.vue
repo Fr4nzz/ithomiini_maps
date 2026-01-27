@@ -410,26 +410,42 @@ function onDrag(e) {
     const legendHeight = legendRef.value?.offsetHeight || 200
     const margin = 10
 
+    // Debug: Log bounds during drag
+    console.log('[onDrag] Snap check:', {
+      bounds,
+      legendWidth,
+      legendHeight,
+      newX,
+      newY,
+      bottomAttributionMargin: bottomAttributionMargin.value,
+      isExportMode: isExportMode.value,
+      bottomSnapY: bounds.height - legendHeight - margin - bottomAttributionMargin.value
+    })
+
     // Snap to left edge
     if (newX >= 0 && newX < threshold) {
       newX = margin
       stickyEdge.value.left = true
+      console.log('[onDrag] Snapped to left')
     }
     // Snap to right edge
     if (newX > bounds.width - legendWidth - threshold && newX <= bounds.width - legendWidth) {
       newX = bounds.width - legendWidth - margin
       stickyEdge.value.right = true
+      console.log('[onDrag] Snapped to right')
     }
     // Snap to top edge
     if (newY >= 0 && newY < threshold) {
       newY = margin
       stickyEdge.value.top = true
+      console.log('[onDrag] Snapped to top')
     }
     // Snap to bottom edge (above attribution)
     const bottomSnapY = bounds.height - legendHeight - margin - bottomAttributionMargin.value
     if (newY > bottomSnapY - threshold && newY <= bounds.height - legendHeight) {
       newY = bottomSnapY
       stickyEdge.value.bottom = true
+      console.log('[onDrag] Snapped to bottom at Y =', bottomSnapY)
     }
   }
 
@@ -563,6 +579,21 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
   // Legend is at bottom if within threshold of where it should be
   const isAtBottom = effectiveY >= bottomEdgeY - threshold
 
+  console.log('[detectStickyEdges] Input:', {
+    wasExportMode,
+    useExportMode,
+    bounds,
+    legendWidth,
+    legendHeight,
+    posX: posX.value,
+    posY: posY.value,
+    effectiveY,
+    attrMargin,
+    bottomEdgeY,
+    threshold,
+    isAtBottom
+  })
+
   stickyEdge.value = {
     left: posX.value <= threshold,
     right: posX.value >= bounds.width - legendWidth - threshold,
@@ -570,6 +601,8 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
     // If posY is null, it's using CSS bottom positioning, so it's sticky to bottom
     bottom: posY.value === null || isAtBottom
   }
+
+  console.log('[detectStickyEdges] Result:', { ...stickyEdge.value })
 }
 
 /**
@@ -585,6 +618,17 @@ function applyPositionForBounds(oldBounds, newBounds) {
 
   // Calculate bottom margin (include attribution space when not in export mode)
   const bottomMargin = margin + bottomAttributionMargin.value
+
+  console.log('[applyPositionForBounds] Input:', {
+    oldBounds,
+    newBounds,
+    legendWidth,
+    legendHeight,
+    bottomMargin,
+    bottomAttributionMargin: bottomAttributionMargin.value,
+    isExportMode: isExportMode.value,
+    stickyEdges: { ...stickyEdge.value }
+  })
 
   // Calculate maximum allowed height
   const maxAllowedHeight = newBounds.height - margin - bottomMargin
@@ -602,8 +646,10 @@ function applyPositionForBounds(oldBounds, newBounds) {
   // Apply sticky edges to new bounds
   if (stickyEdge.value.left) {
     newX = margin
+    console.log('[applyPositionForBounds] Applied left sticky: newX =', newX)
   } else if (stickyEdge.value.right) {
     newX = newBounds.width - legendWidth - margin
+    console.log('[applyPositionForBounds] Applied right sticky: newX =', newX)
   } else {
     // Scale proportionally
     if (oldBounds.width > 0) {
@@ -616,8 +662,10 @@ function applyPositionForBounds(oldBounds, newBounds) {
 
   if (stickyEdge.value.top) {
     newY = margin
+    console.log('[applyPositionForBounds] Applied top sticky: newY =', newY)
   } else if (stickyEdge.value.bottom) {
     newY = newBounds.height - legendHeight - bottomMargin
+    console.log('[applyPositionForBounds] Applied bottom sticky: newY =', newY, '(height:', newBounds.height, '- legendHeight:', legendHeight, '- bottomMargin:', bottomMargin, ')')
   } else {
     // Scale proportionally
     if (oldBounds.height > 0) {
@@ -631,6 +679,8 @@ function applyPositionForBounds(oldBounds, newBounds) {
   // Final safety check
   newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
   newY = Math.max(margin, Math.min(newBounds.height - legendHeight - bottomMargin, newY))
+
+  console.log('[applyPositionForBounds] Final position:', { newX, newY })
 
   posX.value = newX
   posY.value = newY
@@ -833,20 +883,32 @@ function setupContainerResizeObserver() {
         height: entry.contentRect.height
       }
 
+      console.log('[Legend ResizeObserver] New bounds:', newBounds)
+      console.log('[Legend ResizeObserver] Previous bounds:', { ...prevContainerBounds.value })
+      console.log('[Legend ResizeObserver] Current sticky edges:', { ...stickyEdge.value })
+      console.log('[Legend ResizeObserver] isExportMode:', isExportMode.value)
+      console.log('[Legend ResizeObserver] bottomAttributionMargin:', bottomAttributionMargin.value)
+
       // Skip if bounds haven't actually changed or if currently dragging
-      if (isDragging.value) return
+      if (isDragging.value) {
+        console.log('[Legend ResizeObserver] Skipping - currently dragging')
+        return
+      }
       if (newBounds.width === prevContainerBounds.value.width &&
           newBounds.height === prevContainerBounds.value.height) {
+        console.log('[Legend ResizeObserver] Skipping - bounds unchanged')
         return
       }
 
       // Only reposition if we have previous bounds to compare with
       if (prevContainerBounds.value.width > 0) {
-        // Detect sticky edges based on current position and OLD bounds
-        detectStickyEdges()
+        console.log('[Legend ResizeObserver] Will reposition. Current pos:', { x: posX.value, y: posY.value })
 
         // Apply position for new bounds while preserving sticky edges
+        // Note: sticky edges should have been captured by isExportMode watcher before resize
         applyPositionForBounds(prevContainerBounds.value, newBounds)
+
+        console.log('[Legend ResizeObserver] After reposition. New pos:', { x: posX.value, y: posY.value })
       }
 
       prevContainerBounds.value = { ...newBounds }
@@ -976,9 +1038,15 @@ watch(containerBounds, (newBounds) => {
 // Watch for export mode changes - capture sticky state BEFORE container resizes
 // The actual repositioning is handled by the containerResizeObserver
 watch(isExportMode, (enabled, wasEnabled) => {
+  console.log('[isExportMode watcher] Export mode changed:', { enabled, wasEnabled })
+  console.log('[isExportMode watcher] Current position:', { x: posX.value, y: posY.value })
+  console.log('[isExportMode watcher] Current bounds:', { ...prevContainerBounds.value })
+
   // Capture current sticky state BEFORE container resizes
   // IMPORTANT: Pass the OLD export mode state since the container hasn't resized yet
   detectStickyEdges(wasEnabled)
+
+  console.log('[isExportMode watcher] After detectStickyEdges, sticky state:', { ...stickyEdge.value })
 })
 
 </script>
