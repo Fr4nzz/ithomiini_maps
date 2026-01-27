@@ -75,6 +75,7 @@ export const useDataStore = defineStore('data', () => {
     showCoordinates: true,
     includeLegend: true,
     includeScaleBar: true,
+    includeAttribution: true,
     uiScale: 1.0,
     format: 'png',
     dpi: 150

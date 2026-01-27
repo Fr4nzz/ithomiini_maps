@@ -10,6 +10,7 @@ import { ASPECT_RATIOS } from '../utils/constants'
 import {
   MAP_STYLES,
   getStylesByTheme,
+  getBasemapPair,
   useLocationSearch,
   useExportPreview,
   useScatterVisualization,
@@ -17,9 +18,13 @@ import {
   useStyleSwitcher,
   useCountryBoundaries
 } from '../composables/useMapEngine'
+import { useThemeStore } from '../stores/theme'
+import { getThemeOptions } from '../themes/presets'
+import { Sun, Moon, Palette } from 'lucide-vue-next'
 
 const store = useDataStore()
 const legendStore = useLegendStore()
+const themeStore = useThemeStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
@@ -106,6 +111,11 @@ const showMapLayerDropdown = ref(false)
 const stylesByTheme = getStylesByTheme()
 const mapLayerDropdownRef = ref(null)
 
+// Theme dropdown
+const showThemeDropdown = ref(false)
+const themeDropdownRef = ref(null)
+const themeOptions = getThemeOptions()
+
 // Select a map style from dropdown
 const selectMapStyle = (styleKey) => {
   switchStyle(styleKey)
@@ -118,6 +128,39 @@ const selectMapStyle = (styleKey) => {
   }, 500)
 }
 
+// Select a theme from dropdown
+const selectTheme = (themeKey) => {
+  themeStore.setTheme(themeKey)
+  showThemeDropdown.value = false
+}
+
+// Get current theme name
+const currentThemeName = computed(() => {
+  return themeStore.availableThemes[themeStore.currentTheme]?.name || 'Emerald'
+})
+
+// Toggle light/dark mode and switch basemap accordingly
+const toggleThemeMode = () => {
+  const newMode = themeStore.isDarkMode ? 'light' : 'dark'
+
+  // Get the paired basemap for the new mode
+  const pairedBasemap = getBasemapPair(currentStyle.value, newMode)
+
+  // Switch theme mode
+  themeStore.toggleMode()
+
+  // If basemap has a pair, switch to it
+  if (pairedBasemap !== currentStyle.value) {
+    switchStyle(pairedBasemap)
+    // Re-add boundaries after style change
+    setTimeout(() => {
+      if (showBoundaries.value) {
+        addBoundariesLayer()
+      }
+    }, 500)
+  }
+}
+
 // Get current style name
 const currentStyleName = computed(() => {
   return MAP_STYLES[currentStyle.value]?.name || 'Dark'
@@ -127,6 +170,9 @@ const currentStyleName = computed(() => {
 const handleMapLayerClickOutside = (event) => {
   if (mapLayerDropdownRef.value && !mapLayerDropdownRef.value.contains(event.target)) {
     showMapLayerDropdown.value = false
+  }
+  if (themeDropdownRef.value && !themeDropdownRef.value.contains(event.target)) {
+    showThemeDropdown.value = false
   }
 }
 
@@ -692,6 +738,53 @@ watch(
           </div>
         </Transition>
       </div>
+
+      <!-- Theme Dropdown -->
+      <div ref="themeDropdownRef" class="theme-dropdown-container">
+        <button
+          class="dropdown-trigger theme-trigger"
+          @click.stop="showThemeDropdown = !showThemeDropdown"
+        >
+          <Palette class="layer-icon" />
+          <span>{{ currentThemeName }}</span>
+          <svg class="chevron" :class="{ open: showThemeDropdown }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+
+        <Transition name="dropdown">
+          <div v-if="showThemeDropdown" class="dropdown-menu theme-menu">
+            <button
+              v-for="option in themeOptions"
+              :key="option.value"
+              :class="{ active: themeStore.currentTheme === option.value }"
+              @click="selectTheme(option.value)"
+            >
+              <div
+                class="theme-swatch"
+                :style="{ backgroundColor: themeStore.isDarkMode ? option.previewBgDark : option.previewBgLight }"
+              >
+                <div
+                  class="theme-swatch-accent"
+                  :style="{ backgroundColor: option.accentColor }"
+                />
+              </div>
+              <span>{{ option.label }}</span>
+            </button>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- Light/Dark Mode Toggle -->
+      <button
+        class="mode-toggle-btn"
+        :class="{ 'is-light': !themeStore.isDarkMode }"
+        @click="toggleThemeMode"
+        :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
+        <Moon v-else class="mode-icon" />
+      </button>
     </div>
 
   </div>
@@ -710,7 +803,7 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0d0d1a;
+  background: var(--color-bg-primary, #0d0d1a);
 }
 
 .map {
@@ -727,9 +820,9 @@ watch(
   height: auto;
   /* CRITICAL: Clip MapLibre canvas to container bounds */
   overflow: hidden;
-  border: 2px dashed rgba(74, 222, 128, 0.9);
+  border: 2px dashed var(--color-accent, rgba(74, 222, 128, 0.9));
   border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 30px var(--color-shadow-color, rgba(0, 0, 0, 0.5));
 }
 
 /* Force MapLibre's internal elements to respect container bounds */
@@ -757,11 +850,11 @@ watch(
   display: flex;
   gap: 10px;
   align-items: center;
-  background: rgba(26, 26, 46, 0.95);
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
   padding: 8px 14px;
   border-radius: 6px;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
   z-index: 20;
 }
@@ -769,12 +862,12 @@ watch(
 .export-info-badge .export-ratio {
   font-size: 0.85em;
   font-weight: 700;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
 }
 
 .export-info-badge .export-dimensions {
   font-size: 0.75em;
-  color: #aaa;
+  color: var(--color-text-secondary, #aaa);
   font-family: monospace;
 }
 
@@ -785,10 +878,10 @@ watch(
 }
 
 :deep(.maplibregl-ctrl-group) {
-  background: rgba(26, 26, 46, 0.95) !important;
-  border: 1px solid #3d3d5c !important;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95)) !important;
+  border: 1px solid var(--color-border, #3d3d5c) !important;
   border-radius: 8px !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3)) !important;
   backdrop-filter: blur(4px);
   overflow: hidden;
 }
@@ -798,7 +891,7 @@ watch(
   height: 32px !important;
   background-color: transparent !important;
   border: none !important;
-  border-bottom: 1px solid #3d3d5c !important;
+  border-bottom: 1px solid var(--color-border, #3d3d5c) !important;
 }
 
 :deep(.maplibregl-ctrl-group button:last-child) {
@@ -806,7 +899,7 @@ watch(
 }
 
 :deep(.maplibregl-ctrl-group button:hover) {
-  background-color: #2d2d4a !important;
+  background-color: var(--color-bg-secondary, #2d2d4a) !important;
 }
 
 :deep(.maplibregl-ctrl-compass) {
@@ -827,8 +920,8 @@ watch(
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(26, 26, 46, 0.95);
-  color: #aaa;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  color: var(--color-text-secondary, #aaa);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 11px;
@@ -861,10 +954,10 @@ watch(
 }
 
 :deep(.maplibregl-ctrl-scale) {
-  background: rgba(26, 26, 46, 0.8) !important;
-  border: 1px solid #3d3d5c !important;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;
+  border: 1px solid var(--color-border, #3d3d5c) !important;
   border-radius: 4px !important;
-  color: #aaa !important;
+  color: var(--color-text-secondary, #aaa) !important;
   font-size: 10px !important;
   padding: 2px 6px !important;
 }
@@ -881,29 +974,29 @@ watch(
 .search-input-wrapper {
   display: flex;
   align-items: center;
-  background: rgba(26, 26, 46, 0.95);
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
   padding: 0 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-input-wrapper:focus-within {
-  border-color: #4ade80;
-  box-shadow: 0 2px 15px rgba(74, 222, 128, 0.2);
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 2px 15px var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
 }
 
 .search-icon {
   width: 16px;
   height: 16px;
-  color: #666;
+  color: var(--color-text-muted, #666);
   flex-shrink: 0;
 }
 
 .search-input-wrapper:focus-within .search-icon {
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
 }
 
 .location-search input {
@@ -911,20 +1004,20 @@ watch(
   background: transparent;
   border: none;
   outline: none;
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
   font-size: 0.875rem;
   padding: 10px 10px;
   width: 100%;
 }
 
 .location-search input::placeholder {
-  color: #666;
+  color: var(--color-text-muted, #666);
 }
 
 .search-spinner {
   width: 18px;
   height: 18px;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
   animation: spin 1s linear infinite;
   flex-shrink: 0;
 }
@@ -941,12 +1034,12 @@ watch(
   border: none;
   cursor: pointer;
   padding: 4px;
-  color: #666;
+  color: var(--color-text-muted, #666);
   transition: color 0.2s;
 }
 
 .search-clear:hover {
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
 }
 
 .search-clear svg {
@@ -959,10 +1052,10 @@ watch(
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: rgba(26, 26, 46, 0.98);
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.98));
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
   backdrop-filter: blur(8px);
   max-height: 300px;
   overflow-y: auto;
@@ -977,7 +1070,7 @@ watch(
   padding: 10px 12px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #2d2d4a;
+  border-bottom: 1px solid var(--color-bg-secondary, #2d2d4a);
   cursor: pointer;
   text-align: left;
   transition: background 0.15s;
@@ -988,20 +1081,20 @@ watch(
 }
 
 .search-result-item:hover {
-  background: #2d2d4a;
+  background: var(--color-bg-secondary, #2d2d4a);
 }
 
 .result-icon {
   width: 16px;
   height: 16px;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .result-name {
   font-size: 0.8rem;
-  color: #c0c0c0;
+  color: var(--color-text-secondary, #c0c0c0);
   line-height: 1.4;
   overflow: hidden;
   display: -webkit-box;
@@ -1010,7 +1103,7 @@ watch(
 }
 
 .search-result-item:hover .result-name {
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
 }
 
 .search-results::-webkit-scrollbar {
@@ -1022,12 +1115,12 @@ watch(
 }
 
 .search-results::-webkit-scrollbar-thumb {
-  background: #3d3d5c;
+  background: var(--color-border, #3d3d5c);
   border-radius: 3px;
 }
 
 .search-results::-webkit-scrollbar-thumb:hover {
-  background: #4d4d6c;
+  background: var(--color-border-light, #4d4d6c);
 }
 
 /* Map Layer Controls */
@@ -1036,10 +1129,49 @@ watch(
   top: 10px;
   left: 10px;
   z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .map-layer-dropdown {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Light/Dark Mode Toggle Button */
+.mode-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(4px);
+}
+
+.mode-toggle-btn:hover {
+  background: var(--color-bg-secondary, rgba(37, 37, 64, 0.98));
+  border-color: var(--color-accent, #4ade80);
+}
+
+.mode-toggle-btn .mode-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-accent, #4ade80);
+}
+
+/* In light mode, show sun icon with appropriate color */
+.mode-toggle-btn.is-light .mode-icon {
+  color: var(--color-accent, #f59e0b);
 }
 
 .dropdown-trigger {
@@ -1047,33 +1179,33 @@ watch(
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: rgba(26, 26, 46, 0.95);
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
 }
 
 .dropdown-trigger:hover {
-  background: rgba(37, 37, 64, 0.98);
-  border-color: #4d4d6c;
+  background: var(--color-bg-secondary, rgba(37, 37, 64, 0.98));
+  border-color: var(--color-border-light, #4d4d6c);
 }
 
 .dropdown-trigger .layer-icon {
   width: 16px;
   height: 16px;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
 }
 
 .dropdown-trigger .chevron {
   width: 14px;
   height: 14px;
-  color: #888;
+  color: var(--color-text-muted, #888);
   transition: transform 0.2s;
 }
 
@@ -1086,10 +1218,10 @@ watch(
   top: calc(100% + 6px);
   left: 0;
   min-width: 180px;
-  background: rgba(26, 26, 46, 0.98);
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.98));
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
   backdrop-filter: blur(8px);
   overflow: hidden;
 }
@@ -1111,7 +1243,7 @@ watch(
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #888;
+  color: var(--color-text-muted, #888);
 }
 
 .theme-label svg {
@@ -1125,7 +1257,7 @@ watch(
   padding: 8px 12px 8px 30px;
   background: transparent;
   border: none;
-  color: #c0c0c0;
+  color: var(--color-text-secondary, #c0c0c0);
   font-size: 0.8rem;
   text-align: left;
   cursor: pointer;
@@ -1134,25 +1266,25 @@ watch(
 }
 
 .theme-group button:hover {
-  background: #2d2d4a;
-  color: #fff;
+  background: var(--color-bg-secondary, #2d2d4a);
+  color: var(--color-text-primary, #fff);
 }
 
 .theme-group button.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: #4ade80;
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  color: var(--color-accent, #4ade80);
 }
 
 .theme-group button.active::before {
   content: '✓';
   position: absolute;
   left: 12px;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
 }
 
 .dropdown-divider {
   height: 1px;
-  background: #3d3d5c;
+  background: var(--color-border, #3d3d5c);
   margin: 4px 0;
 }
 
@@ -1166,15 +1298,15 @@ watch(
   gap: 8px;
   cursor: pointer;
   font-size: 0.8rem;
-  color: #c0c0c0;
+  color: var(--color-text-secondary, #c0c0c0);
 }
 
 .overlay-toggle:hover {
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
 }
 
 .overlay-toggle input[type="checkbox"] {
-  accent-color: #4ade80;
+  accent-color: var(--color-accent, #4ade80);
   width: 14px;
   height: 14px;
 }
@@ -1194,29 +1326,29 @@ watch(
 
 /* Popup Styles */
 :deep(.maplibregl-popup-content) {
-  background: #1a1a2e !important;
-  color: #e0e0e0 !important;
+  background: var(--color-bg-primary, #1a1a2e) !important;
+  color: var(--color-text-primary, #e0e0e0) !important;
   border-radius: 10px;
   padding: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  border: 1px solid #3d3d5c;
+  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.5));
+  border: 1px solid var(--color-border, #3d3d5c);
   max-width: 340px;
 }
 
 :deep(.maplibregl-popup-close-button) {
-  color: #888 !important;
+  color: var(--color-text-muted, #888) !important;
   font-size: 20px;
   padding: 6px 10px;
   line-height: 1;
 }
 
 :deep(.maplibregl-popup-close-button:hover) {
-  color: #fff !important;
+  color: var(--color-text-primary, #fff) !important;
   background: transparent !important;
 }
 
 :deep(.maplibregl-popup-tip) {
-  border-top-color: #1a1a2e !important;
+  border-top-color: var(--color-bg-primary, #1a1a2e) !important;
 }
 
 :deep(.popup-content) { padding: 14px 18px; }
@@ -1228,12 +1360,12 @@ watch(
   font-size: 1.1em;
   margin-bottom: 12px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #3d3d5c;
+  border-bottom: 1px solid var(--color-border, #3d3d5c);
 }
 
 :deep(.popup-header strong) {
   font-style: italic;
-  color: #fff;
+  color: var(--color-text-primary, #fff);
 }
 
 :deep(.status-dot) {
@@ -1247,12 +1379,12 @@ watch(
 :deep(.popup-row) {
   font-size: 0.85em;
   margin-bottom: 5px;
-  color: #ccc;
+  color: var(--color-text-secondary, #ccc);
   line-height: 1.4;
 }
 
 :deep(.popup-row .label) {
-  color: #888;
+  color: var(--color-text-muted, #888);
   margin-right: 6px;
 }
 
@@ -1268,8 +1400,8 @@ watch(
   height: 100px;
   border-radius: 6px;
   overflow: hidden;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary, #252540);
+  border: 1px solid var(--color-border, #3d3d5c);
 }
 
 :deep(.popup-thumbnail img) {
@@ -1323,6 +1455,120 @@ watch(
 }
 
 :deep(.enhanced-popup .maplibregl-popup-tip) {
-  border-top-color: #1a1a2e !important;
+  border-top-color: var(--color-bg-primary, #1a1a2e) !important;
+}
+
+/* Attribution Control */
+:deep(.maplibregl-ctrl-attrib) {
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;
+  color: var(--color-text-secondary, #aaa) !important;
+  font-size: 10px !important;
+  border-radius: 4px !important;
+}
+
+/* Compact attribution styling */
+:deep(.maplibregl-ctrl-attrib.maplibregl-compact) {
+  min-height: 20px !important;
+  padding: 2px 8px !important;
+  position: relative !important;
+}
+
+/* Attribution button (info icon) - position to avoid overlapping text */
+:deep(.maplibregl-ctrl-attrib-button) {
+  background-color: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 24px !important;
+  margin: 0 !important;
+}
+
+/* Bottom-left: button on left side, text needs left margin */
+:deep(.maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib-button) {
+  left: 0 !important;
+  right: auto !important;
+}
+
+:deep(.maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib.maplibregl-compact) {
+  padding-left: 28px !important;
+}
+
+/* Bottom-right: button on right side, text needs right margin */
+:deep(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib-button) {
+  right: 0 !important;
+  left: auto !important;
+}
+
+:deep(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib.maplibregl-compact) {
+  padding-right: 28px !important;
+}
+
+:deep(.maplibregl-ctrl-attrib a) {
+  color: var(--color-accent, #4ade80) !important;
+}
+
+:deep(.maplibregl-ctrl-attrib a:hover) {
+  color: var(--color-accent-hover, #6ee7a0) !important;
+}
+
+/* Theme Dropdown */
+.theme-dropdown-container {
+  position: relative;
+}
+
+.theme-trigger {
+  gap: 6px !important;
+}
+
+.theme-trigger .layer-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.theme-menu {
+  min-width: 160px;
+}
+
+.theme-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary, #c0c0c0);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.theme-menu button:hover {
+  background: var(--color-bg-secondary, #2d2d4a);
+  color: var(--color-text-primary, #fff);
+}
+
+.theme-menu button.active {
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  color: var(--color-accent, #4ade80);
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border, #3d3d5c);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.theme-swatch-accent {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 </style>

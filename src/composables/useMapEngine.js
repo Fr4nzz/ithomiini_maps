@@ -17,13 +17,22 @@ export const MAP_STYLES = {
   light: {
     name: 'Light',
     theme: 'day',
-    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
+    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+    pair: 'dark' // Dark counterpart
   },
   'stadia-smooth': {
     name: 'Smooth',
     theme: 'day',
     provider: 'Stadia',
-    style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json'
+    style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json',
+    pair: 'stadia-dark' // Smooth Dark counterpart
+  },
+  'stadia-toner-lite': {
+    name: 'Toner Lite',
+    theme: 'day',
+    provider: 'Stadia',
+    style: 'https://tiles.stadiamaps.com/styles/stamen_toner_lite.json',
+    pair: 'stadia-toner' // Toner counterpart
   },
   terrain: {
     name: 'Terrain',
@@ -50,12 +59,14 @@ export const MAP_STYLES = {
         }
       ]
     }
+    // No dark pair - stays the same
   },
   'stadia-terrain': {
     name: 'Stamen Terrain',
     theme: 'day',
     provider: 'Stadia',
     style: 'https://tiles.stadiamaps.com/styles/stamen_terrain.json'
+    // No dark pair - stays the same
   },
   streets: {
     name: 'Streets',
@@ -82,6 +93,7 @@ export const MAP_STYLES = {
         }
       ]
     }
+    // No dark pair - stays the same
   },
   satellite: {
     name: 'Satellite',
@@ -108,25 +120,50 @@ export const MAP_STYLES = {
         }
       ]
     }
+    // No dark pair - stays the same
   },
   // Night themes
   dark: {
     name: 'Dark',
     theme: 'night',
-    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+    pair: 'light' // Light counterpart
   },
   'stadia-dark': {
     name: 'Smooth Dark',
     theme: 'night',
     provider: 'Stadia',
-    style: 'https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json'
+    style: 'https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json',
+    pair: 'stadia-smooth' // Smooth counterpart
   },
   'stadia-toner': {
     name: 'Toner',
     theme: 'night',
     provider: 'Stadia',
-    style: 'https://tiles.stadiamaps.com/styles/stamen_toner.json'
+    style: 'https://tiles.stadiamaps.com/styles/stamen_toner.json',
+    pair: 'stadia-toner-lite' // Toner Lite counterpart
   }
+}
+
+// Get the paired basemap for light/dark mode switching
+export const getBasemapPair = (currentBasemap, targetMode) => {
+  const style = MAP_STYLES[currentBasemap]
+  if (!style) return currentBasemap
+
+  // Check if current basemap matches the target mode
+  const isCurrentDark = style.theme === 'night'
+  const targetIsDark = targetMode === 'dark'
+
+  // If already matching, no change needed
+  if (isCurrentDark === targetIsDark) return currentBasemap
+
+  // If has a pair, return the pair
+  if (style.pair && MAP_STYLES[style.pair]) {
+    return style.pair
+  }
+
+  // No pair, return current (basemaps like Terrain, Streets, Satellite don't change)
+  return currentBasemap
 }
 
 // Get styles grouped by theme

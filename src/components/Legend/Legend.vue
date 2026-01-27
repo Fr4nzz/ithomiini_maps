@@ -59,11 +59,20 @@ const stickyEdge = ref({
 // Previous container bounds (for detecting changes)
 const prevContainerBounds = ref({ width: 0, height: 0 })
 
-// Attribution height (space reserved at bottom for map attribution)
-const ATTRIBUTION_HEIGHT = 24  // Height of the collapsed attribution info button
+// Attribution state - dynamically calculated based on actual attribution element
+const attributionHeight = ref(24)  // Default fallback
+const isAttributionOpen = ref(true)  // Track if attribution is expanded
 
 // Is export mode active?
 const isExportMode = computed(() => dataStore.exportSettings.enabled)
+
+// Get the actual bottom margin needed based on attribution state
+// If attribution is open/visible, we need space above it (even in export mode, since it will be in the export)
+// If attribution is collapsed, no extra space needed (it won't be in export either)
+const bottomAttributionMargin = computed(() => {
+  if (!isAttributionOpen.value) return 0  // Attribution collapsed, no extra space needed
+  return attributionHeight.value
+})
 
 // Should show toolbar? (hidden by default, shown on hover OR when popup is open)
 const showToolbar = computed(() => isHovered.value || hasOpenPopup.value)
@@ -397,7 +406,9 @@ function onDrag(e) {
   // Apply sticky edges if enabled (soft snapping, not constraint)
   if (legendStore.stickyEdges) {
     const threshold = legendStore.snapThreshold
-    const bounds = containerBounds.value
+    // Use prevContainerBounds (updated by ResizeObserver) instead of containerBounds
+    // containerBounds computed doesn't track DOM size changes reactively
+    const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
     const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
     const legendHeight = legendRef.value?.offsetHeight || 200
     const margin = 10
@@ -417,9 +428,10 @@ function onDrag(e) {
       newY = margin
       stickyEdge.value.top = true
     }
-    // Snap to bottom edge
-    if (newY > bounds.height - legendHeight - threshold && newY <= bounds.height - legendHeight) {
-      newY = bounds.height - legendHeight - margin
+    // Snap to bottom edge (above attribution)
+    const bottomSnapY = bounds.height - legendHeight - margin - bottomAttributionMargin.value
+    if (newY > bottomSnapY - threshold && newY <= bounds.height - legendHeight) {
+      newY = bottomSnapY
       stickyEdge.value.bottom = true
     }
   }
@@ -544,10 +556,12 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
 
   // Calculate bottom edge position (where legend would be if at bottom)
   // The legend is considered "at bottom" if it's within threshold of:
-  // - In export mode: bounds.height - legendHeight - margin
-  // - Not in export mode: bounds.height - legendHeight - margin - ATTRIBUTION_HEIGHT
-  const bottomMargin = useExportMode ? margin : margin + ATTRIBUTION_HEIGHT
-  const bottomEdgeY = bounds.height - legendHeight - bottomMargin
+  // - In export mode: bounds.height - legendHeight - margin (no attribution)
+  // - Not in export mode: bounds.height - legendHeight - margin - attributionHeight
+  // NOTE: We can't use bottomAttributionMargin here because it's reactive to current isExportMode
+  // We need to calculate based on the provided wasExportMode parameter
+  const attrMargin = useExportMode ? 0 : (isAttributionOpen.value ? attributionHeight.value : 0)
+  const bottomEdgeY = bounds.height - legendHeight - margin - attrMargin
 
   // Legend is at bottom if within threshold of where it should be
   const isAtBottom = effectiveY >= bottomEdgeY - threshold
@@ -573,7 +587,7 @@ function applyPositionForBounds(oldBounds, newBounds) {
   const minHeight = 100
 
   // Calculate bottom margin (include attribution space when not in export mode)
-  const bottomMargin = isExportMode.value ? margin : margin + ATTRIBUTION_HEIGHT
+  const bottomMargin = margin + bottomAttributionMargin.value
 
   // Calculate maximum allowed height
   const maxAllowedHeight = newBounds.height - margin - bottomMargin
@@ -737,6 +751,113 @@ function handleApplyPrefixFormatToAll(format) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// ATTRIBUTION OBSERVER
+// ═══════════════════════════════════════════════════════════════════════════
+
+let attributionObserver = null
+let containerResizeObserver = null
+
+function updateAttributionState() {
+  if (!props.containerRef) return
+
+  const attrEl = props.containerRef.querySelector('.maplibregl-ctrl-attrib')
+  if (!attrEl) {
+    isAttributionOpen.value = false
+    attributionHeight.value = 0
+    return
+  }
+
+  // Check if the details element is open
+  const wasOpen = isAttributionOpen.value
+  isAttributionOpen.value = attrEl.hasAttribute('open')
+  attributionHeight.value = attrEl.offsetHeight || 24
+
+  // If attribution state changed and legend is stuck to bottom, reposition
+  if (wasOpen !== isAttributionOpen.value && stickyEdge.value.bottom) {
+    repositionForAttributionChange()
+  }
+}
+
+function repositionForAttributionChange() {
+  if (!props.containerRef) return
+
+  const bounds = {
+    width: props.containerRef.clientWidth || 800,
+    height: props.containerRef.clientHeight || 600
+  }
+
+  const legendHeight = legendRef.value?.offsetHeight || 200
+  const margin = 10
+  const bottomMargin = margin + bottomAttributionMargin.value
+
+  // Only reposition if legend is stuck to bottom
+  if (stickyEdge.value.bottom) {
+    posY.value = bounds.height - legendHeight - bottomMargin
+    legendStore.updatePosition(posX.value, posY.value)
+  }
+}
+
+function setupAttributionObserver() {
+  if (!props.containerRef) return
+
+  const attrEl = props.containerRef.querySelector('.maplibregl-ctrl-attrib')
+  if (!attrEl) {
+    // Attribution element not yet mounted, retry later
+    setTimeout(setupAttributionObserver, 100)
+    return
+  }
+
+  // Initialize attribution state
+  updateAttributionState()
+
+  // Watch for open/close changes on the details element
+  attributionObserver = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
+        updateAttributionState()
+      }
+    }
+  })
+
+  attributionObserver.observe(attrEl, { attributes: true })
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CONTAINER RESIZE OBSERVER
+// ═══════════════════════════════════════════════════════════════════════════
+
+function setupContainerResizeObserver() {
+  if (!props.containerRef || containerResizeObserver) return
+
+  containerResizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const newBounds = {
+        width: entry.contentRect.width,
+        height: entry.contentRect.height
+      }
+
+      // Skip if bounds haven't actually changed or if currently dragging
+      if (isDragging.value) return
+      if (newBounds.width === prevContainerBounds.value.width &&
+          newBounds.height === prevContainerBounds.value.height) {
+        return
+      }
+
+      // Only reposition if we have previous bounds to compare with
+      if (prevContainerBounds.value.width > 0) {
+        // Apply position for new bounds while preserving sticky edges
+        // Note: sticky edges should have been captured by isExportMode watcher before resize
+        applyPositionForBounds(prevContainerBounds.value, newBounds)
+      }
+
+      prevContainerBounds.value = { ...newBounds }
+    }
+  })
+
+  containerResizeObserver.observe(props.containerRef)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // LIFECYCLE
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -749,6 +870,12 @@ onMounted(() => {
         height: props.containerRef.clientHeight || 600
       }
       prevContainerBounds.value = { ...bounds }
+
+      // Setup attribution observer (will also initialize attributionHeight)
+      setupAttributionObserver()
+
+      // Setup container resize observer to detect export mode changes
+      setupContainerResizeObserver()
 
       const legendHeight = legendRef.value?.offsetHeight || 200
       const margin = 10
@@ -763,7 +890,7 @@ onMounted(() => {
       if (isDefaultPosition || isOutsideBounds) {
         // Initialize to bottom-left, above attribution
         posX.value = margin
-        posY.value = bounds.height - legendHeight - margin - ATTRIBUTION_HEIGHT
+        posY.value = bounds.height - legendHeight - margin - bottomAttributionMargin.value
         stickyEdge.value = { left: true, right: false, top: false, bottom: true }
         legendStore.updatePosition(posX.value, posY.value)
       } else {
@@ -783,6 +910,18 @@ onUnmounted(() => {
   document.removeEventListener('touchmove', onDrag)
   document.removeEventListener('touchend', endDrag)
   window.removeEventListener('resize', handleWindowResize)
+
+  // Clean up attribution observer
+  if (attributionObserver) {
+    attributionObserver.disconnect()
+    attributionObserver = null
+  }
+
+  // Clean up container resize observer
+  if (containerResizeObserver) {
+    containerResizeObserver.disconnect()
+    containerResizeObserver = null
+  }
 })
 
 // Debounced window resize handler
@@ -835,34 +974,12 @@ watch(containerBounds, (newBounds) => {
   // Repositioning is handled by handleWindowResize and isExportMode watcher
 }, { deep: true })
 
-// Watch for export mode changes to force bounds recalculation
+// Watch for export mode changes - capture sticky state BEFORE container resizes
+// The actual repositioning is handled by the containerResizeObserver
 watch(isExportMode, (enabled, wasEnabled) => {
   // Capture current sticky state BEFORE container resizes
   // IMPORTANT: Pass the OLD export mode state since the container hasn't resized yet
   detectStickyEdges(wasEnabled)
-
-  // Save pre-resize bounds for interpolation
-  const oldBounds = { ...prevContainerBounds.value }
-
-  // Wait for the CSS styles to be applied and the browser to reflow
-  // Use requestAnimationFrame + setTimeout to ensure the container has been resized
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      if (!props.containerRef) return
-
-      // Get fresh bounds AFTER container has resized
-      const newBounds = {
-        width: props.containerRef.clientWidth || 800,
-        height: props.containerRef.clientHeight || 600
-      }
-
-      if (newBounds.width && newBounds.height) {
-        // Apply position for new bounds while preserving sticky edges
-        applyPositionForBounds(oldBounds, newBounds)
-        prevContainerBounds.value = { ...newBounds }
-      }
-    }, 250) // Delay for CSS transitions
-  })
 })
 
 </script>

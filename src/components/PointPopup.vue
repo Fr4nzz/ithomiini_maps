@@ -529,14 +529,14 @@ const openGallery = () => {
 <style scoped>
 .point-popup {
   position: relative;
-  background: #1a1a2e;
-  color: #e0e0e0;
+  background: var(--color-bg-primary, #1a1a2e);
+  color: var(--color-text-primary, #e0e0e0);
   border-radius: 10px;
   padding: 16px;
   min-width: 420px;
   max-width: 500px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  border: 1px solid #3d3d5c;
+  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.5));
+  border: 1px solid var(--color-border, #3d3d5c);
 }
 
 .popup-close {
@@ -550,7 +550,7 @@ const openGallery = () => {
   justify-content: center;
   background: transparent;
   border: none;
-  color: #888;
+  color: var(--color-text-muted, #888);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.2s;
@@ -558,8 +558,8 @@ const openGallery = () => {
 }
 
 .popup-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
+  color: var(--color-text-primary, #fff);
 }
 
 .popup-close svg {
@@ -585,10 +585,10 @@ const openGallery = () => {
   position: relative;
   width: 170px;
   height: 170px;
-  background: #252540;
+  background: var(--color-bg-secondary, #252540);
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid #3d3d5c;
+  border: 1px solid var(--color-border, #3d3d5c);
 }
 
 .photo-container img {
@@ -604,7 +604,7 @@ const openGallery = () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #666;
+  color: var(--color-text-muted, #666);
   gap: 8px;
 }
 
@@ -624,7 +624,7 @@ const openGallery = () => {
   left: 6px;
   right: 6px;
   background: rgba(0, 0, 0, 0.7);
-  color: #888;
+  color: var(--color-text-muted, #888);
   font-size: 0.65rem;
   padding: 3px 6px;
   border-radius: 3px;
@@ -672,8 +672,8 @@ const openGallery = () => {
 }
 
 .count-badge {
-  background: rgba(74, 222, 128, 0.2);
-  color: #4ade80;
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
+  color: var(--color-accent, #4ade80);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
@@ -684,7 +684,7 @@ const openGallery = () => {
 
 .section-label {
   font-size: 0.7rem;
-  color: #888;
+  color: var(--color-text-muted, #888);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -698,10 +698,10 @@ const openGallery = () => {
 .individual-select {
   width: 100%;
   padding: 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary, #252540);
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
   font-size: 0.8rem;
   font-family: monospace;
   cursor: pointer;
@@ -709,21 +709,21 @@ const openGallery = () => {
 }
 
 .individual-select:hover {
-  border-color: #5d5d7c;
+  border-color: var(--color-border-light, #5d5d7c);
 }
 
 .individual-select:focus {
   outline: none;
-  border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
 }
 
 .single-individual-id {
   padding: 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary, #252540);
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
-  color: #14b8a6;
+  color: var(--color-info, #14b8a6);
   font-size: 0.8rem;
   font-family: monospace;
 }
@@ -734,7 +734,7 @@ const openGallery = () => {
   flex-direction: column;
   gap: 5px;
   padding-top: 8px;
-  border-top: 1px solid #3d3d5c;
+  border-top: 1px solid var(--color-border, #3d3d5c);
 }
 
 .detail-row {
@@ -745,13 +745,13 @@ const openGallery = () => {
 }
 
 .detail-label {
-  color: #888;
+  color: var(--color-text-muted, #888);
   flex-shrink: 0;
   min-width: 55px;
 }
 
 .detail-value {
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
   word-break: break-word;
 }
 
@@ -785,10 +785,10 @@ const openGallery = () => {
 .taxonomy-select {
   width: 100%;
   padding: 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary, #252540);
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
-  color: #e0e0e0;
+  color: var(--color-text-primary, #e0e0e0);
   font-size: 0.85rem;
   font-style: italic;
   cursor: pointer;
@@ -796,31 +796,31 @@ const openGallery = () => {
 }
 
 .taxonomy-select:hover {
-  border-color: #5d5d7c;
+  border-color: var(--color-border-light, #5d5d7c);
 }
 
 .taxonomy-select:focus {
   outline: none;
-  border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 0 0 2px var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
 }
 
 .divider {
   height: 1px;
-  background: #3d3d5c;
+  background: var(--color-border, #3d3d5c);
   margin: 4px 0;
 }
 
 .location-summary {
-  background: rgba(74, 222, 128, 0.05);
-  border: 1px solid rgba(74, 222, 128, 0.15);
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.05));
+  border: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
   border-radius: 6px;
   padding: 10px;
 }
 
 .summary-title {
   font-size: 0.7rem;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -840,7 +840,7 @@ const openGallery = () => {
   gap: 16px;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(74, 222, 128, 0.15);
+  border-top: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
 }
 
 .stat {
@@ -852,12 +852,12 @@ const openGallery = () => {
 .stat-value {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
 }
 
 .stat-label {
   font-size: 0.7rem;
-  color: #888;
+  color: var(--color-text-muted, #888);
 }
 
 /* Observation URL Link */
@@ -867,10 +867,10 @@ const openGallery = () => {
   gap: 6px;
   margin-top: 8px;
   padding: 6px 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.1));
+  border: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.3));
   border-radius: 5px;
-  color: #4ade80;
+  color: var(--color-accent, #4ade80);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -878,9 +878,9 @@ const openGallery = () => {
 }
 
 .observation-link:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
-  color: #86efac;
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
+  border-color: var(--color-accent, rgba(74, 222, 128, 0.5));
+  color: var(--color-accent-hover, #86efac);
 }
 
 .observation-link svg {
@@ -895,7 +895,7 @@ const openGallery = () => {
   gap: 12px;
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px solid rgba(74, 222, 128, 0.15);
+  border-top: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
 }
 
 .sex-count {
@@ -915,6 +915,6 @@ const openGallery = () => {
 }
 
 .sex-count.unknown {
-  color: #9ca3af; /* Gray for unknown */
+  color: var(--color-text-muted, #9ca3af); /* Gray for unknown */
 }
 </style>

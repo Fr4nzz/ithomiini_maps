@@ -345,6 +345,10 @@ const updateExportHeight = (value) => {
             <input type="checkbox" v-model="store.exportSettings.includeScaleBar" />
             <span>Include Scale Bar</span>
           </label>
+          <label class="checkbox-label">
+            <input type="checkbox" v-model="store.exportSettings.includeAttribution" />
+            <span>Include Attribution</span>
+          </label>
         </div>
 
         <!-- UI Scale -->

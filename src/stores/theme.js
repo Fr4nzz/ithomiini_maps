@@ -1,64 +1,90 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
-import { themes, DEFAULT_THEME, getTheme } from '../themes/presets'
+import { ref, computed } from 'vue'
+import { themes, DEFAULT_THEME, DEFAULT_MODE, getTheme } from '../themes/presets'
 
-// Helper to convert camelCase to kebab-case
-function kebabCase(str) {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+// Check if persistence is enabled
+function isPersistenceEnabled() {
+  try {
+    const stored = localStorage.getItem('app-persist-enabled')
+    return stored ? JSON.parse(stored) : false
+  } catch {
+    return false
+  }
 }
 
-// Get stored theme or default
+// Get stored theme or default (only if persistence enabled)
 function getStoredTheme() {
   try {
+    if (!isPersistenceEnabled()) {
+      return DEFAULT_THEME
+    }
     return localStorage.getItem('app-theme') || DEFAULT_THEME
   } catch {
     return DEFAULT_THEME
   }
 }
 
+// Get stored mode or default (only if persistence enabled)
+function getStoredMode() {
+  try {
+    if (!isPersistenceEnabled()) {
+      return DEFAULT_MODE
+    }
+    return localStorage.getItem('app-mode') || DEFAULT_MODE
+  } catch {
+    return DEFAULT_MODE
+  }
+}
+
 export const useThemeStore = defineStore('theme', () => {
-  // Current theme name
+  // Current theme name (emerald, ocean, forest, sunset, lavender)
   const currentTheme = ref(getStoredTheme())
+
+  // Current mode (light or dark)
+  const currentMode = ref(getStoredMode())
 
   // Available themes (for UI)
   const availableThemes = themes
 
+  // Computed: is dark mode
+  const isDarkMode = computed(() => currentMode.value === 'dark')
+
   /**
-   * Apply a theme by setting CSS variables on :root
-   * @param {string} themeName - Name of the theme to apply
+   * Apply theme and mode by setting data attributes on document
    */
-  function applyTheme(themeName) {
+  function applyTheme() {
+    const themeName = currentTheme.value
+    const mode = currentMode.value
+
     const theme = getTheme(themeName)
     if (!theme) {
       console.warn(`Theme '${themeName}' not found, using default`)
-      themeName = DEFAULT_THEME
+      currentTheme.value = DEFAULT_THEME
     }
 
-    currentTheme.value = themeName
-
-    // Store preference
-    try {
-      localStorage.setItem('app-theme', themeName)
-    } catch {
-      // Storage unavailable
+    // Store preferences only if persistence is enabled
+    if (isPersistenceEnabled()) {
+      try {
+        localStorage.setItem('app-theme', currentTheme.value)
+        localStorage.setItem('app-mode', currentMode.value)
+      } catch {
+        // Storage unavailable
+      }
     }
 
-    // Apply CSS variables to root
+    // Apply data attributes to root - CSS handles the rest via selectors
     const root = document.documentElement
-    const themeColors = getTheme(themeName).colors
+    root.setAttribute('data-theme', currentTheme.value)
+    root.setAttribute('data-mode', currentMode.value)
 
-    Object.entries(themeColors).forEach(([key, value]) => {
-      const cssVar = `--color-${kebabCase(key)}`
-      root.style.setProperty(cssVar, value)
-    })
-
-    // Add theme class for potential CSS selectors
-    // Remove old theme classes first
+    // Also set classes for potential CSS selectors
     const themeClasses = Object.keys(themes).map(t => `theme-${t}`)
     root.classList.remove(...themeClasses)
-    root.classList.add(`theme-${themeName}`)
+    root.classList.add(`theme-${currentTheme.value}`)
 
-    console.log(`Applied theme: ${themeName}`)
+    // Set dark/light class
+    root.classList.remove('dark', 'light')
+    root.classList.add(currentMode.value)
   }
 
   /**
@@ -67,8 +93,28 @@ export const useThemeStore = defineStore('theme', () => {
    */
   function setTheme(themeName) {
     if (themes[themeName]) {
-      applyTheme(themeName)
+      currentTheme.value = themeName
+      applyTheme()
     }
+  }
+
+  /**
+   * Set mode (light or dark)
+   * @param {string} mode - 'light' or 'dark'
+   */
+  function setMode(mode) {
+    if (mode === 'light' || mode === 'dark') {
+      currentMode.value = mode
+      applyTheme()
+    }
+  }
+
+  /**
+   * Toggle between light and dark mode
+   */
+  function toggleMode() {
+    currentMode.value = currentMode.value === 'dark' ? 'light' : 'dark'
+    applyTheme()
   }
 
   /**
@@ -89,12 +135,16 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   // Apply theme on initialization
-  applyTheme(currentTheme.value)
+  applyTheme()
 
   return {
     currentTheme,
+    currentMode,
+    isDarkMode,
     availableThemes,
     setTheme,
+    setMode,
+    toggleMode,
     applyTheme,
     cycleTheme,
     getCurrentThemeData
