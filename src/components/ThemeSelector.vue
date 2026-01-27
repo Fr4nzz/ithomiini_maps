@@ -5,7 +5,6 @@ import { getThemeOptions } from '../themes/presets'
 
 // shadcn-vue components
 import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
 import { Separator } from '@/components/ui/separator'
 import {
   Select,
@@ -19,11 +18,8 @@ const themeStore = useThemeStore()
 const themeOptions = getThemeOptions()
 
 // Toggle light/dark mode
-function handleModeToggle(checked) {
-  console.log('handleModeToggle called with checked:', checked)
-  const newMode = checked ? 'light' : 'dark'
-  console.log('Setting mode to:', newMode)
-  themeStore.setMode(newMode)
+function toggleMode() {
+  themeStore.toggleMode()
 }
 
 // Handle theme selection from dropdown
@@ -50,16 +46,26 @@ function getThemeAccentColor(option) {
       <span class="text-xs font-medium uppercase tracking-wide">Theme</span>
     </div>
 
-    <!-- Light/Dark Toggle -->
+    <!-- Light/Dark Toggle - Custom pill toggle like tweakcn -->
     <div class="flex items-center justify-between">
-      <Label class="flex items-center gap-2 text-sm cursor-pointer">
+      <Label class="flex items-center gap-2 text-sm">
         <component :is="themeStore.isDarkMode ? Moon : Sun" class="h-4 w-4" />
         <span>{{ themeStore.isDarkMode ? 'Dark' : 'Light' }} Mode</span>
       </Label>
-      <Switch
-        :model-value="!themeStore.isDarkMode"
-        @update:model-value="handleModeToggle"
-      />
+
+      <!-- Custom toggle button with sun/moon icons -->
+      <button
+        class="mode-toggle"
+        :class="{ 'is-light': !themeStore.isDarkMode }"
+        @click="toggleMode"
+        :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <span class="toggle-track">
+          <Sun class="toggle-icon sun-icon" />
+          <Moon class="toggle-icon moon-icon" />
+          <span class="toggle-thumb" />
+        </span>
+      </button>
     </div>
 
     <Separator />
@@ -132,6 +138,87 @@ function getThemeAccentColor(option) {
 </template>
 
 <style scoped>
+/* Custom mode toggle like tweakcn */
+.mode-toggle {
+  position: relative;
+  width: 56px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.toggle-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  background: hsl(var(--muted));
+  border-radius: 14px;
+  border: 1px solid hsl(var(--border));
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.mode-toggle:hover .toggle-track {
+  border-color: hsl(var(--primary) / 0.5);
+}
+
+.toggle-icon {
+  width: 14px;
+  height: 14px;
+  z-index: 1;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.sun-icon {
+  color: hsl(var(--muted-foreground));
+  margin-left: 2px;
+}
+
+.moon-icon {
+  color: hsl(var(--foreground));
+  margin-right: 2px;
+}
+
+/* In dark mode (default): moon is active */
+.mode-toggle:not(.is-light) .moon-icon {
+  color: hsl(var(--primary));
+}
+
+.mode-toggle:not(.is-light) .sun-icon {
+  color: hsl(var(--muted-foreground));
+}
+
+/* In light mode: sun is active */
+.mode-toggle.is-light .sun-icon {
+  color: hsl(var(--primary));
+}
+
+.mode-toggle.is-light .moon-icon {
+  color: hsl(var(--muted-foreground));
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: hsl(var(--background));
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+/* Light mode: thumb moves to right */
+.mode-toggle.is-light .toggle-thumb {
+  transform: translateX(28px);
+}
+
 .theme-preview-swatch {
   width: 20px;
   height: 20px;
