@@ -19,7 +19,8 @@ import {
   useCountryBoundaries
 } from '../composables/useMapEngine'
 import { useThemeStore } from '../stores/theme'
-import { Sun, Moon } from 'lucide-vue-next'
+import { getThemeOptions } from '../themes/presets'
+import { Sun, Moon, Palette } from 'lucide-vue-next'
 
 const store = useDataStore()
 const legendStore = useLegendStore()
@@ -110,6 +111,11 @@ const showMapLayerDropdown = ref(false)
 const stylesByTheme = getStylesByTheme()
 const mapLayerDropdownRef = ref(null)
 
+// Theme dropdown
+const showThemeDropdown = ref(false)
+const themeDropdownRef = ref(null)
+const themeOptions = getThemeOptions()
+
 // Select a map style from dropdown
 const selectMapStyle = (styleKey) => {
   switchStyle(styleKey)
@@ -121,6 +127,17 @@ const selectMapStyle = (styleKey) => {
     }
   }, 500)
 }
+
+// Select a theme from dropdown
+const selectTheme = (themeKey) => {
+  themeStore.setTheme(themeKey)
+  showThemeDropdown.value = false
+}
+
+// Get current theme name
+const currentThemeName = computed(() => {
+  return themeStore.availableThemes[themeStore.currentTheme]?.name || 'Emerald'
+})
 
 // Toggle light/dark mode and switch basemap accordingly
 const toggleThemeMode = () => {
@@ -153,6 +170,9 @@ const currentStyleName = computed(() => {
 const handleMapLayerClickOutside = (event) => {
   if (mapLayerDropdownRef.value && !mapLayerDropdownRef.value.contains(event.target)) {
     showMapLayerDropdown.value = false
+  }
+  if (themeDropdownRef.value && !themeDropdownRef.value.contains(event.target)) {
+    showThemeDropdown.value = false
   }
 }
 
@@ -655,17 +675,6 @@ watch(
           </svg>
         </button>
 
-      <!-- Light/Dark Mode Toggle -->
-      <button
-        class="mode-toggle-btn"
-        :class="{ 'is-light': !themeStore.isDarkMode }"
-        @click="toggleThemeMode"
-        :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-      >
-        <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
-        <Moon v-else class="mode-icon" />
-      </button>
-
         <Transition name="dropdown">
           <div v-if="showMapLayerDropdown" class="dropdown-menu">
             <!-- Day Themes -->
@@ -729,6 +738,53 @@ watch(
           </div>
         </Transition>
       </div>
+
+      <!-- Theme Dropdown -->
+      <div ref="themeDropdownRef" class="theme-dropdown-container">
+        <button
+          class="dropdown-trigger theme-trigger"
+          @click.stop="showThemeDropdown = !showThemeDropdown"
+        >
+          <Palette class="layer-icon" />
+          <span>{{ currentThemeName }}</span>
+          <svg class="chevron" :class="{ open: showThemeDropdown }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+
+        <Transition name="dropdown">
+          <div v-if="showThemeDropdown" class="dropdown-menu theme-menu">
+            <button
+              v-for="option in themeOptions"
+              :key="option.value"
+              :class="{ active: themeStore.currentTheme === option.value }"
+              @click="selectTheme(option.value)"
+            >
+              <div
+                class="theme-swatch"
+                :style="{ backgroundColor: themeStore.isDarkMode ? option.previewBgDark : option.previewBgLight }"
+              >
+                <div
+                  class="theme-swatch-accent"
+                  :style="{ backgroundColor: option.accentColor }"
+                />
+              </div>
+              <span>{{ option.label }}</span>
+            </button>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- Light/Dark Mode Toggle -->
+      <button
+        class="mode-toggle-btn"
+        :class="{ 'is-light': !themeStore.isDarkMode }"
+        @click="toggleThemeMode"
+        :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
+        <Moon v-else class="mode-icon" />
+      </button>
     </div>
 
   </div>
@@ -1418,5 +1474,66 @@ watch(
 
 :deep(.maplibregl-ctrl-attrib-button) {
   background-color: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;
+}
+
+/* Theme Dropdown */
+.theme-dropdown-container {
+  position: relative;
+}
+
+.theme-trigger {
+  gap: 6px !important;
+}
+
+.theme-trigger .layer-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.theme-menu {
+  min-width: 160px;
+}
+
+.theme-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary, #c0c0c0);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.theme-menu button:hover {
+  background: var(--color-bg-secondary, #2d2d4a);
+  color: var(--color-text-primary, #fff);
+}
+
+.theme-menu button.active {
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  color: var(--color-accent, #4ade80);
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border, #3d3d5c);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.theme-swatch-accent {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 </style>

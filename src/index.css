@@ -35,12 +35,12 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   DEFAULT / SCIENTIFIC THEME
+   DEFAULT / EMERALD THEME
    ══════════════════════════════════════════════════════════════════════════════ */
 
-/* Scientific - Light Mode */
+/* Emerald - Light Mode */
 :root,
-[data-theme="scientific"][data-mode="light"] {
+[data-theme="emerald"][data-mode="light"] {
   /* shadcn variables */
   --background: 0 0% 98%;
   --foreground: 240 10% 15%;
@@ -91,9 +91,9 @@
   --color-shadow-color-light: rgba(0, 0, 0, 0.04);
 }
 
-/* Scientific - Dark Mode (Default) */
-[data-theme="scientific"][data-mode="dark"],
-[data-theme="scientific"]:not([data-mode]) {
+/* Emerald - Dark Mode (Default) */
+[data-theme="emerald"][data-mode="dark"],
+[data-theme="emerald"]:not([data-mode]) {
   --background: 240 10% 9%;
   --foreground: 0 0% 88%;
   --card: 240 10% 14%;

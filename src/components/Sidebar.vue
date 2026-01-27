@@ -6,7 +6,6 @@ import { useLegendStore } from '../stores/legend'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
-import ThemeSelector from './ThemeSelector.vue'
 import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
 import { ASPECT_RATIOS } from '../utils/constants'
 
@@ -643,11 +642,6 @@ const updateExportHeight = (value) => {
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->
       <SidebarMapSettings v-if="currentView === 'map'" />
-
-      <!-- Theme Settings -->
-      <div class="filter-section">
-        <ThemeSelector />
-      </div>
 
       <!-- Remember Settings -->
       <div class="filter-section remember-settings">

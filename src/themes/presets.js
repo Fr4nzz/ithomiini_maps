@@ -2,9 +2,9 @@
 // Each theme has both light and dark variants defined in index.css
 
 export const themes = {
-  scientific: {
-    name: 'Scientific',
-    description: 'Default theme optimized for scientific data visualization',
+  emerald: {
+    name: 'Emerald',
+    description: 'Classic green theme for scientific data visualization',
     accentColor: '#4ade80', // Green
     previewBgDark: '#1a1a2e',
     previewBgLight: '#f8f9fa',
@@ -44,7 +44,7 @@ export const themes = {
 }
 
 // Default theme
-export const DEFAULT_THEME = 'scientific'
+export const DEFAULT_THEME = 'emerald'
 export const DEFAULT_MODE = 'dark'
 
 // Get theme by name with fallback to default
