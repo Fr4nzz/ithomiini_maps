@@ -59,11 +59,19 @@ const stickyEdge = ref({
 // Previous container bounds (for detecting changes)
 const prevContainerBounds = ref({ width: 0, height: 0 })
 
-// Attribution height (space reserved at bottom for map attribution)
-const ATTRIBUTION_HEIGHT = 24  // Height of the collapsed attribution info button
+// Attribution state - dynamically calculated based on actual attribution element
+const attributionHeight = ref(24)  // Default fallback
+const isAttributionOpen = ref(true)  // Track if attribution is expanded
 
 // Is export mode active?
 const isExportMode = computed(() => dataStore.exportSettings.enabled)
+
+// Get the actual bottom margin needed based on attribution state
+const bottomAttributionMargin = computed(() => {
+  if (isExportMode.value) return 0  // No attribution in export mode
+  if (!isAttributionOpen.value) return 0  // Attribution collapsed, no extra space needed
+  return attributionHeight.value
+})
 
 // Should show toolbar? (hidden by default, shown on hover OR when popup is open)
 const showToolbar = computed(() => isHovered.value || hasOpenPopup.value)
@@ -417,9 +425,10 @@ function onDrag(e) {
       newY = margin
       stickyEdge.value.top = true
     }
-    // Snap to bottom edge
-    if (newY > bounds.height - legendHeight - threshold && newY <= bounds.height - legendHeight) {
-      newY = bounds.height - legendHeight - margin
+    // Snap to bottom edge (above attribution)
+    const bottomSnapY = bounds.height - legendHeight - margin - bottomAttributionMargin.value
+    if (newY > bottomSnapY - threshold && newY <= bounds.height - legendHeight) {
+      newY = bottomSnapY
       stickyEdge.value.bottom = true
     }
   }
@@ -544,10 +553,10 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
 
   // Calculate bottom edge position (where legend would be if at bottom)
   // The legend is considered "at bottom" if it's within threshold of:
-  // - In export mode: bounds.height - legendHeight - margin
-  // - Not in export mode: bounds.height - legendHeight - margin - ATTRIBUTION_HEIGHT
-  const bottomMargin = useExportMode ? margin : margin + ATTRIBUTION_HEIGHT
-  const bottomEdgeY = bounds.height - legendHeight - bottomMargin
+  // - In export mode: bounds.height - legendHeight - margin (no attribution)
+  // - Not in export mode: bounds.height - legendHeight - margin - attributionHeight
+  const attrMargin = useExportMode ? 0 : bottomAttributionMargin.value
+  const bottomEdgeY = bounds.height - legendHeight - margin - attrMargin
 
   // Legend is at bottom if within threshold of where it should be
   const isAtBottom = effectiveY >= bottomEdgeY - threshold
@@ -573,7 +582,7 @@ function applyPositionForBounds(oldBounds, newBounds) {
   const minHeight = 100
 
   // Calculate bottom margin (include attribution space when not in export mode)
-  const bottomMargin = isExportMode.value ? margin : margin + ATTRIBUTION_HEIGHT
+  const bottomMargin = margin + bottomAttributionMargin.value
 
   // Calculate maximum allowed height
   const maxAllowedHeight = newBounds.height - margin - bottomMargin
@@ -737,6 +746,77 @@ function handleApplyPrefixFormatToAll(format) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// ATTRIBUTION OBSERVER
+// ═══════════════════════════════════════════════════════════════════════════
+
+let attributionObserver = null
+
+function updateAttributionState() {
+  if (!props.containerRef) return
+
+  const attrEl = props.containerRef.querySelector('.maplibregl-ctrl-attrib')
+  if (!attrEl) {
+    isAttributionOpen.value = false
+    attributionHeight.value = 0
+    return
+  }
+
+  // Check if the details element is open
+  const wasOpen = isAttributionOpen.value
+  isAttributionOpen.value = attrEl.hasAttribute('open')
+  attributionHeight.value = attrEl.offsetHeight || 24
+
+  // If attribution state changed and legend is stuck to bottom, reposition
+  if (wasOpen !== isAttributionOpen.value && stickyEdge.value.bottom) {
+    repositionForAttributionChange()
+  }
+}
+
+function repositionForAttributionChange() {
+  if (!props.containerRef) return
+
+  const bounds = {
+    width: props.containerRef.clientWidth || 800,
+    height: props.containerRef.clientHeight || 600
+  }
+
+  const legendHeight = legendRef.value?.offsetHeight || 200
+  const margin = 10
+  const bottomMargin = margin + bottomAttributionMargin.value
+
+  // Only reposition if legend is stuck to bottom
+  if (stickyEdge.value.bottom) {
+    posY.value = bounds.height - legendHeight - bottomMargin
+    legendStore.updatePosition(posX.value, posY.value)
+  }
+}
+
+function setupAttributionObserver() {
+  if (!props.containerRef) return
+
+  const attrEl = props.containerRef.querySelector('.maplibregl-ctrl-attrib')
+  if (!attrEl) {
+    // Attribution element not yet mounted, retry later
+    setTimeout(setupAttributionObserver, 100)
+    return
+  }
+
+  // Initialize attribution state
+  updateAttributionState()
+
+  // Watch for open/close changes on the details element
+  attributionObserver = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
+        updateAttributionState()
+      }
+    }
+  })
+
+  attributionObserver.observe(attrEl, { attributes: true })
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // LIFECYCLE
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -749,6 +829,9 @@ onMounted(() => {
         height: props.containerRef.clientHeight || 600
       }
       prevContainerBounds.value = { ...bounds }
+
+      // Setup attribution observer (will also initialize attributionHeight)
+      setupAttributionObserver()
 
       const legendHeight = legendRef.value?.offsetHeight || 200
       const margin = 10
@@ -763,7 +846,7 @@ onMounted(() => {
       if (isDefaultPosition || isOutsideBounds) {
         // Initialize to bottom-left, above attribution
         posX.value = margin
-        posY.value = bounds.height - legendHeight - margin - ATTRIBUTION_HEIGHT
+        posY.value = bounds.height - legendHeight - margin - bottomAttributionMargin.value
         stickyEdge.value = { left: true, right: false, top: false, bottom: true }
         legendStore.updatePosition(posX.value, posY.value)
       } else {
@@ -783,6 +866,12 @@ onUnmounted(() => {
   document.removeEventListener('touchmove', onDrag)
   document.removeEventListener('touchend', endDrag)
   window.removeEventListener('resize', handleWindowResize)
+
+  // Clean up attribution observer
+  if (attributionObserver) {
+    attributionObserver.disconnect()
+    attributionObserver = null
+  }
 })
 
 // Debounced window resize handler
