@@ -10,6 +10,7 @@ import { ASPECT_RATIOS } from '../utils/constants'
 import {
   MAP_STYLES,
   getStylesByTheme,
+  getBasemapPair,
   useLocationSearch,
   useExportPreview,
   useScatterVisualization,
@@ -17,9 +18,12 @@ import {
   useStyleSwitcher,
   useCountryBoundaries
 } from '../composables/useMapEngine'
+import { useThemeStore } from '../stores/theme'
+import { Sun, Moon } from 'lucide-vue-next'
 
 const store = useDataStore()
 const legendStore = useLegendStore()
+const themeStore = useThemeStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
@@ -116,6 +120,28 @@ const selectMapStyle = (styleKey) => {
       addBoundariesLayer()
     }
   }, 500)
+}
+
+// Toggle light/dark mode and switch basemap accordingly
+const toggleThemeMode = () => {
+  const newMode = themeStore.isDarkMode ? 'light' : 'dark'
+
+  // Get the paired basemap for the new mode
+  const pairedBasemap = getBasemapPair(currentStyle.value, newMode)
+
+  // Switch theme mode
+  themeStore.toggleMode()
+
+  // If basemap has a pair, switch to it
+  if (pairedBasemap !== currentStyle.value) {
+    switchStyle(pairedBasemap)
+    // Re-add boundaries after style change
+    setTimeout(() => {
+      if (showBoundaries.value) {
+        addBoundariesLayer()
+      }
+    }, 500)
+  }
 }
 
 // Get current style name
@@ -629,6 +655,17 @@ watch(
           </svg>
         </button>
 
+      <!-- Light/Dark Mode Toggle -->
+      <button
+        class="mode-toggle-btn"
+        :class="{ 'is-light': !themeStore.isDarkMode }"
+        @click="toggleThemeMode"
+        :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
+        <Moon v-else class="mode-icon" />
+      </button>
+
         <Transition name="dropdown">
           <div v-if="showMapLayerDropdown" class="dropdown-menu">
             <!-- Day Themes -->
@@ -1040,6 +1077,42 @@ watch(
 
 .map-layer-dropdown {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Light/Dark Mode Toggle Button */
+.mode-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(4px);
+}
+
+.mode-toggle-btn:hover {
+  background: var(--color-bg-secondary, rgba(37, 37, 64, 0.98));
+  border-color: var(--color-accent, #4ade80);
+}
+
+.mode-toggle-btn .mode-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-accent, #4ade80);
+}
+
+/* In light mode, show sun icon with appropriate color */
+.mode-toggle-btn.is-light .mode-icon {
+  color: var(--color-accent, #f59e0b);
 }
 
 .dropdown-trigger {
