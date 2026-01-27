@@ -522,6 +522,9 @@ export function useDataLayer(map, options = {}) {
   // Store current cluster extent parameters for recreation after style change
   const currentExtentParams = ref(null)
 
+  // Timestamp of last params update - used to prevent clearing immediately after creation
+  let lastParamsUpdateTime = 0
+
   // Generate a circle polygon for geographic radius display
   const generateGeoCircle = (centerLng, centerLat, radiusKm, points = 64) => {
     const coords = []
@@ -551,7 +554,8 @@ export function useDataLayer(map, options = {}) {
 
     // Store parameters for recreation after style change
     currentExtentParams.value = { centerLat, centerLng, radiusKm }
-    console.log('[ClusterExtent] Stored params:', currentExtentParams.value)
+    lastParamsUpdateTime = Date.now()
+    console.log('[ClusterExtent] Stored params:', currentExtentParams.value, 'at time:', lastParamsUpdateTime)
 
     // Remove existing dynamic extent layer if present
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -653,13 +657,21 @@ export function useDataLayer(map, options = {}) {
 
   // Clear the dynamic cluster extent circle
   const clearClusterExtentCircle = () => {
+    const timeSinceUpdate = Date.now() - lastParamsUpdateTime
     console.log('[ClusterExtent] clearClusterExtentCircle called')
     console.log('[ClusterExtent] isStyleChanging:', isStyleChanging)
-    console.log('[ClusterExtent] Call stack:', new Error().stack)
+    console.log('[ClusterExtent] timeSinceUpdate:', timeSinceUpdate, 'ms')
 
     // Don't clear during style change - the circle will be recreated
     if (isStyleChanging) {
       console.log('[ClusterExtent] Skipping clear during style change')
+      return
+    }
+
+    // Don't clear if params were just updated (within 200ms)
+    // This prevents clearing when a new cluster is clicked (which updates params before popup close fires)
+    if (timeSinceUpdate < 200) {
+      console.log('[ClusterExtent] Skipping clear - params just updated')
       return
     }
 
@@ -1177,7 +1189,8 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
     currentStyle.value = styleName
     const styleConfig = MAP_STYLES[styleName]
 
-    console.log('[StyleSwitcher] Setting style:', styleConfig.name)
+    console.log('[StyleSwitcher] Setting style:', styleConfig.name, '(theme:', styleConfig.theme, ')')
+    console.log('[StyleSwitcher] Current accent color BEFORE style change:', getThemeAccentColor())
     map.value.setStyle(styleConfig.style)
 
     // Use style.load event to add data layer, then idle event to recreate extent circle
@@ -1194,7 +1207,7 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
 
         // First: recreate the extent circle (while flag is still true)
         if (recreateClusterExtentCircle) {
-          console.log('[StyleSwitcher] Recreating cluster extent circle')
+          console.log('[StyleSwitcher] Recreating cluster extent circle with NEW accent color:', getThemeAccentColor())
           recreateClusterExtentCircle()
         }
 
