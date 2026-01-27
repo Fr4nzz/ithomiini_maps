@@ -555,7 +555,9 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
   // The legend is considered "at bottom" if it's within threshold of:
   // - In export mode: bounds.height - legendHeight - margin (no attribution)
   // - Not in export mode: bounds.height - legendHeight - margin - attributionHeight
-  const attrMargin = useExportMode ? 0 : bottomAttributionMargin.value
+  // NOTE: We can't use bottomAttributionMargin here because it's reactive to current isExportMode
+  // We need to calculate based on the provided wasExportMode parameter
+  const attrMargin = useExportMode ? 0 : (isAttributionOpen.value ? attributionHeight.value : 0)
   const bottomEdgeY = bounds.height - legendHeight - margin - attrMargin
 
   // Legend is at bottom if within threshold of where it should be
