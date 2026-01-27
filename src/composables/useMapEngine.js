@@ -630,7 +630,7 @@ export function useDataLayer(map, options = {}) {
   let isStyleChanging = false
 
   // Recreate cluster extent circle from stored params (called after style change)
-  // Uses map.once('idle') to wait for map to be fully ready
+  // Called directly - no longer uses idle event (handled by switchStyle)
   const recreateClusterExtentCircle = () => {
     console.log('[ClusterExtent] recreateClusterExtentCircle called')
     console.log('[ClusterExtent] currentExtentParams:', currentExtentParams.value)
@@ -640,16 +640,9 @@ export function useDataLayer(map, options = {}) {
       return
     }
 
-    // Wait for map to be idle (all rendering complete) before recreating
-    // This is the MapLibre-recommended way to ensure layers are ready
-    map.value.once('idle', () => {
-      console.log('[ClusterExtent] Map idle - recreating extent circle')
-      if (currentExtentParams.value) {
-        const { centerLat, centerLng, radiusKm } = currentExtentParams.value
-        console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
-        updateClusterExtentCircle(centerLat, centerLng, radiusKm)
-      }
-    })
+    const { centerLat, centerLng, radiusKm } = currentExtentParams.value
+    console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
+    updateClusterExtentCircle(centerLat, centerLng, radiusKm)
   }
 
   // Set style changing flag
@@ -1194,19 +1187,25 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
       console.log('[StyleSwitcher] Calling addDataLayer')
       addDataLayer({ skipZoom: true })
 
-      // Recreate cluster extent circle after map becomes idle (all layers ready)
-      if (recreateClusterExtentCircle) {
-        console.log('[StyleSwitcher] Scheduling recreateClusterExtentCircle on idle')
-        recreateClusterExtentCircle()
-      }
-
-      // Clear the style changing flag after map is idle
-      // This ensures popup close events during style change are ignored
+      // Single idle handler: recreate extent circle THEN clear flag
+      // Order matters - we must recreate before clearing the flag
       map.value.once('idle', () => {
-        console.log('[StyleSwitcher] Map idle after style change, clearing flag')
-        if (setStyleChanging) {
-          setStyleChanging(false)
+        console.log('[StyleSwitcher] Map idle after style change')
+
+        // First: recreate the extent circle (while flag is still true)
+        if (recreateClusterExtentCircle) {
+          console.log('[StyleSwitcher] Recreating cluster extent circle')
+          recreateClusterExtentCircle()
         }
+
+        // Then: clear the flag AFTER a short delay to let any pending popup close events fire
+        // while the flag is still true (so they're ignored)
+        setTimeout(() => {
+          console.log('[StyleSwitcher] Clearing style changing flag')
+          if (setStyleChanging) {
+            setStyleChanging(false)
+          }
+        }, 100)
       })
     })
   }
