@@ -630,16 +630,42 @@ export function useDataLayer(map, options = {}) {
   let isStyleChanging = false
 
   // Recreate cluster extent circle from stored params (called after style change)
-  const recreateClusterExtentCircle = () => {
-    console.log('[ClusterExtent] recreateClusterExtentCircle called')
+  // Returns true if successfully recreated, false if needs retry
+  const recreateClusterExtentCircle = (retryCount = 0) => {
+    console.log('[ClusterExtent] recreateClusterExtentCircle called, retry:', retryCount)
     console.log('[ClusterExtent] currentExtentParams:', currentExtentParams.value)
-    if (currentExtentParams.value) {
-      const { centerLat, centerLng, radiusKm } = currentExtentParams.value
-      console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
-      updateClusterExtentCircle(centerLat, centerLng, radiusKm)
-    } else {
+
+    if (!currentExtentParams.value) {
       console.log('[ClusterExtent] No params stored, nothing to recreate')
+      return true // Nothing to do, consider it success
     }
+
+    // Check if style is loaded
+    if (!map.value || !map.value.isStyleLoaded()) {
+      console.log('[ClusterExtent] Style not loaded, scheduling retry')
+      if (retryCount < 20) { // Max 20 retries (1 second total)
+        setTimeout(() => recreateClusterExtentCircle(retryCount + 1), 50)
+      } else {
+        console.log('[ClusterExtent] Max retries reached, giving up')
+      }
+      return false
+    }
+
+    // Check if clusters layer exists (needed for positioning)
+    if (!map.value.getLayer('clusters')) {
+      console.log('[ClusterExtent] Clusters layer not ready, scheduling retry')
+      if (retryCount < 20) {
+        setTimeout(() => recreateClusterExtentCircle(retryCount + 1), 50)
+      } else {
+        console.log('[ClusterExtent] Max retries reached, giving up')
+      }
+      return false
+    }
+
+    const { centerLat, centerLng, radiusKm } = currentExtentParams.value
+    console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
+    updateClusterExtentCircle(centerLat, centerLng, radiusKm)
+    return true
   }
 
   // Set style changing flag
@@ -1186,14 +1212,17 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
         console.log('[StyleSwitcher] Calling addDataLayer')
         addDataLayer({ skipZoom: true })
         // Recreate cluster extent circle if one was showing
+        // Note: recreateClusterExtentCircle will retry internally if needed
         if (recreateClusterExtentCircle) {
           console.log('[StyleSwitcher] Calling recreateClusterExtentCircle')
           recreateClusterExtentCircle()
         }
-        // Mark style change as complete
+        // Mark style change as complete after a delay to handle popup close events
         if (setStyleChanging) {
-          console.log('[StyleSwitcher] Style change complete, clearing flag')
-          setStyleChanging(false)
+          setTimeout(() => {
+            console.log('[StyleSwitcher] Style change complete, clearing flag (delayed)')
+            setStyleChanging(false)
+          }, 500) // Wait 500ms for popup events to settle
         }
       } else {
         setTimeout(waitForStyleAndAddLayer, 50)
@@ -1216,10 +1245,12 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
           console.log('[StyleSwitcher] Calling recreateClusterExtentCircle from idle')
           recreateClusterExtentCircle()
         }
-        // Mark style change as complete
+        // Mark style change as complete after a delay
         if (setStyleChanging) {
-          console.log('[StyleSwitcher] Style change complete (from idle), clearing flag')
-          setStyleChanging(false)
+          setTimeout(() => {
+            console.log('[StyleSwitcher] Style change complete (from idle), clearing flag (delayed)')
+            setStyleChanging(false)
+          }, 500)
         }
       }
     })
