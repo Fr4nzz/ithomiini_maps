@@ -479,6 +479,7 @@ export function useScatterVisualization(map) {
 export function getThemeAccentColor() {
   const style = getComputedStyle(document.documentElement)
   const accentColor = style.getPropertyValue('--color-accent').trim()
+  console.log('[ClusterExtent] getThemeAccentColor - raw CSS value:', accentColor)
   // Convert HSL or return the raw color value
   return accentColor || '#4ade80'
 }
@@ -539,10 +540,18 @@ export function useDataLayer(map, options = {}) {
 
   // Update or create the cluster extent circle with actual geographic radius
   const updateClusterExtentCircle = (centerLat, centerLng, radiusKm) => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    console.log('[ClusterExtent] updateClusterExtentCircle called:', { centerLat, centerLng, radiusKm })
+    console.log('[ClusterExtent] map.value exists:', !!map.value)
+    console.log('[ClusterExtent] isStyleLoaded:', map.value?.isStyleLoaded())
+
+    if (!map.value || !map.value.isStyleLoaded()) {
+      console.log('[ClusterExtent] Early return - map not ready')
+      return
+    }
 
     // Store parameters for recreation after style change
     currentExtentParams.value = { centerLat, centerLng, radiusKm }
+    console.log('[ClusterExtent] Stored params:', currentExtentParams.value)
 
     // Remove existing dynamic extent layer if present
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -582,40 +591,57 @@ export function useDataLayer(map, options = {}) {
     const accentColor = getThemeAccentColor()
     const fillColor = colorToRgba(accentColor, 0.1)
     const lineColor = colorToRgba(accentColor, 0.5)
+    console.log('[ClusterExtent] Colors - accent:', accentColor, 'fill:', fillColor, 'line:', lineColor)
 
-    // Add fill layer (semi-transparent)
-    map.value.addLayer({
-      id: 'cluster-extent-dynamic',
-      type: 'fill',
-      source: 'cluster-extent-dynamic-source',
-      paint: {
-        'fill-color': fillColor,
-        'fill-opacity': 1
-      }
-    }, 'clusters')
+    // Check if 'clusters' layer exists for positioning
+    const hasClustersLayer = map.value.getLayer('clusters')
+    console.log('[ClusterExtent] clusters layer exists:', !!hasClustersLayer)
 
-    // Add outline layer
-    map.value.addLayer({
-      id: 'cluster-extent-dynamic-outline',
-      type: 'line',
-      source: 'cluster-extent-dynamic-source',
-      paint: {
-        'line-color': lineColor,
-        'line-width': 2
-      }
-    }, 'clusters')
+    try {
+      // Add fill layer (semi-transparent)
+      map.value.addLayer({
+        id: 'cluster-extent-dynamic',
+        type: 'fill',
+        source: 'cluster-extent-dynamic-source',
+        paint: {
+          'fill-color': fillColor,
+          'fill-opacity': 1
+        }
+      }, hasClustersLayer ? 'clusters' : undefined)
+      console.log('[ClusterExtent] Fill layer added successfully')
+
+      // Add outline layer
+      map.value.addLayer({
+        id: 'cluster-extent-dynamic-outline',
+        type: 'line',
+        source: 'cluster-extent-dynamic-source',
+        paint: {
+          'line-color': lineColor,
+          'line-width': 2
+        }
+      }, hasClustersLayer ? 'clusters' : undefined)
+      console.log('[ClusterExtent] Outline layer added successfully')
+    } catch (err) {
+      console.error('[ClusterExtent] Error adding layers:', err)
+    }
   }
 
   // Recreate cluster extent circle from stored params (called after style change)
   const recreateClusterExtentCircle = () => {
+    console.log('[ClusterExtent] recreateClusterExtentCircle called')
+    console.log('[ClusterExtent] currentExtentParams:', currentExtentParams.value)
     if (currentExtentParams.value) {
       const { centerLat, centerLng, radiusKm } = currentExtentParams.value
+      console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
       updateClusterExtentCircle(centerLat, centerLng, radiusKm)
+    } else {
+      console.log('[ClusterExtent] No params stored, nothing to recreate')
     }
   }
 
   // Clear the dynamic cluster extent circle
   const clearClusterExtentCircle = () => {
+    console.log('[ClusterExtent] clearClusterExtentCircle called')
     // Clear stored params
     currentExtentParams.value = null
 
@@ -1108,6 +1134,9 @@ export function useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle 
   const currentStyle = ref('dark')
 
   const switchStyle = async (styleName) => {
+    console.log('[StyleSwitcher] switchStyle called:', styleName)
+    console.log('[StyleSwitcher] recreateClusterExtentCircle function provided:', !!recreateClusterExtentCircle)
+
     if (!map.value || !MAP_STYLES[styleName]) return
 
     // Save current view state before style change
@@ -1119,16 +1148,20 @@ export function useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle 
     currentStyle.value = styleName
     const styleConfig = MAP_STYLES[styleName]
 
+    console.log('[StyleSwitcher] Setting style:', styleConfig.name)
     map.value.setStyle(styleConfig.style)
 
     // Wait for style to be fully loaded
     // Note: Shape images are generated on-demand in addDataLayer, no pre-loading needed
     const waitForStyleAndAddLayer = async () => {
+      console.log('[StyleSwitcher] waitForStyleAndAddLayer - isStyleLoaded:', map.value.isStyleLoaded())
       if (map.value.isStyleLoaded()) {
         map.value.jumpTo({ center, zoom, bearing, pitch })
+        console.log('[StyleSwitcher] Calling addDataLayer')
         addDataLayer({ skipZoom: true })
         // Recreate cluster extent circle if one was showing
         if (recreateClusterExtentCircle) {
+          console.log('[StyleSwitcher] Calling recreateClusterExtentCircle')
           recreateClusterExtentCircle()
         }
       } else {
@@ -1137,15 +1170,19 @@ export function useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle 
     }
 
     map.value.once('style.load', () => {
+      console.log('[StyleSwitcher] style.load event fired')
       setTimeout(waitForStyleAndAddLayer, 100)
     })
 
     map.value.once('idle', async () => {
+      console.log('[StyleSwitcher] idle event fired')
       if (!map.value.getSource('points-source')) {
+        console.log('[StyleSwitcher] No points-source, calling addDataLayer from idle')
         map.value.jumpTo({ center, zoom, bearing, pitch })
         addDataLayer({ skipZoom: true })
         // Recreate cluster extent circle if one was showing
         if (recreateClusterExtentCircle) {
+          console.log('[StyleSwitcher] Calling recreateClusterExtentCircle from idle')
           recreateClusterExtentCircle()
         }
       }
