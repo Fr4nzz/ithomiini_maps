@@ -124,6 +124,11 @@ const directExportMap = async () => {
     const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
     const includeAttribution = store.exportSettings.includeAttribution
+
+    // Check if attribution is visually expanded (user hasn't clicked the icon to hide it)
+    const attributionElement = container.querySelector('.maplibregl-ctrl-attrib')
+    const isAttributionOpen = attributionElement?.hasAttribute('open') ?? false
+
     let containerDataUrl
     try {
       containerDataUrl = await toPng(container, {
@@ -138,8 +143,10 @@ const directExportMap = async () => {
           if (!includeScaleBar && node.classList?.contains('maplibregl-ctrl-scale')) return false
           // Exclude legend if user disabled it
           if (!includeLegend && node.classList?.contains('legend')) return false
-          // Exclude attribution if user disabled it
-          if (!includeAttribution && node.classList?.contains('maplibregl-ctrl-attrib')) return false
+          // Exclude attribution if user disabled it OR if it's collapsed (user clicked icon to hide)
+          if (node.classList?.contains('maplibregl-ctrl-attrib')) {
+            if (!includeAttribution || !isAttributionOpen) return false
+          }
           return true
         }
       })
