@@ -102,9 +102,22 @@ const handleShowPopup = (data) => {
   })
 }
 
-const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, { recreateClusterExtentCircle, setStyleChanging })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
+
+// Watch for theme/mode changes to update cluster extent circle colors
+watch(
+  () => [themeStore.currentTheme, themeStore.currentMode],
+  () => {
+    // Use nextTick to ensure CSS variables are updated
+    nextTick(() => {
+      if (updateClusterExtentColors) {
+        updateClusterExtentColors()
+      }
+    })
+  }
+)
 
 // Map layer dropdown
 const showMapLayerDropdown = ref(false)

@@ -479,7 +479,6 @@ export function useScatterVisualization(map) {
 export function getThemeAccentColor() {
   const style = getComputedStyle(document.documentElement)
   const accentColor = style.getPropertyValue('--color-accent').trim()
-  console.log('[ClusterExtent] getThemeAccentColor - raw CSS value:', accentColor)
   // Convert HSL or return the raw color value
   return accentColor || '#4ade80'
 }
@@ -543,19 +542,13 @@ export function useDataLayer(map, options = {}) {
 
   // Update or create the cluster extent circle with actual geographic radius
   const updateClusterExtentCircle = (centerLat, centerLng, radiusKm) => {
-    console.log('[ClusterExtent] updateClusterExtentCircle called:', { centerLat, centerLng, radiusKm })
-    console.log('[ClusterExtent] map.value exists:', !!map.value)
-    console.log('[ClusterExtent] isStyleLoaded:', map.value?.isStyleLoaded())
-
     if (!map.value || !map.value.isStyleLoaded()) {
-      console.log('[ClusterExtent] Early return - map not ready')
       return
     }
 
     // Store parameters for recreation after style change
     currentExtentParams.value = { centerLat, centerLng, radiusKm }
     lastParamsUpdateTime = Date.now()
-    console.log('[ClusterExtent] Stored params:', currentExtentParams.value, 'at time:', lastParamsUpdateTime)
 
     // Remove existing dynamic extent layer if present
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -595,11 +588,9 @@ export function useDataLayer(map, options = {}) {
     const accentColor = getThemeAccentColor()
     const fillColor = colorToRgba(accentColor, 0.1)
     const lineColor = colorToRgba(accentColor, 0.5)
-    console.log('[ClusterExtent] Colors - accent:', accentColor, 'fill:', fillColor, 'line:', lineColor)
 
     // Check if 'clusters' layer exists for positioning
     const hasClustersLayer = map.value.getLayer('clusters')
-    console.log('[ClusterExtent] clusters layer exists:', !!hasClustersLayer)
 
     try {
       // Add fill layer (semi-transparent)
@@ -612,7 +603,6 @@ export function useDataLayer(map, options = {}) {
           'fill-opacity': 1
         }
       }, hasClustersLayer ? 'clusters' : undefined)
-      console.log('[ClusterExtent] Fill layer added successfully')
 
       // Add outline layer
       map.value.addLayer({
@@ -624,7 +614,6 @@ export function useDataLayer(map, options = {}) {
           'line-width': 2
         }
       }, hasClustersLayer ? 'clusters' : undefined)
-      console.log('[ClusterExtent] Outline layer added successfully')
     } catch (err) {
       console.error('[ClusterExtent] Error adding layers:', err)
     }
@@ -633,45 +622,60 @@ export function useDataLayer(map, options = {}) {
   // Track if we're in the middle of a style change (to prevent clearing extent circle)
   let isStyleChanging = false
 
-  // Recreate cluster extent circle from stored params (called after style change)
-  // Called directly - no longer uses idle event (handled by switchStyle)
-  const recreateClusterExtentCircle = () => {
-    console.log('[ClusterExtent] recreateClusterExtentCircle called')
-    console.log('[ClusterExtent] currentExtentParams:', currentExtentParams.value)
+  // Update just the colors of existing cluster extent circle (for theme changes)
+  const updateClusterExtentColors = () => {
+    if (!map.value || !map.value.isStyleLoaded()) return false
+    if (!map.value.getLayer('cluster-extent-dynamic')) return false
 
+    const accentColor = getThemeAccentColor()
+    const fillColor = colorToRgba(accentColor, 0.1)
+    const lineColor = colorToRgba(accentColor, 0.5)
+
+    try {
+      map.value.setPaintProperty('cluster-extent-dynamic', 'fill-color', fillColor)
+      map.value.setPaintProperty('cluster-extent-dynamic-outline', 'line-color', lineColor)
+      return true
+    } catch (err) {
+      console.error('[ClusterExtent] Error updating colors:', err)
+      return false
+    }
+  }
+
+  // Recreate cluster extent circle from stored params (called after style change)
+  const recreateClusterExtentCircle = () => {
     if (!currentExtentParams.value) {
-      console.log('[ClusterExtent] No params stored, nothing to recreate')
       return
     }
 
+    // If layers already exist, just update colors (more efficient)
+    if (map.value?.getLayer('cluster-extent-dynamic')) {
+      if (updateClusterExtentColors()) {
+        return
+      }
+    }
+
+    // Otherwise recreate the layers
     const { centerLat, centerLng, radiusKm } = currentExtentParams.value
-    console.log('[ClusterExtent] Recreating with params:', { centerLat, centerLng, radiusKm })
     updateClusterExtentCircle(centerLat, centerLng, radiusKm)
   }
 
   // Set style changing flag
   const setStyleChanging = (value) => {
-    console.log('[ClusterExtent] setStyleChanging:', value)
     isStyleChanging = value
   }
 
   // Clear the dynamic cluster extent circle
   const clearClusterExtentCircle = () => {
     const timeSinceUpdate = Date.now() - lastParamsUpdateTime
-    console.log('[ClusterExtent] clearClusterExtentCircle called')
-    console.log('[ClusterExtent] isStyleChanging:', isStyleChanging)
-    console.log('[ClusterExtent] timeSinceUpdate:', timeSinceUpdate, 'ms')
 
     // Don't clear during style change - the circle will be recreated
     if (isStyleChanging) {
-      console.log('[ClusterExtent] Skipping clear during style change')
       return
     }
 
     // Don't clear if params were just updated (within 200ms)
     // This prevents clearing when a new cluster is clicked (which updates params before popup close fires)
     if (timeSinceUpdate < 200) {
-      console.log('[ClusterExtent] Skipping clear - params just updated')
       return
     }
 
@@ -1159,6 +1163,7 @@ export function useDataLayer(map, options = {}) {
     fitBoundsToData,
     clearClusterExtentCircle,
     recreateClusterExtentCircle,
+    updateClusterExtentColors,
     setStyleChanging
   }
 }
@@ -1169,10 +1174,6 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
   const { recreateClusterExtentCircle, setStyleChanging } = extentCircleCallbacks || {}
 
   const switchStyle = async (styleName) => {
-    console.log('[StyleSwitcher] switchStyle called:', styleName)
-    console.log('[StyleSwitcher] recreateClusterExtentCircle function provided:', !!recreateClusterExtentCircle)
-    console.log('[StyleSwitcher] setStyleChanging function provided:', !!setStyleChanging)
-
     if (!map.value || !MAP_STYLES[styleName]) return
 
     // Mark that we're changing styles - prevents clearing extent circle during popup close
@@ -1189,32 +1190,24 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
     currentStyle.value = styleName
     const styleConfig = MAP_STYLES[styleName]
 
-    console.log('[StyleSwitcher] Setting style:', styleConfig.name, '(theme:', styleConfig.theme, ')')
-    console.log('[StyleSwitcher] Current accent color BEFORE style change:', getThemeAccentColor())
     map.value.setStyle(styleConfig.style)
 
     // Use style.load event to add data layer, then idle event to recreate extent circle
     map.value.once('style.load', () => {
-      console.log('[StyleSwitcher] style.load event fired')
       map.value.jumpTo({ center, zoom, bearing, pitch })
-      console.log('[StyleSwitcher] Calling addDataLayer')
       addDataLayer({ skipZoom: true })
 
       // Single idle handler: recreate extent circle THEN clear flag
       // Order matters - we must recreate before clearing the flag
       map.value.once('idle', () => {
-        console.log('[StyleSwitcher] Map idle after style change')
-
         // First: recreate the extent circle (while flag is still true)
         if (recreateClusterExtentCircle) {
-          console.log('[StyleSwitcher] Recreating cluster extent circle with NEW accent color:', getThemeAccentColor())
           recreateClusterExtentCircle()
         }
 
         // Then: clear the flag AFTER a short delay to let any pending popup close events fire
         // while the flag is still true (so they're ignored)
         setTimeout(() => {
-          console.log('[StyleSwitcher] Clearing style changing flag')
           if (setStyleChanging) {
             setStyleChanging(false)
           }
