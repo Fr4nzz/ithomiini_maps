@@ -475,6 +475,36 @@ export function useScatterVisualization(map) {
   }
 }
 
+// Helper to get theme accent color from CSS variables
+export function getThemeAccentColor() {
+  const style = getComputedStyle(document.documentElement)
+  const accentColor = style.getPropertyValue('--color-accent').trim()
+  // Convert HSL or return the raw color value
+  return accentColor || '#4ade80'
+}
+
+// Convert hex or CSS color to rgba with alpha
+function colorToRgba(color, alpha) {
+  // If already rgba, just modify alpha
+  if (color.startsWith('rgba')) {
+    return color.replace(/[\d.]+\)$/, `${alpha})`)
+  }
+  // If rgb, convert to rgba
+  if (color.startsWith('rgb(')) {
+    return color.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`)
+  }
+  // If hex, convert to rgba
+  if (color.startsWith('#')) {
+    const hex = color.slice(1)
+    const r = parseInt(hex.length === 3 ? hex[0] + hex[0] : hex.slice(0, 2), 16)
+    const g = parseInt(hex.length === 3 ? hex[1] + hex[1] : hex.slice(2, 4), 16)
+    const b = parseInt(hex.length === 3 ? hex[2] + hex[2] : hex.slice(4, 6), 16)
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }
+  // Fallback
+  return `rgba(74, 222, 128, ${alpha})`
+}
+
 // Data layer management
 export function useDataLayer(map, options = {}) {
   const store = useDataStore()
@@ -487,6 +517,9 @@ export function useDataLayer(map, options = {}) {
   // Track if event handlers are registered (to prevent duplicates)
   let clusterHandlersRegistered = false
   let pointsHandlersRegistered = false
+
+  // Store current cluster extent parameters for recreation after style change
+  const currentExtentParams = ref(null)
 
   // Generate a circle polygon for geographic radius display
   const generateGeoCircle = (centerLng, centerLat, radiusKm, points = 64) => {
@@ -507,6 +540,9 @@ export function useDataLayer(map, options = {}) {
   // Update or create the cluster extent circle with actual geographic radius
   const updateClusterExtentCircle = (centerLat, centerLng, radiusKm) => {
     if (!map.value || !map.value.isStyleLoaded()) return
+
+    // Store parameters for recreation after style change
+    currentExtentParams.value = { centerLat, centerLng, radiusKm }
 
     // Remove existing dynamic extent layer if present
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -542,13 +578,18 @@ export function useDataLayer(map, options = {}) {
       data: circleGeoJSON
     })
 
+    // Get theme-aware accent color
+    const accentColor = getThemeAccentColor()
+    const fillColor = colorToRgba(accentColor, 0.1)
+    const lineColor = colorToRgba(accentColor, 0.5)
+
     // Add fill layer (semi-transparent)
     map.value.addLayer({
       id: 'cluster-extent-dynamic',
       type: 'fill',
       source: 'cluster-extent-dynamic-source',
       paint: {
-        'fill-color': 'rgba(74, 222, 128, 0.1)',
+        'fill-color': fillColor,
         'fill-opacity': 1
       }
     }, 'clusters')
@@ -559,14 +600,25 @@ export function useDataLayer(map, options = {}) {
       type: 'line',
       source: 'cluster-extent-dynamic-source',
       paint: {
-        'line-color': 'rgba(74, 222, 128, 0.5)',
+        'line-color': lineColor,
         'line-width': 2
       }
     }, 'clusters')
   }
 
+  // Recreate cluster extent circle from stored params (called after style change)
+  const recreateClusterExtentCircle = () => {
+    if (currentExtentParams.value) {
+      const { centerLat, centerLng, radiusKm } = currentExtentParams.value
+      updateClusterExtentCircle(centerLat, centerLng, radiusKm)
+    }
+  }
+
   // Clear the dynamic cluster extent circle
   const clearClusterExtentCircle = () => {
+    // Clear stored params
+    currentExtentParams.value = null
+
     if (!map.value) return
 
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -1046,12 +1098,13 @@ export function useDataLayer(map, options = {}) {
   return {
     addDataLayer,
     fitBoundsToData,
-    clearClusterExtentCircle
+    clearClusterExtentCircle,
+    recreateClusterExtentCircle
   }
 }
 
 // Style switcher
-export function useStyleSwitcher(map, addDataLayer) {
+export function useStyleSwitcher(map, addDataLayer, recreateClusterExtentCircle = null) {
   const currentStyle = ref('dark')
 
   const switchStyle = async (styleName) => {
@@ -1074,6 +1127,10 @@ export function useStyleSwitcher(map, addDataLayer) {
       if (map.value.isStyleLoaded()) {
         map.value.jumpTo({ center, zoom, bearing, pitch })
         addDataLayer({ skipZoom: true })
+        // Recreate cluster extent circle if one was showing
+        if (recreateClusterExtentCircle) {
+          recreateClusterExtentCircle()
+        }
       } else {
         setTimeout(waitForStyleAndAddLayer, 50)
       }
@@ -1087,6 +1144,10 @@ export function useStyleSwitcher(map, addDataLayer) {
       if (!map.value.getSource('points-source')) {
         map.value.jumpTo({ center, zoom, bearing, pitch })
         addDataLayer({ skipZoom: true })
+        // Recreate cluster extent circle if one was showing
+        if (recreateClusterExtentCircle) {
+          recreateClusterExtentCircle()
+        }
       }
     })
   }
