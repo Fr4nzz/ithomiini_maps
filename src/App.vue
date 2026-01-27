@@ -8,10 +8,7 @@ import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
 import { ASPECT_RATIOS } from './utils/constants'
-import {
-  loadImage,
-  drawAttributionOnCanvas,
-} from './utils/canvasHelpers'
+import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
 import { toPng } from 'html-to-image'
 
@@ -126,6 +123,7 @@ const directExportMap = async () => {
     // Capture the map container (canvas + HTML overlays like scale bar, legend)
     const includeScaleBar = store.exportSettings.includeScaleBar
     const includeLegend = store.exportSettings.includeLegend
+    const includeAttribution = store.exportSettings.includeAttribution
     let containerDataUrl
     try {
       containerDataUrl = await toPng(container, {
@@ -140,8 +138,10 @@ const directExportMap = async () => {
           if (!includeScaleBar && node.classList?.contains('maplibregl-ctrl-scale')) return false
           // Exclude legend if user disabled it
           if (!includeLegend && node.classList?.contains('legend')) return false
-          // Exclude attribution control (we draw our own)
-          if (node.classList?.contains('maplibregl-ctrl-attrib')) return false
+          // Exclude attribution control if user disabled it
+          if (!includeAttribution && node.classList?.contains('maplibregl-ctrl-attrib')) return false
+          // Exclude the attribution toggle button (info icon) - always hide it in export
+          if (node.classList?.contains('maplibregl-ctrl-attrib-button')) return false
           return true
         }
       })
@@ -168,35 +168,6 @@ const directExportMap = async () => {
 
     // Draw the captured container scaled to output size
     ctx.drawImage(containerImage, 0, 0, canvas.width, canvas.height)
-
-    // Draw attribution if enabled
-    if (store.exportSettings.includeAttribution) {
-      // Get basemap attribution from the map's style sources
-      let basemapAttribution = ''
-      try {
-        const style = map.getStyle()
-        const sourceAttributions = []
-        if (style?.sources) {
-          Object.values(style.sources).forEach(source => {
-            if (source.attribution) {
-              // Strip HTML tags from attribution
-              const text = source.attribution.replace(/<[^>]*>/g, '').trim()
-              if (text && !sourceAttributions.includes(text)) {
-                sourceAttributions.push(text)
-              }
-            }
-          })
-        }
-        basemapAttribution = sourceAttributions.join(' | ')
-      } catch (e) {
-        console.warn('Could not get basemap attribution:', e)
-      }
-
-      drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
-        exportSettings: store.exportSettings,
-        basemapAttribution,
-      })
-    }
 
     // Download the image
     const format = store.exportSettings.format || 'png'
