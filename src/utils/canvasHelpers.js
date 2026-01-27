@@ -138,20 +138,27 @@ export const drawLegendOnCanvas = (ctx, width, height, options) => {
 
 // Draw attribution on canvas for export
 export const drawAttributionOnCanvas = (ctx, width, height, options) => {
-  const { exportSettings } = options
+  const { exportSettings, basemapAttribution } = options
   const uiScale = exportSettings.uiScale || 1
-  const text = 'Ithomiini Distribution Maps | Data: Dore et al., Sanger Institute, GBIF'
-  const padding = 15 * uiScale
 
-  ctx.font = `${11 * uiScale}px system-ui, sans-serif`
+  // Build attribution text with basemap attribution if available
+  let text = 'Ithomiini Distribution Maps | Data: Dore et al., Sanger Institute, GBIF'
+  if (basemapAttribution) {
+    text += ` | ${basemapAttribution}`
+  }
+
+  const padding = 15 * uiScale
+  const fontSize = 10 * uiScale
+
+  ctx.font = `${fontSize}px system-ui, sans-serif`
   const textWidth = ctx.measureText(text).width
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
-  roundRect(ctx, width - textWidth - padding - 12 * uiScale, height - 28 * uiScale, textWidth + 12 * uiScale, 22 * uiScale, 4 * uiScale)
+  roundRect(ctx, width - textWidth - padding - 12 * uiScale, height - 26 * uiScale, textWidth + 12 * uiScale, 20 * uiScale, 4 * uiScale)
   ctx.fill()
 
   ctx.fillStyle = '#aaa'
   ctx.textAlign = 'right'
   ctx.textBaseline = 'middle'
-  ctx.fillText(text, width - padding, height - 17 * uiScale)
+  ctx.fillText(text, width - padding, height - 16 * uiScale)
 }

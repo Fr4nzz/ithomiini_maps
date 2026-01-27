@@ -169,10 +169,34 @@ const directExportMap = async () => {
     // Draw the captured container scaled to output size
     ctx.drawImage(containerImage, 0, 0, canvas.width, canvas.height)
 
-    // Draw attribution
-    drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
-      exportSettings: store.exportSettings,
-    })
+    // Draw attribution if enabled
+    if (store.exportSettings.includeAttribution) {
+      // Get basemap attribution from the map's style sources
+      let basemapAttribution = ''
+      try {
+        const style = map.getStyle()
+        const sourceAttributions = []
+        if (style?.sources) {
+          Object.values(style.sources).forEach(source => {
+            if (source.attribution) {
+              // Strip HTML tags from attribution
+              const text = source.attribution.replace(/<[^>]*>/g, '').trim()
+              if (text && !sourceAttributions.includes(text)) {
+                sourceAttributions.push(text)
+              }
+            }
+          })
+        }
+        basemapAttribution = sourceAttributions.join(' | ')
+      } catch (e) {
+        console.warn('Could not get basemap attribution:', e)
+      }
+
+      drawAttributionOnCanvas(ctx, canvas.width, canvas.height, {
+        exportSettings: store.exportSettings,
+        basemapAttribution,
+      })
+    }
 
     // Download the image
     const format = store.exportSettings.format || 'png'

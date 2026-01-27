@@ -74,7 +74,8 @@ export const usePersistenceStore = defineStore('persistence', () => {
       // Export settings
       'app-export-settings',
       // Theme
-      'app-theme'
+      'app-theme',
+      'app-mode'
     ]
 
     for (const key of keysToRemove) {

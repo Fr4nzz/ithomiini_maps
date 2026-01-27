@@ -2,18 +2,34 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { themes, DEFAULT_THEME, DEFAULT_MODE, getTheme } from '../themes/presets'
 
-// Get stored theme or default
+// Check if persistence is enabled
+function isPersistenceEnabled() {
+  try {
+    const stored = localStorage.getItem('app-persist-enabled')
+    return stored ? JSON.parse(stored) : false
+  } catch {
+    return false
+  }
+}
+
+// Get stored theme or default (only if persistence enabled)
 function getStoredTheme() {
   try {
+    if (!isPersistenceEnabled()) {
+      return DEFAULT_THEME
+    }
     return localStorage.getItem('app-theme') || DEFAULT_THEME
   } catch {
     return DEFAULT_THEME
   }
 }
 
-// Get stored mode or default
+// Get stored mode or default (only if persistence enabled)
 function getStoredMode() {
   try {
+    if (!isPersistenceEnabled()) {
+      return DEFAULT_MODE
+    }
     return localStorage.getItem('app-mode') || DEFAULT_MODE
   } catch {
     return DEFAULT_MODE
@@ -21,7 +37,7 @@ function getStoredMode() {
 }
 
 export const useThemeStore = defineStore('theme', () => {
-  // Current theme name (scientific, ocean, forest, sunset, lavender)
+  // Current theme name (emerald, ocean, forest, sunset, lavender)
   const currentTheme = ref(getStoredTheme())
 
   // Current mode (light or dark)
@@ -46,12 +62,14 @@ export const useThemeStore = defineStore('theme', () => {
       currentTheme.value = DEFAULT_THEME
     }
 
-    // Store preferences
-    try {
-      localStorage.setItem('app-theme', currentTheme.value)
-      localStorage.setItem('app-mode', currentMode.value)
-    } catch {
-      // Storage unavailable
+    // Store preferences only if persistence is enabled
+    if (isPersistenceEnabled()) {
+      try {
+        localStorage.setItem('app-theme', currentTheme.value)
+        localStorage.setItem('app-mode', currentMode.value)
+      } catch {
+        // Storage unavailable
+      }
     }
 
     // Apply data attributes to root - CSS handles the rest via selectors
@@ -67,8 +85,6 @@ export const useThemeStore = defineStore('theme', () => {
     // Set dark/light class
     root.classList.remove('dark', 'light')
     root.classList.add(currentMode.value)
-
-    console.log(`Applied theme: ${currentTheme.value}, mode: ${currentMode.value}`)
   }
 
   /**

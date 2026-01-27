@@ -1467,6 +1467,11 @@ watch(
   border-radius: 4px !important;
 }
 
+:deep(.maplibregl-ctrl-attrib.maplibregl-compact) {
+  padding-right: 24px !important;
+  min-height: 20px !important;
+}
+
 :deep(.maplibregl-ctrl-attrib a) {
   color: var(--color-accent, #4ade80) !important;
 }
@@ -1477,6 +1482,8 @@ watch(
 
 :deep(.maplibregl-ctrl-attrib-button) {
   background-color: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;
+  top: 0 !important;
+  right: 0 !important;
 }
 
 /* Theme Dropdown */
