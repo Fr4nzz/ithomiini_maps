@@ -19,10 +19,14 @@ import {
 const themeStore = useThemeStore()
 const themeOptions = getThemeOptions()
 
-// Toggle between light and dark mode
-function toggleLightDark(checked) {
-  themeStore.setMode(checked ? 'light' : 'dark')
-}
+// Computed for v-model binding with Switch
+const isLightMode = computed({
+  get: () => !themeStore.isDarkMode,
+  set: (value) => {
+    console.log('Switch toggled, isLightMode:', value)
+    themeStore.setMode(value ? 'light' : 'dark')
+  }
+})
 
 // Handle theme selection from dropdown
 function handleThemeChange(value) {
@@ -54,10 +58,7 @@ function getThemeAccentColor(option) {
         <component :is="themeStore.isDarkMode ? Moon : Sun" class="h-4 w-4" />
         <span>{{ themeStore.isDarkMode ? 'Dark' : 'Light' }} Mode</span>
       </Label>
-      <Switch
-        :checked="!themeStore.isDarkMode"
-        @update:checked="toggleLightDark"
-      />
+      <Switch v-model:checked="isLightMode" />
     </div>
 
     <Separator />
