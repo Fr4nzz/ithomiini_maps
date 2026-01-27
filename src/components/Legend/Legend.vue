@@ -752,6 +752,7 @@ function handleApplyPrefixFormatToAll(format) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 let attributionObserver = null
+let containerResizeObserver = null
 
 function updateAttributionState() {
   if (!props.containerRef) return
@@ -819,6 +820,43 @@ function setupAttributionObserver() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// CONTAINER RESIZE OBSERVER
+// ═══════════════════════════════════════════════════════════════════════════
+
+function setupContainerResizeObserver() {
+  if (!props.containerRef || containerResizeObserver) return
+
+  containerResizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const newBounds = {
+        width: entry.contentRect.width,
+        height: entry.contentRect.height
+      }
+
+      // Skip if bounds haven't actually changed or if currently dragging
+      if (isDragging.value) return
+      if (newBounds.width === prevContainerBounds.value.width &&
+          newBounds.height === prevContainerBounds.value.height) {
+        return
+      }
+
+      // Only reposition if we have previous bounds to compare with
+      if (prevContainerBounds.value.width > 0) {
+        // Detect sticky edges based on current position and OLD bounds
+        detectStickyEdges()
+
+        // Apply position for new bounds while preserving sticky edges
+        applyPositionForBounds(prevContainerBounds.value, newBounds)
+      }
+
+      prevContainerBounds.value = { ...newBounds }
+    }
+  })
+
+  containerResizeObserver.observe(props.containerRef)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // LIFECYCLE
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -834,6 +872,9 @@ onMounted(() => {
 
       // Setup attribution observer (will also initialize attributionHeight)
       setupAttributionObserver()
+
+      // Setup container resize observer to detect export mode changes
+      setupContainerResizeObserver()
 
       const legendHeight = legendRef.value?.offsetHeight || 200
       const margin = 10
@@ -873,6 +914,12 @@ onUnmounted(() => {
   if (attributionObserver) {
     attributionObserver.disconnect()
     attributionObserver = null
+  }
+
+  // Clean up container resize observer
+  if (containerResizeObserver) {
+    containerResizeObserver.disconnect()
+    containerResizeObserver = null
   }
 })
 
@@ -926,34 +973,12 @@ watch(containerBounds, (newBounds) => {
   // Repositioning is handled by handleWindowResize and isExportMode watcher
 }, { deep: true })
 
-// Watch for export mode changes to force bounds recalculation
+// Watch for export mode changes - capture sticky state BEFORE container resizes
+// The actual repositioning is handled by the containerResizeObserver
 watch(isExportMode, (enabled, wasEnabled) => {
   // Capture current sticky state BEFORE container resizes
   // IMPORTANT: Pass the OLD export mode state since the container hasn't resized yet
   detectStickyEdges(wasEnabled)
-
-  // Save pre-resize bounds for interpolation
-  const oldBounds = { ...prevContainerBounds.value }
-
-  // Wait for the CSS styles to be applied and the browser to reflow
-  // Use requestAnimationFrame + setTimeout to ensure the container has been resized
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      if (!props.containerRef) return
-
-      // Get fresh bounds AFTER container has resized
-      const newBounds = {
-        width: props.containerRef.clientWidth || 800,
-        height: props.containerRef.clientHeight || 600
-      }
-
-      if (newBounds.width && newBounds.height) {
-        // Apply position for new bounds while preserving sticky edges
-        applyPositionForBounds(oldBounds, newBounds)
-        prevContainerBounds.value = { ...newBounds }
-      }
-    }, 250) // Delay for CSS transitions
-  })
 })
 
 </script>
