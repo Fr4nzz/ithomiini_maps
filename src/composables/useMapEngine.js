@@ -696,9 +696,13 @@ export function useDataLayer(map, options = {}) {
   }
 
   const addDataLayer = (layerOptions = {}) => {
+    console.time('[Perf] addDataLayer total')
     const { skipZoom = false } = layerOptions
 
-    if (!map.value) return
+    if (!map.value) {
+      console.timeEnd('[Perf] addDataLayer total')
+      return
+    }
 
     // Remove existing layers/sources if they exist
     const layersToRemove = [
@@ -715,10 +719,16 @@ export function useDataLayer(map, options = {}) {
     if (map.value.getSource('points-source')) map.value.removeSource('points-source')
     if (map.value.getSource('cluster-extent-dynamic-source')) map.value.removeSource('cluster-extent-dynamic-source')
 
+    console.time('[Perf] addDataLayer: Get displayGeoJSON')
     const geojson = store.displayGeoJSON
-    if (!geojson) return
+    console.timeEnd('[Perf] addDataLayer: Get displayGeoJSON')
+    if (!geojson) {
+      console.timeEnd('[Perf] addDataLayer total')
+      return
+    }
 
     const pointCount = geojson.features.length
+    console.log(`[Perf] addDataLayer: Processing ${pointCount} features, clustering=${store.clusteringEnabled}`)
     const shouldCluster = store.clusteringEnabled
     const settings = store.clusterSettings
 
@@ -726,6 +736,7 @@ export function useDataLayer(map, options = {}) {
     const clusterRadiusPixels = settings.radiusPixels
 
     // Add source - use store settings for clustering
+    console.time('[Perf] addDataLayer: addSource')
     map.value.addSource('points-source', {
       type: 'geojson',
       data: geojson,
@@ -734,6 +745,7 @@ export function useDataLayer(map, options = {}) {
       clusterRadius: clusterRadiusPixels,
       clusterMinPoints: 2
     })
+    console.timeEnd('[Perf] addDataLayer: addSource')
 
     // Only add cluster layers if clustering is enabled
     if (shouldCluster) {
@@ -966,20 +978,28 @@ export function useDataLayer(map, options = {}) {
 
       // Cluster click - show enhanced popup with all cluster points
       map.value.on('click', 'clusters', async (e) => {
+        console.time('[Perf] Cluster click handler total')
         const features = map.value.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-        if (!features.length) return
+        if (!features.length) {
+          console.timeEnd('[Perf] Cluster click handler total')
+          return
+        }
 
         const cluster = features[0]
         const coords = cluster.geometry.coordinates
         const clusterId = cluster.properties.cluster_id
         const pointCount = cluster.properties.point_count
 
+        console.log(`[Perf] Cluster clicked: id=${clusterId}, point_count=${pointCount}`)
+
         const clusterLng = coords[0]
         const clusterLat = coords[1]
 
         // Helper function to find cluster points using proximity search
         const findClusterPointsByProximity = () => {
+          console.time('[Perf] findClusterPointsByProximity')
           const allPoints = store.displayGeoJSON?.features || []
+          console.log(`[Perf] Proximity search: Scanning ${allPoints.length} points for cluster with ${pointCount} points`)
           const zoom = map.value.getZoom()
           const clusterRadiusPx = store.clusterSettings.radiusPixels
 
@@ -1000,6 +1020,8 @@ export function useDataLayer(map, options = {}) {
           pointsWithDistance.sort((a, b) => a.distance - b.distance)
           const limitedPoints = pointsWithDistance.slice(0, pointCount)
 
+          console.timeEnd('[Perf] findClusterPointsByProximity')
+          console.log(`[Perf] Proximity search found ${limitedPoints.length} points`)
           return limitedPoints.map(p => p.feature)
         }
 
@@ -1007,39 +1029,51 @@ export function useDataLayer(map, options = {}) {
         const source = map.value.getSource('points-source')
         let clusterFeatures = null
 
+        console.time('[Perf] getClusterLeaves')
         if (source && typeof source.getClusterLeaves === 'function') {
           try {
             clusterFeatures = await new Promise((resolve, reject) => {
               const timeout = setTimeout(() => {
+                console.log('[Perf] getClusterLeaves: Timeout after 500ms, falling back to proximity search')
                 resolve(null) // Resolve with null to trigger fallback
               }, 500) // Short 500ms timeout
 
               source.getClusterLeaves(clusterId, pointCount, 0, (error, features) => {
                 clearTimeout(timeout)
                 if (error) {
+                  console.log('[Perf] getClusterLeaves: Error, falling back to proximity search', error)
                   resolve(null)
                 } else {
+                  console.log(`[Perf] getClusterLeaves: Success, returned ${features?.length || 0} features`)
                   resolve(features)
                 }
               })
             })
           } catch (err) {
+            console.log('[Perf] getClusterLeaves: Exception, falling back to proximity search', err)
             clusterFeatures = null
           }
         }
+        console.timeEnd('[Perf] getClusterLeaves')
 
         // Fallback to proximity search if getClusterLeaves didn't work
         if (!clusterFeatures || clusterFeatures.length === 0) {
+          console.log('[Perf] Using proximity search fallback')
           clusterFeatures = findClusterPointsByProximity()
         }
 
-        if (!clusterFeatures || clusterFeatures.length === 0) return
+        if (!clusterFeatures || clusterFeatures.length === 0) {
+          console.timeEnd('[Perf] Cluster click handler total')
+          return
+        }
 
         const clusterPoints = clusterFeatures.map(f => f.properties)
 
         if (clusterPoints.length > 0 && onShowPopup) {
           // Compute cluster statistics including geographic radius
+          console.time('[Perf] computeClusterStats')
           const clusterStats = computeClusterStats(clusterFeatures, clusterLat, clusterLng)
+          console.timeEnd('[Perf] computeClusterStats')
 
           // Update the cluster extent circle to show actual geographic radius
           updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
@@ -1053,6 +1087,7 @@ export function useDataLayer(map, options = {}) {
             clusterStats
           })
         }
+        console.timeEnd('[Perf] Cluster click handler total')
       })
 
       // Cluster hover
@@ -1129,6 +1164,7 @@ export function useDataLayer(map, options = {}) {
     if (!skipZoom) {
       fitBoundsToData(geojson)
     }
+    console.timeEnd('[Perf] addDataLayer total')
   }
 
   const fitBoundsToData = (geojson) => {
