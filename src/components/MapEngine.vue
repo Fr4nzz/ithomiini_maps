@@ -411,11 +411,16 @@ watch(
 // Track clustering toggle to prevent zoom
 let clusteringJustToggled = false
 
-// Watch ONLY clusteringEnabled with sync flush to set flag BEFORE displayGeoJSON watcher runs
+// Watch clusteringEnabled to toggle clustering on/off
+// Since displayGeoJSON no longer changes when clustering toggles (no pre-aggregation),
+// we need to explicitly call addDataLayer here
 watch(
   () => store.clusteringEnabled,
-  () => {
+  (enabled) => {
     clusteringJustToggled = true
+    if (!map.value || !map.value.isStyleLoaded()) return
+    console.log('[Clustering] Toggle changed to:', enabled)
+    addDataLayer({ skipZoom: true })
   },
   { flush: 'sync' }
 )
