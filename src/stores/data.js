@@ -42,7 +42,6 @@ export const useDataStore = defineStore('data', () => {
   const clusteringEnabled = ref(getStorage('app-clustering-enabled', false))
   const clusterSettings = ref(getStorage('app-cluster-settings', {
     radiusPixels: 80,  // Cluster radius in pixels (default 80px)
-    countMode: 'subspecies',  // What clusters count: 'species', 'subspecies', 'individuals'
   }))
 
   // Scatter overlapping points settings
@@ -1067,117 +1066,11 @@ export const useDataStore = defineStore('data', () => {
       }
     }
 
-    // Clustering mode with aggregation (when scatter is not enabled)
+    // Clustering mode - always pass all points to MapLibre
+    // Filtering was removed because it caused incorrect statistics in cluster popups
+    // (e.g., showing 906 individuals when there were actually 2820)
     if (clusteringEnabled.value) {
-      const countMode = clusterSettings.value.countMode
-
-      // For 'individuals' mode, use all points (default behavior)
-      if (countMode === 'individuals') {
-        return geo
-      }
-
-      // Build a lookup Map for O(1) feature access instead of O(n) find()
-      // This is the critical performance fix - avoids O(n²) complexity
-      const featureLookup = new Map()
-      for (const feature of geo.features) {
-        featureLookup.set(feature.properties.id, feature)
-      }
-
-      // For 'subspecies' mode: aggregate to one point per subspecies per location
-      if (countMode === 'subspecies') {
-        const features = []
-        const seenIds = new Set()
-
-        for (const [coordKey, subspeciesMap] of subspeciesGroups.value) {
-          for (const [subspeciesKey, data] of subspeciesMap) {
-            const rep = data.representative
-            if (!seenIds.has(rep.id)) {
-              seenIds.add(rep.id)
-              // O(1) lookup instead of O(n) find()
-              const origFeature = featureLookup.get(rep.id)
-              if (origFeature) {
-                features.push({
-                  ...origFeature,
-                  properties: {
-                    ...origFeature.properties,
-                    _aggregatedCount: data.allPoints.length,
-                    _aggregationType: 'subspecies'
-                  }
-                })
-              }
-            }
-          }
-        }
-
-        return {
-          type: 'FeatureCollection',
-          features
-        }
-      }
-
-      // For 'species' mode: aggregate to one point per species per location
-      if (countMode === 'species') {
-        const features = []
-        const seenIds = new Set()
-
-        for (const [coordKey, speciesMap] of speciesGroups.value) {
-          for (const [speciesKey, data] of speciesMap) {
-            const rep = data.representative
-            if (!seenIds.has(rep.id)) {
-              seenIds.add(rep.id)
-              // O(1) lookup instead of O(n) find()
-              const origFeature = featureLookup.get(rep.id)
-              if (origFeature) {
-                features.push({
-                  ...origFeature,
-                  properties: {
-                    ...origFeature.properties,
-                    _aggregatedCount: data.allPoints.length,
-                    _aggregationType: 'species'
-                  }
-                })
-              }
-            }
-          }
-        }
-
-        return {
-          type: 'FeatureCollection',
-          features
-        }
-      }
-
-      // For 'genera' mode: aggregate to one point per genus per location
-      if (countMode === 'genera') {
-        const features = []
-        const seenIds = new Set()
-
-        for (const [coordKey, genusMap] of genusGroups.value) {
-          for (const [genusKey, data] of genusMap) {
-            const rep = data.representative
-            if (!seenIds.has(rep.id)) {
-              seenIds.add(rep.id)
-              // O(1) lookup instead of O(n) find()
-              const origFeature = featureLookup.get(rep.id)
-              if (origFeature) {
-                features.push({
-                  ...origFeature,
-                  properties: {
-                    ...origFeature.properties,
-                    _aggregatedCount: data.allPoints.length,
-                    _aggregationType: 'genera'
-                  }
-                })
-              }
-            }
-          }
-        }
-
-        return {
-          type: 'FeatureCollection',
-          features
-        }
-      }
+      return geo
     }
 
     // Default: return filtered GeoJSON as-is

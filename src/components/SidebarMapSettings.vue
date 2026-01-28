@@ -80,21 +80,6 @@ function toggleLegend() {
           </p>
         </div>
 
-        <div class="setting-row">
-          <label>Cluster Count Shows</label>
-          <select v-model="store.clusterSettings.countMode" class="style-select">
-            <option value="individuals">Individuals (records)</option>
-            <option value="subspecies">Subspecies (unique)</option>
-            <option value="species">Species (unique)</option>
-            <option value="genera">Genera (unique)</option>
-          </select>
-          <p class="count-mode-hint">
-            {{ store.clusterSettings.countMode === 'individuals' ? 'Total specimen records in cluster' :
-               store.clusterSettings.countMode === 'subspecies' ? 'Unique subspecies in cluster' :
-               store.clusterSettings.countMode === 'species' ? 'Unique species in cluster' :
-               'Unique genera in cluster' }}
-          </p>
-        </div>
       </div>
     </div>
   </div>

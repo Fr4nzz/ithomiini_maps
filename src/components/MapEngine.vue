@@ -420,7 +420,7 @@ watch(
   { flush: 'sync' }
 )
 
-// Watch for clustering settings changes (for radius, countMode, etc.)
+// Watch for clustering settings changes (for radius, etc.)
 watch(
   () => store.clusterSettings,
   () => {
