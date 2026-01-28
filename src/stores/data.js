@@ -621,13 +621,9 @@ export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
   
   const filteredGeoJSON = computed(() => {
-    console.time('[Perf] filteredGeoJSON computation')
     if (!allFeatures.value.length) {
-      console.timeEnd('[Perf] filteredGeoJSON computation')
       return null
     }
-
-    console.log(`[Perf] filteredGeoJSON: Filtering ${allFeatures.value.length} total features`)
 
     const filtered = allFeatures.value.filter(item => {
       // CAMID Search - supports multiple IDs separated by comma, space, or newline
@@ -684,7 +680,7 @@ export const useDataStore = defineStore('data', () => {
       return true
     })
 
-    const result = {
+    return {
       type: 'FeatureCollection',
       features: filtered.map(item => ({
         type: 'Feature',
@@ -692,9 +688,6 @@ export const useDataStore = defineStore('data', () => {
         properties: item
       }))
     }
-    console.timeEnd('[Perf] filteredGeoJSON computation')
-    console.log(`[Perf] filteredGeoJSON: Filtered to ${result.features.length} features`)
-    return result
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -841,15 +834,9 @@ export const useDataStore = defineStore('data', () => {
    * Returns Map: "lat,lng" -> { subspeciesKey -> { representative, allPoints, species, subspecies } }
    */
   const subspeciesGroups = computed(() => {
-    console.time('[Perf] subspeciesGroups computation')
     const groups = new Map()
     const geo = filteredGeoJSON.value
-    if (!geo || !geo.features) {
-      console.timeEnd('[Perf] subspeciesGroups computation')
-      return groups
-    }
-
-    console.log(`[Perf] subspeciesGroups: Processing ${geo.features.length} features`)
+    if (!geo || !geo.features) return groups
 
     for (const feature of geo.features) {
       const [lng, lat] = feature.geometry.coordinates
@@ -884,8 +871,6 @@ export const useDataStore = defineStore('data', () => {
       }
     }
 
-    console.timeEnd('[Perf] subspeciesGroups computation')
-    console.log(`[Perf] subspeciesGroups: Created ${groups.size} location groups`)
     return groups
   })
 
@@ -947,15 +932,9 @@ export const useDataStore = defineStore('data', () => {
    * Returns Map: "lat,lng" -> { speciesKey -> { representative, allPoints, species } }
    */
   const speciesGroups = computed(() => {
-    console.time('[Perf] speciesGroups computation')
     const groups = new Map()
     const geo = filteredGeoJSON.value
-    if (!geo || !geo.features) {
-      console.timeEnd('[Perf] speciesGroups computation')
-      return groups
-    }
-
-    console.log(`[Perf] speciesGroups: Processing ${geo.features.length} features`)
+    if (!geo || !geo.features) return groups
 
     for (const feature of geo.features) {
       const [lng, lat] = feature.geometry.coordinates
@@ -987,8 +966,6 @@ export const useDataStore = defineStore('data', () => {
       }
     }
 
-    console.timeEnd('[Perf] speciesGroups computation')
-    console.log(`[Perf] speciesGroups: Created ${groups.size} location groups`)
     return groups
   })
 
@@ -998,14 +975,8 @@ export const useDataStore = defineStore('data', () => {
    * When clustering is enabled with species/subspecies count mode: aggregates to one point per taxon per location
    */
   const displayGeoJSON = computed(() => {
-    console.time('[Perf] displayGeoJSON computation')
     const geo = filteredGeoJSON.value
-    if (!geo) {
-      console.timeEnd('[Perf] displayGeoJSON computation')
-      return geo
-    }
-
-    console.log(`[Perf] displayGeoJSON: Processing ${geo.features?.length || 0} features, clustering=${clusteringEnabled.value}, countMode=${clusterSettings.value.countMode}`)
+    if (!geo) return geo
 
     // Scatter mode takes priority (includes subspecies aggregation with visual scatter)
     if (scatterOverlappingPoints.value) {
@@ -1048,8 +1019,6 @@ export const useDataStore = defineStore('data', () => {
         }
       }
 
-      console.timeEnd('[Perf] displayGeoJSON computation')
-      console.log(`[Perf] displayGeoJSON: Scatter mode returned ${features.length} features`)
       return {
         type: 'FeatureCollection',
         features
@@ -1062,23 +1031,18 @@ export const useDataStore = defineStore('data', () => {
 
       // For 'individuals' mode, use all points (default behavior)
       if (countMode === 'individuals') {
-        console.timeEnd('[Perf] displayGeoJSON computation')
-        console.log(`[Perf] displayGeoJSON: Individuals mode returned ${geo.features.length} features`)
         return geo
       }
 
       // Build a lookup Map for O(1) feature access instead of O(n) find()
       // This is the critical performance fix - avoids O(n²) complexity
-      console.time('[Perf] displayGeoJSON: Building feature lookup Map')
       const featureLookup = new Map()
       for (const feature of geo.features) {
         featureLookup.set(feature.properties.id, feature)
       }
-      console.timeEnd('[Perf] displayGeoJSON: Building feature lookup Map')
 
       // For 'subspecies' mode: aggregate to one point per subspecies per location
       if (countMode === 'subspecies') {
-        console.time('[Perf] displayGeoJSON: Subspecies aggregation')
         const features = []
         const seenIds = new Set()
 
@@ -1103,9 +1067,6 @@ export const useDataStore = defineStore('data', () => {
           }
         }
 
-        console.timeEnd('[Perf] displayGeoJSON: Subspecies aggregation')
-        console.timeEnd('[Perf] displayGeoJSON computation')
-        console.log(`[Perf] displayGeoJSON: Subspecies mode returned ${features.length} features (from ${geo.features.length} original)`)
         return {
           type: 'FeatureCollection',
           features
@@ -1114,7 +1075,6 @@ export const useDataStore = defineStore('data', () => {
 
       // For 'species' mode: aggregate to one point per species per location
       if (countMode === 'species') {
-        console.time('[Perf] displayGeoJSON: Species aggregation')
         const features = []
         const seenIds = new Set()
 
@@ -1139,9 +1099,6 @@ export const useDataStore = defineStore('data', () => {
           }
         }
 
-        console.timeEnd('[Perf] displayGeoJSON: Species aggregation')
-        console.timeEnd('[Perf] displayGeoJSON computation')
-        console.log(`[Perf] displayGeoJSON: Species mode returned ${features.length} features (from ${geo.features.length} original)`)
         return {
           type: 'FeatureCollection',
           features
@@ -1150,8 +1107,6 @@ export const useDataStore = defineStore('data', () => {
     }
 
     // Default: return filtered GeoJSON as-is
-    console.timeEnd('[Perf] displayGeoJSON computation')
-    console.log(`[Perf] displayGeoJSON: Default mode returned ${geo.features.length} features`)
     return geo
   })
 

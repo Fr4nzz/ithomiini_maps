@@ -84,13 +84,9 @@ export const formatCountries = (countries, maxDisplay = 3) => {
  * Compute cluster statistics from an array of points
  */
 export const computeClusterStats = (points, centerLat, centerLng) => {
-  const startTime = performance.now()
-
   if (!points || points.length === 0) {
     return null
   }
-
-  console.log(`[Perf] computeClusterStats: Processing ${points.length} points`)
 
   // Unique locations (by coordinate pairs)
   const locationSet = new Set()
@@ -190,9 +186,6 @@ export const computeClusterStats = (points, centerLat, centerLng) => {
 
   // Sort countries alphabetically
   const countries = Array.from(countrySet).sort()
-
-  const elapsed = performance.now() - startTime
-  console.log(`[Perf] computeClusterStats: Completed in ${elapsed.toFixed(2)}ms - ${locationSet.size} locations, ${speciesMap.size} species`)
 
   return {
     // Location info
