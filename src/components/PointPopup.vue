@@ -248,6 +248,33 @@ watch(() => props.points, () => {
 const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
 const totalIndividuals = computed(() => props.points.length)
 
+// Format radius similar to scale bar (round to nice numbers)
+const formattedRadius = computed(() => {
+  if (!props.clusterStats?.radiusKm) return null
+  const km = props.clusterStats.radiusKm
+
+  if (km < 0.1) {
+    // Less than 100m - show in meters
+    const m = km * 1000
+    if (m >= 10) return Math.round(m) + ' m'
+    return m.toFixed(1) + ' m'
+  } else if (km < 1) {
+    // Less than 1km - show in meters, rounded to nearest 10m
+    const m = km * 1000
+    if (m >= 100) return Math.round(m / 10) * 10 + ' m'
+    return Math.round(m) + ' m'
+  } else if (km < 10) {
+    // 1-10km - show with one decimal
+    return km.toFixed(1) + ' km'
+  } else if (km < 100) {
+    // 10-100km - round to nearest integer
+    return Math.round(km) + ' km'
+  } else {
+    // 100+km - round to nearest 10km
+    return Math.round(km / 10) * 10 + ' km'
+  }
+})
+
 // Sex counts
 const maleCount = computed(() => props.points.filter(p => p.sex === 'male').length)
 const femaleCount = computed(() => props.points.filter(p => p.sex === 'female').length)
@@ -494,11 +521,9 @@ const openGallery = () => {
           </div>
 
           <!-- Cluster: Geographic radius -->
-          <div v-if="isCluster && clusterStats?.radiusKm > 0" class="detail-row">
+          <div v-if="isCluster && formattedRadius" class="detail-row">
             <span class="detail-label">Radius:</span>
-            <span class="detail-value">
-              {{ clusterStats.radiusKm < 1 ? (clusterStats.radiusKm * 1000).toFixed(0) + ' m' : clusterStats.radiusKm.toFixed(1) + ' km' }}
-            </span>
+            <span class="detail-value">{{ formattedRadius }}</span>
           </div>
 
           <div class="location-stats">
