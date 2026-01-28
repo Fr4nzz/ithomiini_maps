@@ -57,7 +57,7 @@ function toggleLegend() {
 
       <div v-if="store.clusteringEnabled" class="settings-panel">
         <div class="setting-row">
-          <label>Grouping Sensitivity</label>
+          <label>Cluster Radius <span class="unit-label">(pixels)</span></label>
           <div class="slider-group">
             <input
               type="range"
@@ -76,9 +76,15 @@ function toggleLegend() {
             />
           </div>
           <p class="count-mode-hint">
-            Lower = more clusters, Higher = fewer larger clusters
+            Points within this pixel distance are grouped into clusters.
+            Lower values create more clusters; higher values merge nearby points.
           </p>
         </div>
+
+        <label class="toggle-row cluster-points-toggle">
+          <input type="checkbox" v-model="store.clusterSettings.showClusterPoints" />
+          <span>Show points of selected cluster</span>
+        </label>
 
       </div>
     </div>
@@ -317,6 +323,18 @@ function toggleLegend() {
   font-style: italic;
   margin-top: 4px;
   margin-bottom: 0;
+}
+
+.unit-label {
+  font-weight: 400;
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #666);
+}
+
+.cluster-points-toggle {
+  margin-top: 8px;
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(74, 222, 128, 0.03) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.15);
 }
 
 /* Slider Group */

@@ -540,8 +540,96 @@ export function useDataLayer(map, options = {}) {
     return coords
   }
 
+  // Store cluster features for the selected cluster (for showing individual points)
+  const currentClusterFeatures = ref(null)
+
+  // Update or create the cluster points layer showing individual points of selected cluster
+  const updateClusterPointsLayer = (features) => {
+    if (!map.value || !map.value.isStyleLoaded()) return
+
+    // Remove existing layer if present
+    if (map.value.getLayer('cluster-points-layer')) {
+      map.value.removeLayer('cluster-points-layer')
+    }
+    if (map.value.getSource('cluster-points-source')) {
+      map.value.removeSource('cluster-points-source')
+    }
+
+    // Check if showClusterPoints is enabled
+    if (!store.clusterSettings.showClusterPoints || !features || features.length === 0) {
+      currentClusterFeatures.value = null
+      return
+    }
+
+    // Store for recreation after style change
+    currentClusterFeatures.value = features
+
+    // Create GeoJSON from features
+    const geojson = {
+      type: 'FeatureCollection',
+      features: features.map(f => ({
+        type: 'Feature',
+        geometry: f.geometry,
+        properties: f.properties || {}
+      }))
+    }
+
+    // Add source
+    map.value.addSource('cluster-points-source', {
+      type: 'geojson',
+      data: geojson
+    })
+
+    // Get theme accent color
+    const accentColor = getThemeAccentColor()
+
+    // Add layer - render on top of extent circle but below clusters
+    const hasClustersLayer = map.value.getLayer('clusters')
+
+    map.value.addLayer({
+      id: 'cluster-points-layer',
+      type: 'circle',
+      source: 'cluster-points-source',
+      paint: {
+        'circle-radius': [
+          'interpolate', ['linear'], ['zoom'],
+          3, 3,
+          6, 4,
+          10, 6,
+          14, 8
+        ],
+        'circle-color': accentColor,
+        'circle-opacity': 0.8,
+        'circle-stroke-width': 1.5,
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-opacity': 0.9
+      }
+    }, hasClustersLayer ? 'clusters' : undefined)
+  }
+
+  // Clear the cluster points layer
+  const clearClusterPointsLayer = () => {
+    currentClusterFeatures.value = null
+
+    if (!map.value) return
+
+    if (map.value.getLayer('cluster-points-layer')) {
+      map.value.removeLayer('cluster-points-layer')
+    }
+    if (map.value.getSource('cluster-points-source')) {
+      map.value.removeSource('cluster-points-source')
+    }
+  }
+
+  // Recreate cluster points layer (called after style change)
+  const recreateClusterPointsLayer = () => {
+    if (currentClusterFeatures.value && store.clusterSettings.showClusterPoints) {
+      updateClusterPointsLayer(currentClusterFeatures.value)
+    }
+  }
+
   // Update or create the cluster extent circle with actual geographic radius
-  const updateClusterExtentCircle = (centerLat, centerLng, radiusKm) => {
+  const updateClusterExtentCircle = (centerLat, centerLng, radiusKm, clusterFeatures = null) => {
     if (!map.value || !map.value.isStyleLoaded()) {
       return
     }
@@ -549,6 +637,11 @@ export function useDataLayer(map, options = {}) {
     // Store parameters for recreation after style change
     currentExtentParams.value = { centerLat, centerLng, radiusKm }
     lastParamsUpdateTime = Date.now()
+
+    // Also update cluster points layer if features provided
+    if (clusterFeatures) {
+      updateClusterPointsLayer(clusterFeatures)
+    }
 
     // Remove existing dynamic extent layer if present
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -650,6 +743,8 @@ export function useDataLayer(map, options = {}) {
     // If layers already exist, just update colors (more efficient)
     if (map.value?.getLayer('cluster-extent-dynamic')) {
       if (updateClusterExtentColors()) {
+        // Also recreate cluster points layer
+        recreateClusterPointsLayer()
         return
       }
     }
@@ -657,6 +752,9 @@ export function useDataLayer(map, options = {}) {
     // Otherwise recreate the layers
     const { centerLat, centerLng, radiusKm } = currentExtentParams.value
     updateClusterExtentCircle(centerLat, centerLng, radiusKm)
+
+    // Also recreate cluster points layer
+    recreateClusterPointsLayer()
   }
 
   // Set style changing flag
@@ -682,6 +780,9 @@ export function useDataLayer(map, options = {}) {
     // Clear stored params
     currentExtentParams.value = null
 
+    // Also clear cluster points layer
+    clearClusterPointsLayer()
+
     if (!map.value) return
 
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -706,6 +807,7 @@ export function useDataLayer(map, options = {}) {
       'cluster-count',
       'cluster-extent-dynamic',
       'cluster-extent-dynamic-outline',
+      'cluster-points-layer',
       'points-layer',
       'points-highlight'
     ]
@@ -714,6 +816,7 @@ export function useDataLayer(map, options = {}) {
     })
     if (map.value.getSource('points-source')) map.value.removeSource('points-source')
     if (map.value.getSource('cluster-extent-dynamic-source')) map.value.removeSource('cluster-extent-dynamic-source')
+    if (map.value.getSource('cluster-points-source')) map.value.removeSource('cluster-points-source')
 
     const geojson = store.displayGeoJSON
     if (!geojson) return
@@ -1041,7 +1144,8 @@ export function useDataLayer(map, options = {}) {
           const clusterStats = computeClusterStats(clusterFeatures, clusterLat, clusterLng)
 
           // Update the cluster extent circle to show actual geographic radius
-          updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0)
+          // Also pass cluster features to show individual points
+          updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0, clusterFeatures)
 
           onShowPopup({
             type: 'cluster',

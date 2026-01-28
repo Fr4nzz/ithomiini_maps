@@ -42,6 +42,7 @@ export const useDataStore = defineStore('data', () => {
   const clusteringEnabled = ref(getStorage('app-clustering-enabled', false))
   const clusterSettings = ref(getStorage('app-cluster-settings', {
     radiusPixels: 80,  // Cluster radius in pixels (default 80px)
+    showClusterPoints: true,  // Show individual points of selected cluster (default true)
   }))
 
   // Scatter overlapping points settings
