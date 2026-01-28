@@ -970,9 +970,51 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
+   * Group points by genus at each coordinate location (for genera count mode)
+   * Returns Map: "lat,lng" -> { genusKey -> { representative, allPoints, genus } }
+   */
+  const genusGroups = computed(() => {
+    const groups = new Map()
+    const geo = filteredGeoJSON.value
+    if (!geo || !geo.features) return groups
+
+    for (const feature of geo.features) {
+      const [lng, lat] = feature.geometry.coordinates
+      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
+      const props = feature.properties
+      const genus = props.genus || 'Unknown'
+
+      if (!groups.has(coordKey)) {
+        groups.set(coordKey, new Map())
+      }
+
+      const locationGroup = groups.get(coordKey)
+
+      if (!locationGroup.has(genus)) {
+        // First point of this genus - it becomes the representative
+        locationGroup.set(genus, {
+          representative: props,
+          allPoints: [props],
+          genus
+        })
+      } else {
+        // Add to existing genus group
+        const genusGroup = locationGroup.get(genus)
+        genusGroup.allPoints.push(props)
+        // Prefer representative with photo
+        if (props.image_url && !genusGroup.representative.image_url) {
+          genusGroup.representative = props
+        }
+      }
+    }
+
+    return groups
+  })
+
+  /**
    * The GeoJSON to display - handles scatter, clustering count modes, and aggregation
    * When scatter is enabled: shows one point per subspecies at each location with scattered coordinates
-   * When clustering is enabled with species/subspecies count mode: aggregates to one point per taxon per location
+   * When clustering is enabled with species/subspecies/genera count mode: aggregates to one point per taxon per location
    */
   const displayGeoJSON = computed(() => {
     const geo = filteredGeoJSON.value
@@ -1092,6 +1134,38 @@ export const useDataStore = defineStore('data', () => {
                     ...origFeature.properties,
                     _aggregatedCount: data.allPoints.length,
                     _aggregationType: 'species'
+                  }
+                })
+              }
+            }
+          }
+        }
+
+        return {
+          type: 'FeatureCollection',
+          features
+        }
+      }
+
+      // For 'genera' mode: aggregate to one point per genus per location
+      if (countMode === 'genera') {
+        const features = []
+        const seenIds = new Set()
+
+        for (const [coordKey, genusMap] of genusGroups.value) {
+          for (const [genusKey, data] of genusMap) {
+            const rep = data.representative
+            if (!seenIds.has(rep.id)) {
+              seenIds.add(rep.id)
+              // O(1) lookup instead of O(n) find()
+              const origFeature = featureLookup.get(rep.id)
+              if (origFeature) {
+                features.push({
+                  ...origFeature,
+                  properties: {
+                    ...origFeature.properties,
+                    _aggregatedCount: data.allPoints.length,
+                    _aggregationType: 'genera'
                   }
                 })
               }
