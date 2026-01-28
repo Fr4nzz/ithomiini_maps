@@ -102,9 +102,22 @@ const handleShowPopup = (data) => {
   })
 }
 
-const { addDataLayer, fitBoundsToData, clearClusterExtentCircle } = useDataLayer(map, { onShowPopup: handleShowPopup })
-const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer)
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, { recreateClusterExtentCircle, setStyleChanging })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
+
+// Watch for theme/mode changes to update cluster extent circle colors
+watch(
+  () => [themeStore.currentTheme, themeStore.currentMode],
+  () => {
+    // Use nextTick to ensure CSS variables are updated
+    nextTick(() => {
+      if (updateClusterExtentColors) {
+        updateClusterExtentColors()
+      }
+    })
+  }
+)
 
 // Map layer dropdown
 const showMapLayerDropdown = ref(false)
@@ -398,16 +411,21 @@ watch(
 // Track clustering toggle to prevent zoom
 let clusteringJustToggled = false
 
-// Watch ONLY clusteringEnabled with sync flush to set flag BEFORE displayGeoJSON watcher runs
+// Watch clusteringEnabled to toggle clustering on/off
+// Since displayGeoJSON no longer changes when clustering toggles (no pre-aggregation),
+// we need to explicitly call addDataLayer here
 watch(
   () => store.clusteringEnabled,
-  () => {
+  (enabled) => {
     clusteringJustToggled = true
+    if (!map.value || !map.value.isStyleLoaded()) return
+    console.log('[Clustering] Toggle changed to:', enabled)
+    addDataLayer({ skipZoom: true })
   },
   { flush: 'sync' }
 )
 
-// Watch for clustering settings changes (for radius, countMode, etc.)
+// Watch for clustering settings changes (for radius, etc.)
 watch(
   () => store.clusterSettings,
   () => {

@@ -57,7 +57,7 @@ function toggleLegend() {
 
       <div v-if="store.clusteringEnabled" class="settings-panel">
         <div class="setting-row">
-          <label>Cluster Radius <span class="setting-hint">(px)</span></label>
+          <label>Grouping Sensitivity</label>
           <div class="slider-group">
             <input
               type="range"
@@ -75,21 +75,11 @@ function toggleLegend() {
               @keydown.enter="$event.target.blur()"
             />
           </div>
-        </div>
-
-        <div class="setting-row">
-          <label>Cluster Count Shows</label>
-          <select v-model="store.clusterSettings.countMode" class="style-select">
-            <option value="individuals">Individuals (records)</option>
-            <option value="subspecies">Subspecies (unique)</option>
-            <option value="species">Species (unique)</option>
-          </select>
           <p class="count-mode-hint">
-            {{ store.clusterSettings.countMode === 'individuals' ? 'Total specimen records in cluster' :
-               store.clusterSettings.countMode === 'subspecies' ? 'Unique subspecies in cluster' :
-               'Unique species in cluster' }}
+            Lower = more clusters, Higher = fewer larger clusters
           </p>
         </div>
+
       </div>
     </div>
   </div>

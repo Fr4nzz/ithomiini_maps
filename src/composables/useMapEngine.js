@@ -475,6 +475,36 @@ export function useScatterVisualization(map) {
   }
 }
 
+// Helper to get theme accent color from CSS variables
+export function getThemeAccentColor() {
+  const style = getComputedStyle(document.documentElement)
+  const accentColor = style.getPropertyValue('--color-accent').trim()
+  // Convert HSL or return the raw color value
+  return accentColor || '#4ade80'
+}
+
+// Convert hex or CSS color to rgba with alpha
+function colorToRgba(color, alpha) {
+  // If already rgba, just modify alpha
+  if (color.startsWith('rgba')) {
+    return color.replace(/[\d.]+\)$/, `${alpha})`)
+  }
+  // If rgb, convert to rgba
+  if (color.startsWith('rgb(')) {
+    return color.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`)
+  }
+  // If hex, convert to rgba
+  if (color.startsWith('#')) {
+    const hex = color.slice(1)
+    const r = parseInt(hex.length === 3 ? hex[0] + hex[0] : hex.slice(0, 2), 16)
+    const g = parseInt(hex.length === 3 ? hex[1] + hex[1] : hex.slice(2, 4), 16)
+    const b = parseInt(hex.length === 3 ? hex[2] + hex[2] : hex.slice(4, 6), 16)
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }
+  // Fallback
+  return `rgba(74, 222, 128, ${alpha})`
+}
+
 // Data layer management
 export function useDataLayer(map, options = {}) {
   const store = useDataStore()
@@ -487,6 +517,12 @@ export function useDataLayer(map, options = {}) {
   // Track if event handlers are registered (to prevent duplicates)
   let clusterHandlersRegistered = false
   let pointsHandlersRegistered = false
+
+  // Store current cluster extent parameters for recreation after style change
+  const currentExtentParams = ref(null)
+
+  // Timestamp of last params update - used to prevent clearing immediately after creation
+  let lastParamsUpdateTime = 0
 
   // Generate a circle polygon for geographic radius display
   const generateGeoCircle = (centerLng, centerLat, radiusKm, points = 64) => {
@@ -506,7 +542,13 @@ export function useDataLayer(map, options = {}) {
 
   // Update or create the cluster extent circle with actual geographic radius
   const updateClusterExtentCircle = (centerLat, centerLng, radiusKm) => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!map.value || !map.value.isStyleLoaded()) {
+      return
+    }
+
+    // Store parameters for recreation after style change
+    currentExtentParams.value = { centerLat, centerLng, radiusKm }
+    lastParamsUpdateTime = Date.now()
 
     // Remove existing dynamic extent layer if present
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -542,31 +584,104 @@ export function useDataLayer(map, options = {}) {
       data: circleGeoJSON
     })
 
-    // Add fill layer (semi-transparent)
-    map.value.addLayer({
-      id: 'cluster-extent-dynamic',
-      type: 'fill',
-      source: 'cluster-extent-dynamic-source',
-      paint: {
-        'fill-color': 'rgba(74, 222, 128, 0.1)',
-        'fill-opacity': 1
-      }
-    }, 'clusters')
+    // Get theme-aware accent color
+    const accentColor = getThemeAccentColor()
+    const fillColor = colorToRgba(accentColor, 0.1)
+    const lineColor = colorToRgba(accentColor, 0.5)
 
-    // Add outline layer
-    map.value.addLayer({
-      id: 'cluster-extent-dynamic-outline',
-      type: 'line',
-      source: 'cluster-extent-dynamic-source',
-      paint: {
-        'line-color': 'rgba(74, 222, 128, 0.5)',
-        'line-width': 2
+    // Check if 'clusters' layer exists for positioning
+    const hasClustersLayer = map.value.getLayer('clusters')
+
+    try {
+      // Add fill layer (semi-transparent)
+      map.value.addLayer({
+        id: 'cluster-extent-dynamic',
+        type: 'fill',
+        source: 'cluster-extent-dynamic-source',
+        paint: {
+          'fill-color': fillColor,
+          'fill-opacity': 1
+        }
+      }, hasClustersLayer ? 'clusters' : undefined)
+
+      // Add outline layer
+      map.value.addLayer({
+        id: 'cluster-extent-dynamic-outline',
+        type: 'line',
+        source: 'cluster-extent-dynamic-source',
+        paint: {
+          'line-color': lineColor,
+          'line-width': 2
+        }
+      }, hasClustersLayer ? 'clusters' : undefined)
+    } catch (err) {
+      console.error('[ClusterExtent] Error adding layers:', err)
+    }
+  }
+
+  // Track if we're in the middle of a style change (to prevent clearing extent circle)
+  let isStyleChanging = false
+
+  // Update just the colors of existing cluster extent circle (for theme changes)
+  const updateClusterExtentColors = () => {
+    if (!map.value || !map.value.isStyleLoaded()) return false
+    if (!map.value.getLayer('cluster-extent-dynamic')) return false
+
+    const accentColor = getThemeAccentColor()
+    const fillColor = colorToRgba(accentColor, 0.1)
+    const lineColor = colorToRgba(accentColor, 0.5)
+
+    try {
+      map.value.setPaintProperty('cluster-extent-dynamic', 'fill-color', fillColor)
+      map.value.setPaintProperty('cluster-extent-dynamic-outline', 'line-color', lineColor)
+      return true
+    } catch (err) {
+      console.error('[ClusterExtent] Error updating colors:', err)
+      return false
+    }
+  }
+
+  // Recreate cluster extent circle from stored params (called after style change)
+  const recreateClusterExtentCircle = () => {
+    if (!currentExtentParams.value) {
+      return
+    }
+
+    // If layers already exist, just update colors (more efficient)
+    if (map.value?.getLayer('cluster-extent-dynamic')) {
+      if (updateClusterExtentColors()) {
+        return
       }
-    }, 'clusters')
+    }
+
+    // Otherwise recreate the layers
+    const { centerLat, centerLng, radiusKm } = currentExtentParams.value
+    updateClusterExtentCircle(centerLat, centerLng, radiusKm)
+  }
+
+  // Set style changing flag
+  const setStyleChanging = (value) => {
+    isStyleChanging = value
   }
 
   // Clear the dynamic cluster extent circle
   const clearClusterExtentCircle = () => {
+    const timeSinceUpdate = Date.now() - lastParamsUpdateTime
+
+    // Don't clear during style change - the circle will be recreated
+    if (isStyleChanging) {
+      return
+    }
+
+    // Don't clear if params were just updated (within 200ms)
+    // This prevents clearing when a new cluster is clicked (which updates params before popup close fires)
+    if (timeSinceUpdate < 200) {
+      return
+    }
+
+    // Clear stored params
+    currentExtentParams.value = null
+
     if (!map.value) return
 
     if (map.value.getLayer('cluster-extent-dynamic')) {
@@ -603,7 +718,6 @@ export function useDataLayer(map, options = {}) {
     const geojson = store.displayGeoJSON
     if (!geojson) return
 
-    const pointCount = geojson.features.length
     const shouldCluster = store.clusteringEnabled
     const settings = store.clusterSettings
 
@@ -1046,16 +1160,25 @@ export function useDataLayer(map, options = {}) {
   return {
     addDataLayer,
     fitBoundsToData,
-    clearClusterExtentCircle
+    clearClusterExtentCircle,
+    recreateClusterExtentCircle,
+    updateClusterExtentColors,
+    setStyleChanging
   }
 }
 
 // Style switcher
-export function useStyleSwitcher(map, addDataLayer) {
+export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null) {
   const currentStyle = ref('dark')
+  const { recreateClusterExtentCircle, setStyleChanging } = extentCircleCallbacks || {}
 
   const switchStyle = async (styleName) => {
     if (!map.value || !MAP_STYLES[styleName]) return
+
+    // Mark that we're changing styles - prevents clearing extent circle during popup close
+    if (setStyleChanging) {
+      setStyleChanging(true)
+    }
 
     // Save current view state before style change
     const center = map.value.getCenter()
@@ -1068,26 +1191,27 @@ export function useStyleSwitcher(map, addDataLayer) {
 
     map.value.setStyle(styleConfig.style)
 
-    // Wait for style to be fully loaded
-    // Note: Shape images are generated on-demand in addDataLayer, no pre-loading needed
-    const waitForStyleAndAddLayer = async () => {
-      if (map.value.isStyleLoaded()) {
-        map.value.jumpTo({ center, zoom, bearing, pitch })
-        addDataLayer({ skipZoom: true })
-      } else {
-        setTimeout(waitForStyleAndAddLayer, 50)
-      }
-    }
-
+    // Use style.load event to add data layer, then idle event to recreate extent circle
     map.value.once('style.load', () => {
-      setTimeout(waitForStyleAndAddLayer, 100)
-    })
+      map.value.jumpTo({ center, zoom, bearing, pitch })
+      addDataLayer({ skipZoom: true })
 
-    map.value.once('idle', async () => {
-      if (!map.value.getSource('points-source')) {
-        map.value.jumpTo({ center, zoom, bearing, pitch })
-        addDataLayer({ skipZoom: true })
-      }
+      // Single idle handler: recreate extent circle THEN clear flag
+      // Order matters - we must recreate before clearing the flag
+      map.value.once('idle', () => {
+        // First: recreate the extent circle (while flag is still true)
+        if (recreateClusterExtentCircle) {
+          recreateClusterExtentCircle()
+        }
+
+        // Then: clear the flag AFTER a short delay to let any pending popup close events fire
+        // while the flag is still true (so they're ignored)
+        setTimeout(() => {
+          if (setStyleChanging) {
+            setStyleChanging(false)
+          }
+        }, 100)
+      })
     })
   }
 

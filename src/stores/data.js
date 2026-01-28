@@ -42,7 +42,6 @@ export const useDataStore = defineStore('data', () => {
   const clusteringEnabled = ref(getStorage('app-clustering-enabled', false))
   const clusterSettings = ref(getStorage('app-cluster-settings', {
     radiusPixels: 80,  // Cluster radius in pixels (default 80px)
-    countMode: 'subspecies',  // What clusters count: 'species', 'subspecies', 'individuals'
   }))
 
   // Scatter overlapping points settings
@@ -621,7 +620,9 @@ export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
   
   const filteredGeoJSON = computed(() => {
-    if (!allFeatures.value.length) return null
+    if (!allFeatures.value.length) {
+      return null
+    }
 
     const filtered = allFeatures.value.filter(item => {
       // CAMID Search - supports multiple IDs separated by comma, space, or newline
@@ -968,9 +969,51 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
+   * Group points by genus at each coordinate location (for genera count mode)
+   * Returns Map: "lat,lng" -> { genusKey -> { representative, allPoints, genus } }
+   */
+  const genusGroups = computed(() => {
+    const groups = new Map()
+    const geo = filteredGeoJSON.value
+    if (!geo || !geo.features) return groups
+
+    for (const feature of geo.features) {
+      const [lng, lat] = feature.geometry.coordinates
+      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
+      const props = feature.properties
+      const genus = props.genus || 'Unknown'
+
+      if (!groups.has(coordKey)) {
+        groups.set(coordKey, new Map())
+      }
+
+      const locationGroup = groups.get(coordKey)
+
+      if (!locationGroup.has(genus)) {
+        // First point of this genus - it becomes the representative
+        locationGroup.set(genus, {
+          representative: props,
+          allPoints: [props],
+          genus
+        })
+      } else {
+        // Add to existing genus group
+        const genusGroup = locationGroup.get(genus)
+        genusGroup.allPoints.push(props)
+        // Prefer representative with photo
+        if (props.image_url && !genusGroup.representative.image_url) {
+          genusGroup.representative = props
+        }
+      }
+    }
+
+    return groups
+  })
+
+  /**
    * The GeoJSON to display - handles scatter, clustering count modes, and aggregation
    * When scatter is enabled: shows one point per subspecies at each location with scattered coordinates
-   * When clustering is enabled with species/subspecies count mode: aggregates to one point per taxon per location
+   * When clustering is enabled with species/subspecies/genera count mode: aggregates to one point per taxon per location
    */
   const displayGeoJSON = computed(() => {
     const geo = filteredGeoJSON.value
@@ -1023,82 +1066,11 @@ export const useDataStore = defineStore('data', () => {
       }
     }
 
-    // Clustering mode with aggregation (when scatter is not enabled)
+    // Clustering mode - always pass all points to MapLibre
+    // Filtering was removed because it caused incorrect statistics in cluster popups
+    // (e.g., showing 906 individuals when there were actually 2820)
     if (clusteringEnabled.value) {
-      const countMode = clusterSettings.value.countMode
-
-      // For 'individuals' mode, use all points (default behavior)
-      if (countMode === 'individuals') {
-        return geo
-      }
-
-      // For 'subspecies' mode: aggregate to one point per subspecies per location
-      if (countMode === 'subspecies') {
-        const features = []
-        const seenIds = new Set()
-
-        for (const [coordKey, subspeciesMap] of subspeciesGroups.value) {
-          const [lat, lng] = coordKey.split(',').map(Number)
-
-          for (const [subspeciesKey, data] of subspeciesMap) {
-            const rep = data.representative
-            if (!seenIds.has(rep.id)) {
-              seenIds.add(rep.id)
-              // Find the original feature to maintain structure
-              const origFeature = geo.features.find(f => f.properties.id === rep.id)
-              if (origFeature) {
-                features.push({
-                  ...origFeature,
-                  properties: {
-                    ...origFeature.properties,
-                    _aggregatedCount: data.allPoints.length,
-                    _aggregationType: 'subspecies'
-                  }
-                })
-              }
-            }
-          }
-        }
-
-        return {
-          type: 'FeatureCollection',
-          features
-        }
-      }
-
-      // For 'species' mode: aggregate to one point per species per location
-      if (countMode === 'species') {
-        const features = []
-        const seenIds = new Set()
-
-        for (const [coordKey, speciesMap] of speciesGroups.value) {
-          const [lat, lng] = coordKey.split(',').map(Number)
-
-          for (const [speciesKey, data] of speciesMap) {
-            const rep = data.representative
-            if (!seenIds.has(rep.id)) {
-              seenIds.add(rep.id)
-              // Find the original feature to maintain structure
-              const origFeature = geo.features.find(f => f.properties.id === rep.id)
-              if (origFeature) {
-                features.push({
-                  ...origFeature,
-                  properties: {
-                    ...origFeature.properties,
-                    _aggregatedCount: data.allPoints.length,
-                    _aggregationType: 'species'
-                  }
-                })
-              }
-            }
-          }
-        }
-
-        return {
-          type: 'FeatureCollection',
-          features
-        }
-      }
+      return geo
     }
 
     // Default: return filtered GeoJSON as-is
