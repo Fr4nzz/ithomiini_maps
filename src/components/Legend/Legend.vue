@@ -506,7 +506,6 @@ const effectiveMaxItems = computed(() => {
   }
 
   const est = Math.max(1, Math.floor(available / effectiveItemHeight))
-  console.debug(`[Legend] effectiveMaxItems estimate: ${est} (maxH=${maxLegendHeight.value}, avail=${available}, itemH=${effectiveItemHeight.toFixed(1)})`)
   return est
 })
 
@@ -1453,12 +1452,6 @@ function adjustItemsToFit() {
   // Both cause undershooting. maxH is a stable, reliable ceiling.
   const overflows = scrollH > maxH + 2
 
-  console.debug(
-    `[Legend] adjustItemsToFit: scrollH=${scrollH}, maxH=${maxH}, ` +
-    `items=${effectiveMaxItems.value}, override=${itemLimitOverride.value}, ` +
-    `adjustingUp=${adjustingUp.value}, total=${totalAvailable}, hovered=${isHovered.value}`
-  )
-
   if (overflows) {
     if (adjustingUp.value) {
       // Was trying to add items but it overflowed — revert last increase and stop
@@ -1466,7 +1459,6 @@ function adjustItemsToFit() {
       const revertTo = Math.max(1, (itemLimitOverride.value || 2) - 1)
       itemLimitOverride.value = revertTo
       settledMaxItems.value = revertTo // Remember: this is the max that fits
-      console.debug(`[Legend] Increase overflow. Reverted to ${revertTo}, settled.`)
       return // Don't schedule another check — we know this count fits
     }
     // Normal reduction
@@ -1477,7 +1469,6 @@ function adjustItemsToFit() {
     } else {
       return // Can't reduce further
     }
-    console.debug(`[Legend] Reducing to ${itemLimitOverride.value}`)
     nextTick(() => nextTick(() => adjustItemsToFit()))
   } else {
     // Content fits — try adding more items to fill available space
@@ -1485,20 +1476,17 @@ function adjustItemsToFit() {
 
     // Don't retry increase if we already settled at this count
     if (settledMaxItems.value !== null && currentLimit >= settledMaxItems.value) {
-      console.debug(`[Legend] Already settled at max ${settledMaxItems.value}, skipping increase.`)
       return
     }
 
     if (currentLimit < totalAvailable) {
       adjustingUp.value = true
       itemLimitOverride.value = (itemLimitOverride.value ?? currentLimit) + 1
-      console.debug(`[Legend] Room available. Trying ${itemLimitOverride.value} items`)
       nextTick(() => nextTick(() => adjustItemsToFit()))
     } else {
       // All items fit or at maximum
       adjustingUp.value = false
       settledMaxItems.value = currentLimit
-      console.debug(`[Legend] Settled at ${currentLimit} items (all fit)`)
     }
   }
 }
