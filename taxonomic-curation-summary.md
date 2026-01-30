@@ -166,11 +166,26 @@ Many subspecies represent recently described or undescribed taxa (`n. ssp. [1]`,
 - **Willmott et al. (2020, 2021)** — recent Ithomiini taxonomic revisions
 - **GBIF Backbone Taxonomy** — reference database used for matching
 
+## Literature Review Results
+
+A comprehensive literature review of all flagged names has been completed. See
+**`taxonomic-literature-review.md`** for full details.
+
+### Key Findings
+1. **12 of 16 fuzzy species matches**: Dataset is correct, GBIF is outdated (e.g., *Actinote* not *Altinote*; *Elzunia humboldt* not *humboldtii*; *Heliconius numata* not *numatus*)
+2. **2 spelling corrections needed**: *Lycorea cleobea* → *cleobaea*; *Thyridia aedessa* → *aedesia*
+3. **1 fuzzy false positive**: *Episcada hymen* and *E. hymenaea* are different valid species
+4. **All 14 Hypomenitis species**: Valid — GBIF incorrectly treats the genus as a synonym of *Greta*
+5. **Ollantaya and Pachacutia**: Valid genera despite GBIF DOUBTFUL status
+6. **5 names are subspecies treated as species**: *Hypothyris dionaea*, *H. maenas*, *Hyposcada adelphina*, *H. gallardi*, *Veladyris cytharista*
+7. **Overall**: The dataset (Lamas 2004 / Willmott et al.) is more taxonomically current than the GBIF backbone for Ithomiini
+
 ## Next Steps
 
 ### Immediate (ACTION NEEDED)
-1. **Expert review of 50 fuzzy species matches** — are "Elzunia humboldt", "Episcada hymen", "Hyalenna perasippa" spelling errors or deliberate naming?
-2. **Expert review of 191 species not in GBIF** — are these valid recently described species or data entry errors?
+1. **Apply 2 spelling corrections** — *Lycorea cleobea* → *cleobaea*, *Thyridia aedessa* → *aedesia*
+2. **Flag 5 subspecies-as-species** — *Hypothyris dionaea/maenas*, *Hyposcada adelphina/gallardi*, *Veladyris cytharista*
+3. **Expert review of 9 uncertain names** — See literature review §5.4
 
 ### Future Enhancements
 1. **Apply corrections to map_points.json** — update synonym names to accepted names, fix confirmed spelling errors
