@@ -56,13 +56,16 @@ The legend reduced to showing only **1 item** when it should show as many items 
 2. **`.legend-content` CSS**: Changed `flex: 1` (flex-basis: 0%) to `flex: 1 1 auto` (flex-basis: auto). With flex-basis: 0%, removing explicit height would collapse the container. With flex-basis: auto, the content div starts at its content size, and the container's max-height correctly constrains it. Also removed `max-height: 100%` (redundant) and added `min-height: 0`.
 3. **`adjustItemsToFit()`**: Added container-level overflow check (`legendEl.scrollHeight > maxH`) as fallback, in case `overflow: visible` on the container prevents flex shrinking in some browsers.
 
+### Design goal
+On startup or when filters change legend items, fit as many items as possible without exceeding 75% of map height AND without requiring a scrollbar. If a scrollbar would appear, it means too many items — reduce item count until everything fits without scrolling. The scrollbar is NOT removed — it still appears if the user manually resizes the legend shorter.
+
 ### How it works now
 - Container has `max-height: 75%` but no explicit `height` in auto mode
 - Content div (`flex: 1 1 auto`) starts at its content size
 - If content exceeds max-height, container caps and content div shrinks (flex-shrink: 1)
-- Content div's `overflow-y: auto` creates scrollbar when content > available height
-- `adjustItemsToFit()` correctly detects `scrollH > clientH` and reduces items
+- `adjustItemsToFit()` detects overflow (`scrollH > clientH`) and reduces items until no scrollbar needed
 - When items fit, container shrinks to content (no wasted space)
+- Scrollbar still works if user manually resizes legend shorter
 - Manual resize mode still sets explicit height as before
 
 ## Branch
