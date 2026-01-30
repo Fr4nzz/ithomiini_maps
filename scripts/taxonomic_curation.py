@@ -21,10 +21,11 @@ References:
   - Willmott KR et al. (2020, 2021) Trop Lepid Res
 
 Usage:
-  python scripts/taxonomic_curation.py                  # Full run
-  python scripts/taxonomic_curation.py --test           # Test subset (~50 names)
+  python scripts/taxonomic_curation.py                   # Full run
+  python scripts/taxonomic_curation.py --apply           # Full run + write curated dataset
+  python scripts/taxonomic_curation.py --test            # Test subset (~50 names)
   python scripts/taxonomic_curation.py --test --limit 20
-  python scripts/taxonomic_curation.py --report-only    # Just show data quality
+  python scripts/taxonomic_curation.py --report-only     # Just show data quality
   python scripts/taxonomic_curation.py --rebuild-cache   # Force rebuild GBIF cache
 """
 
@@ -82,6 +83,139 @@ FREE_TEXT_PATTERNS = re.compile(
     r"[?/\(\)]|^f\.\s|^\d+$|WESTERN$|EASTERN$|NORTHERN$|SOUTHERN$",
     re.IGNORECASE,
 )
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# LITERATURE-BASED CORRECTIONS
+# Source: taxonomic-literature-review.md
+# References: Lamas (2004), Willmott et al. (2006, 2007, 2020, 2021),
+#   de-Silva et al. (2010), ICZN Code, Butterflies of America, nymphalidae.net
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Spelling corrections confirmed by literature (dataset has typo)
+SPELLING_CORRECTIONS = {
+    "Lycorea cleobea": "Lycorea cleobaea",     # sic → cleobaea (Godart 1819)
+    "Thyridia aedessa": "Thyridia aedesia",     # aedessa is junior synonym
+}
+
+# Dataset names that are CORRECT — GBIF fuzzy suggestion should be rejected.
+# Key = dataset name (lowered), Value = (gbif_wrong_name, literature_reason)
+DATASET_CORRECT_OVER_GBIF = {
+    "actinote dicaeus": (
+        "Altinote dicaeus",
+        "Altinote is a junior synonym of Actinote (Lamas 2004; molecular phylogenetics)"
+    ),
+    "actinote ozomene": (
+        "Altinote ozomene",
+        "Altinote is a junior synonym of Actinote (Lamas 2004)"
+    ),
+    "elzunia humboldt": (
+        "Elzunia humboldtii",
+        "Original spelling by Latreille (1809); ICZN Art. 32 preserves original"
+    ),
+    "heliconius numata": (
+        "Heliconius numatus",
+        "Noun in apposition (ICZN Art. 31.2.2); all specialist literature uses numata"
+    ),
+    "hyalenna perasippa": (
+        "Hyalenna perasippe",
+        "Willmott & Lamas (2006) revision consistently uses perasippa"
+    ),
+    "hypothyris leprieuri": (
+        "Hypothyris leprieurii",
+        "Lamas (2004) uses single-i leprieuri (original Feisthamel 1835)"
+    ),
+    "ithomia leila": (
+        "Ithomia leilae",
+        "Noun in apposition; Butterflies of America, iNaturalist, nymphalidae.net"
+    ),
+    "patricia oligyrtis": (
+        "Patricia olygyrtis",
+        "olygyrtis is a letter-transposition error in GBIF"
+    ),
+    "episcada hymen": (
+        "Episcada hymenaea",
+        "FALSE POSITIVE: E. hymen (Haensch 1905) and E. hymenaea (Prittwitz 1865) "
+        "are different valid species"
+    ),
+    "hyalyris schlingeri": (
+        "Hyalaris schlingeri",
+        "Correct genus is Hyalyris Boisduval 1870 (with y); Hyalaris is GBIF error"
+    ),
+    "anteros bracteata": (
+        "Anteros bracteatus",
+        "Dataset follows specialist usage; GBIF form is DOUBTFUL"
+    ),
+    "euptychia westwoodi": (
+        "Euptychia westwoodii",
+        "Dataset follows specialist usage; GBIF form is SYNONYM"
+    ),
+    "eurybia nicaeus": (
+        "Eurybia nicaea",
+        "Dataset follows specialist usage; GBIF form is DOUBTFUL"
+    ),
+}
+
+# Names where the dataset uses a species name that is actually a subspecies epithet.
+# Key = dataset scientific_name (lowered), Value = (correct_species, ssp_epithet, source)
+SUBSPECIES_AS_SPECIES = {
+    "hypothyris dionaea": (
+        "Hypothyris lycaste", "dionaea",
+        "funet; Butterflies of America: H. lycaste dionaea (Hewitson 1854)"
+    ),
+    "hypothyris maenas": (
+        "Hypothyris mamercus", "maenas",
+        "funet checklist: H. mamercus maenas"
+    ),
+    "hyposcada adelphina": (
+        "Hyposcada virginiana", "adelphina",
+        "funet; ADW: H. virginiana adelphina (Bates 1866)"
+    ),
+    "hyposcada gallardi": (
+        "Hyposcada anchiala", "gallardi",
+        "funet: H. anchiala gallardi Brevignon 1993"
+    ),
+    "veladyris cytharista": (
+        "Veladyris pardalis", "cytharista",
+        "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+    ),
+}
+
+# Species confirmed valid in literature but absent from GBIF backbone.
+# These get status "verified_literature" instead of "higher_rank_only".
+VALID_SPECIES_NOT_IN_GBIF = {
+    # Hypomenitis — GBIF wrongly synonymizes genus with Greta (Lamas 2004 treats
+    # Hypomenitis Fox 1945 as valid separate genus in Godyridina)
+    "hypomenitis alphesiboea", "hypomenitis depauperata", "hypomenitis dercetis",
+    "hypomenitis enigma", "hypomenitis esula", "hypomenitis gabiglooris",
+    "hypomenitis gardneri", "hypomenitis hermana", "hypomenitis libethris",
+    "hypomenitis lojana", "hypomenitis lydia", "hypomenitis ochretis",
+    "hypomenitis oneidodes", "hypomenitis ortygia", "hypomenitis polissena",
+    # Ollantaya — resurrected by de-Silva et al. (2010), GBIF DOUBTFUL but valid
+    "ollantaya aegineta", "ollantaya canilla", "ollantaya olerioides",
+    # Pachacutia — Willmott & Lamas (2007), GBIF DOUBTFUL but valid
+    "pachacutia baroni", "pachacutia cleomella", "pachacutia germaini",
+    "pachacutia mantura",
+    # Other confirmed Ithomiini species (nymphalidae.net, Butterflies of America)
+    "brevioleria plisthenes", "callicorina pulchra", "callithomia callipero",
+    "episcada doto", "godyris lauta", "godyris sappho", "greta clavijoi",
+    "hyalyris adelinda", "hyalyris mestra", "hyalyris ocna",
+    "hypoleria asellia", "hyposcada dujardini",
+    "hypothyris cantobrica", "hypothyris gemella", "hypothyris xanthostola",
+    "ithomia cleora", "ithomia eleonora", "ithomia jucunda", "ithomia praeithomia",
+    "leucochimona lagora", "melinaea mnemopsis", "melinaea mothone",
+    "melinaea scylax", "napeogenes zurippa", "oleria boyeri",
+    "olyras theon", "ourocnemis renaldus", "pagyris priscilla",
+    "pseudoscada troetschi", "pteronymia alicia", "pteronymia dorothyae",
+    "pteronymia forsteri", "pteronymia peteri", "scada zemira",
+    "tithorea pacifica", "veladyris electrea",
+    # Non-Ithomiini confirmed (Riodinidae, Charaxinae, Pieridae, etc.)
+    "abaeis xantochlora", "actinote hilaris",
+    "chalodeta chaonitis", "chalodeta lypera", "erythia midas",
+    "fountainea nessus", "ithomeis eulema", "ithomiola floralis",
+    "ithomiola orpheus", "lasaia agesilas", "lyropteryx apollonia",
+    "memphis lorna", "memphis offa", "mesenopsis tricolor",
+    "myselasia eustola", "panara phereclus", "pierella brasiliensis",
+}
 
 logging.basicConfig(
     level=logging.INFO,
@@ -681,8 +815,10 @@ def curate_name(name_entry, cache):
     """
     Run the full curation pipeline on a single taxonomic name.
 
+    Phase 0: Apply literature-based corrections (spelling, subspecies-as-species)
     Phase 1: Look up in local cache (zero API calls)
     Phase 2: Targeted API fallback for unresolved names
+    Phase 3: Override GBIF results with literature findings where appropriate
 
     Returns a curation result dict.
     """
@@ -699,10 +835,53 @@ def curate_name(name_entry, cache):
         "subspecies_match": None,
         "accepted_name": None,
         "recognized_subspecies": [],
+        "curated_name": None,       # Final corrected name after all curation
+        "literature_action": None,   # What the literature review determined
         "status": "pending",
         "flags": [],
         "notes": [],
     }
+
+    # ── Phase 0: Literature-based pre-corrections ────────────────────────
+
+    # 0a. Spelling corrections (dataset has a typo, literature confirms correct form)
+    if sci_name in SPELLING_CORRECTIONS:
+        corrected = SPELLING_CORRECTIONS[sci_name]
+        result["flags"].append("SPELLING_CORRECTED")
+        result["notes"].append(
+            f"Spelling correction (literature): '{sci_name}' -> '{corrected}'"
+        )
+        result["literature_action"] = f"spelling_corrected:{corrected}"
+        sci_name = corrected
+        # Update name_entry so downstream steps use the corrected name
+        name_entry = dict(name_entry)
+        name_entry["scientific_name"] = corrected
+        parts = corrected.split()
+        if len(parts) >= 2:
+            name_entry["genus"] = parts[0]
+            name_entry["species_epithet"] = parts[1]
+
+    # 0b. Subspecies-as-species: dataset treats a subspecies epithet as a species
+    ssp_remap = SUBSPECIES_AS_SPECIES.get(sci_name.lower())
+    if ssp_remap:
+        correct_species, ssp_epithet, source = ssp_remap
+        result["flags"].append("SUBSPECIES_AS_SPECIES")
+        result["notes"].append(
+            f"Literature correction: '{sci_name}' is actually a subspecies. "
+            f"Correct name: {correct_species} {ssp_epithet} ({source})"
+        )
+        result["literature_action"] = (
+            f"subspecies_reclassified:{correct_species} {ssp_epithet}"
+        )
+        result["curated_name"] = f"{correct_species} {ssp_epithet}"
+        # Try to match the correct parent species instead
+        sci_name = correct_species
+        name_entry = dict(name_entry)
+        name_entry["scientific_name"] = correct_species
+        parts = correct_species.split()
+        if len(parts) >= 2:
+            name_entry["genus"] = parts[0]
+            name_entry["species_epithet"] = parts[1]
 
     # ── Step 1: Look up binomial in local cache ──────────────────────────
     binomial_lower = sci_name.lower()
@@ -826,9 +1005,25 @@ def curate_name(name_entry, cache):
             return result
 
         if match_type == "HIGHERRANK":
+            matched_rank = species_result.get("rank", "")
+
+            # Check if literature confirms this species as valid
+            if sci_name.lower() in VALID_SPECIES_NOT_IN_GBIF:
+                result["status"] = "verified_literature"
+                result["flags"].append("LITERATURE_VERIFIED")
+                result["notes"].append(
+                    f"'{sci_name}' not in GBIF backbone (matched {matched_rank}) "
+                    f"but VERIFIED in specialist literature "
+                    f"(Lamas 2004 / Willmott et al. / nymphalidae.net)."
+                )
+                result["literature_action"] = (
+                    f"verified_not_in_gbif:{sci_name}"
+                )
+                result["curated_name"] = sci_name
+                return result
+
             result["status"] = "higher_rank_only"
             result["flags"].append("MATCHED_HIGHER_RANK")
-            matched_rank = species_result.get("rank", "")
             result["notes"].append(
                 f"'{sci_name}' matched only at {matched_rank} level. "
                 "The species may not be in the backbone."
@@ -836,12 +1031,31 @@ def curate_name(name_entry, cache):
             return result
 
         if match_type == "FUZZY":
-            result["flags"].append("FUZZY_MATCH")
             matched_name = species_result.get("canonicalName", "")
-            result["notes"].append(
-                f"Fuzzy match: '{sci_name}' -> '{matched_name}' "
-                f"(confidence: {confidence}%). Possible spelling correction."
-            )
+
+            # Check if literature says the dataset name is correct (GBIF is wrong)
+            lit_override = DATASET_CORRECT_OVER_GBIF.get(sci_name.lower())
+            if lit_override:
+                gbif_wrong, reason = lit_override
+                result["flags"].append("GBIF_FUZZY_OVERRIDDEN")
+                result["notes"].append(
+                    f"GBIF suggested fuzzy match '{matched_name}' REJECTED. "
+                    f"Dataset name '{sci_name}' is correct per literature: {reason}"
+                )
+                result["literature_action"] = (
+                    f"dataset_correct_over_gbif:{sci_name}"
+                )
+                result["curated_name"] = sci_name
+                # Override species match to reflect the dataset is correct
+                result["species_match"]["matchType"] = "LITERATURE_VERIFIED"
+                result["species_match"]["literature_override"] = True
+                result["species_match"]["gbif_suggestion_rejected"] = matched_name
+            else:
+                result["flags"].append("FUZZY_MATCH")
+                result["notes"].append(
+                    f"Fuzzy match: '{sci_name}' -> '{matched_name}' "
+                    f"(confidence: {confidence}%). Possible spelling correction."
+                )
 
         if species_result.get("synonym"):
             result["flags"].append("SYNONYM")
@@ -1120,13 +1334,23 @@ def _determine_status(result):
 
     if not flags:
         result["status"] = "verified"
+        _set_curated_name(result)
         return
 
     # Priority ordering for status
-    if "GBIF_API_ERROR" in flags:
+    # Literature corrections take highest priority
+    if "SUBSPECIES_AS_SPECIES" in flags:
+        result["status"] = "corrected_literature"
+    elif "SPELLING_CORRECTED" in flags:
+        result["status"] = "corrected_literature"
+    elif "GBIF_FUZZY_OVERRIDDEN" in flags:
+        result["status"] = "verified_literature"
+    elif "LITERATURE_VERIFIED" in flags:
+        result["status"] = "verified_literature"
+    elif "GBIF_API_ERROR" in flags:
         result["status"] = "api_error"
     elif "SPECIES_NOT_IN_BACKBONE" in flags or "MATCHED_HIGHER_RANK" in flags:
-        result["status"] = "species_unresolved"
+        result["status"] = "higher_rank_only"
     elif "SYNONYM" in flags:
         result["status"] = "synonym_resolved"
     elif "FUZZY_MATCH" in flags:
@@ -1147,6 +1371,52 @@ def _determine_status(result):
         result["status"] = "verified_nominotypical"
     else:
         result["status"] = "verified"
+
+    _set_curated_name(result)
+
+
+def _set_curated_name(result):
+    """
+    Set the curated_name field — the final recommended name after all corrections.
+    Priority: literature_action > accepted_name (synonym resolution) > input name.
+    """
+    # Already set by literature correction
+    if result.get("curated_name"):
+        return
+
+    # Synonym resolution: use the accepted name
+    if result.get("accepted_name") and "SYNONYM" in result.get("flags", []):
+        accepted = result["accepted_name"]
+        ssp = result["input"].get("subspecies")
+        if ssp and result["input"].get("ssp_category") == "standard":
+            result["curated_name"] = (
+                f"{accepted['canonicalName']} {result['input']['ssp_cleaned']}"
+            )
+        else:
+            result["curated_name"] = accepted["canonicalName"]
+        return
+
+    # Spelling correction via GBIF fuzzy (not overridden by literature)
+    if "FUZZY_MATCH" in result.get("flags", []):
+        sm = result.get("species_match")
+        if sm:
+            ssp = result["input"].get("subspecies")
+            if ssp and result["input"].get("ssp_category") == "standard":
+                result["curated_name"] = (
+                    f"{sm['canonicalName']} {result['input']['ssp_cleaned']}"
+                )
+            else:
+                result["curated_name"] = sm["canonicalName"]
+        return
+
+    # Default: input name is correct
+    inp = result["input"]
+    sci = inp.get("scientific_name", "")
+    ssp = inp.get("subspecies")
+    if ssp and inp.get("ssp_category") == "standard":
+        result["curated_name"] = f"{sci} {inp['ssp_cleaned']}"
+    else:
+        result["curated_name"] = sci
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1235,13 +1505,48 @@ def print_curation_summary(results, cache):
                 if "FALSE POSITIVE" in note:
                     print(f"  {note}")
 
+    # Literature-based corrections
+    lit_verified = [r for r in results if r["status"] == "verified_literature"]
+    if lit_verified:
+        print(f"\n--- Literature-Verified ({len(lit_verified)}) ---")
+        gbif_overrides = [r for r in lit_verified if "GBIF_FUZZY_OVERRIDDEN" in r["flags"]]
+        gbif_missing = [r for r in lit_verified if "LITERATURE_VERIFIED" in r["flags"]
+                        and "GBIF_FUZZY_OVERRIDDEN" not in r["flags"]]
+        if gbif_overrides:
+            print(f"  GBIF fuzzy suggestions rejected (dataset correct): {len(gbif_overrides)}")
+            for r in gbif_overrides[:5]:
+                inp = r["input"]["scientific_name"]
+                rejected = r["species_match"].get("gbif_suggestion_rejected", "?")
+                print(f"    {inp:35s} (GBIF wrongly suggested: {rejected})")
+            if len(gbif_overrides) > 5:
+                print(f"    ... and {len(gbif_overrides) - 5} more")
+        if gbif_missing:
+            print(f"  Valid species not in GBIF backbone: {len(gbif_missing)}")
+            for r in gbif_missing[:10]:
+                print(f"    {r['input']['scientific_name']}")
+            if len(gbif_missing) > 10:
+                print(f"    ... and {len(gbif_missing) - 10} more")
+
+    lit_corrected = [r for r in results if r["status"] == "corrected_literature"]
+    if lit_corrected:
+        print(f"\n--- Literature Corrections Applied ({len(lit_corrected)}) ---")
+        for r in lit_corrected[:10]:
+            action = r.get("literature_action", "")
+            inp_name = r["input"]["scientific_name"]
+            curated = r.get("curated_name", "?")
+            print(f"  {inp_name:35s} -> {curated}")
+        if len(lit_corrected) > 10:
+            print(f"  ... and {len(lit_corrected) - 10} more")
+
     not_found = [r for r in results if "SPECIES_NOT_IN_BACKBONE" in r["flags"]]
     if not_found:
         print(f"\n--- Species Not Found in GBIF ({len(not_found)}) ---")
         for r in not_found:
             print(f"  {r['input']['scientific_name']}")
 
-    higher = [r for r in results if "MATCHED_HIGHER_RANK" in r["flags"]]
+    higher = [r for r in results
+              if "MATCHED_HIGHER_RANK" in r["flags"]
+              and r["status"] != "verified_literature"]
     if higher:
         print(f"\n--- Matched Higher Rank Only ({len(higher)}) ---")
         for r in higher[:15]:
@@ -1373,6 +1678,10 @@ def main():
         "--rebuild-cache", action="store_true",
         help="Force rebuild of GBIF taxonomy cache"
     )
+    parser.add_argument(
+        "--apply", action="store_true",
+        help="Apply corrections and write curated map_points.json"
+    )
     args = parser.parse_args()
 
     # Load data
@@ -1432,7 +1741,7 @@ def main():
     # Step 6: Print actionable items
     needs_review = [
         r for r in results
-        if r["status"] in ("species_unresolved", "api_error", "review_spelling")
+        if r["status"] in ("higher_rank_only", "api_error", "review_spelling")
     ]
     if needs_review:
         print("=" * 70)
@@ -1441,6 +1750,197 @@ def main():
         print(f"See full report: {CURATION_REPORT}")
     else:
         print("All names processed. See report for details.")
+
+    # Step 7: Apply corrections if requested
+    if args.apply:
+        apply_corrections(records, results)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# APPLY CORRECTIONS TO DATASET
+# ═══════════════════════════════════════════════════════════════════════════════
+
+CURATED_DATA_FILE = OUTPUT_DIR / "map_points_curated.json"
+CORRECTIONS_LOG_FILE = OUTPUT_DIR / "taxonomic_corrections_applied.json"
+
+
+def apply_corrections(records, results):
+    """
+    Apply all curation corrections to the dataset and write a curated copy.
+
+    Corrections applied:
+    1. Spelling corrections (literature-confirmed)
+    2. Synonym resolution (GBIF accepted names)
+    3. Subspecies-as-species reclassification
+    4. GBIF fuzzy overrides marked (dataset name kept)
+    5. Literature-verified species marked
+
+    Does NOT modify the original map_points.json.
+    Writes to map_points_curated.json with added curation fields.
+    """
+    log.info("Applying corrections to dataset...")
+
+    # Build lookup: (scientific_name, subspecies) -> curation result
+    result_lookup = {}
+    for r in results:
+        inp = r["input"]
+        key = (inp.get("scientific_name", ""), inp.get("subspecies") or "")
+        # Use original input (before corrections) as key
+        # We need to reconstruct the original name if it was corrected
+        original_sci = inp.get("scientific_name", "")
+        # Check if this was spelling-corrected — original is in notes
+        if "SPELLING_CORRECTED" in r.get("flags", []):
+            for note in r.get("notes", []):
+                if "Spelling correction (literature):" in note:
+                    # Extract original from "'original' -> 'corrected'"
+                    parts = note.split("'")
+                    if len(parts) >= 2:
+                        original_sci = parts[1]
+                        break
+        # Check if this was subspecies-as-species — original is in notes
+        if "SUBSPECIES_AS_SPECIES" in r.get("flags", []):
+            for note in r.get("notes", []):
+                if "is actually a subspecies" in note:
+                    parts = note.split("'")
+                    if len(parts) >= 2:
+                        original_sci = parts[1]
+                        break
+        key = (original_sci, inp.get("subspecies") or "")
+        result_lookup[key] = r
+
+    # Apply corrections
+    corrections_log = []
+    curated_records = []
+    stats = Counter()
+
+    for rec in records:
+        curated = dict(rec)  # shallow copy
+        sci_name = rec.get("scientific_name", "")
+        subspecies = rec.get("subspecies") or ""
+        key = (sci_name, subspecies)
+
+        curation = result_lookup.get(key)
+        if not curation:
+            curated["curation_status"] = "not_curated"
+            curated_records.append(curated)
+            stats["not_curated"] += 1
+            continue
+
+        status = curation["status"]
+        curated["curation_status"] = status
+        curated["curated_name"] = curation.get("curated_name", sci_name)
+        curated["literature_action"] = curation.get("literature_action")
+
+        # Apply specific corrections
+        changed = False
+
+        # Spelling corrections
+        if "SPELLING_CORRECTED" in curation.get("flags", []):
+            corrected = SPELLING_CORRECTIONS.get(sci_name)
+            if corrected:
+                parts = corrected.split()
+                curated["scientific_name"] = corrected
+                if len(parts) >= 2:
+                    curated["genus"] = parts[0]
+                    curated["species"] = parts[1]
+                corrections_log.append({
+                    "type": "spelling_correction",
+                    "original": sci_name,
+                    "corrected": corrected,
+                    "subspecies": subspecies,
+                    "source": "literature review",
+                })
+                changed = True
+
+        # Synonym resolution — update scientific_name to accepted name
+        if status == "synonym_resolved" and curation.get("accepted_name"):
+            accepted = curation["accepted_name"]
+            acc_name = accepted.get("canonicalName", "")
+            if acc_name and acc_name != sci_name:
+                parts = acc_name.split()
+                curated["scientific_name_original"] = sci_name
+                curated["scientific_name"] = acc_name
+                if len(parts) >= 2:
+                    curated["genus"] = parts[0]
+                    curated["species"] = parts[1]
+                corrections_log.append({
+                    "type": "synonym_resolution",
+                    "original": sci_name,
+                    "accepted": acc_name,
+                    "subspecies": subspecies,
+                    "source": "GBIF backbone",
+                })
+                changed = True
+
+        # Subspecies-as-species reclassification
+        ssp_remap = SUBSPECIES_AS_SPECIES.get(sci_name.lower())
+        if ssp_remap:
+            correct_species, ssp_epithet, source = ssp_remap
+            parts = correct_species.split()
+            curated["scientific_name_original"] = sci_name
+            curated["scientific_name"] = correct_species
+            if len(parts) >= 2:
+                curated["genus"] = parts[0]
+                curated["species"] = parts[1]
+            # The subspecies from the original record becomes a sub-subspecies
+            # identifier; the species epithet itself was a subspecies
+            if not subspecies:
+                curated["subspecies"] = ssp_epithet
+            corrections_log.append({
+                "type": "subspecies_reclassification",
+                "original_species": sci_name,
+                "correct_species": correct_species,
+                "subspecies_epithet": ssp_epithet,
+                "source": source,
+            })
+            changed = True
+
+        if changed:
+            stats["corrected"] += 1
+        else:
+            stats[status] += 1
+
+        curated_records.append(curated)
+
+    # Write curated dataset
+    with open(CURATED_DATA_FILE, "w") as f:
+        json.dump(curated_records, f, indent=2, default=str)
+
+    # Write corrections log
+    corrections_summary = {
+        "applied_at": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
+        "total_records": len(records),
+        "stats": dict(stats),
+        "total_corrections": len(corrections_log),
+        "corrections": corrections_log,
+        "correction_tables": {
+            "spelling_corrections": SPELLING_CORRECTIONS,
+            "dataset_correct_over_gbif": {
+                k: v[1] for k, v in DATASET_CORRECT_OVER_GBIF.items()
+            },
+            "subspecies_as_species": {
+                k: f"{v[0]} {v[1]}" for k, v in SUBSPECIES_AS_SPECIES.items()
+            },
+            "valid_species_not_in_gbif_count": len(VALID_SPECIES_NOT_IN_GBIF),
+        },
+    }
+    with open(CORRECTIONS_LOG_FILE, "w") as f:
+        json.dump(corrections_summary, f, indent=2, default=str)
+
+    log.info(f"Curated dataset written to {CURATED_DATA_FILE}")
+    log.info(f"Corrections log written to {CORRECTIONS_LOG_FILE}")
+    print(f"\n{'=' * 70}")
+    print(f"CORRECTIONS APPLIED")
+    print(f"{'=' * 70}")
+    print(f"Total records:        {len(records):,}")
+    print(f"Records corrected:    {stats.get('corrected', 0):,}")
+    print(f"Total corrections:    {len(corrections_log)}")
+    print(f"\nCorrection breakdown:")
+    type_counts = Counter(c["type"] for c in corrections_log)
+    for ctype, count in type_counts.most_common():
+        print(f"  {ctype:35s}  {count:,}")
+    print(f"\nOutput: {CURATED_DATA_FILE}")
+    print(f"Log:    {CORRECTIONS_LOG_FILE}")
 
 
 if __name__ == "__main__":
