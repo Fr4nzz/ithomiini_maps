@@ -158,7 +158,7 @@ export const useLegendStore = defineStore('legend', () => {
   const wrapLabels = ref(getStorage('legend-wrap-labels', true))
 
   // Whether to show individual counts per legend item
-  const showCounts = ref(getStorage('legend-show-counts', false))
+  const showCounts = ref(getStorage('legend-show-counts', true))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
@@ -242,7 +242,7 @@ export const useLegendStore = defineStore('legend', () => {
            sortBy.value !== 'alphabetical' ||
            sortOrder.value !== 'asc' ||
            wrapLabels.value !== true ||
-           showCounts.value !== false
+           showCounts.value !== true
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -380,8 +380,8 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-wrap-labels', true)
 
     // Reset show counts
-    showCounts.value = false
-    setStorage('legend-show-counts', false)
+    showCounts.value = true
+    setStorage('legend-show-counts', true)
   }
 
   function resetPosition() {

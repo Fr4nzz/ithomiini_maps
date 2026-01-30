@@ -1,10 +1,10 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { generateSpeciesBorderColors, generateSpeciesBaseHues } from '../../utils/colors'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
-import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown } from 'lucide-vue-next'
+import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
 import LegendResizeHandle from './LegendResizeHandle.vue'
@@ -450,21 +450,28 @@ const maxLegendHeight = computed(() => {
   return Math.floor(containerBounds.value.height * 0.75)
 })
 
-// Calculate how many items can fit in the max height (for non-edit mode, no scrollbar)
-// This dynamically fills the available 75% height without producing a scrollbar.
+// Dynamic item limit — adjusted after render to eliminate scrollbar.
+// Starts with a generous estimate, then post-render adjustment trims if needed.
+const itemLimitOverride = ref(null)
+
 const effectiveMaxItems = computed(() => {
+  if (itemLimitOverride.value !== null) {
+    return itemLimitOverride.value
+  }
+  // Initial estimate: use conservative per-item height
   const fontSizePx = Math.round(14 * legendStore.textScale)
-  // Wrapped labels need more line height for the hanging indent + potential multi-line
-  const itemHeight = legendStore.wrapLabels ? fontSizePx + 14 : fontSizePx + 8
+  // Generous estimate for wrapped text (allows 2-line items)
+  const itemHeight = legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10
   const titleHeight = 32
   const padding = 24
 
   const available = maxLegendHeight.value - titleHeight - padding
-  // For grouped mode, add ~20% overhead for group headers
   const groupOverhead = legendStore.isGrouped ? 1.2 : 1.0
   const effectiveItemHeight = itemHeight * groupOverhead
 
-  return Math.max(1, Math.floor(available / effectiveItemHeight))
+  const est = Math.max(1, Math.floor(available / effectiveItemHeight))
+  console.debug(`[Legend] effectiveMaxItems estimate: ${est} (maxH=${maxLegendHeight.value}, avail=${available}, itemH=${effectiveItemHeight.toFixed(1)})`)
+  return est
 })
 
 // Calculate auto height from content (using effectiveMaxItems)
@@ -946,33 +953,25 @@ function handleApplyDisplayFormatToAll(format) {
   // The format will be applied via computed in groupedLegendData
 }
 
-// Sort dropdown state
-const sortByDropdownOpen = ref(false)
-const sortOrderDropdownOpen = ref(false)
+// Sort dropdown state (single merged dropdown)
+const sortDropdownOpen = ref(false)
 
-function setSortBy(value) {
-  legendStore.setSortBy(value)
-  sortByDropdownOpen.value = false
+function applySortOption(sortBy, sortOrder) {
+  legendStore.setSortBy(sortBy)
+  legendStore.setSortOrder(sortOrder)
+  sortDropdownOpen.value = false
 }
 
-function setSortOrder(value) {
-  legendStore.setSortOrder(value)
-  sortOrderDropdownOpen.value = false
-}
-
-function toggleSortByDropdown() {
-  sortByDropdownOpen.value = !sortByDropdownOpen.value
-  sortOrderDropdownOpen.value = false
-}
-
-function toggleSortOrderDropdown() {
-  sortOrderDropdownOpen.value = !sortOrderDropdownOpen.value
-  sortByDropdownOpen.value = false
+function toggleSortDropdown() {
+  sortDropdownOpen.value = !sortDropdownOpen.value
 }
 
 function closeSortDropdowns() {
-  sortByDropdownOpen.value = false
-  sortOrderDropdownOpen.value = false
+  sortDropdownOpen.value = false
+}
+
+function toggleShowCounts() {
+  legendStore.toggleShowCounts()
 }
 
 // Handle applying prefix format to all species
@@ -1148,6 +1147,11 @@ onMounted(() => {
     }
   }, 150)
 
+  // Initial item-fit adjustment after DOM is ready
+  setTimeout(() => {
+    adjustItemsToFit()
+  }, 300)
+
   // Add window resize listener
   window.addEventListener('resize', handleWindowResize)
 })
@@ -1227,6 +1231,56 @@ watch(autoHeight, (newAutoHeight) => {
   }
 })
 
+// Post-render adjustment: measure actual content height and reduce items if scrollbar appears.
+// Watch sources that indicate the available space or content set changed (NOT legendItems,
+// which depends on effectiveMaxItems, to avoid circular updates).
+watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.sortOrder,
+       () => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts],
+  () => {
+    // Reset override so the estimate recalculates from scratch
+    itemLimitOverride.value = null
+
+    nextTick(() => {
+      nextTick(() => {
+        adjustItemsToFit()
+      })
+    })
+  },
+  { flush: 'post' }
+)
+
+function adjustItemsToFit() {
+  const el = contentRef.value
+  if (!el) return
+
+  const maxH = maxLegendHeight.value
+  const scrollH = el.scrollHeight
+  const clientH = el.clientHeight
+
+  console.debug(
+    `[Legend] adjustItemsToFit: scrollH=${scrollH}, clientH=${clientH}, maxLegendH=${maxH}, ` +
+    `containerH=${containerBounds.value.height}, items=${legendItems.value.filter(i => i.visible).length}, ` +
+    `effectiveMax=${effectiveMaxItems.value}, override=${itemLimitOverride.value}`
+  )
+
+  // If content overflows, reduce items one by one
+  if (scrollH > clientH + 2 && itemLimitOverride.value === null) {
+    // Content overflows — progressively reduce
+    const currentCount = effectiveMaxItems.value
+    const newLimit = Math.max(1, currentCount - 1)
+    console.debug(`[Legend] Overflow detected (scrollH ${scrollH} > clientH ${clientH}). Reducing items from ${currentCount} to ${newLimit}`)
+    itemLimitOverride.value = newLimit
+    // Re-check after next render
+    nextTick(() => nextTick(() => adjustItemsToFit()))
+  } else if (scrollH > clientH + 2 && itemLimitOverride.value !== null && itemLimitOverride.value > 1) {
+    // Still overflows — keep reducing
+    const newLimit = itemLimitOverride.value - 1
+    console.debug(`[Legend] Still overflowing. Reducing to ${newLimit}`)
+    itemLimitOverride.value = newLimit
+    nextTick(() => nextTick(() => adjustItemsToFit()))
+  }
+}
+
 // Watch for container bounds changes (triggered by export mode toggle or other factors)
 // Note: This is a backup - main handling is in handleWindowResize and isExportMode watcher
 watch(containerBounds, (newBounds) => {
@@ -1279,71 +1333,64 @@ watch(isExportMode, (enabled, wasEnabled) => {
       class="legend-content"
       :style="contentMaxHeight ? { maxHeight: contentMaxHeight + 'px' } : {}"
     >
-      <!-- Title with sort controls -->
+      <!-- Title with hover controls (sort dropdown + counts toggle) -->
       <div class="legend-title" @click.stop>
         <span>{{ dataStore.legendTitle }}</span>
-        <span class="title-sort-controls">
-          <!-- Sort By dropdown -->
+        <span v-if="showEditUI || sortDropdownOpen" class="title-hover-controls">
+          <!-- Counts toggle -->
+          <button
+            class="title-control-button"
+            :class="{ active: legendStore.showCounts }"
+            title="Toggle item counts"
+            @click.stop="toggleShowCounts"
+          >
+            <Hash :size="13" />
+          </button>
+          <!-- Sort dropdown -->
           <div class="sort-dropdown-wrapper">
             <button
-              class="sort-icon-button"
-              :title="legendStore.sortBy === 'alphabetical' ? 'Sort by: Alphabetical' : 'Sort by: Abundance'"
-              @click.stop="toggleSortByDropdown"
+              class="title-control-button sort-trigger"
+              :class="{ active: sortDropdownOpen }"
+              title="Sort options"
+              @click.stop="toggleSortDropdown"
             >
-              <ArrowUpAZ v-if="legendStore.sortBy === 'alphabetical'" :size="14" />
-              <ChartBarDecreasing v-else :size="14" />
+              <span class="sort-label">Sort</span>
               <ChevronDown :size="10" class="sort-chevron" />
             </button>
-            <div v-if="sortByDropdownOpen" class="sort-dropdown" @click.stop>
+            <div v-if="sortDropdownOpen" class="sort-dropdown" @click.stop>
+              <div class="sort-dropdown-header">Sort by</div>
               <button
                 class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortBy === 'alphabetical' }"
-                @click="setSortBy('alphabetical')"
+                :class="{ selected: legendStore.sortBy === 'alphabetical' && legendStore.sortOrder === 'asc' }"
+                @click="applySortOption('alphabetical', 'asc')"
               >
                 <ArrowUpAZ :size="14" />
-                <span>Alphabetical</span>
+                <span>A &rarr; Z</span>
               </button>
               <button
                 class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortBy === 'abundance' }"
-                @click="setSortBy('abundance')"
+                :class="{ selected: legendStore.sortBy === 'alphabetical' && legendStore.sortOrder === 'desc' }"
+                @click="applySortOption('alphabetical', 'desc')"
+              >
+                <ArrowDownZA :size="14" />
+                <span>Z &rarr; A</span>
+              </button>
+              <div class="sort-dropdown-divider"></div>
+              <button
+                class="sort-dropdown-item"
+                :class="{ selected: legendStore.sortBy === 'abundance' && legendStore.sortOrder === 'desc' }"
+                @click="applySortOption('abundance', 'desc')"
               >
                 <ChartBarDecreasing :size="14" />
-                <span>Abundance</span>
-              </button>
-            </div>
-          </div>
-          <!-- Sort Order dropdown -->
-          <div class="sort-dropdown-wrapper">
-            <button
-              class="sort-icon-button"
-              :title="legendStore.sortOrder === 'asc' ? 'Order: Ascending' : 'Order: Descending'"
-              @click.stop="toggleSortOrderDropdown"
-            >
-              <ArrowUpAZ v-if="legendStore.sortOrder === 'asc' && legendStore.sortBy === 'alphabetical'" :size="14" />
-              <ArrowDownZA v-else-if="legendStore.sortOrder === 'desc' && legendStore.sortBy === 'alphabetical'" :size="14" />
-              <ChartBarIncreasing v-else-if="legendStore.sortOrder === 'asc'" :size="14" />
-              <ChartBarDecreasing v-else :size="14" />
-              <ChevronDown :size="10" class="sort-chevron" />
-            </button>
-            <div v-if="sortOrderDropdownOpen" class="sort-dropdown" @click.stop>
-              <button
-                class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortOrder === 'asc' }"
-                @click="setSortOrder('asc')"
-              >
-                <ArrowUpAZ v-if="legendStore.sortBy === 'alphabetical'" :size="14" />
-                <ChartBarIncreasing v-else :size="14" />
-                <span>Ascending</span>
+                <span>Most abundant</span>
               </button>
               <button
                 class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortOrder === 'desc' }"
-                @click="setSortOrder('desc')"
+                :class="{ selected: legendStore.sortBy === 'abundance' && legendStore.sortOrder === 'asc' }"
+                @click="applySortOption('abundance', 'asc')"
               >
-                <ArrowDownZA v-if="legendStore.sortBy === 'alphabetical'" :size="14" />
-                <ChartBarDecreasing v-else :size="14" />
-                <span>Descending</span>
+                <ChartBarIncreasing :size="14" />
+                <span>Least abundant</span>
               </button>
             </div>
           </div>
@@ -1550,23 +1597,19 @@ watch(isExportMode, (enabled, wasEnabled) => {
   border-bottom: 1px solid var(--color-border, #3d3d5c);
 }
 
-.title-sort-controls {
+.title-hover-controls {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
   flex-shrink: 0;
 }
 
-.sort-dropdown-wrapper {
-  position: relative;
-}
-
-.sort-icon-button {
+.title-control-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1px;
-  padding: 2px 3px;
+  gap: 2px;
+  padding: 2px 4px;
   background: transparent;
   border: none;
   color: var(--color-text-muted, #666);
@@ -1574,17 +1617,33 @@ watch(isExportMode, (enabled, wasEnabled) => {
   border-radius: 3px;
   transition: all 0.15s ease;
   opacity: 0.6;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
-.sort-icon-button:hover {
+.title-control-button:hover {
   opacity: 1;
   background: var(--color-bg-tertiary, rgba(255,255,255,0.08));
   color: var(--color-text-secondary, #aaa);
 }
 
+.title-control-button.active {
+  opacity: 1;
+  color: var(--color-accent, #4ade80);
+}
+
+.sort-label {
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
 .sort-chevron {
   opacity: 0.5;
-  margin-left: -1px;
+}
+
+.sort-dropdown-wrapper {
+  position: relative;
 }
 
 .sort-dropdown {
@@ -1592,13 +1651,28 @@ watch(isExportMode, (enabled, wasEnabled) => {
   top: 100%;
   right: 0;
   z-index: 50;
-  min-width: 130px;
+  min-width: 150px;
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.98));
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   padding: 4px;
   margin-top: 2px;
+}
+
+.sort-dropdown-header {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted, #666);
+  padding: 4px 10px 2px;
+}
+
+.sort-dropdown-divider {
+  height: 1px;
+  background: var(--color-border, #3d3d5c);
+  margin: 4px 6px;
 }
 
 .sort-dropdown-item {
