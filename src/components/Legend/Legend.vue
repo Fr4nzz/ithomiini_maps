@@ -31,6 +31,7 @@ const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) i
 const contentMaxHeight = ref(null) // Max height for content during hover to prevent growing
 const adjustingUp = ref(false) // Track increase phase in adjustItemsToFit
 const settledMaxItems = ref(null) // Track settled count to prevent re-trying increase
+const adjustedDuringHover = ref(false) // Track if adjustItemsToFit ran while hovered (headers visible)
 
 // Multi-directional resize state
 const resizeDirection = ref(null) // 'n'|'s'|'e'|'w'|'ne'|'nw'|'se'|'sw'
@@ -484,8 +485,12 @@ const effectiveMaxItems = computed(() => {
   // Compute group overhead from actual data instead of fixed multiplier.
   // When grouped, each species gets a header row. If most species have only
   // 1 subspecies (common in abundance sort), overhead approaches 2x, not 1.2x.
+  // Headers are visible either when showHeaders is true OR during hover
+  // (hidden headers become display:flex when hovered).
   let effectiveItemHeight = itemHeight
-  if (legendStore.isGrouped && legendStore.groupingSettings.showHeaders) {
+  const headersVisible = legendStore.isGrouped &&
+    (legendStore.groupingSettings.showHeaders || isHovered.value)
+  if (headersVisible) {
     const allItems = sortedAllItems.value
     const sampleSize = Math.min(20, allItems.length)
     if (sampleSize > 0) {
@@ -616,6 +621,17 @@ function handleMouseLeave() {
   isHovered.value = false
   // Release the height constraint when mouse leaves
   contentMaxHeight.value = null
+
+  // If adjustItemsToFit ran while hovered (with group headers visible),
+  // the item count was reduced to accommodate headers. Now that headers
+  // are hidden again (display:none), re-adjust to fill the freed space.
+  if (adjustedDuringHover.value) {
+    adjustedDuringHover.value = false
+    itemLimitOverride.value = null
+    adjustingUp.value = false
+    settledMaxItems.value = null
+    nextTick(() => nextTick(() => adjustItemsToFit()))
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1402,6 +1418,8 @@ watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.so
     itemLimitOverride.value = null
     adjustingUp.value = false
     settledMaxItems.value = null
+    // Clear hover height lock so adjustment isn't constrained by old layout
+    contentMaxHeight.value = null
 
     nextTick(() => {
       nextTick(() => {
@@ -1415,6 +1433,14 @@ watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.so
 function adjustItemsToFit() {
   const el = contentRef.value
   if (!el) return
+
+  // Track whether this adjustment ran during hover.
+  // When hovered with hidden-header groups, headers are visible (display:flex)
+  // and take up space, reducing the number of items that fit. On unhover,
+  // headers go back to display:none and a re-adjustment is needed.
+  if (isHovered.value) {
+    adjustedDuringHover.value = true
+  }
 
   const maxH = maxLegendHeight.value
   const scrollH = el.scrollHeight
@@ -1430,7 +1456,7 @@ function adjustItemsToFit() {
   console.debug(
     `[Legend] adjustItemsToFit: scrollH=${scrollH}, maxH=${maxH}, ` +
     `items=${effectiveMaxItems.value}, override=${itemLimitOverride.value}, ` +
-    `adjustingUp=${adjustingUp.value}, total=${totalAvailable}`
+    `adjustingUp=${adjustingUp.value}, total=${totalAvailable}, hovered=${isHovered.value}`
   )
 
   if (overflows) {
