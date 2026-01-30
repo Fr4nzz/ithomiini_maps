@@ -30,6 +30,7 @@ const isResizing = ref(false)
 const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
 const contentMaxHeight = ref(null) // Max height for content during hover to prevent growing
 const adjustingUp = ref(false) // Track increase phase in adjustItemsToFit
+const settledMaxItems = ref(null) // Track settled count to prevent re-trying increase
 
 // Multi-directional resize state
 const resizeDirection = ref(null) // 'n'|'s'|'e'|'w'|'ne'|'nw'|'se'|'sw'
@@ -457,9 +458,9 @@ const autoWidth = computed(() => {
   return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
 })
 
-// Max legend height based on container (75% of map height)
+// Max legend height based on container (80% of map height)
 const maxLegendHeight = computed(() => {
-  return Math.floor(containerBounds.value.height * 0.75)
+  return Math.floor(containerBounds.value.height * 0.80)
 })
 
 // Dynamic item limit — adjusted after render to eliminate scrollbar.
@@ -1382,6 +1383,7 @@ watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.so
     // Reset override so the estimate recalculates from scratch
     itemLimitOverride.value = null
     adjustingUp.value = false
+    settledMaxItems.value = null
 
     nextTick(() => {
       nextTick(() => {
@@ -1417,8 +1419,10 @@ function adjustItemsToFit() {
     if (adjustingUp.value) {
       // Was trying to add items but it overflowed — revert last increase and stop
       adjustingUp.value = false
-      itemLimitOverride.value = Math.max(1, (itemLimitOverride.value || 2) - 1)
-      console.debug(`[Legend] Increase overflow. Reverted to ${itemLimitOverride.value}`)
+      const revertTo = Math.max(1, (itemLimitOverride.value || 2) - 1)
+      itemLimitOverride.value = revertTo
+      settledMaxItems.value = revertTo // Remember: this is the max that fits
+      console.debug(`[Legend] Increase overflow. Reverted to ${revertTo}, settled.`)
       return // Don't schedule another check — we know this count fits
     }
     // Normal reduction
@@ -1434,6 +1438,13 @@ function adjustItemsToFit() {
   } else {
     // Content fits — try adding more items to fill available space
     const currentLimit = effectiveMaxItems.value
+
+    // Don't retry increase if we already settled at this count
+    if (settledMaxItems.value !== null && currentLimit >= settledMaxItems.value) {
+      console.debug(`[Legend] Already settled at max ${settledMaxItems.value}, skipping increase.`)
+      return
+    }
+
     if (currentLimit < totalAvailable) {
       adjustingUp.value = true
       itemLimitOverride.value = (itemLimitOverride.value ?? currentLimit) + 1
@@ -1442,7 +1453,8 @@ function adjustItemsToFit() {
     } else {
       // All items fit or at maximum
       adjustingUp.value = false
-      console.debug(`[Legend] Settled at ${currentLimit} items`)
+      settledMaxItems.value = currentLimit
+      console.debug(`[Legend] Settled at ${currentLimit} items (all fit)`)
     }
   }
 }
@@ -1759,7 +1771,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 .legend-container.is-hovered:not(.is-export) {
   border-color: var(--color-accent, #4ade80);
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
-  border-radius: 0 0 8px 8px; /* Remove top corners when toolbar visible */
+  border-radius: 0 0 8px 8px; /* Flat top corners where toolbar connects */
 }
 
 .legend-container.is-dragging {
