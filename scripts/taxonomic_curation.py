@@ -21,14 +21,23 @@ References:
   - Willmott KR et al. (2020, 2021) Trop Lepid Res
 
 Usage:
-  python scripts/taxonomic_curation.py                   # Full run
-  python scripts/taxonomic_curation.py --apply           # Full run + write curated dataset
+  # Curate the app's merged dataset (default)
+  python scripts/taxonomic_curation.py
+  python scripts/taxonomic_curation.py --apply
+
+  # Curate a specific file (CSV, TSV, Excel, or JSON)
+  python scripts/taxonomic_curation.py --input Dore_Ithomiini_records.xlsx
+  python scripts/taxonomic_curation.py --input Dore_Ithomiini_records.xlsx --apply
+  python scripts/taxonomic_curation.py --input my_data.csv --apply
+
+  # Other options
   python scripts/taxonomic_curation.py --test            # Test subset (~50 names)
   python scripts/taxonomic_curation.py --test --limit 20
   python scripts/taxonomic_curation.py --report-only     # Just show data quality
   python scripts/taxonomic_curation.py --rebuild-cache   # Force rebuild GBIF cache
 """
 
+import csv
 import json
 import re
 import sys
@@ -45,11 +54,13 @@ import requests
 # ═══════════════════════════════════════════════════════════════════════════════
 
 PROJECT_ROOT = Path(__file__).parent.parent
+SCRIPTS_DIR = Path(__file__).parent
 DATA_FILE = PROJECT_ROOT / "public" / "data" / "map_points.json"
 OUTPUT_DIR = PROJECT_ROOT / "public" / "data"
 CURATION_REPORT = OUTPUT_DIR / "taxonomic_curation_report.json"
 TAXONOMY_CACHE_FILE = OUTPUT_DIR / "gbif_taxonomy_cache.json"
 TAXON_KEYS_FILE = OUTPUT_DIR / "gbif_taxon_keys.json"
+CORRECTIONS_FILE = SCRIPTS_DIR / "taxonomic_corrections.json"
 
 GBIF_API = "https://api.gbif.org/v1"
 GBIF_MATCH_URL = f"{GBIF_API}/species/match"
@@ -86,136 +97,150 @@ FREE_TEXT_PATTERNS = re.compile(
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # LITERATURE-BASED CORRECTIONS
-# Source: taxonomic-literature-review.md
-# References: Lamas (2004), Willmott et al. (2006, 2007, 2020, 2021),
-#   de-Silva et al. (2010), ICZN Code, Butterflies of America, nymphalidae.net
+# Loaded from external file: scripts/taxonomic_corrections.json
+# See that file for full documentation, references, and contribution guide.
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Spelling corrections confirmed by literature (dataset has typo)
-SPELLING_CORRECTIONS = {
-    "Lycorea cleobea": "Lycorea cleobaea",     # sic → cleobaea (Godart 1819)
-    "Thyridia aedessa": "Thyridia aedesia",     # aedessa is junior synonym
+def _load_corrections(corrections_file=None):
+    """
+    Load taxonomic corrections from the external JSON file.
+
+    Returns (SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF,
+             SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF) dicts/set.
+    """
+    path = corrections_file or CORRECTIONS_FILE
+    if not Path(path).exists():
+        log_msg = f"Corrections file not found: {path}"
+        # Only warn if logging is set up, otherwise print
+        try:
+            log.warning(log_msg)
+        except Exception:
+            print(f"WARNING: {log_msg}", file=sys.stderr)
+        return {}, {}, {}, set()
+
+    with open(path) as f:
+        data = json.load(f)
+
+    # Spelling corrections: {original: corrected}
+    spelling = {}
+    for entry in data.get("spelling_corrections", []):
+        spelling[entry["original"]] = entry["corrected"]
+
+    # Dataset correct over GBIF: {name_lower: (gbif_wrong_name, reason)}
+    overrides = {}
+    for entry in data.get("dataset_correct_over_gbif", []):
+        key = entry["dataset_name"].lower()
+        overrides[key] = (entry["gbif_suggestion"], entry["reason"])
+
+    # Subspecies as species: {name_lower: (correct_species, ssp_epithet, source)}
+    subspecies_remap = {}
+    for entry in data.get("subspecies_as_species", []):
+        key = entry["dataset_name"].lower()
+        subspecies_remap[key] = (
+            entry["correct_species"],
+            entry["subspecies_epithet"],
+            entry["reference"],
+        )
+
+    # Valid species not in GBIF: set of lowered names
+    valid_not_in_gbif = set()
+    gbif_section = data.get("valid_species_not_in_gbif", {})
+    # Genus-level issues
+    for genus_data in gbif_section.get("genus_issues", {}).values():
+        for sp in genus_data.get("species", []):
+            valid_not_in_gbif.add(sp.lower())
+    # Individual species
+    individual = gbif_section.get("individual_species", {})
+    for sp in individual.get("ithomiini", []):
+        valid_not_in_gbif.add(sp.lower())
+    for sp in individual.get("non_ithomiini", []):
+        valid_not_in_gbif.add(sp.lower())
+
+    return spelling, overrides, subspecies_remap, valid_not_in_gbif
+
+
+# Load corrections at module level (used throughout the pipeline)
+SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, SUBSPECIES_AS_SPECIES, \
+    VALID_SPECIES_NOT_IN_GBIF = _load_corrections()
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# COLUMN MAPPING — support different input file formats
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Known column mappings for different data sources.
+# Each maps the source column name to our internal field name.
+COLUMN_PRESETS = {
+    "map_points": {
+        # JSON from process_data.py — already normalized
+        "scientific_name": "scientific_name",
+        "genus": "genus",
+        "species": "species",
+        "subspecies": "subspecies",
+    },
+    "dore_excel": {
+        # Dore_Ithomiini_records.xlsx
+        "Genus": "genus",
+        "Species": "species",
+        "Sub.species": "subspecies",
+        # scientific_name is derived: Genus + Species
+    },
+    "csv_standard": {
+        # Generic CSV with standard column names
+        "scientific_name": "scientific_name",
+        "genus": "genus",
+        "species": "species",
+        "subspecies": "subspecies",
+    },
 }
 
-# Dataset names that are CORRECT — GBIF fuzzy suggestion should be rejected.
-# Key = dataset name (lowered), Value = (gbif_wrong_name, literature_reason)
-DATASET_CORRECT_OVER_GBIF = {
-    "actinote dicaeus": (
-        "Altinote dicaeus",
-        "Altinote is a junior synonym of Actinote (Lamas 2004; molecular phylogenetics)"
-    ),
-    "actinote ozomene": (
-        "Altinote ozomene",
-        "Altinote is a junior synonym of Actinote (Lamas 2004)"
-    ),
-    "elzunia humboldt": (
-        "Elzunia humboldtii",
-        "Original spelling by Latreille (1809); ICZN Art. 32 preserves original"
-    ),
-    "heliconius numata": (
-        "Heliconius numatus",
-        "Noun in apposition (ICZN Art. 31.2.2); all specialist literature uses numata"
-    ),
-    "hyalenna perasippa": (
-        "Hyalenna perasippe",
-        "Willmott & Lamas (2006) revision consistently uses perasippa"
-    ),
-    "hypothyris leprieuri": (
-        "Hypothyris leprieurii",
-        "Lamas (2004) uses single-i leprieuri (original Feisthamel 1835)"
-    ),
-    "ithomia leila": (
-        "Ithomia leilae",
-        "Noun in apposition; Butterflies of America, iNaturalist, nymphalidae.net"
-    ),
-    "patricia oligyrtis": (
-        "Patricia olygyrtis",
-        "olygyrtis is a letter-transposition error in GBIF"
-    ),
-    "episcada hymen": (
-        "Episcada hymenaea",
-        "FALSE POSITIVE: E. hymen (Haensch 1905) and E. hymenaea (Prittwitz 1865) "
-        "are different valid species"
-    ),
-    "hyalyris schlingeri": (
-        "Hyalaris schlingeri",
-        "Correct genus is Hyalyris Boisduval 1870 (with y); Hyalaris is GBIF error"
-    ),
-    "anteros bracteata": (
-        "Anteros bracteatus",
-        "Dataset follows specialist usage; GBIF form is DOUBTFUL"
-    ),
-    "euptychia westwoodi": (
-        "Euptychia westwoodii",
-        "Dataset follows specialist usage; GBIF form is SYNONYM"
-    ),
-    "eurybia nicaeus": (
-        "Eurybia nicaea",
-        "Dataset follows specialist usage; GBIF form is DOUBTFUL"
-    ),
-}
 
-# Names where the dataset uses a species name that is actually a subspecies epithet.
-# Key = dataset scientific_name (lowered), Value = (correct_species, ssp_epithet, source)
-SUBSPECIES_AS_SPECIES = {
-    "hypothyris dionaea": (
-        "Hypothyris lycaste", "dionaea",
-        "funet; Butterflies of America: H. lycaste dionaea (Hewitson 1854)"
-    ),
-    "hypothyris maenas": (
-        "Hypothyris mamercus", "maenas",
-        "funet checklist: H. mamercus maenas"
-    ),
-    "hyposcada adelphina": (
-        "Hyposcada virginiana", "adelphina",
-        "funet; ADW: H. virginiana adelphina (Bates 1866)"
-    ),
-    "hyposcada gallardi": (
-        "Hyposcada anchiala", "gallardi",
-        "funet: H. anchiala gallardi Brevignon 1993"
-    ),
-    "veladyris cytharista": (
-        "Veladyris pardalis", "cytharista",
-        "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
-    ),
-}
+def _detect_column_preset(columns):
+    """Auto-detect column mapping from available column names."""
+    col_set = set(columns)
+    if "Genus" in col_set and "Species" in col_set and "Sub.species" in col_set:
+        return "dore_excel"
+    if "scientific_name" in col_set:
+        return "map_points"
+    if "genus" in col_set and "species" in col_set:
+        return "csv_standard"
+    return None
 
-# Species confirmed valid in literature but absent from GBIF backbone.
-# These get status "verified_literature" instead of "higher_rank_only".
-VALID_SPECIES_NOT_IN_GBIF = {
-    # Hypomenitis — GBIF wrongly synonymizes genus with Greta (Lamas 2004 treats
-    # Hypomenitis Fox 1945 as valid separate genus in Godyridina)
-    "hypomenitis alphesiboea", "hypomenitis depauperata", "hypomenitis dercetis",
-    "hypomenitis enigma", "hypomenitis esula", "hypomenitis gabiglooris",
-    "hypomenitis gardneri", "hypomenitis hermana", "hypomenitis libethris",
-    "hypomenitis lojana", "hypomenitis lydia", "hypomenitis ochretis",
-    "hypomenitis oneidodes", "hypomenitis ortygia", "hypomenitis polissena",
-    # Ollantaya — resurrected by de-Silva et al. (2010), GBIF DOUBTFUL but valid
-    "ollantaya aegineta", "ollantaya canilla", "ollantaya olerioides",
-    # Pachacutia — Willmott & Lamas (2007), GBIF DOUBTFUL but valid
-    "pachacutia baroni", "pachacutia cleomella", "pachacutia germaini",
-    "pachacutia mantura",
-    # Other confirmed Ithomiini species (nymphalidae.net, Butterflies of America)
-    "brevioleria plisthenes", "callicorina pulchra", "callithomia callipero",
-    "episcada doto", "godyris lauta", "godyris sappho", "greta clavijoi",
-    "hyalyris adelinda", "hyalyris mestra", "hyalyris ocna",
-    "hypoleria asellia", "hyposcada dujardini",
-    "hypothyris cantobrica", "hypothyris gemella", "hypothyris xanthostola",
-    "ithomia cleora", "ithomia eleonora", "ithomia jucunda", "ithomia praeithomia",
-    "leucochimona lagora", "melinaea mnemopsis", "melinaea mothone",
-    "melinaea scylax", "napeogenes zurippa", "oleria boyeri",
-    "olyras theon", "ourocnemis renaldus", "pagyris priscilla",
-    "pseudoscada troetschi", "pteronymia alicia", "pteronymia dorothyae",
-    "pteronymia forsteri", "pteronymia peteri", "scada zemira",
-    "tithorea pacifica", "veladyris electrea",
-    # Non-Ithomiini confirmed (Riodinidae, Charaxinae, Pieridae, etc.)
-    "abaeis xantochlora", "actinote hilaris",
-    "chalodeta chaonitis", "chalodeta lypera", "erythia midas",
-    "fountainea nessus", "ithomeis eulema", "ithomiola floralis",
-    "ithomiola orpheus", "lasaia agesilas", "lyropteryx apollonia",
-    "memphis lorna", "memphis offa", "mesenopsis tricolor",
-    "myselasia eustola", "panara phereclus", "pierella brasiliensis",
-}
+
+def _normalize_record(row, preset_name):
+    """
+    Normalize a record from any supported format into our internal format.
+    Returns a dict with: scientific_name, genus, species, subspecies,
+    plus all other columns passed through.
+    """
+    preset = COLUMN_PRESETS[preset_name]
+    out = {}
+
+    # Copy all original columns (pass through extras like lat, lng, country, etc.)
+    for k, v in row.items():
+        out[k] = v
+
+    # Map known columns to internal names
+    genus = str(row.get(next((k for k, v in preset.items() if v == "genus"), "genus"), "")).strip()
+    species_epithet = str(row.get(next((k for k, v in preset.items() if v == "species"), "species"), "")).strip()
+
+    ssp_key = next((k for k, v in preset.items() if v == "subspecies"), None)
+    subspecies_raw = row.get(ssp_key, "") if ssp_key else ""
+    subspecies = str(subspecies_raw).strip() if subspecies_raw and str(subspecies_raw).strip() not in ("nan", "None", "NA", "") else None
+
+    # Build scientific_name if not present
+    sci_key = next((k for k, v in preset.items() if v == "scientific_name"), None)
+    if sci_key and sci_key in row and row[sci_key]:
+        scientific_name = str(row[sci_key]).strip()
+    else:
+        scientific_name = f"{genus} {species_epithet}".strip()
+
+    out["scientific_name"] = scientific_name
+    out["genus"] = genus
+    out["species"] = species_epithet
+    out["subspecies"] = subspecies
+
+    return out
 
 logging.basicConfig(
     level=logging.INFO,
@@ -229,13 +254,81 @@ log = logging.getLogger(__name__)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 
-def load_data():
-    """Load the map_points.json dataset."""
-    log.info(f"Loading data from {DATA_FILE}")
-    with open(DATA_FILE) as f:
-        data = json.load(f)
-    log.info(f"Loaded {len(data):,} records")
-    return data
+def load_data(input_file=None):
+    """
+    Load a dataset from JSON, CSV, TSV, or Excel (.xlsx).
+
+    Auto-detects format from file extension and column preset from headers.
+    Normalizes all records to internal format with: scientific_name, genus,
+    species, subspecies (plus all other columns passed through).
+
+    Args:
+        input_file: Path to input file. If None, uses the default DATA_FILE
+                    (public/data/map_points.json).
+
+    Returns:
+        (records, preset_name, input_path) tuple.
+    """
+    path = Path(input_file) if input_file else DATA_FILE
+    if not path.is_absolute():
+        path = PROJECT_ROOT / path
+
+    log.info(f"Loading data from {path}")
+    ext = path.suffix.lower()
+
+    if ext == ".json":
+        with open(path) as f:
+            raw = json.load(f)
+        if raw:
+            preset = _detect_column_preset(raw[0].keys())
+        else:
+            preset = "map_points"
+        records = [_normalize_record(r, preset) for r in raw]
+
+    elif ext in (".csv", ".tsv"):
+        delimiter = "\t" if ext == ".tsv" else ","
+        with open(path, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f, delimiter=delimiter)
+            raw = list(reader)
+        if raw:
+            preset = _detect_column_preset(raw[0].keys())
+        else:
+            preset = "csv_standard"
+        if not preset:
+            log.error(
+                f"Could not detect column mapping for {path}. "
+                f"Expected columns: genus/Genus + species/Species, or scientific_name. "
+                f"Found: {list(raw[0].keys()) if raw else '(empty)'}"
+            )
+            sys.exit(1)
+        records = [_normalize_record(r, preset) for r in raw]
+
+    elif ext in (".xlsx", ".xls"):
+        try:
+            import pandas as pd
+        except ImportError:
+            log.error("pandas and openpyxl are required to read Excel files. "
+                      "Install with: pip install pandas openpyxl")
+            sys.exit(1)
+        df = pd.read_excel(path)
+        preset = _detect_column_preset(df.columns)
+        if not preset:
+            log.error(
+                f"Could not detect column mapping for {path}. "
+                f"Expected columns: Genus + Species + Sub.species, or scientific_name. "
+                f"Found: {list(df.columns)}"
+            )
+            sys.exit(1)
+        # Convert DataFrame to list of dicts, handling NaN
+        raw = df.where(df.notna(), None).to_dict("records")
+        records = [_normalize_record(r, preset) for r in raw]
+
+    else:
+        log.error(f"Unsupported file format: {ext}. Use .json, .csv, .tsv, or .xlsx")
+        sys.exit(1)
+
+    log.info(f"Loaded {len(records):,} records (format: {preset}, file: {path.name})")
+    return records, preset, path
 
 
 def assess_data_quality(records):
@@ -1663,6 +1756,16 @@ def main():
         description="Taxonomic name curation for Ithomiini dataset"
     )
     parser.add_argument(
+        "--input", "-i", type=str, default=None,
+        help="Input file to curate (CSV, TSV, Excel, or JSON). "
+             "Default: public/data/map_points.json"
+    )
+    parser.add_argument(
+        "--output", "-o", type=str, default=None,
+        help="Output file for curated data. Default: auto-generated from input "
+             "filename (e.g. data.csv -> data_curated.csv)"
+    )
+    parser.add_argument(
         "--test", action="store_true",
         help="Run on a test subset (~50 names) for quick validation"
     )
@@ -1680,12 +1783,26 @@ def main():
     )
     parser.add_argument(
         "--apply", action="store_true",
-        help="Apply corrections and write curated map_points.json"
+        help="Apply corrections and write curated dataset"
+    )
+    parser.add_argument(
+        "--corrections", type=str, default=None,
+        help="Path to custom corrections JSON file. "
+             "Default: scripts/taxonomic_corrections.json"
     )
     args = parser.parse_args()
 
+    # Reload corrections from custom file if specified
+    if args.corrections:
+        global SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, \
+               SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF
+        SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, \
+            SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF = \
+            _load_corrections(args.corrections)
+        log.info(f"Loaded custom corrections from {args.corrections}")
+
     # Load data
-    records = load_data()
+    records, preset, input_path = load_data(args.input)
 
     # Step 1: Data quality assessment
     log.info("Running data quality assessment...")
@@ -1753,7 +1870,8 @@ def main():
 
     # Step 7: Apply corrections if requested
     if args.apply:
-        apply_corrections(records, results)
+        apply_corrections(records, results, input_path=input_path,
+                          output_file=args.output, preset=preset)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1764,7 +1882,8 @@ CURATED_DATA_FILE = OUTPUT_DIR / "map_points_curated.json"
 CORRECTIONS_LOG_FILE = OUTPUT_DIR / "taxonomic_corrections_applied.json"
 
 
-def apply_corrections(records, results):
+def apply_corrections(records, results, input_path=None, output_file=None,
+                      preset=None):
     """
     Apply all curation corrections to the dataset and write a curated copy.
 
@@ -1775,9 +1894,14 @@ def apply_corrections(records, results):
     4. GBIF fuzzy overrides marked (dataset name kept)
     5. Literature-verified species marked
 
-    Writes corrections into map_points.json (in-place) so the app picks
-    them up. Also writes a separate curated copy and corrections log.
+    For the app's map_points.json: writes corrections in-place so the app
+    picks them up. Also writes a separate curated copy and corrections log.
+
+    For external files (CSV, Excel): writes a curated copy next to the
+    original with _curated suffix (or to --output path).
     """
+    is_app_data = (input_path is None or
+                   Path(input_path).resolve() == DATA_FILE.resolve())
     log.info("Applying corrections to dataset...")
 
     # Build lookup: (scientific_name, subspecies) -> curation result
@@ -1902,12 +2026,24 @@ def apply_corrections(records, results):
 
         curated_records.append(curated)
 
+    # ─── Write output ───────────────────────────────────────────────────────
+
+    if is_app_data:
+        # App pipeline: write curated JSON + in-place update + corrections log
+        _write_app_outputs(curated_records, corrections_log, records, stats)
+    else:
+        # External file: write curated copy in same format as input
+        _write_external_output(curated_records, corrections_log, records,
+                               stats, input_path, output_file, preset)
+
+
+def _write_app_outputs(curated_records, corrections_log, records, stats):
+    """Write outputs for the app's map_points.json pipeline."""
     # Write curated dataset (separate copy with curation metadata fields)
     with open(CURATED_DATA_FILE, "w") as f:
         json.dump(curated_records, f, indent=2, default=str)
 
     # Write corrections back into the main map_points.json (in-place)
-    # This updates the app's data source with corrected names.
     # Only modifies scientific_name, genus, species, subspecies fields.
     # Preserves all other fields (lat, lng, source, etc.).
     inplace_records = []
@@ -1924,6 +2060,85 @@ def apply_corrections(records, results):
     log.info(f"Updated {DATA_FILE} in-place with corrections")
 
     # Write corrections log
+    _write_corrections_log(corrections_log, records, stats)
+
+    log.info(f"Curated dataset written to {CURATED_DATA_FILE}")
+    _print_summary(records, corrections_log, stats, CURATED_DATA_FILE)
+
+
+def _write_external_output(curated_records, corrections_log, records,
+                           stats, input_path, output_file, preset):
+    """
+    Write curated output for external files (CSV, TSV, Excel).
+    Adds curation columns alongside original data.
+    """
+    input_path = Path(input_path)
+    ext = input_path.suffix.lower()
+
+    # Determine output path
+    if output_file:
+        out_path = Path(output_file)
+        if not out_path.is_absolute():
+            out_path = PROJECT_ROOT / out_path
+    else:
+        out_path = input_path.parent / f"{input_path.stem}_curated{ext}"
+
+    # Prepare output records — include curation columns for transparency
+    out_records = []
+    for rec in curated_records:
+        out = dict(rec)
+        # Ensure curation columns are present even for uncurated records
+        out.setdefault("curation_status", "not_curated")
+        out.setdefault("scientific_name_original", None)
+        out.setdefault("curated_name", out.get("scientific_name", ""))
+        # Remove internal metadata not useful in output files
+        out.pop("literature_action", None)
+        out_records.append(out)
+
+    if ext == ".json":
+        with open(out_path, "w") as f:
+            json.dump(out_records, f, indent=2, default=str)
+
+    elif ext in (".csv", ".tsv"):
+        if out_records:
+            fieldnames = list(out_records[0].keys())
+            delimiter = "\t" if ext == ".tsv" else ","
+            with open(out_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames,
+                                        delimiter=delimiter)
+                writer.writeheader()
+                writer.writerows(out_records)
+
+    elif ext in (".xlsx", ".xls"):
+        try:
+            import pandas as pd
+        except ImportError:
+            log.error("pandas and openpyxl are required to write Excel files.")
+            # Fall back to CSV
+            csv_path = out_path.with_suffix(".csv")
+            log.info(f"Falling back to CSV: {csv_path}")
+            fieldnames = list(out_records[0].keys()) if out_records else []
+            with open(csv_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(out_records)
+            out_path = csv_path
+        else:
+            df = pd.DataFrame(out_records)
+            df.to_excel(out_path, index=False)
+
+    log.info(f"Curated dataset written to {out_path}")
+
+    # Write corrections log next to the output file
+    log_path = out_path.parent / f"{out_path.stem}_corrections.json"
+    _write_corrections_log(corrections_log, records, stats, log_path)
+
+    _print_summary(records, corrections_log, stats, out_path)
+
+
+def _write_corrections_log(corrections_log, records, stats, log_file=None):
+    """Write corrections log JSON."""
+    out_path = log_file or CORRECTIONS_LOG_FILE
     corrections_summary = {
         "applied_at": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
         "total_records": len(records),
@@ -1941,11 +2156,13 @@ def apply_corrections(records, results):
             "valid_species_not_in_gbif_count": len(VALID_SPECIES_NOT_IN_GBIF),
         },
     }
-    with open(CORRECTIONS_LOG_FILE, "w") as f:
+    with open(out_path, "w") as f:
         json.dump(corrections_summary, f, indent=2, default=str)
+    log.info(f"Corrections log written to {out_path}")
 
-    log.info(f"Curated dataset written to {CURATED_DATA_FILE}")
-    log.info(f"Corrections log written to {CORRECTIONS_LOG_FILE}")
+
+def _print_summary(records, corrections_log, stats, output_path):
+    """Print correction summary to console."""
     print(f"\n{'=' * 70}")
     print(f"CORRECTIONS APPLIED")
     print(f"{'=' * 70}")
@@ -1956,8 +2173,7 @@ def apply_corrections(records, results):
     type_counts = Counter(c["type"] for c in corrections_log)
     for ctype, count in type_counts.most_common():
         print(f"  {ctype:35s}  {count:,}")
-    print(f"\nOutput: {CURATED_DATA_FILE}")
-    print(f"Log:    {CORRECTIONS_LOG_FILE}")
+    print(f"\nOutput: {output_path}")
 
 
 if __name__ == "__main__":

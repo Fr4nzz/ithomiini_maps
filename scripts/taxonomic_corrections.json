@@ -1,0 +1,256 @@
+{
+  "_description": "Manual taxonomic corrections for the Ithomiini dataset. These corrections override GBIF Backbone Taxonomy results where the literature supports a different name. Researchers can review, edit, and extend this file.",
+  "_format_version": "1.0",
+  "_references": [
+    "Lamas G (2004) Checklist: Part 4A, Hesperioidea - Papilionoidea",
+    "Willmott KR & Lamas G (2006) Revision of Hyalenna Forbes (Nymphalidae: Ithomiinae: Oleriina)",
+    "Willmott KR & Lamas G (2007) A revision of Pachacutia de Haas (Nymphalidae: Ithomiinae: Napeogenina)",
+    "Willmott KR et al. (2020, 2021) Tropical Lepidoptera Research",
+    "de-Silva DL et al. (2010) Molecular phylogenetics, Ithomiini",
+    "ICZN International Code of Zoological Nomenclature, 4th ed.",
+    "Butterflies of America (https://www.butterfliesofamerica.com)",
+    "nymphalidae.net (https://www.nymphalidae.net)",
+    "funet.fi Lepidoptera checklist"
+  ],
+  "_how_to_contribute": "To add a new correction, add an entry to the appropriate section below. Each entry includes the original name, the corrected form, and a literature reference justifying the change. Submit a pull request with your additions.",
+
+  "spelling_corrections": [
+    {
+      "original": "Lycorea cleobea",
+      "corrected": "Lycorea cleobaea",
+      "reason": "Correct original spelling by Godart (1819); 'cleobea' is a misspelling",
+      "reference": "Lamas 2004 checklist"
+    },
+    {
+      "original": "Thyridia aedessa",
+      "corrected": "Thyridia aedesia",
+      "reason": "'aedessa' is a junior synonym; correct name is aedesia",
+      "reference": "Lamas 2004 checklist"
+    }
+  ],
+
+  "dataset_correct_over_gbif": [
+    {
+      "dataset_name": "Actinote dicaeus",
+      "gbif_suggestion": "Altinote dicaeus",
+      "reason": "Altinote is a junior synonym of Actinote; molecular phylogenetics confirms synonymy",
+      "reference": "Lamas 2004"
+    },
+    {
+      "dataset_name": "Actinote ozomene",
+      "gbif_suggestion": "Altinote ozomene",
+      "reason": "Altinote is a junior synonym of Actinote",
+      "reference": "Lamas 2004"
+    },
+    {
+      "dataset_name": "Elzunia humboldt",
+      "gbif_suggestion": "Elzunia humboldtii",
+      "reason": "Original spelling by Latreille (1809); ICZN Art. 32 preserves original",
+      "reference": "Latreille 1809; ICZN Art. 32"
+    },
+    {
+      "dataset_name": "Heliconius numata",
+      "gbif_suggestion": "Heliconius numatus",
+      "reason": "Noun in apposition (ICZN Art. 31.2.2); all specialist literature uses 'numata'",
+      "reference": "ICZN Art. 31.2.2; Lamas 2004"
+    },
+    {
+      "dataset_name": "Hyalenna perasippa",
+      "gbif_suggestion": "Hyalenna perasippe",
+      "reason": "Willmott & Lamas (2006) revision consistently uses 'perasippa'",
+      "reference": "Willmott & Lamas 2006"
+    },
+    {
+      "dataset_name": "Hypothyris leprieuri",
+      "gbif_suggestion": "Hypothyris leprieurii",
+      "reason": "Original single-i spelling by Feisthamel (1835); Lamas (2004) uses leprieuri",
+      "reference": "Feisthamel 1835; Lamas 2004"
+    },
+    {
+      "dataset_name": "Ithomia leila",
+      "gbif_suggestion": "Ithomia leilae",
+      "reason": "Noun in apposition; Butterflies of America, iNaturalist, and nymphalidae.net all use 'leila'",
+      "reference": "Butterflies of America; ICZN Art. 31.2.2"
+    },
+    {
+      "dataset_name": "Patricia oligyrtis",
+      "gbif_suggestion": "Patricia olygyrtis",
+      "reason": "'olygyrtis' is a letter-transposition error in GBIF; 'oligyrtis' is correct",
+      "reference": "Lamas 2004; nymphalidae.net"
+    },
+    {
+      "dataset_name": "Episcada hymen",
+      "gbif_suggestion": "Episcada hymenaea",
+      "reason": "FALSE POSITIVE: E. hymen (Haensch 1905) and E. hymenaea (Prittwitz 1865) are different valid species",
+      "reference": "Haensch 1905; Prittwitz 1865"
+    },
+    {
+      "dataset_name": "Hyalyris schlingeri",
+      "gbif_suggestion": "Hyalaris schlingeri",
+      "reason": "Correct genus is Hyalyris Boisduval 1870 (with y); Hyalaris is a GBIF error",
+      "reference": "Boisduval 1870; Lamas 2004"
+    },
+    {
+      "dataset_name": "Anteros bracteata",
+      "gbif_suggestion": "Anteros bracteatus",
+      "reason": "Dataset follows specialist usage; GBIF form is listed as DOUBTFUL",
+      "reference": "Specialist literature"
+    },
+    {
+      "dataset_name": "Euptychia westwoodi",
+      "gbif_suggestion": "Euptychia westwoodii",
+      "reason": "Dataset follows specialist usage; GBIF form is listed as SYNONYM",
+      "reference": "Specialist literature"
+    },
+    {
+      "dataset_name": "Eurybia nicaeus",
+      "gbif_suggestion": "Eurybia nicaea",
+      "reason": "Dataset follows specialist usage; GBIF form is listed as DOUBTFUL",
+      "reference": "Specialist literature"
+    }
+  ],
+
+  "subspecies_as_species": [
+    {
+      "dataset_name": "Hypothyris dionaea",
+      "correct_species": "Hypothyris lycaste",
+      "subspecies_epithet": "dionaea",
+      "reason": "H. lycaste dionaea (Hewitson 1854) — dionaea is a subspecies, not a species",
+      "reference": "funet; Butterflies of America"
+    },
+    {
+      "dataset_name": "Hypothyris maenas",
+      "correct_species": "Hypothyris mamercus",
+      "subspecies_epithet": "maenas",
+      "reason": "H. mamercus maenas — maenas is a subspecies of mamercus",
+      "reference": "funet checklist"
+    },
+    {
+      "dataset_name": "Hyposcada adelphina",
+      "correct_species": "Hyposcada virginiana",
+      "subspecies_epithet": "adelphina",
+      "reason": "H. virginiana adelphina (Bates 1866) — adelphina is a subspecies",
+      "reference": "funet; ADW (Animal Diversity Web)"
+    },
+    {
+      "dataset_name": "Hyposcada gallardi",
+      "correct_species": "Hyposcada anchiala",
+      "subspecies_epithet": "gallardi",
+      "reason": "H. anchiala gallardi Brevignon 1993 — gallardi is a subspecies of anchiala",
+      "reference": "funet"
+    },
+    {
+      "dataset_name": "Veladyris cytharista",
+      "correct_species": "Veladyris pardalis",
+      "subspecies_epithet": "cytharista",
+      "reason": "V. pardalis cytharista (Hewitson 1874) — cytharista is a subspecies",
+      "reference": "funet [NL4A #321d]; Wikipedia"
+    }
+  ],
+
+  "valid_species_not_in_gbif": {
+    "_description": "Species confirmed valid in taxonomic literature but absent or misclassified in the GBIF Backbone Taxonomy. These receive status 'verified_literature' instead of 'higher_rank_only'. Grouped by reason for GBIF absence.",
+    "genus_issues": {
+      "Hypomenitis": {
+        "reason": "GBIF wrongly synonymizes Hypomenitis Fox 1945 with Greta; Lamas (2004) treats Hypomenitis as valid separate genus in subtribe Godyridina",
+        "reference": "Lamas 2004; Fox 1945",
+        "species": [
+          "Hypomenitis alphesiboea",
+          "Hypomenitis depauperata",
+          "Hypomenitis dercetis",
+          "Hypomenitis enigma",
+          "Hypomenitis esula",
+          "Hypomenitis gabiglooris",
+          "Hypomenitis gardneri",
+          "Hypomenitis hermana",
+          "Hypomenitis libethris",
+          "Hypomenitis lojana",
+          "Hypomenitis lydia",
+          "Hypomenitis ochretis",
+          "Hypomenitis oneidodes",
+          "Hypomenitis ortygia",
+          "Hypomenitis polissena"
+        ]
+      },
+      "Ollantaya": {
+        "reason": "Resurrected from synonymy of Hyposcada by de-Silva et al. (2010) molecular phylogenetics; GBIF still lists as DOUBTFUL",
+        "reference": "de-Silva et al. 2010",
+        "species": [
+          "Ollantaya aegineta",
+          "Ollantaya canilla",
+          "Ollantaya olerioides"
+        ]
+      },
+      "Pachacutia": {
+        "reason": "Valid genus revised by Willmott & Lamas (2007); GBIF still lists as DOUBTFUL",
+        "reference": "Willmott & Lamas 2007",
+        "species": [
+          "Pachacutia baroni",
+          "Pachacutia cleomella",
+          "Pachacutia germaini",
+          "Pachacutia mantura"
+        ]
+      }
+    },
+    "individual_species": {
+      "_description": "Species individually confirmed valid in specialist literature but missing from GBIF backbone. Most are recognized on nymphalidae.net and/or Butterflies of America.",
+      "ithomiini": [
+        "Brevioleria plisthenes",
+        "Callicorina pulchra",
+        "Callithomia callipero",
+        "Episcada doto",
+        "Godyris lauta",
+        "Godyris sappho",
+        "Greta clavijoi",
+        "Hyalyris adelinda",
+        "Hyalyris mestra",
+        "Hyalyris ocna",
+        "Hypoleria asellia",
+        "Hyposcada dujardini",
+        "Hypothyris cantobrica",
+        "Hypothyris gemella",
+        "Hypothyris xanthostola",
+        "Ithomia cleora",
+        "Ithomia eleonora",
+        "Ithomia jucunda",
+        "Ithomia praeithomia",
+        "Leucochimona lagora",
+        "Melinaea mnemopsis",
+        "Melinaea mothone",
+        "Melinaea scylax",
+        "Napeogenes zurippa",
+        "Oleria boyeri",
+        "Olyras theon",
+        "Ourocnemis renaldus",
+        "Pagyris priscilla",
+        "Pseudoscada troetschi",
+        "Pteronymia alicia",
+        "Pteronymia dorothyae",
+        "Pteronymia forsteri",
+        "Pteronymia peteri",
+        "Scada zemira",
+        "Tithorea pacifica",
+        "Veladyris electrea"
+      ],
+      "non_ithomiini": [
+        "Abaeis xantochlora",
+        "Actinote hilaris",
+        "Chalodeta chaonitis",
+        "Chalodeta lypera",
+        "Erythia midas",
+        "Fountainea nessus",
+        "Ithomeis eulema",
+        "Ithomiola floralis",
+        "Ithomiola orpheus",
+        "Lasaia agesilas",
+        "Lyropteryx apollonia",
+        "Memphis lorna",
+        "Memphis offa",
+        "Mesenopsis tricolor",
+        "Myselasia eustola",
+        "Panara phereclus",
+        "Pierella brasiliensis"
+      ]
+    }
+  }
+}
