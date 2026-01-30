@@ -1131,6 +1131,20 @@ def curate_name(name_entry, cache):
         }
 
         if match_type == "NONE":
+            # Check Sanger taxonomy before marking as not found
+            if sci_name.lower() in SANGER_VALID_SPECIES:
+                result["status"] = "verified_literature"
+                result["flags"].append("SANGER_TAXONOMY_VERIFIED")
+                result["notes"].append(
+                    f"'{sci_name}' not found in GBIF Backbone "
+                    f"but VERIFIED in Sanger taxonomy."
+                )
+                result["literature_action"] = (
+                    f"sanger_taxonomy_verified:{sci_name}"
+                )
+                result["curated_name"] = sci_name
+                return result
+
             result["status"] = "not_found"
             result["flags"].append("SPECIES_NOT_IN_BACKBONE")
             result["notes"].append(
@@ -1157,6 +1171,21 @@ def curate_name(name_entry, cache):
                 result["curated_name"] = sci_name
                 return result
 
+            # Check Sanger taxonomy — authoritative species list
+            if sci_name.lower() in SANGER_VALID_SPECIES:
+                result["status"] = "verified_literature"
+                result["flags"].append("SANGER_TAXONOMY_VERIFIED")
+                result["notes"].append(
+                    f"'{sci_name}' not in GBIF backbone (matched {matched_rank}) "
+                    f"but VERIFIED in Sanger taxonomy "
+                    f"(Butterflies of America / nymphalidae.net)."
+                )
+                result["literature_action"] = (
+                    f"sanger_taxonomy_verified:{sci_name}"
+                )
+                result["curated_name"] = sci_name
+                return result
+
             result["status"] = "higher_rank_only"
             result["flags"].append("MATCHED_HIGHER_RANK")
             result["notes"].append(
@@ -1168,10 +1197,22 @@ def curate_name(name_entry, cache):
         if match_type == "FUZZY":
             matched_name = species_result.get("canonicalName", "")
 
-            # Check if literature says the dataset name is correct (GBIF is wrong)
-            lit_override = DATASET_CORRECT_OVER_GBIF.get(sci_name.lower())
-            if lit_override:
-                gbif_wrong, reason = lit_override
+            # Check Sanger taxonomy first — most authoritative
+            if sci_name.lower() in SANGER_VALID_SPECIES:
+                result["flags"].append("SANGER_TAXONOMY_VERIFIED")
+                result["notes"].append(
+                    f"GBIF suggested fuzzy match '{matched_name}' REJECTED. "
+                    f"Dataset name '{sci_name}' is correct per Sanger taxonomy."
+                )
+                result["literature_action"] = (
+                    f"sanger_taxonomy_verified:{sci_name}"
+                )
+                result["curated_name"] = sci_name
+                result["species_match"]["matchType"] = "SANGER_VERIFIED"
+                result["species_match"]["gbif_suggestion_rejected"] = matched_name
+            # Fallback: check manual corrections file
+            elif DATASET_CORRECT_OVER_GBIF.get(sci_name.lower()):
+                gbif_wrong, reason = DATASET_CORRECT_OVER_GBIF[sci_name.lower()]
                 result["flags"].append("GBIF_FUZZY_OVERRIDDEN")
                 result["notes"].append(
                     f"GBIF suggested fuzzy match '{matched_name}' REJECTED. "
@@ -1181,7 +1222,6 @@ def curate_name(name_entry, cache):
                     f"dataset_correct_over_gbif:{sci_name}"
                 )
                 result["curated_name"] = sci_name
-                # Override species match to reflect the dataset is correct
                 result["species_match"]["matchType"] = "LITERATURE_VERIFIED"
                 result["species_match"]["literature_override"] = True
                 result["species_match"]["gbif_suggestion_rejected"] = matched_name

@@ -1,21 +1,21 @@
 {
-  "applied_at": "2026-01-30 22:39:17 UTC",
+  "applied_at": "2026-01-30 23:00:35 UTC",
   "total_records": 102561,
   "stats": {
-    "verified_nominotypical": 12372,
-    "subspecies_unresolved": 9778,
-    "undescribed": 2224,
-    "verified": 72852,
-    "corrected": 497,
-    "verified_literature": 1757,
-    "higher_rank_only": 617,
+    "verified_nominotypical": 12405,
+    "subspecies_unresolved": 9845,
+    "undescribed": 2258,
+    "verified": 72917,
+    "corrected": 462,
+    "review_subspecies_spelling": 61,
+    "verified_literature": 1537,
+    "higher_rank_only": 615,
     "synonym_resolved": 1444,
     "not_curated": 731,
     "non_standard_subspecies": 238,
-    "subspecies_synonym": 48,
-    "review_spelling": 3
+    "subspecies_synonym": 48
   },
-  "total_corrections": 1941,
+  "total_corrections": 1906,
   "corrections": [
     {
       "type": "subspecies_typo",
@@ -459,27 +459,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_reclassification",
-      "original_species": "Hyposcada gallardi",
-      "correct_species": "Hyposcada anchiala",
-      "subspecies_epithet": "gallardi",
-      "source": "funet"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hyposcada gallardi",
-      "correct_species": "Hyposcada anchiala",
-      "subspecies_epithet": "gallardi",
-      "source": "funet"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hyposcada gallardi",
-      "correct_species": "Hyposcada anchiala",
-      "subspecies_epithet": "gallardi",
-      "source": "funet"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Hyposcada zarepha",
       "gbif_wanted": "Oleria zarepha",
@@ -667,83 +646,6 @@
       "gbif_wanted": "Oleria zarepha",
       "kept": "Hyposcada zarepha",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris maenas",
-      "correct_species": "Hypothyris mamercus",
-      "subspecies_epithet": "maenas",
-      "source": "funet checklist"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -4923,153 +4825,6 @@
       "gbif_wanted": "Pteronymia linzera alina Haensch, 1909",
       "kept": "Pteronymia alina",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Veladyris cytharista",
-      "correct_species": "Veladyris pardalis",
-      "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_typo",
@@ -13610,29 +13365,12 @@
       "Lycorea cleobea": "Lycorea cleobaea",
       "Thyridia aedessa": "Thyridia aedesia"
     },
-    "dataset_correct_over_gbif": {
-      "actinote dicaeus": "Altinote is a junior synonym of Actinote; molecular phylogenetics confirms synonymy",
-      "actinote ozomene": "Altinote is a junior synonym of Actinote",
-      "elzunia humboldt": "Original spelling by Latreille (1809); ICZN Art. 32 preserves original",
-      "heliconius numata": "Noun in apposition (ICZN Art. 31.2.2); all specialist literature uses 'numata'",
-      "hyalenna perasippa": "Willmott & Lamas (2006) revision consistently uses 'perasippa'",
-      "hypothyris leprieuri": "Original single-i spelling by Feisthamel (1835); Lamas (2004) uses leprieuri",
-      "ithomia leila": "Noun in apposition; Butterflies of America, iNaturalist, and nymphalidae.net all use 'leila'",
-      "patricia oligyrtis": "'olygyrtis' is a letter-transposition error in GBIF; 'oligyrtis' is correct",
-      "episcada hymen": "FALSE POSITIVE: E. hymen (Haensch 1905) and E. hymenaea (Prittwitz 1865) are different valid species",
-      "hyalyris schlingeri": "Correct genus is Hyalyris Boisduval 1870 (with y); Hyalaris is a GBIF error",
-      "anteros bracteata": "Dataset follows specialist usage; GBIF form is listed as DOUBTFUL",
-      "euptychia westwoodi": "Dataset follows specialist usage; GBIF form is listed as SYNONYM",
-      "eurybia nicaeus": "Dataset follows specialist usage; GBIF form is listed as DOUBTFUL"
-    },
+    "dataset_correct_over_gbif": {},
     "subspecies_as_species": {
       "hypothyris dionaea": "Hypothyris lycaste dionaea",
-      "hypothyris maenas": "Hypothyris mamercus maenas",
-      "hyposcada adelphina": "Hyposcada virginiana adelphina",
-      "hyposcada gallardi": "Hyposcada anchiala gallardi",
-      "veladyris cytharista": "Veladyris pardalis cytharista"
+      "hyposcada adelphina": "Hyposcada virginiana adelphina"
     },
-    "valid_species_not_in_gbif_count": 75,
+    "valid_species_not_in_gbif_count": 2,
     "subspecies_typos": {
       "ithomia agnosia angosia": "agnosia",
       "oleria onega jaranilla": "janarilla",
