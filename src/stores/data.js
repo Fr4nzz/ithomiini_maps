@@ -146,7 +146,7 @@ export const useDataStore = defineStore('data', () => {
     try {
       // Determine base path (handles both dev and GitHub Pages)
       const basePath = import.meta.env.BASE_URL || '/'
-      const response = await fetch(`${basePath}data/map_points.json`)
+      const response = await fetch(`${basePath}data/map_points_curated.json`)
 
       if (!response.ok) {
         throw new Error(`Failed to load data: ${response.status} ${response.statusText}`)
