@@ -46,6 +46,7 @@ import argparse
 import logging
 from pathlib import Path
 from collections import Counter
+from difflib import SequenceMatcher
 
 import requests
 
@@ -204,6 +205,119 @@ SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, SUBSPECIES_AS_SPECIES, \
 
 # Load Sanger taxonomy as authoritative species reference
 SANGER_VALID_SPECIES = _load_sanger_taxonomy()
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROGRAMMATIC SUBSPECIES TYPO DETECTION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Thresholds (validated against the full dataset — see prototype analysis)
+_SSP_MAX_RARE_COUNT = 5       # subspecies with count <= this are candidates
+_SSP_MIN_RATIO = 3            # abundant must be >= 3x the rare count
+_SSP_MIN_SIMILARITY = 0.85    # SequenceMatcher ratio threshold
+_SSP_MAX_EDIT_DISTANCE = 1    # Levenshtein distance threshold (OR with similarity)
+
+
+def _levenshtein_distance(s1, s2):
+    """Compute Levenshtein edit distance between two strings."""
+    if len(s1) < len(s2):
+        return _levenshtein_distance(s2, s1)
+    if len(s2) == 0:
+        return len(s1)
+    prev = range(len(s2) + 1)
+    for i, c1 in enumerate(s1):
+        curr = [i + 1]
+        for j, c2 in enumerate(s2):
+            curr.append(min(
+                prev[j + 1] + 1,      # deletion
+                curr[j] + 1,           # insertion
+                prev[j] + (c1 != c2),  # substitution
+            ))
+        prev = curr
+    return prev[-1]
+
+
+def _detect_subspecies_typos(records):
+    """
+    Programmatically detect likely subspecies typos via frequency analysis
+    and string similarity.
+
+    Logic: within each species, rare subspecies names (count <= 5) that are
+    very similar to an abundant name (similarity >= 0.85 OR edit distance <= 1,
+    AND abundant count >= 3x rare count) are flagged as likely typos.
+
+    This catches transpositions (jaranilla/janarilla), missing letters
+    (xantina/xanthina), truncations (zelic/zelie), and single-char errors.
+
+    Returns dict with same structure as SUBSPECIES_TYPOS:
+        {(species_lower, wrong_ssp_lower): (correct_ssp, "auto-detected")}
+    """
+    # Group subspecies counts by species
+    ssp_counts = {}  # {species_lower: Counter({ssp_lower: count})}
+    for rec in records:
+        sci_name = rec.get("scientific_name", "").strip()
+        ssp = (rec.get("subspecies") or "").strip()
+        if not sci_name or not ssp:
+            continue
+
+        # Skip placeholder species
+        parts = sci_name.split()
+        if len(parts) < 2:
+            continue
+        genus, epithet = parts[0], parts[1]
+        if genus in PLACEHOLDER_GENERA or epithet.lower() in PLACEHOLDER_SPECIES:
+            continue
+
+        # Classify subspecies — only consider standard epithets
+        ssp_cat, ssp_cleaned = classify_subspecies(ssp)
+        if ssp_cat != "standard" or not ssp_cleaned:
+            continue
+
+        key = sci_name.lower()
+        if key not in ssp_counts:
+            ssp_counts[key] = Counter()
+        ssp_counts[key][ssp_cleaned] += 1
+
+    # Detect typos: rare names similar to abundant names
+    detected = {}
+    for species, counts in ssp_counts.items():
+        # Separate rare vs abundant
+        rare = [(name, cnt) for name, cnt in counts.items()
+                if cnt <= _SSP_MAX_RARE_COUNT]
+        abundant = [(name, cnt) for name, cnt in counts.items()
+                    if cnt > _SSP_MAX_RARE_COUNT]
+
+        if not rare or not abundant:
+            continue
+
+        for rare_name, rare_cnt in rare:
+            best_match = None
+            best_sim = 0
+
+            for abund_name, abund_cnt in abundant:
+                if rare_name == abund_name:
+                    continue
+                # Check abundance ratio
+                if abund_cnt < _SSP_MIN_RATIO * rare_cnt:
+                    continue
+
+                sim = SequenceMatcher(None, rare_name, abund_name).ratio()
+                edit_dist = _levenshtein_distance(rare_name, abund_name)
+
+                if sim >= _SSP_MIN_SIMILARITY or edit_dist <= _SSP_MAX_EDIT_DISTANCE:
+                    if sim > best_sim:
+                        best_sim = sim
+                        best_match = (abund_name, abund_cnt, sim, edit_dist)
+
+            if best_match:
+                correct_name, abund_cnt, sim, edit_dist = best_match
+                detected[(species, rare_name)] = (
+                    correct_name,
+                    f"auto-detected (sim={sim:.2f}, edit_dist={edit_dist}, "
+                    f"counts: {rare_cnt} vs {abund_cnt})",
+                )
+
+    return detected
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -2017,6 +2131,20 @@ def apply_corrections(records, results, input_path=None, output_file=None,
         key = (original_sci, inp.get("subspecies") or "")
         result_lookup[key] = r
 
+    # Auto-detect subspecies typos from frequency analysis, then merge
+    # with manual overrides (manual entries take priority)
+    auto_ssp_typos = _detect_subspecies_typos(records)
+    merged_ssp_typos = dict(auto_ssp_typos)  # start with auto-detected
+    merged_ssp_typos.update(SUBSPECIES_TYPOS)  # manual overrides win
+    if auto_ssp_typos:
+        auto_only = set(auto_ssp_typos) - set(SUBSPECIES_TYPOS)
+        overlap = set(auto_ssp_typos) & set(SUBSPECIES_TYPOS)
+        log.info(
+            f"Subspecies typo detection: {len(auto_ssp_typos)} auto-detected, "
+            f"{len(SUBSPECIES_TYPOS)} manual, {len(auto_only)} new from auto, "
+            f"{len(overlap)} confirmed by both → {len(merged_ssp_typos)} total"
+        )
+
     # Apply corrections
     corrections_log = []
     curated_records = []
@@ -2116,10 +2244,10 @@ def apply_corrections(records, results, input_path=None, output_file=None,
             })
             changed = True
 
-        # Subspecies typo corrections (from literature-verified corrections file)
+        # Subspecies typo corrections (auto-detected + manual overrides)
         if subspecies and not changed:
             ssp_key = (sci_name.lower(), subspecies.lower())
-            ssp_fix = SUBSPECIES_TYPOS.get(ssp_key)
+            ssp_fix = merged_ssp_typos.get(ssp_key)
             if ssp_fix:
                 correct_ssp, ssp_source = ssp_fix
                 curated["subspecies_original"] = subspecies
@@ -2144,14 +2272,17 @@ def apply_corrections(records, results, input_path=None, output_file=None,
 
     if is_app_data:
         # App pipeline: write curated JSON + in-place update + corrections log
-        _write_app_outputs(curated_records, corrections_log, records, stats)
+        _write_app_outputs(curated_records, corrections_log, records, stats,
+                           merged_ssp_typos)
     else:
         # External file: write curated copy in same format as input
         _write_external_output(curated_records, corrections_log, records,
-                               stats, input_path, output_file, preset)
+                               stats, input_path, output_file, preset,
+                               merged_ssp_typos)
 
 
-def _write_app_outputs(curated_records, corrections_log, records, stats):
+def _write_app_outputs(curated_records, corrections_log, records, stats,
+                       merged_ssp_typos=None):
     """Write outputs for the app's map_points.json pipeline."""
     # Write curated dataset (separate copy with curation metadata fields)
     with open(CURATED_DATA_FILE, "w") as f:
@@ -2174,14 +2305,16 @@ def _write_app_outputs(curated_records, corrections_log, records, stats):
     log.info(f"Updated {DATA_FILE} in-place with corrections")
 
     # Write corrections log
-    _write_corrections_log(corrections_log, records, stats)
+    _write_corrections_log(corrections_log, records, stats,
+                           merged_ssp_typos=merged_ssp_typos)
 
     log.info(f"Curated dataset written to {CURATED_DATA_FILE}")
     _print_summary(records, corrections_log, stats, CURATED_DATA_FILE)
 
 
 def _write_external_output(curated_records, corrections_log, records,
-                           stats, input_path, output_file, preset):
+                           stats, input_path, output_file, preset,
+                           merged_ssp_typos=None):
     """
     Write curated output for external files (CSV, TSV, Excel).
     Adds curation columns alongside original data.
@@ -2245,14 +2378,18 @@ def _write_external_output(curated_records, corrections_log, records,
 
     # Write corrections log next to the output file
     log_path = out_path.parent / f"{out_path.stem}_corrections.json"
-    _write_corrections_log(corrections_log, records, stats, log_path)
+    _write_corrections_log(corrections_log, records, stats, log_path,
+                           merged_ssp_typos=merged_ssp_typos)
 
     _print_summary(records, corrections_log, stats, out_path)
 
 
-def _write_corrections_log(corrections_log, records, stats, log_file=None):
+def _write_corrections_log(corrections_log, records, stats, log_file=None,
+                           merged_ssp_typos=None):
     """Write corrections log JSON."""
     out_path = log_file or CORRECTIONS_LOG_FILE
+    # Use merged typos (auto-detected + manual) if provided, else manual only
+    ssp_typos_to_log = merged_ssp_typos or SUBSPECIES_TYPOS
     corrections_summary = {
         "applied_at": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
         "total_records": len(records),
@@ -2270,8 +2407,10 @@ def _write_corrections_log(corrections_log, records, stats, log_file=None):
             "valid_species_not_in_gbif_count": len(VALID_SPECIES_NOT_IN_GBIF),
             "subspecies_typos": {
                 f"{k[0]} {k[1]}": v[0]
-                for k, v in SUBSPECIES_TYPOS.items()
+                for k, v in ssp_typos_to_log.items()
             },
+            "subspecies_typos_manual_count": len(SUBSPECIES_TYPOS),
+            "subspecies_typos_total_count": len(ssp_typos_to_log),
             "sanger_taxonomy_species_count": len(SANGER_VALID_SPECIES),
         },
     }

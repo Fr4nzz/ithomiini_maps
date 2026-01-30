@@ -1,462 +1,441 @@
 {
-  "applied_at": "2026-01-30 23:00:35 UTC",
+  "applied_at": "2026-01-30 23:20:18 UTC",
   "total_records": 102561,
   "stats": {
-    "verified_nominotypical": 12405,
-    "subspecies_unresolved": 9845,
+    "verified_nominotypical": 12406,
+    "subspecies_unresolved": 9949,
     "undescribed": 2258,
-    "verified": 72917,
-    "corrected": 462,
+    "verified": 73268,
     "review_subspecies_spelling": 61,
-    "verified_literature": 1537,
+    "verified_literature": 1538,
     "higher_rank_only": 615,
     "synonym_resolved": 1444,
     "not_curated": 731,
+    "corrected": 5,
     "non_standard_subspecies": 238,
     "subspecies_synonym": 48
   },
-  "total_corrections": 1906,
+  "total_corrections": 1449,
   "corrections": [
     {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
+      "kept": "Episcada striposis",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
       "type": "subspecies_typo",
-      "species": "Callithomia hezia",
-      "original_subspecies": "phagesina",
-      "corrected_subspecies": "phagesia",
-      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+      "species": "Hypoleria lavinia",
+      "original_subspecies": "vaniliana",
+      "corrected_subspecies": "vanilia",
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 4 vs 24)"
     },
     {
       "type": "subspecies_typo",
-      "species": "Callithomia hezia",
-      "original_subspecies": "phagesina",
-      "corrected_subspecies": "phagesia",
-      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+      "species": "Hypoleria lavinia",
+      "original_subspecies": "vaniliana",
+      "corrected_subspecies": "vanilia",
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 4 vs 24)"
     },
     {
       "type": "subspecies_typo",
-      "species": "Callithomia hezia",
-      "original_subspecies": "phagesina",
-      "corrected_subspecies": "phagesia",
-      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+      "species": "Hypoleria lavinia",
+      "original_subspecies": "vaniliana",
+      "corrected_subspecies": "vanilia",
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 4 vs 24)"
     },
     {
       "type": "subspecies_typo",
-      "species": "Callithomia hezia",
-      "original_subspecies": "phagesina",
-      "corrected_subspecies": "phagesia",
-      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Callithomia hezia",
-      "original_subspecies": "phagesina",
-      "corrected_subspecies": "phagesia",
-      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Callithomia hezia",
-      "original_subspecies": "phagesina",
-      "corrected_subspecies": "phagesia",
-      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Callithomia hezia",
-      "original_subspecies": "phagesina",
-      "corrected_subspecies": "phagesia",
-      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Episcada striposis",
-      "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
-      "kept": "Episcada striposis",
-      "source": "Sanger taxonomy (BoA)"
+      "species": "Hypoleria lavinia",
+      "original_subspecies": "vaniliana",
+      "corrected_subspecies": "vanilia",
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 4 vs 24)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -1220,461 +1199,6 @@
       "gbif_wanted": "Ithomia lagusa hymettia Staudinger, 1885",
       "kept": "Ithomia hymettia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -4827,13 +4351,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Hypomenitis ortygia",
-      "original_subspecies": "pyrczy",
-      "corrected_subspecies": "pyrczi",
-      "source": "nymphalidae.net"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -4944,34 +4461,6 @@
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis mazaeus",
-      "original_subspecies": "proceriformes",
-      "corrected_subspecies": "proceriformis",
-      "source": "funet; Bryk 1953"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis mazaeus",
-      "original_subspecies": "proceriformes",
-      "corrected_subspecies": "proceriformis",
-      "source": "funet; Bryk 1953"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis mazaeus",
-      "original_subspecies": "proceriformes",
-      "corrected_subspecies": "proceriformis",
-      "source": "funet; Bryk 1953"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis mazaeus",
-      "original_subspecies": "proceriformes",
-      "corrected_subspecies": "proceriformis",
-      "source": "funet; Bryk 1953"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -5623,482 +5112,6 @@
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
       "kept": "Episcada striposis",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea ludovica",
-      "original_subspecies": "parayia",
-      "corrected_subspecies": "paraiya",
-      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -6143,20 +5156,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Oleria onega",
-      "original_subspecies": "jaranilla",
-      "corrected_subspecies": "janarilla",
-      "source": "Hewitson 1863; Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Oleria onega",
-      "original_subspecies": "jaranilla",
-      "corrected_subspecies": "janarilla",
-      "source": "Hewitson 1863; Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Methona curvifascia",
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
@@ -6171,20 +5170,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Oleria onega",
-      "original_subspecies": "jaranilla",
-      "corrected_subspecies": "janarilla",
-      "source": "Hewitson 1863; Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Oleria onega",
-      "original_subspecies": "jaranilla",
-      "corrected_subspecies": "janarilla",
-      "source": "Hewitson 1863; Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -6477,13 +5462,6 @@
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Oleria onega",
-      "original_subspecies": "jaranilla",
-      "corrected_subspecies": "janarilla",
-      "source": "Hewitson 1863; Butterflies of America"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -6535,20 +5513,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Oleria onega",
-      "original_subspecies": "jaranilla",
-      "corrected_subspecies": "janarilla",
-      "source": "Hewitson 1863; Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Oleria onega",
-      "original_subspecies": "jaranilla",
-      "corrected_subspecies": "janarilla",
-      "source": "Hewitson 1863; Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Melinaea isocomma",
       "gbif_wanted": "Melinaea maenius isocomma Forbes, 1948",
@@ -6589,13 +5553,6 @@
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
       "kept": "Methona curvifascia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Brevioleria arzalia",
-      "original_subspecies": "lorenia",
-      "corrected_subspecies": "loronia",
-      "source": "nymphalidae.net"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -6829,13 +5786,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Eutresis hypereia",
-      "original_subspecies": "banosa",
-      "corrected_subspecies": "banosana",
-      "source": "Hewitson 1869; Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -6855,13 +5805,6 @@
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Ithomia agnosia",
-      "original_subspecies": "angosia",
-      "corrected_subspecies": "agnosia",
-      "source": "GBIF; Butterflies of America"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -7345,6 +6288,13 @@
       "gbif_wanted": "Dynamine mylitta",
       "kept": "Dynamine postverta",
       "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "berolla",
+      "corrected_subspecies": "beronilla",
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 1 vs 41)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -8236,13 +7186,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Callithomia lenea",
-      "original_subspecies": "zelic",
-      "corrected_subspecies": "zelie",
-      "source": "Gu\u00e9rin-M\u00e9neville 1844; Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Methona curvifascia",
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
@@ -8474,13 +7417,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Callithomia lenea",
-      "original_subspecies": "metonella",
-      "corrected_subspecies": "methonella",
-      "source": "Hewitson 1860; Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Philaethria wernickei",
       "gbif_wanted": "Philaethria dido wernickei",
@@ -8537,48 +7473,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Lycorea halia",
       "gbif_wanted": "Lycorea cleobaea halia",
@@ -8593,39 +7487,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Scada zibia",
-      "original_subspecies": "xantina",
-      "corrected_subspecies": "xanthina",
-      "source": "H. Bates 1866; Butterflies of America; BAMONA"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea mnasias",
-      "original_subspecies": "erastosthenes",
-      "corrected_subspecies": "eratosthenes",
-      "source": "Lamas 2004"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Lycorea halia",
       "gbif_wanted": "Lycorea cleobaea halia",
       "kept": "Lycorea halia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Melinaea mnasias",
-      "original_subspecies": "eurastosthenes",
-      "corrected_subspecies": "eratosthenes",
-      "source": "Lamas 2004"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -8635,39 +7501,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Greta championi",
-      "accepted": "Greta annette championi Lamas, 1978",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia melantho",
-      "accepted": "Thyridia psidii melantho Bates, 1866",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Napeogenes amara",
-      "accepted": "Napeogenes tolosa amara Godman, 1899",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Pteronymia alina",
       "gbif_wanted": "Pteronymia linzera alina Haensch, 1909",
       "kept": "Pteronymia alina",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Greta championi",
-      "accepted": "Greta annette championi Lamas, 1978",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -8789,97 +7627,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Hyposcada napirida",
-      "accepted": "Hyposcada illinissa",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hyposcada napirida",
-      "accepted": "Hyposcada illinissa",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona mystica",
-      "accepted": "Methona megisto",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona mystica",
-      "accepted": "Methona megisto",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -8927,13 +7674,6 @@
       "gbif_wanted": "Melinaea maenius isocomma Forbes, 1948",
       "kept": "Melinaea isocomma",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -8971,13 +7711,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -8990,20 +7723,6 @@
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9041,53 +7760,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis macrinus",
-      "accepted": "Mechanitis lysimnia macrinus Hewitson, 1860",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9146,102 +7823,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria famina",
-      "accepted": "Hypoleria oriana famina Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria famina",
-      "accepted": "Hypoleria oriana famina Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9265,60 +7851,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria famina",
-      "accepted": "Hypoleria oriana famina Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9356,11 +7893,25 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9384,13 +7935,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Hypothyris occulta",
-      "accepted": "Hypothyris semifulva",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -9398,18 +7942,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9433,27 +7970,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria famina",
-      "accepted": "Hypoleria oriana famina Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -9461,39 +7977,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Napeogenes pyrrho",
-      "accepted": "Napeogenes aethra",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Ithomia diaphana",
-      "accepted": "Ithomia ardea",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hyposcada adelphina",
-      "correct_species": "Hyposcada virginiana",
-      "subspecies_epithet": "adelphina",
-      "source": "funet; ADW (Animal Diversity Web)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona mystica",
-      "accepted": "Methona megisto",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9501,97 +7989,6 @@
       "gbif_wanted": "Patricia olygyrtis",
       "kept": "Patricia demylus",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis nessaea",
-      "accepted": "Mechanitis lysimnia",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Napeogenes sulphurina",
-      "accepted": "Napeogenes inachia sulphurina Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris completa",
-      "accepted": "Hypothyris noinonia completa Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis nessaea",
-      "accepted": "Mechanitis lysimnia",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Napeogenes sulphurina",
-      "accepted": "Napeogenes inachia sulphurina Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria famina",
-      "accepted": "Hypoleria oriana famina Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9615,179 +8012,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Callithomia butes",
-      "accepted": "Callithomia alexirrhoe butes Godman & Salvin, 1898",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Methona curvifascia",
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
       "kept": "Methona curvifascia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9797,13 +8026,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Napeogenes gracilis",
       "gbif_wanted": "Napeogenes cyrianassa gracilis Haensch, 1905",
@@ -9811,32 +8033,291 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+      "type": "sanger_taxonomy_override",
+      "original": "Patricia demylus",
+      "gbif_wanted": "Patricia olygyrtis",
+      "kept": "Patricia demylus",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Oleria victorine",
-      "original_subspecies": "graciella",
-      "corrected_subspecies": "graziella",
-      "source": "Haensch 1905; nymphalidae.net"
+      "type": "sanger_taxonomy_override",
+      "original": "Methona curvifascia",
+      "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
+      "kept": "Methona curvifascia",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Melinaea isocomma",
+      "gbif_wanted": "Melinaea maenius isocomma Forbes, 1948",
+      "kept": "Melinaea isocomma",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9846,375 +8327,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Dircenna lonera",
-      "accepted": "Dircenna relata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Methona curvifascia",
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
       "kept": "Methona curvifascia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria famina",
-      "accepted": "Hypoleria oriana famina Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Melinaea isocomma",
-      "gbif_wanted": "Melinaea maenius isocomma Forbes, 1948",
-      "kept": "Melinaea isocomma",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia huamba",
-      "accepted": "Pteronymia veia huamba Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia huamba",
-      "accepted": "Pteronymia veia huamba Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia huamba",
-      "accepted": "Pteronymia veia huamba Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Patricia demylus",
-      "gbif_wanted": "Patricia olygyrtis",
-      "kept": "Patricia demylus",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Methona curvifascia",
-      "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
-      "kept": "Methona curvifascia",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -10238,55 +8355,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia aetta",
-      "accepted": "Pteronymia aletta",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -10931,46 +8999,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Mechanitis utemaia",
-      "accepted": "Mechanitis polymnia",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -10980,95 +9013,25 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Hypoleria riffarthi",
-      "accepted": "Hypoleria mirza riffarthi Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia nigricans",
-      "accepted": "Pteronymia latilla",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -11127,564 +9090,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alope",
-      "accepted": "Pteronymia obsurata",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Mechanitis messenoides",
-      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "kept": "Mechanitis messenoides",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria riffarthi",
-      "accepted": "Hypoleria mirza riffarthi Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia ceto",
-      "accepted": "Thyridia psidii",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria riffarthi",
-      "accepted": "Hypoleria mirza riffarthi Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria karschi",
-      "accepted": "Hypoleria cidonia karschi Haensch, 1903",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria riffarthi",
-      "accepted": "Hypoleria mirza riffarthi Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria riffarthi",
-      "accepted": "Hypoleria mirza riffarthi Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypoleria riffarthi",
-      "accepted": "Hypoleria mirza riffarthi Haensch, 1905",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe Bates, 1862",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -11785,11 +9195,25 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Melinaea crameri",
-      "accepted": "Melinaea ludovica crameri Godman & Salvin, 1898",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Mechanitis messenoides",
+      "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "kept": "Mechanitis messenoides",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -11804,27 +9228,6 @@
       "gbif_wanted": "Melinaea maenius isocomma Forbes, 1948",
       "kept": "Melinaea isocomma",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -11841,13 +9244,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -11881,20 +9277,6 @@
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
       "kept": "Methona curvifascia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -11909,20 +9291,6 @@
       "gbif_wanted": "Pteronymia linzera alina Haensch, 1909",
       "kept": "Pteronymia alina",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -11981,39 +9349,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12035,20 +9375,6 @@
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
       "kept": "Methona curvifascia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12100,13 +9426,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Episcada striposis",
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
@@ -12114,25 +9433,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Episcada striposis",
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
       "kept": "Episcada striposis",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12177,20 +9482,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -12203,13 +9494,6 @@
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
       "kept": "Episcada striposis",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12273,27 +9557,6 @@
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
       "kept": "Episcada striposis",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12324,20 +9587,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Methona curvifascia",
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
@@ -12373,13 +9622,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Methona curvifascia",
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
@@ -12399,13 +9641,6 @@
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12457,32 +9692,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12506,13 +9720,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Episcada striposis",
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
@@ -12527,25 +9734,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12581,13 +9774,6 @@
       "gbif_wanted": "Methona confusa curvifascia Weymer, 1884",
       "kept": "Methona curvifascia",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12632,13 +9818,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -12667,13 +9846,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Episcada striposis",
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
@@ -12716,20 +9888,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Episcada striposis",
       "gbif_wanted": "Episcada clausina striposis Haensch, 1909",
@@ -12765,25 +9923,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Mechanitis messenoides",
       "gbif_wanted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "kept": "Mechanitis messenoides",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12863,13 +10007,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Melinaea isocomma",
       "gbif_wanted": "Melinaea maenius isocomma Forbes, 1948",
@@ -12877,116 +10014,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis lysimnia",
-      "original_subspecies": "neseaea",
-      "corrected_subspecies": "nesaea",
-      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Ithomia cotytto",
-      "accepted": "Ithomia patilla",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_reclassification",
-      "original_species": "Hypothyris dionaea",
-      "correct_species": "Hypothyris lycaste",
-      "subspecies_epithet": "dionaea",
-      "source": "funet; Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis lycidice",
-      "accepted": "Mechanitis polymnia lycidice Bates, 1864",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis caloifornica",
-      "accepted": "Mechanitis polymnia",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis utemaia",
-      "accepted": "Mechanitis polymnia",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis caloifornica",
-      "accepted": "Mechanitis polymnia",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia huamba",
-      "accepted": "Pteronymia veia huamba Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Melinaea isocomma",
       "gbif_wanted": "Melinaea maenius isocomma Forbes, 1948",
       "kept": "Melinaea isocomma",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia huamba",
-      "accepted": "Pteronymia veia huamba Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -13017,20 +10049,6 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Thyridia aedesia",
-      "accepted": "Thyridia psidii aedesia Doubleday, 1847",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Pteronymia huamba",
-      "accepted": "Pteronymia veia huamba Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Patricia demylus",
       "gbif_wanted": "Patricia olygyrtis",
@@ -13038,95 +10056,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+      "type": "sanger_taxonomy_override",
+      "original": "Napeogenes sodalis",
+      "gbif_wanted": "Napeogenes verticilla",
+      "kept": "Napeogenes sodalis",
+      "source": "Sanger taxonomy (BoA)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -13136,123 +10070,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
       "type": "sanger_taxonomy_override",
       "original": "Napeogenes sodalis",
       "gbif_wanted": "Napeogenes verticilla",
       "kept": "Napeogenes sodalis",
       "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Napeogenes sodalis",
-      "gbif_wanted": "Napeogenes verticilla",
-      "kept": "Napeogenes sodalis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "sanger_taxonomy_override",
-      "original": "Napeogenes sodalis",
-      "gbif_wanted": "Napeogenes verticilla",
-      "kept": "Napeogenes sodalis",
-      "source": "Sanger taxonomy (BoA)"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -13332,32 +10154,11 @@
       "source": "Sanger taxonomy (BoA)"
     },
     {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "subspecies_typo",
-      "species": "Mechanitis polymnia",
-      "original_subspecies": "doryssides",
-      "corrected_subspecies": "dorissides",
-      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Hypothyris ninyas",
-      "accepted": "Hypothyris leprieurii ninyas d'Almeida, 1945",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "sanger_taxonomy_override",
+      "original": "Napeogenes sodalis",
+      "gbif_wanted": "Napeogenes verticilla",
+      "kept": "Napeogenes sodalis",
+      "source": "Sanger taxonomy (BoA)"
     }
   ],
   "correction_tables": {
@@ -13372,23 +10173,17 @@
     },
     "valid_species_not_in_gbif_count": 2,
     "subspecies_typos": {
-      "ithomia agnosia angosia": "agnosia",
+      "callithomia hezia berolla": "beronilla",
+      "hypoleria lavinia vaniliana": "vanilia",
       "oleria onega jaranilla": "janarilla",
-      "mechanitis mazaeus proceriformes": "proceriformis",
       "scada zibia xantina": "xanthina",
       "mechanitis polymnia doryssides": "dorissides",
       "melinaea ludovica parayia": "paraiya",
       "mechanitis lysimnia neseaea": "nesaea",
-      "callithomia hezia phagesina": "phagesia",
-      "callithomia lenea metonella": "methonella",
-      "callithomia lenea zelic": "zelie",
-      "oleria victorine graciella": "graziella",
-      "eutresis hypereia banosa": "banosana",
-      "melinaea mnasias erastosthenes": "eratosthenes",
-      "melinaea mnasias eurastosthenes": "eratosthenes",
-      "brevioleria arzalia lorenia": "loronia",
-      "hypomenitis ortygia pyrczy": "pyrczi"
+      "callithomia hezia phagesina": "phagesia"
     },
+    "subspecies_typos_manual_count": 6,
+    "subspecies_typos_total_count": 8,
     "sanger_taxonomy_species_count": 9647
   }
 }
