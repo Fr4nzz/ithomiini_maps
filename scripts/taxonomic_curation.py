@@ -61,6 +61,7 @@ CURATION_REPORT = OUTPUT_DIR / "taxonomic_curation_report.json"
 TAXONOMY_CACHE_FILE = OUTPUT_DIR / "gbif_taxonomy_cache.json"
 TAXON_KEYS_FILE = OUTPUT_DIR / "gbif_taxon_keys.json"
 CORRECTIONS_FILE = SCRIPTS_DIR / "taxonomic_corrections.json"
+SANGER_TAXONOMY_FILE = OUTPUT_DIR / "sanger_taxonomy.csv"
 
 GBIF_API = "https://api.gbif.org/v1"
 GBIF_MATCH_URL = f"{GBIF_API}/species/match"
@@ -164,9 +165,45 @@ def _load_corrections(corrections_file=None):
     return spelling, overrides, subspecies_remap, valid_not_in_gbif, ssp_typos
 
 
+def _load_sanger_taxonomy(taxonomy_file=None):
+    """
+    Load the authoritative Sanger taxonomy reference.
+
+    Returns a set of lowered species names that the Sanger/BoA taxonomy
+    considers valid. When a species name is in this set, GBIF synonym
+    resolutions are skipped (the dataset name is kept).
+    """
+    import csv
+
+    path = taxonomy_file or SANGER_TAXONOMY_FILE
+    if not Path(path).exists():
+        try:
+            log.info(f"Sanger taxonomy file not found: {path} — GBIF synonyms will not be overridden")
+        except Exception:
+            pass
+        return set()
+
+    valid = set()
+    with open(path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if row.get("taxon_rank") == "species":
+                name = row.get("species", "").strip()
+                if name:
+                    valid.add(name.lower())
+    try:
+        log.info(f"Sanger taxonomy loaded: {len(valid)} valid species")
+    except Exception:
+        pass
+    return valid
+
+
 # Load corrections at module level (used throughout the pipeline)
 SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, SUBSPECIES_AS_SPECIES, \
     VALID_SPECIES_NOT_IN_GBIF, SUBSPECIES_TYPOS = _load_corrections()
+
+# Load Sanger taxonomy as authoritative species reference
+SANGER_VALID_SPECIES = _load_sanger_taxonomy()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1801,10 +1838,12 @@ def main():
     if args.corrections:
         global SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, \
                SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF, \
-               SUBSPECIES_TYPOS
+               SUBSPECIES_TYPOS, SANGER_VALID_SPECIES
         SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, \
             SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF, \
             SUBSPECIES_TYPOS = _load_corrections(args.corrections)
+        # Reload Sanger taxonomy (uses default path unless overridden)
+        SANGER_VALID_SPECIES = _load_sanger_taxonomy()
         log.info(f"Loaded custom corrections from {args.corrections}")
 
     # Load data
@@ -1983,24 +2022,36 @@ def apply_corrections(records, results, input_path=None, output_file=None,
                 changed = True
 
         # Synonym resolution — update scientific_name to accepted name
+        # BUT: skip if the Sanger taxonomy considers the original name valid
         if status == "synonym_resolved" and curation.get("accepted_name"):
             accepted = curation["accepted_name"]
             acc_name = accepted.get("canonicalName", "")
             if acc_name and acc_name != sci_name:
-                parts = acc_name.split()
-                curated["scientific_name_original"] = sci_name
-                curated["scientific_name"] = acc_name
-                if len(parts) >= 2:
-                    curated["genus"] = parts[0]
-                    curated["species"] = parts[1]
-                corrections_log.append({
-                    "type": "synonym_resolution",
-                    "original": sci_name,
-                    "accepted": acc_name,
-                    "subspecies": subspecies,
-                    "source": "GBIF backbone",
-                })
-                changed = True
+                if sci_name.lower() in SANGER_VALID_SPECIES:
+                    # Sanger taxonomy overrides GBIF — keep the dataset name
+                    corrections_log.append({
+                        "type": "sanger_taxonomy_override",
+                        "original": sci_name,
+                        "gbif_wanted": acc_name,
+                        "kept": sci_name,
+                        "source": "Sanger taxonomy (BoA)",
+                    })
+                    # Don't change the name — mark as not corrected
+                else:
+                    parts = acc_name.split()
+                    curated["scientific_name_original"] = sci_name
+                    curated["scientific_name"] = acc_name
+                    if len(parts) >= 2:
+                        curated["genus"] = parts[0]
+                        curated["species"] = parts[1]
+                    corrections_log.append({
+                        "type": "synonym_resolution",
+                        "original": sci_name,
+                        "accepted": acc_name,
+                        "subspecies": subspecies,
+                        "source": "GBIF backbone",
+                    })
+                    changed = True
 
         # Subspecies-as-species reclassification
         ssp_remap = SUBSPECIES_AS_SPECIES.get(sci_name.lower())
@@ -2181,6 +2232,7 @@ def _write_corrections_log(corrections_log, records, stats, log_file=None):
                 f"{k[0]} {k[1]}": v[0]
                 for k, v in SUBSPECIES_TYPOS.items()
             },
+            "sanger_taxonomy_species_count": len(SANGER_VALID_SPECIES),
         },
     }
     with open(out_path, "w") as f:

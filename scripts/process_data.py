@@ -33,7 +33,8 @@ LOCAL_EXCEL_PATH = "Dore_Ithomiini_records.xlsx"
 GOOGLE_SHEET_ID = "1QZj6YgHAJ9NmFXFPCtu-i-1NDuDmAdMF2Wogts7S2_4"
 SHEET_GIDS = {
     "Collection_data": "900206579",
-    "Photo_links": "439406691"
+    "Photo_links": "439406691",
+    "Taxonomy_v18Jun25": "1251116294"
 }
 OUTPUT_DIR = "public/data"
 
@@ -712,6 +713,21 @@ def fetch_gbif_data(species_list):
 # MAIN PIPELINE
 # ══════════════════════════════════════════════════════════════════════════════
 
+def download_sanger_taxonomy():
+    """Download the Sanger taxonomy reference sheet for use by the curation pipeline."""
+    print("\n>> Downloading Sanger taxonomy reference sheet...")
+    taxonomy_output = os.path.join(OUTPUT_DIR, "sanger_taxonomy.csv")
+    try:
+        url = get_google_export_url(SHEET_GIDS["Taxonomy_v18Jun25"])
+        df = pd.read_csv(url, dtype=str)
+        df.to_csv(taxonomy_output, index=False)
+        species_count = (df['taxon_rank'] == 'species').sum() if 'taxon_rank' in df.columns else '?'
+        print(f"   Saved {len(df)} rows ({species_count} species) to {taxonomy_output}")
+    except Exception as e:
+        print(f"   WARNING: Failed to download taxonomy sheet: {e}")
+        print(f"   Curation will proceed without Sanger taxonomy reference.")
+
+
 def main():
     print("=" * 70)
     print("ITHOMIINI MAPS - DATA PROCESSING PIPELINE")
@@ -733,7 +749,10 @@ def main():
     # STEP 2: Load other sources (uses mimicry lookup)
     # ═══════════════════════════════════════════════════════════════════════
     df_sanger = load_sanger_data()
-    
+
+    # Download Sanger taxonomy reference sheet
+    download_sanger_taxonomy()
+
     # Merge local and sanger
     all_dfs = [df for df in [df_local, df_sanger] if not df.empty]
     
