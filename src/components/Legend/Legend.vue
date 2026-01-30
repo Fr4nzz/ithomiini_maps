@@ -543,10 +543,15 @@ const positionStyle = computed(() => {
   // X position
   style.left = posX.value + 'px'
 
-  // Height - use effective height for auto mode, or manual height
-  const h = effectiveHeight.value
-  if (h && h !== 'auto') {
-    style.height = h + 'px'
+  // Height - only set explicit height in manual mode (user has resized).
+  // In auto mode, let the container size to its content, capped by maxHeight.
+  // This allows adjustItemsToFit() to correctly detect overflow by comparing
+  // scrollHeight vs clientHeight on the content div.
+  if (!isAutoHeight.value) {
+    const h = effectiveHeight.value
+    if (h && h !== 'auto') {
+      style.height = h + 'px'
+    }
   }
 
   return style
@@ -1257,22 +1262,33 @@ function adjustItemsToFit() {
   const scrollH = el.scrollHeight
   const clientH = el.clientHeight
 
+  // Detect overflow via two checks:
+  // 1. Content div scrolls internally (scrollH > clientH) — works when flex layout
+  //    correctly constrains the content div within the container's maxHeight.
+  // 2. Legend container exceeds maxHeight (fallback) — catches cases where the
+  //    container's overflow:visible prevents flex shrinking.
+  const contentOverflows = scrollH > clientH + 2
+  const legendEl = legendRef.value
+  const legendExceedsMax = legendEl ? legendEl.scrollHeight > maxH + 2 : false
+  const overflows = contentOverflows || legendExceedsMax
+
   console.debug(
     `[Legend] adjustItemsToFit: scrollH=${scrollH}, clientH=${clientH}, maxLegendH=${maxH}, ` +
     `containerH=${containerBounds.value.height}, items=${legendItems.value.filter(i => i.visible).length}, ` +
-    `effectiveMax=${effectiveMaxItems.value}, override=${itemLimitOverride.value}`
+    `effectiveMax=${effectiveMaxItems.value}, override=${itemLimitOverride.value}, ` +
+    `legendScrollH=${legendEl?.scrollHeight}, legendExceedsMax=${legendExceedsMax}`
   )
 
   // If content overflows, reduce items one by one
-  if (scrollH > clientH + 2 && itemLimitOverride.value === null) {
+  if (overflows && itemLimitOverride.value === null) {
     // Content overflows — progressively reduce
     const currentCount = effectiveMaxItems.value
     const newLimit = Math.max(1, currentCount - 1)
-    console.debug(`[Legend] Overflow detected (scrollH ${scrollH} > clientH ${clientH}). Reducing items from ${currentCount} to ${newLimit}`)
+    console.debug(`[Legend] Overflow detected (scrollH ${scrollH} > clientH ${clientH}, legendExceedsMax=${legendExceedsMax}). Reducing items from ${currentCount} to ${newLimit}`)
     itemLimitOverride.value = newLimit
     // Re-check after next render
     nextTick(() => nextTick(() => adjustItemsToFit()))
-  } else if (scrollH > clientH + 2 && itemLimitOverride.value !== null && itemLimitOverride.value > 1) {
+  } else if (overflows && itemLimitOverride.value !== null && itemLimitOverride.value > 1) {
     // Still overflows — keep reducing
     const newLimit = itemLimitOverride.value - 1
     console.debug(`[Legend] Still overflowing. Reducing to ${newLimit}`)
@@ -1575,8 +1591,10 @@ watch(isExportMode, (enabled, wasEnabled) => {
   padding: 12px 16px;
   overflow-y: auto;
   overflow-x: hidden;
-  flex: 1;
-  max-height: 100%;
+  /* flex-basis: auto so the container sizes to content, then max-height caps it.
+     flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .legend-container.is-export .legend-content {
