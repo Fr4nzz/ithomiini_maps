@@ -65,6 +65,11 @@ jobs:
           GBIF_PASSWORD: ${{ secrets.GBIF_PASSWORD }}
           GBIF_EMAIL: ${{ secrets.GBIF_EMAIL }}
 
+      - name: Run taxonomic curation
+        run: |
+          echo "🔬 Running taxonomic curation pipeline..."
+          python scripts/taxonomic_curation.py --apply
+
       - name: Check for changes
         id: check_changes
         run: |
@@ -79,13 +84,13 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          
+
           git add public/data/*.json
           git commit -m "🔄 Auto-update database from Google Sheets/GBIF
 
           Triggered by: ${{ github.actor }}
           Workflow run: ${{ github.run_id }}"
-          
+
           git push
 
       - name: Report no changes

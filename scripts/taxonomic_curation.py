@@ -1775,8 +1775,8 @@ def apply_corrections(records, results):
     4. GBIF fuzzy overrides marked (dataset name kept)
     5. Literature-verified species marked
 
-    Does NOT modify the original map_points.json.
-    Writes to map_points_curated.json with added curation fields.
+    Writes corrections into map_points.json (in-place) so the app picks
+    them up. Also writes a separate curated copy and corrections log.
     """
     log.info("Applying corrections to dataset...")
 
@@ -1902,9 +1902,26 @@ def apply_corrections(records, results):
 
         curated_records.append(curated)
 
-    # Write curated dataset
+    # Write curated dataset (separate copy with curation metadata fields)
     with open(CURATED_DATA_FILE, "w") as f:
         json.dump(curated_records, f, indent=2, default=str)
+
+    # Write corrections back into the main map_points.json (in-place)
+    # This updates the app's data source with corrected names.
+    # Only modifies scientific_name, genus, species, subspecies fields.
+    # Preserves all other fields (lat, lng, source, etc.).
+    inplace_records = []
+    for rec in curated_records:
+        # Strip curation metadata fields — keep only the data fields the app uses
+        cleaned = {
+            k: v for k, v in rec.items()
+            if k not in ("curation_status", "curated_name", "literature_action")
+        }
+        inplace_records.append(cleaned)
+
+    with open(DATA_FILE, "w") as f:
+        json.dump(inplace_records, f, separators=(",", ":"), default=str)
+    log.info(f"Updated {DATA_FILE} in-place with corrections")
 
     # Write corrections log
     corrections_summary = {

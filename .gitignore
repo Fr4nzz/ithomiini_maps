@@ -27,5 +27,7 @@ dist-ssr
 # Python
 __pycache__/
 
-# Generated data
+# Generated data (large files from curation pipeline)
 public/data/taxonomic_curation_report.json
+public/data/map_points_curated.json
+public/data/taxonomic_corrections_applied.json
