@@ -1,22 +1,71 @@
 {
-  "applied_at": "2026-01-30 20:04:28 UTC",
+  "applied_at": "2026-01-30 21:44:36 UTC",
   "total_records": 102561,
   "stats": {
     "verified_nominotypical": 12372,
-    "subspecies_unresolved": 9869,
+    "subspecies_unresolved": 9775,
     "undescribed": 2224,
-    "verified": 72954,
-    "verified_literature": 1758,
+    "verified": 72852,
+    "corrected": 1944,
+    "verified_literature": 1757,
     "higher_rank_only": 617,
-    "corrected": 1747,
     "not_curated": 731,
     "non_standard_subspecies": 238,
     "subspecies_synonym": 48,
     "review_spelling": 3
   },
-  "total_corrections": 1747,
+  "total_corrections": 1944,
   "corrections": [
     {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "phagesina",
+      "corrected_subspecies": "phagesia",
+      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "phagesina",
+      "corrected_subspecies": "phagesia",
+      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "phagesina",
+      "corrected_subspecies": "phagesia",
+      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "phagesina",
+      "corrected_subspecies": "phagesia",
+      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "phagesina",
+      "corrected_subspecies": "phagesia",
+      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "phagesina",
+      "corrected_subspecies": "phagesia",
+      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Callithomia hezia",
+      "original_subspecies": "phagesina",
+      "corrected_subspecies": "phagesia",
+      "source": "Hewitson 1869; Butterflies of America (type specimen page)"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Episcada striposis",
       "accepted": "Episcada clausina striposis Haensch, 1909",
@@ -413,21 +462,21 @@
       "original_species": "Hyposcada gallardi",
       "correct_species": "Hyposcada anchiala",
       "subspecies_epithet": "gallardi",
-      "source": "funet: H. anchiala gallardi Brevignon 1993"
+      "source": "funet"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hyposcada gallardi",
       "correct_species": "Hyposcada anchiala",
       "subspecies_epithet": "gallardi",
-      "source": "funet: H. anchiala gallardi Brevignon 1993"
+      "source": "funet"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hyposcada gallardi",
       "correct_species": "Hyposcada anchiala",
       "subspecies_epithet": "gallardi",
-      "source": "funet: H. anchiala gallardi Brevignon 1993"
+      "source": "funet"
     },
     {
       "type": "synonym_resolution",
@@ -623,77 +672,77 @@
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Hypothyris maenas",
       "correct_species": "Hypothyris mamercus",
       "subspecies_epithet": "maenas",
-      "source": "funet checklist: H. mamercus maenas"
+      "source": "funet checklist"
     },
     {
       "type": "synonym_resolution",
@@ -4879,147 +4928,154 @@
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
     },
     {
       "type": "subspecies_reclassification",
       "original_species": "Veladyris cytharista",
       "correct_species": "Veladyris pardalis",
       "subspecies_epithet": "cytharista",
-      "source": "funet [NL4A #321d]; Wikipedia: V. pardalis cytharista (Hewitson 1874)"
+      "source": "funet [NL4A #321d]; Wikipedia"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Hypomenitis ortygia",
+      "original_subspecies": "pyrczy",
+      "corrected_subspecies": "pyrczi",
+      "source": "nymphalidae.net"
     },
     {
       "type": "synonym_resolution",
@@ -5132,6 +5188,34 @@
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "messenoides",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis mazaeus",
+      "original_subspecies": "proceriformes",
+      "corrected_subspecies": "proceriformis",
+      "source": "funet; Bryk 1953"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis mazaeus",
+      "original_subspecies": "proceriformes",
+      "corrected_subspecies": "proceriformis",
+      "source": "funet; Bryk 1953"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis mazaeus",
+      "original_subspecies": "proceriformes",
+      "corrected_subspecies": "proceriformis",
+      "source": "funet; Bryk 1953"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis mazaeus",
+      "original_subspecies": "proceriformes",
+      "corrected_subspecies": "proceriformis",
+      "source": "funet; Bryk 1953"
     },
     {
       "type": "synonym_resolution",
@@ -5785,6 +5869,482 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Mechanitis messenoides",
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -5825,6 +6385,20 @@
       "accepted": "Cithaerias aurora",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Oleria onega",
+      "original_subspecies": "jaranilla",
+      "corrected_subspecies": "janarilla",
+      "source": "Hewitson 1863; Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Oleria onega",
+      "original_subspecies": "jaranilla",
+      "corrected_subspecies": "janarilla",
+      "source": "Hewitson 1863; Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -5841,6 +6415,20 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Oleria onega",
+      "original_subspecies": "jaranilla",
+      "corrected_subspecies": "janarilla",
+      "source": "Hewitson 1863; Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Oleria onega",
+      "original_subspecies": "jaranilla",
+      "corrected_subspecies": "janarilla",
+      "source": "Hewitson 1863; Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Mechanitis messenoides",
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -6133,6 +6721,13 @@
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "intermedia",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Oleria onega",
+      "original_subspecies": "jaranilla",
+      "corrected_subspecies": "janarilla",
+      "source": "Hewitson 1863; Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -6184,6 +6779,20 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Oleria onega",
+      "original_subspecies": "jaranilla",
+      "corrected_subspecies": "janarilla",
+      "source": "Hewitson 1863; Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Oleria onega",
+      "original_subspecies": "jaranilla",
+      "corrected_subspecies": "janarilla",
+      "source": "Hewitson 1863; Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Melinaea isocomma",
       "accepted": "Melinaea maenius isocomma Forbes, 1948",
@@ -6224,6 +6833,13 @@
       "accepted": "Methona confusa curvifascia Weymer, 1884",
       "subspecies": "(No subspecies described)",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Brevioleria arzalia",
+      "original_subspecies": "lorenia",
+      "corrected_subspecies": "loronia",
+      "source": "nymphalidae.net"
     },
     {
       "type": "spelling_correction",
@@ -6471,6 +7087,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Eutresis hypereia",
+      "original_subspecies": "banosa",
+      "corrected_subspecies": "banosana",
+      "source": "Hewitson 1869; Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Mechanitis messenoides",
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -6490,6 +7113,13 @@
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "?",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Ithomia agnosia",
+      "original_subspecies": "angosia",
+      "corrected_subspecies": "agnosia",
+      "source": "GBIF; Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -7871,6 +8501,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Callithomia lenea",
+      "original_subspecies": "zelic",
+      "corrected_subspecies": "zelie",
+      "source": "Gu\u00e9rin-M\u00e9neville 1844; Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Methona curvifascia",
       "accepted": "Methona confusa curvifascia Weymer, 1884",
@@ -8102,6 +8739,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Callithomia lenea",
+      "original_subspecies": "metonella",
+      "corrected_subspecies": "methonella",
+      "source": "Hewitson 1860; Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Philaethria wernickei",
       "accepted": "Philaethria dido wernickei",
@@ -8158,6 +8802,48 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Lycorea halia",
       "accepted": "Lycorea cleobaea halia",
@@ -8172,11 +8858,39 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Scada zibia",
+      "original_subspecies": "xantina",
+      "corrected_subspecies": "xanthina",
+      "source": "H. Bates 1866; Butterflies of America; BAMONA"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea mnasias",
+      "original_subspecies": "erastosthenes",
+      "corrected_subspecies": "eratosthenes",
+      "source": "Lamas 2004"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Lycorea halia",
       "accepted": "Lycorea cleobaea halia",
       "subspecies": "transiens",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea mnasias",
+      "original_subspecies": "eurastosthenes",
+      "corrected_subspecies": "eratosthenes",
+      "source": "Lamas 2004"
     },
     {
       "type": "synonym_resolution",
@@ -9030,7 +9744,7 @@
       "original_species": "Hyposcada adelphina",
       "correct_species": "Hyposcada virginiana",
       "subspecies_epithet": "adelphina",
-      "source": "funet; ADW: H. virginiana adelphina (Bates 1866)"
+      "source": "funet; ADW (Animal Diversity Web)"
     },
     {
       "type": "synonym_resolution",
@@ -9110,11 +9824,25 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Napeogenes sulphurina",
       "accepted": "Napeogenes inachia sulphurina Bates, 1862",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -9159,6 +9887,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Dircenna lonera",
       "accepted": "Dircenna relata",
@@ -9171,6 +9906,13 @@
       "accepted": "Dircenna relata",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -9201,11 +9943,81 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Dircenna lonera",
       "accepted": "Dircenna relata",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -9227,6 +10039,13 @@
       "accepted": "Dircenna relata",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -9255,6 +10074,34 @@
       "accepted": "Napeogenes cyrianassa gracilis Haensch, 1905",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Oleria victorine",
+      "original_subspecies": "graciella",
+      "corrected_subspecies": "graziella",
+      "source": "Haensch 1905; nymphalidae.net"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -9565,6 +10412,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Pteronymia huamba",
       "accepted": "Pteronymia veia huamba Haensch, 1909",
@@ -9593,6 +10447,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Thyridia aedesia",
       "accepted": "Thyridia psidii aedesia Doubleday, 1847",
@@ -9605,6 +10466,13 @@
       "accepted": "Methona confusa curvifascia Weymer, 1884",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -9633,6 +10501,48 @@
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -11161,6 +12071,132 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Melinaea isocomma",
+      "accepted": "Melinaea maenius isocomma Forbes, 1948",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Methona curvifascia",
+      "accepted": "Methona confusa curvifascia Weymer, 1884",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Methona curvifascia",
+      "accepted": "Methona confusa curvifascia Weymer, 1884",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Pteronymia alina",
+      "accepted": "Pteronymia linzera alina Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Melinaea isocomma",
       "accepted": "Melinaea maenius isocomma Forbes, 1948",
@@ -11183,20 +12219,6 @@
     },
     {
       "type": "synonym_resolution",
-      "original": "Methona curvifascia",
-      "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
       "original": "Mechanitis messenoides",
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "",
@@ -11206,13 +12228,6 @@
       "type": "synonym_resolution",
       "original": "Methona curvifascia",
       "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "",
       "source": "GBIF backbone"
     },
@@ -11231,6 +12246,188 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Methona curvifascia",
+      "accepted": "Methona confusa curvifascia Weymer, 1884",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Methona curvifascia",
+      "accepted": "Methona confusa curvifascia Weymer, 1884",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Methona curvifascia",
+      "accepted": "Methona confusa curvifascia Weymer, 1884",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Methona curvifascia",
+      "accepted": "Methona confusa curvifascia Weymer, 1884",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Melinaea isocomma",
       "accepted": "Melinaea maenius isocomma Forbes, 1948",
@@ -11239,101 +12436,24 @@
     },
     {
       "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
       "original": "Methona curvifascia",
       "accepted": "Methona confusa curvifascia Weymer, 1884",
       "subspecies": "",
       "source": "GBIF backbone"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Pteronymia alina",
-      "accepted": "Pteronymia linzera alina Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona curvifascia",
-      "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona curvifascia",
-      "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona curvifascia",
-      "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11350,81 +12470,11 @@
       "source": "GBIF backbone"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona curvifascia",
-      "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Melinaea isocomma",
-      "accepted": "Melinaea maenius isocomma Forbes, 1948",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona curvifascia",
-      "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11488,6 +12538,27 @@
       "accepted": "Episcada clausina striposis Haensch, 1909",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11518,6 +12589,20 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Methona curvifascia",
       "accepted": "Methona confusa curvifascia Weymer, 1884",
@@ -11553,6 +12638,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Methona curvifascia",
       "accepted": "Methona confusa curvifascia Weymer, 1884",
@@ -11572,6 +12664,13 @@
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11623,11 +12722,32 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Mechanitis messenoides",
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11651,6 +12771,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Episcada striposis",
       "accepted": "Episcada clausina striposis Haensch, 1909",
@@ -11665,11 +12792,25 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Mechanitis messenoides",
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11707,6 +12848,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Episcada striposis",
       "accepted": "Episcada clausina striposis Haensch, 1909",
@@ -11749,6 +12897,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Mechanitis messenoides",
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
@@ -11777,53 +12932,11 @@
       "source": "GBIF backbone"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Methona curvifascia",
-      "accepted": "Methona confusa curvifascia Weymer, 1884",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Mechanitis messenoides",
-      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-      "subspecies": "",
-      "source": "GBIF backbone"
-    },
-    {
-      "type": "synonym_resolution",
-      "original": "Episcada striposis",
-      "accepted": "Episcada clausina striposis Haensch, 1909",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11859,6 +12972,83 @@
       "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Episcada striposis",
+      "accepted": "Episcada clausina striposis Haensch, 1909",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Methona curvifascia",
+      "accepted": "Methona confusa curvifascia Weymer, 1884",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis messenoides",
+      "accepted": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11938,11 +13128,25 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Melinaea isocomma",
       "accepted": "Melinaea maenius isocomma Forbes, 1948",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "synonym_resolution",
@@ -11956,7 +13160,7 @@
       "original_species": "Hypothyris dionaea",
       "correct_species": "Hypothyris lycaste",
       "subspecies_epithet": "dionaea",
-      "source": "funet; Butterflies of America: H. lycaste dionaea (Hewitson 1854)"
+      "source": "funet; Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -12008,6 +13212,13 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Melinaea isocomma",
       "accepted": "Melinaea maenius isocomma Forbes, 1948",
@@ -12015,11 +13226,25 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Thyridia aedesia",
       "accepted": "Thyridia psidii aedesia Doubleday, 1847",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -12134,11 +13359,165 @@
       "source": "GBIF backbone"
     },
     {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
       "type": "synonym_resolution",
       "original": "Napeogenes sodalis",
       "accepted": "Napeogenes verticilla",
       "subspecies": "",
       "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Napeogenes sodalis",
+      "accepted": "Napeogenes verticilla",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Napeogenes sodalis",
+      "accepted": "Napeogenes verticilla",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Napeogenes sodalis",
+      "accepted": "Napeogenes verticilla",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -12218,25 +13597,25 @@
       "source": "GBIF backbone"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Napeogenes sodalis",
-      "accepted": "Napeogenes verticilla",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Napeogenes sodalis",
-      "accepted": "Napeogenes verticilla",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
-      "type": "synonym_resolution",
-      "original": "Napeogenes sodalis",
-      "accepted": "Napeogenes verticilla",
-      "subspecies": "",
-      "source": "GBIF backbone"
+      "type": "subspecies_typo",
+      "species": "Mechanitis polymnia",
+      "original_subspecies": "doryssides",
+      "corrected_subspecies": "dorissides",
+      "source": "Staudinger [1884]; funet (missp. note); Butterflies of America"
     },
     {
       "type": "synonym_resolution",
@@ -12252,19 +13631,19 @@
       "Thyridia aedessa": "Thyridia aedesia"
     },
     "dataset_correct_over_gbif": {
-      "actinote dicaeus": "Altinote is a junior synonym of Actinote (Lamas 2004; molecular phylogenetics)",
-      "actinote ozomene": "Altinote is a junior synonym of Actinote (Lamas 2004)",
+      "actinote dicaeus": "Altinote is a junior synonym of Actinote; molecular phylogenetics confirms synonymy",
+      "actinote ozomene": "Altinote is a junior synonym of Actinote",
       "elzunia humboldt": "Original spelling by Latreille (1809); ICZN Art. 32 preserves original",
-      "heliconius numata": "Noun in apposition (ICZN Art. 31.2.2); all specialist literature uses numata",
-      "hyalenna perasippa": "Willmott & Lamas (2006) revision consistently uses perasippa",
-      "hypothyris leprieuri": "Lamas (2004) uses single-i leprieuri (original Feisthamel 1835)",
-      "ithomia leila": "Noun in apposition; Butterflies of America, iNaturalist, nymphalidae.net",
-      "patricia oligyrtis": "olygyrtis is a letter-transposition error in GBIF",
+      "heliconius numata": "Noun in apposition (ICZN Art. 31.2.2); all specialist literature uses 'numata'",
+      "hyalenna perasippa": "Willmott & Lamas (2006) revision consistently uses 'perasippa'",
+      "hypothyris leprieuri": "Original single-i spelling by Feisthamel (1835); Lamas (2004) uses leprieuri",
+      "ithomia leila": "Noun in apposition; Butterflies of America, iNaturalist, and nymphalidae.net all use 'leila'",
+      "patricia oligyrtis": "'olygyrtis' is a letter-transposition error in GBIF; 'oligyrtis' is correct",
       "episcada hymen": "FALSE POSITIVE: E. hymen (Haensch 1905) and E. hymenaea (Prittwitz 1865) are different valid species",
-      "hyalyris schlingeri": "Correct genus is Hyalyris Boisduval 1870 (with y); Hyalaris is GBIF error",
-      "anteros bracteata": "Dataset follows specialist usage; GBIF form is DOUBTFUL",
-      "euptychia westwoodi": "Dataset follows specialist usage; GBIF form is SYNONYM",
-      "eurybia nicaeus": "Dataset follows specialist usage; GBIF form is DOUBTFUL"
+      "hyalyris schlingeri": "Correct genus is Hyalyris Boisduval 1870 (with y); Hyalaris is a GBIF error",
+      "anteros bracteata": "Dataset follows specialist usage; GBIF form is listed as DOUBTFUL",
+      "euptychia westwoodi": "Dataset follows specialist usage; GBIF form is listed as SYNONYM",
+      "eurybia nicaeus": "Dataset follows specialist usage; GBIF form is listed as DOUBTFUL"
     },
     "subspecies_as_species": {
       "hypothyris dionaea": "Hypothyris lycaste dionaea",
@@ -12273,6 +13652,24 @@
       "hyposcada gallardi": "Hyposcada anchiala gallardi",
       "veladyris cytharista": "Veladyris pardalis cytharista"
     },
-    "valid_species_not_in_gbif_count": 75
+    "valid_species_not_in_gbif_count": 75,
+    "subspecies_typos": {
+      "ithomia agnosia angosia": "agnosia",
+      "oleria onega jaranilla": "janarilla",
+      "mechanitis mazaeus proceriformes": "proceriformis",
+      "scada zibia xantina": "xanthina",
+      "mechanitis polymnia doryssides": "dorissides",
+      "melinaea ludovica parayia": "paraiya",
+      "mechanitis lysimnia neseaea": "nesaea",
+      "callithomia hezia phagesina": "phagesia",
+      "callithomia lenea metonella": "methonella",
+      "callithomia lenea zelic": "zelie",
+      "oleria victorine graciella": "graziella",
+      "eutresis hypereia banosa": "banosana",
+      "melinaea mnasias erastosthenes": "eratosthenes",
+      "melinaea mnasias eurastosthenes": "eratosthenes",
+      "brevioleria arzalia lorenia": "loronia",
+      "hypomenitis ortygia pyrczy": "pyrczi"
+    }
   }
 }

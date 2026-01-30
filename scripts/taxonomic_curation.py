@@ -106,17 +106,17 @@ def _load_corrections(corrections_file=None):
     Load taxonomic corrections from the external JSON file.
 
     Returns (SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF,
-             SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF) dicts/set.
+             SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF,
+             SUBSPECIES_TYPOS) dicts/set.
     """
     path = corrections_file or CORRECTIONS_FILE
     if not Path(path).exists():
         log_msg = f"Corrections file not found: {path}"
-        # Only warn if logging is set up, otherwise print
         try:
             log.warning(log_msg)
         except Exception:
             print(f"WARNING: {log_msg}", file=sys.stderr)
-        return {}, {}, {}, set()
+        return {}, {}, {}, set(), {}
 
     with open(path) as f:
         data = json.load(f)
@@ -145,23 +145,28 @@ def _load_corrections(corrections_file=None):
     # Valid species not in GBIF: set of lowered names
     valid_not_in_gbif = set()
     gbif_section = data.get("valid_species_not_in_gbif", {})
-    # Genus-level issues
     for genus_data in gbif_section.get("genus_issues", {}).values():
         for sp in genus_data.get("species", []):
             valid_not_in_gbif.add(sp.lower())
-    # Individual species
     individual = gbif_section.get("individual_species", {})
     for sp in individual.get("ithomiini", []):
         valid_not_in_gbif.add(sp.lower())
     for sp in individual.get("non_ithomiini", []):
         valid_not_in_gbif.add(sp.lower())
 
-    return spelling, overrides, subspecies_remap, valid_not_in_gbif
+    # Subspecies typos: {(species_lower, wrong_ssp_lower): (correct_ssp, reference)}
+    ssp_typos = {}
+    ssp_section = data.get("subspecies_corrections", {})
+    for entry in ssp_section.get("typos", []):
+        key = (entry["species"].lower(), entry["wrong"].lower())
+        ssp_typos[key] = (entry["correct"], entry.get("reference", ""))
+
+    return spelling, overrides, subspecies_remap, valid_not_in_gbif, ssp_typos
 
 
 # Load corrections at module level (used throughout the pipeline)
 SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, SUBSPECIES_AS_SPECIES, \
-    VALID_SPECIES_NOT_IN_GBIF = _load_corrections()
+    VALID_SPECIES_NOT_IN_GBIF, SUBSPECIES_TYPOS = _load_corrections()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1795,10 +1800,11 @@ def main():
     # Reload corrections from custom file if specified
     if args.corrections:
         global SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, \
-               SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF
+               SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF, \
+               SUBSPECIES_TYPOS
         SPELLING_CORRECTIONS, DATASET_CORRECT_OVER_GBIF, \
-            SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF = \
-            _load_corrections(args.corrections)
+            SUBSPECIES_AS_SPECIES, VALID_SPECIES_NOT_IN_GBIF, \
+            SUBSPECIES_TYPOS = _load_corrections(args.corrections)
         log.info(f"Loaded custom corrections from {args.corrections}")
 
     # Load data
@@ -2019,6 +2025,23 @@ def apply_corrections(records, results, input_path=None, output_file=None,
             })
             changed = True
 
+        # Subspecies typo corrections (from literature-verified corrections file)
+        if subspecies and not changed:
+            ssp_key = (sci_name.lower(), subspecies.lower())
+            ssp_fix = SUBSPECIES_TYPOS.get(ssp_key)
+            if ssp_fix:
+                correct_ssp, ssp_source = ssp_fix
+                curated["subspecies_original"] = subspecies
+                curated["subspecies"] = correct_ssp
+                corrections_log.append({
+                    "type": "subspecies_typo",
+                    "species": sci_name,
+                    "original_subspecies": subspecies,
+                    "corrected_subspecies": correct_ssp,
+                    "source": ssp_source,
+                })
+                changed = True
+
         if changed:
             stats["corrected"] += 1
         else:
@@ -2154,6 +2177,10 @@ def _write_corrections_log(corrections_log, records, stats, log_file=None):
                 k: f"{v[0]} {v[1]}" for k, v in SUBSPECIES_AS_SPECIES.items()
             },
             "valid_species_not_in_gbif_count": len(VALID_SPECIES_NOT_IN_GBIF),
+            "subspecies_typos": {
+                f"{k[0]} {k[1]}": v[0]
+                for k, v in SUBSPECIES_TYPOS.items()
+            },
         },
     }
     with open(out_path, "w") as f:
