@@ -107,6 +107,9 @@ export function generateAbbreviationOptions(speciesName) {
     // Full name
     full: speciesName,
 
+    // Full species name (for use as prefix before subspecies)
+    fullSpecies: speciesName,
+
     // First letter of genus + full epithet (M. polymnia)
     firstLetterGenus: `${genusFirstLetter} ${epithet}`,
 
@@ -145,6 +148,7 @@ export const ABBREVIATION_FORMATS = {
 
   // For prefix (abbreviation before subspecies)
   prefix: [
+    { value: 'fullSpecies', label: 'Mechanitis polymnia', description: 'Full species name' },
     { value: 'firstLetterBoth', label: 'M. p.', description: '1st letter of each' },
     { value: 'syllableBoth', label: 'Mec. pol.', description: '1st syllable of each' },
     { value: 'none', label: '(none)', description: 'No prefix' },

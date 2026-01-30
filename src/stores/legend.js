@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { usePersistenceStore } from './persistence'
 import { useDataStore } from './data'
+import { applyAbbreviationFormat } from '../utils/abbreviations'
 
 // Helper to get/set localStorage with fallback (uses persistence store)
 const getStorage = (key, defaultValue) => {
@@ -28,8 +29,8 @@ export const useLegendStore = defineStore('legend', () => {
   // Position (x, y coordinates for free positioning)
   const position = ref(getStorage('legend-position', { x: 40, y: null }))
 
-  // Size
-  const size = ref(getStorage('legend-size', { width: 200, height: 'auto' }))
+  // Size ('auto' means auto-fit to content)
+  const size = ref(getStorage('legend-size', { width: 'auto', height: 'auto' }))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // DISPLAY SETTINGS
@@ -132,12 +133,29 @@ export const useLegendStore = defineStore('legend', () => {
   const displayNameFormat = ref(getStorage('legend-display-name-format', 'full'))
 
   // Global format for prefix abbreviations (shown before subspecies)
-  // Values: 'firstLetterBoth' | 'syllableBoth' | 'none' | 'custom' (per-species)
-  const prefixFormat = ref(getStorage('legend-prefix-format', 'syllableBoth'))
+  // Values: 'fullSpecies' | 'firstLetterBoth' | 'syllableBoth' | 'none' | 'custom' (per-species)
+  const prefixFormat = ref(getStorage('legend-prefix-format', 'fullSpecies'))
 
   // Per-species custom display names (overrides global format)
   // Format: { 'Mechanitis polymnia': 'M. polymnia', ... }
   const speciesDisplayNames = ref(getStorage('legend-species-display-names', {}))
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SORTING SETTINGS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Sort by: 'alphabetical' (by display text) | 'abundance' (by count)
+  const sortBy = ref(getStorage('legend-sort-by', 'alphabetical'))
+
+  // Sort order: 'asc' | 'desc'
+  const sortOrder = ref(getStorage('legend-sort-order', 'asc'))
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // WRAP/OUTDENT SETTINGS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Whether to wrap long labels with hanging indent (outdent) instead of ellipsis
+  const wrapLabels = ref(getStorage('legend-wrap-labels', true))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
@@ -216,7 +234,11 @@ export const useLegendStore = defineStore('legend', () => {
            speciesStyling.value.colorGradient !== false ||
            // Display name/prefix formats changed from defaults
            displayNameFormat.value !== 'full' ||
-           prefixFormat.value !== 'syllableBoth'
+           prefixFormat.value !== 'fullSpecies' ||
+           // Sorting/wrap changed from defaults
+           sortBy.value !== 'alphabetical' ||
+           sortOrder.value !== 'asc' ||
+           wrapLabels.value !== true
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -337,11 +359,21 @@ export const useLegendStore = defineStore('legend', () => {
 
     // Reset display name format settings
     displayNameFormat.value = 'full'
-    prefixFormat.value = 'syllableBoth'
+    prefixFormat.value = 'fullSpecies'
     speciesDisplayNames.value = {}
     setStorage('legend-display-name-format', 'full')
-    setStorage('legend-prefix-format', 'syllableBoth')
+    setStorage('legend-prefix-format', 'fullSpecies')
     setStorage('legend-species-display-names', {})
+
+    // Reset sorting settings
+    sortBy.value = 'alphabetical'
+    sortOrder.value = 'asc'
+    setStorage('legend-sort-by', 'alphabetical')
+    setStorage('legend-sort-order', 'asc')
+
+    // Reset wrap settings
+    wrapLabels.value = true
+    setStorage('legend-wrap-labels', true)
   }
 
   function resetPosition() {
@@ -350,7 +382,7 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   function resetSize() {
-    size.value = { width: 200, height: 'auto' }
+    size.value = { width: 'auto', height: 'auto' }
     setStorage('legend-size', size.value)
   }
 
@@ -512,8 +544,15 @@ export const useLegendStore = defineStore('legend', () => {
   // ABBREVIATION ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Get default abbreviation for a species (first letter of each word)
+  // Get default abbreviation for a species based on current prefix format
   function getDefaultAbbreviation(species) {
+    const format = prefixFormat.value
+    if (format === 'none') return ''
+    if (format === 'fullSpecies') return species
+    // Use applyAbbreviationFormat for other formats
+    const result = applyAbbreviationFormat(species, format)
+    if (result) return result
+    // Fallback: first letter of each word
     const parts = species.split(' ')
     if (parts.length >= 2) {
       return `${parts[0][0]}. ${parts[1][0]}.`
@@ -610,6 +649,38 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // SORTING ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setSortBy(value) {
+    sortBy.value = value
+    setStorage('legend-sort-by', value)
+  }
+
+  function setSortOrder(value) {
+    sortOrder.value = value
+    setStorage('legend-sort-order', value)
+  }
+
+  function toggleSortOrder() {
+    const newOrder = sortOrder.value === 'asc' ? 'desc' : 'asc'
+    setSortOrder(newOrder)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // WRAP LABEL ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setWrapLabels(enabled) {
+    wrapLabels.value = enabled
+    setStorage('legend-wrap-labels', enabled)
+  }
+
+  function toggleWrapLabels() {
+    setWrapLabels(!wrapLabels.value)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // SHAPE ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -683,6 +754,13 @@ export const useLegendStore = defineStore('legend', () => {
     prefixFormat,
     speciesDisplayNames,
 
+    // Sorting state
+    sortBy,
+    sortOrder,
+
+    // Wrap labels state
+    wrapLabels,
+
     // Computed
     hasCustomizations,
     canGroup,
@@ -750,6 +828,15 @@ export const useLegendStore = defineStore('legend', () => {
     setDisplayNameFormat,
     setPrefixFormat,
     setSpeciesDisplayName,
-    getSpeciesDisplayName
+    getSpeciesDisplayName,
+
+    // Sorting actions
+    setSortBy,
+    setSortOrder,
+    toggleSortOrder,
+
+    // Wrap label actions
+    setWrapLabels,
+    toggleWrapLabels
   }
 })

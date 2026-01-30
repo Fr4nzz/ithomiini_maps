@@ -41,6 +41,7 @@ const formatOptions = computed(() => {
 
   if (props.type === 'prefix') {
     return [
+      { value: 'fullSpecies', label: opts.fullSpecies, description: 'Full species name' },
       { value: 'firstLetterBoth', label: opts.firstLetterBoth, description: '1st letter of each' },
       { value: 'syllableBoth', label: opts.syllableBoth, description: '1st syllable of each' },
       { value: 'none', label: '(none)', description: 'No prefix' },

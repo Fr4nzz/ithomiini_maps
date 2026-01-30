@@ -36,9 +36,11 @@ const stylePopupState = ref({
   position: { x: 0, y: 0 }
 })
 
-// Current size
-const currentWidth = ref(legendStore.size.width || 200)
-const currentHeight = ref(legendStore.size.height === 'auto' ? null : legendStore.size.height)
+// Current size - 'auto' means auto-fit to content
+const isAutoWidth = computed(() => legendStore.size.width === 'auto')
+const isAutoHeight = computed(() => legendStore.size.height === 'auto')
+const currentWidth = ref(isAutoWidth.value ? null : legendStore.size.width)
+const currentHeight = ref(isAutoHeight.value ? null : legendStore.size.height)
 
 // Position state
 const posX = ref(legendStore.position.x || 40)
@@ -228,11 +230,47 @@ const legendItems = computed(() => {
   return items
 })
 
+// Sort helper functions
+function sortItemsByText(items, order) {
+  return items.slice().sort((a, b) => {
+    const textA = (a.displayLabel || a.label).toLowerCase()
+    const textB = (b.displayLabel || b.label).toLowerCase()
+    return order === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
+  })
+}
+
+function sortItemsByAbundance(items, order, counts) {
+  return items.slice().sort((a, b) => {
+    const countA = counts[a.label] || 0
+    const countB = counts[b.label] || 0
+    return order === 'asc' ? countA - countB : countB - countA
+  })
+}
+
 // Grouped legend data structure
 const groupedLegendData = computed(() => {
+  const sortByVal = legendStore.sortBy
+  const sortOrderVal = legendStore.sortOrder
+  const counts = subspeciesCounts.value
+
   // If not grouped mode or not in subspecies colorBy, return flat
   if (!legendStore.isGrouped) {
-    return { type: 'flat', items: legendItems.value }
+    let items = legendItems.value.slice()
+    // Apply sorting to flat items
+    if (sortByVal === 'abundance') {
+      items.sort((a, b) => {
+        const countA = counts[a.label] || 0
+        const countB = counts[b.label] || 0
+        return sortOrderVal === 'asc' ? countA - countB : countB - countA
+      })
+    } else {
+      items.sort((a, b) => {
+        const textA = a.label.toLowerCase()
+        const textB = b.label.toLowerCase()
+        return sortOrderVal === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
+      })
+    }
+    return { type: 'flat', items }
   }
 
   // Group items by species
@@ -250,11 +288,8 @@ const groupedLegendData = computed(() => {
     }
   }
 
-  // Sort species alphabetically
-  const sortedSpecies = Object.keys(itemsBySpecies).sort()
-
   // Build groups
-  for (const species of sortedSpecies) {
+  for (const species of Object.keys(itemsBySpecies)) {
     const items = itemsBySpecies[species]
 
     // Get custom display name - either per-species or apply global format
@@ -262,6 +297,19 @@ const groupedLegendData = computed(() => {
     if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
       // If global format is not default, apply it
       customLabel = applyAbbreviationFormat(species, legendStore.displayNameFormat)
+    }
+
+    // Map items with display labels
+    let mappedItems = items.map(item => ({
+      ...item,
+      displayLabel: formatLabel(item.label, species)
+    }))
+
+    // Sort items within group
+    if (sortByVal === 'abundance') {
+      mappedItems = sortItemsByAbundance(mappedItems, sortOrderVal, counts)
+    } else {
+      mappedItems = sortItemsByText(mappedItems, sortOrderVal)
     }
 
     groups.push({
@@ -273,10 +321,22 @@ const groupedLegendData = computed(() => {
       abbreviationVisible: legendStore.isAbbreviationVisible(species),
       customLabel: customLabel || '',
       hasCustomizedStyle: hasCustomizedStyle(species),
-      items: items.map(item => ({
-        ...item,
-        displayLabel: formatLabel(item.label, species)
-      }))
+      items: mappedItems
+    })
+  }
+
+  // Sort groups
+  if (sortByVal === 'abundance') {
+    groups.sort((a, b) => {
+      const totalA = a.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
+      const totalB = b.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
+      return sortOrderVal === 'asc' ? totalA - totalB : totalB - totalA
+    })
+  } else {
+    groups.sort((a, b) => {
+      const textA = a.species.toLowerCase()
+      const textB = b.species.toLowerCase()
+      return sortOrderVal === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
     })
   }
 
@@ -299,6 +359,133 @@ const moreCount = computed(() => {
   return Math.max(0, total - hidden - maxItems)
 })
 
+// ═══════════════════════════════════════════════════════════════════════════
+// SUBSPECIES COUNTS (for abundance sorting)
+// ═══════════════════════════════════════════════════════════════════════════
+
+const subspeciesCounts = computed(() => {
+  const geo = dataStore.displayGeoJSON
+  if (!geo?.features) return {}
+  const counts = {}
+  for (const feature of geo.features) {
+    const ssp = feature.properties.subspecies
+    if (ssp && ssp !== 'Unknown' && ssp !== 'NA') {
+      counts[ssp] = (counts[ssp] || 0) + 1
+    }
+  }
+  return counts
+})
+
+// ═══════════════════════════════════════════════════════════════════════════
+// AUTO-SIZING
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Measure text width using canvas
+let _measureCanvas = null
+function measureTextWidth(text, fontSizePx) {
+  if (!_measureCanvas) {
+    _measureCanvas = document.createElement('canvas')
+  }
+  const ctx = _measureCanvas.getContext('2d')
+  ctx.font = `italic ${fontSizePx}px system-ui, -apple-system, sans-serif`
+  return ctx.measureText(text).width
+}
+
+// Collect all displayed label texts for width calculation
+const allDisplayedLabels = computed(() => {
+  const labels = []
+  const data = groupedLegendData.value
+  if (data.type === 'flat') {
+    for (const item of data.items) {
+      labels.push(item.label)
+    }
+  } else if (data.groups) {
+    for (const group of data.groups) {
+      // Include species group header text
+      if (legendStore.groupingSettings.showHeaders) {
+        labels.push(group.species)
+      }
+      for (const item of group.items) {
+        labels.push(item.displayLabel || item.label)
+      }
+    }
+  }
+  return labels
+})
+
+// Calculate auto width from content
+const autoWidth = computed(() => {
+  const labels = allDisplayedLabels.value
+  if (!labels.length) return 200
+
+  const maxContainerWidth = containerBounds.value.width * 0.3
+  const fontSizePx = Math.round(14 * legendStore.textScale)
+
+  let maxTextWidth = 0
+  for (const label of labels) {
+    const width = measureTextWidth(label, fontSizePx)
+    if (width > maxTextWidth) maxTextWidth = width
+  }
+
+  // Add dot size + gap + padding + extra margin
+  const dotSz = Math.round(10 * legendStore.dotScale)
+  const padding = 16 * 2 // left + right content padding
+  const gap = 8
+  const scrollbarWidth = 8
+  const extraMargin = 12
+
+  const idealWidth = maxTextWidth + dotSz + gap + padding + scrollbarWidth + extraMargin
+
+  return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
+})
+
+// Calculate auto height from content
+const autoHeight = computed(() => {
+  const data = groupedLegendData.value
+  const fontSizePx = Math.round(14 * legendStore.textScale)
+  const itemHeight = legendStore.wrapLabels ? fontSizePx + 12 : fontSizePx + 8
+  const titleHeight = 32 // title + border
+  const moreHeight = moreCount.value > 0 ? 30 : 0
+  const padding = 24 // top + bottom content padding
+
+  let totalItems = 0
+  let groupHeaders = 0
+
+  if (data.type === 'flat') {
+    totalItems = data.items.length
+  } else if (data.groups) {
+    for (const group of data.groups) {
+      if (legendStore.groupingSettings.showHeaders) {
+        groupHeaders++
+      }
+      totalItems += group.items.length
+    }
+  }
+
+  const groupHeaderHeight = fontSizePx + 10
+  const idealHeight = titleHeight + (totalItems * itemHeight) + (groupHeaders * groupHeaderHeight) + moreHeight + padding
+
+  // Cap at reasonable bounds
+  return Math.min(Math.max(Math.ceil(idealHeight), 80), 600)
+})
+
+// Effective width (auto or manual)
+const effectiveWidth = computed(() => {
+  if (isAutoWidth.value) return autoWidth.value
+  return currentWidth.value || 200
+})
+
+// Effective height (auto or manual)
+const effectiveHeight = computed(() => {
+  if (isAutoHeight.value) return autoHeight.value
+  return currentHeight.value
+})
+
+// Max resize width (50% of container for manual, more generous than auto's 30%)
+const maxResizeWidth = computed(() => {
+  return Math.min(Math.round(containerBounds.value.width * 0.5), 600)
+})
+
 // Scaled sizes
 const dotSize = computed(() => Math.round(10 * legendStore.dotScale))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
@@ -306,7 +493,7 @@ const fontSize = computed(() => Math.round(14 * legendStore.textScale))
 // Position style
 const positionStyle = computed(() => {
   const style = {
-    width: currentWidth.value + 'px'
+    width: effectiveWidth.value + 'px'
   }
 
   // Y position
@@ -320,9 +507,10 @@ const positionStyle = computed(() => {
   // X position
   style.left = posX.value + 'px'
 
-  // Height if set (allows vertical resize)
-  if (currentHeight.value && currentHeight.value !== 'auto') {
-    style.height = currentHeight.value + 'px'
+  // Height - use effective height for auto mode, or manual height
+  const h = effectiveHeight.value
+  if (h && h !== 'auto') {
+    style.height = h + 'px'
   }
 
   return style
@@ -470,6 +658,7 @@ function onResize({ width, height }) {
 
 function onResizeEnd() {
   isResizing.value = false
+  // Store numeric values (switches from 'auto' to manual sizing)
   legendStore.updateSize(currentWidth.value, currentHeight.value || 'auto')
 }
 
@@ -953,10 +1142,24 @@ watch(() => legendStore.position, (newPos) => {
 // Watch for size changes from store
 watch(() => legendStore.size, (newSize) => {
   if (!isResizing.value) {
-    currentWidth.value = newSize.width
+    currentWidth.value = newSize.width === 'auto' ? null : newSize.width
     currentHeight.value = newSize.height === 'auto' ? null : newSize.height
   }
 }, { deep: true })
+
+// Watch auto-width changes to update currentWidth in auto mode
+watch(autoWidth, (newAutoWidth) => {
+  if (isAutoWidth.value && !isResizing.value) {
+    currentWidth.value = newAutoWidth
+  }
+})
+
+// Watch auto-height changes to update currentHeight in auto mode
+watch(autoHeight, (newAutoHeight) => {
+  if (isAutoHeight.value && !isResizing.value) {
+    currentHeight.value = newAutoHeight
+  }
+})
 
 // Watch for container bounds changes (triggered by export mode toggle or other factors)
 // Note: This is a backup - main handling is in handleWindowResize and isExportMode watcher
@@ -1032,6 +1235,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
           :font-size="fontSize"
           :border-color="dataStore.mapStyle.borderColor"
           :border-width="dataStore.mapStyle.borderWidth"
+          :wrap-label="legendStore.wrapLabels"
           @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
           @update:custom-color="(val) => handleColorUpdate(item.label, val)"
           @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -1092,6 +1296,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
               :border-width="dataStore.mapStyle.borderWidth"
               :indented="legendStore.groupingSettings.showHeaders"
               :shape="group.shape"
+              :wrap-label="legendStore.wrapLabels"
               @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
               @update:custom-color="(val) => handleColorUpdate(item.label, val)"
               @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -1117,7 +1322,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
     <LegendResizeHandle
       v-show="showToolbar"
       :min-width="150"
-      :max-width="400"
+      :max-width="maxResizeWidth"
       :min-height="100"
       :max-height="600"
       @resize-start="onResizeStart"
@@ -1153,8 +1358,8 @@ watch(isExportMode, (enabled, wasEnabled) => {
   border-radius: 8px;
   z-index: 10;
   min-width: 150px;
-  max-width: 400px;
-  min-height: 100px;
+  max-width: 600px;
+  min-height: 80px;
   max-height: 600px;
   overflow: visible; /* Allow toolbar to overflow upwards */
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));

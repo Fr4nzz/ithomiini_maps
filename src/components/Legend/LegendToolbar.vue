@@ -10,7 +10,11 @@ import {
   Palette,
   Type,
   Circle,
-  MapPin
+  MapPin,
+  ArrowUpDown,
+  ArrowUpAZ,
+  ArrowDownAZ,
+  WrapText
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
@@ -257,6 +261,67 @@ onUnmounted(() => {
               @input="updateMaxItems"
             />
             <span class="value-display">{{ legendStore.maxItems }}</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="settings-divider"></div>
+
+        <!-- Sorting Section -->
+        <div class="settings-section-header">
+          <ArrowUpDown :size="14" />
+          <span>SORTING</span>
+        </div>
+
+        <!-- Sort By -->
+        <div class="settings-row">
+          <label class="settings-label">Sort By</label>
+          <div class="settings-control">
+            <select
+              class="settings-select"
+              :value="legendStore.sortBy"
+              @change="legendStore.setSortBy($event.target.value)"
+            >
+              <option value="alphabetical">Alphabetical</option>
+              <option value="abundance">Abundance</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Sort Order -->
+        <div class="settings-row">
+          <label class="settings-label">Order</label>
+          <div class="settings-control">
+            <button
+              class="sort-order-button"
+              :title="legendStore.sortOrder === 'asc' ? 'Ascending (click to reverse)' : 'Descending (click to reverse)'"
+              @click="legendStore.toggleSortOrder()"
+            >
+              <ArrowUpAZ v-if="legendStore.sortOrder === 'asc'" :size="16" />
+              <ArrowDownAZ v-else :size="16" />
+              <span>{{ legendStore.sortOrder === 'asc' ? 'Ascending' : 'Descending' }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="settings-divider"></div>
+
+        <!-- Text Wrap -->
+        <div class="settings-row">
+          <label class="settings-label">
+            <WrapText :size="14" />
+            Wrap Long Labels
+          </label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.wrapLabels }"
+              @click="legendStore.toggleWrapLabels()"
+            >
+              {{ legendStore.wrapLabels ? 'ON' : 'OFF' }}
+            </button>
+            <span class="value-display">{{ legendStore.wrapLabels ? 'Outdent' : 'Ellipsis' }}</span>
           </div>
         </div>
 
@@ -658,6 +723,72 @@ onUnmounted(() => {
 .settings-panel::-webkit-scrollbar-thumb {
   background: var(--color-border, #3d3d5c);
   border-radius: 3px;
+}
+
+/* Settings select */
+.settings-select {
+  flex: 1;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.settings-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+.settings-select option {
+  background: var(--color-bg-secondary, #252540);
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+/* Sort order button */
+.sort-order-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sort-order-button:hover {
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
+}
+
+/* Wrap toggle button */
+.wrap-toggle-button {
+  padding: 6px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-muted, #666);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wrap-toggle-button:hover {
+  border-color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary, #aaa);
+}
+
+.wrap-toggle-button.active {
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
 }
 
 /* Transitions */

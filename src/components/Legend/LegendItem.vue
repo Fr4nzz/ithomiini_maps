@@ -61,6 +61,10 @@ const props = defineProps({
     type: String,
     default: 'circle',
     validator: (v) => ['circle', 'square', 'triangle', 'rhombus'].includes(v)
+  },
+  wrapLabel: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -103,7 +107,8 @@ function toggleVisibility() {
       'is-hidden': !visible,
       'is-editable': editable,
       'is-export': isExportMode && !editable,
-      'is-indented': indented
+      'is-indented': indented,
+      'is-wrap': wrapLabel
     }"
   >
     <!-- Color dot / picker -->
@@ -174,6 +179,7 @@ function toggleVisibility() {
     <span
       v-else
       class="legend-label"
+      :class="{ 'wrap-enabled': wrapLabel }"
       :style="{ fontSize: fontSize + 'px' }"
       :title="label"
     >
@@ -229,6 +235,26 @@ function toggleVisibility() {
   white-space: nowrap;
   color: var(--color-text-primary, #e0e0e0);
   font-style: italic;
+}
+
+/* Wrap mode: text wraps with hanging indent (outdent) */
+.legend-label.wrap-enabled {
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
+  text-overflow: clip;
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+/* When wrapping, align dot to top of first line instead of center */
+.legend-item.is-wrap {
+  align-items: flex-start;
+}
+
+.legend-item.is-wrap .legend-shape,
+.legend-item.is-wrap :deep(.color-picker-trigger) {
+  margin-top: 3px;
 }
 
 .visibility-toggle {
