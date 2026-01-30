@@ -475,12 +475,30 @@ const effectiveMaxItems = computed(() => {
   const fontSizePx = Math.round(14 * legendStore.textScale)
   // Generous estimate for wrapped text (allows 2-line items)
   const itemHeight = legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10
+  const headerHeight = fontSizePx + 10
   const titleHeight = 32
   const padding = 24
 
   const available = maxLegendHeight.value - titleHeight - padding
-  const groupOverhead = legendStore.isGrouped ? 1.2 : 1.0
-  const effectiveItemHeight = itemHeight * groupOverhead
+
+  // Compute group overhead from actual data instead of fixed multiplier.
+  // When grouped, each species gets a header row. If most species have only
+  // 1 subspecies (common in abundance sort), overhead approaches 2x, not 1.2x.
+  let effectiveItemHeight = itemHeight
+  if (legendStore.isGrouped && legendStore.groupingSettings.showHeaders) {
+    const allItems = sortedAllItems.value
+    const sampleSize = Math.min(20, allItems.length)
+    if (sampleSize > 0) {
+      const speciesSeen = new Set()
+      for (let i = 0; i < sampleSize; i++) {
+        const species = getSpeciesForSubspecies(allItems[i].label)
+        if (species) speciesSeen.add(species)
+      }
+      // Each group header adds headerHeight per (items/groups) items
+      const headersPerItem = speciesSeen.size / sampleSize
+      effectiveItemHeight = itemHeight + headersPerItem * headerHeight
+    }
+  }
 
   const est = Math.max(1, Math.floor(available / effectiveItemHeight))
   console.debug(`[Legend] effectiveMaxItems estimate: ${est} (maxH=${maxLegendHeight.value}, avail=${available}, itemH=${effectiveItemHeight.toFixed(1)})`)
@@ -1755,7 +1773,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  z-index: 10;
+  z-index: 25; /* Above search bar (10) and map controls (20) so toolbar overlaps them */
   min-width: 150px;
   max-width: 600px;
   min-height: 80px;

@@ -68,6 +68,42 @@ On startup or when filters change legend items, fit as many items as possible wi
 - Scrollbar still works if user manually resizes legend shorter
 - Manual resize mode still sets explicit height as before
 
+## Additional Fixes
+
+### 8. Multi-directional Resize
+- 8 resize zones (N, S, E, W, NE, NW, SE, SW) with appropriate cursors
+- SE corner has SVG grip icon for visual affordance
+- `resizeOverride` ref provides immediate visual feedback during drag
+- North/west directions reposition the legend to keep opposite edge fixed
+
+### 9. Bottom-sticky Repositioning
+- ResizeObserver on legend element monitors height changes
+- When legend shrinks (fewer items), `repositionIfBottomSticky()` moves it down to keep bottom edge anchored
+- Only activates when legend was stuck to the bottom edge
+
+### 10. adjustItemsToFit Increase Phase
+- After reducing items to fit, algorithm tries adding items back to fill available space
+- Compares `scrollH > maxH` (stable ceiling) instead of `scrollH > clientH` (varies with content)
+- `settledMaxItems` ref prevents infinite retry loops: once settled at N items, won't re-try N+1
+
+### 11. Max Height Changed to 80%
+- `maxLegendHeight` uses `0.80` instead of `0.75` for more item capacity
+
+### 12. Toolbar Border Separated from Resize Border
+- Toolbar uses `--color-border` (normal border) instead of `--color-accent` (green)
+- Visually separates toolbar from the green resize border
+- Toolbar remains physically connected (no gap) so mouse events work correctly
+
+### 13. Legend z-index Raised
+- Legend `z-index` increased from 10 to 25 (above search bar at 10, map controls at 20)
+- Toolbar now renders on top of search UI when it appears on hover
+
+### 14. Data-driven Group Overhead Estimate
+- `effectiveMaxItems` now samples the first 20 items to count unique species
+- Computes headers-per-item ratio to estimate group overhead accurately
+- Fixed 1.2x multiplier was too low when most species have only 1 visible subspecies (common in abundance sort)
+- Reduces unnecessary reduction steps (e.g., starting at 9 instead of 12 for abundance sort)
+
 ## Branch
 `claude/default-syllabus-taxonomy-JqDDr` (continued from `claude/default-syllabus-taxonomy-xDg7M`)
 
