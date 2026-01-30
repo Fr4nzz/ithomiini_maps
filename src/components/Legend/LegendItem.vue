@@ -65,6 +65,10 @@ const props = defineProps({
   wrapLabel: {
     type: Boolean,
     default: false
+  },
+  count: {
+    type: Number,
+    default: null
   }
 })
 
@@ -186,6 +190,13 @@ function toggleVisibility() {
       {{ customLabel || label }}
     </span>
 
+    <!-- Count badge -->
+    <span
+      v-if="count !== null"
+      class="legend-count"
+      :style="{ fontSize: (fontSize - 2) + 'px' }"
+    >{{ count }}</span>
+
     <!-- Visibility toggle (only in edit mode) -->
     <button
       v-if="editable"
@@ -255,6 +266,14 @@ function toggleVisibility() {
 .legend-item.is-wrap .legend-shape,
 .legend-item.is-wrap :deep(.color-picker-trigger) {
   margin-top: 3px;
+}
+
+.legend-count {
+  flex-shrink: 0;
+  color: var(--color-text-muted, #666);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
 }
 
 .visibility-toggle {

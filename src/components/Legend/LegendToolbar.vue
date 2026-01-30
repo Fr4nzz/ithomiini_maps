@@ -11,9 +11,6 @@ import {
   Type,
   Circle,
   MapPin,
-  ArrowUpDown,
-  ArrowUpAZ,
-  ArrowDownAZ,
   WrapText
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
@@ -267,45 +264,11 @@ onUnmounted(() => {
         <!-- Divider -->
         <div class="settings-divider"></div>
 
-        <!-- Sorting Section -->
+        <!-- Display Section -->
         <div class="settings-section-header">
-          <ArrowUpDown :size="14" />
-          <span>SORTING</span>
+          <Type :size="14" />
+          <span>DISPLAY</span>
         </div>
-
-        <!-- Sort By -->
-        <div class="settings-row">
-          <label class="settings-label">Sort By</label>
-          <div class="settings-control">
-            <select
-              class="settings-select"
-              :value="legendStore.sortBy"
-              @change="legendStore.setSortBy($event.target.value)"
-            >
-              <option value="alphabetical">Alphabetical</option>
-              <option value="abundance">Abundance</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Sort Order -->
-        <div class="settings-row">
-          <label class="settings-label">Order</label>
-          <div class="settings-control">
-            <button
-              class="sort-order-button"
-              :title="legendStore.sortOrder === 'asc' ? 'Ascending (click to reverse)' : 'Descending (click to reverse)'"
-              @click="legendStore.toggleSortOrder()"
-            >
-              <ArrowUpAZ v-if="legendStore.sortOrder === 'asc'" :size="16" />
-              <ArrowDownAZ v-else :size="16" />
-              <span>{{ legendStore.sortOrder === 'asc' ? 'Ascending' : 'Descending' }}</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Divider -->
-        <div class="settings-divider"></div>
 
         <!-- Text Wrap -->
         <div class="settings-row">
@@ -322,6 +285,23 @@ onUnmounted(() => {
               {{ legendStore.wrapLabels ? 'ON' : 'OFF' }}
             </button>
             <span class="value-display">{{ legendStore.wrapLabels ? 'Outdent' : 'Ellipsis' }}</span>
+          </div>
+        </div>
+
+        <!-- Show Counts -->
+        <div class="settings-row">
+          <label class="settings-label">
+            Show Counts
+          </label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.showCounts }"
+              @click="legendStore.toggleShowCounts()"
+            >
+              {{ legendStore.showCounts ? 'ON' : 'OFF' }}
+            </button>
+            <span class="value-display">per item</span>
           </div>
         </div>
 
@@ -437,7 +417,10 @@ onUnmounted(() => {
   position: absolute;
   bottom: 100%; /* Position above the legend */
   left: -1px; /* Align with legend border */
-  right: -1px;
+  /* Let toolbar expand wider than legend so all buttons are reachable */
+  right: auto;
+  min-width: calc(100% + 2px);
+  width: max-content;
   cursor: grab;
   box-shadow: 0 -2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
@@ -745,26 +728,6 @@ onUnmounted(() => {
 .settings-select option {
   background: var(--color-bg-secondary, #252540);
   color: var(--color-text-primary, #e0e0e0);
-}
-
-/* Sort order button */
-.sort-order-button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.sort-order-button:hover {
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-accent, #4ade80);
 }
 
 /* Wrap toggle button */

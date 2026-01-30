@@ -61,6 +61,8 @@ export const usePersistenceStore = defineStore('persistence', () => {
       'legend-sort-order',
       // Legend wrap settings
       'legend-wrap-labels',
+      // Legend show counts
+      'legend-show-counts',
       // Legend shape settings
       'legend-shape-settings',
       'legend-group-shapes',
@@ -147,6 +149,7 @@ export const usePersistenceStore = defineStore('persistence', () => {
       set('legend-sort-by', legendStore.sortBy)
       set('legend-sort-order', legendStore.sortOrder)
       set('legend-wrap-labels', legendStore.wrapLabels)
+      set('legend-show-counts', legendStore.showCounts)
     }
 
     // Save data store state

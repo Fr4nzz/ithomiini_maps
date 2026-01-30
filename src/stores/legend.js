@@ -157,6 +157,9 @@ export const useLegendStore = defineStore('legend', () => {
   // Whether to wrap long labels with hanging indent (outdent) instead of ellipsis
   const wrapLabels = ref(getStorage('legend-wrap-labels', true))
 
+  // Whether to show individual counts per legend item
+  const showCounts = ref(getStorage('legend-show-counts', false))
+
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
@@ -238,7 +241,8 @@ export const useLegendStore = defineStore('legend', () => {
            // Sorting/wrap changed from defaults
            sortBy.value !== 'alphabetical' ||
            sortOrder.value !== 'asc' ||
-           wrapLabels.value !== true
+           wrapLabels.value !== true ||
+           showCounts.value !== false
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -374,6 +378,10 @@ export const useLegendStore = defineStore('legend', () => {
     // Reset wrap settings
     wrapLabels.value = true
     setStorage('legend-wrap-labels', true)
+
+    // Reset show counts
+    showCounts.value = false
+    setStorage('legend-show-counts', false)
   }
 
   function resetPosition() {
@@ -681,6 +689,19 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // SHOW COUNTS ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setShowCounts(enabled) {
+    showCounts.value = enabled
+    setStorage('legend-show-counts', enabled)
+  }
+
+  function toggleShowCounts() {
+    setShowCounts(!showCounts.value)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // SHAPE ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -761,6 +782,9 @@ export const useLegendStore = defineStore('legend', () => {
     // Wrap labels state
     wrapLabels,
 
+    // Show counts state
+    showCounts,
+
     // Computed
     hasCustomizations,
     canGroup,
@@ -837,6 +861,10 @@ export const useLegendStore = defineStore('legend', () => {
 
     // Wrap label actions
     setWrapLabels,
-    toggleWrapLabels
+    toggleWrapLabels,
+
+    // Show counts actions
+    setShowCounts,
+    toggleShowCounts
   }
 })

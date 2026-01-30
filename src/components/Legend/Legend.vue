@@ -4,6 +4,7 @@ import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { generateSpeciesBorderColors, generateSpeciesBaseHues } from '../../utils/colors'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
+import { ArrowUpAZ, ArrowDownAZ, ArrowDown01, ArrowUp01 } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
 import LegendResizeHandle from './LegendResizeHandle.vue'
@@ -189,7 +190,7 @@ function formatLabel(subspecies, species) {
 // Get items with visibility and custom settings applied
 const legendItems = computed(() => {
   const items = []
-  const maxItems = legendStore.maxItems
+  const maxItems = effectiveMaxItems.value
 
   let count = 0
   for (const [label, color] of Object.entries(colorMap.value)) {
@@ -353,7 +354,7 @@ const hiddenCount = computed(() => {
 // More items indicator
 const moreCount = computed(() => {
   const total = Object.keys(colorMap.value).length
-  const maxItems = legendStore.maxItems
+  const maxItems = effectiveMaxItems.value
   const hidden = legendStore.hiddenItems.length
 
   return Math.max(0, total - hidden - maxItems)
@@ -439,7 +440,29 @@ const autoWidth = computed(() => {
   return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
 })
 
-// Calculate auto height from content
+// Max legend height based on container (75% of map height)
+const maxLegendHeight = computed(() => {
+  return Math.min(Math.floor(containerBounds.value.height * 0.75), 600)
+})
+
+// Calculate how many items can fit in the max height (for non-edit mode, no scrollbar)
+const effectiveMaxItems = computed(() => {
+  const fontSizePx = Math.round(14 * legendStore.textScale)
+  const itemHeight = legendStore.wrapLabels ? fontSizePx + 12 : fontSizePx + 8
+  const titleHeight = 32
+  const padding = 24
+  const moreHeight = 30 // reserve for "more" indicator
+
+  const available = maxLegendHeight.value - titleHeight - padding - moreHeight
+  // For grouped mode, add ~20% overhead for group headers
+  const groupOverhead = legendStore.isGrouped ? 1.2 : 1.0
+  const effectiveItemHeight = itemHeight * groupOverhead
+
+  const maxByHeight = Math.max(1, Math.floor(available / effectiveItemHeight))
+  return Math.min(maxByHeight, legendStore.maxItems)
+})
+
+// Calculate auto height from content (using effectiveMaxItems)
 const autoHeight = computed(() => {
   const data = groupedLegendData.value
   const fontSizePx = Math.round(14 * legendStore.textScale)
@@ -465,8 +488,8 @@ const autoHeight = computed(() => {
   const groupHeaderHeight = fontSizePx + 10
   const idealHeight = titleHeight + (totalItems * itemHeight) + (groupHeaders * groupHeaderHeight) + moreHeight + padding
 
-  // Cap at reasonable bounds
-  return Math.min(Math.max(Math.ceil(idealHeight), 80), 600)
+  // Cap at 75% of container height
+  return Math.min(Math.max(Math.ceil(idealHeight), 80), maxLegendHeight.value)
 })
 
 // Effective width (auto or manual)
@@ -917,6 +940,16 @@ function handleApplyDisplayFormatToAll(format) {
   // The format will be applied via computed in groupedLegendData
 }
 
+// Toggle sort mode (alphabetical <-> abundance)
+function toggleSortBy() {
+  legendStore.setSortBy(legendStore.sortBy === 'alphabetical' ? 'abundance' : 'alphabetical')
+}
+
+// Toggle sort order (asc <-> desc)
+function toggleSortOrder() {
+  legendStore.toggleSortOrder()
+}
+
 // Handle applying prefix format to all species
 function handleApplyPrefixFormatToAll(format) {
   // Set global format
@@ -1213,9 +1246,30 @@ watch(isExportMode, (enabled, wasEnabled) => {
       class="legend-content"
       :style="contentMaxHeight ? { maxHeight: contentMaxHeight + 'px' } : {}"
     >
-      <!-- Title -->
+      <!-- Title with sort controls -->
       <div class="legend-title">
-        {{ dataStore.legendTitle }}
+        <span>{{ dataStore.legendTitle }}</span>
+        <span class="title-sort-controls">
+          <button
+            class="sort-icon-button"
+            :class="{ active: legendStore.sortBy === 'abundance' }"
+            :title="legendStore.sortBy === 'alphabetical' ? 'Sort: Alphabetical (click for Abundance)' : 'Sort: Abundance (click for Alphabetical)'"
+            @click.stop="toggleSortBy"
+          >
+            <ArrowUpAZ v-if="legendStore.sortBy === 'alphabetical'" :size="14" />
+            <ArrowDown01 v-else :size="14" />
+          </button>
+          <button
+            class="sort-icon-button"
+            :title="legendStore.sortOrder === 'asc' ? 'Order: Ascending (click to reverse)' : 'Order: Descending (click to reverse)'"
+            @click.stop="toggleSortOrder"
+          >
+            <ArrowUpAZ v-if="legendStore.sortOrder === 'asc' && legendStore.sortBy === 'alphabetical'" :size="14" />
+            <ArrowDownAZ v-else-if="legendStore.sortOrder === 'desc' && legendStore.sortBy === 'alphabetical'" :size="14" />
+            <ArrowUp01 v-else-if="legendStore.sortOrder === 'asc'" :size="14" />
+            <ArrowDown01 v-else :size="14" />
+          </button>
+        </span>
       </div>
 
       <!-- Items (Flat view) -->
@@ -1236,6 +1290,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
           :border-color="dataStore.mapStyle.borderColor"
           :border-width="dataStore.mapStyle.borderWidth"
           :wrap-label="legendStore.wrapLabels"
+          :count="legendStore.showCounts ? (subspeciesCounts[item.label] || 0) : null"
           @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
           @update:custom-color="(val) => handleColorUpdate(item.label, val)"
           @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -1297,6 +1352,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
               :indented="legendStore.groupingSettings.showHeaders"
               :shape="group.shape"
               :wrap-label="legendStore.wrapLabels"
+              :count="legendStore.showCounts ? (subspeciesCounts[item.label] || 0) : null"
               @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
               @update:custom-color="(val) => handleColorUpdate(item.label, val)"
               @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -1403,6 +1459,9 @@ watch(isExportMode, (enabled, wasEnabled) => {
 }
 
 .legend-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -1411,6 +1470,38 @@ watch(isExportMode, (enabled, wasEnabled) => {
   padding-bottom: 8px;
   margin-bottom: 8px;
   border-bottom: 1px solid var(--color-border, #3d3d5c);
+}
+
+.title-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.sort-icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted, #666);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+  opacity: 0.6;
+}
+
+.sort-icon-button:hover {
+  opacity: 1;
+  background: var(--color-bg-tertiary, rgba(255,255,255,0.08));
+  color: var(--color-text-secondary, #aaa);
+}
+
+.sort-icon-button.active {
+  opacity: 1;
+  color: var(--color-accent, #4ade80);
 }
 
 .legend-items {
