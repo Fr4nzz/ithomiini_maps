@@ -50,10 +50,6 @@ const props = defineProps({
     type: String,
     default: 'circle'
   },
-  hasCustomizedStyle: {
-    type: Boolean,
-    default: false
-  },
   anyGroupHasCustomStyle: {
     type: Boolean,
     default: false

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { usePersistenceStore } from './persistence'
 import { useDataStore } from './data'
+import { applyAbbreviationFormat } from '../utils/abbreviations'
 
 // Helper to get/set localStorage with fallback (uses persistence store)
 const getStorage = (key, defaultValue) => {
@@ -28,8 +29,8 @@ export const useLegendStore = defineStore('legend', () => {
   // Position (x, y coordinates for free positioning)
   const position = ref(getStorage('legend-position', { x: 40, y: null }))
 
-  // Size
-  const size = ref(getStorage('legend-size', { width: 200, height: 'auto' }))
+  // Size ('auto' means auto-fit to content)
+  const size = ref(getStorage('legend-size', { width: 'auto', height: 'auto' }))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // DISPLAY SETTINGS
@@ -62,9 +63,6 @@ export const useLegendStore = defineStore('legend', () => {
   // Hidden items (labels to hide from legend)
   const hiddenItems = ref(getStorage('legend-hidden-items', []))
 
-  // Item order (for custom reordering, array of labels)
-  const itemOrder = ref(getStorage('legend-item-order', []))
-
   // ═══════════════════════════════════════════════════════════════════════════
   // GROUPING SETTINGS (for subspecies grouped by species)
   // ═══════════════════════════════════════════════════════════════════════════
@@ -73,7 +71,6 @@ export const useLegendStore = defineStore('legend', () => {
   const groupingSettings = ref(getStorage('legend-grouping', {
     enabled: true,                     // Enable grouping
     groupBy: 'species',                // 'none' | 'species' | 'genus' | 'tribe' | 'subfamily' | 'family'
-    labelFormat: 'abbreviated',        // 'full' | 'abbreviated'
     abbreviationStyle: 'first-letter', // 'first-letter' | 'first-three'
     showHeaders: false,                // Headers visible (default hidden)
     prefixEnabled: 'auto',             // true | false | 'auto' (smart default)
@@ -105,10 +102,6 @@ export const useLegendStore = defineStore('legend', () => {
   // Format: { 'Mechanitis polymnia': true, ... } - true = show abbreviation prefix
   const speciesAbbreviationVisible = ref(getStorage('legend-species-abbrev-visible', {}))
 
-  // Track which species groups are expanded/collapsed
-  // Format: { 'Mechanitis polymnia': true, ... }
-  const expandedGroups = ref({})
-
   // ═══════════════════════════════════════════════════════════════════════════
   // SHAPE SETTINGS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -132,12 +125,32 @@ export const useLegendStore = defineStore('legend', () => {
   const displayNameFormat = ref(getStorage('legend-display-name-format', 'full'))
 
   // Global format for prefix abbreviations (shown before subspecies)
-  // Values: 'firstLetterBoth' | 'syllableBoth' | 'none' | 'custom' (per-species)
-  const prefixFormat = ref(getStorage('legend-prefix-format', 'syllableBoth'))
+  // Values: 'fullSpecies' | 'firstLetterBoth' | 'syllableBoth' | 'none' | 'custom' (per-species)
+  const prefixFormat = ref(getStorage('legend-prefix-format', 'fullSpecies'))
 
   // Per-species custom display names (overrides global format)
   // Format: { 'Mechanitis polymnia': 'M. polymnia', ... }
   const speciesDisplayNames = ref(getStorage('legend-species-display-names', {}))
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SORTING SETTINGS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Sort by: 'alphabetical' (by display text) | 'abundance' (by count)
+  const sortBy = ref(getStorage('legend-sort-by', 'alphabetical'))
+
+  // Sort order: 'asc' | 'desc'
+  const sortOrder = ref(getStorage('legend-sort-order', 'asc'))
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // WRAP/OUTDENT SETTINGS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Whether to wrap long labels with hanging indent (outdent) instead of ellipsis
+  const wrapLabels = ref(getStorage('legend-wrap-labels', true))
+
+  // Whether to show individual counts per legend item
+  const showCounts = ref(getStorage('legend-show-counts', true))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
@@ -199,7 +212,6 @@ export const useLegendStore = defineStore('legend', () => {
     return Object.keys(customLabels.value).length > 0 ||
            Object.keys(customColors.value).length > 0 ||
            hiddenItems.value.length > 0 ||
-           itemOrder.value.length > 0 ||
            Object.keys(speciesBorderColors.value).length > 0 ||
            Object.keys(speciesBaseHues.value).length > 0 ||
            Object.keys(speciesGradientEnabled.value).length > 0 ||
@@ -216,12 +228,23 @@ export const useLegendStore = defineStore('legend', () => {
            speciesStyling.value.colorGradient !== false ||
            // Display name/prefix formats changed from defaults
            displayNameFormat.value !== 'full' ||
-           prefixFormat.value !== 'syllableBoth'
+           prefixFormat.value !== 'fullSpecies' ||
+           // Sorting/wrap changed from defaults
+           sortBy.value !== 'alphabetical' ||
+           sortOrder.value !== 'asc' ||
+           wrapLabels.value !== true ||
+           showCounts.value !== true
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
+
+  // Helper: reset a ref and persist it in one call
+  function resetRef(r, key, value) {
+    r.value = value
+    setStorage(key, value)
+  }
 
   function updatePosition(x, y) {
     position.value = { x, y }
@@ -294,64 +317,47 @@ export const useLegendStore = defineStore('legend', () => {
     return !hiddenItems.value.includes(label)
   }
 
-  function setItemOrder(order) {
-    itemOrder.value = order
-    setStorage('legend-item-order', order)
-  }
-
   function resetCustomizations() {
-    // Reset label/color customizations
-    customLabels.value = {}
-    customColors.value = {}
-    hiddenItems.value = []
-    itemOrder.value = []
-    setStorage('legend-custom-labels', {})
-    setStorage('legend-custom-colors', {})
-    setStorage('legend-hidden-items', [])
-    setStorage('legend-item-order', [])
+    // Label/color customizations
+    resetRef(customLabels, 'legend-custom-labels', {})
+    resetRef(customColors, 'legend-custom-colors', {})
+    resetRef(hiddenItems, 'legend-hidden-items', [])
 
-    // Reset species styling customizations
-    speciesBorderColors.value = {}
-    speciesBaseHues.value = {}
-    speciesGradientEnabled.value = {}
-    speciesAbbreviations.value = {}
-    speciesAbbreviationVisible.value = {}
-    groupShapes.value = {}
-    setStorage('legend-species-borders', {})
-    setStorage('legend-species-hues', {})
-    setStorage('legend-species-gradient-enabled', {})
-    setStorage('legend-species-abbreviations', {})
-    setStorage('legend-species-abbrev-visible', {})
-    setStorage('legend-group-shapes', {})
+    // Species styling customizations
+    resetRef(speciesBorderColors, 'legend-species-borders', {})
+    resetRef(speciesBaseHues, 'legend-species-hues', {})
+    resetRef(speciesGradientEnabled, 'legend-species-gradient-enabled', {})
+    resetRef(speciesAbbreviations, 'legend-species-abbreviations', {})
+    resetRef(speciesAbbreviationVisible, 'legend-species-abbrev-visible', {})
+    resetRef(groupShapes, 'legend-group-shapes', {})
 
-    // Reset grouping settings to defaults
-    groupingSettings.value.showHeaders = false
-    groupingSettings.value.prefixEnabled = 'auto'
-    groupingSettings.value.abbreviationStyle = 'first-letter'
+    // Grouping settings (preserve enabled/groupBy, reset display options)
+    Object.assign(groupingSettings.value, { showHeaders: false, prefixEnabled: 'auto', abbreviationStyle: 'first-letter' })
     setStorage('legend-grouping', groupingSettings.value)
 
-    // Reset species styling flags
-    speciesStyling.value.borderColor = false
-    speciesStyling.value.colorGradient = false
-    setStorage('legend-species-styling', speciesStyling.value)
+    // Species styling flags
+    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false, colorGradient: false })
 
-    // Reset display name format settings
-    displayNameFormat.value = 'full'
-    prefixFormat.value = 'syllableBoth'
-    speciesDisplayNames.value = {}
-    setStorage('legend-display-name-format', 'full')
-    setStorage('legend-prefix-format', 'syllableBoth')
-    setStorage('legend-species-display-names', {})
+    // Display name format
+    resetRef(displayNameFormat, 'legend-display-name-format', 'full')
+    resetRef(prefixFormat, 'legend-prefix-format', 'fullSpecies')
+    resetRef(speciesDisplayNames, 'legend-species-display-names', {})
+
+    // Sorting
+    resetRef(sortBy, 'legend-sort-by', 'alphabetical')
+    resetRef(sortOrder, 'legend-sort-order', 'asc')
+
+    // Wrap labels & counts
+    resetRef(wrapLabels, 'legend-wrap-labels', true)
+    resetRef(showCounts, 'legend-show-counts', true)
   }
 
   function resetPosition() {
-    position.value = { x: 40, y: null }
-    setStorage('legend-position', position.value)
+    resetRef(position, 'legend-position', { x: 40, y: null })
   }
 
   function resetSize() {
-    size.value = { width: 200, height: 'auto' }
-    setStorage('legend-size', size.value)
+    resetRef(size, 'legend-size', { width: 'auto', height: 'auto' })
   }
 
   function resetAll() {
@@ -360,23 +366,17 @@ export const useLegendStore = defineStore('legend', () => {
     resetSize()
     resetSpeciesStyling()
     resetShapeSettings()
-    textScale.value = 1
-    dotScale.value = 1
-    maxItems.value = 15
-    stickyEdges.value = true
-    groupingSettings.value = {
+    resetRef(textScale, 'legend-text-scale', 1)
+    resetRef(dotScale, 'legend-dot-scale', 1)
+    resetRef(maxItems, 'legend-max-items', 15)
+    resetRef(stickyEdges, 'legend-sticky', true)
+    resetRef(groupingSettings, 'legend-grouping', {
       enabled: true,
       groupBy: 'species',
-      labelFormat: 'abbreviated',
       abbreviationStyle: 'first-letter',
       showHeaders: false,
       prefixEnabled: 'auto',
-    }
-    setStorage('legend-text-scale', 1)
-    setStorage('legend-dot-scale', 1)
-    setStorage('legend-max-items', 15)
-    setStorage('legend-sticky', true)
-    setStorage('legend-grouping', groupingSettings.value)
+    })
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -390,11 +390,6 @@ export const useLegendStore = defineStore('legend', () => {
 
   function setGroupBy(value) {
     groupingSettings.value.groupBy = value
-    setStorage('legend-grouping', groupingSettings.value)
-  }
-
-  function setLabelFormat(format) {
-    groupingSettings.value.labelFormat = format
     setStorage('legend-grouping', groupingSettings.value)
   }
 
@@ -417,27 +412,6 @@ export const useLegendStore = defineStore('legend', () => {
     // value can be true, false, or 'auto'
     groupingSettings.value.prefixEnabled = value
     setStorage('legend-grouping', groupingSettings.value)
-  }
-
-  function toggleGroupExpanded(groupKey) {
-    expandedGroups.value[groupKey] = !expandedGroups.value[groupKey]
-  }
-
-  function isGroupExpanded(groupKey) {
-    // Default to expanded if not set
-    return expandedGroups.value[groupKey] !== false
-  }
-
-  function expandAllGroups() {
-    expandedGroups.value = {}
-  }
-
-  function collapseAllGroups(groupList) {
-    const collapsed = {}
-    groupList.forEach(group => {
-      collapsed[group] = false
-    })
-    expandedGroups.value = collapsed
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -493,27 +467,27 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   function resetSpeciesStyling() {
-    speciesStyling.value = { borderColor: false, colorGradient: false }
-    speciesBorderColors.value = {}
-    speciesBaseHues.value = {}
-    speciesGradientEnabled.value = {}
-    speciesAbbreviations.value = {}
-    speciesAbbreviationVisible.value = {}
-    expandedGroups.value = {}
-    setStorage('legend-species-styling', speciesStyling.value)
-    setStorage('legend-species-borders', {})
-    setStorage('legend-species-hues', {})
-    setStorage('legend-species-gradient-enabled', {})
-    setStorage('legend-species-abbreviations', {})
-    setStorage('legend-species-abbrev-visible', {})
+    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false, colorGradient: false })
+    resetRef(speciesBorderColors, 'legend-species-borders', {})
+    resetRef(speciesBaseHues, 'legend-species-hues', {})
+    resetRef(speciesGradientEnabled, 'legend-species-gradient-enabled', {})
+    resetRef(speciesAbbreviations, 'legend-species-abbreviations', {})
+    resetRef(speciesAbbreviationVisible, 'legend-species-abbrev-visible', {})
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ABBREVIATION ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Get default abbreviation for a species (first letter of each word)
+  // Get default abbreviation for a species based on current prefix format
   function getDefaultAbbreviation(species) {
+    const format = prefixFormat.value
+    if (format === 'none') return ''
+    if (format === 'fullSpecies') return species
+    // Use applyAbbreviationFormat for other formats
+    const result = applyAbbreviationFormat(species, format)
+    if (result) return result
+    // Fallback: first letter of each word
     const parts = species.split(' ')
     if (parts.length >= 2) {
       return `${parts[0][0]}. ${parts[1][0]}.`
@@ -610,6 +584,51 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // SORTING ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setSortBy(value) {
+    sortBy.value = value
+    setStorage('legend-sort-by', value)
+  }
+
+  function setSortOrder(value) {
+    sortOrder.value = value
+    setStorage('legend-sort-order', value)
+  }
+
+  function toggleSortOrder() {
+    const newOrder = sortOrder.value === 'asc' ? 'desc' : 'asc'
+    setSortOrder(newOrder)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // WRAP LABEL ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setWrapLabels(enabled) {
+    wrapLabels.value = enabled
+    setStorage('legend-wrap-labels', enabled)
+  }
+
+  function toggleWrapLabels() {
+    setWrapLabels(!wrapLabels.value)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SHOW COUNTS ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setShowCounts(enabled) {
+    showCounts.value = enabled
+    setStorage('legend-show-counts', enabled)
+  }
+
+  function toggleShowCounts() {
+    setShowCounts(!showCounts.value)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // SHAPE ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -643,10 +662,8 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   function resetShapeSettings() {
-    shapeSettings.value = { enabled: false, assignBy: 'species' }
-    groupShapes.value = {}
-    setStorage('legend-shape-settings', shapeSettings.value)
-    setStorage('legend-group-shapes', {})
+    resetRef(shapeSettings, 'legend-shape-settings', { enabled: false, assignBy: 'species' })
+    resetRef(groupShapes, 'legend-group-shapes', {})
   }
 
   return {
@@ -662,7 +679,6 @@ export const useLegendStore = defineStore('legend', () => {
     customLabels,
     customColors,
     hiddenItems,
-    itemOrder,
 
     // Grouping state
     groupingSettings,
@@ -672,7 +688,6 @@ export const useLegendStore = defineStore('legend', () => {
     speciesGradientEnabled,
     speciesAbbreviations,
     speciesAbbreviationVisible,
-    expandedGroups,
 
     // Shape state
     shapeSettings,
@@ -682,6 +697,16 @@ export const useLegendStore = defineStore('legend', () => {
     displayNameFormat,
     prefixFormat,
     speciesDisplayNames,
+
+    // Sorting state
+    sortBy,
+    sortOrder,
+
+    // Wrap labels state
+    wrapLabels,
+
+    // Show counts state
+    showCounts,
 
     // Computed
     hasCustomizations,
@@ -703,7 +728,6 @@ export const useLegendStore = defineStore('legend', () => {
     getDisplayColor,
     toggleItemVisibility,
     isItemVisible,
-    setItemOrder,
     resetCustomizations,
     resetPosition,
     resetSize,
@@ -712,15 +736,10 @@ export const useLegendStore = defineStore('legend', () => {
     // Grouping actions
     setGroupingEnabled,
     setGroupBy,
-    setLabelFormat,
     setAbbreviationStyle,
     setShowHeaders,
     toggleHeaders,
     setPrefixEnabled,
-    toggleGroupExpanded,
-    isGroupExpanded,
-    expandAllGroups,
-    collapseAllGroups,
 
     // Species styling actions
     setSpeciesBorderColorEnabled,
@@ -750,6 +769,19 @@ export const useLegendStore = defineStore('legend', () => {
     setDisplayNameFormat,
     setPrefixFormat,
     setSpeciesDisplayName,
-    getSpeciesDisplayName
+    getSpeciesDisplayName,
+
+    // Sorting actions
+    setSortBy,
+    setSortOrder,
+    toggleSortOrder,
+
+    // Wrap label actions
+    setWrapLabels,
+    toggleWrapLabels,
+
+    // Show counts actions
+    setShowCounts,
+    toggleShowCounts
   }
 })

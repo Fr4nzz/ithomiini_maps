@@ -61,6 +61,14 @@ const props = defineProps({
     type: String,
     default: 'circle',
     validator: (v) => ['circle', 'square', 'triangle', 'rhombus'].includes(v)
+  },
+  wrapLabel: {
+    type: Boolean,
+    default: false
+  },
+  count: {
+    type: Number,
+    default: null
   }
 })
 
@@ -103,7 +111,8 @@ function toggleVisibility() {
       'is-hidden': !visible,
       'is-editable': editable,
       'is-export': isExportMode && !editable,
-      'is-indented': indented
+      'is-indented': indented,
+      'is-wrap': wrapLabel
     }"
   >
     <!-- Color dot / picker -->
@@ -174,11 +183,19 @@ function toggleVisibility() {
     <span
       v-else
       class="legend-label"
+      :class="{ 'wrap-enabled': wrapLabel }"
       :style="{ fontSize: fontSize + 'px' }"
       :title="label"
     >
       {{ customLabel || label }}
     </span>
+
+    <!-- Count badge -->
+    <span
+      v-if="count !== null"
+      class="legend-count"
+      :style="{ fontSize: (fontSize - 2) + 'px' }"
+    >{{ count }}</span>
 
     <!-- Visibility toggle (only in edit mode) -->
     <button
@@ -229,6 +246,34 @@ function toggleVisibility() {
   white-space: nowrap;
   color: var(--color-text-primary, #e0e0e0);
   font-style: italic;
+}
+
+/* Wrap mode: text wraps with hanging indent (outdent) */
+.legend-label.wrap-enabled {
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
+  text-overflow: clip;
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+/* When wrapping, align dot to top of first line instead of center */
+.legend-item.is-wrap {
+  align-items: flex-start;
+}
+
+.legend-item.is-wrap .legend-shape,
+.legend-item.is-wrap :deep(.color-picker-trigger) {
+  margin-top: 3px;
+}
+
+.legend-count {
+  flex-shrink: 0;
+  color: var(--color-text-muted, #666);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
 }
 
 .visibility-toggle {

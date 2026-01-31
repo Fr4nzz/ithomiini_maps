@@ -56,6 +56,13 @@ export const usePersistenceStore = defineStore('persistence', () => {
       // Legend abbreviation settings
       'legend-species-abbreviations',
       'legend-species-abbrev-visible',
+      // Legend sorting settings
+      'legend-sort-by',
+      'legend-sort-order',
+      // Legend wrap settings
+      'legend-wrap-labels',
+      // Legend show counts
+      'legend-show-counts',
       // Legend shape settings
       'legend-shape-settings',
       'legend-group-shapes',
@@ -139,6 +146,10 @@ export const usePersistenceStore = defineStore('persistence', () => {
       set('legend-species-abbrev-visible', legendStore.speciesAbbreviationVisible)
       set('legend-shape-settings', legendStore.shapeSettings)
       set('legend-group-shapes', legendStore.groupShapes)
+      set('legend-sort-by', legendStore.sortBy)
+      set('legend-sort-order', legendStore.sortOrder)
+      set('legend-wrap-labels', legendStore.wrapLabels)
+      set('legend-show-counts', legendStore.showCounts)
     }
 
     // Save data store state

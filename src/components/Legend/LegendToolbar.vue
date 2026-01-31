@@ -10,7 +10,8 @@ import {
   Palette,
   Type,
   Circle,
-  MapPin
+  MapPin,
+  WrapText
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
@@ -263,6 +264,50 @@ onUnmounted(() => {
         <!-- Divider -->
         <div class="settings-divider"></div>
 
+        <!-- Display Section -->
+        <div class="settings-section-header">
+          <Type :size="14" />
+          <span>DISPLAY</span>
+        </div>
+
+        <!-- Text Wrap -->
+        <div class="settings-row">
+          <label class="settings-label">
+            <WrapText :size="14" />
+            Wrap Long Labels
+          </label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.wrapLabels }"
+              @click="legendStore.toggleWrapLabels()"
+            >
+              {{ legendStore.wrapLabels ? 'ON' : 'OFF' }}
+            </button>
+            <span class="value-display">{{ legendStore.wrapLabels ? 'Outdent' : 'Ellipsis' }}</span>
+          </div>
+        </div>
+
+        <!-- Show Counts -->
+        <div class="settings-row">
+          <label class="settings-label">
+            Show Counts
+          </label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.showCounts }"
+              @click="legendStore.toggleShowCounts()"
+            >
+              {{ legendStore.showCounts ? 'ON' : 'OFF' }}
+            </button>
+            <span class="value-display">per item</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="settings-divider"></div>
+
         <!-- Map Point Style Section -->
         <div class="settings-section-header">
           <MapPin :size="14" />
@@ -365,14 +410,17 @@ onUnmounted(() => {
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
-  border: 1px solid var(--color-accent, #4ade80); /* Accent border when visible */
+  border: 1px solid var(--color-border, #3d3d5c); /* Normal border — NOT accent green */
   border-bottom: none; /* Merge with legend below */
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
   border-radius: 8px 8px 0 0; /* Only round top corners */
   position: absolute;
   bottom: 100%; /* Position above the legend */
   left: -1px; /* Align with legend border */
-  right: -1px;
+  /* Let toolbar expand wider than legend so all buttons are reachable */
+  right: auto;
+  min-width: calc(100% + 2px);
+  width: max-content;
   cursor: grab;
   box-shadow: 0 -2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
@@ -658,6 +706,52 @@ onUnmounted(() => {
 .settings-panel::-webkit-scrollbar-thumb {
   background: var(--color-border, #3d3d5c);
   border-radius: 3px;
+}
+
+/* Settings select */
+.settings-select {
+  flex: 1;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.settings-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
+.settings-select option {
+  background: var(--color-bg-secondary, #252540);
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+/* Wrap toggle button */
+.wrap-toggle-button {
+  padding: 6px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-muted, #666);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wrap-toggle-button:hover {
+  border-color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary, #aaa);
+}
+
+.wrap-toggle-button.active {
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
 }
 
 /* Transitions */
