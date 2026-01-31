@@ -171,6 +171,7 @@ def apply_corrections(records, results, correction_tables, sanger_species,
         status = curation["status"]
         curated["curation_status"] = status
         curated["curated_name"] = curation.get("curated_name", sci_name)
+        curated["curation_basis"] = curation.get("curation_basis")
         curated["literature_action"] = curation.get("literature_action")
 
         changed = False
@@ -198,10 +199,11 @@ def apply_corrections(records, results, correction_tables, sanger_species,
             acc_rank = accepted.get("rank", "")
             if acc_name and acc_name != sci_name:
                 if sci_name.lower() in sanger_species:
+                    curated["curation_basis"] = "Ref. Taxonomy"
                     corrections_log.append({
                         "type": "sanger_taxonomy_override",
                         "original": sci_name, "gbif_wanted": acc_name,
-                        "kept": sci_name, "source": "Sanger taxonomy (BoA)",
+                        "kept": sci_name, "source": "reference taxonomy (BoA / nymphalidae.net)",
                     })
                 else:
                     parts = acc_name.split()
@@ -260,6 +262,7 @@ def apply_corrections(records, results, correction_tables, sanger_species,
                 correct_ssp, ssp_source = ssp_fix
                 curated["subspecies_original"] = subspecies
                 curated["subspecies"] = correct_ssp
+                curated["curation_basis"] = "Typo Detection"
                 corrections_log.append({
                     "type": "subspecies_typo",
                     "species": sci_name,

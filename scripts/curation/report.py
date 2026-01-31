@@ -209,6 +209,12 @@ def print_curation_summary(results, cache, api_call_count=0):
     for cat, count in ssp_cats.most_common():
         print(f"  {cat:25s}  {count:4d}  ({count/total*100:5.1f}%)")
 
+    # Curation basis breakdown
+    basis_counts = Counter(r.get("curation_basis") or "Unresolved" for r in results)
+    print(f"\n--- Curation Basis ---")
+    for basis, count in basis_counts.most_common():
+        print(f"  {basis:25s}  {count:4d}  ({count/total*100:5.1f}%)")
+
     # All flags
     all_flags = Counter(f for r in results for f in r["flags"])
     if all_flags:
@@ -264,6 +270,30 @@ def print_curation_summary(results, cache, api_call_count=0):
             for note in r["notes"]:
                 if "synonym" in note.lower():
                     print(f"  {note}")
+
+    # Synonym epithet -> subspecies inferences
+    epithet_inferred = [r for r in results if "SYNONYM_EPITHET_AS_SUBSPECIES" in r["flags"]]
+    if epithet_inferred:
+        print(f"\n--- Synonym Epithet → Subspecies (confirmed: {len(epithet_inferred)}) ---")
+        for r in epithet_inferred[:15]:
+            orig = r["input"]["scientific_name"]
+            accepted = r.get("accepted_name", {}).get("canonicalName", "?")
+            print(f"  {orig:40s} -> {accepted}")
+        if len(epithet_inferred) > 15:
+            print(f"  ... and {len(epithet_inferred) - 15} more")
+
+    epithet_unconfirmed = [r for r in results if "SYNONYM_EPITHET_UNCONFIRMED" in r["flags"]]
+    if epithet_unconfirmed:
+        print(f"\n--- Synonym Epithet → Subspecies (unconfirmed: {len(epithet_unconfirmed)}) ---")
+        print(f"  These species synonyms may need a subspecies designation.")
+        print(f"  Add to corrections file if appropriate:")
+        for r in epithet_unconfirmed[:20]:
+            orig = r["input"]["scientific_name"]
+            accepted = r.get("accepted_name", {}).get("canonicalName", "?")
+            orig_epithet = orig.split()[1] if len(orig.split()) >= 2 else "?"
+            print(f"  {orig:40s} -> {accepted} {orig_epithet}  ?")
+        if len(epithet_unconfirmed) > 20:
+            print(f"  ... and {len(epithet_unconfirmed) - 20} more")
 
     # Nominotypical
     nom = [r for r in results if "NOMINOTYPICAL" in r["flags"]]

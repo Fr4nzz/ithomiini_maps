@@ -49,10 +49,11 @@ def _check_sanger_verified(sci_name, sanger_species, result, context=""):
     result["status"] = "verified_literature"
     result["flags"].append("SANGER_TAXONOMY_VERIFIED")
     result["notes"].append(
-        f"'{sci_name}' verified in Sanger taxonomy (BoA / nymphalidae.net). {context}"
+        f"'{sci_name}' verified in reference taxonomy (BoA / nymphalidae.net). {context}"
     )
     result["literature_action"] = f"sanger_taxonomy_verified:{sci_name}"
     result["curated_name"] = sci_name
+    result["curation_basis"] = "Ref. Taxonomy"
     return True
 
 
@@ -79,6 +80,7 @@ def curate_name(name_entry, cache, correction_tables, sanger_species, ctx):
         "accepted_name": None,
         "recognized_subspecies": [],
         "curated_name": None,
+        "curation_basis": None,
         "literature_action": None,
         "status": "pending",
         "flags": [],
@@ -115,6 +117,7 @@ def _apply_literature_pre_corrections(name_entry, result, tables):
         result["flags"].append("SPELLING_CORRECTED")
         result["notes"].append(f"Spelling correction (literature): '{sci_name}' -> '{corrected}'")
         result["literature_action"] = f"spelling_corrected:{corrected}"
+        result["curation_basis"] = "Literature"
         name_entry = dict(name_entry)
         name_entry["scientific_name"] = corrected
         parts = corrected.split()
@@ -134,6 +137,7 @@ def _apply_literature_pre_corrections(name_entry, result, tables):
         )
         result["literature_action"] = f"subspecies_reclassified:{correct_species} {ssp_epithet}"
         result["curated_name"] = f"{correct_species} {ssp_epithet}"
+        result["curation_basis"] = "Literature"
         name_entry = dict(name_entry)
         name_entry["scientific_name"] = correct_species
         parts = correct_species.split()
@@ -169,6 +173,7 @@ def _resolve_accepted_species(species_entry, cache, result):
     """Species found as accepted in cache."""
     result["species_match"] = _make_species_match(species_entry)
     result["accepted_name"] = _make_accepted(species_entry)
+    result["curation_basis"] = "GBIF"
     sp_key = str(species_entry["key"])
     result["recognized_subspecies"] = [
         {"name": c, "status": "ACCEPTED"}
@@ -180,6 +185,7 @@ def _resolve_synonym(sci_name, synonym_entry, cache, result, ctx):
     """Species found as synonym in cache — resolve to accepted name."""
     result["species_match"] = _make_species_match(synonym_entry, synonym=True)
     result["flags"].append("SYNONYM")
+    result["curation_basis"] = "GBIF Synonym"
 
     accepted_key = synonym_entry.get("acceptedKey")
     if not accepted_key:
@@ -197,6 +203,8 @@ def _resolve_synonym(sci_name, synonym_entry, cache, result, ctx):
             {"name": c, "status": "ACCEPTED"}
             for c in cache.get("children", {}).get(acc_key_str, [])
         ]
+        # Try to infer subspecies from the original epithet
+        _try_synonym_epithet_as_subspecies(sci_name, accepted, cache, result, ctx)
         return
 
     # Accepted name outside cache — fetch via API
@@ -224,10 +232,94 @@ def _resolve_synonym(sci_name, synonym_entry, cache, result, ctx):
     )
 
 
+def _try_synonym_epithet_as_subspecies(sci_name, accepted, cache, result, ctx):
+    """
+    When a species synonym resolves to a different species, check if the
+    original epithet exists as a subspecies of the accepted species.
+
+    E.g. 'Hyposcada napirida' → 'Hyposcada illinissa' (species-level),
+    but 'Hyposcada illinissa napirida' may exist as a valid subspecies.
+    Only applies if confirmed by GBIF (cache children or API).
+    """
+    accepted_name = accepted.get("canonicalName", "")
+    if accepted.get("rank", "SPECIES") != "SPECIES":
+        return  # Already resolved to subspecies rank
+
+    orig_parts = sci_name.split()
+    acc_parts = accepted_name.split()
+    if len(orig_parts) < 2 or len(acc_parts) < 2:
+        return
+
+    orig_epithet = orig_parts[1].lower()
+    acc_epithet = acc_parts[1].lower()
+    if orig_epithet == acc_epithet:
+        return  # Same epithet — no inference needed
+
+    # Check 1: Is the epithet in the recognized children list?
+    trinomial = f"{accepted_name} {orig_parts[1]}"
+    trinomial_lower = trinomial.lower()
+
+    recognized_epithets = {
+        child["name"].split()[-1].lower()
+        for child in result.get("recognized_subspecies", [])
+        if len(child["name"].split()) >= 3
+    }
+    if orig_epithet in recognized_epithets:
+        result["accepted_name"]["canonicalName"] = trinomial
+        result["accepted_name"]["rank"] = "SUBSPECIES"
+        result["flags"].append("SYNONYM_EPITHET_AS_SUBSPECIES")
+        result["notes"].append(
+            f"Synonym epithet '{orig_parts[1]}' confirmed as subspecies "
+            f"of {accepted_name} (in GBIF children list)."
+        )
+        return
+
+    # Check 2: Is the trinomial in the cache as a subspecies?
+    ssp_entry = cache["subspecies"].get(trinomial_lower)
+    if ssp_entry:
+        result["accepted_name"]["canonicalName"] = trinomial
+        result["accepted_name"]["rank"] = "SUBSPECIES"
+        result["flags"].append("SYNONYM_EPITHET_AS_SUBSPECIES")
+        result["notes"].append(
+            f"Synonym epithet '{orig_parts[1]}' confirmed as subspecies "
+            f"of {accepted_name} (in GBIF subspecies cache)."
+        )
+        return
+
+    # Check 3: API lookup for the trinomial
+    ctx["api_call_count"] += 1
+    ssp_result = match_species(trinomial, rank="SUBSPECIES")
+    if not ssp_result:
+        result["notes"].append(
+            f"Synonym epithet '{orig_parts[1]}' could not be checked as subspecies "
+            f"of {accepted_name} (API error). Manual review recommended."
+        )
+        return
+
+    match_type = ssp_result.get("matchType", "NONE")
+    if match_type == "EXACT":
+        result["accepted_name"]["canonicalName"] = trinomial
+        result["accepted_name"]["rank"] = "SUBSPECIES"
+        result["flags"].append("SYNONYM_EPITHET_AS_SUBSPECIES")
+        result["notes"].append(
+            f"Synonym epithet '{orig_parts[1]}' confirmed as subspecies "
+            f"of {accepted_name} (via GBIF API)."
+        )
+    else:
+        # Not in backbone — log for manual review
+        result["flags"].append("SYNONYM_EPITHET_UNCONFIRMED")
+        result["notes"].append(
+            f"Synonym '{sci_name}' resolved to species '{accepted_name}'. "
+            f"Epithet '{orig_parts[1]}' not confirmed as subspecies in GBIF backbone "
+            f"(match: {match_type}). Manual review recommended."
+        )
+
+
 def _resolve_via_api(sci_name, cache, result, tables, sanger_species, ctx):
     """Fallback: match via GBIF species/match API."""
     ctx["api_call_count"] += 1
     api_result = match_species(sci_name, rank="SPECIES")
+    result["curation_basis"] = "GBIF API"
 
     if not api_result:
         result["status"] = "api_error"
@@ -263,6 +355,7 @@ def _resolve_via_api(sci_name, cache, result, tables, sanger_species, ctx):
             )
             result["literature_action"] = f"verified_not_in_gbif:{sci_name}"
             result["curated_name"] = sci_name
+            result["curation_basis"] = "Literature"
             return
         if _check_sanger_verified(sci_name, sanger_species, result,
                                    f"(matched {api_result.get('rank', '?')} only)"):
@@ -292,11 +385,13 @@ def _resolve_via_api(sci_name, cache, result, tables, sanger_species, ctx):
             )
             result["literature_action"] = f"dataset_correct_over_gbif:{sci_name}"
             result["curated_name"] = sci_name
+            result["curation_basis"] = "Literature"
             result["species_match"]["matchType"] = "LITERATURE_VERIFIED"
             result["species_match"]["literature_override"] = True
             result["species_match"]["gbif_suggestion_rejected"] = matched_name
         else:
             result["flags"].append("FUZZY_MATCH")
+            result["curation_basis"] = "GBIF Fuzzy"
             result["notes"].append(
                 f"Fuzzy match: '{sci_name}' -> '{matched_name}' (confidence: {confidence}%)."
             )
@@ -304,6 +399,7 @@ def _resolve_via_api(sci_name, cache, result, tables, sanger_species, ctx):
     # Handle synonym from API result
     if api_result.get("synonym"):
         result["flags"].append("SYNONYM")
+        result["curation_basis"] = "GBIF Synonym"
         acc_key = api_result.get("acceptedUsageKey")
         if acc_key:
             accepted = cache["species_by_key"].get(str(acc_key))
