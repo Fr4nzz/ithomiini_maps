@@ -1225,12 +1225,6 @@ onUnmounted(() => {
     legendResizeObserver.disconnect()
     legendResizeObserver = null
   }
-
-  // Clean up resize drag listeners
-  document.removeEventListener('mousemove', onResizeDrag)
-  document.removeEventListener('mouseup', endResizeDrag)
-  document.removeEventListener('touchmove', onResizeTouchMove)
-  document.removeEventListener('touchend', onResizeTouchEnd)
 })
 
 // Debounced window resize handler
