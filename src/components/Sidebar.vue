@@ -79,9 +79,6 @@ const showDateFilter = ref(false)
 // Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
 const showAdvancedTaxonomy = ref(false)
 
-// Show URL share settings section
-const showUrlSettings = ref(false)
-
 // Database Update section
 const showUpdateDatabase = ref(false)
 const updateSanger = ref(true)  // Default checked
@@ -673,46 +670,6 @@ const updateExportHeight = (value) => {
         <p class="filter-hint" style="margin-top: 4px;">
           {{ persistenceStore.enabled ? 'All settings saved to browser' : 'Settings reset on refresh' }}
         </p>
-      </div>
-
-      <!-- URL Share Settings -->
-      <div class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="showUrlSettings = !showUrlSettings"
-          :class="{ expanded: showUrlSettings }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          URL Share Settings
-        </button>
-
-        <div v-show="showUrlSettings" class="collapse-content">
-          <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
-            Choose which settings to include when sharing URLs
-          </p>
-
-          <div class="setting-row checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeFilters" />
-              <span>Include Filters</span>
-            </label>
-            <p class="checkbox-hint">Taxonomy, mimicry, status, source filters</p>
-
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeMapView" />
-              <span>Include Map View</span>
-            </label>
-            <p class="checkbox-hint">Map center, zoom, rotation</p>
-
-            <label class="checkbox-label">
-              <input type="checkbox" v-model="store.urlSettings.includeStyleSettings" />
-              <span>Include Style Settings</span>
-            </label>
-            <p class="checkbox-hint">Color by, legend, point style</p>
-          </div>
-        </div>
       </div>
 
     </div>

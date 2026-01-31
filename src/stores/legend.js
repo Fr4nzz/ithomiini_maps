@@ -710,10 +710,7 @@ export const useLegendStore = defineStore('legend', () => {
 
     // Computed
     hasCustomizations,
-    canGroup,
     isGrouped,
-    groupByOptions,
-    shouldShowPrefix,
 
     // Actions
     updatePosition,
@@ -723,65 +720,29 @@ export const useLegendStore = defineStore('legend', () => {
     setMaxItems,
     setStickyEdges,
     setCustomLabel,
-    getDisplayLabel,
     setCustomColor,
-    getDisplayColor,
     toggleItemVisibility,
     isItemVisible,
     resetCustomizations,
-    resetPosition,
-    resetSize,
-    resetAll,
-
-    // Grouping actions
-    setGroupingEnabled,
-    setGroupBy,
-    setAbbreviationStyle,
     setShowHeaders,
-    toggleHeaders,
-    setPrefixEnabled,
-
-    // Species styling actions
-    setSpeciesBorderColorEnabled,
-    setSpeciesGradientEnabled,
     setSpeciesBorderColor,
     setSpeciesBaseHue,
     setSpeciesGradientEnabledForSpecies,
     isSpeciesGradientEnabled,
-    resetSpeciesStyling,
-
-    // Abbreviation actions
-    getDefaultAbbreviation,
     getSpeciesAbbreviation,
     setSpeciesAbbreviation,
     isAbbreviationVisible,
     setAbbreviationVisible,
     toggleAbbreviationVisible,
-
-    // Shape actions
-    setShapesEnabled,
-    setShapeAssignBy,
-    setGroupShape,
-    getGroupShape,
-    resetShapeSettings,
-
-    // Display name format actions
     setDisplayNameFormat,
     setPrefixFormat,
     setSpeciesDisplayName,
     getSpeciesDisplayName,
-
-    // Sorting actions
     setSortBy,
     setSortOrder,
-    toggleSortOrder,
-
-    // Wrap label actions
-    setWrapLabels,
+    setGroupShape,
+    getGroupShape,
     toggleWrapLabels,
-
-    // Show counts actions
-    setShowCounts,
     toggleShowCounts
   }
 })

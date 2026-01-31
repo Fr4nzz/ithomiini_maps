@@ -109,19 +109,6 @@ export const useDataStore = defineStore('data', () => {
     pitch: 0
   }))
 
-  // URL sharing settings
-  const urlSettings = ref({
-    includeFilters: true,     // Include taxonomy, mimicry, status filters
-    includeMapView: false,    // Include center, zoom, bearing, pitch
-    includeExportSettings: false,
-    includeStyleSettings: false
-  })
-
-  // Custom color palettes for different colorBy modes
-  const customColors = ref({
-    // Users can customize these
-  })
-
   // The Active Filters
   // NOTE: species is now an ARRAY for multi-select (like Wings Gallery)
   const filters = ref({
@@ -482,7 +469,7 @@ export const useDataStore = defineStore('data', () => {
       filters.value.subspecies = params.get('ssp').split(',')
     }
     if (params.get('mim')) {
-      filters.value.mimicry = params.get('mim')
+      filters.value.mimicry = params.get('mim').split(',')
       showMimicryFilter.value = true
     }
     if (params.get('status')) {
@@ -524,24 +511,6 @@ export const useDataStore = defineStore('data', () => {
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
-    }
-  }
-
-  const toggleAdvancedFilters = () => {
-    showAdvancedFilters.value = !showAdvancedFilters.value
-    // Reset advanced filters when hiding
-    if (!showAdvancedFilters.value) {
-      filters.value.family = 'All'
-      filters.value.tribe = 'All'
-      filters.value.genus = 'All'
-    }
-  }
-
-  const toggleMimicryFilter = () => {
-    showMimicryFilter.value = !showMimicryFilter.value
-    // Reset mimicry when hiding
-    if (!showMimicryFilter.value) {
-      filters.value.mimicry = 'All'
     }
   }
 
@@ -760,22 +729,22 @@ export const useDataStore = defineStore('data', () => {
       return null
     }
 
+    // Pre-compute CAMID search terms outside the filter loop
+    let searchTerms = null
+    if (filters.value.camidSearch) {
+      searchTerms = filters.value.camidSearch
+        .toUpperCase()
+        .split(/[\s,\n]+/)
+        .map(s => s.trim())
+        .filter(s => s.length > 0)
+      if (searchTerms.length === 0) searchTerms = null
+    }
+
     const filtered = allFeatures.value.filter(item => {
       // CAMID Search - supports multiple IDs separated by comma, space, or newline
-      if (filters.value.camidSearch) {
-        // Parse multiple CAMIDs from input (split by comma, space, newline)
-        const searchTerms = filters.value.camidSearch
-          .toUpperCase()
-          .split(/[\s,\n]+/)
-          .map(s => s.trim())
-          .filter(s => s.length > 0)
-
-        if (searchTerms.length > 0) {
-          const itemId = (item.id || '').toUpperCase()
-          // Check if item ID matches ANY of the search terms (substring match)
-          const matches = searchTerms.some(term => itemId.includes(term))
-          if (!matches) return false
-        }
+      if (searchTerms) {
+        const itemId = (item.id || '').toUpperCase()
+        if (!searchTerms.some(term => itemId.includes(term))) return false
       }
 
       // Taxonomic cascade
@@ -1063,90 +1032,6 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
-   * Group points by species at each coordinate location (for species count mode)
-   * Returns Map: "lat,lng" -> { speciesKey -> { representative, allPoints, species } }
-   */
-  const speciesGroups = computed(() => {
-    const groups = new Map()
-    const geo = filteredGeoJSON.value
-    if (!geo || !geo.features) return groups
-
-    for (const feature of geo.features) {
-      const [lng, lat] = feature.geometry.coordinates
-      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
-      const props = feature.properties
-      const species = props.scientific_name || 'Unknown'
-
-      if (!groups.has(coordKey)) {
-        groups.set(coordKey, new Map())
-      }
-
-      const locationGroup = groups.get(coordKey)
-
-      if (!locationGroup.has(species)) {
-        // First point of this species - it becomes the representative
-        locationGroup.set(species, {
-          representative: props,
-          allPoints: [props],
-          species
-        })
-      } else {
-        // Add to existing species group
-        const speciesGroup = locationGroup.get(species)
-        speciesGroup.allPoints.push(props)
-        // Prefer representative with photo
-        if (props.image_url && !speciesGroup.representative.image_url) {
-          speciesGroup.representative = props
-        }
-      }
-    }
-
-    return groups
-  })
-
-  /**
-   * Group points by genus at each coordinate location (for genera count mode)
-   * Returns Map: "lat,lng" -> { genusKey -> { representative, allPoints, genus } }
-   */
-  const genusGroups = computed(() => {
-    const groups = new Map()
-    const geo = filteredGeoJSON.value
-    if (!geo || !geo.features) return groups
-
-    for (const feature of geo.features) {
-      const [lng, lat] = feature.geometry.coordinates
-      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
-      const props = feature.properties
-      const genus = props.genus || 'Unknown'
-
-      if (!groups.has(coordKey)) {
-        groups.set(coordKey, new Map())
-      }
-
-      const locationGroup = groups.get(coordKey)
-
-      if (!locationGroup.has(genus)) {
-        // First point of this genus - it becomes the representative
-        locationGroup.set(genus, {
-          representative: props,
-          allPoints: [props],
-          genus
-        })
-      } else {
-        // Add to existing genus group
-        const genusGroup = locationGroup.get(genus)
-        genusGroup.allPoints.push(props)
-        // Prefer representative with photo
-        if (props.image_url && !genusGroup.representative.image_url) {
-          genusGroup.representative = props
-        }
-      }
-    }
-
-    return groups
-  })
-
-  /**
    * The GeoJSON to display - handles scatter, clustering count modes, and aggregation
    * When scatter is enabled: shows one point per subspecies at each location with scattered coordinates
    * When clustering is enabled with species/subspecies/genera count mode: aggregates to one point per taxon per location
@@ -1295,11 +1180,6 @@ export const useDataStore = defineStore('data', () => {
     const attr = colorByAttribute.value
     const geo = displayGeoJSON.value
 
-    // Check for custom colors first
-    if (customColors.value[mode]) {
-      return customColors.value[mode]
-    }
-
     // Get unique values from DISPLAYED data only
     const displayedValues = geo?.features
       ? [...new Set(
@@ -1423,7 +1303,7 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.species.length > 0) params.set('sp', newFilters.species.join(','))
       // Subspecies as comma-separated array
       if (newFilters.subspecies.length > 0) params.set('ssp', newFilters.subspecies.join(','))
-      if (newFilters.mimicry !== 'All') params.set('mim', newFilters.mimicry)
+      if (newFilters.mimicry.length > 0) params.set('mim', newFilters.mimicry.join(','))
       if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
       // Source as comma-separated array (only if not default)
       if (newFilters.source.length > 0 && !(newFilters.source.length === 1 && newFilters.source[0] === 'Sanger Institute')) {
@@ -1489,7 +1369,6 @@ export const useDataStore = defineStore('data', () => {
     clusteringEnabled,
     clusterSettings,
     scatterOverlappingPoints,
-    photoLookup,
     mimicryPhotoLookup,
     gbifCitation,
 
@@ -1499,15 +1378,10 @@ export const useDataStore = defineStore('data', () => {
     legendSettings,
     exportSettings,
     mapView,
-    urlSettings,
-    customColors,
 
     // Actions
     loadMapData,
-    loadSource,
     resetAllFilters,
-    toggleAdvancedFilters,
-    toggleMimicryFilter,
     getPhotoForItem,
 
     // Coordinate grouping helpers
@@ -1538,8 +1412,6 @@ export const useDataStore = defineStore('data', () => {
     // Final output
     filteredGeoJSON,
     displayGeoJSON,
-    coordinateGroups,
-    scatteredPositions,
     scatterVisualizationData,
   }
 })

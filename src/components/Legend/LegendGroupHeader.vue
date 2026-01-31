@@ -2,7 +2,6 @@
 import { ref, computed } from 'vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
-import { generateAbbreviationOptions } from '../../utils/abbreviations'
 import AbbreviationDropdown from './AbbreviationDropdown.vue'
 
 const props = defineProps({

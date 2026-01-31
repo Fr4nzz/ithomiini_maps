@@ -135,49 +135,6 @@ export function generateAbbreviationOptions(speciesName) {
 }
 
 /**
- * Abbreviation format types
- */
-export const ABBREVIATION_FORMATS = {
-  // For display name (species header)
-  displayName: [
-    { value: 'firstLetterGenus', label: 'M. polymnia', description: '1st letter + epithet' },
-    { value: 'syllableGenus', label: 'Mec. polymnia', description: '1st syllable + epithet' },
-    { value: 'full', label: 'Mechanitis polymnia', description: 'Full name' },
-    { value: 'custom', label: 'Custom...', description: 'Enter manually' }
-  ],
-
-  // For prefix (abbreviation before subspecies)
-  prefix: [
-    { value: 'fullSpecies', label: 'Mechanitis polymnia', description: 'Full species name' },
-    { value: 'firstLetterBoth', label: 'M. p.', description: '1st letter of each' },
-    { value: 'syllableBoth', label: 'Mec. pol.', description: '1st syllable of each' },
-    { value: 'none', label: '(none)', description: 'No prefix' },
-    { value: 'custom', label: 'Custom...', description: 'Enter manually' }
-  ]
-}
-
-/**
- * Get the display label for an abbreviation format (with example)
- * @param {string} format - Format key
- * @param {string} speciesName - Species name for example
- * @param {string} type - 'displayName' or 'prefix'
- * @returns {string} Display label with example
- */
-export function getFormatLabel(format, speciesName, type = 'displayName') {
-  const options = generateAbbreviationOptions(speciesName)
-
-  if (format === 'custom') {
-    return 'Custom...'
-  }
-
-  if (format === 'none') {
-    return '(none)'
-  }
-
-  return options[format] || format
-}
-
-/**
  * Apply abbreviation format to a species name
  * @param {string} speciesName - Full species name
  * @param {string} format - Format key

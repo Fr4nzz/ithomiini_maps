@@ -215,26 +215,3 @@ export const computeClusterStats = (points, centerLat, centerLng) => {
   }
 }
 
-/**
- * Convert radius in km to meters (for MapLibre circle-radius in meters)
- */
-export const kmToMeters = (km) => km * 1000
-
-/**
- * Calculate the radius in pixels for a given geographic radius at a specific zoom level and latitude
- * This is used to draw accurate geographic circles on the map
- */
-export const geoRadiusToPixels = (radiusKm, zoom, latitude) => {
-  // At zoom 0, the world is 256 pixels wide
-  // Each zoom level doubles the size
-  const worldPixelSize = 256 * Math.pow(2, zoom)
-
-  // Earth's circumference at the equator is ~40075 km
-  // At a given latitude, the circumference is multiplied by cos(latitude)
-  const earthCircumferenceAtLat = 40075 * Math.cos(latitude * Math.PI / 180)
-
-  // Pixels per km at this zoom and latitude
-  const pixelsPerKm = worldPixelSize / earthCircumferenceAtLat
-
-  return radiusKm * pixelsPerKm
-}

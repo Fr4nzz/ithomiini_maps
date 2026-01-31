@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
-import { ChevronDown, Check } from 'lucide-vue-next'
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
+import { Check } from 'lucide-vue-next'
 import { generateAbbreviationOptions } from '../../utils/abbreviations'
 
 const props = defineProps({
