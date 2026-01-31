@@ -191,6 +191,26 @@ Each record in `map_points.json` contains:
 }
 ```
 
+## Taxonomic Curation
+
+All occurrence records pass through an automated taxonomic curation pipeline (`scripts/curation/`) that validates and corrects scientific names. Each curated record includes a `curation_basis` field indicating how the name was resolved:
+
+| `curation_basis` | Meaning |
+|---|---|
+| **GBIF** | Exact match in the GBIF backbone taxonomy (cached) |
+| **GBIF Synonym** | Name recognized as a synonym and resolved to its accepted name via GBIF |
+| **GBIF API** | Resolved via a live query to the GBIF species match API (when not in cache) |
+| **Ref. Taxonomy** | Verified against a compiled reference taxonomy (Butterflies of America / nymphalidae.net) |
+| **Literature** | Corrected or verified based on specialist literature review |
+| **Typo Detection** | Subspecies spelling auto-corrected (edit-distance detection confirmed by known subspecies list) |
+| *(empty)* | Name could not be resolved (not found, API error, or higher-rank match only) |
+
+Additional output fields:
+
+- `curation_status` — outcome of the curation process (e.g. `verified`, `synonym_resolved`, `not_found`)
+- `curated_name` — the final recommended scientific name after all corrections
+- `scientific_name_original` — preserved when the name was changed by synonym resolution
+
 ## Credits
 
 - **Project Lead**: Dr. Joana Meier (Wellcome Sanger Institute)

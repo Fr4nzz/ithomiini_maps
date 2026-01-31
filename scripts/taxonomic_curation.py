@@ -126,7 +126,7 @@ def main():
     # Step 6: Actionable items
     needs_review = [
         r for r in results
-        if r["status"] in ("higher_rank_only", "api_error", "review_spelling")
+        if r["status"] in ("higher_rank_only", "api_error", "not_found")
     ]
     if needs_review:
         print("=" * 70)

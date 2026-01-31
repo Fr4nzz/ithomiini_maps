@@ -157,10 +157,8 @@ _SUMMARY_SECTIONS = [
      lambda r: f"  {r['input']['scientific_name']:40s} -> "
                f"{r.get('accepted_name', {}).get('canonicalName', '?')}", 15),
 
-    ("Species Fuzzy Matches", lambda r: "FUZZY_MATCH" in r["flags"],
-     lambda r: f"  {r['input']['scientific_name']:40s} -> "
-               f"{r['species_match']['canonicalName'] if r['species_match'] else '?'} "
-               f"({r['species_match'].get('confidence', '?') if r['species_match'] else '?'}%)", 15),
+    ("Species Fuzzy Matches (Rejected)", lambda r: "FUZZY_MATCH_REJECTED" in r["flags"],
+     lambda r: "  " + next((n for n in r["notes"] if "REJECTED" in n), ""), 15),
 
     ("Subspecies Fuzzy False Positives", lambda r: "SUBSPECIES_FUZZY_FALSE_POSITIVE" in r["flags"],
      lambda r: "  " + next((n for n in r["notes"] if "FALSE POSITIVE" in n), ""), 10),
@@ -191,7 +189,7 @@ def print_curation_summary(results, cache, api_call_count=0):
     # Resolution rates
     species_resolved = sum(
         1 for r in results
-        if r.get("species_match") and r["species_match"]["matchType"] in ("EXACT", "FUZZY")
+        if r.get("species_match") and r["species_match"]["matchType"] == "EXACT"
     )
     with_ssp = [r for r in results if r["input"].get("ssp_category") == "standard"]
     ssp_resolved = sum(

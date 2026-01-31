@@ -390,11 +390,17 @@ def _resolve_via_api(sci_name, cache, result, tables, sanger_species, ctx):
             result["species_match"]["literature_override"] = True
             result["species_match"]["gbif_suggestion_rejected"] = matched_name
         else:
-            result["flags"].append("FUZZY_MATCH")
-            result["curation_basis"] = "GBIF Fuzzy"
+            # Reject fuzzy match — too risky for taxonomic curation
+            result["status"] = "not_found"
+            result["flags"].append("FUZZY_MATCH_REJECTED")
+            result["species_match"] = None
+            result["curation_basis"] = None
             result["notes"].append(
-                f"Fuzzy match: '{sci_name}' -> '{matched_name}' (confidence: {confidence}%)."
+                f"GBIF suggested fuzzy match '{sci_name}' -> '{matched_name}' "
+                f"(confidence: {confidence}%) REJECTED. "
+                f"Fuzzy matches not accepted. Manual review recommended."
             )
+            return
 
     # Handle synonym from API result
     if api_result.get("synonym"):
@@ -591,12 +597,12 @@ def _determine_status(result):
         result["status"] = "verified_literature"
     elif "GBIF_API_ERROR" in flags:
         result["status"] = "api_error"
+    elif "FUZZY_MATCH_REJECTED" in flags:
+        result["status"] = "not_found"
     elif "SPECIES_NOT_IN_BACKBONE" in flags or "MATCHED_HIGHER_RANK" in flags:
         result["status"] = "higher_rank_only"
     elif "SYNONYM" in flags:
         result["status"] = "synonym_resolved"
-    elif "FUZZY_MATCH" in flags:
-        result["status"] = "review_spelling"
     elif "UNDESCRIBED_SUBSPECIES" in flags:
         result["status"] = "undescribed"
     elif flags & {"QUESTION_MARK_SUBSPECIES", "FORM_NAME", "SLASH_ALTERNATIVE",
@@ -633,11 +639,6 @@ def _set_curated_name(result):
     # Synonym resolution
     if result.get("accepted_name") and "SYNONYM" in result.get("flags", []):
         result["curated_name"] = result["accepted_name"]["canonicalName"] + ssp_suffix
-        return
-
-    # GBIF fuzzy spelling
-    if "FUZZY_MATCH" in result.get("flags", []) and result.get("species_match"):
-        result["curated_name"] = result["species_match"]["canonicalName"] + ssp_suffix
         return
 
     # Default: input name
