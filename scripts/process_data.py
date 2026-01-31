@@ -872,7 +872,14 @@ def main():
     
     # Convert to list of dicts for JSON
     records = df_merged.to_dict(orient='records')
-    
+
+    # Replace float NaN with None so json.dump writes null (NaN is not valid JSON)
+    import math
+    for rec in records:
+        for k, v in rec.items():
+            if isinstance(v, float) and math.isnan(v):
+                rec[k] = None
+
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(records, f, ensure_ascii=False)
     

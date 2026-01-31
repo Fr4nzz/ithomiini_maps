@@ -1234,23 +1234,47 @@ def curate_name(name_entry, cache):
                 ]
             else:
                 # Accepted name references something outside our cache
-                # (e.g., accepted name is in a different genus)
-                accepted_name_str = synonym_entry.get("acceptedName", "")
-                # Parse canonical name: extract only Latin name parts
-                # (genus + species [+ subspecies]), stripping author citations
-                canonical = _strip_author_from_name(accepted_name_str)
-                canonical_parts = canonical.split()
-                # Determine rank from number of name parts
-                inferred_rank = "SUBSPECIES" if len(canonical_parts) >= 3 else "SPECIES"
-                result["accepted_name"] = {
-                    "key": accepted_key,
-                    "canonicalName": canonical,
-                    "scientificName": accepted_name_str,
-                    "status": "ACCEPTED",
-                    "rank": inferred_rank,
-                }
+                # (e.g., accepted name is in a different genus or at
+                # subspecies rank). Look up via GBIF species/{key} API
+                # to get authoritative canonicalName and rank.
+                _api_call_count += 1
+                acc_details = gbif_request(
+                    f"{GBIF_USAGE_URL}/{accepted_key}", {}
+                )
+                if acc_details and acc_details.get("canonicalName"):
+                    result["accepted_name"] = {
+                        "key": accepted_key,
+                        "canonicalName": acc_details["canonicalName"],
+                        "scientificName": acc_details.get(
+                            "scientificName", ""
+                        ),
+                        "status": acc_details.get(
+                            "taxonomicStatus", "ACCEPTED"
+                        ),
+                        "rank": acc_details.get("rank", "SPECIES"),
+                    }
+                else:
+                    # API failed — fall back to parsing the cached string
+                    accepted_name_str = synonym_entry.get(
+                        "acceptedName", ""
+                    )
+                    canonical = _strip_author_from_name(accepted_name_str)
+                    canonical_parts = canonical.split()
+                    inferred_rank = (
+                        "SUBSPECIES"
+                        if len(canonical_parts) >= 3
+                        else "SPECIES"
+                    )
+                    result["accepted_name"] = {
+                        "key": accepted_key,
+                        "canonicalName": canonical,
+                        "scientificName": accepted_name_str,
+                        "status": "ACCEPTED",
+                        "rank": inferred_rank,
+                    }
                 result["notes"].append(
-                    f"SYNONYM: '{sci_name}' -> accepted: '{accepted_name_str}' "
+                    f"SYNONYM: '{sci_name}' -> accepted: "
+                    f"'{result['accepted_name']['canonicalName']}' "
                     f"(outside cache, key={accepted_key})"
                 )
     else:
@@ -2338,9 +2362,21 @@ def apply_corrections(records, results, input_path=None, output_file=None,
                                merged_ssp_typos)
 
 
+def _sanitize_for_json(records):
+    """Replace float NaN with None so json.dump writes null (NaN is not valid JSON)."""
+    import math
+    for rec in records:
+        for k, v in rec.items():
+            if isinstance(v, float) and math.isnan(v):
+                rec[k] = None
+    return records
+
+
 def _write_app_outputs(curated_records, corrections_log, records, stats,
                        merged_ssp_typos=None):
     """Write outputs for the app's map_points.json pipeline."""
+    _sanitize_for_json(curated_records)
+
     # Write curated dataset (separate copy with curation metadata fields)
     with open(CURATED_DATA_FILE, "w") as f:
         json.dump(curated_records, f, indent=2, default=str)
