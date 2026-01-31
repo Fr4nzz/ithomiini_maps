@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, watch } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
 import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
@@ -22,18 +22,23 @@ export const useDataStore = defineStore('data', () => {
 
   const allFeatures = ref([])
   const imageSupplement = ref([])     // Non-Sanger records used only for photo lookups
-  const loadedSources = ref(new Set()) // Which sources have been fully loaded
-  const sourceLoading = ref(new Set()) // Which sources are currently loading
+  const loadedSources = reactive(new Set()) // Which sources have been fully loaded
+  const sourceLoading = reactive(new Set()) // Which sources are currently loading
   const loading = ref(true)
 
-  // Known data sources and their file names (for lazy loading)
-  const KNOWN_SOURCES = ['Sanger Institute', 'GBIF', 'Dore et al. (2025)', 'iNaturalist']
-  const SOURCE_FILES = {
-    'Sanger Institute': 'map_points_sanger.json',
-    'GBIF': 'map_points_gbif.json',
-    'Dore et al. (2025)': 'map_points_dore.json',
-    'iNaturalist': 'map_points_inaturalist.json',
+  // Data manifest (loaded from data_manifest.json at startup)
+  const manifest = ref(null)
+
+  // Derived from manifest — fallback to hardcoded values if manifest fails to load
+  const FALLBACK_SOURCES = {
+    'Sanger Institute': { file: 'map_points_sanger.json', default: true },
+    'GBIF': { file: 'map_points_gbif.json', default: false },
+    'Dore et al. (2025)': { file: 'map_points_dore.json', default: false },
+    'iNaturalist': { file: 'map_points_inaturalist.json', default: false },
   }
+
+  const sourceConfig = computed(() => manifest.value?.sources ?? FALLBACK_SOURCES)
+  const imageSupplementFile = computed(() => manifest.value?.image_supplement ?? 'map_points_images.json')
 
   // Filter visibility state (for expand/collapse)
   const showAdvancedFilters = ref(getStorage('app-show-advanced-filters', false))
@@ -158,25 +163,41 @@ export const useDataStore = defineStore('data', () => {
     try {
       const basePath = import.meta.env.BASE_URL || '/'
 
-      // Load Sanger data + image supplement in parallel (small, fast)
-      const [sangerRes, imgRes] = await Promise.all([
-        fetch(`${basePath}data/map_points_sanger.json`),
-        fetch(`${basePath}data/map_points_images.json`),
-      ])
-
-      if (!sangerRes.ok) {
-        throw new Error(`Failed to load Sanger data: ${sangerRes.status}`)
+      // Load manifest first (small file, tells us what data files exist)
+      try {
+        const manifestRes = await fetch(`${basePath}data/data_manifest.json`)
+        if (manifestRes.ok) {
+          manifest.value = await manifestRes.json()
+        }
+      } catch {
+        // Manifest is optional — fall back to hardcoded config
       }
 
-      const sangerData = await sangerRes.json()
+      // Find default source from manifest (or fallback)
+      const config = sourceConfig.value
+      const defaultSource = Object.entries(config).find(([, v]) => v.default)?.[0]
+        ?? Object.keys(config)[0]
+      const defaultFile = config[defaultSource]?.file
+
+      // Load default source + image supplement in parallel (small, fast)
+      const [defaultRes, imgRes] = await Promise.all([
+        fetch(`${basePath}data/${defaultFile}`),
+        fetch(`${basePath}data/${imageSupplementFile.value}`),
+      ])
+
+      if (!defaultRes.ok) {
+        throw new Error(`Failed to load ${defaultSource} data: ${defaultRes.status}`)
+      }
+
+      const defaultData = await defaultRes.json()
       const imgData = imgRes.ok ? await imgRes.json() : []
 
-      allFeatures.value = sangerData
+      allFeatures.value = defaultData
       imageSupplement.value = imgData
-      loadedSources.value = new Set(['Sanger Institute'])
-      console.log(`✓ Loaded ${sangerData.length} Sanger records + ${imgData.length} image supplement`)
+      loadedSources.add(defaultSource)
+      console.log(`✓ Loaded ${defaultData.length} ${defaultSource} records + ${imgData.length} image supplement`)
 
-      // Build photo lookups from Sanger + supplement
+      // Build photo lookups from default source + supplement
       rebuildPhotoLookups()
 
       // Load GBIF citation data
@@ -199,13 +220,14 @@ export const useDataStore = defineStore('data', () => {
    * Lazy-load a single data source. Merges into allFeatures on success.
    */
   const loadSource = async (sourceName) => {
-    if (loadedSources.value.has(sourceName)) return
-    if (sourceLoading.value.has(sourceName)) return
+    if (loadedSources.has(sourceName)) return
+    if (sourceLoading.has(sourceName)) return
 
-    const fileName = SOURCE_FILES[sourceName]
+    const config = sourceConfig.value
+    const fileName = config[sourceName]?.file
     if (!fileName) return
 
-    sourceLoading.value = new Set([...sourceLoading.value, sourceName])
+    sourceLoading.add(sourceName)
 
     try {
       const basePath = import.meta.env.BASE_URL || '/'
@@ -214,17 +236,15 @@ export const useDataStore = defineStore('data', () => {
 
       const data = await response.json()
       allFeatures.value = [...allFeatures.value, ...data]
-      loadedSources.value = new Set([...loadedSources.value, sourceName])
+      loadedSources.add(sourceName)
       console.log(`✓ Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
 
-      // Rebuild photo lookups with the expanded dataset
-      rebuildPhotoLookups()
+      // Incrementally add new photos (don't rebuild from scratch)
+      addPhotosFromData(data)
     } catch (e) {
       console.error(`❌ Failed to load ${sourceName}:`, e)
     } finally {
-      const next = new Set(sourceLoading.value)
-      next.delete(sourceName)
-      sourceLoading.value = next
+      sourceLoading.delete(sourceName)
     }
   }
 
@@ -232,17 +252,67 @@ export const useDataStore = defineStore('data', () => {
    * Ensure all sources referenced by the current filter are loaded.
    */
   const loadSourcesForFilters = async () => {
-    const needed = filters.value.source.filter(s => !loadedSources.value.has(s))
+    const needed = filters.value.source.filter(s => !loadedSources.has(s))
     await Promise.all(needed.map(s => loadSource(s)))
   }
 
   /**
    * Rebuild both photo lookups from allFeatures + imageSupplement.
+   * Used only on initial load; subsequent sources use addPhotosFromData().
    */
   const rebuildPhotoLookups = () => {
     const combined = [...allFeatures.value, ...imageSupplement.value]
     buildPhotoLookup(combined)
     buildMimicryPhotoLookup(combined)
+  }
+
+  /**
+   * Incrementally add photo entries from newly loaded data.
+   * Avoids rebuilding the entire lookup from scratch when lazy-loading a source.
+   */
+  const addPhotosFromData = (data) => {
+    // Incremental photo lookup update
+    const lookup = { ...photoLookup.value }
+    let added = 0
+    for (const item of data) {
+      if (!item.image_url) continue
+      const subspeciesKey = `${item.scientific_name || ''} ${item.subspecies || ''}`.toLowerCase().trim()
+      const speciesKey = (item.scientific_name || '').toLowerCase().trim()
+      if (subspeciesKey && !lookup[subspeciesKey]) {
+        lookup[subspeciesKey] = { url: item.image_url, id: item.id, exact: false }
+        added++
+      }
+      if (speciesKey && !lookup[speciesKey]) {
+        lookup[speciesKey] = { url: item.image_url, id: item.id, exact: false }
+        added++
+      }
+    }
+    photoLookup.value = lookup
+
+    // Incremental mimicry ring update
+    const mLookup = { ...mimicryPhotoLookup.value }
+    for (const item of data) {
+      const ring = item.mimicry_ring
+      if (!ring || ring === 'Unknown' || !item.image_url) continue
+      if (!mLookup[ring]) {
+        mLookup[ring] = { representatives: [], currentIndex: 0 }
+      }
+      const key = `${item.scientific_name}|${item.subspecies || ''}`
+      const existing = mLookup[ring].representatives.some(r =>
+        `${r.scientific_name}|${r.subspecies || ''}` === key
+      )
+      if (!existing) {
+        mLookup[ring].representatives.push({
+          scientific_name: item.scientific_name,
+          subspecies: item.subspecies,
+          image_url: item.image_url,
+          source: item.source,
+          id: item.id,
+        })
+      }
+    }
+    mimicryPhotoLookup.value = mLookup
+    console.log(`Incremental photo update: +${added} entries`)
   }
 
   /**
@@ -252,14 +322,14 @@ export const useDataStore = defineStore('data', () => {
    */
   const buildPhotoLookup = (data) => {
     const lookup = {}
-    
+
     for (const item of data) {
       if (!item.image_url) continue
-      
+
       // Key: "genus species subspecies" (lowercase for matching)
       const subspeciesKey = `${item.scientific_name || ''} ${item.subspecies || ''}`.toLowerCase().trim()
       const speciesKey = (item.scientific_name || '').toLowerCase().trim()
-      
+
       // Prioritize subspecies match, then species match
       if (subspeciesKey && !lookup[subspeciesKey]) {
         lookup[subspeciesKey] = {
@@ -276,7 +346,7 @@ export const useDataStore = defineStore('data', () => {
         }
       }
     }
-    
+
     photoLookup.value = lookup
     console.log(`Built photo lookup with ${Object.keys(lookup).length} entries`)
   }
@@ -625,7 +695,7 @@ export const useDataStore = defineStore('data', () => {
   })
 
   // Unique data sources — always show all known sources (even if not yet loaded)
-  const uniqueSources = computed(() => KNOWN_SOURCES)
+  const uniqueSources = computed(() => Object.keys(sourceConfig.value))
 
   // Unique countries
   const uniqueCountries = computed(() => {
@@ -675,7 +745,7 @@ export const useDataStore = defineStore('data', () => {
   // When source filter changes, lazy-load any unloaded sources
   watch(() => filters.value.source, async (selectedSources) => {
     for (const source of selectedSources) {
-      if (!loadedSources.value.has(source)) {
+      if (!loadedSources.has(source)) {
         await loadSource(source)
       }
     }

@@ -1,0 +1,26 @@
+{
+  "sources": {
+    "Sanger Institute": {
+      "file": "map_points_sanger.json",
+      "records": 6722,
+      "default": true
+    },
+    "GBIF": {
+      "file": "map_points_gbif.json",
+      "records": 49405,
+      "default": false
+    },
+    "Dore et al. (2025)": {
+      "file": "map_points_dore.json",
+      "records": 28927,
+      "default": false
+    },
+    "iNaturalist": {
+      "file": "map_points_inaturalist.json",
+      "records": 19328,
+      "default": false
+    }
+  },
+  "image_supplement": "map_points_images.json",
+  "generated_at": "2026-01-31T02:12:20Z"
+}
