@@ -98,6 +98,36 @@ FREE_TEXT_PATTERNS = re.compile(
 )
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# UTILITY FUNCTIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+
+def _strip_author_from_name(name_str):
+    """
+    Extract the canonical name (genus species [subspecies]) from a scientific
+    name string that may include author citations.
+
+    Examples:
+        'Mechanitis lysimnia macrinus Hewitson, 1860' -> 'Mechanitis lysimnia macrinus'
+        'Greta annette championi Lamas, 1978'         -> 'Greta annette championi'
+        'Hyposcada illinissa (Hewitson, 1852)'         -> 'Hyposcada illinissa'
+        'Mechanitis polymnia'                          -> 'Mechanitis polymnia'
+    """
+    if not name_str:
+        return "?"
+    # Strip anything in parentheses first (parenthetical authors)
+    cleaned = re.sub(r'\([^)]*\)', '', name_str).strip()
+    # Take only the leading Latin name words: uppercase genus + lowercase epithets
+    parts = []
+    for word in cleaned.split():
+        if parts and (word[0].isupper() or any(c.isdigit() for c in word)
+                      or ',' in word):
+            break  # Hit an author name or year
+        parts.append(word)
+    return " ".join(parts) if parts else "?"
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # LITERATURE-BASED CORRECTIONS
 # Loaded from external file: scripts/taxonomic_corrections.json
 # See that file for full documentation, references, and contribution guide.
@@ -1206,13 +1236,18 @@ def curate_name(name_entry, cache):
                 # Accepted name references something outside our cache
                 # (e.g., accepted name is in a different genus)
                 accepted_name_str = synonym_entry.get("acceptedName", "")
+                # Parse canonical name: extract only Latin name parts
+                # (genus + species [+ subspecies]), stripping author citations
+                canonical = _strip_author_from_name(accepted_name_str)
+                canonical_parts = canonical.split()
+                # Determine rank from number of name parts
+                inferred_rank = "SUBSPECIES" if len(canonical_parts) >= 3 else "SPECIES"
                 result["accepted_name"] = {
                     "key": accepted_key,
-                    "canonicalName": accepted_name_str.split("(")[0].strip()
-                        if accepted_name_str else "?",
+                    "canonicalName": canonical,
                     "scientificName": accepted_name_str,
                     "status": "ACCEPTED",
-                    "rank": "SPECIES",
+                    "rank": inferred_rank,
                 }
                 result["notes"].append(
                     f"SYNONYM: '{sci_name}' -> accepted: '{accepted_name_str}' "
@@ -2194,6 +2229,7 @@ def apply_corrections(records, results, input_path=None, output_file=None,
         if status == "synonym_resolved" and curation.get("accepted_name"):
             accepted = curation["accepted_name"]
             acc_name = accepted.get("canonicalName", "")
+            acc_rank = accepted.get("rank", "")
             if acc_name and acc_name != sci_name:
                 if sci_name.lower() in SANGER_VALID_SPECIES:
                     # Sanger taxonomy overrides GBIF — keep the dataset name
@@ -2208,17 +2244,38 @@ def apply_corrections(records, results, input_path=None, output_file=None,
                 else:
                     parts = acc_name.split()
                     curated["scientific_name_original"] = sci_name
-                    curated["scientific_name"] = acc_name
-                    if len(parts) >= 2:
+                    # If accepted name is a subspecies (trinomial), split into
+                    # species (scientific_name) + subspecies epithet
+                    if acc_rank == "SUBSPECIES" and len(parts) >= 3:
+                        species_name = f"{parts[0]} {parts[1]}"
+                        ssp_epithet = parts[2]
+                        curated["scientific_name"] = species_name
                         curated["genus"] = parts[0]
                         curated["species"] = parts[1]
-                    corrections_log.append({
-                        "type": "synonym_resolution",
-                        "original": sci_name,
-                        "accepted": acc_name,
-                        "subspecies": subspecies,
-                        "source": "GBIF backbone",
-                    })
+                        if not subspecies:
+                            curated["subspecies"] = ssp_epithet
+                        corrections_log.append({
+                            "type": "synonym_resolution",
+                            "original": sci_name,
+                            "accepted": acc_name,
+                            "accepted_species": species_name,
+                            "accepted_subspecies": ssp_epithet,
+                            "accepted_rank": acc_rank,
+                            "subspecies": subspecies,
+                            "source": "GBIF backbone",
+                        })
+                    else:
+                        curated["scientific_name"] = acc_name
+                        if len(parts) >= 2:
+                            curated["genus"] = parts[0]
+                            curated["species"] = parts[1]
+                        corrections_log.append({
+                            "type": "synonym_resolution",
+                            "original": sci_name,
+                            "accepted": acc_name,
+                            "subspecies": subspecies,
+                            "source": "GBIF backbone",
+                        })
                     changed = True
 
         # Subspecies-as-species reclassification
