@@ -2136,8 +2136,17 @@ def main():
 # APPLY CORRECTIONS TO DATASET
 # ═══════════════════════════════════════════════════════════════════════════════
 
-CURATED_DATA_FILE = OUTPUT_DIR / "map_points_curated.json"
+CURATED_DATA_FILE = OUTPUT_DIR / "map_points_curated.json"  # legacy, removed
 CORRECTIONS_LOG_FILE = OUTPUT_DIR / "taxonomic_corrections_applied.json"
+
+# Split data files by source for lazy loading
+SOURCE_DATA_FILES = {
+    "Sanger Institute": "map_points_sanger.json",
+    "GBIF": "map_points_gbif.json",
+    "Dore et al. (2025)": "map_points_dore.json",
+    "iNaturalist": "map_points_inaturalist.json",
+}
+IMAGE_SUPPLEMENT_FILE = OUTPUT_DIR / "map_points_images.json"
 
 
 def apply_corrections(records, results, input_path=None, output_file=None,
@@ -2374,35 +2383,106 @@ def _sanitize_for_json(records):
 
 def _write_app_outputs(curated_records, corrections_log, records, stats,
                        merged_ssp_typos=None):
-    """Write outputs for the app's map_points.json pipeline."""
+    """Write split-by-source outputs for the app's lazy-loading pipeline."""
     _sanitize_for_json(curated_records)
 
-    # Write curated dataset (separate copy with curation metadata fields)
-    with open(CURATED_DATA_FILE, "w") as f:
-        json.dump(curated_records, f, indent=2, default=str)
-
-    # Write corrections back into the main map_points.json (in-place)
-    # Only modifies scientific_name, genus, species, subspecies fields.
-    # Preserves all other fields (lat, lng, source, etc.).
-    inplace_records = []
+    # Group records by source
+    source_groups = {}
     for rec in curated_records:
-        # Strip curation metadata fields — keep only the data fields the app uses
-        cleaned = {
-            k: v for k, v in rec.items()
-            if k not in ("curation_status", "curated_name", "literature_action")
-        }
-        inplace_records.append(cleaned)
+        source = rec.get("source", "Unknown")
+        source_groups.setdefault(source, []).append(rec)
 
-    with open(DATA_FILE, "w") as f:
-        json.dump(inplace_records, f, separators=(",", ":"), default=str)
-    log.info(f"Updated {DATA_FILE} in-place with corrections")
+    # Write each source as a separate minified JSON file
+    for source, source_recs in source_groups.items():
+        filename = SOURCE_DATA_FILES.get(source)
+        if not filename:
+            log.warning(f"Unknown source '{source}' ({len(source_recs)} records) — skipped")
+            continue
+        filepath = OUTPUT_DIR / filename
+        with open(filepath, "w") as f:
+            json.dump(source_recs, f, separators=(",", ":"), default=str)
+        log.info(f"  {source}: {len(source_recs)} records -> {filepath.name}")
+
+    # Generate image supplement (non-Sanger records that fill Sanger image gaps)
+    _write_image_supplement(curated_records, source_groups)
+
+    # Remove legacy curated file if it exists (replaced by split files)
+    if CURATED_DATA_FILE.exists():
+        CURATED_DATA_FILE.unlink()
+        log.info(f"  Removed legacy file: {CURATED_DATA_FILE.name}")
 
     # Write corrections log
     _write_corrections_log(corrections_log, records, stats,
                            merged_ssp_typos=merged_ssp_typos)
 
-    log.info(f"Curated dataset written to {CURATED_DATA_FILE}")
-    _print_summary(records, corrections_log, stats, CURATED_DATA_FILE)
+    _print_summary(records, corrections_log, stats, OUTPUT_DIR)
+
+
+def _write_image_supplement(curated_records, source_groups):
+    """
+    Generate a small JSON file with non-Sanger records that fill image gaps.
+
+    Covers two cases:
+      1. Species/subspecies present in Sanger but lacking any image there
+      2. Mimicry rings with no Sanger images at all
+
+    Only one representative record per gap is included to keep the file small.
+    iNaturalist images are preferred over GBIF (higher coverage / quality).
+    """
+    sanger_records = source_groups.get("Sanger Institute", [])
+
+    # Catalogue what Sanger already has
+    sanger_has_image = set()   # (scientific_name, subspecies) with images
+    sanger_species = set()     # all (scientific_name, subspecies) in Sanger
+    sanger_ring_images = set() # mimicry rings with at least one Sanger image
+
+    for rec in sanger_records:
+        key = (rec.get("scientific_name", ""), rec.get("subspecies", ""))
+        sanger_species.add(key)
+        if rec.get("image_url"):
+            sanger_has_image.add(key)
+            ring = rec.get("mimicry_ring")
+            if ring and ring != "Unknown":
+                sanger_ring_images.add(ring)
+
+    species_needing_images = sanger_species - sanger_has_image
+
+    all_rings = {rec.get("mimicry_ring") for rec in curated_records
+                 if rec.get("mimicry_ring") and rec["mimicry_ring"] != "Unknown"}
+    rings_needing_images = all_rings - sanger_ring_images
+
+    # Collect one representative per gap, preferring iNaturalist
+    non_sanger_with_img = [
+        r for r in curated_records
+        if r.get("source") != "Sanger Institute" and r.get("image_url")
+    ]
+    non_sanger_with_img.sort(
+        key=lambda r: (0 if r.get("source") == "iNaturalist" else 1)
+    )
+
+    supplement = []
+    filled_species = set()
+    filled_rings = set()
+
+    for rec in non_sanger_with_img:
+        key = (rec.get("scientific_name", ""), rec.get("subspecies", ""))
+        ring = rec.get("mimicry_ring", "")
+
+        need_species = key in species_needing_images and key not in filled_species
+        need_ring = ring in rings_needing_images and ring not in filled_rings
+
+        if need_species or need_ring:
+            supplement.append(rec)
+            if need_species:
+                filled_species.add(key)
+            if need_ring:
+                filled_rings.add(ring)
+
+    with open(IMAGE_SUPPLEMENT_FILE, "w") as f:
+        json.dump(supplement, f, separators=(",", ":"), default=str)
+    log.info(f"  Image supplement: {len(supplement)} records -> "
+             f"{IMAGE_SUPPLEMENT_FILE.name}"
+             f" (species gaps: {len(filled_species)}, ring gaps: {len(filled_rings)})")
 
 
 def _write_external_output(curated_records, corrections_log, records,

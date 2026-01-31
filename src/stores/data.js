@@ -21,7 +21,19 @@ export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
 
   const allFeatures = ref([])
+  const imageSupplement = ref([])     // Non-Sanger records used only for photo lookups
+  const loadedSources = ref(new Set()) // Which sources have been fully loaded
+  const sourceLoading = ref(new Set()) // Which sources are currently loading
   const loading = ref(true)
+
+  // Known data sources and their file names (for lazy loading)
+  const KNOWN_SOURCES = ['Sanger Institute', 'GBIF', 'Dore et al. (2025)', 'iNaturalist']
+  const SOURCE_FILES = {
+    'Sanger Institute': 'map_points_sanger.json',
+    'GBIF': 'map_points_gbif.json',
+    'Dore et al. (2025)': 'map_points_dore.json',
+    'iNaturalist': 'map_points_inaturalist.json',
+  }
 
   // Filter visibility state (for expand/collapse)
   const showAdvancedFilters = ref(getStorage('app-show-advanced-filters', false))
@@ -144,42 +156,93 @@ export const useDataStore = defineStore('data', () => {
   const loadMapData = async () => {
     loading.value = true
     try {
-      // Determine base path (handles both dev and GitHub Pages)
       const basePath = import.meta.env.BASE_URL || '/'
-      const response = await fetch(`${basePath}data/map_points_curated.json`)
 
-      if (!response.ok) {
-        throw new Error(`Failed to load data: ${response.status} ${response.statusText}`)
+      // Load Sanger data + image supplement in parallel (small, fast)
+      const [sangerRes, imgRes] = await Promise.all([
+        fetch(`${basePath}data/map_points_sanger.json`),
+        fetch(`${basePath}data/map_points_images.json`),
+      ])
+
+      if (!sangerRes.ok) {
+        throw new Error(`Failed to load Sanger data: ${sangerRes.status}`)
       }
 
-      const data = await response.json()
+      const sangerData = await sangerRes.json()
+      const imgData = imgRes.ok ? await imgRes.json() : []
 
-      // Validate data format
-      if (!Array.isArray(data)) {
-        throw new Error('Invalid data format: expected array')
-      }
+      allFeatures.value = sangerData
+      imageSupplement.value = imgData
+      loadedSources.value = new Set(['Sanger Institute'])
+      console.log(`✓ Loaded ${sangerData.length} Sanger records + ${imgData.length} image supplement`)
 
-      allFeatures.value = data
-      console.log(`✓ Loaded ${data.length} records`)
-
-      // Build photo lookup table
-      buildPhotoLookup(data)
-
-      // Build mimicry ring photo lookup
-      buildMimicryPhotoLookup(data)
+      // Build photo lookups from Sanger + supplement
+      rebuildPhotoLookups()
 
       // Load GBIF citation data
       loadGbifCitation()
 
-      // Initialize filters from URL
+      // Initialize filters from URL (may trigger lazy loads for other sources)
       restoreFiltersFromURL()
+
+      // After URL restore, load any sources the filters require
+      await loadSourcesForFilters()
     } catch (e) {
       console.error('❌ Failed to load data:', e)
-      // Set empty array to prevent errors
       allFeatures.value = []
     } finally {
       loading.value = false
     }
+  }
+
+  /**
+   * Lazy-load a single data source. Merges into allFeatures on success.
+   */
+  const loadSource = async (sourceName) => {
+    if (loadedSources.value.has(sourceName)) return
+    if (sourceLoading.value.has(sourceName)) return
+
+    const fileName = SOURCE_FILES[sourceName]
+    if (!fileName) return
+
+    sourceLoading.value = new Set([...sourceLoading.value, sourceName])
+
+    try {
+      const basePath = import.meta.env.BASE_URL || '/'
+      const response = await fetch(`${basePath}data/${fileName}`)
+      if (!response.ok) throw new Error(`${response.status}`)
+
+      const data = await response.json()
+      allFeatures.value = [...allFeatures.value, ...data]
+      loadedSources.value = new Set([...loadedSources.value, sourceName])
+      console.log(`✓ Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
+
+      // Rebuild photo lookups with the expanded dataset
+      rebuildPhotoLookups()
+    } catch (e) {
+      console.error(`❌ Failed to load ${sourceName}:`, e)
+    } finally {
+      const next = new Set(sourceLoading.value)
+      next.delete(sourceName)
+      sourceLoading.value = next
+    }
+  }
+
+  /**
+   * Ensure all sources referenced by the current filter are loaded.
+   */
+  const loadSourcesForFilters = async () => {
+    const needed = filters.value.source.filter(s => !loadedSources.value.has(s))
+    await Promise.all(needed.map(s => loadSource(s)))
+  }
+
+  /**
+   * Rebuild both photo lookups from allFeatures + imageSupplement.
+   */
+  const rebuildPhotoLookups = () => {
+    const combined = [...allFeatures.value, ...imageSupplement.value]
+    buildPhotoLookup(combined)
+    buildMimicryPhotoLookup(combined)
   }
 
   /**
@@ -561,15 +624,8 @@ export const useDataStore = defineStore('data', () => {
     return Array.from(set).sort()
   })
 
-  // Unique data sources
-  const uniqueSources = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.source)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
+  // Unique data sources — always show all known sources (even if not yet loaded)
+  const uniqueSources = computed(() => KNOWN_SOURCES)
 
   // Unique countries
   const uniqueCountries = computed(() => {
@@ -614,6 +670,15 @@ export const useDataStore = defineStore('data', () => {
   // When species changes, reset subspecies
   watch(() => filters.value.species, () => {
     filters.value.subspecies = []
+  }, { deep: true })
+
+  // When source filter changes, lazy-load any unloaded sources
+  watch(() => filters.value.source, async (selectedSources) => {
+    for (const source of selectedSources) {
+      if (!loadedSources.value.has(source)) {
+        await loadSource(source)
+      }
+    }
   }, { deep: true })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1343,6 +1408,8 @@ export const useDataStore = defineStore('data', () => {
     // State
     loading,
     allFeatures,
+    loadedSources,
+    sourceLoading,
     filters,
     showAdvancedFilters,
     showMimicryFilter,
@@ -1367,6 +1434,7 @@ export const useDataStore = defineStore('data', () => {
 
     // Actions
     loadMapData,
+    loadSource,
     resetAllFilters,
     toggleAdvancedFilters,
     toggleMimicryFilter,

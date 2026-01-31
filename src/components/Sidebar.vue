@@ -595,7 +595,10 @@ const updateExportHeight = (value) => {
           placeholder="Select sources..."
           :multiple="true"
         />
-        <p class="filter-hint" v-if="store.filters.source.length === 0">
+        <p class="filter-hint" v-if="store.sourceLoading.size > 0">
+          Loading {{ [...store.sourceLoading].join(', ') }}...
+        </p>
+        <p class="filter-hint" v-else-if="store.filters.source.length === 0">
           No sources selected - showing all data
         </p>
       </div>
