@@ -1040,10 +1040,6 @@ watch(
   flex-shrink: 0;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 .search-clear {
   display: flex;
   align-items: center;

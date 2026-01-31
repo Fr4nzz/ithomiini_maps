@@ -11,6 +11,28 @@ import {
   buildColoredShapeExpression
 } from '../utils/shapes'
 
+// Remove a map layer and its source if they exist
+function removeLayerAndSource(map, layerId, sourceId) {
+  if (map.getLayer(layerId)) map.removeLayer(layerId)
+  if (sourceId && map.getSource(sourceId)) map.removeSource(sourceId)
+}
+
+// Generate a circle polygon approximation for a given center and radius
+function generateCirclePolygon(centerLng, centerLat, radiusKm, points = 64) {
+  const coords = []
+  const kmPerDegreeLat = 111.32
+  const kmPerDegreeLng = 111.32 * Math.cos(centerLat * Math.PI / 180)
+
+  for (let i = 0; i <= points; i++) {
+    const angle = (2 * Math.PI * i) / points
+    const latOffset = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
+    const lngOffset = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
+    coords.push([centerLng + lngOffset, centerLat + latOffset])
+  }
+
+  return coords
+}
+
 // Map style configurations - organized by theme
 export const MAP_STYLES = {
   // Day themes
@@ -381,22 +403,6 @@ export function useExportPreview(containerSize) {
 export function useScatterVisualization(map) {
   const store = useDataStore()
 
-  // Generate a circle polygon approximation for a given center and radius
-  const generateCirclePolygon = (centerLng, centerLat, radiusKm, points = 64) => {
-    const coords = []
-    const kmPerDegreeLat = 111.32
-    const kmPerDegreeLng = 111.32 * Math.cos(centerLat * Math.PI / 180)
-
-    for (let i = 0; i <= points; i++) {
-      const angle = (2 * Math.PI * i) / points
-      const latOffset = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
-      const lngOffset = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
-      coords.push([centerLng + lngOffset, centerLat + latOffset])
-    }
-
-    return coords
-  }
-
   // Build GeoJSON for scatter visualization (circle polygons only)
   const buildScatterVisualizationGeoJSON = () => {
     const data = store.scatterVisualizationData
@@ -424,12 +430,8 @@ export function useScatterVisualization(map) {
     const sourceIds = ['scatter-circles-source']
 
     // Remove existing layers and sources
-    layerIds.forEach(id => {
-      if (map.value.getLayer(id)) map.value.removeLayer(id)
-    })
-    sourceIds.forEach(id => {
-      if (map.value.getSource(id)) map.value.removeSource(id)
-    })
+    layerIds.forEach(id => removeLayerAndSource(map.value, id))
+    sourceIds.forEach(id => removeLayerAndSource(map.value, null, id))
 
     // Only add if scatter is enabled and there's data
     if (!store.scatterOverlappingPoints) return
@@ -524,22 +526,6 @@ export function useDataLayer(map, options = {}) {
   // Timestamp of last params update - used to prevent clearing immediately after creation
   let lastParamsUpdateTime = 0
 
-  // Generate a circle polygon for geographic radius display
-  const generateGeoCircle = (centerLng, centerLat, radiusKm, points = 64) => {
-    const coords = []
-    const kmPerDegreeLat = 111.32
-    const kmPerDegreeLng = 111.32 * Math.cos(centerLat * Math.PI / 180)
-
-    for (let i = 0; i <= points; i++) {
-      const angle = (2 * Math.PI * i) / points
-      const latOffset = (radiusKm / kmPerDegreeLat) * Math.cos(angle)
-      const lngOffset = (radiusKm / kmPerDegreeLng) * Math.sin(angle)
-      coords.push([centerLng + lngOffset, centerLat + latOffset])
-    }
-
-    return coords
-  }
-
   // Store cluster features for the selected cluster (for showing individual points)
   const currentClusterFeatures = ref(null)
 
@@ -548,12 +534,7 @@ export function useDataLayer(map, options = {}) {
     if (!map.value || !map.value.isStyleLoaded()) return
 
     // Remove existing layer if present
-    if (map.value.getLayer('cluster-points-layer')) {
-      map.value.removeLayer('cluster-points-layer')
-    }
-    if (map.value.getSource('cluster-points-source')) {
-      map.value.removeSource('cluster-points-source')
-    }
+    removeLayerAndSource(map.value, 'cluster-points-layer', 'cluster-points-source')
 
     // Check if showClusterPoints is enabled
     if (!store.clusterSettings.showClusterPoints || !features || features.length === 0) {
@@ -613,12 +594,7 @@ export function useDataLayer(map, options = {}) {
 
     if (!map.value) return
 
-    if (map.value.getLayer('cluster-points-layer')) {
-      map.value.removeLayer('cluster-points-layer')
-    }
-    if (map.value.getSource('cluster-points-source')) {
-      map.value.removeSource('cluster-points-source')
-    }
+    removeLayerAndSource(map.value, 'cluster-points-layer', 'cluster-points-source')
   }
 
   // Recreate cluster points layer (called after style change)
@@ -644,21 +620,14 @@ export function useDataLayer(map, options = {}) {
     }
 
     // Remove existing dynamic extent layer if present
-    if (map.value.getLayer('cluster-extent-dynamic')) {
-      map.value.removeLayer('cluster-extent-dynamic')
-    }
-    if (map.value.getLayer('cluster-extent-dynamic-outline')) {
-      map.value.removeLayer('cluster-extent-dynamic-outline')
-    }
-    if (map.value.getSource('cluster-extent-dynamic-source')) {
-      map.value.removeSource('cluster-extent-dynamic-source')
-    }
+    removeLayerAndSource(map.value, 'cluster-extent-dynamic')
+    removeLayerAndSource(map.value, 'cluster-extent-dynamic-outline', 'cluster-extent-dynamic-source')
 
     // Don't draw if radius is 0 or very small
     if (radiusKm < 0.1) return
 
     // Create GeoJSON circle polygon
-    const circleCoords = generateGeoCircle(centerLng, centerLat, radiusKm)
+    const circleCoords = generateCirclePolygon(centerLng, centerLat, radiusKm)
     const circleGeoJSON = {
       type: 'FeatureCollection',
       features: [{
@@ -785,15 +754,8 @@ export function useDataLayer(map, options = {}) {
 
     if (!map.value) return
 
-    if (map.value.getLayer('cluster-extent-dynamic')) {
-      map.value.removeLayer('cluster-extent-dynamic')
-    }
-    if (map.value.getLayer('cluster-extent-dynamic-outline')) {
-      map.value.removeLayer('cluster-extent-dynamic-outline')
-    }
-    if (map.value.getSource('cluster-extent-dynamic-source')) {
-      map.value.removeSource('cluster-extent-dynamic-source')
-    }
+    removeLayerAndSource(map.value, 'cluster-extent-dynamic')
+    removeLayerAndSource(map.value, 'cluster-extent-dynamic-outline', 'cluster-extent-dynamic-source')
   }
 
   const addDataLayer = (layerOptions = {}) => {
@@ -802,21 +764,12 @@ export function useDataLayer(map, options = {}) {
     if (!map.value) return
 
     // Remove existing layers/sources if they exist
-    const layersToRemove = [
-      'clusters',
-      'cluster-count',
-      'cluster-extent-dynamic',
-      'cluster-extent-dynamic-outline',
-      'cluster-points-layer',
-      'points-layer',
-      'points-highlight'
-    ]
-    layersToRemove.forEach(layer => {
-      if (map.value.getLayer(layer)) map.value.removeLayer(layer)
-    })
-    if (map.value.getSource('points-source')) map.value.removeSource('points-source')
-    if (map.value.getSource('cluster-extent-dynamic-source')) map.value.removeSource('cluster-extent-dynamic-source')
-    if (map.value.getSource('cluster-points-source')) map.value.removeSource('cluster-points-source')
+    ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
+      'cluster-extent-dynamic-outline', 'cluster-points-layer',
+      'points-layer', 'points-highlight'
+    ].forEach(id => removeLayerAndSource(map.value, id))
+    ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source'
+    ].forEach(id => removeLayerAndSource(map.value, null, id))
 
     const geojson = store.displayGeoJSON
     if (!geojson) return
@@ -1392,15 +1345,8 @@ export function useCountryBoundaries(map) {
     if (!map.value || !map.value.isStyleLoaded()) return
 
     // Remove existing layers if present
-    if (map.value.getLayer('country-boundaries-fill')) {
-      map.value.removeLayer('country-boundaries-fill')
-    }
-    if (map.value.getLayer('country-boundaries-line')) {
-      map.value.removeLayer('country-boundaries-line')
-    }
-    if (map.value.getSource('country-boundaries')) {
-      map.value.removeSource('country-boundaries')
-    }
+    removeLayerAndSource(map.value, 'country-boundaries-fill')
+    removeLayerAndSource(map.value, 'country-boundaries-line', 'country-boundaries')
 
     if (!showBoundaries.value) return
 
@@ -1447,16 +1393,9 @@ export function useCountryBoundaries(map) {
     addBoundariesLayer()
   }
 
-  const setBoundaries = (value) => {
-    showBoundaries.value = value
-    addBoundariesLayer()
-  }
-
   return {
     showBoundaries,
-    boundariesLoaded,
     toggleBoundaries,
-    setBoundaries,
     addBoundariesLayer
   }
 }

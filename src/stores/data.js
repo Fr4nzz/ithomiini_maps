@@ -4,18 +4,9 @@ import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
 import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
 import { useLegendStore } from './legend'
-import { usePersistenceStore } from './persistence'
+import { getStorage, setStorage } from '../utils/storageHelpers'
 
 export const useDataStore = defineStore('data', () => {
-  // ═══════════════════════════════════════════════════════════════════════════
-  // PERSISTENCE HELPERS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  const persistenceStore = usePersistenceStore()
-
-  const getStorage = (key, defaultValue) => persistenceStore.get(key, defaultValue)
-  const setStorage = (key, value) => persistenceStore.set(key, value)
-
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════════════════
@@ -557,65 +548,19 @@ export const useDataStore = defineStore('data', () => {
            cleaned !== 'none'
   }
 
+  // Helper to extract unique sorted values from a data array
+  const uniqueValuesOf = (data, field) =>
+    Array.from(new Set(data.map(i => i[field]).filter(isValidValue))).sort()
+
   // Unique values at each level (based on parent selections)
-  const uniqueFamilies = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.family)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueTribes = computed(() => {
-    const subset = getFilteredSubset(1) // After family filter
-    const set = new Set(
-      subset
-        .map(i => i.tribe)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueGenera = computed(() => {
-    const subset = getFilteredSubset(2) // After tribe filter
-    const set = new Set(
-      subset
-        .map(i => i.genus)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueSpecies = computed(() => {
-    const subset = getFilteredSubset(3) // After genus filter
-    const set = new Set(
-      subset
-        .map(i => i.scientific_name)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueSubspecies = computed(() => {
-    const subset = getFilteredSubset(4) // After species filter
-    const set = new Set(
-      subset
-        .map(i => i.subspecies)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueFamilies = computed(() => uniqueValuesOf(allFeatures.value, 'family'))
+  const uniqueTribes = computed(() => uniqueValuesOf(getFilteredSubset(1), 'tribe'))
+  const uniqueGenera = computed(() => uniqueValuesOf(getFilteredSubset(2), 'genus'))
+  const uniqueSpecies = computed(() => uniqueValuesOf(getFilteredSubset(3), 'scientific_name'))
+  const uniqueSubspecies = computed(() => uniqueValuesOf(getFilteredSubset(4), 'subspecies'))
 
   // Mimicry rings - always show ALL options (non-cascading)
-  const uniqueMimicry = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.mimicry_ring)
-        .filter(v => v && v !== 'Unknown' && isValidValue(v))
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueMimicry = computed(() => uniqueValuesOf(allFeatures.value, 'mimicry_ring'))
 
   // Available mimicry rings based on current taxonomy filter (species/genus)
   // These are rings that would return results if selected
@@ -639,12 +584,7 @@ export const useDataStore = defineStore('data', () => {
       data = data.filter(i => filters.value.subspecies.includes(i.subspecies))
     }
 
-    const set = new Set(
-      data
-        .map(i => i.mimicry_ring)
-        .filter(v => v && v !== 'Unknown' && isValidValue(v))
-    )
-    return Array.from(set).sort()
+    return uniqueValuesOf(data, 'mimicry_ring')
   })
 
   // Unavailable mimicry rings - rings that exist but would return no results
@@ -654,35 +594,16 @@ export const useDataStore = defineStore('data', () => {
   })
 
   // Unique sequencing statuses
-  const uniqueStatuses = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.sequencing_status)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueStatuses = computed(() => uniqueValuesOf(allFeatures.value, 'sequencing_status'))
 
   // Unique data sources — always show all known sources (even if not yet loaded)
   const uniqueSources = computed(() => Object.keys(sourceConfig.value))
 
   // Unique countries
-  const uniqueCountries = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.country)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueCountries = computed(() => uniqueValuesOf(allFeatures.value, 'country'))
 
   // Unique CAMIDs for autocomplete (sorted for binary search potential)
-  const uniqueCamids = computed(() => {
-    return allFeatures.value
-      .map(i => i.id)
-      .filter(id => id && typeof id === 'string')
-      .sort()
-  })
+  const uniqueCamids = computed(() => uniqueValuesOf(allFeatures.value, 'id'))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // CASCADE RESET WATCHERS

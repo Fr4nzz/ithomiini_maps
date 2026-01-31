@@ -17,19 +17,6 @@
                  'Helvetica Neue', Arial, sans-serif;
   --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
 
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.85rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.1rem;
-  --font-size-xl: 1.25rem;
-
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 6px;
@@ -40,12 +27,9 @@
   /* Shadows */
   --shadow-sm: 0 1px 2px var(--color-shadow-color-light);
   --shadow-md: 0 4px 8px var(--color-shadow-color);
-  --shadow-lg: 0 8px 16px var(--color-shadow-color);
-
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 200ms ease;
-  --transition-slow: 300ms ease;
 }
 
 /* Base Styles */
@@ -223,6 +207,12 @@ select, input, textarea {
   color: #aaa !important;
   border-color: #666 !important;
   font-size: 10px !important;
+}
+
+/* Shared Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* Print Styles */

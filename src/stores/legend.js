@@ -1,19 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { usePersistenceStore } from './persistence'
 import { useDataStore } from './data'
 import { applyAbbreviationFormat } from '../utils/abbreviations'
-
-// Helper to get/set localStorage with fallback (uses persistence store)
-const getStorage = (key, defaultValue) => {
-  const persistenceStore = usePersistenceStore()
-  return persistenceStore.get(key, defaultValue)
-}
-
-const setStorage = (key, value) => {
-  const persistenceStore = usePersistenceStore()
-  persistenceStore.set(key, value)
-}
+import { getStorage, setStorage } from '../utils/storageHelpers'
 
 export const useLegendStore = defineStore('legend', () => {
   // Lazy getter for data store (avoid circular dependency)

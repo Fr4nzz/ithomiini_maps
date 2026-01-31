@@ -1816,11 +1816,6 @@ const updateExportHeight = (value) => {
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .update-message {
   padding: 10px 12px;
   border-radius: 6px;
