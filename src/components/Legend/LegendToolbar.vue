@@ -410,7 +410,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
-  border: 1px solid var(--color-accent, #4ade80); /* Accent border when visible */
+  border: 1px solid var(--color-border, #3d3d5c); /* Normal border — NOT accent green */
   border-bottom: none; /* Merge with legend below */
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
   border-radius: 8px 8px 0 0; /* Only round top corners */

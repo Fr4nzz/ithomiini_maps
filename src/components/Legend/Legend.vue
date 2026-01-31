@@ -7,7 +7,7 @@ import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
-import LegendResizeHandle from './LegendResizeHandle.vue'
+// LegendResizeHandle replaced by inline multi-directional resize zones
 import LegendGroupHeader from './LegendGroupHeader.vue'
 import LegendGroupStylePopup from './LegendGroupStylePopup.vue'
 
@@ -29,6 +29,20 @@ const isDragging = ref(false)
 const isResizing = ref(false)
 const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
 const contentMaxHeight = ref(null) // Max height for content during hover to prevent growing
+const adjustingUp = ref(false) // Track increase phase in adjustItemsToFit
+const settledMaxItems = ref(null) // Track settled count to prevent re-trying increase
+const adjustedDuringHover = ref(false) // Track if adjustItemsToFit ran while hovered (headers visible)
+
+// Multi-directional resize state
+const resizeDirection = ref(null) // 'n'|'s'|'e'|'w'|'ne'|'nw'|'se'|'sw'
+const resizeStartMousePos = ref({ x: 0, y: 0 })
+const resizeStartSize = ref({ width: 0, height: 0 })
+const resizeStartLegendPos = ref({ x: 0, y: 0 })
+const resizeOverride = ref(null) // { x, y, width, height } during active resize
+
+// Legend resize observer (for bottom-sticky repositioning)
+let legendResizeObserver = null
+let lastLegendHeight = 0
 
 // Popup state
 const stylePopupState = ref({
@@ -445,9 +459,9 @@ const autoWidth = computed(() => {
   return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
 })
 
-// Max legend height based on container (75% of map height)
+// Max legend height based on container (80% of map height)
 const maxLegendHeight = computed(() => {
-  return Math.floor(containerBounds.value.height * 0.75)
+  return Math.floor(containerBounds.value.height * 0.80)
 })
 
 // Dynamic item limit — adjusted after render to eliminate scrollbar.
@@ -462,15 +476,36 @@ const effectiveMaxItems = computed(() => {
   const fontSizePx = Math.round(14 * legendStore.textScale)
   // Generous estimate for wrapped text (allows 2-line items)
   const itemHeight = legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10
+  const headerHeight = fontSizePx + 10
   const titleHeight = 32
   const padding = 24
 
   const available = maxLegendHeight.value - titleHeight - padding
-  const groupOverhead = legendStore.isGrouped ? 1.2 : 1.0
-  const effectiveItemHeight = itemHeight * groupOverhead
+
+  // Compute group overhead from actual data instead of fixed multiplier.
+  // When grouped, each species gets a header row. If most species have only
+  // 1 subspecies (common in abundance sort), overhead approaches 2x, not 1.2x.
+  // Headers are visible either when showHeaders is true OR during hover
+  // (hidden headers become display:flex when hovered).
+  let effectiveItemHeight = itemHeight
+  const headersVisible = legendStore.isGrouped &&
+    (legendStore.groupingSettings.showHeaders || isHovered.value)
+  if (headersVisible) {
+    const allItems = sortedAllItems.value
+    const sampleSize = Math.min(20, allItems.length)
+    if (sampleSize > 0) {
+      const speciesSeen = new Set()
+      for (let i = 0; i < sampleSize; i++) {
+        const species = getSpeciesForSubspecies(allItems[i].label)
+        if (species) speciesSeen.add(species)
+      }
+      // Each group header adds headerHeight per (items/groups) items
+      const headersPerItem = speciesSeen.size / sampleSize
+      effectiveItemHeight = itemHeight + headersPerItem * headerHeight
+    }
+  }
 
   const est = Math.max(1, Math.floor(available / effectiveItemHeight))
-  console.debug(`[Legend] effectiveMaxItems estimate: ${est} (maxH=${maxLegendHeight.value}, avail=${available}, itemH=${effectiveItemHeight.toFixed(1)})`)
   return est
 })
 
@@ -527,6 +562,17 @@ const fontSize = computed(() => Math.round(14 * legendStore.textScale))
 
 // Position style
 const positionStyle = computed(() => {
+  // During active resize, use override for immediate visual feedback
+  if (resizeOverride.value) {
+    return {
+      width: resizeOverride.value.width + 'px',
+      height: resizeOverride.value.height + 'px',
+      maxHeight: maxLegendHeight.value + 'px',
+      left: resizeOverride.value.x + 'px',
+      top: resizeOverride.value.y + 'px'
+    }
+  }
+
   const style = {
     width: effectiveWidth.value + 'px',
     maxHeight: maxLegendHeight.value + 'px'
@@ -543,10 +589,15 @@ const positionStyle = computed(() => {
   // X position
   style.left = posX.value + 'px'
 
-  // Height - use effective height for auto mode, or manual height
-  const h = effectiveHeight.value
-  if (h && h !== 'auto') {
-    style.height = h + 'px'
+  // Height - only set explicit height in manual mode (user has resized).
+  // In auto mode, let the container size to its content, capped by maxHeight.
+  // This allows adjustItemsToFit() to correctly detect overflow by comparing
+  // scrollHeight vs maxLegendHeight.
+  if (!isAutoHeight.value) {
+    const h = effectiveHeight.value
+    if (h && h !== 'auto') {
+      style.height = h + 'px'
+    }
   }
 
   return style
@@ -569,6 +620,17 @@ function handleMouseLeave() {
   isHovered.value = false
   // Release the height constraint when mouse leaves
   contentMaxHeight.value = null
+
+  // If adjustItemsToFit ran while hovered (with group headers visible),
+  // the item count was reduced to accommodate headers. Now that headers
+  // are hidden again (display:none), re-adjust to fill the freed space.
+  if (adjustedDuringHover.value) {
+    adjustedDuringHover.value = false
+    itemLimitOverride.value = null
+    adjustingUp.value = false
+    settledMaxItems.value = null
+    nextTick(() => nextTick(() => adjustItemsToFit()))
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -678,24 +740,124 @@ function endDrag() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// RESIZE HANDLING
+// MULTI-DIRECTIONAL RESIZE HANDLING
 // ═══════════════════════════════════════════════════════════════════════════
 
-function onResizeStart() {
+function startResize(e, direction) {
+  e.preventDefault()
+  e.stopPropagation()
+
   isResizing.value = true
+  resizeDirection.value = direction
+  resizeStartMousePos.value = { x: e.clientX, y: e.clientY }
+
+  const el = legendRef.value
+  if (el) {
+    resizeStartSize.value = { width: el.offsetWidth, height: el.offsetHeight }
+  }
+  resizeStartLegendPos.value = { x: posX.value, y: posY.value ?? 0 }
+
+  // Clear contentMaxHeight so content can fill new size during resize
+  contentMaxHeight.value = null
+
+  document.addEventListener('mousemove', onResizeDrag)
+  document.addEventListener('mouseup', endResizeDrag)
 }
 
-function onResize({ width, height }) {
-  currentWidth.value = width
-  if (height) {
+function onResizeDrag(e) {
+  if (!isResizing.value || !resizeDirection.value) return
+
+  const deltaX = e.clientX - resizeStartMousePos.value.x
+  const deltaY = e.clientY - resizeStartMousePos.value.y
+  const dir = resizeDirection.value
+
+  let newWidth = resizeStartSize.value.width
+  let newHeight = resizeStartSize.value.height
+  let newX = resizeStartLegendPos.value.x
+  let newY = resizeStartLegendPos.value.y
+
+  const minW = 150
+  const maxW = maxResizeWidth.value
+  const minH = 100
+  const maxH = maxLegendHeight.value
+
+  // Width changes
+  if (dir.includes('e')) {
+    newWidth = Math.min(maxW, Math.max(minW, resizeStartSize.value.width + deltaX))
+  } else if (dir.includes('w')) {
+    const proposedWidth = Math.min(maxW, Math.max(minW, resizeStartSize.value.width - deltaX))
+    // Move left edge: keep right edge fixed
+    newX = resizeStartLegendPos.value.x + (resizeStartSize.value.width - proposedWidth)
+    newWidth = proposedWidth
+  }
+
+  // Height changes
+  if (dir.includes('s')) {
+    newHeight = Math.min(maxH, Math.max(minH, resizeStartSize.value.height + deltaY))
+  } else if (dir.includes('n')) {
+    const proposedHeight = Math.min(maxH, Math.max(minH, resizeStartSize.value.height - deltaY))
+    // Move top edge: keep bottom edge fixed
+    newY = resizeStartLegendPos.value.y + (resizeStartSize.value.height - proposedHeight)
+    newHeight = proposedHeight
+  }
+
+  // Apply via override for immediate visual feedback
+  resizeOverride.value = { x: newX, y: newY, width: newWidth, height: newHeight }
+}
+
+function endResizeDrag() {
+  if (isResizing.value && resizeOverride.value) {
+    const { x, y, width, height } = resizeOverride.value
+
+    // Commit position and size
+    posX.value = x
+    posY.value = y
+    currentWidth.value = width
     currentHeight.value = height
+
+    // Store values (switches from 'auto' to manual sizing)
+    legendStore.updateSize(width, height)
+    legendStore.updatePosition(x, y)
+
+    // Re-detect sticky edges at new position
+    detectStickyEdges()
+  }
+
+  isResizing.value = false
+  resizeDirection.value = null
+  resizeOverride.value = null
+
+  document.removeEventListener('mousemove', onResizeDrag)
+  document.removeEventListener('mouseup', endResizeDrag)
+}
+
+// Touch support for resize
+function startResizeTouch(e, direction) {
+  if (e.touches.length === 1) {
+    const touch = e.touches[0]
+    startResize({
+      clientX: touch.clientX,
+      clientY: touch.clientY,
+      preventDefault: () => e.preventDefault(),
+      stopPropagation: () => e.stopPropagation()
+    }, direction)
+
+    document.addEventListener('touchmove', onResizeTouchMove, { passive: false })
+    document.addEventListener('touchend', onResizeTouchEnd)
   }
 }
 
-function onResizeEnd() {
-  isResizing.value = false
-  // Store numeric values (switches from 'auto' to manual sizing)
-  legendStore.updateSize(currentWidth.value, currentHeight.value || 'auto')
+function onResizeTouchMove(e) {
+  if (e.touches.length === 1 && isResizing.value) {
+    onResizeDrag({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY })
+    e.preventDefault()
+  }
+}
+
+function onResizeTouchEnd() {
+  endResizeDrag()
+  document.removeEventListener('touchmove', onResizeTouchMove)
+  document.removeEventListener('touchend', onResizeTouchEnd)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1150,6 +1312,8 @@ onMounted(() => {
   // Initial item-fit adjustment after DOM is ready
   setTimeout(() => {
     adjustItemsToFit()
+    // Setup legend resize observer for bottom-sticky repositioning
+    setupLegendResizeObserver()
   }, 300)
 
   // Add window resize listener
@@ -1175,6 +1339,18 @@ onUnmounted(() => {
     containerResizeObserver.disconnect()
     containerResizeObserver = null
   }
+
+  // Clean up legend resize observer
+  if (legendResizeObserver) {
+    legendResizeObserver.disconnect()
+    legendResizeObserver = null
+  }
+
+  // Clean up resize drag listeners
+  document.removeEventListener('mousemove', onResizeDrag)
+  document.removeEventListener('mouseup', endResizeDrag)
+  document.removeEventListener('touchmove', onResizeTouchMove)
+  document.removeEventListener('touchend', onResizeTouchEnd)
 })
 
 // Debounced window resize handler
@@ -1231,7 +1407,7 @@ watch(autoHeight, (newAutoHeight) => {
   }
 })
 
-// Post-render adjustment: measure actual content height and reduce items if scrollbar appears.
+// Post-render adjustment: measure actual content height and reduce/increase items to fill space.
 // Watch sources that indicate the available space or content set changed (NOT legendItems,
 // which depends on effectiveMaxItems, to avoid circular updates).
 watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.sortOrder,
@@ -1239,6 +1415,10 @@ watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.so
   () => {
     // Reset override so the estimate recalculates from scratch
     itemLimitOverride.value = null
+    adjustingUp.value = false
+    settledMaxItems.value = null
+    // Clear hover height lock so adjustment isn't constrained by old layout
+    contentMaxHeight.value = null
 
     nextTick(() => {
       nextTick(() => {
@@ -1253,32 +1433,97 @@ function adjustItemsToFit() {
   const el = contentRef.value
   if (!el) return
 
+  // Track whether this adjustment ran during hover.
+  // When hovered with hidden-header groups, headers are visible (display:flex)
+  // and take up space, reducing the number of items that fit. On unhover,
+  // headers go back to display:none and a re-adjustment is needed.
+  if (isHovered.value) {
+    adjustedDuringHover.value = true
+  }
+
   const maxH = maxLegendHeight.value
   const scrollH = el.scrollHeight
-  const clientH = el.clientHeight
+  const totalAvailable = sortedAllItems.value.length
 
-  console.debug(
-    `[Legend] adjustItemsToFit: scrollH=${scrollH}, clientH=${clientH}, maxLegendH=${maxH}, ` +
-    `containerH=${containerBounds.value.height}, items=${legendItems.value.filter(i => i.visible).length}, ` +
-    `effectiveMax=${effectiveMaxItems.value}, override=${itemLimitOverride.value}`
-  )
+  // Compare content's full scroll height against max allowed legend height.
+  // Use maxH (not clientH) because:
+  // 1. clientH gets locked by contentMaxHeight during hover
+  // 2. clientH shrinks when the container auto-sizes to fewer items
+  // Both cause undershooting. maxH is a stable, reliable ceiling.
+  const overflows = scrollH > maxH + 2
 
-  // If content overflows, reduce items one by one
-  if (scrollH > clientH + 2 && itemLimitOverride.value === null) {
-    // Content overflows — progressively reduce
-    const currentCount = effectiveMaxItems.value
-    const newLimit = Math.max(1, currentCount - 1)
-    console.debug(`[Legend] Overflow detected (scrollH ${scrollH} > clientH ${clientH}). Reducing items from ${currentCount} to ${newLimit}`)
-    itemLimitOverride.value = newLimit
-    // Re-check after next render
+  if (overflows) {
+    if (adjustingUp.value) {
+      // Was trying to add items but it overflowed — revert last increase and stop
+      adjustingUp.value = false
+      const revertTo = Math.max(1, (itemLimitOverride.value || 2) - 1)
+      itemLimitOverride.value = revertTo
+      settledMaxItems.value = revertTo // Remember: this is the max that fits
+      return // Don't schedule another check — we know this count fits
+    }
+    // Normal reduction
+    if (itemLimitOverride.value === null) {
+      itemLimitOverride.value = Math.max(1, effectiveMaxItems.value - 1)
+    } else if (itemLimitOverride.value > 1) {
+      itemLimitOverride.value -= 1
+    } else {
+      return // Can't reduce further
+    }
     nextTick(() => nextTick(() => adjustItemsToFit()))
-  } else if (scrollH > clientH + 2 && itemLimitOverride.value !== null && itemLimitOverride.value > 1) {
-    // Still overflows — keep reducing
-    const newLimit = itemLimitOverride.value - 1
-    console.debug(`[Legend] Still overflowing. Reducing to ${newLimit}`)
-    itemLimitOverride.value = newLimit
-    nextTick(() => nextTick(() => adjustItemsToFit()))
+  } else {
+    // Content fits — try adding more items to fill available space
+    const currentLimit = effectiveMaxItems.value
+
+    // Don't retry increase if we already settled at this count
+    if (settledMaxItems.value !== null && currentLimit >= settledMaxItems.value) {
+      return
+    }
+
+    if (currentLimit < totalAvailable) {
+      adjustingUp.value = true
+      itemLimitOverride.value = (itemLimitOverride.value ?? currentLimit) + 1
+      nextTick(() => nextTick(() => adjustItemsToFit()))
+    } else {
+      // All items fit or at maximum
+      adjustingUp.value = false
+      settledMaxItems.value = currentLimit
+    }
   }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// BOTTOM-STICKY REPOSITIONING
+// ═══════════════════════════════════════════════════════════════════════════
+
+function repositionIfBottomSticky() {
+  if (!stickyEdge.value.bottom || !legendRef.value || posY.value === null) return
+  if (isDragging.value || isResizing.value) return
+
+  const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
+  const legendHeight = legendRef.value.offsetHeight
+  const margin = 10
+  const bottomMargin = margin + bottomAttributionMargin.value
+  const targetY = bounds.height - legendHeight - bottomMargin
+
+  if (Math.abs(posY.value - targetY) > 2) {
+    posY.value = targetY
+    legendStore.updatePosition(posX.value, posY.value)
+  }
+}
+
+function setupLegendResizeObserver() {
+  if (!legendRef.value || legendResizeObserver) return
+
+  lastLegendHeight = legendRef.value.offsetHeight
+
+  legendResizeObserver = new ResizeObserver((entries) => {
+    const newHeight = entries[0]?.contentRect?.height || 0
+    if (newHeight === 0 || Math.abs(newHeight - lastLegendHeight) < 2) return
+    lastLegendHeight = newHeight
+    repositionIfBottomSticky()
+  })
+
+  legendResizeObserver.observe(legendRef.value)
 }
 
 // Watch for container bounds changes (triggered by export mode toggle or other factors)
@@ -1499,17 +1744,22 @@ watch(isExportMode, (enabled, wasEnabled) => {
       </div>
     </div>
 
-    <!-- Resize handle (shown on hover) -->
-    <LegendResizeHandle
-      v-show="showToolbar"
-      :min-width="150"
-      :max-width="maxResizeWidth"
-      :min-height="100"
-      :max-height="maxLegendHeight"
-      @resize-start="onResizeStart"
-      @resize="onResize"
-      @resize-end="onResizeEnd"
-    />
+    <!-- Multi-directional resize zones (shown on hover) -->
+    <template v-if="showToolbar && !isExportMode">
+      <div class="resize-zone resize-n" @mousedown.stop.prevent="startResize($event, 'n')" @touchstart.stop.prevent="startResizeTouch($event, 'n')" />
+      <div class="resize-zone resize-s" @mousedown.stop.prevent="startResize($event, 's')" @touchstart.stop.prevent="startResizeTouch($event, 's')" />
+      <div class="resize-zone resize-e" @mousedown.stop.prevent="startResize($event, 'e')" @touchstart.stop.prevent="startResizeTouch($event, 'e')" />
+      <div class="resize-zone resize-w" @mousedown.stop.prevent="startResize($event, 'w')" @touchstart.stop.prevent="startResizeTouch($event, 'w')" />
+      <div class="resize-zone resize-ne" @mousedown.stop.prevent="startResize($event, 'ne')" @touchstart.stop.prevent="startResizeTouch($event, 'ne')" />
+      <div class="resize-zone resize-nw" @mousedown.stop.prevent="startResize($event, 'nw')" @touchstart.stop.prevent="startResizeTouch($event, 'nw')" />
+      <div class="resize-zone resize-se" @mousedown.stop.prevent="startResize($event, 'se')" @touchstart.stop.prevent="startResizeTouch($event, 'se')">
+        <!-- Visual affordance for SE corner -->
+        <svg viewBox="0 0 10 10" class="resize-icon">
+          <path d="M 8 2 L 2 8 M 8 5 L 5 8 M 8 8 L 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" />
+        </svg>
+      </div>
+      <div class="resize-zone resize-sw" @mousedown.stop.prevent="startResize($event, 'sw')" @touchstart.stop.prevent="startResizeTouch($event, 'sw')" />
+    </template>
 
     <!-- Group Style Popup -->
     <LegendGroupStylePopup
@@ -1537,7 +1787,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  z-index: 10;
+  z-index: 25; /* Above search bar (10) and map controls (20) so toolbar overlaps them */
   min-width: 150px;
   max-width: 600px;
   min-height: 80px;
@@ -1553,7 +1803,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 .legend-container.is-hovered:not(.is-export) {
   border-color: var(--color-accent, #4ade80);
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
-  border-radius: 0 0 8px 8px; /* Remove top corners when toolbar visible */
+  border-radius: 0 0 8px 8px; /* Flat top corners where toolbar connects */
 }
 
 .legend-container.is-dragging {
@@ -1575,8 +1825,10 @@ watch(isExportMode, (enabled, wasEnabled) => {
   padding: 12px 16px;
   overflow-y: auto;
   overflow-x: hidden;
-  flex: 1;
-  max-height: 100%;
+  /* flex-basis: auto so the container sizes to content, then max-height caps it.
+     flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .legend-container.is-export .legend-content {
@@ -1751,5 +2003,36 @@ watch(isExportMode, (enabled, wasEnabled) => {
   gap: 2px;
   margin-left: 16px;
   padding-left: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MULTI-DIRECTIONAL RESIZE ZONES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.resize-zone {
+  position: absolute;
+  z-index: 5;
+}
+
+/* Edge handles: thin invisible strips */
+.resize-n { top: -3px; left: 10px; right: 10px; height: 6px; cursor: n-resize; }
+.resize-s { bottom: -3px; left: 10px; right: 10px; height: 6px; cursor: s-resize; }
+.resize-e { right: -3px; top: 10px; bottom: 10px; width: 6px; cursor: e-resize; }
+.resize-w { left: -3px; top: 10px; bottom: 10px; width: 6px; cursor: w-resize; }
+
+/* Corner handles: small squares at each corner */
+.resize-ne { top: -3px; right: -3px; width: 12px; height: 12px; cursor: ne-resize; z-index: 6; }
+.resize-nw { top: -3px; left: -3px; width: 12px; height: 12px; cursor: nw-resize; z-index: 6; }
+.resize-se { bottom: -3px; right: -3px; width: 16px; height: 16px; cursor: se-resize; z-index: 6;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted, #666); border-radius: 0 0 8px 0; transition: color 0.15s ease; }
+.resize-sw { bottom: -3px; left: -3px; width: 12px; height: 12px; cursor: sw-resize; z-index: 6; }
+
+.resize-se:hover { color: var(--color-text-secondary, #aaa); }
+.legend-container.is-resizing .resize-se { color: var(--color-accent, #4ade80); }
+
+.resize-icon {
+  width: 10px;
+  height: 10px;
 }
 </style>
