@@ -1605,7 +1605,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
       <div v-for="dir in resizeDirections" :key="dir"
            :class="['resize-zone', `resize-${dir}`]"
            @mousedown.stop.prevent="startResize($event, dir)"
-           @touchstart.stop.prevent="startResizeTouch($event, dir)">
+           @touchstart.stop="startResizeTouch($event, dir)">
         <!-- Visual affordance for SE corner -->
         <svg v-if="dir === 'se'" viewBox="0 0 10 10" class="resize-icon">
           <path d="M 8 2 L 2 8 M 8 5 L 5 8 M 8 8 L 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" />
@@ -1864,6 +1864,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 .resize-zone {
   position: absolute;
   z-index: 5;
+  touch-action: none;
 }
 
 /* Edge handles: thin invisible strips */
