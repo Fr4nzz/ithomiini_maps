@@ -2,12 +2,12 @@
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
+import { useElementResize } from '../../composables/useElementResize'
 import { generateSpeciesBorderColors, generateSpeciesBaseHues } from '../../utils/colors'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
-// LegendResizeHandle replaced by inline multi-directional resize zones
 import LegendGroupHeader from './LegendGroupHeader.vue'
 import LegendGroupStylePopup from './LegendGroupStylePopup.vue'
 
@@ -26,19 +26,11 @@ const legendRef = ref(null)
 const contentRef = ref(null) // Reference to legend-content for height locking
 const isHovered = ref(false)
 const isDragging = ref(false)
-const isResizing = ref(false)
 const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
 const contentMaxHeight = ref(null) // Max height for content during hover to prevent growing
 const adjustingUp = ref(false) // Track increase phase in adjustItemsToFit
 const settledMaxItems = ref(null) // Track settled count to prevent re-trying increase
 const adjustedDuringHover = ref(false) // Track if adjustItemsToFit ran while hovered (headers visible)
-
-// Multi-directional resize state
-const resizeDirection = ref(null) // 'n'|'s'|'e'|'w'|'ne'|'nw'|'se'|'sw'
-const resizeStartMousePos = ref({ x: 0, y: 0 })
-const resizeStartSize = ref({ width: 0, height: 0 })
-const resizeStartLegendPos = ref({ x: 0, y: 0 })
-const resizeOverride = ref(null) // { x, y, width, height } during active resize
 
 // Legend resize observer (for bottom-sticky repositioning)
 let legendResizeObserver = null
@@ -91,11 +83,9 @@ const bottomAttributionMargin = computed(() => {
   return attributionHeight.value
 })
 
-// Should show toolbar? (hidden by default, shown on hover OR when popup is open)
-const showToolbar = computed(() => isHovered.value || hasOpenPopup.value)
-
-// Should show edit UI? (editable on hover OR when popup is open)
+// Should show toolbar/edit UI? (hidden by default, shown on hover OR when popup is open)
 const showEditUI = computed(() => isHovered.value || hasOpenPopup.value)
+const showToolbar = showEditUI
 
 // Track if any popup is open (keeps legend interactive)
 const hasModalOpen = computed(() => stylePopupState.value.open)
@@ -283,93 +273,78 @@ function sortItemsByAbundance(items, order, counts) {
   })
 }
 
+function groupItemsBySpecies(items) {
+  const bySpecies = {}
+  for (const item of items) {
+    const species = getSpeciesForSubspecies(item.label)
+    if (species) {
+      if (!bySpecies[species]) bySpecies[species] = []
+      bySpecies[species].push(item)
+    }
+  }
+  return bySpecies
+}
+
+function sortGroups(groups, sortBy, sortOrder, counts) {
+  if (sortBy === 'abundance') {
+    groups.sort((a, b) => {
+      const totalA = a.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
+      const totalB = b.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
+      return sortOrder === 'asc' ? totalA - totalB : totalB - totalA
+    })
+  } else {
+    groups.sort((a, b) => {
+      const textA = a.species.toLowerCase()
+      const textB = b.species.toLowerCase()
+      return sortOrder === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
+    })
+  }
+  return groups
+}
+
+function buildGroupData(species, items, sortByVal, sortOrderVal, counts) {
+  let customLabel = legendStore.getSpeciesDisplayName(species)
+  if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
+    customLabel = applyAbbreviationFormat(species, legendStore.displayNameFormat)
+  }
+
+  let mappedItems = items.map(item => ({
+    ...item,
+    displayLabel: formatLabel(item.label, species)
+  }))
+
+  mappedItems = sortByVal === 'abundance'
+    ? sortItemsByAbundance(mappedItems, sortOrderVal, counts)
+    : sortItemsByText(mappedItems, sortOrderVal)
+
+  return {
+    species,
+    borderColor: getSpeciesBorderColor(species),
+    baseHue: speciesBaseHues.value[species] || 210,
+    shape: legendStore.getGroupShape(species),
+    abbreviation: legendStore.getSpeciesAbbreviation(species),
+    abbreviationVisible: legendStore.isAbbreviationVisible(species),
+    customLabel: customLabel || '',
+    items: mappedItems
+  }
+}
+
 // Grouped legend data structure
 const groupedLegendData = computed(() => {
   const sortByVal = legendStore.sortBy
   const sortOrderVal = legendStore.sortOrder
   const counts = subspeciesCounts.value
 
-  // If not grouped mode or not in subspecies colorBy, return flat
-  // Items are already sorted in sortedAllItems and sliced in legendItems
   if (!legendStore.isGrouped) {
     return { type: 'flat', items: legendItems.value.slice() }
   }
 
-  // Group items by species
-  const groups = []
-  const itemsBySpecies = {}
+  const itemsBySpecies = groupItemsBySpecies(legendItems.value)
+  const groups = Object.keys(itemsBySpecies).map(species =>
+    buildGroupData(species, itemsBySpecies[species], sortByVal, sortOrderVal, counts)
+  )
 
-  // First, categorize items by species
-  for (const item of legendItems.value) {
-    const species = getSpeciesForSubspecies(item.label)
-    if (species) {
-      if (!itemsBySpecies[species]) {
-        itemsBySpecies[species] = []
-      }
-      itemsBySpecies[species].push(item)
-    }
-  }
-
-  // Build groups
-  for (const species of Object.keys(itemsBySpecies)) {
-    const items = itemsBySpecies[species]
-
-    // Get custom display name - either per-species or apply global format
-    let customLabel = legendStore.getSpeciesDisplayName(species)
-    if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
-      // If global format is not default, apply it
-      customLabel = applyAbbreviationFormat(species, legendStore.displayNameFormat)
-    }
-
-    // Map items with display labels
-    let mappedItems = items.map(item => ({
-      ...item,
-      displayLabel: formatLabel(item.label, species)
-    }))
-
-    // Sort items within group
-    if (sortByVal === 'abundance') {
-      mappedItems = sortItemsByAbundance(mappedItems, sortOrderVal, counts)
-    } else {
-      mappedItems = sortItemsByText(mappedItems, sortOrderVal)
-    }
-
-    groups.push({
-      species,
-      borderColor: getSpeciesBorderColor(species),
-      baseHue: speciesBaseHues.value[species] || 210,
-      shape: legendStore.getGroupShape(species),
-      abbreviation: legendStore.getSpeciesAbbreviation(species),
-      abbreviationVisible: legendStore.isAbbreviationVisible(species),
-      customLabel: customLabel || '',
-      hasCustomizedStyle: hasCustomizedStyle(species),
-      items: mappedItems
-    })
-  }
-
-  // Sort groups
-  if (sortByVal === 'abundance') {
-    groups.sort((a, b) => {
-      const totalA = a.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
-      const totalB = b.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
-      return sortOrderVal === 'asc' ? totalA - totalB : totalB - totalA
-    })
-  } else {
-    groups.sort((a, b) => {
-      const textA = a.species.toLowerCase()
-      const textB = b.species.toLowerCase()
-      return sortOrderVal === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
-    })
-  }
-
-  return { type: 'grouped', groups }
-})
-
-// Count of hidden items
-const hiddenCount = computed(() => {
-  const total = Object.keys(colorMap.value).length
-  const visible = legendItems.value.filter(i => i.visible).length
-  return total - visible
+  return { type: 'grouped', groups: sortGroups(groups, sortByVal, sortOrderVal, counts) }
 })
 
 // More items indicator (based on visible items that didn't fit)
@@ -556,6 +531,22 @@ const maxResizeWidth = computed(() => {
   return Math.min(Math.round(containerBounds.value.width * 0.5), 600)
 })
 
+// Multi-directional resize (composable handles all mouse/touch events)
+const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
+  getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
+  getLimits: () => ({ minW: 150, maxW: maxResizeWidth.value, minH: 100, maxH: maxLegendHeight.value }),
+  onStart: () => { contentMaxHeight.value = null },
+  onEnd: ({ x, y, width, height }) => {
+    posX.value = x
+    posY.value = y
+    currentWidth.value = width
+    currentHeight.value = height
+    legendStore.updateSize(width, height)
+    legendStore.updatePosition(x, y)
+    detectStickyEdges()
+  }
+})
+
 // Scaled sizes
 const dotSize = computed(() => Math.round(10 * legendStore.dotScale))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
@@ -737,127 +728,6 @@ function endDrag() {
   document.removeEventListener('mouseup', endDrag)
   document.removeEventListener('touchmove', onDrag)
   document.removeEventListener('touchend', endDrag)
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// MULTI-DIRECTIONAL RESIZE HANDLING
-// ═══════════════════════════════════════════════════════════════════════════
-
-function startResize(e, direction) {
-  e.preventDefault()
-  e.stopPropagation()
-
-  isResizing.value = true
-  resizeDirection.value = direction
-  resizeStartMousePos.value = { x: e.clientX, y: e.clientY }
-
-  const el = legendRef.value
-  if (el) {
-    resizeStartSize.value = { width: el.offsetWidth, height: el.offsetHeight }
-  }
-  resizeStartLegendPos.value = { x: posX.value, y: posY.value ?? 0 }
-
-  // Clear contentMaxHeight so content can fill new size during resize
-  contentMaxHeight.value = null
-
-  document.addEventListener('mousemove', onResizeDrag)
-  document.addEventListener('mouseup', endResizeDrag)
-}
-
-function onResizeDrag(e) {
-  if (!isResizing.value || !resizeDirection.value) return
-
-  const deltaX = e.clientX - resizeStartMousePos.value.x
-  const deltaY = e.clientY - resizeStartMousePos.value.y
-  const dir = resizeDirection.value
-
-  let newWidth = resizeStartSize.value.width
-  let newHeight = resizeStartSize.value.height
-  let newX = resizeStartLegendPos.value.x
-  let newY = resizeStartLegendPos.value.y
-
-  const minW = 150
-  const maxW = maxResizeWidth.value
-  const minH = 100
-  const maxH = maxLegendHeight.value
-
-  // Width changes
-  if (dir.includes('e')) {
-    newWidth = Math.min(maxW, Math.max(minW, resizeStartSize.value.width + deltaX))
-  } else if (dir.includes('w')) {
-    const proposedWidth = Math.min(maxW, Math.max(minW, resizeStartSize.value.width - deltaX))
-    // Move left edge: keep right edge fixed
-    newX = resizeStartLegendPos.value.x + (resizeStartSize.value.width - proposedWidth)
-    newWidth = proposedWidth
-  }
-
-  // Height changes
-  if (dir.includes('s')) {
-    newHeight = Math.min(maxH, Math.max(minH, resizeStartSize.value.height + deltaY))
-  } else if (dir.includes('n')) {
-    const proposedHeight = Math.min(maxH, Math.max(minH, resizeStartSize.value.height - deltaY))
-    // Move top edge: keep bottom edge fixed
-    newY = resizeStartLegendPos.value.y + (resizeStartSize.value.height - proposedHeight)
-    newHeight = proposedHeight
-  }
-
-  // Apply via override for immediate visual feedback
-  resizeOverride.value = { x: newX, y: newY, width: newWidth, height: newHeight }
-}
-
-function endResizeDrag() {
-  if (isResizing.value && resizeOverride.value) {
-    const { x, y, width, height } = resizeOverride.value
-
-    // Commit position and size
-    posX.value = x
-    posY.value = y
-    currentWidth.value = width
-    currentHeight.value = height
-
-    // Store values (switches from 'auto' to manual sizing)
-    legendStore.updateSize(width, height)
-    legendStore.updatePosition(x, y)
-
-    // Re-detect sticky edges at new position
-    detectStickyEdges()
-  }
-
-  isResizing.value = false
-  resizeDirection.value = null
-  resizeOverride.value = null
-
-  document.removeEventListener('mousemove', onResizeDrag)
-  document.removeEventListener('mouseup', endResizeDrag)
-}
-
-// Touch support for resize
-function startResizeTouch(e, direction) {
-  if (e.touches.length === 1) {
-    const touch = e.touches[0]
-    startResize({
-      clientX: touch.clientX,
-      clientY: touch.clientY,
-      preventDefault: () => e.preventDefault(),
-      stopPropagation: () => e.stopPropagation()
-    }, direction)
-
-    document.addEventListener('touchmove', onResizeTouchMove, { passive: false })
-    document.addEventListener('touchend', onResizeTouchEnd)
-  }
-}
-
-function onResizeTouchMove(e) {
-  if (e.touches.length === 1 && isResizing.value) {
-    onResizeDrag({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY })
-    e.preventDefault()
-  }
-}
-
-function onResizeTouchEnd() {
-  endResizeDrag()
-  document.removeEventListener('touchmove', onResizeTouchMove)
-  document.removeEventListener('touchend', onResizeTouchEnd)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1117,6 +987,16 @@ function handleApplyDisplayFormatToAll(format) {
 
 // Sort dropdown state (single merged dropdown)
 const sortDropdownOpen = ref(false)
+
+const sortOptions = [
+  { by: 'alphabetical', order: 'asc', icon: ArrowUpAZ, label: 'A \u2192 Z' },
+  { by: 'alphabetical', order: 'desc', icon: ArrowDownZA, label: 'Z \u2192 A' },
+  { divider: true },
+  { by: 'abundance', order: 'desc', icon: ChartBarDecreasing, label: 'Most abundant' },
+  { by: 'abundance', order: 'asc', icon: ChartBarIncreasing, label: 'Least abundant' },
+]
+
+const resizeDirections = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw']
 
 function applySortOption(sortBy, sortOrder) {
   legendStore.setSortBy(sortBy)
@@ -1429,7 +1309,11 @@ watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.so
   { flush: 'post' }
 )
 
-function adjustItemsToFit() {
+const MAX_ADJUST_ITERATIONS = 15
+
+function adjustItemsToFit(iteration = 0) {
+  if (iteration >= MAX_ADJUST_ITERATIONS) return
+
   const el = contentRef.value
   if (!el) return
 
@@ -1469,7 +1353,7 @@ function adjustItemsToFit() {
     } else {
       return // Can't reduce further
     }
-    nextTick(() => nextTick(() => adjustItemsToFit()))
+    nextTick(() => nextTick(() => adjustItemsToFit(iteration + 1)))
   } else {
     // Content fits — try adding more items to fill available space
     const currentLimit = effectiveMaxItems.value
@@ -1482,7 +1366,7 @@ function adjustItemsToFit() {
     if (currentLimit < totalAvailable) {
       adjustingUp.value = true
       itemLimitOverride.value = (itemLimitOverride.value ?? currentLimit) + 1
-      nextTick(() => nextTick(() => adjustItemsToFit()))
+      nextTick(() => nextTick(() => adjustItemsToFit(iteration + 1)))
     } else {
       // All items fit or at maximum
       adjustingUp.value = false
@@ -1604,39 +1488,18 @@ watch(isExportMode, (enabled, wasEnabled) => {
             </button>
             <div v-if="sortDropdownOpen" class="sort-dropdown" @click.stop>
               <div class="sort-dropdown-header">Sort by</div>
-              <button
-                class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortBy === 'alphabetical' && legendStore.sortOrder === 'asc' }"
-                @click="applySortOption('alphabetical', 'asc')"
-              >
-                <ArrowUpAZ :size="14" />
-                <span>A &rarr; Z</span>
-              </button>
-              <button
-                class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortBy === 'alphabetical' && legendStore.sortOrder === 'desc' }"
-                @click="applySortOption('alphabetical', 'desc')"
-              >
-                <ArrowDownZA :size="14" />
-                <span>Z &rarr; A</span>
-              </button>
-              <div class="sort-dropdown-divider"></div>
-              <button
-                class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortBy === 'abundance' && legendStore.sortOrder === 'desc' }"
-                @click="applySortOption('abundance', 'desc')"
-              >
-                <ChartBarDecreasing :size="14" />
-                <span>Most abundant</span>
-              </button>
-              <button
-                class="sort-dropdown-item"
-                :class="{ selected: legendStore.sortBy === 'abundance' && legendStore.sortOrder === 'asc' }"
-                @click="applySortOption('abundance', 'asc')"
-              >
-                <ChartBarIncreasing :size="14" />
-                <span>Least abundant</span>
-              </button>
+              <template v-for="(opt, i) in sortOptions" :key="i">
+                <div v-if="opt.divider" class="sort-dropdown-divider" />
+                <button
+                  v-else
+                  class="sort-dropdown-item"
+                  :class="{ selected: legendStore.sortBy === opt.by && legendStore.sortOrder === opt.order }"
+                  @click="applySortOption(opt.by, opt.order)"
+                >
+                  <component :is="opt.icon" :size="14" />
+                  <span>{{ opt.label }}</span>
+                </button>
+              </template>
             </div>
           </div>
         </span>
@@ -1690,7 +1553,6 @@ watch(isExportMode, (enabled, wasEnabled) => {
             :headers-hidden="!legendStore.groupingSettings.showHeaders"
             :is-legend-hovered="isHovered || hasModalOpen"
             :shape="group.shape"
-            :has-customized-style="group.hasCustomizedStyle"
             :any-group-has-custom-style="anyGroupHasCustomStyle"
             @open-style-popup="openGroupStylePopup(group.species, $event)"
             @show-headers="handleShowHeaders"
@@ -1746,19 +1608,15 @@ watch(isExportMode, (enabled, wasEnabled) => {
 
     <!-- Multi-directional resize zones (shown on hover) -->
     <template v-if="showToolbar && !isExportMode">
-      <div class="resize-zone resize-n" @mousedown.stop.prevent="startResize($event, 'n')" @touchstart.stop.prevent="startResizeTouch($event, 'n')" />
-      <div class="resize-zone resize-s" @mousedown.stop.prevent="startResize($event, 's')" @touchstart.stop.prevent="startResizeTouch($event, 's')" />
-      <div class="resize-zone resize-e" @mousedown.stop.prevent="startResize($event, 'e')" @touchstart.stop.prevent="startResizeTouch($event, 'e')" />
-      <div class="resize-zone resize-w" @mousedown.stop.prevent="startResize($event, 'w')" @touchstart.stop.prevent="startResizeTouch($event, 'w')" />
-      <div class="resize-zone resize-ne" @mousedown.stop.prevent="startResize($event, 'ne')" @touchstart.stop.prevent="startResizeTouch($event, 'ne')" />
-      <div class="resize-zone resize-nw" @mousedown.stop.prevent="startResize($event, 'nw')" @touchstart.stop.prevent="startResizeTouch($event, 'nw')" />
-      <div class="resize-zone resize-se" @mousedown.stop.prevent="startResize($event, 'se')" @touchstart.stop.prevent="startResizeTouch($event, 'se')">
+      <div v-for="dir in resizeDirections" :key="dir"
+           :class="['resize-zone', `resize-${dir}`]"
+           @mousedown.stop.prevent="startResize($event, dir)"
+           @touchstart.stop.prevent="startResizeTouch($event, dir)">
         <!-- Visual affordance for SE corner -->
-        <svg viewBox="0 0 10 10" class="resize-icon">
+        <svg v-if="dir === 'se'" viewBox="0 0 10 10" class="resize-icon">
           <path d="M 8 2 L 2 8 M 8 5 L 5 8 M 8 8 L 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" />
         </svg>
       </div>
-      <div class="resize-zone resize-sw" @mousedown.stop.prevent="startResize($event, 'sw')" @touchstart.stop.prevent="startResizeTouch($event, 'sw')" />
     </template>
 
     <!-- Group Style Popup -->
