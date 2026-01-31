@@ -1,9 +1,9 @@
 import { ref } from 'vue'
 import { MAP_STYLES } from '../utils/mapStyles'
 
-export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null) {
+export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
   const currentStyle = ref('dark')
-  const { recreateClusterExtentCircle, setStyleChanging } = extentCircleCallbacks || {}
+  const { recreateClusterExtentCircle, setStyleChanging, onStyleReady } = callbacks
 
   const switchStyle = async (styleName) => {
     if (!map.value || !MAP_STYLES[styleName]) return
@@ -12,7 +12,6 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
       setStyleChanging(true)
     }
 
-    // Save current view state before style change
     const center = map.value.getCenter()
     const zoom = map.value.getZoom()
     const bearing = map.value.getBearing()
@@ -23,10 +22,14 @@ export function useStyleSwitcher(map, addDataLayer, extentCircleCallbacks = null
 
     map.value.setStyle(styleConfig.style)
 
-    // Use style.load event to add data layer, then idle event to recreate extent circle
     map.value.once('style.load', () => {
       map.value.jumpTo({ center, zoom, bearing, pitch })
       addDataLayer({ skipZoom: true })
+
+      // Notify caller that style is ready (e.g., for re-adding boundaries)
+      if (onStyleReady) {
+        onStyleReady()
+      }
 
       map.value.once('idle', () => {
         if (recreateClusterExtentCircle) {
