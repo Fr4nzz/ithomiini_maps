@@ -1,0 +1,122 @@
+{
+  "_description": "Manual taxonomic corrections for the Ithomiini dataset. These corrections override GBIF Backbone Taxonomy results where the literature supports a different name. Researchers can review, edit, and extend this file.",
+  "_format_version": "1.0",
+  "_references": [
+    "Lamas G (2004) Checklist: Part 4A, Hesperioidea - Papilionoidea",
+    "Willmott KR & Lamas G (2006) Revision of Hyalenna Forbes (Nymphalidae: Ithomiinae: Oleriina)",
+    "Willmott KR & Lamas G (2007) A revision of Pachacutia de Haas (Nymphalidae: Ithomiinae: Napeogenina)",
+    "Willmott KR et al. (2020, 2021) Tropical Lepidoptera Research",
+    "de-Silva DL et al. (2010) Molecular phylogenetics, Ithomiini",
+    "ICZN International Code of Zoological Nomenclature, 4th ed.",
+    "Butterflies of America (https://www.butterfliesofamerica.com)",
+    "nymphalidae.net (https://www.nymphalidae.net)",
+    "funet.fi Lepidoptera checklist"
+  ],
+  "_how_to_contribute": "To add a new correction, add an entry to the appropriate section below. Each entry includes the original name, the corrected form, and a literature reference justifying the change. Submit a pull request with your additions.",
+
+  "spelling_corrections": [
+    {
+      "original": "Lycorea cleobea",
+      "corrected": "Lycorea cleobaea",
+      "reason": "Correct original spelling by Godart (1819); 'cleobea' is a misspelling",
+      "reference": "Lamas 2004 checklist"
+    },
+    {
+      "original": "Thyridia aedessa",
+      "corrected": "Thyridia aedesia",
+      "reason": "'aedessa' is a junior synonym; correct name is aedesia",
+      "reference": "Lamas 2004 checklist"
+    }
+  ],
+
+  "dataset_correct_over_gbif": [],
+
+  "subspecies_as_species": [
+    {
+      "dataset_name": "Hypothyris dionaea",
+      "correct_species": "Hypothyris lycaste",
+      "subspecies_epithet": "dionaea",
+      "reason": "H. lycaste dionaea (Hewitson 1854) — dionaea is a subspecies, not a species",
+      "reference": "funet; Butterflies of America"
+    },
+    {
+      "dataset_name": "Hyposcada adelphina",
+      "correct_species": "Hyposcada virginiana",
+      "subspecies_epithet": "adelphina",
+      "reason": "H. virginiana adelphina (Bates 1866) — adelphina is a subspecies",
+      "reference": "funet; ADW (Animal Diversity Web)"
+    }
+  ],
+
+  "subspecies_corrections": {
+    "_description": "Manual subspecies name corrections for cases that programmatic auto-detection cannot catch. Most rare typos (count<=5) are now auto-detected via frequency analysis + string similarity in taxonomic_curation.py. This section only contains: (1) reverse-majority cases where the MORE COMMON form is the misspelling, and (2) higher-count typos (count>5) that exceed the auto-detection threshold.",
+    "typos": [
+      {
+        "species": "Oleria onega",
+        "wrong": "jaranilla",
+        "correct": "janarilla",
+        "wrong_count": 7,
+        "correct_count": 209,
+        "reason": "Letter transposition (na -> ra). O. onega janarilla (Hewitson 1863). Count exceeds auto-detection threshold.",
+        "reference": "Hewitson 1863; Butterflies of America"
+      },
+      {
+        "species": "Scada zibia",
+        "wrong": "xantina",
+        "correct": "xanthina",
+        "wrong_count": 8,
+        "correct_count": 52,
+        "reason": "Missing 'h'. From Greek xanthos (yellow). S. zibia xanthina (H. Bates 1866). Count exceeds auto-detection threshold.",
+        "reference": "H. Bates 1866; Butterflies of America; BAMONA"
+      },
+      {
+        "species": "Mechanitis polymnia",
+        "wrong": "doryssides",
+        "correct": "dorissides",
+        "wrong_count": 46,
+        "correct_count": 21,
+        "reason": "REVERSE-MAJORITY: the more common form (doryssides, 46 records) is the misspelling. Staudinger [1884] originally described it as 'dorissides'; 'doryssides' is a misspelling from Staudinger 1885.",
+        "reference": "Staudinger [1884]; funet (missp. note); Butterflies of America"
+      },
+      {
+        "species": "Melinaea ludovica",
+        "wrong": "parayia",
+        "correct": "paraiya",
+        "wrong_count": 68,
+        "correct_count": 132,
+        "reason": "Letter transposition (iy -> yi). M. ludovica paraiya Reakirt 1866. Count exceeds auto-detection threshold.",
+        "reference": "Reakirt 1866; Wikispecies; Lamas 2004"
+      },
+      {
+        "species": "Mechanitis lysimnia",
+        "wrong": "neseaea",
+        "correct": "nesaea",
+        "wrong_count": 48,
+        "correct_count": 38,
+        "reason": "REVERSE-MAJORITY: the more common form (neseaea, 48 records) is the misspelling. Standard spelling across Butterflies of America, Wikispecies, and published papers is 'nesaea'.",
+        "reference": "Hubner [1820]; Butterflies of America; Wikispecies"
+      },
+      {
+        "species": "Callithomia hezia",
+        "wrong": "phagesina",
+        "correct": "phagesia",
+        "wrong_count": 7,
+        "correct_count": 18,
+        "reason": "Erroneous 'n' inserted. C. hezia phagesia (Hewitson 1869). Count exceeds auto-detection threshold.",
+        "reference": "Hewitson 1869; Butterflies of America (type specimen page)"
+      }
+    ]
+  },
+
+  "valid_species_not_in_gbif": {
+    "_description": "Species confirmed valid but absent from BOTH the Sanger taxonomy and GBIF Backbone. Most species previously here are now validated automatically via sanger_taxonomy.csv. Only species missing from BOTH references need manual entries.",
+    "genus_issues": {},
+    "individual_species": {
+      "ithomiini": [
+        "Callithomia callipero",
+        "Hyalyris adelinda"
+      ],
+      "non_ithomiini": []
+    }
+  }
+}

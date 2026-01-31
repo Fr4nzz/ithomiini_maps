@@ -25,6 +25,7 @@ const visibleColumns = ref({
   mimicry_ring: true,
   sequencing_status: true,
   source: true,
+  curated: true,
   observation_date: true,
   country: true,
   lat: false,
@@ -41,11 +42,57 @@ const columns = [
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
   { key: 'source', label: 'Source', width: '130px' },
+  { key: 'curated', label: 'Curated', width: '130px' },
   { key: 'observation_date', label: 'Date', width: '100px' },
   { key: 'country', label: 'Country', width: '100px' },
   { key: 'lat', label: 'Latitude', width: '90px' },
   { key: 'lng', label: 'Longitude', width: '90px' },
 ]
+
+// Curation correction type colors
+const CORRECTION_COLORS = {
+  'Synonym': '#f59e0b',       // Amber - species name changed to accepted synonym
+  'Spelling': '#f97316',      // Orange - spelling correction
+  'Subspecies': '#a855f7',    // Purple - subspecies typo corrected
+  'Reclassified': '#06b6d4',  // Cyan - subspecies reclassified
+}
+
+/**
+ * Get correction info for a record.
+ * Returns { type, color, originalName, originalSubspecies } or null if not corrected.
+ */
+const getCorrectionInfo = (row) => {
+  const hasNameChange = !!row.scientific_name_original
+  const hasSubspeciesChange = !!row.subspecies_original
+
+  if (!hasNameChange && !hasSubspeciesChange) return null
+
+  // Determine correction type from curation_status and which fields changed
+  let type = 'Corrected'
+  if (hasNameChange && row.curation_status === 'synonym_resolved') {
+    type = 'Synonym'
+  } else if (hasNameChange && row.curation_status === 'corrected_literature') {
+    type = 'Spelling'
+  } else if (hasNameChange) {
+    type = 'Spelling'
+  }
+
+  if (hasSubspeciesChange && !hasNameChange) {
+    type = 'Subspecies'
+  }
+
+  // Check for subspecies reclassification (subspecies_as_species)
+  if (hasNameChange && row.curation_status === 'verified' && hasSubspeciesChange) {
+    type = 'Reclassified'
+  }
+
+  return {
+    type,
+    color: CORRECTION_COLORS[type] || '#f59e0b',
+    originalName: row.scientific_name_original || null,
+    originalSubspecies: row.subspecies_original || null,
+  }
+}
 
 // Get raw data from filtered GeoJSON
 const rawData = computed(() => {
@@ -66,6 +113,13 @@ const sortedData = computed(() => {
     if (sortColumn.value === 'lat' || sortColumn.value === 'lng') {
       valA = parseFloat(valA) || 0
       valB = parseFloat(valB) || 0
+    }
+    // Handle curated column (derived from correction info)
+    else if (sortColumn.value === 'curated') {
+      const infoA = getCorrectionInfo(a)
+      const infoB = getCorrectionInfo(b)
+      valA = infoA ? infoA.type : ''
+      valB = infoB ? infoB.type : ''
     }
     // Handle date column
     else if (sortColumn.value === 'observation_date') {
@@ -285,11 +339,33 @@ const handleImageError = (e, originalUrl) => {
             <td v-if="visibleColumns.id" class="cell-id">
               {{ row.id }}
             </td>
-            <td v-if="visibleColumns.scientific_name" class="cell-species">
+            <td
+              v-if="visibleColumns.scientific_name"
+              class="cell-species"
+              :class="{ 'cell-corrected': row.scientific_name_original }"
+            >
               <em>{{ row.scientific_name }}</em>
+              <span
+                v-if="row.scientific_name_original"
+                class="original-value"
+                :title="`Original: ${row.scientific_name_original}`"
+              >
+                was: <em>{{ row.scientific_name_original }}</em>
+              </span>
             </td>
-            <td v-if="visibleColumns.subspecies" class="cell-subspecies">
+            <td
+              v-if="visibleColumns.subspecies"
+              class="cell-subspecies"
+              :class="{ 'cell-corrected': row.subspecies_original }"
+            >
               {{ row.subspecies || '—' }}
+              <span
+                v-if="row.subspecies_original"
+                class="original-value"
+                :title="`Original: ${row.subspecies_original}`"
+              >
+                was: <em>{{ row.subspecies_original }}</em>
+              </span>
             </td>
             <td v-if="visibleColumns.sex" class="cell-sex">
               <span v-if="row.sex === 'male'" class="sex-badge male" title="Male">♂</span>
@@ -315,6 +391,21 @@ const handleImageError = (e, originalUrl) => {
             </td>
             <td v-if="visibleColumns.source" class="cell-source">
               {{ row.source }}
+            </td>
+            <td v-if="visibleColumns.curated" class="cell-curated">
+              <template v-if="getCorrectionInfo(row)">
+                <span
+                  class="curated-badge"
+                  :style="{ '--curated-color': getCorrectionInfo(row).color }"
+                  :title="[
+                    getCorrectionInfo(row).originalName ? `Species was: ${getCorrectionInfo(row).originalName}` : '',
+                    getCorrectionInfo(row).originalSubspecies ? `Subspecies was: ${getCorrectionInfo(row).originalSubspecies}` : ''
+                  ].filter(Boolean).join('\n')"
+                >
+                  {{ getCorrectionInfo(row).type }}
+                </span>
+              </template>
+              <span v-else class="text-muted">—</span>
             </td>
             <td v-if="visibleColumns.observation_date" class="cell-date">
               {{ row.observation_date || '—' }}
@@ -715,6 +806,47 @@ const handleImageError = (e, originalUrl) => {
   height: 8px;
   border-radius: 50%;
   background: var(--status-color);
+}
+
+/* Curated Badge */
+.curated-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--curated-color);
+  border: 1px solid color-mix(in srgb, var(--curated-color) 30%, transparent);
+}
+
+.curated-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--curated-color);
+}
+
+/* Corrected Cell Highlight */
+.cell-corrected {
+  background: rgba(245, 158, 11, 0.08);
+  border-left: 3px solid rgba(245, 158, 11, 0.4);
+}
+
+.original-value {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #888);
+  font-style: normal;
+  margin-top: 2px;
+  opacity: 0.75;
+}
+
+.original-value em {
+  text-decoration: line-through;
+  color: rgba(245, 158, 11, 0.7);
 }
 
 .text-muted {
