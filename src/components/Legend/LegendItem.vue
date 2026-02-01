@@ -230,11 +230,6 @@ function toggleVisibility() {
   border-radius: 4px;
 }
 
-.legend-dot {
-  flex-shrink: 0;
-  border-radius: 50%;
-}
-
 .legend-shape {
   flex-shrink: 0;
 }
