@@ -50,11 +50,6 @@ UNDESCRIBED_PATTERNS = re.compile(
     re.IGNORECASE,
 )
 
-FREE_TEXT_PATTERNS = re.compile(
-    r"[?/\(\)]|^f\.\s|^\d+$|WESTERN$|EASTERN$|NORTHERN$|SOUTHERN$",
-    re.IGNORECASE,
-)
-
 # ── Subspecies typo detection thresholds ─────────────────────────────────────
 
 SSP_MAX_RARE_COUNT = 5       # subspecies with count <= this are candidates
