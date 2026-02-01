@@ -2,7 +2,27 @@
 
 Full audit of all source files. Findings organized by priority and category.
 
-**Codebase stats**: ~18,400 lines frontend (JS/Vue/CSS), ~4,000 lines backend (Python).
+**Codebase stats at audit time**: ~18,400 lines frontend, ~4,000 lines backend.
+**Lines removed/refactored**: ~2,700 lines across 7 phases of optimization.
+
+## Implementation Status
+
+| Phase | Description | Status |
+|-------|-------------|--------|
+| 1 | Dead code removal (~800 lines across 17 files) | DONE |
+| 2 | Extract shared utilities (storageHelpers, mapHelpers, uniqueValuesOf) | DONE |
+| 3 | Split useMapEngine.js (1,402 -> 10 focused files) | DONE |
+| 4 | Consolidate watchers, fix setTimeout/nextTick hacks | DONE |
+| 5 | CSS cleanup (~340 lines dead CSS, unused vars) | DONE |
+| 6 | Component extraction (ShapeIcon, MimicryRingCard) | DONE |
+| 7 | Python backend cleanup (~140 lines) | DONE |
+| 8 | Performance optimizations (deep watchers, spatial index) | REMAINING |
+
+---
+
+The sections below document the original audit findings. Completed items are preserved
+for reference. The remaining performance optimizations (Section 5) are lower priority
+and can be addressed incrementally.
 
 ---
 
