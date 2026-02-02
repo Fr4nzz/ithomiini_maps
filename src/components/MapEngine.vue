@@ -1062,7 +1062,7 @@ watch(
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 20;
+  z-index: 30; /* Above legend (25) so dropdowns aren't hidden behind it */
   display: flex;
   align-items: center;
   gap: 8px;
