@@ -110,7 +110,7 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
     if (showBoundaries.value) addBoundariesLayer()
   }
 })
-const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
+const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
 
 // Watch for theme/mode changes to update cluster extent circle colors
 watch(

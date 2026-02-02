@@ -1,9 +1,27 @@
 import { ref } from 'vue'
 import { removeLayerAndSource } from '../utils/mapHelpers'
+import { MAP_STYLES } from '../utils/mapStyles'
 
 const BOUNDARIES_URL = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
 
-export function useCountryBoundaries(map) {
+// Styles with light/white land where borders need to be dark
+const DARK_BORDER_STYLES = new Set([
+  'stadia-toner' // White land despite being a "night" theme
+])
+
+function getBorderStyle(styleKey) {
+  const config = MAP_STYLES[styleKey]
+  const needsDarkBorders = DARK_BORDER_STYLES.has(styleKey) ||
+    (config && config.theme === 'day')
+  const isToner = styleKey === 'stadia-toner'
+
+  return {
+    color: needsDarkBorders ? '#000000' : '#ffffff',
+    widthMultiplier: isToner ? 2 : 1
+  }
+}
+
+export function useCountryBoundaries(map, currentStyle) {
   const showBoundaries = ref(false)
   let boundariesData = null
 
@@ -31,6 +49,12 @@ export function useCountryBoundaries(map) {
     const data = await loadBoundaries()
     if (!data) return
 
+    // Check map is still valid after async load
+    if (!map.value || !map.value.isStyleLoaded()) return
+
+    const borderStyle = getBorderStyle(currentStyle.value)
+    const beforeLayer = map.value.getLayer('points-layer') ? 'points-layer' : undefined
+
     map.value.addSource('country-boundaries', {
       type: 'geojson',
       data: data
@@ -41,23 +65,23 @@ export function useCountryBoundaries(map) {
       type: 'fill',
       source: 'country-boundaries',
       paint: { 'fill-color': 'transparent', 'fill-opacity': 0 }
-    }, 'points-layer')
+    }, beforeLayer)
 
     map.value.addLayer({
       id: 'country-boundaries-line',
       type: 'line',
       source: 'country-boundaries',
       paint: {
-        'line-color': '#ffffff',
+        'line-color': borderStyle.color,
         'line-width': [
           'interpolate', ['linear'], ['zoom'],
-          2, 0.5,
-          6, 1,
-          10, 1.5
+          2, 0.5 * borderStyle.widthMultiplier,
+          6, 1 * borderStyle.widthMultiplier,
+          10, 1.5 * borderStyle.widthMultiplier
         ],
         'line-opacity': 0.5
       }
-    }, 'points-layer')
+    }, beforeLayer)
   }
 
   const toggleBoundaries = () => {
