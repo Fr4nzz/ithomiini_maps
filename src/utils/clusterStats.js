@@ -36,6 +36,11 @@ const COUNTRY_CODES = {
   'Unknown': '??'
 }
 
+// Reverse mapping: ISO code → country name
+const CODE_TO_COUNTRY = Object.fromEntries(
+  Object.entries(COUNTRY_CODES).map(([name, code]) => [code, name])
+)
+
 /**
  * Calculate haversine distance between two points in kilometers
  */
@@ -56,6 +61,15 @@ export const haversineDistance = (lat1, lng1, lat2, lng2) => {
 export const getCountryCode = (countryName) => {
   if (!countryName) return null
   return COUNTRY_CODES[countryName] || countryName.substring(0, 2).toUpperCase()
+}
+
+/**
+ * Normalize a country value: convert ISO 2-letter codes to full names.
+ * Returns the full name if the code is recognized, otherwise returns the original value.
+ */
+export const normalizeCountryName = (value) => {
+  if (!value || value.length !== 2) return value
+  return CODE_TO_COUNTRY[value.toUpperCase()] || value
 }
 
 /**

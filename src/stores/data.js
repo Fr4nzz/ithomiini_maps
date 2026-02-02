@@ -5,6 +5,7 @@ import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants
 import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
 import { useLegendStore } from './legend'
 import { getStorage, setStorage } from '../utils/storageHelpers'
+import { normalizeCountryName } from '../utils/clusterStats'
 
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
@@ -170,6 +171,11 @@ export const useDataStore = defineStore('data', () => {
       const defaultData = await defaultRes.json()
       const imgData = imgRes.ok ? await imgRes.json() : []
 
+      // Normalize country codes for consistent filtering across data sources
+      for (const item of defaultData) {
+        if (item.country) item.country = normalizeCountryName(item.country)
+      }
+
       allFeatures.value = defaultData
       imageSupplement.value = imgData
       loadedSources.add(defaultSource)
@@ -213,6 +219,12 @@ export const useDataStore = defineStore('data', () => {
       if (!response.ok) throw new Error(`${response.status}`)
 
       const data = await response.json()
+
+      // Normalize country codes (e.g., GBIF's "BR" → "Brazil") for consistent filtering
+      for (const item of data) {
+        if (item.country) item.country = normalizeCountryName(item.country)
+      }
+
       allFeatures.value = [...allFeatures.value, ...data]
       loadedSources.add(sourceName)
       console.log(`✓ Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)

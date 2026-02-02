@@ -39,18 +39,25 @@ export function useCountryBoundaries(map, currentStyle) {
   }
 
   const addBoundariesLayer = async () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!map.value) return
 
-    removeLayerAndSource(map.value, 'country-boundaries-fill')
-    removeLayerAndSource(map.value, 'country-boundaries-line', 'country-boundaries')
+    // If toggling off, just remove
+    if (!showBoundaries.value) {
+      removeLayerAndSource(map.value, 'country-boundaries-fill')
+      removeLayerAndSource(map.value, 'country-boundaries-line', 'country-boundaries')
+      return
+    }
 
-    if (!showBoundaries.value) return
-
+    // Load data BEFORE removing old layers to avoid a gap if load is slow
     const data = await loadBoundaries()
     if (!data) return
 
-    // Check map is still valid after async load
+    // Verify map is still valid after async load
     if (!map.value || !map.value.isStyleLoaded()) return
+
+    // Atomic remove + add: no gap where borders are missing
+    removeLayerAndSource(map.value, 'country-boundaries-fill')
+    removeLayerAndSource(map.value, 'country-boundaries-line', 'country-boundaries')
 
     const borderStyle = getBorderStyle(currentStyle.value)
     const beforeLayer = map.value.getLayer('points-layer') ? 'points-layer' : undefined

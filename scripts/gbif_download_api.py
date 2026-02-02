@@ -551,7 +551,7 @@ def process_occurrence_file(occurrence_path, multimedia_lookup=None):
                 'tribe': 'Ithomiini',
                 'lat': lat,
                 'lng': lng,
-                'country': row.get('countryCode') or row.get('country'),
+                'country': row.get('country') or row.get('countryCode'),
                 'collection_location': collection_location,
                 'state_province': row.get('stateProvince'),
                 'collection_date': row.get('eventDate'),
