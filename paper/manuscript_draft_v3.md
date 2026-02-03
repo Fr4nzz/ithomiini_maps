@@ -10,7 +10,7 @@
 
 ## Abstract
 
-Studying butterfly diversity requires bringing together data from fieldwork, museum collections, genomic sequencing programs, and global biodiversity databases. However, the tools available for managing specimen photographs, organizing taxonomic records, and visualizing geographic distributions are often separate, require different software packages, and demand specialized technical knowledge. Here we present an integrated open-source toolkit of three web-based applications that together cover the full workflow from specimen photography to interactive distribution mapping for Ithomiini butterflies (Nymphalidae: Danainae). (1) **AI Photo Processor**, a desktop application that uses Google's Gemini AI to read handwritten specimen identifiers from photographs and automatically rename image files in batch; (2) **Wings Gallery**, a serverless web application for browsing, filtering, and sharing high-resolution wing photographs linked to Google Cloud image services; and (3) **Ithomiini Maps**, an interactive mapping platform that brings together occurrence records from published datasets, institutional sequencing databases, and the Global Biodiversity Information Facility (GBIF) into a single filterable map interface. All three applications run entirely in the user's browser and are hosted on GitHub Pages at zero cost, with Python-based data processing pipelines running on GitHub Actions for automated updates. GBIF records are pre-filtered to include only trustworthy data: records with valid coordinates, no geospatial issues, confirmed presence status, and excluding fossils and living specimens. The mapping platform currently shows over 30,000 occurrence records across approximately 400 species and subspecies, with taxonomic filters, sequencing status indicators, mimicry ring phenotype selectors, date range controls, and data source toggles. Users can export filtered datasets, generate publication-ready map images, and share exact search configurations through URLs. We describe the architecture, data pipelines, and taxonomic curation procedures, and discuss how this serverless approach offers a sustainable, reproducible, and freely accessible alternative to server-based platforms for biodiversity research.
+Studying butterfly diversity requires bringing together data from fieldwork, museum collections, genomic sequencing programs, and global biodiversity databases. However, the tools available for managing specimen photographs, organizing taxonomic records, and visualizing geographic distributions are often separate, require different software packages, and demand specialized technical knowledge. Here we present an integrated open-source toolkit of three web-based applications that together cover the full workflow from specimen photography to interactive distribution mapping for Ithomiini butterflies (Nymphalidae: Danainae). (1) **AI Photo Processor**, a desktop application that uses Google's Gemini AI to read handwritten specimen identifiers from photographs and automatically rename image files in batch; (2) **Wings Gallery**, a serverless web application for browsing, filtering, and sharing high-resolution wing photographs linked to Google Cloud image services; and (3) **Ithomiini Maps**, an interactive mapping platform that brings together occurrence records from published datasets, institutional sequencing databases, and the Global Biodiversity Information Facility (GBIF) into a single filterable map interface. All three applications run entirely in the user's browser and are hosted on GitHub Pages at zero cost, with Python-based data processing pipelines running on GitHub Actions for automated updates. GBIF records are pre-filtered to include only trustworthy data: records with valid coordinates, no geospatial issues, confirmed presence status, and excluding fossils and living specimens. The mapping platform currently integrates 104,382 occurrence records across 751 species and 1,365 subspecies from five data sources spanning 33 countries, with taxonomic filters, sequencing status indicators, mimicry ring phenotype selectors, date range controls, and data source toggles. Users can export filtered datasets, generate publication-ready map images, and share exact search configurations through URLs. We describe the architecture, data pipelines, and taxonomic curation procedures, and discuss how this serverless approach offers a sustainable, reproducible, and freely accessible alternative to server-based platforms for biodiversity research.
 
 **Keywords:** biodiversity informatics, Nymphalidae, interactive maps, specimen digitization, Lepidoptera, open-source, mimicry rings, GBIF, distribution mapping
 
@@ -103,15 +103,20 @@ Visualizing Ithomiini distributions requires bringing together data from multipl
 
 #### 2.4.2 Data Sources and Processing Pipeline
 
-The mapping platform brings together three main data sources:
+The mapping platform brings together five data sources, organized into two primary datasets and three GBIF sub-sources:
 
 **Dore et al. (2025) published records.** An Excel file containing 28,927 georeferenced occurrence records with full taxonomic classification, mimicry ring assignments for males and females, and observation metadata. This dataset serves as the main source of mimicry ring information and provides the lookup table used to assign mimicry ring data to records from other sources.
 
 **Sanger Institute collection data.** Live data from a Google Sheets database maintained by the sequencing team. Each record includes specimen identifier (CAMID), taxonomic classification, collection locality, GPS coordinates, sequencing status (based on tube rack and tissue fields), and links to wing photographs. The sequencing status is assigned as follows: specimens with valid tube rack entries are classified as "Sequenced"; those with tissue samples are classified as "Tissue Available"; and the rest are classified as "Preserved Specimen".
 
-**GBIF occurrence data.** An automated download script queries the GBIF API for all Ithomiini occurrences. Before downloading, records are pre-filtered to ensure data quality: only records with valid geographic coordinates are included, records with geospatial issues are excluded, only confirmed presence records are kept, and fossils and living specimens are removed. The script correctly parses species names by removing author citations, extracts subspecific epithets, and filters out invalid entries such as BOLD sequence IDs or placeholder names. Records include the `basisOfRecord` field, which is used to distinguish museum specimens from human observations (including iNaturalist research-grade observations).
+**GBIF occurrence data.** An automated download script queries the GBIF API (DOI: 10.15468/dl.pbs3eu) for all Ithomiini occurrences. Before downloading, records are pre-filtered to ensure data quality: only records with valid geographic coordinates are included, records with geospatial issues are excluded, only confirmed presence records are kept, and fossils and living specimens are removed. The script correctly parses species names by removing author citations, extracts subspecific epithets, and filters out invalid entries such as BOLD sequence IDs or placeholder names. The downloaded GBIF records are automatically split into three sub-sources based on their origin:
+- **iNaturalist**: Research-grade citizen science observations, identified by their dataset key.
+- **GBIF (UNAM)**: Records from the Universidad Nacional Autónoma de México museum collections (MZFC-FC-UNAM, IBUNAM, FC-UNAM, FESZ-UNAM), which represent a major Neotropical entomological collection.
+- **GBIF (Other Institutions)**: Records from all remaining institutional collections and datasets.
 
-**Data merging.** The main processing pipeline loads all three sources, standardizes field names, applies consistent taxonomic formatting, and produces a unified data file for the map. A key feature is the mimicry ring assignment system: a lookup table is built from the Dore dataset linking each (species, subspecies) pair to its male and female mimicry ring values. This lookup is then applied to Sanger and GBIF records, first trying an exact match (species + subspecies), then falling back to a species-only match. This ensures mimicry ring data are available even for records that lack subspecies identification.
+This separation allows users to toggle each sub-source independently on the map, making it possible to assess data provenance and quality at a glance.
+
+**Data merging.** The main processing pipeline loads all five sources, standardizes field names, applies consistent taxonomic formatting, and produces individual data files for each source, which are loaded on demand in the browser. A key feature is the mimicry ring assignment system: a lookup table is built from the Dore dataset linking each (species, subspecies) pair to its male and female mimicry ring values. This lookup is then applied to Sanger and GBIF records, first trying an exact match (species + subspecies), then falling back to a species-only match. This ensures mimicry ring data are available even for records that lack subspecies identification.
 
 #### 2.4.3 Taxonomic Curation Pipeline
 
@@ -137,10 +142,10 @@ The web interface is a Vue.js single-page application using MapLibre GL JS for m
 - *Taxonomic filters*: A cascading set of filters from Family down to Subspecies, where selecting a value at one level automatically updates the options available at lower levels based on the data.
 - *Multi-select with search*: Species and subspecies filters allow selecting multiple values at once with a text search to quickly find specific names.
 - *Sequencing status*: Toggle buttons for Sequenced, Tissue Available, Preserved Specimen, Published, Observation, and Museum Specimen categories.
-- *Mimicry ring selector*: A visual panel displaying wing pattern icons alongside ring names, with record counts. The 37 mimicry ring categories from Dore et al. (2025) were used to assign mimicry ring values to matching Sanger Institute and GBIF records based on species and subspecies.
+- *Mimicry ring selector*: A visual panel displaying wing pattern icons alongside ring names, with record counts. The 44 mimicry ring categories from Dore et al. (2025) were used to assign mimicry ring values to matching Sanger Institute and GBIF records based on species and subspecies.
 - *Date range filter*: A slider for filtering records by collection or observation year.
 - *CAMID search*: Instant specimen lookup by identifier.
-- *Data source toggle*: Show or hide records from each source (Dore, Sanger Institute, GBIF).
+- *Data source toggle*: Show or hide records from each of the five sources (Dore, Sanger Institute, iNaturalist, GBIF UNAM, GBIF Other Institutions). Each source is loaded on demand to keep initial page loads fast.
 
 **URL sharing.** All active filters are saved in the URL, so researchers can share exact search results with colleagues by simply copying and sending the link. Opening a shared URL restores the complete filter state, map position, and zoom level.
 
@@ -166,25 +171,47 @@ The application is accessible at https://fr4nzz.github.io/ithomiini_maps/.
 
 ### 3.1 Data Summary
 
-As of the current version, the Ithomiini Maps platform integrates data from three sources:
+The Ithomiini Maps platform integrates 104,382 occurrence records from five data sources (Table 1). The largest contributors are the Dore et al. (2025) published dataset (28,927 records), GBIF records from non-UNAM institutions (27,819 records), and the UNAM museum collections (21,586 records). iNaturalist research-grade observations contribute 19,328 records, and the Sanger Institute collection adds 6,722 specimens with sequencing status data. Across all sources, the merged dataset includes 751 unique species, 1,365 subspecies, and 178 genera, spanning 33 countries.
 
-<!-- TODO: Update these numbers at time of submission -->
+**Table 1.** Data sources integrated in Ithomiini Maps. GBIF data (DOI: 10.15468/dl.pbs3eu) were pre-filtered for valid coordinates, no geospatial issues, confirmed presence, and excluding fossils and living specimens.
 
-| Data Source | Records | Species | Subspecies | Notes |
-|---|---|---|---|---|
-| Dore et al. (2025) | ~28,927 | [X] | [X] | Published dataset with mimicry ring classifications for 37 mimicry ring categories |
-| Sanger Institute | [X] | [X] | [X] | Active sequencing collection with specimen photographs and sequencing status |
-| GBIF | [X] | [X] | [X] | Pre-filtered for quality: coordinates present, no geospatial issues, excludes fossils and living specimens. Includes museum collections and iNaturalist research-grade observations |
-| **Total (merged)** | **>30,000** | **~[X]** | **~[X]** | After taxonomic curation and deduplication |
+| Data Source | Records | Species | Subspecies | Genera | Countries |
+|---|---:|---:|---:|---:|---:|
+| Dore et al. (2025) | 28,927 | 374 | 999 | 48 | 23 |
+| Sanger Institute | 6,722 | 459 | 579 | 169 | 6 |
+| iNaturalist | 19,328 | 253 | 175 | 41 | 25 |
+| GBIF (UNAM) | 21,586 | 34 | 25 | 19 | 1 |
+| GBIF (Other Institutions) | 27,819 | 415 | 461 | 43 | 32 |
+| **Total (merged)** | **104,382** | **751** | **1,365** | **178** | **33** |
 
-Together, these sources cover the full Neotropical range of Ithomiini, from southern Mexico to southern Brazil, with the highest density of records in the tropical Andes of Ecuador, Colombia, and Peru.
+The five most represented countries are Mexico (29,052 records), Ecuador (18,280), Brazil (15,422), Colombia (9,587), and Peru (8,936), followed by Costa Rica (8,291), Panama (3,456), Bolivia (2,515), and Venezuela (1,894). The high number of Mexican records is driven primarily by the UNAM museum collections.
 
-### 3.2 Performance and Data Efficiency
+### 3.2 Sequencing Status
 
-The serverless architecture results in fast load times and minimal data transfer. The compiled web application (JavaScript and CSS) totals less than 500 KB when compressed. The occurrence data file loads in the background as the map initializes. MapLibre GL JS uses WebGL rendering to maintain smooth interactions even when showing the full dataset. Taxonomic filter updates are computed in the user's browser in under 100 milliseconds for the complete dataset.
+Of the 6,722 Sanger Institute specimens, 4,183 (62.2%) have been sequenced, 1,119 (16.6%) have tissue available for future sequencing, and 1,420 (21.1%) are preserved specimens awaiting tissue extraction. This breakdown is visible on the map through dedicated toggle filters, allowing researchers to identify geographic and taxonomic gaps in the sequencing effort.
 
-<!-- TODO: Measure actual data transfer for initial page load and report here -->
-The total data transferred on initial page load is approximately [X] MB, making the application usable even on slower internet connections.
+### 3.3 Taxonomic Curation
+
+The automated curation pipeline resolved the taxonomy for 104,382 records (Table 2). The majority of records (94.5%) were resolved through the GBIF backbone taxonomy cache, 3.6% were verified against the reference taxonomy (Butterflies of America, nymphalidae.net), 0.8% required live GBIF API queries, 0.3% were synonyms resolved to their accepted names, and 0.2% were corrected through typographical error detection. Of all curated records, 71.1% were verified as exact matches, 11.9% were classified as nominotypical subspecies, and 2.1% had synonyms resolved. Only 0.6% of records could only be matched to a higher taxonomic rank, and 0.0% (2 records) remained unresolved.
+
+**Table 2.** Taxonomic curation results. Curation basis indicates the method used to resolve each record's taxonomy.
+
+| Curation Basis | Records | Percentage |
+|---|---:|---:|
+| GBIF backbone cache | 98,589 | 94.5% |
+| Reference taxonomy (BoA / nymphalidae.net) | 3,739 | 3.6% |
+| GBIF API (live query) | 853 | 0.8% |
+| GBIF synonym resolution | 263 | 0.3% |
+| Typographical error detection | 202 | 0.2% |
+| Literature corrections | 4 | <0.1% |
+
+### 3.4 Mimicry Ring Coverage
+
+The mimicry ring lookup from Dore et al. (2025) contains 44 distinct mimicry ring categories (Table S1). The most record-rich rings are Agnosia (14,930 records across 83 species), Hermias (12,393 records, 50 species), Lerida (12,262 records, 65 species), and Mamercus (11,452 records, 58 species). These mimicry ring values were propagated to Sanger Institute and GBIF records based on species and subspecies matching, allowing researchers to filter and visualize mimicry ring distributions across data sources.
+
+### 3.5 Performance and Data Efficiency
+
+The serverless architecture results in fast load times and minimal data transfer. The compiled web application (JavaScript and CSS) totals approximately 475 KB when compressed (gzipped). Data files are loaded on demand: by default, only the Sanger Institute dataset and image supplement are loaded on first visit (~4.0 MB), with additional data sources loaded when the user activates them. The full dataset across all five sources totals approximately 61 MB. MapLibre GL JS uses WebGL rendering to maintain smooth interactions even when all sources are loaded simultaneously. Taxonomic filter updates are computed in the user's browser in under 100 milliseconds.
 
 GitHub Pages provides high availability (99.9% uptime) and serves files through a global content delivery network. Unlike the previous R-Shiny deployment of the Wings Gallery (which required an AWS EC2 instance), the current deployment has zero website hosting costs—the only expense is cloud storage for specimen photographs—and needs no system administration.
 
@@ -245,7 +272,7 @@ All source code is freely available under the MIT License at:
 
 The occurrence data shown in Ithomiini Maps comes from:
 - Dore et al. (2025) — Published dataset available at [repository DOI to be added]
-- GBIF occurrence data — Downloaded via the GBIF API (https://www.gbif.org), filtered for tribe Ithomiini, with quality filters applied (coordinates present, no geospatial issues, confirmed presence, excluding fossils and living specimens)
+- GBIF occurrence data — Downloaded via the GBIF API (DOI: 10.15468/dl.pbs3eu), filtered for tribe Ithomiini (45 genera), with quality filters applied (coordinates present, no geospatial issues, confirmed presence, excluding fossils and living specimens). Records split into: iNaturalist research-grade observations, UNAM museum collections, and other institutional datasets.
 - Sanger Institute collection data — Available upon request from the corresponding research group
 
 The processed data files and all source code are available in the GitHub repositories listed above. Version-specific data can be retrieved using the Git commit hashes included in the application's citation system.
@@ -282,7 +309,7 @@ Willmott, K.R. & Freitas, A.V.L. (2006). Higher-level phylogeny of the Ithomiina
 
 ## Figures
 
-**Figure 1.** System architecture overview showing the three applications and their connections. The AI Photo Processor (left) reads handwritten specimen identifiers and renames image files. Renamed photographs are uploaded to Google Cloud services and indexed via Google Apps Script. The Wings Gallery (center) provides a web interface for browsing specimen photographs, with one-click database updates via GitHub Actions. The Ithomiini Maps platform (right) brings together occurrence data from three sources (Dore et al., Sanger Institute, GBIF) through a Python data processing pipeline with automated taxonomic curation, producing an interactive map with multi-dimensional filtering. All web applications run in the user's browser and are hosted on GitHub Pages.
+**Figure 1.** System architecture overview showing the three applications and their connections. The AI Photo Processor (left) reads handwritten specimen identifiers and renames image files. Renamed photographs are uploaded to Google Cloud services and indexed via Google Apps Script. The Wings Gallery (center) provides a web interface for browsing specimen photographs, with one-click database updates via GitHub Actions. The Ithomiini Maps platform (right) brings together occurrence data from five sources (Dore et al., Sanger Institute, iNaturalist, GBIF UNAM, GBIF Other Institutions) through a Python data processing pipeline with automated taxonomic curation, producing an interactive map with multi-dimensional filtering. All web applications run in the user's browser and are hosted on GitHub Pages.
 
 **Figure 2.** The AI Photo Processor interface. (A) The Process Images tab showing the grid assembly preview, where multiple specimen photographs are combined into a single image for efficient AI processing. (B) The Review Results tab displaying AI-read identifiers alongside thumbnail images, with editing and pair-verification indicators.
 
@@ -296,8 +323,86 @@ Willmott, K.R. & Freitas, A.V.L. (2006). Higher-level phylogeny of the Ithomiina
 
 ## Supplementary Material
 
-**Table S1.** Complete list of the 37 mimicry rings from Dore et al. (2025) with representative species and the number of occurrence records per ring in the integrated dataset.
+### Table S1. Mimicry ring categories from Dore et al. (2025)
 
-**Table S2.** Summary statistics for the taxonomic curation pipeline: number of names processed, proportion resolved at each stage (GBIF exact match, GBIF synonym, reference taxonomy), and proportion remaining unresolved.
+Complete list of the 44 mimicry rings with the number of occurrence records and species in the integrated dataset. Representative species (up to 3) are shown for each ring.
 
-**Table S3.** GBIF quality filters applied during data download: coordinates present, no geospatial issues, confirmed presence status, fossils and living specimens excluded.
+| Mimicry Ring | Records | Species | Subspecies | Representative Species |
+|---|---:|---:|---:|---|
+| Acrisione | 46 | 1 | 1 | *Athesis acrisione* |
+| Agnosia | 14,930 | 83 | 132 | *Brevioleria arzalia*, *Dircenna adina*, *Episcada hymenaea* |
+| Amalda | 2,514 | 9 | 15 | *Hypoleria lavinia*, *Hyposcada schausi*, *Ithomia diasia* |
+| Aureliana | 739 | 12 | 25 | *Brevioleria aelia*, *Brevioleria arzalia*, *Brevioleria seba* |
+| Banjana-M | 2,007 | 43 | 65 | *Episcada salvinia*, *Godyris lauta*, *Hyalenna sulmona* |
+| Confusa | 6,022 | 20 | 51 | *Athesis acrisione*, *Callithomia lenea*, *Ceratinia neso* |
+| Dercyllidas | 188 | 1 | 2 | *Patricia dercyllidas* |
+| Dilucida | 6,606 | 40 | 81 | *Athesis clearista*, *Callithomia lenea*, *Ceratinia neso* |
+| Doto | 756 | 15 | 35 | *Callithomia lenea*, *Ceratinia neso*, *Dircenna dero* |
+| Duessa | 142 | 4 | 12 | *Hyalyris oulita*, *Hypothyris leprieuri*, *Hypothyris thea* |
+| Duillia | 238 | 3 | 2 | *Godyris duillia*, *Hypomenitis alphesiboea*, *Pachacutia baroni* |
+| Egra | 114 | 11 | 13 | *Hypoleria alema*, *Hypoleria mulviana*, *Hypoleria sarepta* |
+| Eurimedia | 6,652 | 35 | 113 | *Aeria elara*, *Aeria eurimedia*, *Aeria olena* |
+| Excelsa | 3,014 | 17 | 49 | *Callithomia hezia*, *Callithomia hydra*, *Dircenna olyras* |
+| Hemixanthe | 390 | 7 | 7 | *Episcada hemixanthe*, *Episcada zajciwi*, *Hyalyris leptalina* |
+| Hermias | 12,393 | 50 | 204 | *Athyrtis mechanitis*, *Callithomia alexirrhoe*, *Callithomia lenea* |
+| Hewitsoni | 937 | 27 | 40 | *Athesis vitrala*, *Episcada apuleia*, *Godyris hewitsoni* |
+| Humboldt | 34 | 1 | 3 | *Elzunia humboldt* |
+| Illinissa | 162 | 6 | 8 | *Brevioleria aelia*, *Hyposcada anchiala*, *Hyposcada illinissa* |
+| Lerida | 12,262 | 65 | 158 | *Brevioleria aelia*, *Brevioleria plisthenes*, *Callithomia lenea* |
+| Libethris | 534 | 21 | 26 | *Dircenna adina*, *Episcada clausina*, *Episcada hymenaea* |
+| Lysimnia | 2,352 | 5 | 13 | *Hyalyris fiammetta*, *Hypothyris ninonia*, *Mechanitis lysimnia* |
+| Maelus | 4,516 | 16 | 56 | *Callithomia alexirrhoe*, *Ceratinia neso*, *Ceratinia poecila* |
+| Mamercus | 11,452 | 58 | 178 | *Callithomia alexirrhoe*, *Callithomia hezia*, *Callithomia hydra* |
+| Mantineus | 359 | 5 | 5 | *Ceratinia tutia*, *Ithomia cleora*, *Mechanitis menapis* |
+| Mestra | 416 | 13 | 27 | *Dircenna adina*, *Hyalyris antea*, *Hyalyris mestra* |
+| Mothone | 1,546 | 14 | 26 | *Ceratinia poecila*, *Hyposcada anchiala*, *Hypothyris anastasia* |
+| Ocna | 511 | 13 | 33 | *Callithomia hezia*, *Dircenna adina*, *Hyalyris antea* |
+| Orestes | 1,316 | 15 | 29 | *Athyrtis mechanitis*, *Ceratinia poecila*, *Forbestra olivencia* |
+| Ozia | 731 | 19 | 16 | *Brevioleria coenina*, *Dircenna adina*, *Episcada hymenaea* |
+| Panthyale | 610 | 39 | 71 | *Episcada apuleia*, *Episcada ticidella*, *Godyris zavaleta* |
+| Parallelis | 596 | 7 | 14 | *Hyposcada anchiala*, *Hyposcada illinissa*, *Hyposcada virginiana* |
+| Pavonii | 223 | 2 | 6 | *Elzunia humboldt*, *Elzunia pavonii* |
+| Polita | 1,042 | 10 | 12 | *Dircenna jemina*, *Episcada hymenaea*, *Episcada polita* |
+| Praestans | 11 | 1 | 1 | *Olyras insignis* |
+| Praxilla | 207 | 9 | 17 | *Hyalyris antea*, *Hyalyris lactea*, *Hyalyris mestra* |
+| Quintina | 186 | 6 | 6 | *Hyposcada illinissa*, *Hyposcada kena*, *Oleria estella* |
+| Sinilia | 101 | 9 | 14 | *Brevioleria aelia*, *Hyposcada illinissa*, *Hyposcada kena* |
+| Susiana | 330 | 12 | 18 | *Hyposcada attilodes*, *Hyposcada taliata*, *Megoleria orestilla* |
+| Thabena-F | 89 | 6 | 7 | *Oleria deronda*, *Oleria derondina*, *Ollantaya aegineta* |
+| Theudelinda | 181 | 8 | 14 | *Hypomenitis hermana*, *Hypomenitis oneidodes*, *Hypomenitis theudelinda* |
+| Ticidam | 251 | 8 | 7 | *Episcada ticidella*, *Hyalenna sulmona*, *Ithomia avella* |
+| Umbrosa | 42 | 3 | 5 | *Godyris lauta*, *Hypomenitis depauperata*, *Hypomenitis ochretis* |
+| Vestilla | 20 | 1 | 1 | *Pteronymia vestilla* |
+
+### Table S2. Taxonomic curation pipeline: detailed status breakdown
+
+Of 104,382 total records curated:
+
+| Curation Status | Records | Percentage |
+|---|---:|---:|
+| Verified (exact match) | 74,170 | 71.1% |
+| Verified nominotypical subspecies | 12,433 | 11.9% |
+| Subspecies unresolved | 9,907 | 9.5% |
+| Undescribed subspecies | 2,224 | 2.1% |
+| Synonym resolved | 2,142 | 2.1% |
+| Verified via reference taxonomy | 1,861 | 1.8% |
+| Not curated | 730 | 0.7% |
+| Higher rank match only | 615 | 0.6% |
+| Non-standard subspecies | 244 | 0.2% |
+| Subspecies synonym | 48 | <0.1% |
+| Corrected via literature | 6 | <0.1% |
+| Not found | 2 | <0.1% |
+
+### Table S3. GBIF quality filters
+
+The following filters were applied during the GBIF download (DOI: 10.15468/dl.pbs3eu, downloaded 2026-01-05):
+
+| Filter | Setting | Purpose |
+|---|---|---|
+| Taxon scope | All 45 Ithomiini genera | Covers full tribal diversity |
+| HAS_COORDINATE | true | Only georeferenced records |
+| HAS_GEOSPATIAL_ISSUE | false | Excludes records with coordinate problems |
+| OCCURRENCE_STATUS | PRESENT | Excludes absence records |
+| BASIS_OF_RECORD exclusions | FOSSIL_SPECIMEN, LIVING_SPECIMEN | Removes non-wild occurrences |
+
+Total records downloaded: 68,733. After processing (name parsing, coordinate validation, source splitting), these were distributed as: iNaturalist (19,328), GBIF UNAM (21,586), and GBIF Other Institutions (27,819).
