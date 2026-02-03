@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 /**
  * Centralized persistence store
@@ -136,7 +136,6 @@ export const usePersistenceStore = defineStore('persistence', () => {
       set('legend-custom-labels', legendStore.customLabels)
       set('legend-custom-colors', legendStore.customColors)
       set('legend-hidden-items', legendStore.hiddenItems)
-      set('legend-item-order', legendStore.itemOrder)
       set('legend-grouping', legendStore.groupingSettings)
       set('legend-species-styling', legendStore.speciesStyling)
       set('legend-species-borders', legendStore.speciesBorderColors)

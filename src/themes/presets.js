@@ -52,11 +52,6 @@ export function getTheme(name) {
   return themes[name] || themes[DEFAULT_THEME]
 }
 
-// Get list of available theme names
-export function getThemeNames() {
-  return Object.keys(themes)
-}
-
 // Get theme options for select dropdowns
 export function getThemeOptions() {
   return Object.entries(themes).map(([key, theme]) => ({

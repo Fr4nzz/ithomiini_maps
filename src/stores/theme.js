@@ -117,23 +117,6 @@ export const useThemeStore = defineStore('theme', () => {
     applyTheme()
   }
 
-  /**
-   * Cycle through available themes
-   */
-  function cycleTheme() {
-    const themeNames = Object.keys(themes)
-    const currentIndex = themeNames.indexOf(currentTheme.value)
-    const nextIndex = (currentIndex + 1) % themeNames.length
-    setTheme(themeNames[nextIndex])
-  }
-
-  /**
-   * Get current theme object
-   */
-  function getCurrentThemeData() {
-    return getTheme(currentTheme.value)
-  }
-
   // Apply theme on initialization
   applyTheme()
 
@@ -145,8 +128,6 @@ export const useThemeStore = defineStore('theme', () => {
     setTheme,
     setMode,
     toggleMode,
-    applyTheme,
-    cycleTheme,
-    getCurrentThemeData
+    applyTheme
   }
 })

@@ -1,0 +1,71 @@
+import { ref } from 'vue'
+import { MAP_STYLES } from '../utils/mapStyles'
+
+export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
+  const currentStyle = ref('dark')
+  const { recreateClusterExtentCircle, setStyleChanging, onStyleReady } = callbacks
+
+  // Generation counter prevents stale style.load callbacks from running
+  // when the user switches styles rapidly (e.g. streets → terrain before
+  // the streets style.load fires).
+  let switchGeneration = 0
+
+  const switchStyle = async (styleName) => {
+    if (!map.value || !MAP_STYLES[styleName]) return
+
+    if (setStyleChanging) {
+      setStyleChanging(true)
+    }
+
+    const center = map.value.getCenter()
+    const zoom = map.value.getZoom()
+    const bearing = map.value.getBearing()
+    const pitch = map.value.getPitch()
+
+    currentStyle.value = styleName
+    const styleConfig = MAP_STYLES[styleName]
+    const gen = ++switchGeneration
+
+    map.value.setStyle(styleConfig.style)
+
+    let handled = false
+    const handleStyleReady = () => {
+      // Guard: skip if already handled or a newer switch has occurred
+      if (handled || gen !== switchGeneration) return
+      handled = true
+
+      map.value.jumpTo({ center, zoom, bearing, pitch })
+      addDataLayer({ skipZoom: true })
+
+      // Notify caller that style is ready (e.g., for re-adding boundaries)
+      if (onStyleReady) {
+        onStyleReady()
+      }
+
+      map.value.once('idle', () => {
+        if (gen !== switchGeneration) return
+        if (recreateClusterExtentCircle) {
+          recreateClusterExtentCircle()
+        }
+
+        setTimeout(() => {
+          if (setStyleChanging) {
+            setStyleChanging(false)
+          }
+        }, 100)
+      })
+    }
+
+    map.value.once('style.load', handleStyleReady)
+
+    // Fallback: for inline raster styles (streets, satellite, terrain),
+    // style.load may not fire promptly because the style object is parsed
+    // synchronously. The timeout ensures we still initialize the map layers.
+    setTimeout(handleStyleReady, 100)
+  }
+
+  return {
+    currentStyle,
+    switchStyle
+  }
+}

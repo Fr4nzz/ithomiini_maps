@@ -103,8 +103,29 @@ const handleShowPopup = (data) => {
 }
 
 const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup })
-const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, { recreateClusterExtentCircle, setStyleChanging })
-const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map)
+const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
+  recreateClusterExtentCircle,
+  setStyleChanging,
+  onStyleReady: () => {
+    if (showBoundaries.value) {
+      addBoundariesLayer({ fromStyleSwitch: true })
+    }
+  }
+})
+const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
+
+// Helper: check if map is operational (has a parsed style we can add layers to).
+// Uses getStyle() instead of isStyleLoaded() because the latter returns false
+// while GeoJSON source tiles are still being processed, blocking legitimate
+// data updates even though the map can accept addSource/addLayer calls.
+const isMapReady = () => {
+  if (!map.value) return false
+  try {
+    return !!map.value.getStyle()
+  } catch {
+    return false
+  }
+}
 
 // Watch for theme/mode changes to update cluster extent circle colors
 watch(
@@ -133,12 +154,6 @@ const themeOptions = getThemeOptions()
 const selectMapStyle = (styleKey) => {
   switchStyle(styleKey)
   showMapLayerDropdown.value = false
-  // Re-add boundaries after style change
-  setTimeout(() => {
-    if (showBoundaries.value) {
-      addBoundariesLayer()
-    }
-  }, 500)
 }
 
 // Select a theme from dropdown
@@ -162,15 +177,9 @@ const toggleThemeMode = () => {
   // Switch theme mode
   themeStore.toggleMode()
 
-  // If basemap has a pair, switch to it
+  // If basemap has a pair, switch to it (onStyleReady callback handles boundaries)
   if (pairedBasemap !== currentStyle.value) {
     switchStyle(pairedBasemap)
-    // Re-add boundaries after style change
-    setTimeout(() => {
-      if (showBoundaries.value) {
-        addBoundariesLayer()
-      }
-    }, 500)
   }
 }
 
@@ -372,9 +381,10 @@ const handleOpenGallery = () => {
 watch(
   () => store.displayGeoJSON,
   (newData) => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-
     const newLength = newData?.features?.length || 0
+
+    if (!isMapReady()) return
+
     const currentScatterState = store.scatterOverlappingPoints
 
     const scatterJustToggled = currentScatterState !== previousScatterState
@@ -403,7 +413,7 @@ watch(
 watch(
   () => store.scatterOverlappingPoints,
   () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!isMapReady()) return
     updateScatterVisualization()
   }
 )
@@ -418,8 +428,7 @@ watch(
   () => store.clusteringEnabled,
   (enabled) => {
     clusteringJustToggled = true
-    if (!map.value || !map.value.isStyleLoaded()) return
-    console.log('[Clustering] Toggle changed to:', enabled)
+    if (!isMapReady()) return
     addDataLayer({ skipZoom: true })
   },
   { flush: 'sync' }
@@ -429,100 +438,28 @@ watch(
 watch(
   () => store.clusterSettings,
   () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!isMapReady()) return
     addDataLayer({ skipZoom: true })
   },
   { deep: true }
 )
 
-// Watch for color and style settings changes
+// Watch for styling/color/shape changes that require map layer rebuild
 watch(
-  [() => store.colorBy, () => store.mapStyle],
+  [
+    () => store.colorBy,
+    () => store.mapStyle,
+    () => legendStore.customColors,
+    () => legendStore.speciesStyling,
+    () => legendStore.speciesBorderColors,
+    () => legendStore.speciesBaseHues,
+    () => legendStore.speciesGradientEnabled,
+    () => legendStore.shapeSettings,
+    () => legendStore.groupShapes
+  ],
   () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!isMapReady()) return
     addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for legend custom colors changes (to update map points)
-watch(
-  () => legendStore.customColors,
-  () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-    addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for species styling changes (border colors, gradient mode)
-watch(
-  () => legendStore.speciesStyling,
-  () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-    addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for species border color assignments
-watch(
-  () => legendStore.speciesBorderColors,
-  () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-    addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for species hue assignments (gradient mode)
-watch(
-  () => legendStore.speciesBaseHues,
-  () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-    addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for per-species gradient enabled settings
-watch(
-  () => legendStore.speciesGradientEnabled,
-  () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-    addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for shape settings changes
-watch(
-  () => legendStore.shapeSettings,
-  () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-    // Shape images are generated on-demand in addDataLayer
-    addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for group shape assignments
-watch(
-  () => legendStore.groupShapes,
-  () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-    // Shape images are generated on-demand in addDataLayer
-    addDataLayer({ skipZoom: true })
-  },
-  { deep: true }
-)
-
-// Watch for grouping settings changes (to update labels)
-watch(
-  () => legendStore.groupingSettings,
-  () => {
-    // No need to update map layers for grouping changes
-    // The legend handles its own rendering
   },
   { deep: true }
 )
@@ -552,26 +489,25 @@ watch(
         initialSubspecies: point.properties?.subspecies
       }
 
+      showEnhancedPopup.value = true
+
+      // Wait for the popup DOM element to render before attaching to map
       nextTick(() => {
-        showEnhancedPopup.value = true
+        if (pointPopupContainer.value) {
+          popup = new maplibregl.Popup({
+            closeButton: false,
+            closeOnClick: true,
+            maxWidth: '500px',
+            className: 'custom-popup enhanced-popup'
+          })
+            .setLngLat([point.lng, point.lat])
+            .setDOMContent(pointPopupContainer.value)
+            .addTo(map.value)
 
-        nextTick(() => {
-          if (pointPopupContainer.value) {
-            popup = new maplibregl.Popup({
-              closeButton: false,
-              closeOnClick: true,
-              maxWidth: '500px',
-              className: 'custom-popup enhanced-popup'
-            })
-              .setLngLat([point.lng, point.lat])
-              .setDOMContent(pointPopupContainer.value)
-              .addTo(map.value)
-
-            popup.on('close', () => {
-              showEnhancedPopup.value = false
-            })
-          }
-        })
+          popup.on('close', () => {
+            showEnhancedPopup.value = false
+          })
+        }
       })
 
       store.focusPoint = null
@@ -1040,10 +976,6 @@ watch(
   flex-shrink: 0;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 .search-clear {
   display: flex;
   align-items: center;
@@ -1146,7 +1078,7 @@ watch(
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 20;
+  z-index: 30; /* Above legend (25) so dropdowns aren't hidden behind it */
   display: flex;
   align-items: center;
   gap: 8px;

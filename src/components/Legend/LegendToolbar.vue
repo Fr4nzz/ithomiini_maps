@@ -708,28 +708,6 @@ onUnmounted(() => {
   border-radius: 3px;
 }
 
-/* Settings select */
-.settings-select {
-  flex: 1;
-  padding: 6px 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.settings-select:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
-.settings-select option {
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
 /* Wrap toggle button */
 .wrap-toggle-button {
   padding: 6px 12px;

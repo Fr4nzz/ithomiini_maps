@@ -2,7 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
 import { getThumbnailUrl } from '../utils/imageProxy'
-import { STATUS_COLORS, getStatusColor } from '../utils/constants'
+import { STATUS_COLORS } from '../utils/constants'
 
 const props = defineProps({
   coordinates: {

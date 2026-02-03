@@ -5,9 +5,14 @@
       "records": 6722,
       "default": true
     },
-    "GBIF": {
-      "file": "map_points_gbif.json",
-      "records": 49405,
+    "GBIF (UNAM)": {
+      "file": "map_points_gbif_unam.json",
+      "records": 21586,
+      "default": false
+    },
+    "GBIF (Other Institutions)": {
+      "file": "map_points_gbif_other.json",
+      "records": 27819,
       "default": false
     },
     "Dore et al. (2025)": {
@@ -21,6 +26,5 @@
       "default": false
     }
   },
-  "image_supplement": "map_points_images.json",
-  "generated_at": "2026-01-31T04:09:31Z"
+  "image_supplement": "map_points_images.json"
 }

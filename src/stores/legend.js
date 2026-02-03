@@ -1,19 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { usePersistenceStore } from './persistence'
 import { useDataStore } from './data'
 import { applyAbbreviationFormat } from '../utils/abbreviations'
-
-// Helper to get/set localStorage with fallback (uses persistence store)
-const getStorage = (key, defaultValue) => {
-  const persistenceStore = usePersistenceStore()
-  return persistenceStore.get(key, defaultValue)
-}
-
-const setStorage = (key, value) => {
-  const persistenceStore = usePersistenceStore()
-  persistenceStore.set(key, value)
-}
+import { getStorage, setStorage } from '../utils/storageHelpers'
 
 export const useLegendStore = defineStore('legend', () => {
   // Lazy getter for data store (avoid circular dependency)
@@ -710,10 +699,7 @@ export const useLegendStore = defineStore('legend', () => {
 
     // Computed
     hasCustomizations,
-    canGroup,
     isGrouped,
-    groupByOptions,
-    shouldShowPrefix,
 
     // Actions
     updatePosition,
@@ -723,65 +709,29 @@ export const useLegendStore = defineStore('legend', () => {
     setMaxItems,
     setStickyEdges,
     setCustomLabel,
-    getDisplayLabel,
     setCustomColor,
-    getDisplayColor,
     toggleItemVisibility,
     isItemVisible,
     resetCustomizations,
-    resetPosition,
-    resetSize,
-    resetAll,
-
-    // Grouping actions
-    setGroupingEnabled,
-    setGroupBy,
-    setAbbreviationStyle,
     setShowHeaders,
-    toggleHeaders,
-    setPrefixEnabled,
-
-    // Species styling actions
-    setSpeciesBorderColorEnabled,
-    setSpeciesGradientEnabled,
     setSpeciesBorderColor,
     setSpeciesBaseHue,
     setSpeciesGradientEnabledForSpecies,
     isSpeciesGradientEnabled,
-    resetSpeciesStyling,
-
-    // Abbreviation actions
-    getDefaultAbbreviation,
     getSpeciesAbbreviation,
     setSpeciesAbbreviation,
     isAbbreviationVisible,
     setAbbreviationVisible,
     toggleAbbreviationVisible,
-
-    // Shape actions
-    setShapesEnabled,
-    setShapeAssignBy,
-    setGroupShape,
-    getGroupShape,
-    resetShapeSettings,
-
-    // Display name format actions
     setDisplayNameFormat,
     setPrefixFormat,
     setSpeciesDisplayName,
     getSpeciesDisplayName,
-
-    // Sorting actions
     setSortBy,
     setSortOrder,
-    toggleSortOrder,
-
-    // Wrap label actions
-    setWrapLabels,
+    setGroupShape,
+    getGroupShape,
     toggleWrapLabels,
-
-    // Show counts actions
-    setShowCounts,
     toggleShowCounts
   }
 })

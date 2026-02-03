@@ -22,7 +22,6 @@ import re
 import os
 import json
 import sys
-import time
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -41,9 +40,6 @@ OUTPUT_DIR = "public/data"
 # GBIF Configuration
 USE_GBIF_BULK_DOWNLOAD = True
 GBIF_BULK_FILE = "public/data/gbif_occurrences.json"
-GBIF_SEARCH_FALLBACK = False
-GBIF_SPECIES_LIMIT = 5
-GBIF_RECORDS_PER_SPECIES = 50
 
 # ══════════════════════════════════════════════════════════════════════════════
 # MIMICRY RING LOOKUP TABLE
@@ -135,6 +131,13 @@ def lookup_mimicry(scientific_name, subspecies=None):
 # HELPER FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
+def clean_str(x):
+    """Clean a string value: strip whitespace, return None for NaN/empty/NA values."""
+    if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA']:
+        return str(x).strip()
+    return None
+
+
 def clean_id(series):
     """Normalizes IDs: removes spaces, uppercase, handles NaNs."""
     s = series.astype(str).str.upper().str.strip()
@@ -193,21 +196,12 @@ def determine_sequencing_status(row):
     return "Preserved Specimen"
 
 
-def split_scientific_name(name):
-    """
-    Split a scientific name into genus, species epithet, and subspecies.
-    Input: "Mechanitis menophilus nevadensis" or "Mechanitis menophilus"
-    Output: (genus, species_epithet, subspecies)
-    """
-    if pd.isna(name) or not name:
-        return ('Unknown', 'unknown', None)
-    
-    parts = str(name).strip().split()
-    genus = parts[0] if len(parts) > 0 else 'Unknown'
-    species_epithet = parts[1] if len(parts) > 1 else 'sp.'
-    subspecies = ' '.join(parts[2:]) if len(parts) > 2 else None
-    
-    return (genus, species_epithet, subspecies)
+def get_mimicry_for_row(row):
+    """Look up male mimicry ring for a DataFrame row using the Dore lookup table."""
+    sci_name = row.get('scientific_name', '')
+    subspecies = row.get('subspecies')
+    male_mim, _ = lookup_mimicry(sci_name, subspecies)
+    return male_mim
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -228,9 +222,7 @@ def load_local_data():
         # Extract taxonomy components
         df['genus'] = df['Genus'].astype(str).str.strip()
         df['species'] = df['Species'].astype(str).str.strip()  # Just the epithet
-        df['subspecies'] = df['Sub.species'].apply(
-            lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
-        )
+        df['subspecies'] = df['Sub.species'].apply(clean_str)
         
         # All Ithomiini are in Nymphalidae family
         df['family'] = 'Nymphalidae'
@@ -257,9 +249,7 @@ def load_local_data():
         # Collection location and observation date
         # Dore database may have location and date columns
         if 'Locality' in df.columns:
-            df['collection_location'] = df['Locality'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
-            )
+            df['collection_location'] = df['Locality'].apply(clean_str)
         else:
             df['collection_location'] = None
 
@@ -271,9 +261,7 @@ def load_local_data():
                 break
 
         if date_col:
-            df['observation_date'] = df[date_col].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
-            )
+            df['observation_date'] = df[date_col].apply(clean_str)
         else:
             df['observation_date'] = None
 
@@ -372,9 +360,7 @@ def load_sanger_data():
         
         # Subspecies
         df_col['subspecies'] = df_col.get('Subspecies_Form', pd.Series([None] * len(df_col)))
-        df_col['subspecies'] = df_col['subspecies'].apply(
-            lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
-        )
+        df_col['subspecies'] = df_col['subspecies'].apply(clean_str)
         
         # Coordinates (try multiple column names)
         if 'DECIMAL_LATITUDE' in df_col.columns:
@@ -392,12 +378,6 @@ def load_sanger_data():
         # ═══════════════════════════════════════════════════════════════════
         print("   Applying mimicry ring lookup from Dore database...")
         
-        def get_mimicry_for_row(row):
-            sci_name = row.get('scientific_name', '')
-            subspecies = row.get('subspecies')
-            male_mim, _ = lookup_mimicry(sci_name, subspecies)
-            return male_mim
-        
         df_col['mimicry_ring'] = df_col.apply(get_mimicry_for_row, axis=1)
         
         matched = (df_col['mimicry_ring'] != 'Unknown').sum()
@@ -410,25 +390,17 @@ def load_sanger_data():
 
         # Collection location from Sanger data
         if 'Collection_location' in df_col.columns:
-            df_col['collection_location'] = df_col['Collection_location'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
-            )
+            df_col['collection_location'] = df_col['Collection_location'].apply(clean_str)
         elif 'Locality' in df_col.columns:
-            df_col['collection_location'] = df_col['Locality'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
-            )
+            df_col['collection_location'] = df_col['Locality'].apply(clean_str)
         else:
             df_col['collection_location'] = None
 
         # Observation date from Sanger data
         if 'Collection_date' in df_col.columns:
-            df_col['observation_date'] = df_col['Collection_date'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
-            )
+            df_col['observation_date'] = df_col['Collection_date'].apply(clean_str)
         elif 'Date' in df_col.columns:
-            df_col['observation_date'] = df_col['Date'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', '', 'NA'] else None
-            )
+            df_col['observation_date'] = df_col['Date'].apply(clean_str)
         else:
             df_col['observation_date'] = None
 
@@ -545,45 +517,38 @@ def load_gbif_bulk_download():
         required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
                         'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
                         'sequencing_status', 'source', 'image_url', 'country',
-                        'collection_location', 'observation_date', 'observation_url', 'sex']
+                        'collection_location', 'observation_date', 'observation_url', 'sex',
+                        'institution_code']
 
+        nullable_cols = {'subspecies', 'image_url', 'collection_location',
+                         'observation_date', 'observation_url', 'sex', 'institution_code'}
         for col in required_cols:
             if col not in df.columns:
-                df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date', 'observation_url', 'sex'] else 'Unknown'
+                df[col] = None if col in nullable_cols else 'Unknown'
 
         # Preserve source field from download (iNaturalist or GBIF)
         # If source is not set, default to GBIF
         if 'source' in df.columns:
-            df['source'] = df['source'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else 'GBIF'
-            )
+            df['source'] = df['source'].apply(lambda x: clean_str(x) or 'GBIF')
         else:
             df['source'] = 'GBIF'
 
         # Process GBIF collection_location (already set by gbif_download.py with fallbacks)
         # Only use locality as fallback if collection_location is not already set
         if 'collection_location' in df.columns:
-            df['collection_location'] = df['collection_location'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
-            )
+            df['collection_location'] = df['collection_location'].apply(clean_str)
         elif 'locality' in df.columns:
-            df['collection_location'] = df['locality'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
-            )
+            df['collection_location'] = df['locality'].apply(clean_str)
         # Handle observation_date from various source columns
         if 'observation_date' not in df.columns or df['observation_date'].isna().all():
             for date_col in ['collection_date', 'event_date']:
                 if date_col in df.columns:
-                    df['observation_date'] = df[date_col].apply(
-                        lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
-                    )
+                    df['observation_date'] = df[date_col].apply(clean_str)
                     break
 
         # Clean observation_url
         if 'observation_url' in df.columns:
-            df['observation_url'] = df['observation_url'].apply(
-                lambda x: str(x).strip() if pd.notna(x) and str(x).strip() not in ['nan', ''] else None
-            )
+            df['observation_url'] = df['observation_url'].apply(clean_str)
 
         # ═══════════════════════════════════════════════════════════════════
         # SEX FIELD (from Darwin Core)
@@ -601,12 +566,6 @@ def load_gbif_bulk_download():
         # ═══════════════════════════════════════════════════════════════════
         print("   Applying mimicry ring lookup from Dore database...")
         
-        def get_mimicry_for_row(row):
-            sci_name = row.get('scientific_name', '')
-            subspecies = row.get('subspecies')
-            male_mim, _ = lookup_mimicry(sci_name, subspecies)
-            return male_mim
-        
         df['mimicry_ring'] = df.apply(get_mimicry_for_row, axis=1)
         
         matched = (df['mimicry_ring'] != 'Unknown').sum()
@@ -617,96 +576,6 @@ def load_gbif_bulk_download():
     except Exception as e:
         print(f"   ERROR loading GBIF data: {e}")
         return pd.DataFrame()
-
-
-def fetch_gbif_data(species_list):
-    """Fetch occurrence data from GBIF API for given species (LEGACY - use gbif_download.py instead)."""
-    if GBIF_SPECIES_LIMIT == 0:
-        print(">> GBIF search API disabled")
-        return pd.DataFrame()
-    
-    print(f">> Fetching GBIF Data via Search API for up to {GBIF_SPECIES_LIMIT} species...")
-    print("   ⚠️  Note: For bulk data, use gbif_download.py instead!")
-    all_records = []
-    
-    # Get unique species, limit count
-    targets = [s for s in set(species_list) if isinstance(s, str) and len(s) > 3]
-    targets = targets[:GBIF_SPECIES_LIMIT]
-    
-    for i, sp in enumerate(targets):
-        try:
-            print(f"   [{i+1}/{len(targets)}] Querying: {sp}")
-            
-            # Step 1: Match species name to GBIF backbone
-            match_url = "https://api.gbif.org/v1/species/match"
-            r = requests.get(match_url, params={'name': sp, 'kingdom': 'Animalia'}, timeout=10)
-            data = r.json()
-            
-            usage_key = data.get('usageKey')
-            if not usage_key:
-                print(f"      No match found")
-                continue
-            
-            # Step 2: Search occurrences
-            search_url = "https://api.gbif.org/v1/occurrence/search"
-            params = {
-                'taxonKey': usage_key,
-                'hasCoordinate': 'true',
-                'limit': GBIF_RECORDS_PER_SPECIES
-            }
-            r_occ = requests.get(search_url, params=params, timeout=15)
-            results = r_occ.json().get('results', [])
-            
-            print(f"      Found {len(results)} occurrences")
-            
-            for rec in results:
-                # Extract image URL if available
-                image_url = None
-                if 'media' in rec:
-                    for m in rec['media']:
-                        if m.get('type') == 'StillImage' and m.get('identifier'):
-                            image_url = m['identifier']
-                            break
-                
-                # Parse scientific name for components
-                sci_name = rec.get('species', rec.get('scientificName', sp))
-                genus, species_epithet, subspecies = split_scientific_name(sci_name)
-                
-                # Lookup mimicry ring
-                male_mim, _ = lookup_mimicry(sci_name, subspecies)
-                
-                all_records.append({
-                    'id': f"GBIF_{rec.get('key', '')}",
-                    'scientific_name': sci_name,
-                    'genus': rec.get('genus', genus),
-                    'species': species_epithet,
-                    'subspecies': subspecies,
-                    'family': rec.get('family', 'Nymphalidae'),
-                    'tribe': 'Ithomiini',
-                    'lat': rec.get('decimalLatitude'),
-                    'lng': rec.get('decimalLongitude'),
-                    'mimicry_ring': male_mim,  # From Dore lookup
-                    'sequencing_status': 'GBIF Record',
-                    'source': 'GBIF',
-                    'image_url': image_url,
-                    'country': rec.get('country'),
-                    'collection_location': rec.get('locality'),
-                    'observation_date': rec.get('eventDate')
-                })
-            
-            # Rate limiting
-            time.sleep(0.5)
-            
-        except Exception as e:
-            print(f"      ERROR: {e}")
-            continue
-    
-    if all_records:
-        df = pd.DataFrame(all_records)
-        print(f"   Total GBIF records: {len(df)}")
-        return df
-    
-    return pd.DataFrame()
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -771,13 +640,6 @@ def main():
         if not df_gbif.empty:
             df_merged = pd.concat([df_merged, df_gbif], ignore_index=True)
             print(f">> After GBIF bulk merge: {len(df_merged):,} records")
-        elif GBIF_SEARCH_FALLBACK:
-            print(">> Falling back to GBIF Search API...")
-            species_list = df_merged['scientific_name'].unique().tolist()
-            df_gbif = fetch_gbif_data(species_list)
-            if not df_gbif.empty:
-                df_merged = pd.concat([df_merged, df_gbif], ignore_index=True)
-                print(f">> After GBIF search merge: {len(df_merged):,} records")
     
     # ═══════════════════════════════════════════════════════════════════════
     # FINAL CLEANING

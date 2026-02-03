@@ -22,7 +22,6 @@ const props = defineProps({
 const isExporting = ref(false)
 const exportSuccess = ref(false)
 const citationCopied = ref(false)
-const exportError = ref(null)
 
 // Get filtered data
 const filteredData = computed(() => {
@@ -171,12 +170,10 @@ const copyCitation = (type = 'plain') => {
 // R Script Export - uses shared utility
 const exportForR = async () => {
   if (!props.map) {
-    exportError.value = 'Map not available. Please ensure you are on the Map view.'
     return
   }
 
   isExporting.value = true
-  exportError.value = null
 
   try {
     await exportForRUtil(props.map)
@@ -187,7 +184,6 @@ const exportForR = async () => {
     }, 2000)
   } catch (e) {
     console.error('[Export] R export failed:', e)
-    exportError.value = e.message || 'Export failed'
     isExporting.value = false
   }
 }
@@ -500,13 +496,6 @@ const activeTab = ref(props.initialTab || 'export')
   gap: 16px;
 }
 
-.info-text {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary, #aaa);
-  line-height: 1.5;
-  margin: 0;
-}
-
 /* Data Summary */
 .data-summary {
   display: flex;
@@ -536,118 +525,8 @@ const activeTab = ref(props.initialTab || 'export')
   letter-spacing: 1px;
 }
 
-/* Option Groups */
-.option-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.option-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-text-secondary, #aaa);
-}
-
-.option-hint {
-  font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
-}
-
-/* Format Buttons */
-.format-buttons,
-.dpi-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.format-buttons button,
-.dpi-buttons button {
-  flex: 1;
-  padding: 10px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.format-buttons button:hover,
-.dpi-buttons button:hover {
-  background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.format-buttons button.active,
-.dpi-buttons button.active {
-  background: var(--color-accent, #4ade80);
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-}
-
-/* Select Input */
-.select-input {
-  padding: 10px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.select-input:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
-/* Custom Size */
-.custom-size .size-inputs {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.size-input {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.size-input label {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
-}
-
-.size-input input {
-  padding: 8px 10px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-}
-
-.size-input input:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
-.size-separator {
-  color: var(--color-text-muted, #666);
-  font-size: 1.2rem;
-  padding-bottom: 8px;
-}
-
 /* Export Options */
-.export-options,
-.export-buttons {
+.export-options {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -710,53 +589,6 @@ const activeTab = ref(props.initialTab || 'export')
 .btn-desc {
   font-size: 0.75rem;
   color: var(--color-text-muted, #666);
-}
-
-/* Export Image Button */
-.export-image-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding: 16px;
-  background: var(--color-accent, #4ade80);
-  border: none;
-  border-radius: 8px;
-  color: var(--color-bg-primary, #1a1a2e);
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-}
-
-.export-image-btn:hover:not(:disabled) {
-  background: #5eeb94;
-}
-
-.export-image-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.export-image-btn svg {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-}
-
-.export-image-btn .btn-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.export-image-btn .btn-title {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.export-image-btn .btn-desc {
-  font-size: 0.8rem;
-  opacity: 0.8;
 }
 
 /* Citation Section */
@@ -964,24 +796,6 @@ const activeTab = ref(props.initialTab || 'export')
   height: 18px;
 }
 
-/* Error */
-.export-error {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  background: rgba(239, 68, 68, 0.15);
-  border-radius: 8px;
-  color: #ef4444;
-  font-size: 0.85rem;
-}
-
-.export-error svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
 /* Transitions */
 .fade-enter-active,
 .fade-leave-active {
@@ -1004,16 +818,6 @@ const activeTab = ref(props.initialTab || 'export')
 
   .data-summary {
     flex-direction: column;
-  }
-
-  .format-buttons,
-  .dpi-buttons {
-    flex-wrap: wrap;
-  }
-
-  .format-buttons button,
-  .dpi-buttons button {
-    min-width: calc(33% - 8px);
   }
 }
 </style>
