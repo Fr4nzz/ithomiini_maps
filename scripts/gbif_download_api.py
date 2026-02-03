@@ -55,6 +55,9 @@ MAX_POLL_ATTEMPTS = 120  # 60 minutes max wait
 # iNaturalist Research-grade dataset key
 INATURALIST_DATASET_KEY = "50c9509d-22c7-4a22-a47d-8c48425ef4a7"
 
+# UNAM institution codes (major Mexican museum collections)
+UNAM_INSTITUTION_CODES = {'MZFC-FC-UNAM', 'IBUNAM', 'FC-UNAM', 'FESZ-UNAM'}
+
 # All Ithomiini genera (from Dore et al. database)
 ITHOMIINI_GENERA = [
     'Aeria', 'Athesis', 'Athyrtis', 'Brevioleria', 'Callithomia', 'Ceratinia',
@@ -453,9 +456,22 @@ def get_observation_url(record):
     return f"https://www.gbif.org/occurrence/{gbif_id}"
 
 
+def _is_unam_record(record):
+    """Check whether a record originates from a UNAM institution."""
+    institution = record.get('institutionCode', '') or ''
+    return institution in UNAM_INSTITUTION_CODES
+
+
 def get_source(record):
-    """Determine the data source for a record."""
-    return 'iNaturalist' if _is_inaturalist_record(record) else 'GBIF'
+    """Determine the data source for a record.
+
+    Returns one of: 'iNaturalist', 'GBIF (UNAM)', 'GBIF (Other Coverage)'
+    """
+    if _is_inaturalist_record(record):
+        return 'iNaturalist'
+    if _is_unam_record(record):
+        return 'GBIF (UNAM)'
+    return 'GBIF (Other Institutions)'
 
 
 def get_collection_location(record):

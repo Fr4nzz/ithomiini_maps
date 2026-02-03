@@ -109,8 +109,8 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   onStyleReady: () => {
     console.log('[MapEngine] onStyleReady — showBoundaries:', showBoundaries.value)
     if (showBoundaries.value) {
-      console.log('[MapEngine]   Calling addBoundariesLayer from onStyleReady')
-      addBoundariesLayer()
+      console.log('[MapEngine]   Calling addBoundariesLayer from onStyleReady (fromStyleSwitch)')
+      addBoundariesLayer({ fromStyleSwitch: true })
     }
   }
 })

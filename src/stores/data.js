@@ -24,12 +24,23 @@ export const useDataStore = defineStore('data', () => {
   // Derived from manifest — fallback to hardcoded values if manifest fails to load
   const FALLBACK_SOURCES = {
     'Sanger Institute': { file: 'map_points_sanger.json', default: true },
-    'GBIF': { file: 'map_points_gbif.json', default: false },
+    'GBIF (UNAM)': { file: 'map_points_gbif_unam.json', default: false },
+    'GBIF (Other Institutions)': { file: 'map_points_gbif_other.json', default: false },
     'Dore et al. (2025)': { file: 'map_points_dore.json', default: false },
     'iNaturalist': { file: 'map_points_inaturalist.json', default: false },
   }
 
-  const sourceConfig = computed(() => manifest.value?.sources ?? FALLBACK_SOURCES)
+  // Migrate old manifest format: rename "GBIF" → "GBIF (Other Institutions)"
+  const sourceConfig = computed(() => {
+    const raw = manifest.value?.sources ?? FALLBACK_SOURCES
+    if (raw['GBIF'] && !raw['GBIF (Other Institutions)']) {
+      const migrated = { ...raw }
+      migrated['GBIF (Other Institutions)'] = { ...migrated['GBIF'], file: migrated['GBIF'].file }
+      delete migrated['GBIF']
+      return migrated
+    }
+    return raw
+  })
   const imageSupplementFile = computed(() => manifest.value?.image_supplement ?? 'map_points_images.json')
 
   // Filter visibility state (for expand/collapse)
@@ -171,9 +182,10 @@ export const useDataStore = defineStore('data', () => {
       const defaultData = await defaultRes.json()
       const imgData = imgRes.ok ? await imgRes.json() : []
 
-      // Normalize country codes for consistent filtering across data sources
+      // Normalize country codes and stamp source for consistent filtering
       for (const item of defaultData) {
         if (item.country) item.country = normalizeCountryName(item.country)
+        if (item.source !== defaultSource) item.source = defaultSource
       }
 
       allFeatures.value = defaultData
@@ -229,8 +241,11 @@ export const useDataStore = defineStore('data', () => {
       console.log(`[DataStore] loadSource('${sourceName}') — parsed ${data.length} records from ${fileName}`)
 
       // Normalize country codes (e.g., GBIF's "BR" → "Brazil") for consistent filtering
+      // Also stamp each record's source to match the source key used to load it
+      // (handles old data where source="GBIF" but loaded under "GBIF (Other Institutions)")
       for (const item of data) {
         if (item.country) item.country = normalizeCountryName(item.country)
+        if (item.source !== sourceName) item.source = sourceName
       }
 
       const prevCount = allFeatures.value.length

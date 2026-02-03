@@ -43,8 +43,14 @@ export function useCountryBoundaries(map, currentStyle) {
     }
   }
 
-  const addBoundariesLayer = async () => {
-    console.log('[Borders] addBoundariesLayer called — showBoundaries:', showBoundaries.value, 'currentStyle:', currentStyle.value)
+  /**
+   * @param {Object} options
+   * @param {boolean} options.fromStyleSwitch - When true, skip isStyleLoaded() check.
+   *   MapLibre's isStyleLoaded() returns false inside the style.load event because
+   *   tiles haven't loaded yet, but addSource/addLayer work fine at that point.
+   */
+  const addBoundariesLayer = async ({ fromStyleSwitch = false } = {}) => {
+    console.log('[Borders] addBoundariesLayer called — showBoundaries:', showBoundaries.value, 'currentStyle:', currentStyle.value, 'fromStyleSwitch:', fromStyleSwitch)
     console.log('[Borders]   map exists:', !!map.value, 'isStyleLoaded:', map.value?.isStyleLoaded?.())
 
     if (!map.value) {
@@ -68,12 +74,18 @@ export function useCountryBoundaries(map, currentStyle) {
       return
     }
 
-    // Verify map is still valid after async load
-    console.log('[Borders]   Post-load check — map exists:', !!map.value, 'isStyleLoaded:', map.value?.isStyleLoaded?.())
-    if (!map.value || !map.value.isStyleLoaded()) {
-      console.warn('[Borders]   EARLY RETURN: map invalid after async load')
+    // Verify map is still valid after async load.
+    // Skip isStyleLoaded() when called from style.load handler — MapLibre reports
+    // false there (tiles pending) but addSource/addLayer work fine.
+    if (!map.value) {
+      console.warn('[Borders]   EARLY RETURN: no map after async load')
       return
     }
+    if (!fromStyleSwitch && !map.value.isStyleLoaded()) {
+      console.warn('[Borders]   EARLY RETURN: style not loaded (not from style switch)')
+      return
+    }
+    console.log('[Borders]   Post-load check passed (fromStyleSwitch:', fromStyleSwitch, ')')
 
     // Atomic remove + add: no gap where borders are missing
     console.log('[Borders]   Removing old layers...')

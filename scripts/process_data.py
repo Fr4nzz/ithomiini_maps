@@ -517,11 +517,14 @@ def load_gbif_bulk_download():
         required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
                         'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
                         'sequencing_status', 'source', 'image_url', 'country',
-                        'collection_location', 'observation_date', 'observation_url', 'sex']
+                        'collection_location', 'observation_date', 'observation_url', 'sex',
+                        'institution_code']
 
+        nullable_cols = {'subspecies', 'image_url', 'collection_location',
+                         'observation_date', 'observation_url', 'sex', 'institution_code'}
         for col in required_cols:
             if col not in df.columns:
-                df[col] = None if col in ['subspecies', 'image_url', 'collection_location', 'observation_date', 'observation_url', 'sex'] else 'Unknown'
+                df[col] = None if col in nullable_cols else 'Unknown'
 
         # Preserve source field from download (iNaturalist or GBIF)
         # If source is not set, default to GBIF

@@ -61,9 +61,12 @@ SSP_MAX_EDIT_DISTANCE = 1    # Levenshtein distance threshold (OR with similarit
 
 SOURCE_DATA_FILES = {
     "Sanger Institute": "map_points_sanger.json",
-    "GBIF": "map_points_gbif.json",
+    "GBIF (UNAM)": "map_points_gbif_unam.json",
+    "GBIF (Other Institutions)": "map_points_gbif_other.json",
     "Dore et al. (2025)": "map_points_dore.json",
     "iNaturalist": "map_points_inaturalist.json",
+    # Legacy catch-all: records with old "GBIF" source go to other institutions
+    "GBIF": "map_points_gbif_other.json",
 }
 IMAGE_SUPPLEMENT_FILE = OUTPUT_DIR / "map_points_images.json"
 
