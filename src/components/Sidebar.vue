@@ -76,6 +76,57 @@ const showCopiedToast = ref(false)
 // Show date filter section
 const showDateFilter = ref(false)
 
+// ── Source filter with Apply/Cancel ────────────────────────────────────────
+// Sources are grouped: top-level items + GBIF parent with sub-datasets
+const GBIF_CHILDREN = ['iNaturalist', 'GBIF (UNAM)', 'GBIF (Other Institutions)']
+const TOP_LEVEL_SOURCES = computed(() =>
+  store.uniqueSources.filter(s => !GBIF_CHILDREN.includes(s))
+)
+
+// Staged selection (applied only on Apply)
+const stagedSources = ref([...store.filters.source])
+const sourceFilterDirty = computed(() => {
+  const a = [...stagedSources.value].sort()
+  const b = [...store.filters.source].sort()
+  return JSON.stringify(a) !== JSON.stringify(b)
+})
+
+// GBIF parent checkbox state
+const gbifAllSelected = computed(() => GBIF_CHILDREN.every(c => stagedSources.value.includes(c)))
+const gbifSomeSelected = computed(() => GBIF_CHILDREN.some(c => stagedSources.value.includes(c)))
+const gbifIndeterminate = computed(() => gbifSomeSelected.value && !gbifAllSelected.value)
+
+const toggleStagedSource = (source) => {
+  const idx = stagedSources.value.indexOf(source)
+  if (idx >= 0) {
+    stagedSources.value.splice(idx, 1)
+  } else {
+    stagedSources.value.push(source)
+  }
+}
+
+const toggleGbifParent = () => {
+  if (gbifAllSelected.value) {
+    // Deselect all GBIF children
+    stagedSources.value = stagedSources.value.filter(s => !GBIF_CHILDREN.includes(s))
+  } else {
+    // Select all GBIF children
+    for (const child of GBIF_CHILDREN) {
+      if (!stagedSources.value.includes(child)) {
+        stagedSources.value.push(child)
+      }
+    }
+  }
+}
+
+const applySourceFilter = () => {
+  store.filters.source = [...stagedSources.value]
+}
+
+const cancelSourceFilter = () => {
+  stagedSources.value = [...store.filters.source]
+}
+
 // Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
 const showAdvancedTaxonomy = ref(false)
 
@@ -576,7 +627,7 @@ const updateExportHeight = (value) => {
         </p>
       </div>
 
-      <!-- Data Source (Multi-select, default Sanger) -->
+      <!-- Data Source (Checkbox panel with Apply/Cancel) -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -586,12 +637,43 @@ const updateExportHeight = (value) => {
           </svg>
           Data Source
         </label>
-        <FilterSelect
-          v-model="store.filters.source"
-          :options="store.uniqueSources"
-          placeholder="Select sources..."
-          :multiple="true"
-        />
+        <div class="source-checkbox-panel">
+          <!-- Top-level sources (non-GBIF) -->
+          <label v-for="source in TOP_LEVEL_SOURCES" :key="source" class="source-checkbox">
+            <input
+              type="checkbox"
+              :checked="stagedSources.includes(source)"
+              @change="toggleStagedSource(source)"
+            />
+            <span>{{ source }}</span>
+          </label>
+
+          <!-- GBIF parent group -->
+          <label class="source-checkbox gbif-parent">
+            <input
+              type="checkbox"
+              :checked="gbifAllSelected"
+              :indeterminate="gbifIndeterminate"
+              @change="toggleGbifParent"
+            />
+            <span>GBIF</span>
+          </label>
+          <!-- GBIF children (indented) -->
+          <label v-for="child in GBIF_CHILDREN" :key="child" class="source-checkbox gbif-child">
+            <input
+              type="checkbox"
+              :checked="stagedSources.includes(child)"
+              @change="toggleStagedSource(child)"
+            />
+            <span>{{ child }}</span>
+          </label>
+
+          <!-- Apply / Cancel buttons -->
+          <div class="source-filter-actions" v-if="sourceFilterDirty">
+            <button class="btn-source-cancel" @click="cancelSourceFilter">Cancel</button>
+            <button class="btn-source-apply" @click="applySourceFilter">Apply</button>
+          </div>
+        </div>
         <p class="filter-hint" v-if="store.sourceLoading.size > 0">
           Loading {{ [...store.sourceLoading].join(', ') }}...
         </p>
@@ -1327,6 +1409,89 @@ const updateExportHeight = (value) => {
   background: var(--color-bg-primary, #1a1a2e);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
+}
+
+/* Source checkbox panel */
+.source-checkbox-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+}
+
+.source-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #c0c0c0);
+  transition: background 0.15s;
+}
+
+.source-checkbox:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.source-checkbox input[type="checkbox"] {
+  accent-color: var(--color-accent, #4ade80);
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.source-checkbox.gbif-parent {
+  margin-top: 4px;
+  font-weight: 600;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.source-checkbox.gbif-child {
+  padding-left: 30px;
+  font-size: 0.75rem;
+}
+
+.source-filter-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.btn-source-cancel,
+.btn-source-apply {
+  flex: 1;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-source-cancel {
+  background: transparent;
+  border: 1px solid var(--color-border, #3d3d5c);
+  color: var(--color-text-secondary, #aaa);
+}
+
+.btn-source-cancel:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.btn-source-apply {
+  background: var(--color-accent, #4ade80);
+  border: none;
+  color: var(--color-bg-primary, #1a1a2e);
+}
+
+.btn-source-apply:hover {
+  filter: brightness(1.1);
 }
 
 .filter-hint {

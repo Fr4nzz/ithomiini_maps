@@ -107,14 +107,25 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   recreateClusterExtentCircle,
   setStyleChanging,
   onStyleReady: () => {
-    console.log('[MapEngine] onStyleReady — showBoundaries:', showBoundaries.value)
     if (showBoundaries.value) {
-      console.log('[MapEngine]   Calling addBoundariesLayer from onStyleReady (fromStyleSwitch)')
       addBoundariesLayer({ fromStyleSwitch: true })
     }
   }
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
+
+// Helper: check if map is operational (has a parsed style we can add layers to).
+// Uses getStyle() instead of isStyleLoaded() because the latter returns false
+// while GeoJSON source tiles are still being processed, blocking legitimate
+// data updates even though the map can accept addSource/addLayer calls.
+const isMapReady = () => {
+  if (!map.value) return false
+  try {
+    return !!map.value.getStyle()
+  } catch {
+    return false
+  }
+}
 
 // Watch for theme/mode changes to update cluster extent circle colors
 watch(
@@ -371,12 +382,8 @@ watch(
   () => store.displayGeoJSON,
   (newData) => {
     const newLength = newData?.features?.length || 0
-    console.log('[MapEngine] displayGeoJSON watcher fired — features:', newLength, 'map:', !!map.value, 'styleLoaded:', map.value?.isStyleLoaded?.())
 
-    if (!map.value || !map.value.isStyleLoaded()) {
-      console.warn('[MapEngine]   SKIPPED addDataLayer: map not ready')
-      return
-    }
+    if (!isMapReady()) return
 
     const currentScatterState = store.scatterOverlappingPoints
 
@@ -384,7 +391,6 @@ watch(
     previousScatterState = currentScatterState
 
     const dataLengthChanged = newLength !== previousDataLength
-    console.log('[MapEngine]   prevLength:', previousDataLength, 'newLength:', newLength, 'dataLengthChanged:', dataLengthChanged)
     previousDataLength = newLength
 
     const shouldSkipZoom = !dataLengthChanged || scatterJustToggled || clusteringJustToggled
@@ -394,7 +400,6 @@ watch(
       clusteringJustToggled = false
     }
 
-    console.log('[MapEngine]   Calling addDataLayer — skipZoom:', shouldSkipZoom)
     addDataLayer({ skipZoom: shouldSkipZoom })
 
     if (store.scatterOverlappingPoints) {
@@ -408,7 +413,7 @@ watch(
 watch(
   () => store.scatterOverlappingPoints,
   () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!isMapReady()) return
     updateScatterVisualization()
   }
 )
@@ -423,7 +428,7 @@ watch(
   () => store.clusteringEnabled,
   (enabled) => {
     clusteringJustToggled = true
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!isMapReady()) return
     addDataLayer({ skipZoom: true })
   },
   { flush: 'sync' }
@@ -433,7 +438,7 @@ watch(
 watch(
   () => store.clusterSettings,
   () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!isMapReady()) return
     addDataLayer({ skipZoom: true })
   },
   { deep: true }
@@ -453,7 +458,7 @@ watch(
     () => legendStore.groupShapes
   ],
   () => {
-    if (!map.value || !map.value.isStyleLoaded()) return
+    if (!isMapReady()) return
     addDataLayer({ skipZoom: true })
   },
   { deep: true }

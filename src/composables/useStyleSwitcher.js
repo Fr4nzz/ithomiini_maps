@@ -5,10 +5,13 @@ export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
   const currentStyle = ref('dark')
   const { recreateClusterExtentCircle, setStyleChanging, onStyleReady } = callbacks
 
+  // Generation counter prevents stale style.load callbacks from running
+  // when the user switches styles rapidly (e.g. streets → terrain before
+  // the streets style.load fires).
+  let switchGeneration = 0
+
   const switchStyle = async (styleName) => {
     if (!map.value || !MAP_STYLES[styleName]) return
-
-    console.log('[StyleSwitch] Switching to:', styleName)
 
     if (setStyleChanging) {
       setStyleChanging(true)
@@ -21,29 +24,26 @@ export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
 
     currentStyle.value = styleName
     const styleConfig = MAP_STYLES[styleName]
+    const gen = ++switchGeneration
 
-    console.log('[StyleSwitch] Calling setStyle...')
     map.value.setStyle(styleConfig.style)
 
-    map.value.once('style.load', () => {
-      console.log('[StyleSwitch] style.load fired for:', styleName)
-      console.log('[StyleSwitch]   isStyleLoaded:', map.value?.isStyleLoaded?.())
+    let handled = false
+    const handleStyleReady = () => {
+      // Guard: skip if already handled or a newer switch has occurred
+      if (handled || gen !== switchGeneration) return
+      handled = true
 
       map.value.jumpTo({ center, zoom, bearing, pitch })
-      console.log('[StyleSwitch]   Calling addDataLayer...')
       addDataLayer({ skipZoom: true })
-
-      const hasPointsLayer = !!map.value.getLayer('points-layer')
-      console.log('[StyleSwitch]   After addDataLayer — points-layer exists:', hasPointsLayer)
 
       // Notify caller that style is ready (e.g., for re-adding boundaries)
       if (onStyleReady) {
-        console.log('[StyleSwitch]   Calling onStyleReady callback...')
         onStyleReady()
       }
 
       map.value.once('idle', () => {
-        console.log('[StyleSwitch]   Map idle for:', styleName)
+        if (gen !== switchGeneration) return
         if (recreateClusterExtentCircle) {
           recreateClusterExtentCircle()
         }
@@ -52,10 +52,16 @@ export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
           if (setStyleChanging) {
             setStyleChanging(false)
           }
-          console.log('[StyleSwitch]   Style change complete for:', styleName)
         }, 100)
       })
-    })
+    }
+
+    map.value.once('style.load', handleStyleReady)
+
+    // Fallback: for inline raster styles (streets, satellite, terrain),
+    // style.load may not fire promptly because the style object is parsed
+    // synchronously. The timeout ensures we still initialize the map layers.
+    setTimeout(handleStyleReady, 100)
   }
 
   return {
