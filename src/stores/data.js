@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, reactive, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
-import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
+import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS, STATUS_REMAP } from '../utils/constants'
 import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
 import { useLegendStore } from './legend'
 import { getStorage, setStorage } from '../utils/storageHelpers'
@@ -182,10 +182,13 @@ export const useDataStore = defineStore('data', () => {
       const defaultData = await defaultRes.json()
       const imgData = imgRes.ok ? await imgRes.json() : []
 
-      // Normalize country codes and stamp source for consistent filtering
+      // Normalize country codes, sequencing statuses, and stamp source for consistent filtering
       for (const item of defaultData) {
         if (item.country) item.country = normalizeCountryName(item.country)
         if (item.source !== defaultSource) item.source = defaultSource
+        if (item.sequencing_status && STATUS_REMAP[item.sequencing_status]) {
+          item.sequencing_status = STATUS_REMAP[item.sequencing_status]
+        }
       }
 
       allFeatures.value = defaultData
@@ -235,9 +238,13 @@ export const useDataStore = defineStore('data', () => {
       // Normalize country codes (e.g., GBIF's "BR" → "Brazil") for consistent filtering
       // Also stamp each record's source to match the source key used to load it
       // (handles old data where source="GBIF" but loaded under "GBIF (Other Institutions)")
+      // And normalize legacy sequencing_status values (e.g., "Observation" → "GBIF Record")
       for (const item of data) {
         if (item.country) item.country = normalizeCountryName(item.country)
         if (item.source !== sourceName) item.source = sourceName
+        if (item.sequencing_status && STATUS_REMAP[item.sequencing_status]) {
+          item.sequencing_status = STATUS_REMAP[item.sequencing_status]
+        }
       }
 
       allFeatures.value = [...allFeatures.value, ...data]
@@ -860,10 +867,12 @@ export const useDataStore = defineStore('data', () => {
     // Golden angle in radians: π * (3 - √5) ≈ 137.5 degrees
     const goldenAngle = Math.PI * (3 - Math.sqrt(5))
 
-    // Calculate angle and radius for this point using Fibonacci/sunflower spiral
-    const angle = index * goldenAngle
+    // Reverse the index so the outermost points render first (bottom of visual stack)
+    // and the center point renders last (on top), creating a center-outward visual.
+    const reverseIdx = totalPoints - 1 - index
+    const angle = reverseIdx * goldenAngle
     // Radius increases with sqrt to ensure even area distribution
-    const radiusFraction = Math.sqrt(index / totalPoints)
+    const radiusFraction = Math.sqrt(reverseIdx / totalPoints)
     const pointRadius = radiusFraction * radiusKm
 
     // Convert km to degrees (approximate)

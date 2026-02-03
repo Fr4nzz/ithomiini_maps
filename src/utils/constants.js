@@ -13,11 +13,16 @@ export const STATUS_COLORS = {
   'Sequenced': '#3b82f6',
   'Tissue Available': '#10b981',
   'Preserved Specimen': '#f59e0b',
-  'Published': '#a855f7',
+  'Dore et al.': '#a855f7',
   'GBIF Record': '#6b7280',
-  'Observation': '#22c55e',
   'Museum Specimen': '#8b5cf6',
   'Living Specimen': '#14b8a6',
+}
+
+// Normalize legacy sequencing_status values during data loading
+export const STATUS_REMAP = {
+  'Observation': 'GBIF Record',
+  'Published': 'Dore et al.',
 }
 
 // Source colors for data source badges

@@ -20,7 +20,7 @@ export default defineConfig({
   // Build optimization
   build: {
     // Generate source maps for debugging
-    sourcemap: false,
+    sourcemap: true,
     
     // Chunk size warnings
     chunkSizeWarningLimit: 1000,

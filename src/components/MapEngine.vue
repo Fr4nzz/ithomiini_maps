@@ -400,7 +400,11 @@ watch(
       clusteringJustToggled = false
     }
 
-    addDataLayer({ skipZoom: shouldSkipZoom })
+    try {
+      addDataLayer({ skipZoom: shouldSkipZoom })
+    } catch (err) {
+      console.error('[MapEngine] addDataLayer error:', err)
+    }
 
     if (store.scatterOverlappingPoints) {
       updateScatterVisualization()
@@ -459,7 +463,11 @@ watch(
   ],
   () => {
     if (!isMapReady()) return
-    addDataLayer({ skipZoom: true })
+    try {
+      addDataLayer({ skipZoom: true })
+    } catch (err) {
+      console.error('[MapEngine] addDataLayer error (style/color change):', err)
+    }
   },
   { deep: true }
 )
