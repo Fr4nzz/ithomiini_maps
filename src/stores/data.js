@@ -4,18 +4,10 @@ import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
 import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
 import { useLegendStore } from './legend'
-import { usePersistenceStore } from './persistence'
+import { getStorage, setStorage } from '../utils/storageHelpers'
+import { normalizeCountryName } from '../utils/clusterStats'
 
 export const useDataStore = defineStore('data', () => {
-  // ═══════════════════════════════════════════════════════════════════════════
-  // PERSISTENCE HELPERS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  const persistenceStore = usePersistenceStore()
-
-  const getStorage = (key, defaultValue) => persistenceStore.get(key, defaultValue)
-  const setStorage = (key, value) => persistenceStore.set(key, value)
-
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════════════════
@@ -32,12 +24,23 @@ export const useDataStore = defineStore('data', () => {
   // Derived from manifest — fallback to hardcoded values if manifest fails to load
   const FALLBACK_SOURCES = {
     'Sanger Institute': { file: 'map_points_sanger.json', default: true },
-    'GBIF': { file: 'map_points_gbif.json', default: false },
+    'GBIF (UNAM)': { file: 'map_points_gbif_unam.json', default: false },
+    'GBIF (Other Institutions)': { file: 'map_points_gbif_other.json', default: false },
     'Dore et al. (2025)': { file: 'map_points_dore.json', default: false },
     'iNaturalist': { file: 'map_points_inaturalist.json', default: false },
   }
 
-  const sourceConfig = computed(() => manifest.value?.sources ?? FALLBACK_SOURCES)
+  // Migrate old manifest format: rename "GBIF" → "GBIF (Other Institutions)"
+  const sourceConfig = computed(() => {
+    const raw = manifest.value?.sources ?? FALLBACK_SOURCES
+    if (raw['GBIF'] && !raw['GBIF (Other Institutions)']) {
+      const migrated = { ...raw }
+      migrated['GBIF (Other Institutions)'] = { ...migrated['GBIF'], file: migrated['GBIF'].file }
+      delete migrated['GBIF']
+      return migrated
+    }
+    return raw
+  })
   const imageSupplementFile = computed(() => manifest.value?.image_supplement ?? 'map_points_images.json')
 
   // Filter visibility state (for expand/collapse)
@@ -109,19 +112,6 @@ export const useDataStore = defineStore('data', () => {
     pitch: 0
   }))
 
-  // URL sharing settings
-  const urlSettings = ref({
-    includeFilters: true,     // Include taxonomy, mimicry, status filters
-    includeMapView: false,    // Include center, zoom, bearing, pitch
-    includeExportSettings: false,
-    includeStyleSettings: false
-  })
-
-  // Custom color palettes for different colorBy modes
-  const customColors = ref({
-    // Users can customize these
-  })
-
   // The Active Filters
   // NOTE: species is now an ARRAY for multi-select (like Wings Gallery)
   const filters = ref({
@@ -192,6 +182,12 @@ export const useDataStore = defineStore('data', () => {
       const defaultData = await defaultRes.json()
       const imgData = imgRes.ok ? await imgRes.json() : []
 
+      // Normalize country codes and stamp source for consistent filtering
+      for (const item of defaultData) {
+        if (item.country) item.country = normalizeCountryName(item.country)
+        if (item.source !== defaultSource) item.source = defaultSource
+      }
+
       allFeatures.value = defaultData
       imageSupplement.value = imgData
       loadedSources.add(defaultSource)
@@ -235,9 +231,18 @@ export const useDataStore = defineStore('data', () => {
       if (!response.ok) throw new Error(`${response.status}`)
 
       const data = await response.json()
+
+      // Normalize country codes (e.g., GBIF's "BR" → "Brazil") for consistent filtering
+      // Also stamp each record's source to match the source key used to load it
+      // (handles old data where source="GBIF" but loaded under "GBIF (Other Institutions)")
+      for (const item of data) {
+        if (item.country) item.country = normalizeCountryName(item.country)
+        if (item.source !== sourceName) item.source = sourceName
+      }
+
       allFeatures.value = [...allFeatures.value, ...data]
       loadedSources.add(sourceName)
-      console.log(`✓ Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
+      console.log(`Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
 
       // Incrementally add new photos (don't rebuild from scratch)
       addPhotosFromData(data)
@@ -482,7 +487,7 @@ export const useDataStore = defineStore('data', () => {
       filters.value.subspecies = params.get('ssp').split(',')
     }
     if (params.get('mim')) {
-      filters.value.mimicry = params.get('mim')
+      filters.value.mimicry = params.get('mim').split(',')
       showMimicryFilter.value = true
     }
     if (params.get('status')) {
@@ -524,24 +529,6 @@ export const useDataStore = defineStore('data', () => {
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
-    }
-  }
-
-  const toggleAdvancedFilters = () => {
-    showAdvancedFilters.value = !showAdvancedFilters.value
-    // Reset advanced filters when hiding
-    if (!showAdvancedFilters.value) {
-      filters.value.family = 'All'
-      filters.value.tribe = 'All'
-      filters.value.genus = 'All'
-    }
-  }
-
-  const toggleMimicryFilter = () => {
-    showMimicryFilter.value = !showMimicryFilter.value
-    // Reset mimicry when hiding
-    if (!showMimicryFilter.value) {
-      filters.value.mimicry = 'All'
     }
   }
 
@@ -588,65 +575,19 @@ export const useDataStore = defineStore('data', () => {
            cleaned !== 'none'
   }
 
+  // Helper to extract unique sorted values from a data array
+  const uniqueValuesOf = (data, field) =>
+    Array.from(new Set(data.map(i => i[field]).filter(isValidValue))).sort()
+
   // Unique values at each level (based on parent selections)
-  const uniqueFamilies = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.family)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueTribes = computed(() => {
-    const subset = getFilteredSubset(1) // After family filter
-    const set = new Set(
-      subset
-        .map(i => i.tribe)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueGenera = computed(() => {
-    const subset = getFilteredSubset(2) // After tribe filter
-    const set = new Set(
-      subset
-        .map(i => i.genus)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueSpecies = computed(() => {
-    const subset = getFilteredSubset(3) // After genus filter
-    const set = new Set(
-      subset
-        .map(i => i.scientific_name)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
-
-  const uniqueSubspecies = computed(() => {
-    const subset = getFilteredSubset(4) // After species filter
-    const set = new Set(
-      subset
-        .map(i => i.subspecies)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueFamilies = computed(() => uniqueValuesOf(allFeatures.value, 'family'))
+  const uniqueTribes = computed(() => uniqueValuesOf(getFilteredSubset(1), 'tribe'))
+  const uniqueGenera = computed(() => uniqueValuesOf(getFilteredSubset(2), 'genus'))
+  const uniqueSpecies = computed(() => uniqueValuesOf(getFilteredSubset(3), 'scientific_name'))
+  const uniqueSubspecies = computed(() => uniqueValuesOf(getFilteredSubset(4), 'subspecies'))
 
   // Mimicry rings - always show ALL options (non-cascading)
-  const uniqueMimicry = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.mimicry_ring)
-        .filter(v => v && v !== 'Unknown' && isValidValue(v))
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueMimicry = computed(() => uniqueValuesOf(allFeatures.value, 'mimicry_ring'))
 
   // Available mimicry rings based on current taxonomy filter (species/genus)
   // These are rings that would return results if selected
@@ -670,12 +611,7 @@ export const useDataStore = defineStore('data', () => {
       data = data.filter(i => filters.value.subspecies.includes(i.subspecies))
     }
 
-    const set = new Set(
-      data
-        .map(i => i.mimicry_ring)
-        .filter(v => v && v !== 'Unknown' && isValidValue(v))
-    )
-    return Array.from(set).sort()
+    return uniqueValuesOf(data, 'mimicry_ring')
   })
 
   // Unavailable mimicry rings - rings that exist but would return no results
@@ -685,35 +621,16 @@ export const useDataStore = defineStore('data', () => {
   })
 
   // Unique sequencing statuses
-  const uniqueStatuses = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.sequencing_status)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueStatuses = computed(() => uniqueValuesOf(allFeatures.value, 'sequencing_status'))
 
   // Unique data sources — always show all known sources (even if not yet loaded)
   const uniqueSources = computed(() => Object.keys(sourceConfig.value))
 
   // Unique countries
-  const uniqueCountries = computed(() => {
-    const set = new Set(
-      allFeatures.value
-        .map(i => i.country)
-        .filter(isValidValue)
-    )
-    return Array.from(set).sort()
-  })
+  const uniqueCountries = computed(() => uniqueValuesOf(allFeatures.value, 'country'))
 
   // Unique CAMIDs for autocomplete (sorted for binary search potential)
-  const uniqueCamids = computed(() => {
-    return allFeatures.value
-      .map(i => i.id)
-      .filter(id => id && typeof id === 'string')
-      .sort()
-  })
+  const uniqueCamids = computed(() => uniqueValuesOf(allFeatures.value, 'id'))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // CASCADE RESET WATCHERS
@@ -756,26 +673,24 @@ export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
   
   const filteredGeoJSON = computed(() => {
-    if (!allFeatures.value.length) {
-      return null
+    if (!allFeatures.value.length) return null
+
+    // Pre-compute CAMID search terms outside the filter loop
+    let searchTerms = null
+    if (filters.value.camidSearch) {
+      searchTerms = filters.value.camidSearch
+        .toUpperCase()
+        .split(/[\s,\n]+/)
+        .map(s => s.trim())
+        .filter(s => s.length > 0)
+      if (searchTerms.length === 0) searchTerms = null
     }
 
     const filtered = allFeatures.value.filter(item => {
       // CAMID Search - supports multiple IDs separated by comma, space, or newline
-      if (filters.value.camidSearch) {
-        // Parse multiple CAMIDs from input (split by comma, space, newline)
-        const searchTerms = filters.value.camidSearch
-          .toUpperCase()
-          .split(/[\s,\n]+/)
-          .map(s => s.trim())
-          .filter(s => s.length > 0)
-
-        if (searchTerms.length > 0) {
-          const itemId = (item.id || '').toUpperCase()
-          // Check if item ID matches ANY of the search terms (substring match)
-          const matches = searchTerms.some(term => itemId.includes(term))
-          if (!matches) return false
-        }
+      if (searchTerms) {
+        const itemId = (item.id || '').toUpperCase()
+        if (!searchTerms.some(term => itemId.includes(term))) return false
       }
 
       // Taxonomic cascade
@@ -1063,90 +978,6 @@ export const useDataStore = defineStore('data', () => {
   })
 
   /**
-   * Group points by species at each coordinate location (for species count mode)
-   * Returns Map: "lat,lng" -> { speciesKey -> { representative, allPoints, species } }
-   */
-  const speciesGroups = computed(() => {
-    const groups = new Map()
-    const geo = filteredGeoJSON.value
-    if (!geo || !geo.features) return groups
-
-    for (const feature of geo.features) {
-      const [lng, lat] = feature.geometry.coordinates
-      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
-      const props = feature.properties
-      const species = props.scientific_name || 'Unknown'
-
-      if (!groups.has(coordKey)) {
-        groups.set(coordKey, new Map())
-      }
-
-      const locationGroup = groups.get(coordKey)
-
-      if (!locationGroup.has(species)) {
-        // First point of this species - it becomes the representative
-        locationGroup.set(species, {
-          representative: props,
-          allPoints: [props],
-          species
-        })
-      } else {
-        // Add to existing species group
-        const speciesGroup = locationGroup.get(species)
-        speciesGroup.allPoints.push(props)
-        // Prefer representative with photo
-        if (props.image_url && !speciesGroup.representative.image_url) {
-          speciesGroup.representative = props
-        }
-      }
-    }
-
-    return groups
-  })
-
-  /**
-   * Group points by genus at each coordinate location (for genera count mode)
-   * Returns Map: "lat,lng" -> { genusKey -> { representative, allPoints, genus } }
-   */
-  const genusGroups = computed(() => {
-    const groups = new Map()
-    const geo = filteredGeoJSON.value
-    if (!geo || !geo.features) return groups
-
-    for (const feature of geo.features) {
-      const [lng, lat] = feature.geometry.coordinates
-      const coordKey = `${lat.toFixed(4)},${lng.toFixed(4)}`
-      const props = feature.properties
-      const genus = props.genus || 'Unknown'
-
-      if (!groups.has(coordKey)) {
-        groups.set(coordKey, new Map())
-      }
-
-      const locationGroup = groups.get(coordKey)
-
-      if (!locationGroup.has(genus)) {
-        // First point of this genus - it becomes the representative
-        locationGroup.set(genus, {
-          representative: props,
-          allPoints: [props],
-          genus
-        })
-      } else {
-        // Add to existing genus group
-        const genusGroup = locationGroup.get(genus)
-        genusGroup.allPoints.push(props)
-        // Prefer representative with photo
-        if (props.image_url && !genusGroup.representative.image_url) {
-          genusGroup.representative = props
-        }
-      }
-    }
-
-    return groups
-  })
-
-  /**
    * The GeoJSON to display - handles scatter, clustering count modes, and aggregation
    * When scatter is enabled: shows one point per subspecies at each location with scattered coordinates
    * When clustering is enabled with species/subspecies/genera count mode: aggregates to one point per taxon per location
@@ -1295,11 +1126,6 @@ export const useDataStore = defineStore('data', () => {
     const attr = colorByAttribute.value
     const geo = displayGeoJSON.value
 
-    // Check for custom colors first
-    if (customColors.value[mode]) {
-      return customColors.value[mode]
-    }
-
     // Get unique values from DISPLAYED data only
     const displayedValues = geo?.features
       ? [...new Set(
@@ -1423,7 +1249,7 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.species.length > 0) params.set('sp', newFilters.species.join(','))
       // Subspecies as comma-separated array
       if (newFilters.subspecies.length > 0) params.set('ssp', newFilters.subspecies.join(','))
-      if (newFilters.mimicry !== 'All') params.set('mim', newFilters.mimicry)
+      if (newFilters.mimicry.length > 0) params.set('mim', newFilters.mimicry.join(','))
       if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
       // Source as comma-separated array (only if not default)
       if (newFilters.source.length > 0 && !(newFilters.source.length === 1 && newFilters.source[0] === 'Sanger Institute')) {
@@ -1489,7 +1315,6 @@ export const useDataStore = defineStore('data', () => {
     clusteringEnabled,
     clusterSettings,
     scatterOverlappingPoints,
-    photoLookup,
     mimicryPhotoLookup,
     gbifCitation,
 
@@ -1499,15 +1324,10 @@ export const useDataStore = defineStore('data', () => {
     legendSettings,
     exportSettings,
     mapView,
-    urlSettings,
-    customColors,
 
     // Actions
     loadMapData,
-    loadSource,
     resetAllFilters,
-    toggleAdvancedFilters,
-    toggleMimicryFilter,
     getPhotoForItem,
 
     // Coordinate grouping helpers
@@ -1538,8 +1358,6 @@ export const useDataStore = defineStore('data', () => {
     // Final output
     filteredGeoJSON,
     displayGeoJSON,
-    coordinateGroups,
-    scatteredPositions,
     scatterVisualizationData,
   }
 })

@@ -25,10 +25,3 @@ export function getDateOffset(days) {
   return date.toISOString().split('T')[0]
 }
 
-// Format a date for display
-export function formatDate(date, options = { year: 'numeric', month: 'short', day: 'numeric' }) {
-  if (!date) return ''
-  const d = typeof date === 'string' ? parseDate(date) : date
-  if (!d) return ''
-  return d.toLocaleDateString('en-US', options)
-}

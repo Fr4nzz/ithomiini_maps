@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted, onUnmounted, watch } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
 import { generate3ColorPreview } from '../../utils/colors'
 

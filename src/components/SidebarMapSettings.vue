@@ -113,24 +113,6 @@ function toggleLegend() {
   margin-bottom: 20px;
 }
 
-.section-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-text-secondary, #aaa);
-  margin-bottom: 10px;
-}
-
-.section-label svg {
-  width: 14px;
-  height: 14px;
-  opacity: 0.7;
-}
-
 .filter-hint {
   font-size: 0.7rem;
   color: var(--color-text-muted, #666);
@@ -311,12 +293,6 @@ function toggleLegend() {
   font-weight: 500;
 }
 
-.setting-hint {
-  font-weight: 400;
-  font-size: 0.65rem;
-  color: var(--color-text-muted, #666);
-}
-
 .count-mode-hint {
   font-size: 0.7rem;
   color: var(--color-text-muted, #666);
@@ -378,15 +354,6 @@ function toggleLegend() {
   cursor: pointer;
 }
 
-.slider-value {
-  min-width: 45px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-accent, #4ade80);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
 /* Setting Input */
 .setting-input {
   width: 55px;
@@ -414,59 +381,4 @@ function toggleLegend() {
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
-/* Style Select */
-.style-select {
-  width: 100%;
-  padding: 8px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.style-select:hover {
-  border-color: var(--color-text-muted, #666);
-}
-
-.style-select:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
-}
-
-/* Color Picker */
-.color-picker-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.color-picker {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  cursor: pointer;
-  background: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 4px;
-  border: none;
-}
-
-.color-input {
-  flex: 1;
-  width: auto;
-  font-family: monospace;
-  text-transform: uppercase;
-}
 </style>

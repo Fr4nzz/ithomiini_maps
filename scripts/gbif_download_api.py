@@ -23,14 +23,13 @@ Output:
 
 import requests
 import json
-import os
 import sys
 import time
 import zipfile
 import csv
 import re
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 # ═══════════════════════════════════════════════════════════════════
@@ -55,6 +54,9 @@ MAX_POLL_ATTEMPTS = 120  # 60 minutes max wait
 
 # iNaturalist Research-grade dataset key
 INATURALIST_DATASET_KEY = "50c9509d-22c7-4a22-a47d-8c48425ef4a7"
+
+# UNAM institution codes (major Mexican museum collections)
+UNAM_INSTITUTION_CODES = {'MZFC-FC-UNAM', 'IBUNAM', 'FC-UNAM', 'FESZ-UNAM'}
 
 # All Ithomiini genera (from Dore et al. database)
 ITHOMIINI_GENERA = [
@@ -81,6 +83,7 @@ def load_credentials():
         print("  GBIF_USERNAME=your_username")
         print("  GBIF_PASSWORD=your_password")
         print("  GBIF_EMAIL=your_email")
+        # TODO: ideally raise an exception instead of sys.exit() in a utility function
         sys.exit(1)
 
     credentials = {}
@@ -95,6 +98,7 @@ def load_credentials():
     for key in required:
         if key not in credentials:
             print(f"ERROR: Missing {key} in credentials file")
+            # TODO: ideally raise an exception instead of sys.exit() in a utility function
             sys.exit(1)
 
     return credentials
@@ -230,6 +234,7 @@ def submit_download_request(credentials, taxon_keys):
         print(f"ERROR: Failed to submit download request")
         print(f"Status: {e.response.status_code}")
         print(f"Response: {e.response.text}")
+        # TODO: ideally raise an exception instead of sys.exit() in a utility function
         sys.exit(1)
 
 
@@ -256,6 +261,7 @@ def wait_for_download(download_key, credentials):
                 return data
             elif status in ['FAILED', 'KILLED', 'CANCELLED']:
                 print(f"\nERROR: Download {status}")
+                # TODO: ideally raise an exception instead of sys.exit() in a utility function
                 sys.exit(1)
             else:
                 print(f" (waiting {POLL_INTERVAL_SECONDS}s...)")
@@ -266,6 +272,7 @@ def wait_for_download(download_key, credentials):
             time.sleep(POLL_INTERVAL_SECONDS)
 
     print("\nERROR: Timed out waiting for download")
+    # TODO: ideally raise an exception instead of sys.exit() in a utility function
     sys.exit(1)
 
 
@@ -274,6 +281,7 @@ def download_and_extract(download_info):
     download_link = download_info.get('downloadLink')
     if not download_link:
         print("ERROR: No download link in response")
+        # TODO: ideally raise an exception instead of sys.exit() in a utility function
         sys.exit(1)
 
     print(f"\nDownloading from: {download_link}")
@@ -302,6 +310,7 @@ def download_and_extract(download_info):
 
     except Exception as e:
         print(f"\nERROR downloading: {e}")
+        # TODO: ideally raise an exception instead of sys.exit() in a utility function
         sys.exit(1)
 
     # Extract
@@ -318,6 +327,7 @@ def download_and_extract(download_info):
 
     if not occurrence_file.exists():
         print("ERROR: occurrence.txt not found in download")
+        # TODO: ideally raise an exception instead of sys.exit() in a utility function
         sys.exit(1)
 
     print(f"  Occurrence file: {occurrence_file.name}")
@@ -396,22 +406,30 @@ def load_multimedia_lookup(extract_dir):
     return lookup
 
 
-def get_observation_url(record):
-    """Build the observation URL for a record."""
-    gbif_id = record.get('gbifID', '')
-    occurrence_id = record.get('occurrenceID', '') or ''
-    references = record.get('references', '') or ''
-    institution = record.get('institutionCode', '') or ''
-    dataset_key = record.get('datasetKey', '') or ''
+def _is_inaturalist_record(record):
+    """Check whether a record originates from iNaturalist.
 
-    # iNaturalist detection
-    is_inaturalist = (
+    Centralised helper used by get_observation_url() and get_source() so the
+    detection logic is defined in exactly one place.
+    """
+    dataset_key = record.get('datasetKey', '') or ''
+    institution = record.get('institutionCode', '') or ''
+    occurrence_id = record.get('occurrenceID', '') or ''
+
+    return (
         dataset_key == INATURALIST_DATASET_KEY or
         institution.lower() == 'inaturalist' or
         'inaturalist.org' in occurrence_id.lower()
     )
 
-    if is_inaturalist:
+
+def get_observation_url(record):
+    """Build the observation URL for a record."""
+    gbif_id = record.get('gbifID', '')
+    occurrence_id = record.get('occurrenceID', '') or ''
+    references = record.get('references', '') or ''
+
+    if _is_inaturalist_record(record):
         # Try to extract iNaturalist observation ID
         if occurrence_id.startswith('https://www.inaturalist.org/observations/'):
             return occurrence_id
@@ -438,19 +456,22 @@ def get_observation_url(record):
     return f"https://www.gbif.org/occurrence/{gbif_id}"
 
 
-def get_source(record):
-    """Determine the data source for a record."""
-    dataset_key = record.get('datasetKey', '') or ''
+def _is_unam_record(record):
+    """Check whether a record originates from a UNAM institution."""
     institution = record.get('institutionCode', '') or ''
-    occurrence_id = record.get('occurrenceID', '') or ''
+    return institution in UNAM_INSTITUTION_CODES
 
-    is_inaturalist = (
-        dataset_key == INATURALIST_DATASET_KEY or
-        institution.lower() == 'inaturalist' or
-        'inaturalist.org' in occurrence_id.lower()
-    )
 
-    return 'iNaturalist' if is_inaturalist else 'GBIF'
+def get_source(record):
+    """Determine the data source for a record.
+
+    Returns one of: 'iNaturalist', 'GBIF (UNAM)', 'GBIF (Other Coverage)'
+    """
+    if _is_inaturalist_record(record):
+        return 'iNaturalist'
+    if _is_unam_record(record):
+        return 'GBIF (UNAM)'
+    return 'GBIF (Other Institutions)'
 
 
 def get_collection_location(record):
@@ -546,7 +567,7 @@ def process_occurrence_file(occurrence_path, multimedia_lookup=None):
                 'tribe': 'Ithomiini',
                 'lat': lat,
                 'lng': lng,
-                'country': row.get('countryCode') or row.get('country'),
+                'country': row.get('country') or row.get('countryCode'),
                 'collection_location': collection_location,
                 'state_province': row.get('stateProvince'),
                 'collection_date': row.get('eventDate'),

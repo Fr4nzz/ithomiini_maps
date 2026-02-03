@@ -1,8 +1,7 @@
 import JSZip from 'jszip'
 import { useDataStore } from '../stores/data'
 import { useLegendStore } from '../stores/legend'
-import { generateAbbreviationOptions, applyAbbreviationFormat } from './abbreviations'
-import { SHAPE_OPTIONS } from './shapes'
+import { applyAbbreviationFormat } from './abbreviations'
 
 // Build info (injected by Vite)
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
@@ -26,14 +25,6 @@ const getCitationText = (recordCount) => {
 // Generate R script that recreates the map view
 const generateRScript = (colorBy, legendSettings) => {
   const isItalic = colorBy === 'species' || colorBy === 'subspecies' || colorBy === 'genus' || colorBy === 'scientific_name'
-
-  // Extract legend position for R (normalize to 0-1 scale)
-  const legendPosX = legendSettings.position?.x ?? 40
-  const legendPosY = legendSettings.position?.y ?? null
-  // Convert pixel position to normalized (0-1) coordinates
-  // Default bottom-left positioning
-  const rLegendX = 0.02  // Will be overridden by legendSettings if available
-  const rLegendY = 0.08  // Will be overridden by legendSettings if available
 
   return `# ════════════════════════════════════════════════════════════════════════════════
 # Ithomiini Distribution Map - R Script for Publication-Quality Export

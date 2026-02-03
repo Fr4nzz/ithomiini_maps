@@ -456,10 +456,6 @@ html, body, #app {
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 .loading-text {
   font-size: 1.2em;
   color: #e0e0e0;

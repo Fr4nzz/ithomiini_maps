@@ -43,16 +43,31 @@ def write_app_outputs(curated_records, corrections_log, records, stats,
         source = rec.get("source", "Unknown")
         source_groups.setdefault(source, []).append(rec)
 
-    # Write each source as a separate minified JSON file
+    # Merge records mapped to the same output file (e.g. legacy "GBIF" → same
+    # file as "GBIF (Other Institutions)"). Write one file per unique filename.
+    file_groups = {}  # filename → (canonical source name, [records])
     for source, source_recs in source_groups.items():
         filename = SOURCE_DATA_FILES.get(source)
         if not filename:
             log.warning(f"Unknown source '{source}' ({len(source_recs)} records) - skipped")
             continue
+        if filename in file_groups:
+            file_groups[filename][1].extend(source_recs)
+        else:
+            file_groups[filename] = (source, source_recs)
+
+    # Write each unique output file
+    # Also rebuild source_groups with canonical names for the manifest
+    canonical_groups = {}
+    for filename, (canonical_source, recs) in file_groups.items():
         filepath = OUTPUT_DIR / filename
         with open(filepath, "w") as f:
-            json.dump(source_recs, f, separators=(",", ":"), default=str)
-        log.info(f"  {source}: {len(source_recs)} records -> {filepath.name}")
+            json.dump(recs, f, separators=(",", ":"), default=str)
+        log.info(f"  {canonical_source}: {len(recs)} records -> {filepath.name}")
+        canonical_groups[canonical_source] = recs
+
+    # Use canonical groups for downstream (image supplement, manifest)
+    source_groups = canonical_groups
 
     # Generate image supplement
     _write_image_supplement(curated_records, source_groups)
@@ -131,8 +146,13 @@ def _write_image_supplement(curated_records, source_groups):
 
 def _write_manifest(source_groups):
     """Write data_manifest.json so the app knows available sources and files."""
+    # Skip the legacy "GBIF" alias — it shares a file with "GBIF (Other Institutions)"
+    SKIP_SOURCES = {"GBIF"}
+
     sources = {}
     for source_name, filename in SOURCE_DATA_FILES.items():
+        if source_name in SKIP_SOURCES:
+            continue
         recs = source_groups.get(source_name, [])
         sources[source_name] = {
             "file": filename,

@@ -24,8 +24,11 @@ export const STATUS_COLORS = {
 export const SOURCE_COLORS = {
   'Sanger Institute': '#3b82f6',
   'Dore et al.': '#f59e0b',
+  'Dore et al. (2025)': '#f59e0b',
   'iNaturalist': '#74ac00',
   'GBIF': '#6b7280',
+  'GBIF (UNAM)': '#8b5cf6',
+  'GBIF (Other Institutions)': '#6b7280',
 }
 
 // Default color palette for dynamic categories

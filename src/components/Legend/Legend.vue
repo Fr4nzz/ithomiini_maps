@@ -413,7 +413,7 @@ const autoWidth = computed(() => {
   const labels = allDisplayedLabels.value
   if (!labels.length) return 200
 
-  const maxContainerWidth = containerBounds.value.width * 0.3
+  const maxContainerWidth = containerBounds.value.width * 0.25
   const fontSizePx = Math.round(14 * legendStore.textScale)
 
   let maxTextWidth = 0
@@ -526,9 +526,9 @@ const effectiveHeight = computed(() => {
   return currentHeight.value
 })
 
-// Max resize width (50% of container for manual, more generous than auto's 30%)
+// Max resize width (45% of container for manual, more generous than auto's 25%)
 const maxResizeWidth = computed(() => {
-  return Math.min(Math.round(containerBounds.value.width * 0.5), 600)
+  return Math.min(Math.round(containerBounds.value.width * 0.45), 600)
 })
 
 // Multi-directional resize (composable handles all mouse/touch events)
