@@ -203,7 +203,12 @@ export function useDataLayer(map, options = {}) {
   const addDataLayer = (layerOptions = {}) => {
     const { skipZoom = false } = layerOptions
 
-    if (!map.value) return
+    console.log('[DataLayer] addDataLayer called — skipZoom:', skipZoom, 'map:', !!map.value)
+
+    if (!map.value) {
+      console.warn('[DataLayer]   EARLY RETURN: no map')
+      return
+    }
 
     // Remove existing layers/sources
     ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
@@ -214,7 +219,12 @@ export function useDataLayer(map, options = {}) {
     ].forEach(id => removeLayerAndSource(map.value, null, id))
 
     const geojson = store.displayGeoJSON
-    if (!geojson) return
+    if (!geojson) {
+      console.warn('[DataLayer]   EARLY RETURN: no displayGeoJSON')
+      return
+    }
+
+    console.log('[DataLayer]   Adding', geojson.features?.length, 'features to map')
 
     const shouldCluster = store.clusteringEnabled
     const settings = store.clusterSettings

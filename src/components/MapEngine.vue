@@ -107,7 +107,11 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   recreateClusterExtentCircle,
   setStyleChanging,
   onStyleReady: () => {
-    if (showBoundaries.value) addBoundariesLayer()
+    console.log('[MapEngine] onStyleReady — showBoundaries:', showBoundaries.value)
+    if (showBoundaries.value) {
+      console.log('[MapEngine]   Calling addBoundariesLayer from onStyleReady')
+      addBoundariesLayer()
+    }
   }
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
@@ -366,15 +370,21 @@ const handleOpenGallery = () => {
 watch(
   () => store.displayGeoJSON,
   (newData) => {
-    if (!map.value || !map.value.isStyleLoaded()) return
-
     const newLength = newData?.features?.length || 0
+    console.log('[MapEngine] displayGeoJSON watcher fired — features:', newLength, 'map:', !!map.value, 'styleLoaded:', map.value?.isStyleLoaded?.())
+
+    if (!map.value || !map.value.isStyleLoaded()) {
+      console.warn('[MapEngine]   SKIPPED addDataLayer: map not ready')
+      return
+    }
+
     const currentScatterState = store.scatterOverlappingPoints
 
     const scatterJustToggled = currentScatterState !== previousScatterState
     previousScatterState = currentScatterState
 
     const dataLengthChanged = newLength !== previousDataLength
+    console.log('[MapEngine]   prevLength:', previousDataLength, 'newLength:', newLength, 'dataLengthChanged:', dataLengthChanged)
     previousDataLength = newLength
 
     const shouldSkipZoom = !dataLengthChanged || scatterJustToggled || clusteringJustToggled
@@ -384,6 +394,7 @@ watch(
       clusteringJustToggled = false
     }
 
+    console.log('[MapEngine]   Calling addDataLayer — skipZoom:', shouldSkipZoom)
     addDataLayer({ skipZoom: shouldSkipZoom })
 
     if (store.scatterOverlappingPoints) {

@@ -204,14 +204,21 @@ export const useDataStore = defineStore('data', () => {
    * Lazy-load a single data source. Merges into allFeatures on success.
    */
   const loadSource = async (sourceName) => {
-    if (loadedSources.has(sourceName)) return
-    if (sourceLoading.has(sourceName)) return
+    if (loadedSources.has(sourceName)) {
+      console.log(`[DataStore] loadSource('${sourceName}') — already loaded, skipping`)
+      return
+    }
+    if (sourceLoading.has(sourceName)) {
+      console.log(`[DataStore] loadSource('${sourceName}') — already loading, skipping`)
+      return
+    }
 
     const config = sourceConfig.value
     const fileName = config[sourceName]?.file
     if (!fileName) return
 
     sourceLoading.add(sourceName)
+    console.log(`[DataStore] loadSource('${sourceName}') — fetching ${fileName}...`)
 
     try {
       const basePath = import.meta.env.BASE_URL || '/'
@@ -219,13 +226,16 @@ export const useDataStore = defineStore('data', () => {
       if (!response.ok) throw new Error(`${response.status}`)
 
       const data = await response.json()
+      console.log(`[DataStore] loadSource('${sourceName}') — parsed ${data.length} records from ${fileName}`)
 
       // Normalize country codes (e.g., GBIF's "BR" → "Brazil") for consistent filtering
       for (const item of data) {
         if (item.country) item.country = normalizeCountryName(item.country)
       }
 
+      const prevCount = allFeatures.value.length
       allFeatures.value = [...allFeatures.value, ...data]
+      console.log(`[DataStore] loadSource('${sourceName}') — allFeatures: ${prevCount} → ${allFeatures.value.length}`)
       loadedSources.add(sourceName)
       console.log(`✓ Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
 
@@ -646,11 +656,15 @@ export const useDataStore = defineStore('data', () => {
 
   // When source filter changes, lazy-load any unloaded sources
   watch(() => filters.value.source, async (selectedSources) => {
+    console.log('[DataStore] source filter changed:', JSON.stringify(selectedSources))
+    console.log('[DataStore]   loadedSources:', [...loadedSources])
     for (const source of selectedSources) {
       if (!loadedSources.has(source)) {
+        console.log(`[DataStore]   Need to load: ${source}`)
         await loadSource(source)
       }
     }
+    console.log('[DataStore]   After loading — allFeatures:', allFeatures.value.length)
   }, { deep: true })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -658,7 +672,9 @@ export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
   
   const filteredGeoJSON = computed(() => {
+    console.log('[DataStore] filteredGeoJSON recomputing — allFeatures:', allFeatures.value.length, 'source filter:', JSON.stringify(filters.value.source))
     if (!allFeatures.value.length) {
+      console.log('[DataStore]   → null (no features)')
       return null
     }
 
@@ -716,6 +732,13 @@ export const useDataStore = defineStore('data', () => {
       
       return true
     })
+
+    // Debug: count how many items each source contributed
+    const sourceCounts = {}
+    for (const item of filtered) {
+      sourceCounts[item.source] = (sourceCounts[item.source] || 0) + 1
+    }
+    console.log(`[DataStore]   → ${filtered.length} features after filter (from ${allFeatures.value.length} total)`, sourceCounts)
 
     return {
       type: 'FeatureCollection',
