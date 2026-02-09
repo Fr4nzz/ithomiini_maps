@@ -171,7 +171,7 @@ function toggleVisibility() {
     <button
       v-if="editable"
       class="visibility-toggle"
-      :title="visible ? 'Hide from legend' : 'Show in legend'"
+      :title="visible ? 'Hide from map' : 'Show on map'"
       @click.stop="toggleVisibility"
     >
       <Eye v-if="visible" :size="14" />

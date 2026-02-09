@@ -197,7 +197,7 @@ function formatLabel(subspecies, species) {
 const sortedAllItems = computed(() => {
   const sortByVal = legendStore.sortBy
   const sortOrderVal = legendStore.sortOrder
-  const counts = subspeciesCounts.value
+  const counts = legendCounts.value
   const entries = Object.entries(colorMap.value)
 
   // Build full list of visible items
@@ -333,7 +333,7 @@ function buildGroupData(species, items, sortByVal, sortOrderVal, counts) {
 const groupedLegendData = computed(() => {
   const sortByVal = legendStore.sortBy
   const sortOrderVal = legendStore.sortOrder
-  const counts = subspeciesCounts.value
+  const counts = legendCounts.value
 
   if (!legendStore.isGrouped) {
     return { type: 'flat', items: legendItems.value.slice() }
@@ -355,17 +355,20 @@ const moreCount = computed(() => {
 })
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SUBSPECIES COUNTS (for abundance sorting)
+// LEGEND COUNTS (for abundance sorting and display)
+// Counts features by the current colorBy attribute (subspecies, species, genus, etc.)
 // ═══════════════════════════════════════════════════════════════════════════
 
-const subspeciesCounts = computed(() => {
+const legendCounts = computed(() => {
   const geo = dataStore.displayGeoJSON
   if (!geo?.features) return {}
+  const attr = dataStore.colorByAttribute
+  const hidden = new Set(legendStore.hiddenItems)
   const counts = {}
   for (const feature of geo.features) {
-    const ssp = feature.properties.subspecies
-    if (ssp && ssp !== 'Unknown' && ssp !== 'NA') {
-      counts[ssp] = (counts[ssp] || 0) + 1
+    const val = feature.properties[attr]
+    if (val && val !== 'Unknown' && val !== 'NA' && !hidden.has(val)) {
+      counts[val] = (counts[val] || 0) + 1
     }
   }
   return counts
@@ -1517,7 +1520,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
           :border-color="dataStore.mapStyle.borderColor"
           :border-width="dataStore.mapStyle.borderWidth"
           :wrap-label="legendStore.wrapLabels"
-          :count="legendStore.showCounts ? (subspeciesCounts[item.label] || 0) : null"
+          :count="legendStore.showCounts ? (legendCounts[item.label] || 0) : null"
           @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
           @update:custom-color="(val) => handleColorUpdate(item.label, val)"
           @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -1578,7 +1581,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
               :indented="legendStore.groupingSettings.showHeaders"
               :shape="group.shape"
               :wrap-label="legendStore.wrapLabels"
-              :count="legendStore.showCounts ? (subspeciesCounts[item.label] || 0) : null"
+              :count="legendStore.showCounts ? (legendCounts[item.label] || 0) : null"
               @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
               @update:custom-color="(val) => handleColorUpdate(item.label, val)"
               @toggle-visibility="() => handleToggleVisibility(item.label)"

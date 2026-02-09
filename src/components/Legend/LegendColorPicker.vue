@@ -100,9 +100,32 @@ const pickerStyle = ref({})
 function updatePickerPosition() {
   if (dotRef.value) {
     const rect = dotRef.value.getBoundingClientRect()
+    const pickerWidth = 280 // min-width from CSS
+    const pickerHeight = 200 // approximate height
+    const margin = 10
+
+    let top = rect.top
+    let left = rect.right + margin
+
+    // If picker would overflow right edge, place it to the left of the dot
+    if (left + pickerWidth > window.innerWidth - margin) {
+      left = rect.left - pickerWidth - margin
+    }
+
+    // If picker would overflow bottom edge, shift it up
+    if (top + pickerHeight > window.innerHeight - margin) {
+      top = window.innerHeight - pickerHeight - margin
+    }
+
+    // Ensure not above viewport
+    if (top < margin) top = margin
+
+    // Ensure not off-screen left
+    if (left < margin) left = margin
+
     pickerStyle.value = {
-      top: `${rect.top}px`,
-      left: `${rect.right + 10}px`
+      top: `${top}px`,
+      left: `${left}px`
     }
   }
 }
