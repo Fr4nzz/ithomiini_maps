@@ -101,8 +101,10 @@ const containerBounds = computed(() => {
   return { width: 800, height: 600 }
 })
 
-// Color map from data store
+// Color map from data store (includes custom overrides - used for display)
 const colorMap = computed(() => dataStore.activeColorMap)
+// Base color map (without custom overrides - used for defaultColor/reset)
+const baseColors = computed(() => dataStore.baseColorMap)
 
 // Build species-subspecies mapping from displayed data
 const speciesSubspeciesMap = computed(() => {
@@ -202,12 +204,13 @@ const sortedAllItems = computed(() => {
 
   // Build full list of visible items
   const items = []
+  const baseMap = baseColors.value
   for (const [label, color] of entries) {
     if (!legendStore.isItemVisible(label)) continue
     items.push({
       label,
       color,
-      defaultColor: color,
+      defaultColor: baseMap[label] || color,
       customLabel: legendStore.customLabels[label] || '',
       customColor: legendStore.customColors[label] || '',
       visible: true
@@ -239,12 +242,13 @@ const legendItems = computed(() => {
 
   // Add hidden items at the end (for edit mode)
   if (!isExportMode.value) {
+    const baseMap = baseColors.value
     for (const label of legendStore.hiddenItems) {
       if (colorMap.value[label]) {
         items.push({
           label,
           color: colorMap.value[label],
-          defaultColor: colorMap.value[label],
+          defaultColor: baseMap[label] || colorMap.value[label],
           customLabel: legendStore.customLabels[label] || '',
           customColor: legendStore.customColors[label] || '',
           visible: false

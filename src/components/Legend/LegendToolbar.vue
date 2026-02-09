@@ -53,11 +53,31 @@ const colorBy = computed({
 // Toggle settings
 function toggleSettings() {
   if (!showSettings.value && settingsButtonRef.value) {
-    // Position the panel near the button
+    // Position the panel near the button, respecting viewport bounds
     const rect = settingsButtonRef.value.getBoundingClientRect()
+    const panelWidth = 300  // approximate panel width
+    const panelHeight = 500 // approximate panel max height
+    const margin = 10
+
+    let top = rect.bottom + 8
+    let left = Math.max(margin, rect.left - 100)
+
+    // Prevent overflow right edge
+    if (left + panelWidth > window.innerWidth - margin) {
+      left = window.innerWidth - panelWidth - margin
+    }
+
+    // Prevent overflow bottom edge - show above button if needed
+    if (top + panelHeight > window.innerHeight - margin) {
+      top = Math.max(margin, rect.top - panelHeight - 8)
+    }
+
+    // Ensure not off-screen left
+    if (left < margin) left = margin
+
     settingsPanelStyle.value = {
-      top: `${rect.bottom + 8}px`,
-      left: `${Math.max(10, rect.left - 100)}px`
+      top: `${top}px`,
+      left: `${left}px`
     }
     showSettings.value = true
     emit('settings-open')
@@ -527,7 +547,8 @@ onUnmounted(() => {
   z-index: 1000;
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
   min-width: 280px;
-  max-height: 80vh;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
   overflow-y: auto;
 }
 

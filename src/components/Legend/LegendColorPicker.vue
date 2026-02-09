@@ -1,6 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { Compact } from '@ckpack/vue-color'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { RotateCcw } from 'lucide-vue-next'
 import { COLOR_PICKER_PALETTE } from '../../utils/colors'
 import ShapeIcon from './ShapeIcon.vue'
@@ -55,12 +54,15 @@ const isCustomColor = computed(() => {
   return props.color !== props.defaultColor
 })
 
+// Uppercase palette for matching
+const paletteColors = COLOR_PICKER_PALETTE.map(c => c.toUpperCase())
+
 function togglePicker(e) {
   e.stopPropagation()
   if (!isOpen.value) {
-    updatePickerPosition()
     isOpen.value = true
     emit('picker-open')
+    nextTick(() => updatePickerPosition())
   } else {
     isOpen.value = false
     emit('picker-close')
@@ -74,10 +76,10 @@ function closePicker() {
   }
 }
 
-function handleColorChange(color) {
-  const hexColor = color.hex || color
-  pickerColor.value = hexColor
-  emit('update:color', hexColor)
+function handleSwatchClick(hexColor) {
+  const upper = hexColor.toUpperCase()
+  pickerColor.value = upper
+  emit('update:color', upper)
 }
 
 // Handle hex input change
@@ -100,9 +102,12 @@ const pickerStyle = ref({})
 function updatePickerPosition() {
   if (dotRef.value) {
     const rect = dotRef.value.getBoundingClientRect()
-    const pickerWidth = 280 // min-width from CSS
-    const pickerHeight = 200 // approximate height
     const margin = 10
+
+    // Measure actual picker size if available, else use estimates
+    const pickerEl = pickerRef.value
+    const pickerWidth = pickerEl ? pickerEl.offsetWidth : 280
+    const pickerHeight = pickerEl ? pickerEl.offsetHeight : 220
 
     let top = rect.top
     let left = rect.right + margin
@@ -186,21 +191,28 @@ onUnmounted(() => {
         >
           <div class="picker-header">
             <span class="picker-title">CHOOSE COLOR</span>
-            <button
-              v-if="showReset && isCustomColor"
-              class="reset-button"
-              title="Reset to default color"
-              @click="resetColor"
-            >
-              <RotateCcw :size="14" />
+            <button class="picker-close" @click="closePicker" title="Close">
+              &times;
             </button>
           </div>
 
-          <Compact
-            :model-value="pickerColor"
-            :palette="COLOR_PICKER_PALETTE"
-            @update:model-value="handleColorChange"
-          />
+          <!-- Color grid -->
+          <div class="color-grid">
+            <button
+              v-for="c in paletteColors"
+              :key="c"
+              class="color-swatch"
+              :class="{
+                'is-selected': c === pickerColor?.toUpperCase(),
+                'is-white': c === '#FFFFFF'
+              }"
+              :style="{ backgroundColor: c }"
+              :title="c"
+              @click.stop="handleSwatchClick(c)"
+            >
+              <span v-if="c === pickerColor?.toUpperCase()" class="swatch-check" />
+            </button>
+          </div>
 
           <div class="picker-footer">
             <div class="color-preview">
@@ -218,11 +230,16 @@ onUnmounted(() => {
                 placeholder="#000000"
               />
             </div>
+            <button
+              v-if="showReset && isCustomColor"
+              class="reset-button"
+              title="Reset to default color"
+              @click="resetColor"
+            >
+              <RotateCcw :size="12" />
+              <span>Reset</span>
+            </button>
           </div>
-          <!-- Close button -->
-          <button class="picker-close" @click="closePicker" title="Close">
-            &times;
-          </button>
         </div>
       </Transition>
     </Teleport>
@@ -271,25 +288,7 @@ onUnmounted(() => {
   padding: 12px;
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   z-index: 1000;
-  min-width: 260px;
-}
-
-.picker-close {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: transparent;
-  border: none;
-  color: var(--color-text-muted, #666);
-  font-size: 20px;
-  cursor: pointer;
-  padding: 0 4px;
-  line-height: 1;
-  transition: color 0.15s;
-}
-
-.picker-close:hover {
-  color: var(--color-text-primary, #e0e0e0);
+  width: 268px;
 }
 
 .picker-header {
@@ -309,6 +308,113 @@ onUnmounted(() => {
   letter-spacing: 0.5px;
 }
 
+.picker-close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted, #666);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.picker-close:hover {
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+/* Color grid */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(17, 1fr);
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.color-swatch {
+  width: 13px;
+  height: 13px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: transform 0.1s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.3);
+  z-index: 1;
+}
+
+.color-swatch.is-white {
+  border-color: var(--color-border, #3d3d5c);
+}
+
+.color-swatch.is-selected {
+  border-color: #fff;
+  box-shadow: 0 0 0 1px var(--color-bg-primary, #1a1a2e);
+}
+
+.swatch-check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  margin: auto;
+}
+
+.picker-footer {
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  flex: 1;
+}
+
+.preview-label {
+  color: var(--color-text-muted, #666);
+}
+
+.preview-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border, #3d3d5c);
+  flex-shrink: 0;
+}
+
+.hex-input {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.hex-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
+}
+
 .reset-button {
   display: flex;
   align-items: center;
@@ -321,77 +427,14 @@ onUnmounted(() => {
   font-size: 11px;
   cursor: pointer;
   transition: all 0.15s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .reset-button:hover {
   background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
   color: var(--color-text-primary, #e0e0e0);
   border-color: var(--color-accent, #4ade80);
-}
-
-.picker-footer {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-}
-
-.color-preview {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-}
-
-.preview-label {
-  color: var(--color-text-muted, #666);
-}
-
-.preview-swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  border: 1px solid var(--color-border, #3d3d5c);
-}
-
-.hex-input {
-  flex: 1;
-  padding: 4px 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
-  font-family: var(--font-family-mono, monospace);
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
-.hex-input:focus {
-  outline: none;
-  border-color: var(--color-accent, #4ade80);
-}
-
-/* Picker component styling */
-:deep(.vc-compact) {
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-
-:deep(.vc-compact-colors) {
-  display: grid !important;
-  grid-template-columns: repeat(17, 1fr) !important;
-  gap: 2px !important;
-}
-
-:deep(.vc-compact-color-item) {
-  width: 12px !important;
-  height: 12px !important;
-  border-radius: 2px !important;
-}
-
-:deep(.vc-compact-dot) {
-  width: 4px !important;
-  height: 4px !important;
 }
 
 /* Transitions */
