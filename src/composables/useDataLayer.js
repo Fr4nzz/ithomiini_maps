@@ -216,13 +216,24 @@ export function useDataLayer(map, options = {}) {
     const geojson = store.displayGeoJSON
     if (!geojson) return
 
+    // Filter out hidden legend items from map data
+    let mapData = geojson
+    if (legendStore.hiddenItems.length > 0) {
+      const colorAttrKey = store.colorByAttribute
+      const hiddenSet = new Set(legendStore.hiddenItems)
+      const visibleFeatures = geojson.features.filter(
+        f => !hiddenSet.has(f.properties[colorAttrKey])
+      )
+      mapData = { type: 'FeatureCollection', features: visibleFeatures }
+    }
+
     const shouldCluster = store.clusteringEnabled
     const settings = store.clusterSettings
     const clusterRadiusPixels = settings.radiusPixels
 
     map.value.addSource('points-source', {
       type: 'geojson',
-      data: geojson,
+      data: mapData,
       cluster: shouldCluster,
       clusterMaxZoom: 14,
       clusterRadius: clusterRadiusPixels,
