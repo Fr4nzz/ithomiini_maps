@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
+import { computePopupPosition } from '../../composables/usePopupPosition'
 import AbbreviationDropdown from './AbbreviationDropdown.vue'
 
 const props = defineProps({
@@ -135,9 +136,15 @@ function toggleAbbrevVisibility(e) {
 function openDisplayNameDropdown(e) {
   e.stopPropagation()
   const rect = e.target.getBoundingClientRect()
+  const pos = computePopupPosition(rect, {
+    placement: 'bottom',
+    offset: 4,
+    popupWidth: 260,
+    popupHeight: 300
+  })
   displayNameDropdownPosition.value = {
-    x: rect.left,
-    y: rect.bottom + 4
+    x: parseInt(pos.left),
+    y: parseInt(pos.top)
   }
   showDisplayNameDropdown.value = true
 }
@@ -169,9 +176,15 @@ function handleDisplayNameApplyToAll(format) {
 function openPrefixDropdown(e) {
   e.stopPropagation()
   const rect = e.target.getBoundingClientRect()
+  const pos = computePopupPosition(rect, {
+    placement: 'bottom',
+    offset: 4,
+    popupWidth: 260,
+    popupHeight: 300
+  })
   prefixDropdownPosition.value = {
-    x: rect.left,
-    y: rect.bottom + 4
+    x: parseInt(pos.left),
+    y: parseInt(pos.top)
   }
   showPrefixDropdown.value = true
 }

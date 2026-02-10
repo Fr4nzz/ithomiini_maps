@@ -15,6 +15,7 @@ import {
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
+import { computePopupPosition } from '../../composables/usePopupPosition'
 
 const props = defineProps({
   isExportMode: {
@@ -53,32 +54,12 @@ const colorBy = computed({
 // Toggle settings
 function toggleSettings() {
   if (!showSettings.value && settingsButtonRef.value) {
-    // Position the panel near the button, respecting viewport bounds
     const rect = settingsButtonRef.value.getBoundingClientRect()
-    const panelWidth = 300  // approximate panel width
-    const panelHeight = 500 // approximate panel max height
-    const margin = 10
-
-    let top = rect.bottom + 8
-    let left = Math.max(margin, rect.left - 100)
-
-    // Prevent overflow right edge
-    if (left + panelWidth > window.innerWidth - margin) {
-      left = window.innerWidth - panelWidth - margin
-    }
-
-    // Prevent overflow bottom edge - show above button if needed
-    if (top + panelHeight > window.innerHeight - margin) {
-      top = Math.max(margin, rect.top - panelHeight - 8)
-    }
-
-    // Ensure not off-screen left
-    if (left < margin) left = margin
-
-    settingsPanelStyle.value = {
-      top: `${top}px`,
-      left: `${left}px`
-    }
+    settingsPanelStyle.value = computePopupPosition(rect, {
+      placement: 'bottom',
+      popupWidth: 300,
+      popupHeight: 500
+    })
     showSettings.value = true
     emit('settings-open')
   } else {

@@ -2,6 +2,7 @@
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { RotateCcw } from 'lucide-vue-next'
 import { COLOR_PICKER_PALETTE } from '../../utils/colors'
+import { computePopupPosition } from '../../composables/usePopupPosition'
 import ShapeIcon from './ShapeIcon.vue'
 
 const props = defineProps({
@@ -102,36 +103,12 @@ const pickerStyle = ref({})
 function updatePickerPosition() {
   if (dotRef.value) {
     const rect = dotRef.value.getBoundingClientRect()
-    const margin = 10
-
-    // Measure actual picker size if available, else use estimates
     const pickerEl = pickerRef.value
-    const pickerWidth = pickerEl ? pickerEl.offsetWidth : 280
-    const pickerHeight = pickerEl ? pickerEl.offsetHeight : 220
-
-    let top = rect.top
-    let left = rect.right + margin
-
-    // If picker would overflow right edge, place it to the left of the dot
-    if (left + pickerWidth > window.innerWidth - margin) {
-      left = rect.left - pickerWidth - margin
-    }
-
-    // If picker would overflow bottom edge, shift it up
-    if (top + pickerHeight > window.innerHeight - margin) {
-      top = window.innerHeight - pickerHeight - margin
-    }
-
-    // Ensure not above viewport
-    if (top < margin) top = margin
-
-    // Ensure not off-screen left
-    if (left < margin) left = margin
-
-    pickerStyle.value = {
-      top: `${top}px`,
-      left: `${left}px`
-    }
+    pickerStyle.value = computePopupPosition(rect, {
+      placement: 'right',
+      popupWidth: pickerEl ? pickerEl.offsetWidth : 280,
+      popupHeight: pickerEl ? pickerEl.offsetHeight : 220
+    })
   }
 }
 

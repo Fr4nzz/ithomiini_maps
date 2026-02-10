@@ -145,14 +145,30 @@ export const useLegendStore = defineStore('legend', () => {
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Check if grouping is applicable - only when colorBy is subspecies
+  // Check if grouping is applicable - works for any taxonomy colorBy mode
   const canGroup = computed(() => {
     const dataStore = getDataStore()
-    return dataStore.colorBy === 'subspecies' && groupingSettings.value.enabled
+    const colorBy = dataStore.colorBy
+    // Grouping only makes sense for taxonomy-based colorBy modes
+    const groupable = ['subspecies', 'species', 'genus']
+    return groupable.includes(colorBy) &&
+           groupingSettings.value.enabled &&
+           effectiveGroupBy.value !== 'none'
   })
 
-  // Should display grouped - only subspecies can be grouped by species
+  // Should display grouped
   const isGrouped = computed(() => canGroup.value)
+
+  // The actual groupBy value to use (validates against current colorBy)
+  const effectiveGroupBy = computed(() => {
+    const options = groupByOptions.value
+    const current = groupingSettings.value.groupBy
+    if (current === 'none') return 'none'
+    if (options.some(o => o.value === current)) return current
+    // Fall back to first valid non-'none' option
+    const first = options.find(o => o.value !== 'none')
+    return first ? first.value : 'none'
+  })
 
   // Available groupBy options based on current colorBy
   const groupByOptions = computed(() => {
@@ -700,6 +716,9 @@ export const useLegendStore = defineStore('legend', () => {
     // Computed
     hasCustomizations,
     isGrouped,
+    effectiveGroupBy,
+    groupByOptions,
+    canGroup,
 
     // Actions
     updatePosition,
