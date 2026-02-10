@@ -8,6 +8,7 @@ import {
   GripVertical,
   ChevronDown,
   Palette,
+  Layers,
   Type,
   Circle,
   MapPin,
@@ -49,6 +50,25 @@ const colorByOptions = [
 const colorBy = computed({
   get: () => dataStore.colorBy,
   set: (value) => { dataStore.colorBy = value }
+})
+
+// Current groupBy
+const groupBy = computed({
+  get: () => legendStore.effectiveGroupBy,
+  set: (value) => {
+    legendStore.setGroupBy(value)
+    // If setting to 'none', disable grouping; otherwise enable it
+    if (value === 'none') {
+      legendStore.setGroupingEnabled(false)
+    } else {
+      legendStore.setGroupingEnabled(true)
+    }
+  }
+})
+
+// Whether to show the group by dropdown (only for taxonomy-based colorBy)
+const showGroupBy = computed(() => {
+  return legendStore.groupByOptions.length > 1
 })
 
 // Toggle settings
@@ -154,6 +174,21 @@ onUnmounted(() => {
       <select v-model="colorBy" class="color-by-dropdown">
         <option
           v-for="option in colorByOptions"
+          :key="option.value"
+          :value="option.value"
+        >
+          {{ option.label }}
+        </option>
+      </select>
+      <ChevronDown :size="12" class="dropdown-icon" />
+    </div>
+
+    <!-- Group by dropdown (only shown for taxonomy-based colorBy modes) -->
+    <div v-if="showGroupBy" class="toolbar-item group-by-select">
+      <Layers :size="14" />
+      <select v-model="groupBy" class="group-by-dropdown">
+        <option
+          v-for="option in legendStore.groupByOptions"
           :key="option.value"
           :value="option.value"
         >
@@ -466,7 +501,8 @@ onUnmounted(() => {
   color: var(--color-text-secondary, #aaa);
 }
 
-.color-by-dropdown {
+.color-by-dropdown,
+.group-by-dropdown {
   appearance: none;
   background: transparent;
   border: none;
@@ -477,9 +513,19 @@ onUnmounted(() => {
   outline: none;
 }
 
-.color-by-dropdown option {
+.color-by-dropdown option,
+.group-by-dropdown option {
   background: var(--color-bg-secondary, #252540);
   color: var(--color-text-primary, #e0e0e0);
+}
+
+.group-by-select {
+  position: relative;
+  padding: 4px 8px;
+  background: var(--color-bg-secondary, #252540);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
 }
 
 .dropdown-icon {

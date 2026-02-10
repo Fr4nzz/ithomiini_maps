@@ -732,6 +732,8 @@ export const useLegendStore = defineStore('legend', () => {
     toggleItemVisibility,
     isItemVisible,
     resetCustomizations,
+    setGroupingEnabled,
+    setGroupBy,
     setShowHeaders,
     setSpeciesBorderColor,
     setSpeciesBaseHue,
