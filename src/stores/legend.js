@@ -145,14 +145,9 @@ export const useLegendStore = defineStore('legend', () => {
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Check if grouping is applicable - works for any taxonomy colorBy mode
+  // Check if grouping is applicable - works for any colorBy mode
   const canGroup = computed(() => {
-    const dataStore = getDataStore()
-    const colorBy = dataStore.colorBy
-    // Grouping only makes sense for taxonomy-based colorBy modes
-    const groupable = ['subspecies', 'species', 'genus']
-    return groupable.includes(colorBy) &&
-           groupingSettings.value.enabled &&
+    return groupingSettings.value.enabled &&
            effectiveGroupBy.value !== 'none'
   })
 
@@ -171,32 +166,37 @@ export const useLegendStore = defineStore('legend', () => {
   })
 
   // Available groupBy options based on current colorBy
+  // Grouping is available for ALL colorBy modes - you can group any attribute
+  // by a taxonomy level or cross-dimension (e.g., status grouped by species)
   const groupByOptions = computed(() => {
     const dataStore = getDataStore()
     const colorBy = dataStore.colorBy
     const options = [{ value: 'none', label: 'None' }]
 
-    if (colorBy === 'subspecies') {
-      options.push(
-        { value: 'species', label: 'Species' },
-        { value: 'genus', label: 'Genus' },
-        { value: 'tribe', label: 'Tribe' },
-        { value: 'subfamily', label: 'Subfamily' },
-        { value: 'family', label: 'Family' }
-      )
-    } else if (colorBy === 'species') {
-      options.push(
-        { value: 'genus', label: 'Genus' },
-        { value: 'tribe', label: 'Tribe' },
-        { value: 'subfamily', label: 'Subfamily' },
-        { value: 'family', label: 'Family' }
-      )
-    } else if (colorBy === 'genus') {
-      options.push(
-        { value: 'tribe', label: 'Tribe' },
-        { value: 'subfamily', label: 'Subfamily' },
-        { value: 'family', label: 'Family' }
-      )
+    // Taxonomy hierarchy: subspecies < species < genus < tribe < subfamily < family
+    // For taxonomy colorBy modes: can group by any HIGHER level
+    // For non-taxonomy colorBy modes (status, mimicry, source): can group by any taxonomy level
+    const taxonomyOptions = [
+      { value: 'subspecies', label: 'Subspecies' },
+      { value: 'species', label: 'Species' },
+      { value: 'genus', label: 'Genus' },
+      { value: 'tribe', label: 'Tribe' },
+      { value: 'subfamily', label: 'Subfamily' },
+      { value: 'family', label: 'Family' }
+    ]
+    const taxonomyRank = { 'subspecies': 0, 'species': 1, 'genus': 2, 'tribe': 3, 'subfamily': 4, 'family': 5 }
+
+    if (colorBy in taxonomyRank) {
+      // Taxonomy colorBy: only allow grouping by HIGHER levels
+      const currentRank = taxonomyRank[colorBy]
+      for (const opt of taxonomyOptions) {
+        if (taxonomyRank[opt.value] > currentRank) {
+          options.push(opt)
+        }
+      }
+    } else {
+      // Non-taxonomy colorBy (status, mimicry, source): allow grouping by any taxonomy level
+      options.push(...taxonomyOptions)
     }
 
     return options

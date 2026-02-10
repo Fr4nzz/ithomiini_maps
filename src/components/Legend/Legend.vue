@@ -105,6 +105,7 @@ const baseColors = computed(() => dataStore.baseColorMap)
 
 // Map groupBy setting to GeoJSON property name
 const groupByPropertyMap = {
+  'subspecies': 'subspecies',
   'species': 'scientific_name',
   'genus': 'genus',
   'tribe': 'tribe',

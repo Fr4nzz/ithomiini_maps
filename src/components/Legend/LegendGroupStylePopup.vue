@@ -45,6 +45,21 @@ const emit = defineEmits([
 // Local hue for slider (updates on input, emits on change)
 const localHue = ref(props.baseHue)
 
+// Gradient preset themes
+const gradientPresets = [
+  { label: 'Ocean', hue: 200, icon: '🌊' },
+  { label: 'Forest', hue: 140, icon: '🌿' },
+  { label: 'Sunset', hue: 20, icon: '🌅' },
+  { label: 'Berry', hue: 300, icon: '🫐' },
+  { label: 'Gold', hue: 45, icon: '✨' },
+  { label: 'Sky', hue: 220, icon: '🌤' }
+]
+
+function applyPreset(preset) {
+  localHue.value = preset.hue
+  emit('update:hue', preset.hue)
+}
+
 // Gradient preview colors
 const gradientColors = computed(() => generate3ColorPreview(localHue.value))
 
@@ -162,6 +177,19 @@ onUnmounted(() => {
           </div>
           <div class="gradient-controls" :class="{ disabled: !useGradient }">
             <div class="gradient-preview" :style="gradientStyle"></div>
+            <div class="gradient-presets">
+              <button
+                v-for="preset in gradientPresets"
+                :key="preset.label"
+                class="preset-button"
+                :class="{ active: localHue === preset.hue }"
+                :title="preset.label"
+                @click="applyPreset(preset)"
+              >
+                <span class="preset-swatch" :style="{ background: `linear-gradient(135deg, hsl(${preset.hue}, 70%, 60%), hsl(${preset.hue}, 70%, 30%))` }"></span>
+                <span class="preset-label">{{ preset.label }}</span>
+              </button>
+            </div>
             <div class="hue-slider-row">
               <input
                 type="range"
@@ -359,6 +387,49 @@ onUnmounted(() => {
   height: 24px;
   border-radius: 6px;
   border: 1px solid var(--color-border, #3d3d5c);
+}
+
+/* Gradient presets */
+.gradient-presets {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.preset-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+.preset-button:hover {
+  border-color: var(--color-text-secondary, #aaa);
+}
+
+.preset-button.active {
+  border-color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.1));
+}
+
+.preset-swatch {
+  width: 100%;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.preset-label {
+  font-size: 9px;
+  color: var(--color-text-muted, #666);
+  white-space: nowrap;
 }
 
 .hue-slider-row {
