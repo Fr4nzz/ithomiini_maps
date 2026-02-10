@@ -36,14 +36,24 @@ const settingsButtonRef = ref(null)
 const settingsPanelRef = ref(null)
 const settingsPanelStyle = ref({})
 
-// Color by options
-const colorByOptions = [
-  { value: 'subspecies', label: 'Subspecies' },
-  { value: 'species', label: 'Species' },
-  { value: 'genus', label: 'Genus' },
-  { value: 'status', label: 'Sequencing Status' },
-  { value: 'mimicry', label: 'Mimicry Ring' },
-  { value: 'source', label: 'Data Source' }
+// Color by options with section groups
+const colorByGroups = [
+  {
+    label: 'Taxonomy',
+    options: [
+      { value: 'subspecies', label: 'Subspecies' },
+      { value: 'species', label: 'Species' },
+      { value: 'genus', label: 'Genus' }
+    ]
+  },
+  {
+    label: 'Other',
+    options: [
+      { value: 'status', label: 'Sequencing Status' },
+      { value: 'mimicry', label: 'Mimicry Ring' },
+      { value: 'source', label: 'Data Source' }
+    ]
+  }
 ]
 
 // Current colorBy
@@ -172,18 +182,24 @@ onUnmounted(() => {
     <div class="toolbar-item color-by-select">
       <Palette :size="14" />
       <select v-model="colorBy" class="color-by-dropdown">
-        <option
-          v-for="option in colorByOptions"
-          :key="option.value"
-          :value="option.value"
+        <optgroup
+          v-for="group in colorByGroups"
+          :key="group.label"
+          :label="group.label"
         >
-          {{ option.label }}
-        </option>
+          <option
+            v-for="option in group.options"
+            :key="option.value"
+            :value="option.value"
+          >
+            {{ option.label }}
+          </option>
+        </optgroup>
       </select>
       <ChevronDown :size="12" class="dropdown-icon" />
     </div>
 
-    <!-- Group by dropdown (only shown for taxonomy-based colorBy modes) -->
+    <!-- Group by dropdown -->
     <div v-if="showGroupBy" class="toolbar-item group-by-select">
       <Layers :size="14" />
       <select v-model="groupBy" class="group-by-dropdown">
@@ -191,6 +207,8 @@ onUnmounted(() => {
           v-for="option in legendStore.groupByOptions"
           :key="option.value"
           :value="option.value"
+          :disabled="option.disabled"
+          :class="{ 'option-header': option.disabled }"
         >
           {{ option.label }}
         </option>
@@ -517,6 +535,13 @@ onUnmounted(() => {
 .group-by-dropdown option {
   background: var(--color-bg-secondary, #252540);
   color: var(--color-text-primary, #e0e0e0);
+}
+
+.color-by-dropdown optgroup,
+.group-by-dropdown .option-header {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-muted, #666);
 }
 
 .group-by-select {

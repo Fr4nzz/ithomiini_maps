@@ -21,7 +21,7 @@ const props = defineProps({
     default: '#ffffff'
   },
   baseHue: {
-    type: Number,
+    type: [Number, Array],
     default: 210
   },
   useGradient: {
@@ -42,22 +42,28 @@ const emit = defineEmits([
   'update:useGradient'
 ])
 
-// Local hue for slider (updates on input, emits on change)
+// Local hue state - can be a number (slider) or array (multi-hue preset)
 const localHue = ref(props.baseHue)
 
-// Gradient preset themes
+// Multi-color gradient presets: each defines 3 distinct anchor hues
 const gradientPresets = [
-  { label: 'Ocean', hue: 200, icon: '🌊' },
-  { label: 'Forest', hue: 140, icon: '🌿' },
-  { label: 'Sunset', hue: 20, icon: '🌅' },
-  { label: 'Berry', hue: 300, icon: '🫐' },
-  { label: 'Gold', hue: 45, icon: '✨' },
-  { label: 'Sky', hue: 220, icon: '🌤' }
+  { label: 'Tropical', hues: [350, 140, 220] },
+  { label: 'Earth', hues: [25, 80, 175] },
+  { label: 'Vivid', hues: [330, 90, 190] },
+  { label: 'Warm', hues: [0, 40, 60] },
+  { label: 'Cool', hues: [170, 230, 285] },
+  { label: 'Rainbow', hues: [0, 120, 240] }
 ]
 
 function applyPreset(preset) {
-  localHue.value = preset.hue
-  emit('update:hue', preset.hue)
+  localHue.value = preset.hues
+  emit('update:hue', preset.hues)
+}
+
+// Check if a preset is currently active
+function isPresetActive(preset) {
+  if (!Array.isArray(localHue.value)) return false
+  return JSON.stringify(localHue.value) === JSON.stringify(preset.hues)
 }
 
 // Gradient preview colors
@@ -86,14 +92,22 @@ const displayName = computed(() => {
   return props.groupName
 })
 
-// Handle hue slider input (preview only)
+// Slider value for the single-hue slider (extracts first hue if array)
+const sliderHue = computed(() => {
+  if (Array.isArray(localHue.value)) return localHue.value[0]
+  return localHue.value
+})
+
+// Handle hue slider input (preview only, switches to single-hue mode)
 function handleHueInput(e) {
   localHue.value = parseInt(e.target.value)
 }
 
 // Handle hue slider change (commit)
 function handleHueChange(e) {
-  emit('update:hue', parseInt(e.target.value))
+  const val = parseInt(e.target.value)
+  localHue.value = val
+  emit('update:hue', val)
 }
 
 // Click outside handler
@@ -182,26 +196,27 @@ onUnmounted(() => {
                 v-for="preset in gradientPresets"
                 :key="preset.label"
                 class="preset-button"
-                :class="{ active: localHue === preset.hue }"
+                :class="{ active: isPresetActive(preset) }"
                 :title="preset.label"
                 @click="applyPreset(preset)"
               >
-                <span class="preset-swatch" :style="{ background: `linear-gradient(135deg, hsl(${preset.hue}, 70%, 60%), hsl(${preset.hue}, 70%, 30%))` }"></span>
+                <span class="preset-swatch" :style="{ background: `linear-gradient(135deg, hsl(${preset.hues[0]}, 72%, 50%), hsl(${preset.hues[1]}, 72%, 44%), hsl(${preset.hues[2]}, 72%, 38%))` }"></span>
                 <span class="preset-label">{{ preset.label }}</span>
               </button>
             </div>
             <div class="hue-slider-row">
+              <span class="slider-label">Custom</span>
               <input
                 type="range"
                 class="hue-slider"
                 min="0"
                 max="360"
-                :value="localHue"
+                :value="sliderHue"
                 :disabled="!useGradient"
                 @input="handleHueInput"
                 @change="handleHueChange"
               />
-              <span class="hue-value">{{ localHue }}°</span>
+              <span class="hue-value">{{ sliderHue }}°</span>
             </div>
           </div>
         </div>
@@ -465,6 +480,12 @@ onUnmounted(() => {
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.slider-label {
+  font-size: 10px;
+  color: var(--color-text-muted, #666);
+  white-space: nowrap;
 }
 
 .hue-value {

@@ -110,7 +110,10 @@ const groupByPropertyMap = {
   'genus': 'genus',
   'tribe': 'tribe',
   'subfamily': 'subfamily',
-  'family': 'family'
+  'family': 'family',
+  'status': 'sequencing_status',
+  'mimicry': 'mimicry_ring',
+  'source': 'source'
 }
 
 // Build item→group mapping from displayed data (generic for any colorBy/groupBy)
@@ -939,7 +942,8 @@ function handleUpdateBorderColor(color) {
 }
 
 function handleUpdateHue(hue) {
-  legendStore.setSpeciesBaseHue(stylePopupState.value.groupName, parseInt(hue))
+  // hue can be a number (slider) or array (multi-hue preset)
+  legendStore.setSpeciesBaseHue(stylePopupState.value.groupName, hue)
 }
 
 function handleUpdateUseGradient(enabled) {

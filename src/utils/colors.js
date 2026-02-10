@@ -65,35 +65,100 @@ export function generateSpeciesBaseHues(speciesList, existing = {}) {
   return result
 }
 
-export function generateSpeciesGradientColors(subspeciesList, baseHue) {
+/**
+ * Generate gradient colors for items in a group.
+ * @param {string[]} itemList - list of item labels
+ * @param {number|number[]} hueOrHues - single base hue (number) or array of 3 anchor hues
+ * @returns {Object} map of item label → hex color
+ */
+export function generateSpeciesGradientColors(itemList, hueOrHues) {
   const colors = {}
-  const count = subspeciesList.length
-  const saturation = 70
-  const lightnessRange = [60, 45, 30]
+  const count = itemList.length
 
-  subspeciesList.forEach((subspecies, index) => {
-    const position = count > 1 ? index / (count - 1) : 0.5
+  if (Array.isArray(hueOrHues) && hueOrHues.length >= 2) {
+    // Multi-hue mode: interpolate across anchor hues with varied lightness
+    const anchors = hueOrHues
+    const saturation = 72
 
-    let lightness
-    if (position <= 0.5) {
-      const t = position * 2
-      lightness = lightnessRange[0] + (lightnessRange[1] - lightnessRange[0]) * t
-    } else {
-      const t = (position - 0.5) * 2
-      lightness = lightnessRange[1] + (lightnessRange[2] - lightnessRange[1]) * t
-    }
+    itemList.forEach((item, index) => {
+      const position = count > 1 ? index / (count - 1) : 0.5
 
-    // Small hue variation for additional distinction (+-15 degrees max)
-    const hueOffset = (position - 0.5) * 30
-    const hue = (baseHue + hueOffset + 360) % 360
+      // Interpolate hue across anchor points
+      const segmentCount = anchors.length - 1
+      const segmentPos = position * segmentCount
+      const segIdx = Math.min(Math.floor(segmentPos), segmentCount - 1)
+      const t = segmentPos - segIdx
 
-    colors[subspecies] = hslToHex(hue, saturation, lightness)
-  })
+      // Shortest-path hue interpolation
+      let h0 = anchors[segIdx]
+      let h1 = anchors[segIdx + 1]
+      let diff = h1 - h0
+      if (diff > 180) diff -= 360
+      if (diff < -180) diff += 360
+      const hue = ((h0 + diff * t) + 360) % 360
+
+      // Vary lightness for additional distinction (50→38 across the range)
+      const lightness = 50 - position * 12
+
+      colors[item] = hslToHex(hue, saturation, lightness)
+    })
+  } else {
+    // Single-hue mode (legacy): vary lightness with slight hue shift
+    const baseHue = Array.isArray(hueOrHues) ? hueOrHues[0] : hueOrHues
+    const saturation = 70
+    const lightnessRange = [60, 45, 30]
+
+    itemList.forEach((item, index) => {
+      const position = count > 1 ? index / (count - 1) : 0.5
+
+      let lightness
+      if (position <= 0.5) {
+        const tt = position * 2
+        lightness = lightnessRange[0] + (lightnessRange[1] - lightnessRange[0]) * tt
+      } else {
+        const tt = (position - 0.5) * 2
+        lightness = lightnessRange[1] + (lightnessRange[2] - lightnessRange[1]) * tt
+      }
+
+      const hueOffset = (position - 0.5) * 30
+      const hue = (baseHue + hueOffset + 360) % 360
+
+      colors[item] = hslToHex(hue, saturation, lightness)
+    })
+  }
 
   return colors
 }
 
-export function generate3ColorPreview(baseHue) {
+/**
+ * Generate 3-color preview for the gradient preview bar.
+ * @param {number|number[]} hueOrHues - single base hue or array of anchor hues
+ * @returns {string[]} array of 3 hex colors
+ */
+export function generate3ColorPreview(hueOrHues) {
+  if (Array.isArray(hueOrHues) && hueOrHues.length >= 2) {
+    // Multi-hue: show the anchor colors at good saturation/lightness
+    const anchors = hueOrHues
+    const count = 3
+    return Array.from({ length: count }, (_, i) => {
+      const position = count > 1 ? i / (count - 1) : 0.5
+      const segmentCount = anchors.length - 1
+      const segmentPos = position * segmentCount
+      const segIdx = Math.min(Math.floor(segmentPos), segmentCount - 1)
+      const t = segmentPos - segIdx
+      let h0 = anchors[segIdx]
+      let h1 = anchors[segIdx + 1]
+      let diff = h1 - h0
+      if (diff > 180) diff -= 360
+      if (diff < -180) diff += 360
+      const hue = ((h0 + diff * t) + 360) % 360
+      const lightness = 50 - position * 12
+      return hslToHex(hue, 72, lightness)
+    })
+  }
+
+  // Single hue fallback
+  const baseHue = Array.isArray(hueOrHues) ? hueOrHues[0] : hueOrHues
   const saturation = 70
   const lightnessRange = [60, 45, 30]
   const hueOffsets = [-15, 0, 15]

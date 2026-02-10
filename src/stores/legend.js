@@ -159,23 +159,23 @@ export const useLegendStore = defineStore('legend', () => {
     const options = groupByOptions.value
     const current = groupingSettings.value.groupBy
     if (current === 'none') return 'none'
-    if (options.some(o => o.value === current)) return current
-    // Fall back to first valid non-'none' option
-    const first = options.find(o => o.value !== 'none')
+    // Check if current is a valid (non-header) option
+    if (options.some(o => o.value === current && !o.disabled)) return current
+    // Fall back to first valid non-'none', non-header option
+    const first = options.find(o => o.value !== 'none' && !o.disabled)
     return first ? first.value : 'none'
   })
 
   // Available groupBy options based on current colorBy
   // Grouping is available for ALL colorBy modes - you can group any attribute
   // by a taxonomy level or cross-dimension (e.g., status grouped by species)
+  // Options include section headers (disabled) for clarity
   const groupByOptions = computed(() => {
     const dataStore = getDataStore()
     const colorBy = dataStore.colorBy
     const options = [{ value: 'none', label: 'None' }]
 
     // Taxonomy hierarchy: subspecies < species < genus < tribe < subfamily < family
-    // For taxonomy colorBy modes: can group by any HIGHER level
-    // For non-taxonomy colorBy modes (status, mimicry, source): can group by any taxonomy level
     const taxonomyOptions = [
       { value: 'subspecies', label: 'Subspecies' },
       { value: 'species', label: 'Species' },
@@ -186,17 +186,38 @@ export const useLegendStore = defineStore('legend', () => {
     ]
     const taxonomyRank = { 'subspecies': 0, 'species': 1, 'genus': 2, 'tribe': 3, 'subfamily': 4, 'family': 5 }
 
+    // Non-taxonomy options
+    const otherOptions = [
+      { value: 'status', label: 'Sequencing Status' },
+      { value: 'mimicry', label: 'Mimicry Ring' },
+      { value: 'source', label: 'Data Source' }
+    ]
+
+    // Build taxonomy section
+    const taxItems = []
     if (colorBy in taxonomyRank) {
       // Taxonomy colorBy: only allow grouping by HIGHER levels
       const currentRank = taxonomyRank[colorBy]
       for (const opt of taxonomyOptions) {
         if (taxonomyRank[opt.value] > currentRank) {
-          options.push(opt)
+          taxItems.push(opt)
         }
       }
     } else {
-      // Non-taxonomy colorBy (status, mimicry, source): allow grouping by any taxonomy level
-      options.push(...taxonomyOptions)
+      // Non-taxonomy colorBy: allow grouping by any taxonomy level
+      taxItems.push(...taxonomyOptions)
+    }
+
+    if (taxItems.length > 0) {
+      options.push({ value: '__header_taxonomy', label: '── Taxonomy ──', disabled: true })
+      options.push(...taxItems)
+    }
+
+    // Build "other" section (exclude current colorBy from options)
+    const otherItems = otherOptions.filter(o => o.value !== colorBy)
+    if (otherItems.length > 0) {
+      options.push({ value: '__header_other', label: '── Other ──', disabled: true })
+      options.push(...otherItems)
     }
 
     return options
