@@ -56,6 +56,33 @@ const colorByGroups = [
   }
 ]
 
+// Group by options structured with optgroups for consistent header style
+const groupByGroups = computed(() => {
+  const raw = legendStore.groupByOptions
+  const groups = []
+  let currentGroup = null
+
+  for (const opt of raw) {
+    if (opt.disabled) {
+      // Header item - start a new optgroup
+      // Extract clean label from "── Taxonomy ──" -> "Taxonomy"
+      const label = opt.label.replace(/[─\s]/g, '').trim() || opt.label
+      currentGroup = { label, options: [] }
+      groups.push(currentGroup)
+    } else if (currentGroup) {
+      currentGroup.options.push(opt)
+    } else {
+      // "None" option before any header - put in a standalone group
+      if (!groups.length || groups[0].label !== '') {
+        groups.unshift({ label: '', options: [] })
+      }
+      groups[0].options.push(opt)
+    }
+  }
+
+  return groups
+})
+
 // Current colorBy
 const colorBy = computed({
   get: () => dataStore.colorBy,
@@ -181,6 +208,7 @@ onUnmounted(() => {
     <!-- Color by dropdown -->
     <div class="toolbar-item color-by-select">
       <Palette :size="14" />
+      <span class="dropdown-label">Color</span>
       <select v-model="colorBy" class="color-by-dropdown">
         <optgroup
           v-for="group in colorByGroups"
@@ -202,16 +230,27 @@ onUnmounted(() => {
     <!-- Group by dropdown -->
     <div v-if="showGroupBy" class="toolbar-item group-by-select">
       <Layers :size="14" />
+      <span class="dropdown-label">Group</span>
       <select v-model="groupBy" class="group-by-dropdown">
-        <option
-          v-for="option in legendStore.groupByOptions"
-          :key="option.value"
-          :value="option.value"
-          :disabled="option.disabled"
-          :class="{ 'option-header': option.disabled }"
-        >
-          {{ option.label }}
-        </option>
+        <template v-for="group in groupByGroups" :key="group.label">
+          <optgroup v-if="group.label" :label="group.label">
+            <option
+              v-for="option in group.options"
+              :key="option.value"
+              :value="option.value"
+            >
+              {{ option.label }}
+            </option>
+          </optgroup>
+          <option
+            v-else
+            v-for="option in group.options"
+            :key="option.value"
+            :value="option.value"
+          >
+            {{ option.label }}
+          </option>
+        </template>
       </select>
       <ChevronDown :size="12" class="dropdown-icon" />
     </div>
@@ -519,6 +558,15 @@ onUnmounted(() => {
   color: var(--color-text-secondary, #aaa);
 }
 
+.dropdown-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--color-text-muted, #666);
+  white-space: nowrap;
+}
+
 .color-by-dropdown,
 .group-by-dropdown {
   appearance: none;
@@ -538,7 +586,7 @@ onUnmounted(() => {
 }
 
 .color-by-dropdown optgroup,
-.group-by-dropdown .option-header {
+.group-by-dropdown optgroup {
   font-size: 10px;
   font-weight: 600;
   color: var(--color-text-muted, #666);

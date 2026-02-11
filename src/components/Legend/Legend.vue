@@ -3,7 +3,7 @@ import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
-import { generateSpeciesBorderColors, generateSpeciesBaseHues } from '../../utils/colors'
+import { generateSpeciesBorderColors } from '../../utils/colors'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import { computePopupPosition } from '../../composables/usePopupPosition'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
@@ -157,11 +157,6 @@ const groupList = computed(() => Object.keys(itemGroupMap.value).sort())
 const groupBorderColors = computed(() => {
   if (!legendStore.speciesStyling.borderColor) return {}
   return generateSpeciesBorderColors(groupList.value, legendStore.speciesBorderColors)
-})
-
-// Generate base hues for group gradients
-const groupBaseHues = computed(() => {
-  return generateSpeciesBaseHues(groupList.value, legendStore.speciesBaseHues)
 })
 
 // Get border color for a group
@@ -333,7 +328,6 @@ function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts) {
   return {
     name: groupName,
     borderColor: getGroupBorderColor(groupName),
-    baseHue: groupBaseHues.value[groupName] || 210,
     shape: legendStore.getGroupShape(groupName),
     abbreviation: legendStore.getSpeciesAbbreviation(groupName),
     abbreviationVisible: legendStore.isAbbreviationVisible(groupName),
@@ -941,15 +935,6 @@ function handleUpdateBorderColor(color) {
   legendStore.setSpeciesBorderColor(stylePopupState.value.groupName, color)
 }
 
-function handleUpdateHue(hue) {
-  // hue can be a number (slider) or array (multi-hue preset)
-  legendStore.setSpeciesBaseHue(stylePopupState.value.groupName, hue)
-}
-
-function handleUpdateUseGradient(enabled) {
-  legendStore.setSpeciesGradientEnabledForSpecies(stylePopupState.value.groupName, enabled)
-}
-
 // ═══════════════════════════════════════════════════════════════════════════
 // ABBREVIATION HANDLERS
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1530,14 +1515,10 @@ watch(isExportMode, (enabled, wasEnabled) => {
       :group-name="stylePopupState.groupName"
       :current-shape="legendStore.getGroupShape(stylePopupState.groupName)"
       :border-color="legendStore.speciesBorderColors[stylePopupState.groupName] || dataStore.mapStyle.borderColor"
-      :base-hue="groupBaseHues[stylePopupState.groupName] || 210"
-      :use-gradient="legendStore.isSpeciesGradientEnabled(stylePopupState.groupName)"
       :position="stylePopupState.position"
       @close="closeGroupStylePopup"
       @update:shape="handleUpdateShape"
       @update:border-color="handleUpdateBorderColor"
-      @update:hue="handleUpdateHue"
-      @update:use-gradient="handleUpdateUseGradient"
     />
   </div>
 </template>
