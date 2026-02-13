@@ -168,11 +168,6 @@ function updateMapFillOpacity(e) {
   dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
 }
 
-// Update max items
-function updateMaxItems(e) {
-  legendStore.setMaxItems(parseInt(e.target.value))
-}
-
 // Click outside handler
 function handleClickOutside(e) {
   if (!showSettings.value) return
@@ -333,24 +328,6 @@ onUnmounted(() => {
               @input="updateLegendDotScale"
             />
             <span class="value-display">{{ (legendStore.dotScale * 100).toFixed(0) }}%</span>
-          </div>
-        </div>
-
-        <!-- Max items -->
-        <div class="settings-row">
-          <label class="settings-label">
-            Max Items
-          </label>
-          <div class="settings-control">
-            <input
-              type="range"
-              min="5"
-              max="30"
-              step="1"
-              :value="legendStore.maxItems"
-              @input="updateMaxItems"
-            />
-            <span class="value-display">{{ legendStore.maxItems }}</span>
           </div>
         </div>
 

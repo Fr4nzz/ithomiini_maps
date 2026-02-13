@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { ref, reactive, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
-import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
 import { useLegendStore } from './legend'
 import { getStorage, setStorage } from '../utils/storageHelpers'
 import { normalizeCountryName } from '../utils/clusterStats'
@@ -1153,31 +1152,6 @@ export const useDataStore = defineStore('data', () => {
       }
       if (Object.keys(result).length === 0) {
         result = { ...COLOR_PALETTES.source }
-      }
-    } else if (mode === 'subspecies') {
-      // Check if any species has gradient enabled
-      const speciesList = Object.keys(speciesSubspeciesMap.value).sort()
-      const hasAnyGradient = speciesList.some(species => legendStore.isSpeciesGradientEnabled(species))
-
-      if (hasAnyGradient || legendStore.speciesStyling.colorGradient) {
-        const hueAssignments = generateSpeciesBaseHues(speciesList, legendStore.speciesBaseHues)
-        for (const species of speciesList) {
-          const subspecies = speciesSubspeciesMap.value[species]
-          const useGradient = legendStore.isSpeciesGradientEnabled(species) || legendStore.speciesStyling.colorGradient
-          if (useGradient) {
-            const speciesColors = generateSpeciesGradientColors(subspecies, hueAssignments[species])
-            for (const ssp of subspecies) {
-              result[ssp] = speciesColors[ssp]
-            }
-          } else {
-            const subPalette = generateColorPalette(subspecies)
-            for (const ssp of subspecies) {
-              result[ssp] = subPalette[ssp]
-            }
-          }
-        }
-      } else {
-        result = generateColorPalette(displayedValues)
       }
     } else {
       result = generateColorPalette(displayedValues)

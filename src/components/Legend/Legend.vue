@@ -540,7 +540,6 @@ const maxResizeWidth = computed(() => {
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
   getLimits: () => ({ minW: 150, maxW: maxResizeWidth.value, minH: 100, maxH: maxLegendHeight.value }),
-  onStart: () => { contentMaxHeight.value = null },
   onEnd: ({ x, y, width, height }) => {
     posX.value = x
     posY.value = y
@@ -587,8 +586,6 @@ const positionStyle = computed(() => {
 
   // Height - only set explicit height in manual mode (user has resized).
   // In auto mode, let the container size to its content, capped by maxHeight.
-  // This allows adjustItemsToFit() to correctly detect overflow by comparing
-  // scrollHeight vs maxLegendHeight.
   if (!isAutoHeight.value) {
     const h = effectiveHeight.value
     if (h && h !== 'auto') {
