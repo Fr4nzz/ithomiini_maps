@@ -1419,7 +1419,7 @@ export async function exportForR(map) {
   const legendConfig = {
     title: store.legendTitle,
     colorBy: colorBy,
-    maxItems: legendStore.maxItems || store.legendSettings.maxItems,
+    maxItems: legendItems.length,
     colors: colorMap,
     items: legendItems,
     // Legend customization settings

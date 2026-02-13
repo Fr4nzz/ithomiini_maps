@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
+import { computePopupPosition } from '../../composables/usePopupPosition'
 import AbbreviationDropdown from './AbbreviationDropdown.vue'
 
 const props = defineProps({
@@ -52,6 +53,10 @@ const props = defineProps({
   anyGroupHasCustomStyle: {
     type: Boolean,
     default: false
+  },
+  isNonTaxonomy: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -63,7 +68,9 @@ const emit = defineEmits([
   'update:abbreviation-visible',
   'update:custom-label',
   'apply-display-format-to-all',
-  'apply-prefix-format-to-all'
+  'apply-prefix-format-to-all',
+  'dropdown-open',
+  'dropdown-close'
 ])
 
 // Dropdown states
@@ -135,16 +142,24 @@ function toggleAbbrevVisibility(e) {
 function openDisplayNameDropdown(e) {
   e.stopPropagation()
   const rect = e.target.getBoundingClientRect()
+  const pos = computePopupPosition(rect, {
+    placement: 'bottom',
+    offset: 4,
+    popupWidth: 260,
+    popupHeight: 300
+  })
   displayNameDropdownPosition.value = {
-    x: rect.left,
-    y: rect.bottom + 4
+    x: parseInt(pos.left),
+    y: parseInt(pos.top)
   }
   showDisplayNameDropdown.value = true
+  emit('dropdown-open')
 }
 
 // Close display name dropdown
 function closeDisplayNameDropdown() {
   showDisplayNameDropdown.value = false
+  emit('dropdown-close')
 }
 
 // Handle display name selection
@@ -169,16 +184,24 @@ function handleDisplayNameApplyToAll(format) {
 function openPrefixDropdown(e) {
   e.stopPropagation()
   const rect = e.target.getBoundingClientRect()
+  const pos = computePopupPosition(rect, {
+    placement: 'bottom',
+    offset: 4,
+    popupWidth: 260,
+    popupHeight: 300
+  })
   prefixDropdownPosition.value = {
-    x: rect.left,
-    y: rect.bottom + 4
+    x: parseInt(pos.left),
+    y: parseInt(pos.top)
   }
   showPrefixDropdown.value = true
+  emit('dropdown-open')
 }
 
 // Close prefix dropdown
 function closePrefixDropdown() {
   showPrefixDropdown.value = false
+  emit('dropdown-close')
 }
 
 // Handle prefix selection
@@ -237,7 +260,8 @@ function handlePrefixApplyToAll(format) {
         class="species-name"
         :class="{
           'is-greyed': headersHidden,
-          'is-editable': isLegendHovered
+          'is-editable': isLegendHovered,
+          'non-taxonomy': isNonTaxonomy
         }"
         @click="isLegendHovered && openDisplayNameDropdown($event)"
         :title="isLegendHovered ? 'Click to change display format' : ''"
@@ -246,9 +270,9 @@ function handlePrefixApplyToAll(format) {
       </span>
     </span>
 
-    <!-- Abbreviation (clickable to open dropdown when hovered) -->
+    <!-- Abbreviation (clickable to open dropdown when hovered, hidden for non-taxonomy) -->
     <span
-      v-if="isLegendHovered"
+      v-if="isLegendHovered && !isNonTaxonomy"
       class="abbreviation-container"
       :class="{ 'is-disabled': !abbreviationVisible }"
     >
@@ -449,6 +473,10 @@ function handlePrefixApplyToAll(format) {
   padding: 1px 3px;
   border-radius: 3px;
   transition: all 0.15s ease;
+}
+
+.species-name.non-taxonomy {
+  font-style: normal;
 }
 
 .species-name.is-greyed {

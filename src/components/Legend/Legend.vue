@@ -3,8 +3,9 @@ import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
-import { generateSpeciesBorderColors, generateSpeciesBaseHues } from '../../utils/colors'
+import { generateSpeciesBorderColors } from '../../utils/colors'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
+import { computePopupPosition } from '../../composables/usePopupPosition'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
@@ -23,14 +24,10 @@ const dataStore = useDataStore()
 
 // Refs
 const legendRef = ref(null)
-const contentRef = ref(null) // Reference to legend-content for height locking
+const contentRef = ref(null)
 const isHovered = ref(false)
 const isDragging = ref(false)
 const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
-const contentMaxHeight = ref(null) // Max height for content during hover to prevent growing
-const adjustingUp = ref(false) // Track increase phase in adjustItemsToFit
-const settledMaxItems = ref(null) // Track settled count to prevent re-trying increase
-const adjustedDuringHover = ref(false) // Track if adjustItemsToFit ran while hovered (headers visible)
 
 // Legend resize observer (for bottom-sticky repositioning)
 let legendResizeObserver = null
@@ -87,8 +84,7 @@ const bottomAttributionMargin = computed(() => {
 const showEditUI = computed(() => isHovered.value || hasOpenPopup.value)
 const showToolbar = showEditUI
 
-// Track if any popup is open (keeps legend interactive)
-const hasModalOpen = computed(() => stylePopupState.value.open)
+// (hasModalOpen removed — showEditUI now used directly for group headers)
 
 // Get container dimensions
 const containerBounds = computed(() => {
@@ -101,94 +97,103 @@ const containerBounds = computed(() => {
   return { width: 800, height: 600 }
 })
 
-// Color map from data store
+// Color map from data store (includes custom overrides - used for display)
 const colorMap = computed(() => dataStore.activeColorMap)
+// Base color map (without custom overrides - used for defaultColor/reset)
+const baseColors = computed(() => dataStore.baseColorMap)
 
-// Build species-subspecies mapping from displayed data
-const speciesSubspeciesMap = computed(() => {
+// Map groupBy setting to GeoJSON property name
+const groupByPropertyMap = {
+  'subspecies': 'subspecies',
+  'species': 'scientific_name',
+  'genus': 'genus',
+  'tribe': 'tribe',
+  'subfamily': 'subfamily',
+  'family': 'family',
+  'status': 'sequencing_status',
+  'mimicry': 'mimicry_ring',
+  'source': 'source'
+}
+
+// Build item→group mapping from displayed data (generic for any colorBy/groupBy)
+const itemGroupMap = computed(() => {
   const geo = dataStore.displayGeoJSON
   if (!geo?.features) return {}
 
+  const groupBy = legendStore.effectiveGroupBy
+  const groupProperty = groupByPropertyMap[groupBy]
+  if (!groupProperty) return {}
+
+  const itemProperty = dataStore.colorByAttribute
+
   const map = {}
   for (const feature of geo.features) {
-    const species = feature.properties.scientific_name
-    const subspecies = feature.properties.subspecies
+    const groupVal = feature.properties[groupProperty]
+    const itemVal = feature.properties[itemProperty]
 
-    if (!species || !subspecies) continue
-    if (subspecies === 'Unknown' || subspecies === 'NA') continue
+    if (!groupVal || !itemVal) continue
+    if (itemVal === 'Unknown' || itemVal === 'NA') continue
 
-    if (!map[species]) {
-      map[species] = new Set()
+    if (!map[groupVal]) {
+      map[groupVal] = new Set()
     }
-    map[species].add(subspecies)
+    map[groupVal].add(itemVal)
   }
 
   // Convert sets to sorted arrays
   const result = {}
-  for (const [species, subspeciesSet] of Object.entries(map)) {
-    result[species] = [...subspeciesSet].sort()
+  for (const [group, items] of Object.entries(map)) {
+    result[group] = [...items].sort()
   }
 
   return result
 })
 
-// Get list of species (sorted)
-const speciesList = computed(() => Object.keys(speciesSubspeciesMap.value).sort())
+// Get list of groups (sorted)
+const groupList = computed(() => Object.keys(itemGroupMap.value).sort())
 
-// Generate border colors for species
-const speciesBorderColors = computed(() => {
+// Generate border colors for groups
+const groupBorderColors = computed(() => {
   if (!legendStore.speciesStyling.borderColor) return {}
-  return generateSpeciesBorderColors(speciesList.value, legendStore.speciesBorderColors)
+  return generateSpeciesBorderColors(groupList.value, legendStore.speciesBorderColors)
 })
 
-// Generate base hues for species gradients
-const speciesBaseHues = computed(() => {
-  return generateSpeciesBaseHues(speciesList.value, legendStore.speciesBaseHues)
-})
-
-// Get border color for a species
-function getSpeciesBorderColor(species) {
-  return speciesBorderColors.value[species] || dataStore.mapStyle.borderColor
+// Get border color for a group
+function getGroupBorderColor(groupName) {
+  return groupBorderColors.value[groupName] || dataStore.mapStyle.borderColor
 }
 
-// Check if species has customized style (shape or border color)
-function hasCustomizedStyle(species) {
-  // Check if user set a custom shape (not default 'circle')
-  const shape = legendStore.getGroupShape(species)
+// Check if group has customized style (shape or border color)
+function hasCustomizedStyle(groupName) {
+  const shape = legendStore.getGroupShape(groupName)
   const hasCustomShape = shape && shape !== 'circle'
-
-  // Check if user set a custom border color
-  const hasCustomBorder = !!legendStore.speciesBorderColors[species]
-
+  const hasCustomBorder = !!legendStore.speciesBorderColors[groupName]
   return hasCustomShape || hasCustomBorder
 }
 
 // Check if ANY group has customized style (for showing all indicators when one is customized)
 const anyGroupHasCustomStyle = computed(() => {
-  return speciesList.value.some(species => hasCustomizedStyle(species))
+  return groupList.value.some(name => hasCustomizedStyle(name))
 })
 
-// Get species for a subspecies
-function getSpeciesForSubspecies(subspecies) {
-  for (const [species, subspeciesList] of Object.entries(speciesSubspeciesMap.value)) {
-    if (subspeciesList.includes(subspecies)) {
-      return species
+// Get the group that an item belongs to (reverse lookup)
+function getGroupForItem(itemLabel) {
+  for (const [group, items] of Object.entries(itemGroupMap.value)) {
+    if (items.includes(itemLabel)) {
+      return group
     }
   }
   return null
 }
 
-// Format label based on per-species abbreviation visibility
-function formatLabel(subspecies, species) {
-  // Check if abbreviation should be shown for this species
-  if (!species || !legendStore.isAbbreviationVisible(species)) {
-    return subspecies
+// Format label based on per-group abbreviation visibility
+function formatLabel(itemLabel, groupName) {
+  if (!groupName || !legendStore.isAbbreviationVisible(groupName)) {
+    return itemLabel
   }
 
-  // Get the abbreviation for this species (custom or default)
-  const abbreviation = legendStore.getSpeciesAbbreviation(species)
-  // Show abbreviation as prefix before subspecies name (e.g., "M. p. casabranca")
-  return `${abbreviation} ${subspecies}`
+  const abbreviation = legendStore.getSpeciesAbbreviation(groupName)
+  return `${abbreviation} ${itemLabel}`
 }
 
 // All visible items from color map, sorted by current sort criteria
@@ -202,12 +207,13 @@ const sortedAllItems = computed(() => {
 
   // Build full list of visible items
   const items = []
+  const baseMap = baseColors.value
   for (const [label, color] of entries) {
     if (!legendStore.isItemVisible(label)) continue
     items.push({
       label,
       color,
-      defaultColor: color,
+      defaultColor: baseMap[label] || color,
       customLabel: legendStore.customLabels[label] || '',
       customColor: legendStore.customColors[label] || '',
       visible: true
@@ -239,12 +245,13 @@ const legendItems = computed(() => {
 
   // Add hidden items at the end (for edit mode)
   if (!isExportMode.value) {
+    const baseMap = baseColors.value
     for (const label of legendStore.hiddenItems) {
       if (colorMap.value[label]) {
         items.push({
           label,
           color: colorMap.value[label],
-          defaultColor: colorMap.value[label],
+          defaultColor: baseMap[label] || colorMap.value[label],
           customLabel: legendStore.customLabels[label] || '',
           customColor: legendStore.customColors[label] || '',
           visible: false
@@ -273,16 +280,16 @@ function sortItemsByAbundance(items, order, counts) {
   })
 }
 
-function groupItemsBySpecies(items) {
-  const bySpecies = {}
+function groupItemsByGroup(items) {
+  const byGroup = {}
   for (const item of items) {
-    const species = getSpeciesForSubspecies(item.label)
-    if (species) {
-      if (!bySpecies[species]) bySpecies[species] = []
-      bySpecies[species].push(item)
+    const group = getGroupForItem(item.label)
+    if (group) {
+      if (!byGroup[group]) byGroup[group] = []
+      byGroup[group].push(item)
     }
   }
-  return bySpecies
+  return byGroup
 }
 
 function sortGroups(groups, sortBy, sortOrder, counts) {
@@ -294,23 +301,23 @@ function sortGroups(groups, sortBy, sortOrder, counts) {
     })
   } else {
     groups.sort((a, b) => {
-      const textA = a.species.toLowerCase()
-      const textB = b.species.toLowerCase()
+      const textA = a.name.toLowerCase()
+      const textB = b.name.toLowerCase()
       return sortOrder === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
     })
   }
   return groups
 }
 
-function buildGroupData(species, items, sortByVal, sortOrderVal, counts) {
-  let customLabel = legendStore.getSpeciesDisplayName(species)
+function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts) {
+  let customLabel = legendStore.getSpeciesDisplayName(groupName)
   if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
-    customLabel = applyAbbreviationFormat(species, legendStore.displayNameFormat)
+    customLabel = applyAbbreviationFormat(groupName, legendStore.displayNameFormat)
   }
 
   let mappedItems = items.map(item => ({
     ...item,
-    displayLabel: formatLabel(item.label, species)
+    displayLabel: formatLabel(item.label, groupName)
   }))
 
   mappedItems = sortByVal === 'abundance'
@@ -318,12 +325,11 @@ function buildGroupData(species, items, sortByVal, sortOrderVal, counts) {
     : sortItemsByText(mappedItems, sortOrderVal)
 
   return {
-    species,
-    borderColor: getSpeciesBorderColor(species),
-    baseHue: speciesBaseHues.value[species] || 210,
-    shape: legendStore.getGroupShape(species),
-    abbreviation: legendStore.getSpeciesAbbreviation(species),
-    abbreviationVisible: legendStore.isAbbreviationVisible(species),
+    name: groupName,
+    borderColor: getGroupBorderColor(groupName),
+    shape: legendStore.getGroupShape(groupName),
+    abbreviation: legendStore.getSpeciesAbbreviation(groupName),
+    abbreviationVisible: legendStore.isAbbreviationVisible(groupName),
     customLabel: customLabel || '',
     items: mappedItems
   }
@@ -339,9 +345,9 @@ const groupedLegendData = computed(() => {
     return { type: 'flat', items: legendItems.value.slice() }
   }
 
-  const itemsBySpecies = groupItemsBySpecies(legendItems.value)
-  const groups = Object.keys(itemsBySpecies).map(species =>
-    buildGroupData(species, itemsBySpecies[species], sortByVal, sortOrderVal, counts)
+  const itemsByGroup = groupItemsByGroup(legendItems.value)
+  const groups = Object.keys(itemsByGroup).map(groupName =>
+    buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts)
   )
 
   return { type: 'grouped', groups: sortGroups(groups, sortByVal, sortOrderVal, counts) }
@@ -399,9 +405,9 @@ const allDisplayedLabels = computed(() => {
     }
   } else if (data.groups) {
     for (const group of data.groups) {
-      // Include species group header text
-      if (legendStore.groupingSettings.showHeaders) {
-        labels.push(group.species)
+      // Include group header text
+      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
+        labels.push(group.name)
       }
       for (const item of group.items) {
         labels.push(item.displayLabel || item.label)
@@ -442,15 +448,10 @@ const maxLegendHeight = computed(() => {
   return Math.floor(containerBounds.value.height * 0.80)
 })
 
-// Dynamic item limit — adjusted after render to eliminate scrollbar.
-// Starts with a generous estimate, then post-render adjustment trims if needed.
-const itemLimitOverride = ref(null)
-
+// Item limit computed from available space (no post-render adjustment needed;
+// CSS overflow-y: auto handles any remaining overflow).
 const effectiveMaxItems = computed(() => {
-  if (itemLimitOverride.value !== null) {
-    return itemLimitOverride.value
-  }
-  // Initial estimate: use conservative per-item height
+  // Estimate from available space
   const fontSizePx = Math.round(14 * legendStore.textScale)
   // Generous estimate for wrapped text (allows 2-line items)
   const itemHeight = legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10
@@ -467,18 +468,18 @@ const effectiveMaxItems = computed(() => {
   // (hidden headers become display:flex when hovered).
   let effectiveItemHeight = itemHeight
   const headersVisible = legendStore.isGrouped &&
-    (legendStore.groupingSettings.showHeaders || isHovered.value)
+    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy || isHovered.value)
   if (headersVisible) {
     const allItems = sortedAllItems.value
     const sampleSize = Math.min(20, allItems.length)
     if (sampleSize > 0) {
-      const speciesSeen = new Set()
+      const groupsSeen = new Set()
       for (let i = 0; i < sampleSize; i++) {
-        const species = getSpeciesForSubspecies(allItems[i].label)
-        if (species) speciesSeen.add(species)
+        const group = getGroupForItem(allItems[i].label)
+        if (group) groupsSeen.add(group)
       }
       // Each group header adds headerHeight per (items/groups) items
-      const headersPerItem = speciesSeen.size / sampleSize
+      const headersPerItem = groupsSeen.size / sampleSize
       effectiveItemHeight = itemHeight + headersPerItem * headerHeight
     }
   }
@@ -503,7 +504,7 @@ const autoHeight = computed(() => {
     totalItems = data.items.length
   } else if (data.groups) {
     for (const group of data.groups) {
-      if (legendStore.groupingSettings.showHeaders) {
+      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
         groupHeaders++
       }
       totalItems += group.items.length
@@ -538,7 +539,6 @@ const maxResizeWidth = computed(() => {
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
   getLimits: () => ({ minW: 150, maxW: maxResizeWidth.value, minH: 100, maxH: maxLegendHeight.value }),
-  onStart: () => { contentMaxHeight.value = null },
   onEnd: ({ x, y, width, height }) => {
     posX.value = x
     posY.value = y
@@ -585,8 +585,6 @@ const positionStyle = computed(() => {
 
   // Height - only set explicit height in manual mode (user has resized).
   // In auto mode, let the container size to its content, capped by maxHeight.
-  // This allows adjustItemsToFit() to correctly detect overflow by comparing
-  // scrollHeight vs maxLegendHeight.
   if (!isAutoHeight.value) {
     const h = effectiveHeight.value
     if (h && h !== 'auto') {
@@ -602,29 +600,11 @@ const positionStyle = computed(() => {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function handleMouseEnter() {
-  // Capture the current content height before hover effects cause growth
-  // This prevents the legend from expanding when group headers appear on hover
-  if (contentRef.value && !contentMaxHeight.value) {
-    contentMaxHeight.value = contentRef.value.offsetHeight
-  }
   isHovered.value = true
 }
 
 function handleMouseLeave() {
   isHovered.value = false
-  // Release the height constraint when mouse leaves
-  contentMaxHeight.value = null
-
-  // If adjustItemsToFit ran while hovered (with group headers visible),
-  // the item count was reduced to accommodate headers. Now that headers
-  // are hidden again (display:none), re-adjust to fill the freed space.
-  if (adjustedDuringHover.value) {
-    adjustedDuringHover.value = false
-    itemLimitOverride.value = null
-    adjustingUp.value = false
-    settledMaxItems.value = null
-    nextTick(() => nextTick(() => adjustItemsToFit()))
-  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -919,15 +899,20 @@ function handleResetColor(label) {
 // GROUP STYLE POPUP HANDLERS
 // ═══════════════════════════════════════════════════════════════════════════
 
-function openGroupStylePopup(species, event) {
-  // Position popup near the click
+function openGroupStylePopup(groupName, event) {
   const rect = event.target.getBoundingClientRect()
+  const pos = computePopupPosition(rect, {
+    placement: 'bottom',
+    offset: 5,
+    popupWidth: 280,
+    popupHeight: 400
+  })
   stylePopupState.value = {
     open: true,
-    groupName: species,
+    groupName,
     position: {
-      x: Math.min(rect.left + 20, window.innerWidth - 280),
-      y: Math.min(rect.bottom + 5, window.innerHeight - 400)
+      x: parseInt(pos.left),
+      y: parseInt(pos.top)
     }
   }
   hasOpenPopup.value = true
@@ -944,14 +929,6 @@ function handleUpdateShape(shape) {
 
 function handleUpdateBorderColor(color) {
   legendStore.setSpeciesBorderColor(stylePopupState.value.groupName, color)
-}
-
-function handleUpdateHue(hue) {
-  legendStore.setSpeciesBaseHue(stylePopupState.value.groupName, parseInt(hue))
-}
-
-function handleUpdateUseGradient(enabled) {
-  legendStore.setSpeciesGradientEnabledForSpecies(stylePopupState.value.groupName, enabled)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1024,13 +1001,13 @@ function handleApplyPrefixFormatToAll(format) {
   // Set global format
   legendStore.setPrefixFormat(format)
 
-  // Apply format to all species
-  for (const species of speciesList.value) {
-    const formatted = applyAbbreviationFormat(species, format)
+  // Apply format to all groups
+  for (const groupName of groupList.value) {
+    const formatted = applyAbbreviationFormat(groupName, format)
     if (format === 'none') {
-      legendStore.setSpeciesAbbreviation(species, '')
+      legendStore.setSpeciesAbbreviation(groupName, '')
     } else {
-      legendStore.setSpeciesAbbreviation(species, formatted)
+      legendStore.setSpeciesAbbreviation(groupName, formatted)
     }
   }
 }
@@ -1192,10 +1169,8 @@ onMounted(() => {
     }
   }, 150)
 
-  // Initial item-fit adjustment after DOM is ready
+  // Setup legend resize observer for bottom-sticky repositioning
   setTimeout(() => {
-    adjustItemsToFit()
-    // Setup legend resize observer for bottom-sticky repositioning
     setupLegendResizeObserver()
   }, 300)
 
@@ -1284,93 +1259,8 @@ watch(autoHeight, (newAutoHeight) => {
   }
 })
 
-// Post-render adjustment: measure actual content height and reduce/increase items to fill space.
-// Watch sources that indicate the available space or content set changed (NOT legendItems,
-// which depends on effectiveMaxItems, to avoid circular updates).
-watch([maxLegendHeight, colorMap, () => legendStore.sortBy, () => legendStore.sortOrder,
-       () => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts],
-  () => {
-    // Reset override so the estimate recalculates from scratch
-    itemLimitOverride.value = null
-    adjustingUp.value = false
-    settledMaxItems.value = null
-    // Clear hover height lock so adjustment isn't constrained by old layout
-    contentMaxHeight.value = null
-
-    nextTick(() => {
-      nextTick(() => {
-        adjustItemsToFit()
-      })
-    })
-  },
-  { flush: 'post' }
-)
-
-const MAX_ADJUST_ITERATIONS = 15
-
-function adjustItemsToFit(iteration = 0) {
-  if (iteration >= MAX_ADJUST_ITERATIONS) return
-
-  const el = contentRef.value
-  if (!el) return
-
-  // Track whether this adjustment ran during hover.
-  // When hovered with hidden-header groups, headers are visible (display:flex)
-  // and take up space, reducing the number of items that fit. On unhover,
-  // headers go back to display:none and a re-adjustment is needed.
-  if (isHovered.value) {
-    adjustedDuringHover.value = true
-  }
-
-  const maxH = maxLegendHeight.value
-  const scrollH = el.scrollHeight
-  const totalAvailable = sortedAllItems.value.length
-
-  // Compare content's full scroll height against max allowed legend height.
-  // Use maxH (not clientH) because:
-  // 1. clientH gets locked by contentMaxHeight during hover
-  // 2. clientH shrinks when the container auto-sizes to fewer items
-  // Both cause undershooting. maxH is a stable, reliable ceiling.
-  const overflows = scrollH > maxH + 2
-
-  if (overflows) {
-    if (adjustingUp.value) {
-      // Was trying to add items but it overflowed — revert last increase and stop
-      adjustingUp.value = false
-      const revertTo = Math.max(1, (itemLimitOverride.value || 2) - 1)
-      itemLimitOverride.value = revertTo
-      settledMaxItems.value = revertTo // Remember: this is the max that fits
-      return // Don't schedule another check — we know this count fits
-    }
-    // Normal reduction
-    if (itemLimitOverride.value === null) {
-      itemLimitOverride.value = Math.max(1, effectiveMaxItems.value - 1)
-    } else if (itemLimitOverride.value > 1) {
-      itemLimitOverride.value -= 1
-    } else {
-      return // Can't reduce further
-    }
-    nextTick(() => nextTick(() => adjustItemsToFit(iteration + 1)))
-  } else {
-    // Content fits — try adding more items to fill available space
-    const currentLimit = effectiveMaxItems.value
-
-    // Don't retry increase if we already settled at this count
-    if (settledMaxItems.value !== null && currentLimit >= settledMaxItems.value) {
-      return
-    }
-
-    if (currentLimit < totalAvailable) {
-      adjustingUp.value = true
-      itemLimitOverride.value = (itemLimitOverride.value ?? currentLimit) + 1
-      nextTick(() => nextTick(() => adjustItemsToFit(iteration + 1)))
-    } else {
-      // All items fit or at maximum
-      adjustingUp.value = false
-      settledMaxItems.value = currentLimit
-    }
-  }
-}
+// (Auto-sizing is handled by CSS overflow-y: auto on .legend-content,
+// combined with the computed effectiveMaxItems estimate above.)
 
 // ═══════════════════════════════════════════════════════════════════════════
 // BOTTOM-STICKY REPOSITIONING
@@ -1451,13 +1341,14 @@ watch(isExportMode, (enabled, wasEnabled) => {
       :is-export-mode="isExportMode"
       @settings-open="hasOpenPopup = true"
       @settings-close="hasOpenPopup = false"
+      @dropdown-open="hasOpenPopup = true"
+      @dropdown-close="hasOpenPopup = false"
     />
 
     <!-- Legend content -->
     <div
       ref="contentRef"
       class="legend-content"
-      :style="contentMaxHeight ? { maxHeight: contentMaxHeight + 'px' } : {}"
     >
       <!-- Title with hover controls (sort dropdown + counts toggle) -->
       <div class="legend-title" @click.stop>
@@ -1534,12 +1425,12 @@ watch(isExportMode, (enabled, wasEnabled) => {
       <div v-else class="legend-items grouped">
         <div
           v-for="group in groupedLegendData.groups"
-          :key="group.species"
+          :key="group.name"
           class="legend-group"
         >
           <!-- Group header -->
           <LegendGroupHeader
-            :species-name="group.species"
+            :species-name="group.name"
             :abbreviation="group.abbreviation"
             :abbreviation-visible="group.abbreviationVisible"
             :custom-label="group.customLabel"
@@ -1547,18 +1438,21 @@ watch(isExportMode, (enabled, wasEnabled) => {
             :count="group.items.length"
             :dot-size="dotSize"
             :is-export-mode="isExportMode"
-            :headers-hidden="!legendStore.groupingSettings.showHeaders"
-            :is-legend-hovered="isHovered || hasModalOpen"
+            :headers-hidden="!legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy"
+            :is-legend-hovered="showEditUI"
+            :is-non-taxonomy="legendStore.isNonTaxonomyGroupBy"
             :shape="group.shape"
             :any-group-has-custom-style="anyGroupHasCustomStyle"
-            @open-style-popup="openGroupStylePopup(group.species, $event)"
+            @open-style-popup="openGroupStylePopup(group.name, $event)"
             @show-headers="handleShowHeaders"
             @hide-headers="handleHideHeaders"
-            @update:abbreviation="(val) => handleUpdateAbbreviation(group.species, val)"
-            @update:abbreviation-visible="(val) => legendStore.setAbbreviationVisible(group.species, val)"
-            @update:custom-label="(val) => handleUpdateSpeciesCustomLabel(group.species, val)"
+            @update:abbreviation="(val) => handleUpdateAbbreviation(group.name, val)"
+            @update:abbreviation-visible="(val) => legendStore.setAbbreviationVisible(group.name, val)"
+            @update:custom-label="(val) => handleUpdateSpeciesCustomLabel(group.name, val)"
             @apply-display-format-to-all="handleApplyDisplayFormatToAll"
             @apply-prefix-format-to-all="handleApplyPrefixFormatToAll"
+            @dropdown-open="hasOpenPopup = true"
+            @dropdown-close="hasOpenPopup = false"
           />
 
           <!-- Group items (always shown) -->
@@ -1578,7 +1472,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
               :font-size="fontSize"
               :border-color="group.borderColor"
               :border-width="dataStore.mapStyle.borderWidth"
-              :indented="legendStore.groupingSettings.showHeaders"
+              :indented="legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy"
               :shape="group.shape"
               :wrap-label="legendStore.wrapLabels"
               :count="legendStore.showCounts ? (legendCounts[item.label] || 0) : null"
@@ -1622,14 +1516,10 @@ watch(isExportMode, (enabled, wasEnabled) => {
       :group-name="stylePopupState.groupName"
       :current-shape="legendStore.getGroupShape(stylePopupState.groupName)"
       :border-color="legendStore.speciesBorderColors[stylePopupState.groupName] || dataStore.mapStyle.borderColor"
-      :base-hue="speciesBaseHues[stylePopupState.groupName] || 210"
-      :use-gradient="legendStore.isSpeciesGradientEnabled(stylePopupState.groupName)"
       :position="stylePopupState.position"
       @close="closeGroupStylePopup"
       @update:shape="handleUpdateShape"
       @update:border-color="handleUpdateBorderColor"
-      @update:hue="handleUpdateHue"
-      @update:use-gradient="handleUpdateUseGradient"
     />
   </div>
 </template>

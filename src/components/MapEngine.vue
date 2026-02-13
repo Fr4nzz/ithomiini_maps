@@ -452,8 +452,6 @@ watch(
     () => legendStore.customColors,
     () => legendStore.speciesStyling,
     () => legendStore.speciesBorderColors,
-    () => legendStore.speciesBaseHues,
-    () => legendStore.speciesGradientEnabled,
     () => legendStore.shapeSettings,
     () => legendStore.groupShapes,
     () => legendStore.hiddenItems

@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { ref, reactive, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
-import { generateGroupedColorMap, generateSpeciesBaseHues, generateSpeciesGradientColors } from '../utils/colors'
 import { useLegendStore } from './legend'
 import { getStorage, setStorage } from '../utils/storageHelpers'
 import { normalizeCountryName } from '../utils/clusterStats'
@@ -1117,10 +1116,8 @@ export const useDataStore = defineStore('data', () => {
     return result
   })
 
-  // Get the color map based on current colorBy setting
-  // This now derives colors from DISPLAYED data only (for accurate legend)
-  // Also applies custom colors from legend store
-  const activeColorMap = computed(() => {
+  // Base color map without custom color overrides (for reset/default color tracking)
+  const baseColorMap = computed(() => {
     const legendStore = useLegendStore()
     const mode = colorBy.value
     const attr = colorByAttribute.value
@@ -1135,76 +1132,48 @@ export const useDataStore = defineStore('data', () => {
         )].sort()
       : []
 
-    let baseColorMap = {}
+    let result = {}
 
     // Use predefined palettes for status and source (filtered to displayed values)
     if (mode === 'status') {
       for (const val of displayedValues) {
         if (COLOR_PALETTES.status[val]) {
-          baseColorMap[val] = COLOR_PALETTES.status[val]
+          result[val] = COLOR_PALETTES.status[val]
         }
       }
-      if (Object.keys(baseColorMap).length === 0) {
-        baseColorMap = { ...COLOR_PALETTES.status }
+      if (Object.keys(result).length === 0) {
+        result = { ...COLOR_PALETTES.status }
       }
     } else if (mode === 'source') {
       for (const val of displayedValues) {
         if (COLOR_PALETTES.source[val]) {
-          baseColorMap[val] = COLOR_PALETTES.source[val]
+          result[val] = COLOR_PALETTES.source[val]
         }
       }
-      if (Object.keys(baseColorMap).length === 0) {
-        baseColorMap = { ...COLOR_PALETTES.source }
-      }
-    } else if (mode === 'subspecies') {
-      // Check if any species has gradient enabled
-      const speciesList = Object.keys(speciesSubspeciesMap.value).sort()
-      const hasAnyGradient = speciesList.some(species => legendStore.isSpeciesGradientEnabled(species))
-
-      if (hasAnyGradient || legendStore.speciesStyling.colorGradient) {
-        // Generate species-based gradient colors for species with gradient enabled
-        const hueAssignments = generateSpeciesBaseHues(speciesList, legendStore.speciesBaseHues)
-
-        // Build color map, using gradient for enabled species, regular colors for others
-        for (const species of speciesList) {
-          const subspecies = speciesSubspeciesMap.value[species]
-          const useGradient = legendStore.isSpeciesGradientEnabled(species) || legendStore.speciesStyling.colorGradient
-
-          if (useGradient) {
-            // Use gradient colors
-            const speciesColors = generateSpeciesGradientColors(subspecies, hueAssignments[species])
-            for (const ssp of subspecies) {
-              baseColorMap[ssp] = legendStore.customColors[ssp] || speciesColors[ssp]
-            }
-          } else {
-            // Use regular dynamic palette colors for subspecies without gradient
-            const subPalette = generateColorPalette(subspecies)
-            for (const ssp of subspecies) {
-              baseColorMap[ssp] = legendStore.customColors[ssp] || subPalette[ssp]
-            }
-          }
-        }
-        // Return early since custom colors are already applied
-        return baseColorMap
-      } else {
-        // No gradients - use dynamic palette for all
-        baseColorMap = generateColorPalette(displayedValues)
+      if (Object.keys(result).length === 0) {
+        result = { ...COLOR_PALETTES.source }
       }
     } else {
-      // Generate dynamic palette for taxonomy and mimicry using displayed values
-      baseColorMap = generateColorPalette(displayedValues)
+      result = generateColorPalette(displayedValues)
     }
 
+    return result
+  })
+
+  // Active color map = base colors + custom color overrides (used for map rendering)
+  const activeColorMap = computed(() => {
+    const legendStore = useLegendStore()
+    const base = { ...baseColorMap.value }
+
     // Apply legend custom colors on top of base color map
-    // This allows legend color changes to reflect on the map
     const legendCustomColors = legendStore.customColors
     for (const [label, customColor] of Object.entries(legendCustomColors)) {
-      if (baseColorMap[label] && customColor) {
-        baseColorMap[label] = customColor
+      if (base[label] && customColor) {
+        base[label] = customColor
       }
     }
 
-    return baseColorMap
+    return base
   })
 
   // Get the attribute key for the current colorBy mode
@@ -1350,6 +1319,7 @@ export const useDataStore = defineStore('data', () => {
     uniqueCamids,
 
     // Computed (color mapping)
+    baseColorMap,
     activeColorMap,
     colorByAttribute,
     legendTitle,

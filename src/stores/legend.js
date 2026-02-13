@@ -28,8 +28,6 @@ export const useLegendStore = defineStore('legend', () => {
   const showLegend = ref(true)
   const textScale = ref(getStorage('legend-text-scale', 1))
   const dotScale = ref(getStorage('legend-dot-scale', 1))
-  const maxItems = ref(getStorage('legend-max-items', 15))
-
   // ═══════════════════════════════════════════════════════════════════════════
   // BEHAVIOR SETTINGS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -68,20 +66,11 @@ export const useLegendStore = defineStore('legend', () => {
   // Species-level styling options
   const speciesStyling = ref(getStorage('legend-species-styling', {
     borderColor: false,                // Per-species border colors on map
-    colorGradient: false,              // Color families per species
   }))
 
   // Per-species border colors (auto-generated or custom)
   // Format: { 'Mechanitis polymnia': '#ffffff', ... }
   const speciesBorderColors = ref(getStorage('legend-species-borders', {}))
-
-  // Per-species base hues for gradient generation
-  // Format: { 'Mechanitis polymnia': 210, ... } (hue values 0-360)
-  const speciesBaseHues = ref(getStorage('legend-species-hues', {}))
-
-  // Per-species gradient enabled (whether to use color gradient for subspecies)
-  // Format: { 'Mechanitis polymnia': true, ... }
-  const speciesGradientEnabled = ref(getStorage('legend-species-gradient-enabled', {}))
 
   // Per-species custom abbreviations
   // Format: { 'Mechanitis polymnia': 'M. p.', ... }
@@ -145,42 +134,82 @@ export const useLegendStore = defineStore('legend', () => {
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Check if grouping is applicable - only when colorBy is subspecies
+  // Check if grouping is applicable - works for any colorBy mode
   const canGroup = computed(() => {
-    const dataStore = getDataStore()
-    return dataStore.colorBy === 'subspecies' && groupingSettings.value.enabled
+    return groupingSettings.value.enabled &&
+           effectiveGroupBy.value !== 'none'
   })
 
-  // Should display grouped - only subspecies can be grouped by species
+  // Should display grouped
   const isGrouped = computed(() => canGroup.value)
 
+  // Non-taxonomy groupBy modes (status, mimicry, source) need headers instead of prefixes
+  const NON_TAXONOMY_GROUP_BY = new Set(['status', 'mimicry', 'source'])
+  const isNonTaxonomyGroupBy = computed(() => NON_TAXONOMY_GROUP_BY.has(effectiveGroupBy.value))
+
+  // The actual groupBy value to use (validates against current colorBy)
+  const effectiveGroupBy = computed(() => {
+    const options = groupByOptions.value
+    const current = groupingSettings.value.groupBy
+    if (current === 'none') return 'none'
+    // Check if current is a valid (non-header) option
+    if (options.some(o => o.value === current && !o.disabled)) return current
+    // If stored value is not valid for current colorBy, default to none
+    return 'none'
+  })
+
   // Available groupBy options based on current colorBy
+  // Grouping is available for ALL colorBy modes - you can group any attribute
+  // by a taxonomy level or cross-dimension (e.g., status grouped by species)
+  // Options include section headers (disabled) for clarity
   const groupByOptions = computed(() => {
     const dataStore = getDataStore()
     const colorBy = dataStore.colorBy
     const options = [{ value: 'none', label: 'None' }]
 
-    if (colorBy === 'subspecies') {
-      options.push(
-        { value: 'species', label: 'Species' },
-        { value: 'genus', label: 'Genus' },
-        { value: 'tribe', label: 'Tribe' },
-        { value: 'subfamily', label: 'Subfamily' },
-        { value: 'family', label: 'Family' }
-      )
-    } else if (colorBy === 'species') {
-      options.push(
-        { value: 'genus', label: 'Genus' },
-        { value: 'tribe', label: 'Tribe' },
-        { value: 'subfamily', label: 'Subfamily' },
-        { value: 'family', label: 'Family' }
-      )
-    } else if (colorBy === 'genus') {
-      options.push(
-        { value: 'tribe', label: 'Tribe' },
-        { value: 'subfamily', label: 'Subfamily' },
-        { value: 'family', label: 'Family' }
-      )
+    // Taxonomy hierarchy: subspecies < species < genus < tribe < subfamily < family
+    const taxonomyOptions = [
+      { value: 'subspecies', label: 'Subspecies' },
+      { value: 'species', label: 'Species' },
+      { value: 'genus', label: 'Genus' },
+      { value: 'tribe', label: 'Tribe' },
+      { value: 'subfamily', label: 'Subfamily' },
+      { value: 'family', label: 'Family' }
+    ]
+    const taxonomyRank = { 'subspecies': 0, 'species': 1, 'genus': 2, 'tribe': 3, 'subfamily': 4, 'family': 5 }
+
+    // Non-taxonomy options
+    const otherOptions = [
+      { value: 'status', label: 'Sequencing Status' },
+      { value: 'mimicry', label: 'Mimicry Ring' },
+      { value: 'source', label: 'Data Source' }
+    ]
+
+    // Build taxonomy section
+    const taxItems = []
+    if (colorBy in taxonomyRank) {
+      // Taxonomy colorBy: only allow grouping by HIGHER levels
+      const currentRank = taxonomyRank[colorBy]
+      for (const opt of taxonomyOptions) {
+        if (taxonomyRank[opt.value] > currentRank) {
+          taxItems.push(opt)
+        }
+      }
+    } else {
+      // Non-taxonomy colorBy: allow grouping by any taxonomy level
+      taxItems.push(...taxonomyOptions)
+    }
+
+    if (taxItems.length > 0) {
+      options.push({ value: '__header_taxonomy', label: '── Taxonomy ──', disabled: true })
+      options.push(...taxItems)
+    }
+
+    // Build "other" section (exclude current colorBy from options)
+    const otherItems = otherOptions.filter(o => o.value !== colorBy)
+    if (otherItems.length > 0) {
+      options.push({ value: '__header_other', label: '── Other ──', disabled: true })
+      options.push(...otherItems)
     }
 
     return options
@@ -202,8 +231,6 @@ export const useLegendStore = defineStore('legend', () => {
            Object.keys(customColors.value).length > 0 ||
            hiddenItems.value.length > 0 ||
            Object.keys(speciesBorderColors.value).length > 0 ||
-           Object.keys(speciesBaseHues.value).length > 0 ||
-           Object.keys(speciesGradientEnabled.value).length > 0 ||
            Object.keys(speciesAbbreviations.value).length > 0 ||
            Object.keys(speciesAbbreviationVisible.value).length > 0 ||
            Object.keys(groupShapes.value).length > 0 ||
@@ -214,7 +241,6 @@ export const useLegendStore = defineStore('legend', () => {
            groupingSettings.value.abbreviationStyle !== 'first-letter' ||
            // Species styling enabled
            speciesStyling.value.borderColor !== false ||
-           speciesStyling.value.colorGradient !== false ||
            // Display name/prefix formats changed from defaults
            displayNameFormat.value !== 'full' ||
            prefixFormat.value !== 'fullSpecies' ||
@@ -253,11 +279,6 @@ export const useLegendStore = defineStore('legend', () => {
   function setDotScale(scale) {
     dotScale.value = scale
     setStorage('legend-dot-scale', scale)
-  }
-
-  function setMaxItems(max) {
-    maxItems.value = max
-    setStorage('legend-max-items', max)
   }
 
   function setStickyEdges(enabled) {
@@ -314,8 +335,6 @@ export const useLegendStore = defineStore('legend', () => {
 
     // Species styling customizations
     resetRef(speciesBorderColors, 'legend-species-borders', {})
-    resetRef(speciesBaseHues, 'legend-species-hues', {})
-    resetRef(speciesGradientEnabled, 'legend-species-gradient-enabled', {})
     resetRef(speciesAbbreviations, 'legend-species-abbreviations', {})
     resetRef(speciesAbbreviationVisible, 'legend-species-abbrev-visible', {})
     resetRef(groupShapes, 'legend-group-shapes', {})
@@ -325,7 +344,7 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-grouping', groupingSettings.value)
 
     // Species styling flags
-    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false, colorGradient: false })
+    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false })
 
     // Display name format
     resetRef(displayNameFormat, 'legend-display-name-format', 'full')
@@ -357,7 +376,6 @@ export const useLegendStore = defineStore('legend', () => {
     resetShapeSettings()
     resetRef(textScale, 'legend-text-scale', 1)
     resetRef(dotScale, 'legend-dot-scale', 1)
-    resetRef(maxItems, 'legend-max-items', 15)
     resetRef(stickyEdges, 'legend-sticky', true)
     resetRef(groupingSettings, 'legend-grouping', {
       enabled: true,
@@ -412,11 +430,6 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-species-styling', speciesStyling.value)
   }
 
-  function setSpeciesGradientEnabled(enabled) {
-    speciesStyling.value.colorGradient = enabled
-    setStorage('legend-species-styling', speciesStyling.value)
-  }
-
   function setSpeciesBorderColor(species, color) {
     if (color) {
       speciesBorderColors.value[species] = color
@@ -431,35 +444,9 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-species-borders', speciesBorderColors.value)
   }
 
-  function setSpeciesBaseHue(species, hue) {
-    if (hue !== null && hue !== undefined) {
-      speciesBaseHues.value[species] = hue
-    } else {
-      delete speciesBaseHues.value[species]
-    }
-    setStorage('legend-species-hues', speciesBaseHues.value)
-  }
-
-  // Set whether gradient is enabled for a specific species
-  function setSpeciesGradientEnabledForSpecies(species, enabled) {
-    if (enabled) {
-      speciesGradientEnabled.value[species] = true
-    } else {
-      delete speciesGradientEnabled.value[species]
-    }
-    setStorage('legend-species-gradient-enabled', speciesGradientEnabled.value)
-  }
-
-  // Check if gradient is enabled for a specific species
-  function isSpeciesGradientEnabled(species) {
-    return speciesGradientEnabled.value[species] === true
-  }
-
   function resetSpeciesStyling() {
-    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false, colorGradient: false })
+    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false })
     resetRef(speciesBorderColors, 'legend-species-borders', {})
-    resetRef(speciesBaseHues, 'legend-species-hues', {})
-    resetRef(speciesGradientEnabled, 'legend-species-gradient-enabled', {})
     resetRef(speciesAbbreviations, 'legend-species-abbreviations', {})
     resetRef(speciesAbbreviationVisible, 'legend-species-abbrev-visible', {})
   }
@@ -503,6 +490,8 @@ export const useLegendStore = defineStore('legend', () => {
 
   // Check if abbreviation prefix should be shown for a species
   function isAbbreviationVisible(species) {
+    // Non-taxonomy grouping: always hide prefix (headers show the group instead)
+    if (isNonTaxonomyGroupBy.value) return false
     // If not explicitly set, default based on whether headers are shown
     if (speciesAbbreviationVisible.value[species] === undefined) {
       // Default: show abbreviation when headers are hidden
@@ -662,7 +651,6 @@ export const useLegendStore = defineStore('legend', () => {
     showLegend,
     textScale,
     dotScale,
-    maxItems,
     stickyEdges,
     snapThreshold,
     customLabels,
@@ -673,8 +661,6 @@ export const useLegendStore = defineStore('legend', () => {
     groupingSettings,
     speciesStyling,
     speciesBorderColors,
-    speciesBaseHues,
-    speciesGradientEnabled,
     speciesAbbreviations,
     speciesAbbreviationVisible,
 
@@ -700,24 +686,26 @@ export const useLegendStore = defineStore('legend', () => {
     // Computed
     hasCustomizations,
     isGrouped,
+    effectiveGroupBy,
+    groupByOptions,
+    canGroup,
+    isNonTaxonomyGroupBy,
 
     // Actions
     updatePosition,
     updateSize,
     setTextScale,
     setDotScale,
-    setMaxItems,
     setStickyEdges,
     setCustomLabel,
     setCustomColor,
     toggleItemVisibility,
     isItemVisible,
     resetCustomizations,
+    setGroupingEnabled,
+    setGroupBy,
     setShowHeaders,
     setSpeciesBorderColor,
-    setSpeciesBaseHue,
-    setSpeciesGradientEnabledForSpecies,
-    isSpeciesGradientEnabled,
     getSpeciesAbbreviation,
     setSpeciesAbbreviation,
     isAbbreviationVisible,

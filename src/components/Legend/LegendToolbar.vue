@@ -6,8 +6,8 @@ import {
   Lock,
   Unlock,
   GripVertical,
-  ChevronDown,
   Palette,
+  Layers,
   Type,
   Circle,
   MapPin,
@@ -15,6 +15,8 @@ import {
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
+import { computePopupPosition } from '../../composables/usePopupPosition'
+import LegendDropdown from './LegendDropdown.vue'
 
 const props = defineProps({
   isExportMode: {
@@ -23,10 +25,14 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['settings-open', 'settings-close'])
+const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close'])
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
+
+// Dropdown refs
+const colorDropdownRef = ref(null)
+const groupDropdownRef = ref(null)
 
 // Settings panel visibility
 const showSettings = ref(false)
@@ -34,15 +40,52 @@ const settingsButtonRef = ref(null)
 const settingsPanelRef = ref(null)
 const settingsPanelStyle = ref({})
 
-// Color by options
-const colorByOptions = [
-  { value: 'subspecies', label: 'Subspecies' },
-  { value: 'species', label: 'Species' },
-  { value: 'genus', label: 'Genus' },
-  { value: 'status', label: 'Sequencing Status' },
-  { value: 'mimicry', label: 'Mimicry Ring' },
-  { value: 'source', label: 'Data Source' }
+// Color by options with section groups
+const colorByGroups = [
+  {
+    label: 'Taxonomy',
+    options: [
+      { value: 'subspecies', label: 'Subspecies' },
+      { value: 'species', label: 'Species' },
+      { value: 'genus', label: 'Genus' }
+    ]
+  },
+  {
+    label: 'Other',
+    options: [
+      { value: 'status', label: 'Sequencing Status' },
+      { value: 'mimicry', label: 'Mimicry Ring' },
+      { value: 'source', label: 'Data Source' }
+    ]
+  }
 ]
+
+// Group by options structured with optgroups for consistent header style
+const groupByGroups = computed(() => {
+  const raw = legendStore.groupByOptions
+  const groups = []
+  let currentGroup = null
+
+  for (const opt of raw) {
+    if (opt.disabled) {
+      // Header item - start a new optgroup
+      // Extract clean label from "── Taxonomy ──" -> "Taxonomy"
+      const label = opt.label.replace(/[─\s]/g, '').trim() || opt.label
+      currentGroup = { label, options: [] }
+      groups.push(currentGroup)
+    } else if (currentGroup) {
+      currentGroup.options.push(opt)
+    } else {
+      // "None" option before any header - put in a standalone group
+      if (!groups.length || groups[0].label !== '') {
+        groups.unshift({ label: '', options: [] })
+      }
+      groups[0].options.push(opt)
+    }
+  }
+
+  return groups
+})
 
 // Current colorBy
 const colorBy = computed({
@@ -50,15 +93,34 @@ const colorBy = computed({
   set: (value) => { dataStore.colorBy = value }
 })
 
+// Current groupBy
+const groupBy = computed({
+  get: () => legendStore.effectiveGroupBy,
+  set: (value) => {
+    legendStore.setGroupBy(value)
+    // If setting to 'none', disable grouping; otherwise enable it
+    if (value === 'none') {
+      legendStore.setGroupingEnabled(false)
+    } else {
+      legendStore.setGroupingEnabled(true)
+    }
+  }
+})
+
+// Whether to show the group by dropdown (only for taxonomy-based colorBy)
+const showGroupBy = computed(() => {
+  return legendStore.groupByOptions.length > 1
+})
+
 // Toggle settings
 function toggleSettings() {
   if (!showSettings.value && settingsButtonRef.value) {
-    // Position the panel near the button
     const rect = settingsButtonRef.value.getBoundingClientRect()
-    settingsPanelStyle.value = {
-      top: `${rect.bottom + 8}px`,
-      left: `${Math.max(10, rect.left - 100)}px`
-    }
+    settingsPanelStyle.value = computePopupPosition(rect, {
+      placement: 'bottom',
+      popupWidth: 300,
+      popupHeight: 500
+    })
     showSettings.value = true
     emit('settings-open')
   } else {
@@ -110,11 +172,6 @@ function updateMapFillOpacity(e) {
   dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
 }
 
-// Update max items
-function updateMaxItems(e) {
-  legendStore.setMaxItems(parseInt(e.target.value))
-}
-
 // Click outside handler
 function handleClickOutside(e) {
   if (!showSettings.value) return
@@ -148,18 +205,27 @@ onUnmounted(() => {
     </div>
 
     <!-- Color by dropdown -->
-    <div class="toolbar-item color-by-select">
-      <Palette :size="14" />
-      <select v-model="colorBy" class="color-by-dropdown">
-        <option
-          v-for="option in colorByOptions"
-          :key="option.value"
-          :value="option.value"
-        >
-          {{ option.label }}
-        </option>
-      </select>
-      <ChevronDown :size="12" class="dropdown-icon" />
+    <div class="toolbar-item dropdown-with-label" @click.stop="colorDropdownRef?.open()">
+      <span class="dropdown-label"><Palette :size="11" /> Color</span>
+      <LegendDropdown
+        ref="colorDropdownRef"
+        v-model="colorBy"
+        :groups="colorByGroups"
+        @open="emit('dropdown-open')"
+        @close="emit('dropdown-close')"
+      />
+    </div>
+
+    <!-- Group by dropdown -->
+    <div v-if="showGroupBy" class="toolbar-item dropdown-with-label" @click.stop="groupDropdownRef?.open()">
+      <span class="dropdown-label"><Layers :size="11" /> Group</span>
+      <LegendDropdown
+        ref="groupDropdownRef"
+        v-model="groupBy"
+        :groups="groupByGroups"
+        @open="emit('dropdown-open')"
+        @close="emit('dropdown-close')"
+      />
     </div>
 
     <!-- Sticky toggle -->
@@ -240,24 +306,6 @@ onUnmounted(() => {
               @input="updateLegendDotScale"
             />
             <span class="value-display">{{ (legendStore.dotScale * 100).toFixed(0) }}%</span>
-          </div>
-        </div>
-
-        <!-- Max items -->
-        <div class="settings-row">
-          <label class="settings-label">
-            Max Items
-          </label>
-          <div class="settings-control">
-            <input
-              type="range"
-              min="5"
-              max="30"
-              step="1"
-              :value="legendStore.maxItems"
-              @input="updateMaxItems"
-            />
-            <span class="value-display">{{ legendStore.maxItems }}</span>
           </div>
         </div>
 
@@ -456,38 +504,28 @@ onUnmounted(() => {
   gap: 4px;
 }
 
-.color-by-select {
-  position: relative;
-  padding: 4px 8px;
+.dropdown-with-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 3px 6px;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
-}
-
-.color-by-dropdown {
-  appearance: none;
-  background: transparent;
-  border: none;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 12px;
   cursor: pointer;
-  padding-right: 16px;
-  outline: none;
 }
 
-.color-by-dropdown option {
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.dropdown-icon {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+.dropdown-label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
   color: var(--color-text-muted, #666);
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .toolbar-button {
@@ -527,7 +565,8 @@ onUnmounted(() => {
   z-index: 1000;
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
   min-width: 280px;
-  max-height: 80vh;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
   overflow-y: auto;
 }
 
