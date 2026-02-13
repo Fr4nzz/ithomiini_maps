@@ -30,6 +30,10 @@ const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'd
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
 
+// Dropdown refs
+const colorDropdownRef = ref(null)
+const groupDropdownRef = ref(null)
+
 // Settings panel visibility
 const showSettings = ref(false)
 const settingsButtonRef = ref(null)
@@ -201,9 +205,10 @@ onUnmounted(() => {
     </div>
 
     <!-- Color by dropdown -->
-    <div class="toolbar-item dropdown-with-label">
+    <div class="toolbar-item dropdown-with-label" @click.stop="colorDropdownRef?.open()">
       <span class="dropdown-label"><Palette :size="11" /> Color</span>
       <LegendDropdown
+        ref="colorDropdownRef"
         v-model="colorBy"
         :groups="colorByGroups"
         @open="emit('dropdown-open')"
@@ -212,9 +217,10 @@ onUnmounted(() => {
     </div>
 
     <!-- Group by dropdown -->
-    <div v-if="showGroupBy" class="toolbar-item dropdown-with-label">
+    <div v-if="showGroupBy" class="toolbar-item dropdown-with-label" @click.stop="groupDropdownRef?.open()">
       <span class="dropdown-label"><Layers :size="11" /> Group</span>
       <LegendDropdown
+        ref="groupDropdownRef"
         v-model="groupBy"
         :groups="groupByGroups"
         @open="emit('dropdown-open')"
@@ -506,6 +512,7 @@ onUnmounted(() => {
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .dropdown-label {

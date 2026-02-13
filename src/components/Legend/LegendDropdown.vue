@@ -42,7 +42,7 @@ function toggleOpen(e) {
 }
 
 function open() {
-  if (!triggerRef.value) return
+  if (isOpen.value || !triggerRef.value) return
   const rect = triggerRef.value.getBoundingClientRect()
   const pos = computePopupPosition(rect, {
     placement: 'bottom',
@@ -82,6 +82,8 @@ function handleClickOutside(e) {
 onUnmounted(() => {
   document.removeEventListener('mousedown', handleClickOutside)
 })
+
+defineExpose({ open, close, toggleOpen })
 </script>
 
 <template>
