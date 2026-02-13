@@ -6,7 +6,6 @@ import {
   Lock,
   Unlock,
   GripVertical,
-  ChevronDown,
   Palette,
   Layers,
   Type,
@@ -17,6 +16,7 @@ import {
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { computePopupPosition } from '../../composables/usePopupPosition'
+import LegendDropdown from './LegendDropdown.vue'
 
 const props = defineProps({
   isExportMode: {
@@ -25,7 +25,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['settings-open', 'settings-close'])
+const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close'])
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
@@ -201,53 +201,25 @@ onUnmounted(() => {
     </div>
 
     <!-- Color by dropdown -->
-    <div class="toolbar-item color-by-select">
-      <Palette :size="14" />
-      <span class="dropdown-label">Color</span>
-      <select v-model="colorBy" class="color-by-dropdown">
-        <optgroup
-          v-for="group in colorByGroups"
-          :key="group.label"
-          :label="group.label"
-        >
-          <option
-            v-for="option in group.options"
-            :key="option.value"
-            :value="option.value"
-          >
-            {{ option.label }}
-          </option>
-        </optgroup>
-      </select>
-      <ChevronDown :size="12" class="dropdown-icon" />
+    <div class="toolbar-item dropdown-with-label">
+      <span class="dropdown-label"><Palette :size="11" /> Color</span>
+      <LegendDropdown
+        v-model="colorBy"
+        :groups="colorByGroups"
+        @open="emit('dropdown-open')"
+        @close="emit('dropdown-close')"
+      />
     </div>
 
     <!-- Group by dropdown -->
-    <div v-if="showGroupBy" class="toolbar-item group-by-select">
-      <Layers :size="14" />
-      <span class="dropdown-label">Group</span>
-      <select v-model="groupBy" class="group-by-dropdown">
-        <template v-for="group in groupByGroups" :key="group.label">
-          <optgroup v-if="group.label" :label="group.label">
-            <option
-              v-for="option in group.options"
-              :key="option.value"
-              :value="option.value"
-            >
-              {{ option.label }}
-            </option>
-          </optgroup>
-          <option
-            v-else
-            v-for="option in group.options"
-            :key="option.value"
-            :value="option.value"
-          >
-            {{ option.label }}
-          </option>
-        </template>
-      </select>
-      <ChevronDown :size="12" class="dropdown-icon" />
+    <div v-if="showGroupBy" class="toolbar-item dropdown-with-label">
+      <span class="dropdown-label"><Layers :size="11" /> Group</span>
+      <LegendDropdown
+        v-model="groupBy"
+        :groups="groupByGroups"
+        @open="emit('dropdown-open')"
+        @close="emit('dropdown-close')"
+      />
     </div>
 
     <!-- Sticky toggle -->
@@ -526,65 +498,27 @@ onUnmounted(() => {
   gap: 4px;
 }
 
-.color-by-select {
-  position: relative;
-  padding: 4px 8px;
+.dropdown-with-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 3px 6px;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
 }
 
 .dropdown-label {
-  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
   color: var(--color-text-muted, #666);
   white-space: nowrap;
-}
-
-.color-by-dropdown,
-.group-by-dropdown {
-  appearance: none;
-  background: transparent;
-  border: none;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 12px;
-  cursor: pointer;
-  padding-right: 16px;
-  outline: none;
-}
-
-.color-by-dropdown option,
-.group-by-dropdown option {
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.color-by-dropdown optgroup,
-.group-by-dropdown optgroup {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--color-text-muted, #666);
-}
-
-.group-by-select {
-  position: relative;
-  padding: 4px 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
-}
-
-.dropdown-icon {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--color-text-muted, #666);
+  line-height: 1;
 }
 
 .toolbar-button {

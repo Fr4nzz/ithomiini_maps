@@ -143,6 +143,10 @@ export const useLegendStore = defineStore('legend', () => {
   // Should display grouped
   const isGrouped = computed(() => canGroup.value)
 
+  // Non-taxonomy groupBy modes (status, mimicry, source) need headers instead of prefixes
+  const NON_TAXONOMY_GROUP_BY = new Set(['status', 'mimicry', 'source'])
+  const isNonTaxonomyGroupBy = computed(() => NON_TAXONOMY_GROUP_BY.has(effectiveGroupBy.value))
+
   // The actual groupBy value to use (validates against current colorBy)
   const effectiveGroupBy = computed(() => {
     const options = groupByOptions.value
@@ -487,6 +491,8 @@ export const useLegendStore = defineStore('legend', () => {
 
   // Check if abbreviation prefix should be shown for a species
   function isAbbreviationVisible(species) {
+    // Non-taxonomy grouping: always hide prefix (headers show the group instead)
+    if (isNonTaxonomyGroupBy.value) return false
     // If not explicitly set, default based on whether headers are shown
     if (speciesAbbreviationVisible.value[species] === undefined) {
       // Default: show abbreviation when headers are hidden
@@ -684,6 +690,7 @@ export const useLegendStore = defineStore('legend', () => {
     effectiveGroupBy,
     groupByOptions,
     canGroup,
+    isNonTaxonomyGroupBy,
 
     // Actions
     updatePosition,

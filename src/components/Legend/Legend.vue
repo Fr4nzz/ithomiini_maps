@@ -84,8 +84,7 @@ const bottomAttributionMargin = computed(() => {
 const showEditUI = computed(() => isHovered.value || hasOpenPopup.value)
 const showToolbar = showEditUI
 
-// Track if any popup is open (keeps legend interactive)
-const hasModalOpen = computed(() => stylePopupState.value.open)
+// (hasModalOpen removed — showEditUI now used directly for group headers)
 
 // Get container dimensions
 const containerBounds = computed(() => {
@@ -407,7 +406,7 @@ const allDisplayedLabels = computed(() => {
   } else if (data.groups) {
     for (const group of data.groups) {
       // Include group header text
-      if (legendStore.groupingSettings.showHeaders) {
+      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
         labels.push(group.name)
       }
       for (const item of group.items) {
@@ -469,7 +468,7 @@ const effectiveMaxItems = computed(() => {
   // (hidden headers become display:flex when hovered).
   let effectiveItemHeight = itemHeight
   const headersVisible = legendStore.isGrouped &&
-    (legendStore.groupingSettings.showHeaders || isHovered.value)
+    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy || isHovered.value)
   if (headersVisible) {
     const allItems = sortedAllItems.value
     const sampleSize = Math.min(20, allItems.length)
@@ -505,7 +504,7 @@ const autoHeight = computed(() => {
     totalItems = data.items.length
   } else if (data.groups) {
     for (const group of data.groups) {
-      if (legendStore.groupingSettings.showHeaders) {
+      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
         groupHeaders++
       }
       totalItems += group.items.length
@@ -1342,6 +1341,8 @@ watch(isExportMode, (enabled, wasEnabled) => {
       :is-export-mode="isExportMode"
       @settings-open="hasOpenPopup = true"
       @settings-close="hasOpenPopup = false"
+      @dropdown-open="hasOpenPopup = true"
+      @dropdown-close="hasOpenPopup = false"
     />
 
     <!-- Legend content -->
@@ -1437,8 +1438,9 @@ watch(isExportMode, (enabled, wasEnabled) => {
             :count="group.items.length"
             :dot-size="dotSize"
             :is-export-mode="isExportMode"
-            :headers-hidden="!legendStore.groupingSettings.showHeaders"
-            :is-legend-hovered="isHovered || hasModalOpen"
+            :headers-hidden="!legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy"
+            :is-legend-hovered="showEditUI"
+            :is-non-taxonomy="legendStore.isNonTaxonomyGroupBy"
             :shape="group.shape"
             :any-group-has-custom-style="anyGroupHasCustomStyle"
             @open-style-popup="openGroupStylePopup(group.name, $event)"
@@ -1449,6 +1451,8 @@ watch(isExportMode, (enabled, wasEnabled) => {
             @update:custom-label="(val) => handleUpdateSpeciesCustomLabel(group.name, val)"
             @apply-display-format-to-all="handleApplyDisplayFormatToAll"
             @apply-prefix-format-to-all="handleApplyPrefixFormatToAll"
+            @dropdown-open="hasOpenPopup = true"
+            @dropdown-close="hasOpenPopup = false"
           />
 
           <!-- Group items (always shown) -->
@@ -1468,7 +1472,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
               :font-size="fontSize"
               :border-color="group.borderColor"
               :border-width="dataStore.mapStyle.borderWidth"
-              :indented="legendStore.groupingSettings.showHeaders"
+              :indented="legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy"
               :shape="group.shape"
               :wrap-label="legendStore.wrapLabels"
               :count="legendStore.showCounts ? (legendCounts[item.label] || 0) : null"
