@@ -154,9 +154,8 @@ export const useLegendStore = defineStore('legend', () => {
     if (current === 'none') return 'none'
     // Check if current is a valid (non-header) option
     if (options.some(o => o.value === current && !o.disabled)) return current
-    // Fall back to first valid non-'none', non-header option
-    const first = options.find(o => o.value !== 'none' && !o.disabled)
-    return first ? first.value : 'none'
+    // If stored value is not valid for current colorBy, default to none
+    return 'none'
   })
 
   // Available groupBy options based on current colorBy
