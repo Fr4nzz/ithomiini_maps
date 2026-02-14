@@ -465,15 +465,17 @@ const legendCounts = computed(() => {
 // AUTO-SIZING
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Measure text width using canvas
-let _measureCanvas = null
+// Measure text width using a hidden DOM element (matches actual CSS font rendering)
+let _measureSpan = null
 function measureTextWidth(text, fontSizePx) {
-  if (!_measureCanvas) {
-    _measureCanvas = document.createElement('canvas')
+  if (!_measureSpan) {
+    _measureSpan = document.createElement('span')
+    _measureSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-style:italic;pointer-events:none;top:-9999px;left:-9999px;'
+    document.body.appendChild(_measureSpan)
   }
-  const ctx = _measureCanvas.getContext('2d')
-  ctx.font = `italic ${fontSizePx}px system-ui, -apple-system, sans-serif`
-  return ctx.measureText(text).width
+  _measureSpan.style.fontSize = fontSizePx + 'px'
+  _measureSpan.textContent = text
+  return _measureSpan.getBoundingClientRect().width
 }
 
 // Collect all displayed label texts for width calculation
@@ -538,7 +540,14 @@ const targetLegendHeight = computed(() => {
 function computeItemHeight(label, fontSizePx, availableTextWidth, wrapLabels, gap) {
   if (!wrapLabels) return fontSizePx + 10 + gap
   const textWidth = measureTextWidth(label, fontSizePx)
-  const lines = Math.max(1, Math.ceil(textWidth / availableTextWidth))
+  // Account for hanging indent (padding-left: 1em, text-indent: -1em):
+  // Line 1 uses full availableTextWidth, subsequent lines lose 1em
+  const subsequentWidth = Math.max(20, availableTextWidth - fontSizePx)
+  let lines = 1
+  const remaining = textWidth - availableTextWidth
+  if (remaining > 0) {
+    lines += Math.ceil(remaining / subsequentWidth)
+  }
   return Math.ceil(lines * fontSizePx * 1.35 + 6) + gap
 }
 
@@ -550,6 +559,10 @@ function getAvailableTextWidth(legendWidth, showCounts, indented) {
   const indentSpace = indented ? 20 : 0
   return Math.max(50, legendWidth - contentPadding - dotSpace - countSpace - indentSpace)
 }
+
+// Post-render scrollbar correction: if canvas/DOM measurement mismatch causes
+// items to render taller than estimated, reduce item count until no scrollbar.
+const scrollbarCorrection = ref(0)
 
 // Item limit: walk items one by one, summing actual per-item heights until space runs out.
 let _lastLoggedEst = -1
@@ -607,9 +620,9 @@ const effectiveMaxItems = computed(() => {
     count++
   }
 
-  const est = Math.max(1, count)
+  const est = Math.max(1, count - scrollbarCorrection.value)
   if (est !== _lastLoggedEst) {
-    console.log('[Legend] maxItems:', est, '| avail:', Math.round(available), 'px, used:', Math.round(usedHeight), 'px | w:', Math.round(legendWidth))
+    console.log('[Legend] maxItems:', est, '| avail:', Math.round(available), 'px, used:', Math.round(usedHeight), 'px | w:', Math.round(legendWidth), scrollbarCorrection.value > 0 ? '| correction: -' + scrollbarCorrection.value : '')
     _lastLoggedEst = est
   }
   return est
@@ -666,6 +679,35 @@ const effectiveWidth = computed(() => {
 const effectiveHeight = computed(() => {
   if (isAutoHeight.value) return autoHeight.value
   return currentHeight.value
+})
+
+// Post-render scrollbar detection: reduce items until content fits without scrollbar
+function checkAndFixScrollbar() {
+  nextTick(() => {
+    const el = contentRef.value
+    if (!el || isResizing.value) return
+    if (el.scrollHeight > el.clientHeight + 2 && scrollbarCorrection.value < 10) {
+      scrollbarCorrection.value++
+    }
+  })
+}
+
+// Check after items change (which follows effectiveMaxItems changes)
+watch(effectiveMaxItems, () => {
+  if (!isResizing.value) checkAndFixScrollbar()
+})
+
+// Reset correction when layout parameters change fundamentally
+watch([effectiveWidth, () => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
+  scrollbarCorrection.value = 0
+})
+
+// Check after resize ends
+watch(isResizing, (resizing) => {
+  if (!resizing) {
+    scrollbarCorrection.value = 0
+    checkAndFixScrollbar()
+  }
 })
 
 // Max resize width (45% of container for manual, more generous than auto's 25%)
