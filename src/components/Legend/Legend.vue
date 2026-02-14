@@ -1358,14 +1358,28 @@ watch(autoHeight, (newAutoHeight) => {
 // (Auto-sizing is handled by CSS overflow-y: auto on .legend-content,
 // combined with the computed effectiveMaxItems estimate above.)
 
-// Sync shown labels to the store so the map can grey out overflow items
+// Sync shown labels to the store so the map can grey out overflow items.
+// During resize, defer the sync to avoid rebuilding the map layer on every frame.
 watch(legendItems, (items) => {
+  if (isResizing.value) return // Defer — will sync when resize ends
   const labels = new Set()
   for (const item of items) {
     if (item.visible !== false) labels.add(item.label)
   }
   legendStore.setShownLabels(labels)
 }, { immediate: true })
+
+// When resize ends, sync the final shown labels to trigger one map update
+watch(isResizing, (resizing) => {
+  if (!resizing) {
+    const items = legendItems.value
+    const labels = new Set()
+    for (const item of items) {
+      if (item.visible !== false) labels.add(item.label)
+    }
+    legendStore.setShownLabels(labels)
+  }
+})
 
 // ═══════════════════════════════════════════════════════════════════════════
 // BOTTOM-STICKY REPOSITIONING
