@@ -534,19 +534,32 @@ const targetLegendHeight = computed(() => {
   return Math.floor(containerBounds.value.height * 0.75)
 })
 
-// Item limit computed from available space (no post-render adjustment needed;
-// CSS overflow-y: auto handles any remaining overflow).
+// Compute the rendered height for a single item label at a given width
+function computeItemHeight(label, fontSizePx, availableTextWidth, wrapLabels, gap) {
+  if (!wrapLabels) return fontSizePx + 10 + gap
+  const textWidth = measureTextWidth(label, fontSizePx)
+  const lines = Math.max(1, Math.ceil(textWidth / availableTextWidth))
+  return Math.ceil(lines * fontSizePx * 1.35 + 6) + gap
+}
+
+// Available text width given legend width and current settings
+function getAvailableTextWidth(legendWidth, showCounts, indented) {
+  const contentPadding = 32 // 16px * 2
+  const dotSpace = 20
+  const countSpace = showCounts ? 40 : 0
+  const indentSpace = indented ? 20 : 0
+  return Math.max(50, legendWidth - contentPadding - dotSpace - countSpace - indentSpace)
+}
+
+// Item limit: walk items one by one, summing actual per-item heights until space runs out.
+let _lastLoggedEst = -1
 const effectiveMaxItems = computed(() => {
-  // Estimate from available space
   const fontSizePx = Math.round(14 * legendStore.textScale)
   const gap = 2
   const titleHeight = 32
   const padding = 24
-  const moreIndicatorReserve = 40 // "+N more" row: padding-top(8) + margin-top(8) + border(1) + text(~20)
+  const moreIndicatorReserve = 40
 
-  // During resize: use live height for real-time feedback
-  // Manual size: use stored height
-  // Auto: use target height
   let availableHeight
   if (isResizing.value && resizeOverride.value) {
     availableHeight = resizeOverride.value.height
@@ -557,7 +570,6 @@ const effectiveMaxItems = computed(() => {
   }
   const available = availableHeight - titleHeight - padding - moreIndicatorReserve
 
-  // Get current legend width for wrap-aware height estimation
   let legendWidth
   if (isResizing.value && resizeOverride.value) {
     legendWidth = resizeOverride.value.width
@@ -567,78 +579,51 @@ const effectiveMaxItems = computed(() => {
     legendWidth = autoWidth.value || 250
   }
 
-  // Calculate item height — when wrapping, measure actual text to estimate lines
-  let itemHeight
-  if (legendStore.wrapLabels) {
-    const contentPadding = 32 // 16px * 2
-    const dotSpace = 20 // dot + gap
-    const countSpace = legendStore.showCounts ? 40 : 0
-    const indented = legendStore.isGrouped &&
-      (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
-    const indentSpace = indented ? 20 : 0
-    const availableTextWidth = Math.max(50, legendWidth - contentPadding - dotSpace - countSpace - indentSpace)
-
-    // Sample items to estimate average wrap lines
-    const allItems = sortedAllItems.value
-    const sampleSize = Math.min(30, allItems.length)
-    let totalLines = 0
-    for (let i = 0; i < sampleSize; i++) {
-      const label = allItems[i].customLabel || allItems[i].label
-      const textWidth = measureTextWidth(label, fontSizePx)
-      totalLines += Math.max(1, Math.ceil(textWidth / availableTextWidth))
-    }
-    const avgLines = sampleSize > 0 ? totalLines / sampleSize : 1
-    const lineHeight = fontSizePx * 1.35
-    itemHeight = Math.ceil(avgLines * lineHeight + 6) + gap
-  } else {
-    itemHeight = fontSizePx + 10 + gap
-  }
-
-  const headerHeight = fontSizePx + 10 + gap
-
-  // Only count headers when they'll be visible in normal (non-edit) mode.
-  // Don't include isHovered — edit-mode headers inflate the estimate.
-  let effectiveItemHeight = itemHeight
   const headersVisible = legendStore.isGrouped &&
     (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
-  if (headersVisible) {
-    const allItems = sortedAllItems.value
-    const sampleSize = Math.min(20, allItems.length)
-    if (sampleSize > 0) {
-      const groupsSeen = new Set()
-      for (let i = 0; i < sampleSize; i++) {
-        const group = getGroupForItem(allItems[i].label)
-        if (group) groupsSeen.add(group)
+  const headerHeight = fontSizePx + 10 + gap
+  const wrapLabels = legendStore.wrapLabels
+  const availableTextWidth = getAvailableTextWidth(legendWidth, legendStore.showCounts, headersVisible)
+
+  const allItems = sortedAllItems.value
+  let usedHeight = 0
+  let count = 0
+  const groupsSeen = new Set()
+
+  for (let i = 0; i < allItems.length; i++) {
+    const label = allItems[i].customLabel || allItems[i].label
+    let rowHeight = computeItemHeight(label, fontSizePx, availableTextWidth, wrapLabels, gap)
+
+    if (headersVisible) {
+      const group = getGroupForItem(allItems[i].label)
+      if (group && !groupsSeen.has(group)) {
+        groupsSeen.add(group)
+        rowHeight += headerHeight
       }
-      // Each group header adds headerHeight per (items/groups) items
-      const headersPerItem = groupsSeen.size / sampleSize
-      effectiveItemHeight = itemHeight + headersPerItem * headerHeight
     }
+
+    if (usedHeight + rowHeight > available) break
+    usedHeight += rowHeight
+    count++
   }
 
-  const est = Math.max(1, Math.floor(available / effectiveItemHeight))
-  console.log('[Legend effectiveMaxItems]', {
-    availableHeight, legendWidth, available,
-    itemHeight, effectiveItemHeight, est,
-    wrapLabels: legendStore.wrapLabels,
-    isAutoHeight: isAutoHeight.value,
-    isAutoWidth: isAutoWidth.value,
-    targetLegendHeight: targetLegendHeight.value,
-    fontSizePx
-  })
+  const est = Math.max(1, count)
+  if (est !== _lastLoggedEst) {
+    console.log('[Legend] maxItems:', est, '| avail:', Math.round(available), 'px, used:', Math.round(usedHeight), 'px | w:', Math.round(legendWidth))
+    _lastLoggedEst = est
+  }
   return est
 })
 
-// Calculate auto height from content (using effectiveMaxItems)
+// Calculate auto height from content — sums exact per-item heights for displayed items
 const autoHeight = computed(() => {
   const data = groupedLegendData.value
   const fontSizePx = Math.round(14 * legendStore.textScale)
   const gap = 2
-  const titleHeight = 32 // title + border
+  const titleHeight = 32
   const moreHeight = moreCount.value > 0 ? 40 : 0
-  const padding = 24 // top + bottom content padding
+  const padding = 24
 
-  // Get current width for wrap-aware height calculation
   let legendWidth
   if (!isAutoWidth.value && currentWidth.value) {
     legendWidth = currentWidth.value
@@ -646,59 +631,28 @@ const autoHeight = computed(() => {
     legendWidth = autoWidth.value || 250
   }
 
-  // Calculate per-item height (same logic as effectiveMaxItems for consistency)
-  let itemHeight
-  if (legendStore.wrapLabels) {
-    const contentPadding = 32
-    const dotSpace = 20
-    const countSpace = legendStore.showCounts ? 40 : 0
-    const indented = legendStore.isGrouped &&
-      (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
-    const indentSpace = indented ? 20 : 0
-    const availableTextWidth = Math.max(50, legendWidth - contentPadding - dotSpace - countSpace - indentSpace)
+  const headersVisible = legendStore.isGrouped &&
+    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
+  const availableTextWidth = getAvailableTextWidth(legendWidth, legendStore.showCounts, headersVisible)
+  const headerHeight = fontSizePx + 10 + gap
 
-    // Measure actual items that will be displayed
-    const allItems = sortedAllItems.value
-    const maxItems = effectiveMaxItems.value
-    const sampleSize = Math.min(maxItems, allItems.length)
-    let totalLines = 0
-    for (let i = 0; i < sampleSize; i++) {
-      const label = allItems[i].customLabel || allItems[i].label
-      const textWidth = measureTextWidth(label, fontSizePx)
-      totalLines += Math.max(1, Math.ceil(textWidth / availableTextWidth))
-    }
-    const avgLines = sampleSize > 0 ? totalLines / sampleSize : 1
-    const lineHeight = fontSizePx * 1.35
-    itemHeight = Math.ceil(avgLines * lineHeight + 6) + gap
-  } else {
-    itemHeight = fontSizePx + 8 + gap
-  }
-
-  let totalItems = 0
+  // Sum exact heights for displayed items
+  let totalItemHeight = 0
   let groupHeaders = 0
-
   if (data.type === 'flat') {
-    totalItems = data.items.length
+    for (const item of data.items) {
+      totalItemHeight += computeItemHeight(item.label, fontSizePx, availableTextWidth, legendStore.wrapLabels, gap)
+    }
   } else if (data.groups) {
     for (const group of data.groups) {
-      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
-        groupHeaders++
+      if (headersVisible) groupHeaders++
+      for (const item of group.items) {
+        totalItemHeight += computeItemHeight(item.label, fontSizePx, availableTextWidth, legendStore.wrapLabels, gap)
       }
-      totalItems += group.items.length
     }
   }
 
-  const groupHeaderHeight = fontSizePx + 10 + gap
-  const idealHeight = titleHeight + (totalItems * itemHeight) + (groupHeaders * groupHeaderHeight) + moreHeight + padding
-
-  console.log('[Legend autoHeight]', {
-    totalItems, itemHeight, legendWidth, idealHeight,
-    targetLegendHeight: targetLegendHeight.value,
-    wrapLabels: legendStore.wrapLabels,
-    result: Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
-  })
-
-  // Cap at target height (75% of container) for auto-sizing
+  const idealHeight = titleHeight + totalItemHeight + (groupHeaders * headerHeight) + moreHeight + padding
   return Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
 })
 
