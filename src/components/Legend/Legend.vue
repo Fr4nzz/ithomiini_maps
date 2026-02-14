@@ -530,7 +530,11 @@ const effectiveMaxItems = computed(() => {
   const titleHeight = 32
   const padding = 24
 
-  const available = targetLegendHeight.value - titleHeight - padding
+  // When user has manually resized, use actual height; otherwise use auto target
+  const availableHeight = isAutoHeight.value
+    ? targetLegendHeight.value
+    : (currentHeight.value || targetLegendHeight.value)
+  const available = availableHeight - titleHeight - padding
 
   // Compute group overhead from actual data instead of fixed multiplier.
   // When grouped, each species gets a header row. If most species have only
@@ -1333,6 +1337,15 @@ watch(autoHeight, (newAutoHeight) => {
 // (Auto-sizing is handled by CSS overflow-y: auto on .legend-content,
 // combined with the computed effectiveMaxItems estimate above.)
 
+// Sync shown labels to the store so the map can grey out overflow items
+watch(legendItems, (items) => {
+  const labels = new Set()
+  for (const item of items) {
+    if (item.visible !== false) labels.add(item.label)
+  }
+  legendStore.setShownLabels(labels)
+}, { immediate: true })
+
 // ═══════════════════════════════════════════════════════════════════════════
 // BOTTOM-STICKY REPOSITIONING
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1558,12 +1571,13 @@ watch(isExportMode, (enabled, wasEnabled) => {
         </div>
       </div>
 
-      <!-- More indicator -->
+      <!-- More indicator (overflow items appear grey on the map) -->
       <div
         v-if="moreCount > 0"
         class="legend-more"
         :style="{ fontSize: fontSize + 'px' }"
       >
+        <span class="more-dot" />
         + {{ moreCount }} more
       </div>
     </div>
@@ -1776,11 +1790,23 @@ watch(isExportMode, (enabled, wasEnabled) => {
 }
 
 .legend-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-style: italic;
   color: var(--color-text-muted, #666);
   padding-top: 8px;
   margin-top: 8px;
   border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.more-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6b7280;
+  flex-shrink: 0;
 }
 
 /* Scrollbar styling */

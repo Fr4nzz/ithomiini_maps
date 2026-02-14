@@ -282,9 +282,12 @@ export function useDataLayer(map, options = {}) {
     const colorAttr = store.colorByAttribute
     const style = store.mapStyle
 
+    // Build color expression: items in the legend get their color,
+    // overflow items (in color map but not shown in legend) get grey
+    const shownLabels = legendStore.shownLabels
     const colorExpression = ['match', ['get', colorAttr]]
     Object.entries(colorMap).forEach(([value, color]) => {
-      colorExpression.push(value, color)
+      colorExpression.push(value, shownLabels.size > 0 && !shownLabels.has(value) ? '#6b7280' : color)
     })
     colorExpression.push('#6b7280')
 

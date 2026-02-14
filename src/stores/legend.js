@@ -27,6 +27,15 @@ export const useLegendStore = defineStore('legend', () => {
 
   const showLegend = ref(true)
   const textScale = ref(getStorage('legend-text-scale', 1))
+
+  // Labels currently shown in the legend (updated by Legend.vue).
+  // Items in the color map but NOT in this set render as grey on the map.
+  const shownLabels = ref(new Set())
+
+  function setShownLabels(labels) {
+    shownLabels.value = labels instanceof Set ? labels : new Set(labels)
+  }
+
   // ═══════════════════════════════════════════════════════════════════════════
   // BEHAVIOR SETTINGS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -645,6 +654,7 @@ export const useLegendStore = defineStore('legend', () => {
     textScale,
     stickyEdges,
     snapThreshold,
+    shownLabels,
     customLabels,
     customColors,
     hiddenItems,
@@ -688,6 +698,7 @@ export const useLegendStore = defineStore('legend', () => {
     updateSize,
     setTextScale,
     setStickyEdges,
+    setShownLabels,
     setCustomLabel,
     setCustomColor,
     toggleItemVisibility,
