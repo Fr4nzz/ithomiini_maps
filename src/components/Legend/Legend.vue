@@ -427,6 +427,20 @@ const moreCount = computed(() => {
   return Math.max(0, totalVisible - maxItems)
 })
 
+// Total point count for overflow (grey) items — shown when counts enabled
+const morePointCount = computed(() => {
+  if (!legendStore.showCounts || moreCount.value === 0) return null
+  const shownSet = new Set(legendItems.value.filter(i => i.visible !== false).map(i => i.label))
+  const counts = legendCounts.value
+  let total = 0
+  for (const [label, cnt] of Object.entries(counts)) {
+    if (!shownSet.has(label)) {
+      total += cnt
+    }
+  }
+  return total
+})
+
 // ═══════════════════════════════════════════════════════════════════════════
 // LEGEND COUNTS (for abundance sorting and display)
 // Counts features by the current colorBy attribute (subspecies, species, genus, etc.)
@@ -525,12 +539,13 @@ const targetLegendHeight = computed(() => {
 const effectiveMaxItems = computed(() => {
   // Estimate from available space
   const fontSizePx = Math.round(14 * legendStore.textScale)
-  // Generous estimate for wrapped text (allows 2-line items)
-  const itemHeight = legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10
-  const headerHeight = fontSizePx + 10
+  // Item height includes CSS gap (2px between items in .legend-items)
+  const gap = 2
+  const itemHeight = (legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10) + gap
+  const headerHeight = fontSizePx + 10 + gap
   const titleHeight = 32
   const padding = 24
-  const moreIndicatorReserve = 30 // "+N more" row with padding/border
+  const moreIndicatorReserve = 40 // "+N more" row: padding-top(8) + margin-top(8) + border(1) + text(~20)
 
   // During resize: use live height for real-time feedback
   // Manual size: use stored height
@@ -1585,6 +1600,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
       >
         <span class="more-dot" />
         + {{ moreCount }} more
+        <span v-if="morePointCount !== null" class="more-count">{{ morePointCount.toLocaleString() }}</span>
       </div>
     </div>
 
@@ -1628,7 +1644,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   max-width: 600px;
   min-height: 80px;
   /* max-height is set dynamically via positionStyle */
-  overflow: visible; /* Resize zones extend beyond edges; legend-content handles scrolling */
+  overflow: visible; /* Allow toolbar to float above and resize zones to extend beyond edges */
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
@@ -1813,6 +1829,13 @@ watch(isExportMode, (enabled, wasEnabled) => {
   border-radius: 50%;
   background: #6b7280;
   flex-shrink: 0;
+}
+
+.more-count {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 0.85em;
+  opacity: 0.6;
 }
 
 /* Scrollbar styling */

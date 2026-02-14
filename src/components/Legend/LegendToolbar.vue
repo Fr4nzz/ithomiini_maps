@@ -436,10 +436,19 @@ onUnmounted(() => {
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
+  border: 1px solid var(--color-border, #3d3d5c);
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px; /* Fully rounded — separate floating element */
+  position: absolute;
+  bottom: calc(100% + 4px); /* Float above legend with gap for green border */
+  left: -1px; /* Align with legend border */
+  /* Let toolbar expand wider than legend so all buttons are reachable */
+  right: auto;
+  min-width: calc(100% + 2px);
+  width: max-content;
   cursor: grab;
-  flex-shrink: 0;
+  box-shadow: 0 -2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(4px);
 }
 
 .legend-toolbar:active {
