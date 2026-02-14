@@ -81,7 +81,8 @@ const bottomAttributionMargin = computed(() => {
 })
 
 // Should show toolbar/edit UI? (hidden by default, shown on hover OR when popup is open)
-const showEditUI = computed(() => isHovered.value || hasOpenPopup.value)
+// Suppressed during resize so user sees normal (non-edit) layout for accurate item count feedback
+const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
 const showToolbar = showEditUI
 
 // (hasModalOpen removed — showEditUI now used directly for group headers)
@@ -529,21 +530,26 @@ const effectiveMaxItems = computed(() => {
   const headerHeight = fontSizePx + 10
   const titleHeight = 32
   const padding = 24
+  const moreIndicatorReserve = 30 // "+N more" row with padding/border
 
-  // When user has manually resized, use actual height; otherwise use auto target
-  const availableHeight = isAutoHeight.value
-    ? targetLegendHeight.value
-    : (currentHeight.value || targetLegendHeight.value)
-  const available = availableHeight - titleHeight - padding
+  // During resize: use live height for real-time feedback
+  // Manual size: use stored height
+  // Auto: use target height
+  let availableHeight
+  if (isResizing.value && resizeOverride.value) {
+    availableHeight = resizeOverride.value.height
+  } else if (!isAutoHeight.value) {
+    availableHeight = currentHeight.value || targetLegendHeight.value
+  } else {
+    availableHeight = targetLegendHeight.value
+  }
+  const available = availableHeight - titleHeight - padding - moreIndicatorReserve
 
-  // Compute group overhead from actual data instead of fixed multiplier.
-  // When grouped, each species gets a header row. If most species have only
-  // 1 subspecies (common in abundance sort), overhead approaches 2x, not 1.2x.
-  // Headers are visible either when showHeaders is true OR during hover
-  // (hidden headers become display:flex when hovered).
+  // Only count headers when they'll be visible in normal (non-edit) mode.
+  // Don't include isHovered — edit-mode headers inflate the estimate.
   let effectiveItemHeight = itemHeight
   const headersVisible = legendStore.isGrouped &&
-    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy || isHovered.value)
+    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
   if (headersVisible) {
     const allItems = sortedAllItems.value
     const sampleSize = Math.min(20, allItems.length)
@@ -1633,7 +1639,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 .legend-container.is-hovered:not(.is-export) {
   border-color: var(--color-accent, #4ade80);
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
-  border-radius: 0 0 8px 8px; /* Flat top corners where toolbar connects */
+  border-radius: 8px 8px 0 0; /* Flat bottom corners where toolbar connects below */
 }
 
 .legend-container.is-dragging {
