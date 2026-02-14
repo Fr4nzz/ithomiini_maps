@@ -539,10 +539,7 @@ const targetLegendHeight = computed(() => {
 const effectiveMaxItems = computed(() => {
   // Estimate from available space
   const fontSizePx = Math.round(14 * legendStore.textScale)
-  // Item height includes CSS gap (2px between items in .legend-items)
   const gap = 2
-  const itemHeight = (legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10) + gap
-  const headerHeight = fontSizePx + 10 + gap
   const titleHeight = 32
   const padding = 24
   const moreIndicatorReserve = 40 // "+N more" row: padding-top(8) + margin-top(8) + border(1) + text(~20)
@@ -559,6 +556,45 @@ const effectiveMaxItems = computed(() => {
     availableHeight = targetLegendHeight.value
   }
   const available = availableHeight - titleHeight - padding - moreIndicatorReserve
+
+  // Get current legend width for wrap-aware height estimation
+  let legendWidth
+  if (isResizing.value && resizeOverride.value) {
+    legendWidth = resizeOverride.value.width
+  } else if (!isAutoWidth.value && currentWidth.value) {
+    legendWidth = currentWidth.value
+  } else {
+    legendWidth = autoWidth.value || 250
+  }
+
+  // Calculate item height — when wrapping, measure actual text to estimate lines
+  let itemHeight
+  if (legendStore.wrapLabels) {
+    const contentPadding = 32 // 16px * 2
+    const dotSpace = 20 // dot + gap
+    const countSpace = legendStore.showCounts ? 40 : 0
+    const indented = legendStore.isGrouped &&
+      (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
+    const indentSpace = indented ? 20 : 0
+    const availableTextWidth = Math.max(50, legendWidth - contentPadding - dotSpace - countSpace - indentSpace)
+
+    // Sample items to estimate average wrap lines
+    const allItems = sortedAllItems.value
+    const sampleSize = Math.min(30, allItems.length)
+    let totalLines = 0
+    for (let i = 0; i < sampleSize; i++) {
+      const label = allItems[i].customLabel || allItems[i].label
+      const textWidth = measureTextWidth(label, fontSizePx)
+      totalLines += Math.max(1, Math.ceil(textWidth / availableTextWidth))
+    }
+    const avgLines = sampleSize > 0 ? totalLines / sampleSize : 1
+    const lineHeight = fontSizePx * 1.35
+    itemHeight = Math.ceil(avgLines * lineHeight + 6) + gap
+  } else {
+    itemHeight = fontSizePx + 10 + gap
+  }
+
+  const headerHeight = fontSizePx + 10 + gap
 
   // Only count headers when they'll be visible in normal (non-edit) mode.
   // Don't include isHovered — edit-mode headers inflate the estimate.
