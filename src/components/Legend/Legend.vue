@@ -681,6 +681,26 @@ const effectiveHeight = computed(() => {
   return currentHeight.value
 })
 
+// Max resize width (45% of container for manual, more generous than auto's 25%)
+const maxResizeWidth = computed(() => {
+  return Math.min(Math.round(containerBounds.value.width * 0.45), 600)
+})
+
+// Multi-directional resize (composable handles all mouse/touch events)
+const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
+  getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
+  getLimits: () => ({ minW: 150, maxW: maxResizeWidth.value, minH: 100, maxH: maxLegendHeight.value }),
+  onEnd: ({ x, y, width, height }) => {
+    posX.value = x
+    posY.value = y
+    currentWidth.value = width
+    currentHeight.value = height
+    legendStore.updateSize(width, height)
+    legendStore.updatePosition(x, y)
+    detectStickyEdges()
+  }
+})
+
 // Post-render scrollbar detection: reduce items until content fits without scrollbar
 function checkAndFixScrollbar() {
   nextTick(() => {
@@ -707,26 +727,6 @@ watch(isResizing, (resizing) => {
   if (!resizing) {
     scrollbarCorrection.value = 0
     checkAndFixScrollbar()
-  }
-})
-
-// Max resize width (45% of container for manual, more generous than auto's 25%)
-const maxResizeWidth = computed(() => {
-  return Math.min(Math.round(containerBounds.value.width * 0.45), 600)
-})
-
-// Multi-directional resize (composable handles all mouse/touch events)
-const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
-  getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
-  getLimits: () => ({ minW: 150, maxW: maxResizeWidth.value, minH: 100, maxH: maxLegendHeight.value }),
-  onEnd: ({ x, y, width, height }) => {
-    posX.value = x
-    posY.value = y
-    currentWidth.value = width
-    currentHeight.value = height
-    legendStore.updateSize(width, height)
-    legendStore.updatePosition(x, y)
-    detectStickyEdges()
   }
 })
 
