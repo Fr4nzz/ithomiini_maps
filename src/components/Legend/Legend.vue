@@ -1628,7 +1628,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   max-width: 600px;
   min-height: 80px;
   /* max-height is set dynamically via positionStyle */
-  overflow: visible; /* Allow toolbar to overflow upwards */
+  overflow: visible; /* Resize zones extend beyond edges; legend-content handles scrolling */
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
