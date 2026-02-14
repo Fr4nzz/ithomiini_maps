@@ -9,7 +9,6 @@ import {
   Palette,
   Layers,
   Type,
-  Circle,
   MapPin,
   WrapText
 } from 'lucide-vue-next'
@@ -17,6 +16,7 @@ import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { computePopupPosition } from '../../composables/usePopupPosition'
 import LegendDropdown from './LegendDropdown.vue'
+import LegendColorPicker from './LegendColorPicker.vue'
 
 const props = defineProps({
   isExportMode: {
@@ -152,11 +152,6 @@ function updateTextScale(e) {
   legendStore.setTextScale(parseFloat(e.target.value))
 }
 
-// Update legend dot scale
-function updateLegendDotScale(e) {
-  legendStore.setDotScale(parseFloat(e.target.value))
-}
-
 // Update map point size
 function updateMapPointSize(e) {
   dataStore.mapStyle.pointSize = parseInt(e.target.value)
@@ -290,25 +285,6 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <!-- Legend Dot size -->
-        <div class="settings-row">
-          <label class="settings-label">
-            <Circle :size="14" />
-            Dot Size
-          </label>
-          <div class="settings-control">
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              :value="legendStore.dotScale"
-              @input="updateLegendDotScale"
-            />
-            <span class="value-display">{{ (legendStore.dotScale * 100).toFixed(0) }}%</span>
-          </div>
-        </div>
-
         <!-- Divider -->
         <div class="settings-divider"></div>
 
@@ -422,10 +398,12 @@ onUnmounted(() => {
             Border Color
           </label>
           <div class="settings-control color-control">
-            <input
-              type="color"
-              v-model="dataStore.mapStyle.borderColor"
-              class="color-picker"
+            <LegendColorPicker
+              trigger-type="swatch"
+              :color="dataStore.mapStyle.borderColor"
+              :default-color="'#ffffff'"
+              :show-reset="false"
+              @update:color="dataStore.mapStyle.borderColor = $event"
             />
             <input
               type="text"
@@ -695,25 +673,6 @@ onUnmounted(() => {
 /* Color control */
 .color-control {
   gap: 8px;
-}
-
-.color-picker {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  cursor: pointer;
-  background: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 2px;
-  border: none;
 }
 
 .color-input {

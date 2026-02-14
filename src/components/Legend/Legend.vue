@@ -432,7 +432,7 @@ const autoWidth = computed(() => {
   }
 
   // Add dot size + gap + padding + extra margin
-  const dotSz = Math.round(10 * legendStore.dotScale)
+  const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
   const padding = 16 * 2 // left + right content padding
   const gap = 8
   const scrollbarWidth = 8
@@ -443,9 +443,14 @@ const autoWidth = computed(() => {
   return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
 })
 
-// Max legend height based on container (80% of map height)
+// Max legend height based on container (80% of map height) — hard cap for resize
 const maxLegendHeight = computed(() => {
   return Math.floor(containerBounds.value.height * 0.80)
+})
+
+// Target height for auto-sizing (smaller than the hard cap to avoid giant legends)
+const targetLegendHeight = computed(() => {
+  return Math.floor(containerBounds.value.height * 0.50)
 })
 
 // Item limit computed from available space (no post-render adjustment needed;
@@ -459,7 +464,7 @@ const effectiveMaxItems = computed(() => {
   const titleHeight = 32
   const padding = 24
 
-  const available = maxLegendHeight.value - titleHeight - padding
+  const available = targetLegendHeight.value - titleHeight - padding
 
   // Compute group overhead from actual data instead of fixed multiplier.
   // When grouped, each species gets a header row. If most species have only
@@ -514,8 +519,8 @@ const autoHeight = computed(() => {
   const groupHeaderHeight = fontSizePx + 10
   const idealHeight = titleHeight + (totalItems * itemHeight) + (groupHeaders * groupHeaderHeight) + moreHeight + padding
 
-  // Cap at 75% of container height
-  return Math.min(Math.max(Math.ceil(idealHeight), 80), maxLegendHeight.value)
+  // Cap at target height (50% of container) for auto-sizing
+  return Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
 })
 
 // Effective width (auto or manual)
@@ -551,7 +556,7 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
 })
 
 // Scaled sizes
-const dotSize = computed(() => Math.round(10 * legendStore.dotScale))
+const dotSize = computed(() => Math.max(6, Math.min(16, dataStore.mapStyle.pointSize)))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
 
 // Position style

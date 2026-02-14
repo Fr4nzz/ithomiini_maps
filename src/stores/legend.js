@@ -27,7 +27,6 @@ export const useLegendStore = defineStore('legend', () => {
 
   const showLegend = ref(true)
   const textScale = ref(getStorage('legend-text-scale', 1))
-  const dotScale = ref(getStorage('legend-dot-scale', 1))
   // ═══════════════════════════════════════════════════════════════════════════
   // BEHAVIOR SETTINGS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -276,11 +275,6 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-text-scale', scale)
   }
 
-  function setDotScale(scale) {
-    dotScale.value = scale
-    setStorage('legend-dot-scale', scale)
-  }
-
   function setStickyEdges(enabled) {
     stickyEdges.value = enabled
     setStorage('legend-sticky', enabled)
@@ -375,7 +369,6 @@ export const useLegendStore = defineStore('legend', () => {
     resetSpeciesStyling()
     resetShapeSettings()
     resetRef(textScale, 'legend-text-scale', 1)
-    resetRef(dotScale, 'legend-dot-scale', 1)
     resetRef(stickyEdges, 'legend-sticky', true)
     resetRef(groupingSettings, 'legend-grouping', {
       enabled: true,
@@ -650,7 +643,6 @@ export const useLegendStore = defineStore('legend', () => {
     size,
     showLegend,
     textScale,
-    dotScale,
     stickyEdges,
     snapThreshold,
     customLabels,
@@ -695,7 +687,6 @@ export const useLegendStore = defineStore('legend', () => {
     updatePosition,
     updateSize,
     setTextScale,
-    setDotScale,
     setStickyEdges,
     setCustomLabel,
     setCustomColor,
