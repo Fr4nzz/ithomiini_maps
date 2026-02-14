@@ -238,10 +238,76 @@ const sortedAllItems = computed(() => {
   return items
 })
 
+// Fair distribution of legend slots across groups.
+// When grouped, allocates slots equally to each group so every group
+// gets representation (e.g., half Sanger, half iNaturalist).
+function fairGroupedSlice(allItems, maxItems) {
+  const groups = new Map()
+  for (const item of allItems) {
+    const group = getGroupForItem(item.label)
+    if (group) {
+      if (!groups.has(group)) groups.set(group, [])
+      groups.get(group).push(item)
+    }
+  }
+
+  const groupNames = [...groups.keys()]
+  const numGroups = groupNames.length
+  if (numGroups === 0) return allItems.slice(0, maxItems)
+
+  // Equal base allocation per group
+  const basePerGroup = Math.floor(maxItems / numGroups)
+  let remainder = maxItems - basePerGroup * numGroups
+
+  // Allocate: base + up to 1 extra (remainder goes to largest groups first)
+  const allocations = new Map()
+  const bySize = [...groupNames].sort((a, b) => groups.get(b).length - groups.get(a).length)
+
+  for (const name of bySize) {
+    const extra = remainder > 0 ? 1 : 0
+    if (remainder > 0) remainder--
+    allocations.set(name, Math.min(basePerGroup + extra, groups.get(name).length))
+  }
+
+  // Redistribute unused slots from small groups to larger ones
+  let totalAlloc = 0
+  for (const v of allocations.values()) totalAlloc += v
+  let surplus = maxItems - totalAlloc
+
+  while (surplus > 0) {
+    let distributed = false
+    for (const name of bySize) {
+      if (surplus <= 0) break
+      if (allocations.get(name) < groups.get(name).length) {
+        allocations.set(name, allocations.get(name) + 1)
+        surplus--
+        distributed = true
+      }
+    }
+    if (!distributed) break
+  }
+
+  // Collect items preserving original group order
+  const result = []
+  for (const name of groupNames) {
+    const quota = allocations.get(name) || 0
+    result.push(...groups.get(name).slice(0, quota))
+  }
+
+  return result
+}
+
 // Get items sliced to fit, with hidden items appended for edit mode
 const legendItems = computed(() => {
   const maxItems = effectiveMaxItems.value
-  const items = sortedAllItems.value.slice(0, maxItems)
+  let items
+
+  // When grouping is active, distribute slots fairly across groups
+  if (legendStore.isGrouped) {
+    items = fairGroupedSlice(sortedAllItems.value, maxItems)
+  } else {
+    items = sortedAllItems.value.slice(0, maxItems)
+  }
 
   // Add hidden items at the end (for edit mode)
   if (!isExportMode.value) {
@@ -450,7 +516,7 @@ const maxLegendHeight = computed(() => {
 
 // Target height for auto-sizing (smaller than the hard cap to avoid giant legends)
 const targetLegendHeight = computed(() => {
-  return Math.floor(containerBounds.value.height * 0.50)
+  return Math.floor(containerBounds.value.height * 0.75)
 })
 
 // Item limit computed from available space (no post-render adjustment needed;
