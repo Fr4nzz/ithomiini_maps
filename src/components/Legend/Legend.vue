@@ -1655,7 +1655,18 @@ watch(isExportMode, (enabled, wasEnabled) => {
 .legend-container.is-hovered:not(.is-export) {
   border-color: var(--color-accent, #4ade80);
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
-  /* Keep all corners rounded — toolbar renders behind (z-index: -1) so green border stays visible */
+}
+
+/* Invisible hover bridge above legend — keeps mouse "inside" the container
+   when crossing the gap between legend and floating toolbar */
+.legend-container::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: -1px;
+  right: -1px;
+  height: 10px; /* Covers the 2px gap plus toolbar overlap */
+  pointer-events: auto;
 }
 
 .legend-container.is-dragging {

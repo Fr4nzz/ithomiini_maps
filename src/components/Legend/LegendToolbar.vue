@@ -440,7 +440,7 @@ onUnmounted(() => {
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
   border-radius: 8px; /* Fully rounded — separate floating element */
   position: absolute;
-  bottom: 100%; /* Float above legend — no gap so mouse can traverse without leaving */
+  bottom: calc(100% + 2px); /* Float above legend with small gap so green border is visible */
   left: -1px; /* Align with legend border */
   /* Let toolbar expand wider than legend so all buttons are reachable */
   right: auto;
