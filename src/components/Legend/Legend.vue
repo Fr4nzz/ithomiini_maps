@@ -1639,7 +1639,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 .legend-container.is-hovered:not(.is-export) {
   border-color: var(--color-accent, #4ade80);
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
-  border-radius: 8px 8px 0 0; /* Flat bottom corners where toolbar connects below */
+  /* Keep all corners rounded — toolbar renders behind (z-index: -1) so green border stays visible */
 }
 
 .legend-container.is-dragging {
