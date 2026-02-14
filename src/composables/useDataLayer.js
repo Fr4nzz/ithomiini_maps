@@ -291,6 +291,12 @@ export function useDataLayer(map, options = {}) {
     })
     colorExpression.push('#6b7280')
 
+    // Sort key: colored (legend) points render above grey (overflow) points
+    const shownLabelsArray = Array.from(shownLabels)
+    const sortKeyExpression = shownLabelsArray.length > 0
+      ? ['case', ['in', ['get', colorAttr], ['literal', shownLabelsArray]], 1, 0]
+      : 1
+
     const baseSize = style.pointSize
     const sizeExpression = [
       'interpolate', ['linear'], ['zoom'],
@@ -369,7 +375,8 @@ export function useDataLayer(map, options = {}) {
           'icon-image': iconImageExpression,
           'icon-size': iconSizeExpression,
           'icon-allow-overlap': true,
-          'icon-ignore-placement': true
+          'icon-ignore-placement': true,
+          'symbol-sort-key': sortKeyExpression
         },
         paint: { 'icon-opacity': style.fillOpacity }
       })
@@ -379,6 +386,9 @@ export function useDataLayer(map, options = {}) {
         type: 'circle',
         source: 'points-source',
         filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'],
+        layout: {
+          'circle-sort-key': sortKeyExpression
+        },
         paint: {
           'circle-radius': sizeExpression,
           'circle-color': colorExpression,
