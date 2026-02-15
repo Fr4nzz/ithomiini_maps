@@ -571,18 +571,24 @@ const effectiveMaxItems = computed(() => {
 // Calculate auto height from content.
 // Before measurement: use full target height so container is large enough
 // for measureAndTrimItems() to find the real cutoff.
-// After measurement: size to fit measured items exactly.
+// After measurement: if items were trimmed (overflow), keep full target height
+// so the container doesn't shrink due to inaccurate per-item estimates.
+// Only shrink-to-fit when ALL items fit (small data set).
 const autoHeight = computed(() => {
   if (measuredItemCount.value === null) {
     return targetLegendHeight.value
   }
+  // Items were trimmed → keep full target height (don't shrink)
+  if (measuredItemCount.value < sortedAllItems.value.length) {
+    return targetLegendHeight.value
+  }
+  // All items fit → size to content (estimate is fine for small counts)
   const fontSizePx = Math.round(14 * legendStore.textScale)
   const titleHeight = 32
-  const moreHeight = moreCount.value > 0 ? 40 : 0
   const padding = 24
-  const itemCount = Math.min(effectiveMaxItems.value, sortedAllItems.value.length)
+  const itemCount = sortedAllItems.value.length
   const itemHeight = fontSizePx + 10 + 2
-  const idealHeight = titleHeight + (itemCount * itemHeight) + moreHeight + padding
+  const idealHeight = titleHeight + (itemCount * itemHeight) + padding
   return Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
 })
 
@@ -1763,6 +1769,9 @@ watch(isExportMode, (enabled, wasEnabled) => {
      flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
   flex: 1 1 auto;
   min-height: 0;
+  /* Flex column so .legend-more can use margin-top:auto to fill empty space */
+  display: flex;
+  flex-direction: column;
 }
 
 .legend-container.is-export .legend-content {
@@ -1773,6 +1782,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -1900,7 +1910,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   font-style: italic;
   color: var(--color-text-muted, #666);
   padding-top: 8px;
-  margin-top: 8px;
+  margin-top: auto;
   border-top: 1px solid var(--color-border, #3d3d5c);
 }
 
