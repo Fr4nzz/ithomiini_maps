@@ -711,6 +711,21 @@ watch(isResizing, (resizing) => {
   }
 })
 
+// Re-measure when container dimensions change (horizontal resize causes text
+// reflow changing item heights; vertical resize changes available space).
+// We watch prevContainerBounds (set by containerResizeObserver) which is NOT
+// in the effectiveWidth → measuredItemCount dependency chain, so no loop risk.
+let containerResizeRemeasureTimeout = null
+watch(prevContainerBounds, (newBounds, oldBounds) => {
+  if (oldBounds.width > 0 && measuredItemCount.value !== null) {
+    if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
+    containerResizeRemeasureTimeout = setTimeout(() => {
+      measuredItemCount.value = null
+      nextTick(() => measureAndTrimItems())
+    }, 150)
+  }
+}, { deep: true })
+
 // Scaled sizes
 const dotSize = computed(() => Math.max(6, Math.min(16, dataStore.mapStyle.pointSize)))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
