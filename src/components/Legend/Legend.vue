@@ -536,42 +536,14 @@ const targetLegendHeight = computed(() => {
   return Math.floor(containerBounds.value.height * 0.75)
 })
 
-// Compute the rendered height for a single item label at a given width
-function computeItemHeight(label, fontSizePx, availableTextWidth, wrapLabels, gap) {
-  if (!wrapLabels) return fontSizePx + 10 + gap
-  const textWidth = measureTextWidth(label, fontSizePx)
-  // Account for hanging indent (padding-left: 1em, text-indent: -1em):
-  // Line 1 uses full availableTextWidth, subsequent lines lose 1em
-  const subsequentWidth = Math.max(20, availableTextWidth - fontSizePx)
-  let lines = 1
-  const remaining = textWidth - availableTextWidth
-  if (remaining > 0) {
-    lines += Math.ceil(remaining / subsequentWidth)
-  }
-  return Math.ceil(lines * fontSizePx * 1.35 + 6) + gap
-}
-
-// Available text width given legend width and current settings
-function getAvailableTextWidth(legendWidth, showCounts, indented) {
-  const contentPadding = 32 // 16px * 2
-  const dotSpace = 20
-  const countSpace = showCounts ? 40 : 0
-  const indentSpace = indented ? 20 : 0
-  return Math.max(50, legendWidth - contentPadding - dotSpace - countSpace - indentSpace)
-}
-
-// Post-render scrollbar correction: if canvas/DOM measurement mismatch causes
-// items to render taller than estimated, reduce item count until no scrollbar.
-const scrollbarCorrection = ref(0)
-
-// Item limit: walk items one by one, summing actual per-item heights until space runs out.
-let _lastLoggedEst = -1
-const effectiveMaxItems = computed(() => {
-  const fontSizePx = Math.round(14 * legendStore.textScale)
+// Generous upper-bound: how many items COULD fit (deliberately over-estimates).
+// The actual count is determined by post-render DOM measurement.
+const renderUpperBound = computed(() => {
+  const minItemHeight = 22 // smallest possible: fontSize(14) + padding(4+4)
   const gap = 2
   const titleHeight = 32
   const padding = 24
-  const moreIndicatorReserve = 40
+  const moreReserve = 40
 
   let availableHeight
   if (isResizing.value && resizeOverride.value) {
@@ -581,91 +553,31 @@ const effectiveMaxItems = computed(() => {
   } else {
     availableHeight = targetLegendHeight.value
   }
-  const available = availableHeight - titleHeight - padding - moreIndicatorReserve
 
-  let legendWidth
-  if (isResizing.value && resizeOverride.value) {
-    legendWidth = resizeOverride.value.width
-  } else if (!isAutoWidth.value && currentWidth.value) {
-    legendWidth = currentWidth.value
-  } else {
-    legendWidth = autoWidth.value || 250
-  }
-
-  const headersVisible = legendStore.isGrouped &&
-    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
-  const headerHeight = fontSizePx + 10 + gap
-  const wrapLabels = legendStore.wrapLabels
-  const availableTextWidth = getAvailableTextWidth(legendWidth, legendStore.showCounts, headersVisible)
-
-  const allItems = sortedAllItems.value
-  let usedHeight = 0
-  let count = 0
-  const groupsSeen = new Set()
-
-  for (let i = 0; i < allItems.length; i++) {
-    const label = allItems[i].customLabel || allItems[i].label
-    let rowHeight = computeItemHeight(label, fontSizePx, availableTextWidth, wrapLabels, gap)
-
-    if (headersVisible) {
-      const group = getGroupForItem(allItems[i].label)
-      if (group && !groupsSeen.has(group)) {
-        groupsSeen.add(group)
-        rowHeight += headerHeight
-      }
-    }
-
-    if (usedHeight + rowHeight > available) break
-    usedHeight += rowHeight
-    count++
-  }
-
-  const est = Math.max(1, count - scrollbarCorrection.value)
-  if (est !== _lastLoggedEst) {
-    console.log('[Legend] maxItems:', est, '| avail:', Math.round(available), 'px, used:', Math.round(usedHeight), 'px | w:', Math.round(legendWidth), scrollbarCorrection.value > 0 ? '| correction: -' + scrollbarCorrection.value : '')
-    _lastLoggedEst = est
-  }
-  return est
+  const available = availableHeight - titleHeight - padding - moreReserve
+  return Math.max(1, Math.ceil(available / (minItemHeight + gap)))
 })
 
-// Calculate auto height from content — sums exact per-item heights for displayed items
+// Post-render measured count (null = not yet measured, use upper bound)
+const measuredItemCount = ref(null)
+
+// The actual item limit: measured value when available, upper bound otherwise
+const effectiveMaxItems = computed(() => {
+  if (isResizing.value) return renderUpperBound.value
+  if (measuredItemCount.value !== null) return measuredItemCount.value
+  return renderUpperBound.value
+})
+
+// Calculate auto height from content (simple estimate — actual item count
+// is determined by post-render DOM measurement, not this calculation)
 const autoHeight = computed(() => {
-  const data = groupedLegendData.value
   const fontSizePx = Math.round(14 * legendStore.textScale)
-  const gap = 2
   const titleHeight = 32
   const moreHeight = moreCount.value > 0 ? 40 : 0
   const padding = 24
-
-  let legendWidth
-  if (!isAutoWidth.value && currentWidth.value) {
-    legendWidth = currentWidth.value
-  } else {
-    legendWidth = autoWidth.value || 250
-  }
-
-  const headersVisible = legendStore.isGrouped &&
-    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy)
-  const availableTextWidth = getAvailableTextWidth(legendWidth, legendStore.showCounts, headersVisible)
-  const headerHeight = fontSizePx + 10 + gap
-
-  // Sum exact heights for displayed items
-  let totalItemHeight = 0
-  let groupHeaders = 0
-  if (data.type === 'flat') {
-    for (const item of data.items) {
-      totalItemHeight += computeItemHeight(item.label, fontSizePx, availableTextWidth, legendStore.wrapLabels, gap)
-    }
-  } else if (data.groups) {
-    for (const group of data.groups) {
-      if (headersVisible) groupHeaders++
-      for (const item of group.items) {
-        totalItemHeight += computeItemHeight(item.label, fontSizePx, availableTextWidth, legendStore.wrapLabels, gap)
-      }
-    }
-  }
-
-  const idealHeight = titleHeight + totalItemHeight + (groupHeaders * headerHeight) + moreHeight + padding
+  const itemCount = Math.min(effectiveMaxItems.value, sortedAllItems.value.length)
+  const itemHeight = fontSizePx + 10 + 2
+  const idealHeight = titleHeight + (itemCount * itemHeight) + moreHeight + padding
   return Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
 })
 
@@ -701,32 +613,67 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   }
 })
 
-// Post-render scrollbar detection: reduce items until content fits without scrollbar
-function checkAndFixScrollbar() {
-  nextTick(() => {
-    const el = contentRef.value
-    if (!el || isResizing.value) return
-    if (el.scrollHeight > el.clientHeight + 2 && scrollbarCorrection.value < 10) {
-      scrollbarCorrection.value++
+// ═══════════════════════════════════════════════════════════════════════════
+// POST-RENDER DOM MEASUREMENT (render-then-measure pattern)
+// Instead of estimating item heights, we render a generous number of items
+// with overflow:hidden, then measure the actual DOM to find the exact cutoff.
+// ═══════════════════════════════════════════════════════════════════════════
+
+function measureAndTrimItems() {
+  const contentEl = contentRef.value
+  if (!contentEl || isResizing.value) return
+
+  const itemsEl = contentEl.querySelector('.legend-items')
+  if (!itemsEl || !itemsEl.children.length) return
+
+  const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
+  const contentPaddingBottom = 12
+  const moreIndicatorReserve = 40
+
+  const children = itemsEl.children
+  const totalSorted = sortedAllItems.value.length
+
+  // Check if ALL items fit without needing "+N more"
+  const lastChild = children[children.length - 1]
+  if (children.length >= totalSorted &&
+      lastChild.getBoundingClientRect().bottom <= contentBottom - contentPaddingBottom) {
+    if (measuredItemCount.value !== totalSorted) {
+      measuredItemCount.value = totalSorted
     }
-  })
+    return
+  }
+
+  // Not all fit — reserve space for "+N more" and find cutoff
+  const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
+  let count = 0
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].getBoundingClientRect().bottom > maxBottom) break
+    count++
+  }
+
+  count = Math.max(1, count)
+  if (count !== measuredItemCount.value) {
+    measuredItemCount.value = count
+  }
 }
 
-// Check after items change (which follows effectiveMaxItems changes)
+// Measure after DOM updates (covers initial load and data changes)
 watch(effectiveMaxItems, () => {
-  if (!isResizing.value) checkAndFixScrollbar()
+  if (!isResizing.value) {
+    nextTick(() => measureAndTrimItems())
+  }
 })
 
-// Reset correction when layout parameters change fundamentally
+// Re-measure when layout-affecting settings change
 watch([effectiveWidth, () => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
-  scrollbarCorrection.value = 0
+  measuredItemCount.value = null // Reset to upper bound, then re-measure
 })
 
-// Check after resize ends
+// Re-measure after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
-    scrollbarCorrection.value = 0
-    checkAndFixScrollbar()
+    measuredItemCount.value = null
+    nextTick(() => measureAndTrimItems())
   }
 })
 
@@ -1439,8 +1386,8 @@ watch(autoHeight, (newAutoHeight) => {
   }
 })
 
-// (Auto-sizing is handled by CSS overflow-y: auto on .legend-content,
-// combined with the computed effectiveMaxItems estimate above.)
+// (Auto-sizing is handled by overflow:hidden on .legend-content,
+// combined with post-render DOM measurement in measureAndTrimItems.)
 
 // Sync shown labels to the store so the map can grey out overflow items.
 // During resize, defer the sync to avoid rebuilding the map layer on every frame.
@@ -1784,8 +1731,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 
 .legend-content {
   padding: 12px 16px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   /* flex-basis: auto so the container sizes to content, then max-height caps it.
      flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
   flex: 1 1 auto;
