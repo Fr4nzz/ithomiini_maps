@@ -484,38 +484,22 @@ function measureTextWidth(text, fontSizePx) {
   return _measureSpan.getBoundingClientRect().width
 }
 
-// Collect all displayed label texts for width calculation
-const allDisplayedLabels = computed(() => {
-  const labels = []
-  const data = groupedLegendData.value
-  if (data.type === 'flat') {
-    for (const item of data.items) {
-      labels.push(item.label)
-    }
-  } else if (data.groups) {
-    for (const group of data.groups) {
-      // Include group header text
-      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
-        labels.push(group.name)
-      }
-      for (const item of group.items) {
-        labels.push(item.displayLabel || item.label)
-      }
-    }
-  }
-  return labels
-})
-
-// Calculate auto width from content
+// Calculate auto width from content.
+// Uses ALL sorted items' labels (not just displayed ones) so autoWidth is
+// stable across measurement changes. If autoWidth depended on
+// allDisplayedLabels (which changes when measuredItemCount changes), the
+// width would shift after measurement, making items reflow to different
+// heights — but no re-measurement would happen for that shift.
 const autoWidth = computed(() => {
-  const labels = allDisplayedLabels.value
-  if (!labels.length) return 200
+  const items = sortedAllItems.value
+  if (!items.length) return 200
 
   const maxContainerWidth = containerBounds.value.width * 0.25
   const fontSizePx = Math.round(14 * legendStore.textScale)
 
   let maxTextWidth = 0
-  for (const label of labels) {
+  for (const item of items) {
+    const label = item.displayLabel || item.label
     const width = measureTextWidth(label, fontSizePx)
     if (width > maxTextWidth) maxTextWidth = width
   }
@@ -650,16 +634,6 @@ function measureAndTrimItems() {
   const children = itemsEl.children
   const totalSorted = sortedAllItems.value.length
 
-  console.log('[Legend measure]', {
-    childrenInDOM: children.length,
-    totalSorted,
-    contentClientHeight: Math.round(contentEl.clientHeight),
-    renderUpperBound: renderUpperBound.value,
-    prevMeasured: measuredItemCount.value,
-    containerH: containerBounds.value.height,
-    targetH: targetLegendHeight.value
-  })
-
   // Check if ALL items fit without needing "+N more"
   const lastChild = children[children.length - 1]
   if (children.length >= totalSorted &&
@@ -667,7 +641,6 @@ function measureAndTrimItems() {
     if (measuredItemCount.value !== totalSorted) {
       measuredItemCount.value = totalSorted
     }
-    console.log('[Legend measure] all fit:', totalSorted)
     return
   }
 
@@ -683,7 +656,6 @@ function measureAndTrimItems() {
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
-  console.log('[Legend measure] result:', count, '| maxBottom:', Math.round(maxBottom - contentEl.getBoundingClientRect().top))
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
