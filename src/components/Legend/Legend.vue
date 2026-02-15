@@ -633,6 +633,39 @@ function measureAndTrimItems() {
 
   const children = itemsEl.children
   const totalSorted = sortedAllItems.value.length
+  const contentTop = contentEl.getBoundingClientRect().top
+
+  console.log('[Legend measure]', {
+    childrenInDOM: children.length,
+    totalSorted,
+    contentClientHeight: Math.round(contentEl.clientHeight),
+    contentOffsetWidth: contentEl.offsetWidth,
+    itemsOffsetWidth: itemsEl.offsetWidth,
+    renderUpperBound: renderUpperBound.value,
+    prevMeasured: measuredItemCount.value,
+    containerH: containerBounds.value.height,
+    containerW: containerBounds.value.width,
+    targetH: targetLegendHeight.value,
+    effectiveW: effectiveWidth.value,
+    autoW: autoWidth.value,
+    isAutoW: isAutoWidth.value,
+    currentW: currentWidth.value,
+    wrapLabels: legendStore.wrapLabels,
+    isGrouped: legendStore.isGrouped
+  })
+
+  // Log positions of first N items to understand heights
+  const itemPositions = []
+  for (let i = 0; i < Math.min(children.length, 10); i++) {
+    const r = children[i].getBoundingClientRect()
+    itemPositions.push({
+      i,
+      top: Math.round(r.top - contentTop),
+      bottom: Math.round(r.bottom - contentTop),
+      height: Math.round(r.height)
+    })
+  }
+  console.log('[Legend measure] items:', itemPositions)
 
   // Check if ALL items fit without needing "+N more"
   const lastChild = children[children.length - 1]
@@ -641,6 +674,7 @@ function measureAndTrimItems() {
     if (measuredItemCount.value !== totalSorted) {
       measuredItemCount.value = totalSorted
     }
+    console.log('[Legend measure] all fit:', totalSorted)
     return
   }
 
@@ -656,6 +690,7 @@ function measureAndTrimItems() {
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
+  console.log('[Legend measure] result:', count, '| maxBottom:', Math.round(maxBottom - contentTop))
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
@@ -696,8 +731,14 @@ watch(isResizing, (resizing) => {
 let containerResizeRemeasureTimeout = null
 watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
+    console.log('[Legend resize] container changed', {
+      oldW: oldBounds.width, newW: newBounds.width,
+      oldH: oldBounds.height, newH: newBounds.height,
+      measuredItemCount: measuredItemCount.value
+    })
     if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
     containerResizeRemeasureTimeout = setTimeout(() => {
+      console.log('[Legend resize] debounce fired, resetting measuredItemCount')
       measuredItemCount.value = null
       nextTick(() => measureAndTrimItems())
     }, 150)
