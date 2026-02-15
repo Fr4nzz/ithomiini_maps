@@ -87,8 +87,14 @@ const showToolbar = showEditUI
 
 // (hasModalOpen removed — showEditUI now used directly for group headers)
 
-// Get container dimensions
+// Get container dimensions — prefer the reactive prevContainerBounds (updated by
+// ResizeObserver) so that autoWidth/maxLegendHeight/targetLegendHeight reactively
+// update when the container resizes. Falls back to direct DOM read before the
+// ResizeObserver has populated prevContainerBounds.
 const containerBounds = computed(() => {
+  if (prevContainerBounds.value.width > 0) {
+    return prevContainerBounds.value
+  }
   if (props.containerRef) {
     return {
       width: props.containerRef.clientWidth || 800,
