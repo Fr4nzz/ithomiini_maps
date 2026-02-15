@@ -550,6 +550,8 @@ const renderUpperBound = computed(() => {
 
 // Post-render measured count (null = not yet measured, use upper bound)
 const measuredItemCount = ref(null)
+// Tracks measurement passes (0 = fresh, 1 = first pass done, 2 = final/verified)
+const measurePassCount = ref(0)
 
 // The actual item limit: measured value when available, upper bound otherwise
 const effectiveMaxItems = computed(() => {
@@ -631,18 +633,26 @@ function measureAndTrimItems() {
   const contentPaddingBottom = 12
   const moreIndicatorReserve = 40
 
-  const children = itemsEl.children
+  // In grouped mode, walk individual .legend-item elements (not .legend-group
+  // containers). Each item's getBoundingClientRect already includes any group
+  // header height above it, so the bottom check naturally accounts for overhead.
+  const isGroupedView = itemsEl.classList.contains('grouped')
+  const measurableItems = isGroupedView
+    ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
+    : itemsEl.children
+
   const totalSorted = sortedAllItems.value.length
   const contentTop = contentEl.getBoundingClientRect().top
 
   console.log('[Legend measure]', {
-    childrenInDOM: children.length,
+    childrenInDOM: measurableItems.length,
     totalSorted,
     contentClientHeight: Math.round(contentEl.clientHeight),
     contentOffsetWidth: contentEl.offsetWidth,
     itemsOffsetWidth: itemsEl.offsetWidth,
     renderUpperBound: renderUpperBound.value,
     prevMeasured: measuredItemCount.value,
+    measurePass: measurePassCount.value,
     containerH: containerBounds.value.height,
     containerW: containerBounds.value.width,
     targetH: targetLegendHeight.value,
@@ -651,13 +661,13 @@ function measureAndTrimItems() {
     isAutoW: isAutoWidth.value,
     currentW: currentWidth.value,
     wrapLabels: legendStore.wrapLabels,
-    isGrouped: legendStore.isGrouped
+    isGrouped: isGroupedView
   })
 
   // Log positions of first N items to understand heights
   const itemPositions = []
-  for (let i = 0; i < Math.min(children.length, 10); i++) {
-    const r = children[i].getBoundingClientRect()
+  for (let i = 0; i < Math.min(measurableItems.length, 10); i++) {
+    const r = measurableItems[i].getBoundingClientRect()
     itemPositions.push({
       i,
       top: Math.round(r.top - contentTop),
@@ -667,10 +677,12 @@ function measureAndTrimItems() {
   }
   console.log('[Legend measure] items:', itemPositions)
 
+  if (!measurableItems.length) return
+
   // Check if ALL items fit without needing "+N more"
-  const lastChild = children[children.length - 1]
-  if (children.length >= totalSorted &&
-      lastChild.getBoundingClientRect().bottom <= contentBottom - contentPaddingBottom) {
+  const lastItem = measurableItems[measurableItems.length - 1]
+  if (measurableItems.length >= totalSorted &&
+      lastItem.getBoundingClientRect().bottom <= contentBottom - contentPaddingBottom) {
     if (measuredItemCount.value !== totalSorted) {
       measuredItemCount.value = totalSorted
     }
@@ -681,8 +693,8 @@ function measureAndTrimItems() {
   // Not all fit — reserve space for "+N more" and find cutoff
   const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
   let count = 0
-  for (let i = 0; i < children.length; i++) {
-    if (children[i].getBoundingClientRect().bottom > maxBottom) break
+  for (let i = 0; i < measurableItems.length; i++) {
+    if (measurableItems[i].getBoundingClientRect().bottom > maxBottom) break
     count++
   }
 
@@ -691,6 +703,46 @@ function measureAndTrimItems() {
     measuredItemCount.value = count
   }
   console.log('[Legend measure] result:', count, '| maxBottom:', Math.round(maxBottom - contentTop))
+
+  // After first pass, schedule verification to reclaim empty space
+  // (the final render may have shorter items than during measurement)
+  if (measurePassCount.value < 2 && count < totalSorted) {
+    measurePassCount.value = Math.max(measurePassCount.value, 1)
+    nextTick(() => nextTick(() => verifyAndReclaim()))
+  }
+}
+
+// Verification pass: after the first measurement reduces item count and Vue
+// re-renders, check if there's significant remaining space (items ended up
+// shorter than during measurement due to different group structure or wrapping).
+// If so, render more items and do a final measurement pass.
+function verifyAndReclaim() {
+  if (measurePassCount.value >= 2 || isResizing.value) return
+  const contentEl = contentRef.value
+  if (!contentEl) return
+  const itemsEl = contentEl.querySelector('.legend-items')
+  if (!itemsEl || measuredItemCount.value >= sortedAllItems.value.length) return
+
+  // Find last individual item
+  const isGroupedView = itemsEl.classList.contains('grouped')
+  const allItems = isGroupedView
+    ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
+    : itemsEl.children
+  const lastItem = allItems.length ? allItems[allItems.length - 1] : null
+  if (!lastItem) return
+
+  const maxBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight - 12 - 40
+  const remaining = maxBottom - lastItem.getBoundingClientRect().bottom
+  if (remaining < 22) return // No meaningful space
+
+  console.log('[Legend verify] remaining space:', Math.round(remaining),
+    '| current items:', measuredItemCount.value)
+
+  // Estimate extra items and re-measure
+  const extra = Math.max(1, Math.floor(remaining / 22))
+  measurePassCount.value = 2
+  measuredItemCount.value = Math.min(measuredItemCount.value + extra, sortedAllItems.value.length)
+  nextTick(() => nextTick(() => measureAndTrimItems()))
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
@@ -704,6 +756,7 @@ watch(contentRef, (el, oldEl) => {
 // Re-measure when layout-affecting settings change
 watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
   measuredItemCount.value = null
+  measurePassCount.value = 0
   nextTick(() => measureAndTrimItems())
 })
 
@@ -713,6 +766,7 @@ watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendSt
 // infinite reactive loop.
 watch(sortedAllItems, () => {
   measuredItemCount.value = null
+  measurePassCount.value = 0
   nextTick(() => measureAndTrimItems())
 })
 
@@ -720,6 +774,7 @@ watch(sortedAllItems, () => {
 watch(isResizing, (resizing) => {
   if (!resizing) {
     measuredItemCount.value = null
+    measurePassCount.value = 0
     nextTick(() => measureAndTrimItems())
   }
 })
@@ -740,6 +795,7 @@ watch(prevContainerBounds, (newBounds, oldBounds) => {
     containerResizeRemeasureTimeout = setTimeout(() => {
       console.log('[Legend resize] debounce fired, resetting measuredItemCount')
       measuredItemCount.value = null
+      measurePassCount.value = 0
       nextTick(() => measureAndTrimItems())
     }, 150)
   }
