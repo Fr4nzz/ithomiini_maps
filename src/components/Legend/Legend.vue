@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
@@ -553,6 +553,61 @@ const measuredItemCount = ref(null)
 // Tracks measurement passes (0 = fresh, 1 = first pass done, 2 = final/verified)
 const measurePassCount = ref(0)
 
+// ── Centralized measurement scheduler ──────────────────────────────────
+// Prevents overlapping measurement cycles by ensuring only ONE cycle is
+// in-flight at a time.  Uses double-requestAnimationFrame instead of
+// nextTick so the browser has completed CSS layout before we read
+// getBoundingClientRect() values.
+let pendingMeasurementRAF = null
+let pendingVerifyRAF = null
+
+/**
+ * Schedule a full measurement cycle.  All watchers call this instead of
+ * directly invoking measureAndTrimItems().
+ * @param {boolean} resetState  true → reset measuredItemCount/measurePassCount
+ *                              false → keep current state (initial mount, verify re-measure)
+ */
+function scheduleMeasurement(resetState = true) {
+  // Cancel any in-flight measurement or verify from a prior cycle
+  if (pendingMeasurementRAF !== null) {
+    cancelAnimationFrame(pendingMeasurementRAF)
+    pendingMeasurementRAF = null
+  }
+  if (pendingVerifyRAF !== null) {
+    cancelAnimationFrame(pendingVerifyRAF)
+    pendingVerifyRAF = null
+  }
+  if (resetState) {
+    measuredItemCount.value = null
+    measurePassCount.value = 0
+  }
+  // Double rAF: first fires after Vue DOM update + browser layout;
+  // second fires after paint — getBoundingClientRect() is accurate.
+  pendingMeasurementRAF = requestAnimationFrame(() => {
+    pendingMeasurementRAF = requestAnimationFrame(() => {
+      pendingMeasurementRAF = null
+      measureAndTrimItems()
+    })
+  })
+}
+
+/**
+ * Schedule the verify-and-reclaim pass after an initial measurement.
+ * A subsequent scheduleMeasurement() call will cancel this if a new
+ * full cycle is triggered before the verify runs.
+ */
+function scheduleVerify() {
+  if (pendingVerifyRAF !== null) {
+    cancelAnimationFrame(pendingVerifyRAF)
+  }
+  pendingVerifyRAF = requestAnimationFrame(() => {
+    pendingVerifyRAF = requestAnimationFrame(() => {
+      pendingVerifyRAF = null
+      verifyAndReclaim()
+    })
+  })
+}
+
 // The actual item limit: measured value when available, upper bound otherwise
 const effectiveMaxItems = computed(() => {
   if (isResizing.value) return renderUpperBound.value
@@ -708,7 +763,7 @@ function measureAndTrimItems() {
   // (the final render may have shorter items than during measurement)
   if (measurePassCount.value < 2 && count < totalSorted) {
     measurePassCount.value = Math.max(measurePassCount.value, 1)
-    nextTick(() => nextTick(() => verifyAndReclaim()))
+    scheduleVerify()
   }
 }
 
@@ -742,22 +797,20 @@ function verifyAndReclaim() {
   const extra = Math.max(1, Math.floor(remaining / 22))
   measurePassCount.value = 2
   measuredItemCount.value = Math.min(measuredItemCount.value + extra, sortedAllItems.value.length)
-  nextTick(() => nextTick(() => measureAndTrimItems()))
+  scheduleMeasurement(false)  // Don't reset — verify already set measurePassCount = 2
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
 // (legend appears via v-if after data loads), trigger the first measurement.
 watch(contentRef, (el, oldEl) => {
   if (el && !oldEl) {
-    nextTick(() => measureAndTrimItems())
+    scheduleMeasurement(false)  // State already at defaults on mount
   }
 })
 
 // Re-measure when layout-affecting settings change
 watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
-  measuredItemCount.value = null
-  measurePassCount.value = 0
-  nextTick(() => measureAndTrimItems())
+  scheduleMeasurement()
 })
 
 // Re-measure when data changes (new items, filters applied, colorBy changed)
@@ -765,17 +818,13 @@ watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendSt
 // measuredItemCount (via legendItems → autoWidth), which would create an
 // infinite reactive loop.
 watch(sortedAllItems, () => {
-  measuredItemCount.value = null
-  measurePassCount.value = 0
-  nextTick(() => measureAndTrimItems())
+  scheduleMeasurement()
 })
 
 // Re-measure after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
-    measuredItemCount.value = null
-    measurePassCount.value = 0
-    nextTick(() => measureAndTrimItems())
+    scheduleMeasurement()
   }
 })
 
@@ -794,9 +843,7 @@ watch(prevContainerBounds, (newBounds, oldBounds) => {
     if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
     containerResizeRemeasureTimeout = setTimeout(() => {
       console.log('[Legend resize] debounce fired, resetting measuredItemCount')
-      measuredItemCount.value = null
-      measurePassCount.value = 0
-      nextTick(() => measureAndTrimItems())
+      scheduleMeasurement()
     }, 150)
   }
 }, { deep: true })
@@ -1453,6 +1500,11 @@ onUnmounted(() => {
     legendResizeObserver.disconnect()
     legendResizeObserver = null
   }
+
+  // Clean up measurement scheduler
+  if (pendingMeasurementRAF !== null) cancelAnimationFrame(pendingMeasurementRAF)
+  if (pendingVerifyRAF !== null) cancelAnimationFrame(pendingVerifyRAF)
+  if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
 })
 
 // Debounced window resize handler
