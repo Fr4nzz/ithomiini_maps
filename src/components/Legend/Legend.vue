@@ -568,9 +568,14 @@ const effectiveMaxItems = computed(() => {
   return renderUpperBound.value
 })
 
-// Calculate auto height from content (simple estimate — actual item count
-// is determined by post-render DOM measurement, not this calculation)
+// Calculate auto height from content.
+// Before measurement: use full target height so container is large enough
+// for measureAndTrimItems() to find the real cutoff.
+// After measurement: size to fit measured items exactly.
 const autoHeight = computed(() => {
+  if (measuredItemCount.value === null) {
+    return targetLegendHeight.value
+  }
   const fontSizePx = Math.round(14 * legendStore.textScale)
   const titleHeight = 32
   const moreHeight = moreCount.value > 0 ? 40 : 0
@@ -633,6 +638,16 @@ function measureAndTrimItems() {
   const children = itemsEl.children
   const totalSorted = sortedAllItems.value.length
 
+  console.log('[Legend measure]', {
+    childrenInDOM: children.length,
+    totalSorted,
+    contentClientHeight: Math.round(contentEl.clientHeight),
+    renderUpperBound: renderUpperBound.value,
+    prevMeasured: measuredItemCount.value,
+    containerH: containerBounds.value.height,
+    targetH: targetLegendHeight.value
+  })
+
   // Check if ALL items fit without needing "+N more"
   const lastChild = children[children.length - 1]
   if (children.length >= totalSorted &&
@@ -640,6 +655,7 @@ function measureAndTrimItems() {
     if (measuredItemCount.value !== totalSorted) {
       measuredItemCount.value = totalSorted
     }
+    console.log('[Legend measure] all fit:', totalSorted)
     return
   }
 
@@ -655,11 +671,13 @@ function measureAndTrimItems() {
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
+  console.log('[Legend measure] result:', count, '| maxBottom:', Math.round(maxBottom - contentEl.getBoundingClientRect().top))
 }
 
-// Measure after DOM updates (covers initial load and data changes)
-watch(effectiveMaxItems, () => {
-  if (!isResizing.value) {
+// Initial measurement: when contentRef first becomes a DOM element
+// (legend appears via v-if after data loads), trigger the first measurement.
+watch(contentRef, (el, oldEl) => {
+  if (el && !oldEl) {
     nextTick(() => measureAndTrimItems())
   }
 })
@@ -667,6 +685,7 @@ watch(effectiveMaxItems, () => {
 // Re-measure when layout-affecting settings change
 watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
   measuredItemCount.value = null
+  nextTick(() => measureAndTrimItems())
 })
 
 // Re-measure when data changes (new items, filters applied, colorBy changed)
@@ -675,6 +694,7 @@ watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendSt
 // infinite reactive loop.
 watch(sortedAllItems, () => {
   measuredItemCount.value = null
+  nextTick(() => measureAndTrimItems())
 })
 
 // Re-measure after resize ends
@@ -718,13 +738,12 @@ const positionStyle = computed(() => {
   // X position
   style.left = posX.value + 'px'
 
-  // Height - only set explicit height in manual mode (user has resized).
-  // In auto mode, let the container size to its content, capped by maxHeight.
-  if (!isAutoHeight.value) {
-    const h = effectiveHeight.value
-    if (h && h !== 'auto') {
-      style.height = h + 'px'
-    }
+  // Height - always set explicit height so the container has a known size
+  // for measureAndTrimItems(). In auto mode, autoHeight returns targetLegendHeight
+  // before measurement (giving room to measure) and the exact fit after.
+  const h = effectiveHeight.value
+  if (h && h !== 'auto') {
+    style.height = h + 'px'
   }
 
   return style
