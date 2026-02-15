@@ -665,8 +665,16 @@ watch(effectiveMaxItems, () => {
 })
 
 // Re-measure when layout-affecting settings change
-watch([effectiveWidth, () => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
-  measuredItemCount.value = null // Reset to upper bound, then re-measure
+watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
+  measuredItemCount.value = null
+})
+
+// Re-measure when data changes (new items, filters applied, colorBy changed)
+// NOTE: effectiveWidth is NOT watched here — it depends transitively on
+// measuredItemCount (via legendItems → autoWidth), which would create an
+// infinite reactive loop.
+watch(sortedAllItems, () => {
+  measuredItemCount.value = null
 })
 
 // Re-measure after resize ends
