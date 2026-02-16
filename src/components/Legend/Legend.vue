@@ -85,8 +85,6 @@ const bottomAttributionMargin = computed(() => {
 const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
 const showToolbar = showEditUI
 
-// (hasModalOpen removed — showEditUI now used directly for group headers)
-
 // Get container dimensions — prefer the reactive prevContainerBounds (updated by
 // ResizeObserver) so that autoWidth/maxLegendHeight/targetLegendHeight reactively
 // update when the container resizes. Falls back to direct DOM read before the
@@ -697,40 +695,6 @@ function measureAndTrimItems() {
     : itemsEl.children
 
   const totalSorted = sortedAllItems.value.length
-  const contentTop = contentEl.getBoundingClientRect().top
-
-  console.log('[Legend measure]', {
-    childrenInDOM: measurableItems.length,
-    totalSorted,
-    contentClientHeight: Math.round(contentEl.clientHeight),
-    contentOffsetWidth: contentEl.offsetWidth,
-    itemsOffsetWidth: itemsEl.offsetWidth,
-    renderUpperBound: renderUpperBound.value,
-    prevMeasured: measuredItemCount.value,
-    measurePass: measurePassCount.value,
-    containerH: containerBounds.value.height,
-    containerW: containerBounds.value.width,
-    targetH: targetLegendHeight.value,
-    effectiveW: effectiveWidth.value,
-    autoW: autoWidth.value,
-    isAutoW: isAutoWidth.value,
-    currentW: currentWidth.value,
-    wrapLabels: legendStore.wrapLabels,
-    isGrouped: isGroupedView
-  })
-
-  // Log positions of first N items to understand heights
-  const itemPositions = []
-  for (let i = 0; i < Math.min(measurableItems.length, 10); i++) {
-    const r = measurableItems[i].getBoundingClientRect()
-    itemPositions.push({
-      i,
-      top: Math.round(r.top - contentTop),
-      bottom: Math.round(r.bottom - contentTop),
-      height: Math.round(r.height)
-    })
-  }
-  console.log('[Legend measure] items:', itemPositions)
 
   if (!measurableItems.length) return
 
@@ -741,7 +705,6 @@ function measureAndTrimItems() {
     if (measuredItemCount.value !== totalSorted) {
       measuredItemCount.value = totalSorted
     }
-    console.log('[Legend measure] all fit:', totalSorted)
     return
   }
 
@@ -757,7 +720,6 @@ function measureAndTrimItems() {
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
-  console.log('[Legend measure] result:', count, '| maxBottom:', Math.round(maxBottom - contentTop))
 
   // After first pass, schedule verification to reclaim empty space
   // (the final render may have shorter items than during measurement)
@@ -789,9 +751,6 @@ function verifyAndReclaim() {
   const maxBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight - 12 - 40
   const remaining = maxBottom - lastItem.getBoundingClientRect().bottom
   if (remaining < 22) return // No meaningful space
-
-  console.log('[Legend verify] remaining space:', Math.round(remaining),
-    '| current items:', measuredItemCount.value)
 
   // Estimate extra items and re-measure
   const extra = Math.max(1, Math.floor(remaining / 22))
@@ -835,14 +794,8 @@ watch(isResizing, (resizing) => {
 let containerResizeRemeasureTimeout = null
 watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
-    console.log('[Legend resize] container changed', {
-      oldW: oldBounds.width, newW: newBounds.width,
-      oldH: oldBounds.height, newH: newBounds.height,
-      measuredItemCount: measuredItemCount.value
-    })
     if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
     containerResizeRemeasureTimeout = setTimeout(() => {
-      console.log('[Legend resize] debounce fired, resetting measuredItemCount')
       scheduleMeasurement()
     }, 150)
   }
@@ -1621,16 +1574,6 @@ function setupLegendResizeObserver() {
 
   legendResizeObserver.observe(legendRef.value)
 }
-
-// Watch for container bounds changes (triggered by export mode toggle or other factors)
-// Note: This is a backup - main handling is in handleWindowResize and isExportMode watcher
-watch(containerBounds, (newBounds) => {
-  // Only update if not currently dragging
-  if (isDragging.value) return
-
-  // Just track bounds changes, don't reposition here
-  // Repositioning is handled by handleWindowResize and isExportMode watcher
-}, { deep: true })
 
 // Watch for export mode changes - capture sticky state BEFORE container resizes
 // The actual repositioning is handled by the containerResizeObserver
