@@ -768,9 +768,15 @@ watch(contentRef, (el, oldEl) => {
 })
 
 // Re-measure when layout-affecting settings change
-watch([() => legendStore.wrapLabels, () => legendStore.textScale, () => legendStore.showCounts], () => {
+watch([
+  () => legendStore.wrapLabels,
+  () => legendStore.textScale,
+  () => legendStore.showCounts,
+  () => legendStore.isGrouped,
+  () => legendStore.groupingSettings,
+], () => {
   scheduleMeasurement()
-})
+}, { deep: true })
 
 // Re-measure when data changes (new items, filters applied, colorBy changed)
 // NOTE: effectiveWidth is NOT watched here — it depends transitively on
@@ -2013,24 +2019,6 @@ watch(isExportMode, (enabled, wasEnabled) => {
   font-style: normal;
   font-size: 0.85em;
   opacity: 0.6;
-}
-
-/* Scrollbar styling */
-.legend-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.legend-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.legend-content::-webkit-scrollbar-thumb {
-  background: var(--color-border, #3d3d5c);
-  border-radius: 3px;
-}
-
-.legend-content::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted, #666);
 }
 
 /* Grouped view styles */
