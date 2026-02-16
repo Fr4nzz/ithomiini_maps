@@ -575,6 +575,8 @@ function scheduleMeasurement(resetState = true) {
     cancelAnimationFrame(pendingVerifyRAF)
     pendingVerifyRAF = null
   }
+  // Manual mode: skip measurement entirely — effectiveMaxItems uses the user value
+  if (legendStore.isManualMode) return
   if (resetState) {
     measuredItemCount.value = null
     measurePassCount.value = 0
@@ -608,9 +610,20 @@ function scheduleVerify() {
 
 // The actual item limit: measured value when available, upper bound otherwise
 const effectiveMaxItems = computed(() => {
+  // Manual mode: user-specified count, bypass measurement
+  if (legendStore.isManualMode) return legendStore.maxItemsManual
+
+  // Auto mode: render-then-measure
   if (isResizing.value) return renderUpperBound.value
   if (measuredItemCount.value !== null) return measuredItemCount.value
   return renderUpperBound.value
+})
+
+// In manual mode allow vertical scrolling so items beyond the visible area
+// are accessible; in auto mode keep overflow hidden for the measure pass.
+const legendContentStyle = computed(() => {
+  if (legendStore.isManualMode) return { overflow: 'hidden auto' }
+  return {}
 })
 
 // Calculate auto height from content.
@@ -791,6 +804,11 @@ watch(isResizing, (resizing) => {
   if (!resizing) {
     scheduleMeasurement()
   }
+})
+
+// When switching from manual → auto, trigger a fresh measurement
+watch(() => legendStore.maxItemsMode, (newMode) => {
+  if (newMode === 'auto') scheduleMeasurement()
 })
 
 // Re-measure when container dimensions change (horizontal resize causes text
@@ -1623,6 +1641,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
     <div
       ref="contentRef"
       class="legend-content"
+      :style="legendContentStyle"
     >
       <!-- Title with hover controls (sort dropdown + counts toggle) -->
       <div class="legend-title" @click.stop>
@@ -1864,6 +1883,15 @@ watch(isExportMode, (enabled, wasEnabled) => {
   display: flex;
   flex-direction: column;
 }
+
+/* Thin scrollbar for manual-mode overflow */
+.legend-content::-webkit-scrollbar { width: 6px; }
+.legend-content::-webkit-scrollbar-track { background: transparent; }
+.legend-content::-webkit-scrollbar-thumb {
+  background: var(--color-border, #3d3d5c);
+  border-radius: 3px;
+}
+.legend-content::-webkit-scrollbar-thumb:hover { background: #4d4d6d; }
 
 .legend-container.is-export .legend-content {
   padding: 10px 14px;

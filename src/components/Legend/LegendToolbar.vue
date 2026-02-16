@@ -10,7 +10,8 @@ import {
   Layers,
   Type,
   MapPin,
-  WrapText
+  WrapText,
+  ListOrdered
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
@@ -165,6 +166,12 @@ function updateMapBorderWidth(e) {
 // Update map fill opacity
 function updateMapFillOpacity(e) {
   dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
+}
+
+// Update manual max-items count
+function handleManualCountInput(e) {
+  const val = parseInt(e.target.value)
+  if (!isNaN(val) && val >= 1) legendStore.setMaxItemsManual(val)
 }
 
 // Click outside handler
@@ -326,6 +333,35 @@ onUnmounted(() => {
               {{ legendStore.showCounts ? 'ON' : 'OFF' }}
             </button>
             <span class="value-display">per item</span>
+          </div>
+        </div>
+
+        <!-- Max Legend Items -->
+        <div class="settings-row">
+          <label class="settings-label"><ListOrdered :size="14" /> Max Items</label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.isManualMode }"
+              @click="legendStore.toggleMaxItemsMode()"
+            >
+              {{ legendStore.isManualMode ? 'MANUAL' : 'AUTO' }}
+            </button>
+            <span class="value-display">{{ legendStore.isManualMode ? '' : 'fit to size' }}</span>
+          </div>
+        </div>
+        <div v-if="legendStore.isManualMode" class="settings-row manual-count-row">
+          <div class="settings-control">
+            <input
+              type="number"
+              class="manual-count-input"
+              :value="legendStore.maxItemsManual"
+              min="1"
+              max="500"
+              @input="handleManualCountInput"
+              @keydown.enter="$event.target.blur()"
+            />
+            <span class="value-display">items</span>
           </div>
         </div>
 
@@ -727,6 +763,35 @@ onUnmounted(() => {
   background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
   border-color: var(--color-accent, #4ade80);
   color: var(--color-accent, #4ade80);
+}
+
+/* Manual count input (Max Items) */
+.manual-count-row {
+  margin-top: -4px;
+  padding-left: 20px;
+}
+
+.manual-count-input {
+  width: 70px;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.manual-count-input::-webkit-inner-spin-button,
+.manual-count-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.manual-count-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
 }
 
 /* Transitions */
