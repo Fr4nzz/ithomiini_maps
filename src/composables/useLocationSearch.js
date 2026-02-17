@@ -88,6 +88,11 @@ export function useLocationSearch(map) {
     showSearchResults.value = false
   }
 
+  const cleanup = () => {
+    clearTimeout(searchDebounceTimer)
+    searchDebounceTimer = null
+  }
+
   return {
     searchQuery,
     searchResults,
@@ -97,6 +102,7 @@ export function useLocationSearch(map) {
     onSearchInput,
     selectSearchResult,
     handleClickOutside,
-    clearSearch
+    clearSearch,
+    cleanup
   }
 }

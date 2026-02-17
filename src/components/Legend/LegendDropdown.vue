@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onUnmounted, nextTick } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 import { computePopupPosition } from '../../composables/usePopupPosition'
 

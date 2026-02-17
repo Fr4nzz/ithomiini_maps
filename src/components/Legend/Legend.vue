@@ -22,6 +22,9 @@ const props = defineProps({
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
 
+// Minimum gap between the legend and container edges (used for snapping/clamping)
+const STICKY_MARGIN = 10
+
 // Refs
 const legendRef = ref(null)
 const contentRef = ref(null)
@@ -83,7 +86,6 @@ const bottomAttributionMargin = computed(() => {
 // Should show toolbar/edit UI? (hidden by default, shown on hover OR when popup is open)
 // Suppressed during resize so user sees normal (non-edit) layout for accurate item count feedback
 const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
-const showToolbar = showEditUI
 
 // Get container dimensions — prefer the reactive prevContainerBounds (updated by
 // ResizeObserver) so that autoWidth/maxLegendHeight/targetLegendHeight reactively
@@ -945,7 +947,7 @@ function onDrag(e) {
     const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
     const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
     const legendHeight = legendRef.value?.offsetHeight || 200
-    const margin = 10
+    const margin = STICKY_MARGIN
 
     // Snap to left edge
     if (newX >= 0 && newX < threshold) {
@@ -992,61 +994,6 @@ function endDrag() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Recalculate legend position when container bounds change.
- * Maintains relative sticky edge positions when switching export modes.
- */
-function adjustPositionForNewBounds(oldBounds, newBounds) {
-  if (!oldBounds.width || !newBounds.width) return
-
-  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
-  const legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = 10
-
-  let newX = posX.value
-  let newY = posY.value
-
-  // If stuck to right edge, maintain right-edge position
-  if (stickyEdge.value.right) {
-    newX = newBounds.width - legendWidth - margin
-  }
-  // If stuck to left edge, keep at left
-  else if (stickyEdge.value.left) {
-    newX = margin
-  }
-  // Otherwise, scale proportionally to new width
-  else if (oldBounds.width > 0) {
-    const relativeX = posX.value / oldBounds.width
-    newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, relativeX * newBounds.width))
-  }
-
-  // Handle Y position - if posY is null, legend uses CSS bottom positioning
-  // Treat null posY as "sticky to bottom" since that's the default position
-  const isUsingBottomPosition = posY.value === null
-
-  // If stuck to bottom edge OR using default bottom positioning, maintain bottom-edge position
-  if (stickyEdge.value.bottom || isUsingBottomPosition) {
-    newY = newBounds.height - legendHeight - margin
-  }
-  // If stuck to top edge, keep at top
-  else if (stickyEdge.value.top) {
-    newY = margin
-  }
-  // Otherwise, scale proportionally to new height
-  else if (oldBounds.height > 0 && posY.value !== null) {
-    const relativeY = posY.value / oldBounds.height
-    newY = Math.max(margin, Math.min(newBounds.height - legendHeight - margin, relativeY * newBounds.height))
-  }
-
-  // Ensure legend stays within bounds
-  newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
-  newY = Math.max(margin, Math.min(newBounds.height - legendHeight - margin, newY))
-
-  posX.value = newX
-  posY.value = newY
-  legendStore.updatePosition(newX, newY)
-}
-
-/**
  * Detect current sticky edge state based on current position.
  * Used to initialize sticky state when component mounts or bounds change.
  * @param {boolean} wasExportMode - Optional: the export mode state BEFORE a mode change (for transitions)
@@ -1060,7 +1007,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
   const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
   const legendHeight = legendRef.value?.offsetHeight || 200
   const threshold = 20 // Detection threshold
-  const margin = 10
+  const margin = STICKY_MARGIN
 
   // Handle null posY (default bottom positioning via CSS)
   const effectiveY = posY.value !== null ? posY.value : bounds.height - legendHeight - 30
@@ -1091,7 +1038,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
 function applyPositionForBounds(oldBounds, newBounds) {
   const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
   let legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = 10
+  const margin = STICKY_MARGIN
   const minHeight = 100
 
   // Calculate bottom margin (include attribution space when not in export mode)
@@ -1323,7 +1270,7 @@ function repositionForAttributionChange() {
   }
 
   const legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = 10
+  const margin = STICKY_MARGIN
   const bottomMargin = margin + bottomAttributionMargin.value
 
   // Only reposition if legend is stuck to bottom
@@ -1421,7 +1368,7 @@ onMounted(() => {
       setupContainerResizeObserver()
 
       const legendHeight = legendRef.value?.offsetHeight || 200
-      const margin = 10
+      const margin = STICKY_MARGIN
 
       // Check if legend is at default position (never been moved) or outside visible bounds
       const isDefaultPosition = posY.value === null || (posX.value === 40 && posY.value === legendStore.position.y)
@@ -1482,6 +1429,13 @@ onUnmounted(() => {
   if (pendingMeasurementRAF !== null) cancelAnimationFrame(pendingMeasurementRAF)
   if (pendingVerifyRAF !== null) cancelAnimationFrame(pendingVerifyRAF)
   if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
+  if (resizeTimeout) clearTimeout(resizeTimeout)
+
+  // Clean up hidden measure span
+  if (_measureSpan) {
+    _measureSpan.remove()
+    _measureSpan = null
+  }
 })
 
 // Debounced window resize handler
@@ -1574,7 +1528,7 @@ function repositionIfBottomSticky() {
 
   const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
   const legendHeight = legendRef.value.offsetHeight
-  const margin = 10
+  const margin = STICKY_MARGIN
   const bottomMargin = margin + bottomAttributionMargin.value
   const targetY = bounds.height - legendHeight - bottomMargin
 
@@ -1629,7 +1583,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   >
     <!-- Toolbar (hidden by default, shown on hover) -->
     <LegendToolbar
-      v-show="showToolbar"
+      v-show="showEditUI"
       :is-export-mode="isExportMode"
       @settings-open="hasOpenPopup = true"
       @settings-close="hasOpenPopup = false"
@@ -1793,7 +1747,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
     </div>
 
     <!-- Multi-directional resize zones (shown on hover) -->
-    <template v-if="showToolbar && !isExportMode">
+    <template v-if="showEditUI && !isExportMode">
       <div v-for="dir in resizeDirections" :key="dir"
            :class="['resize-zone', `resize-${dir}`]"
            @mousedown.stop.prevent="startResize($event, dir)"

@@ -232,16 +232,6 @@ export const useLegendStore = defineStore('legend', () => {
     return options
   })
 
-  // Smart prefix behavior: show prefix when headers are hidden (auto mode)
-  const shouldShowPrefix = computed(() => {
-    const prefixEnabled = groupingSettings.value.prefixEnabled
-    if (prefixEnabled === 'auto') {
-      // Auto: show prefix when headers hidden
-      return !groupingSettings.value.showHeaders
-    }
-    return prefixEnabled === true
-  })
-
   // Check if there are any customizations
   const hasCustomizations = computed(() => {
     return Object.keys(customLabels.value).length > 0 ||
@@ -309,10 +299,6 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-custom-labels', customLabels.value)
   }
 
-  function getDisplayLabel(originalLabel) {
-    return customLabels.value[originalLabel] || originalLabel
-  }
-
   function setCustomColor(label, color) {
     if (color) {
       customColors.value[label] = color
@@ -320,10 +306,6 @@ export const useLegendStore = defineStore('legend', () => {
       delete customColors.value[label]
     }
     setStorage('legend-custom-colors', customColors.value)
-  }
-
-  function getDisplayColor(label, defaultColor) {
-    return customColors.value[label] || defaultColor
   }
 
   function toggleItemVisibility(label) {
@@ -377,31 +359,6 @@ export const useLegendStore = defineStore('legend', () => {
     resetRef(maxItemsManual, 'legend-max-items-manual', 20)
   }
 
-  function resetPosition() {
-    resetRef(position, 'legend-position', { x: 40, y: null })
-  }
-
-  function resetSize() {
-    resetRef(size, 'legend-size', { width: 'auto', height: 'auto' })
-  }
-
-  function resetAll() {
-    resetCustomizations()
-    resetPosition()
-    resetSize()
-    resetSpeciesStyling()
-    resetShapeSettings()
-    resetRef(textScale, 'legend-text-scale', 1)
-    resetRef(stickyEdges, 'legend-sticky', true)
-    resetRef(groupingSettings, 'legend-grouping', {
-      enabled: true,
-      groupBy: 'species',
-      abbreviationStyle: 'first-letter',
-      showHeaders: false,
-      prefixEnabled: 'auto',
-    })
-  }
-
   // ═══════════════════════════════════════════════════════════════════════════
   // GROUPING ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -416,35 +373,14 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-grouping', groupingSettings.value)
   }
 
-  function setAbbreviationStyle(style) {
-    groupingSettings.value.abbreviationStyle = style
-    setStorage('legend-grouping', groupingSettings.value)
-  }
-
   function setShowHeaders(show) {
     groupingSettings.value.showHeaders = show
-    setStorage('legend-grouping', groupingSettings.value)
-  }
-
-  function toggleHeaders() {
-    groupingSettings.value.showHeaders = !groupingSettings.value.showHeaders
-    setStorage('legend-grouping', groupingSettings.value)
-  }
-
-  function setPrefixEnabled(value) {
-    // value can be true, false, or 'auto'
-    groupingSettings.value.prefixEnabled = value
     setStorage('legend-grouping', groupingSettings.value)
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // SPECIES STYLING ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
-
-  function setSpeciesBorderColorEnabled(enabled) {
-    speciesStyling.value.borderColor = enabled
-    setStorage('legend-species-styling', speciesStyling.value)
-  }
 
   function setSpeciesBorderColor(species, color) {
     if (color) {
@@ -458,13 +394,6 @@ export const useLegendStore = defineStore('legend', () => {
       delete speciesBorderColors.value[species]
     }
     setStorage('legend-species-borders', speciesBorderColors.value)
-  }
-
-  function resetSpeciesStyling() {
-    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false })
-    resetRef(speciesBorderColors, 'legend-species-borders', {})
-    resetRef(speciesAbbreviations, 'legend-species-abbreviations', {})
-    resetRef(speciesAbbreviationVisible, 'legend-species-abbrev-visible', {})
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -672,11 +601,6 @@ export const useLegendStore = defineStore('legend', () => {
 
   function getGroupShape(groupKey) {
     return groupShapes.value[groupKey] || 'circle'
-  }
-
-  function resetShapeSettings() {
-    resetRef(shapeSettings, 'legend-shape-settings', { enabled: false, assignBy: 'species' })
-    resetRef(groupShapes, 'legend-group-shapes', {})
   }
 
   return {
