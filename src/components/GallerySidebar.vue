@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { STATUS_COLORS } from '../utils/constants'
+import { getProxyState, setProxyMode } from '../utils/imageProxy'
 
 const props = defineProps({
   currentSpecimen: Object,
@@ -26,6 +27,20 @@ const emit = defineEmits([
 ])
 
 const subspeciesCount = computed(() => props.subspeciesList?.length || 0)
+
+const proxyState = getProxyState()
+const proxyOptions = [
+  { value: 'auto', label: 'Auto', desc: 'wsrv.nl \u2192 lh3 \u2192 thumbnail' },
+  { value: 'wsrv', label: 'wsrv.nl', desc: 'Cached, fastest' },
+  { value: 'lh3', label: 'Google CDN', desc: 'Direct, highest quality' },
+  { value: 'thumbnail', label: 'Thumbnail', desc: 'Direct, lower quality' },
+]
+function statusClass(tier) {
+  const s = proxyState.tierStatus.value[tier]
+  if (s === 'ok') return 'status-ok'
+  if (s === 'blocked') return 'status-blocked'
+  return 'status-unknown'
+}
 </script>
 
 <template>
@@ -208,6 +223,25 @@ const subspeciesCount = computed(() => props.subspeciesList?.length || 0)
           <span class="stat-value">{{ allFilteredTotal }}</span>
         </div>
       </div>
+    </div>
+
+    <!-- Image Source -->
+    <div class="sidebar-section">
+      <div class="section-header">Image source</div>
+      <label class="proxy-option" v-for="opt in proxyOptions" :key="opt.value">
+        <input type="radio" name="gallery-proxy-mode"
+          :value="opt.value"
+          :checked="proxyState.mode.value === opt.value"
+          @change="setProxyMode(opt.value)" />
+        <div class="proxy-option-content">
+          <div class="proxy-option-header">
+            <span class="proxy-option-name">{{ opt.label }}</span>
+            <span v-if="opt.value !== 'auto'" class="proxy-status-dot"
+                  :class="statusClass(opt.value)" />
+          </div>
+          <small class="proxy-option-desc">{{ opt.desc }}</small>
+        </div>
+      </label>
     </div>
   </div>
 </template>
@@ -449,6 +483,57 @@ const subspeciesCount = computed(() => props.subspeciesList?.length || 0)
 .stat-row.total-row .stat-value {
   font-size: 0.9rem;
 }
+
+/* Proxy Options */
+.proxy-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.proxy-option:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.proxy-option input[type="radio"] {
+  margin-top: 3px;
+  accent-color: #4ade80;
+  cursor: pointer;
+}
+
+.proxy-option-name {
+  font-size: 0.78rem;
+  color: #e0e0e0;
+}
+
+.proxy-option-desc {
+  font-size: 0.68rem;
+  color: #888;
+  display: block;
+  margin-top: 1px;
+}
+
+.proxy-option-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.proxy-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-ok { background: #4ade80; }
+.status-blocked { background: #ef4444; }
+.status-unknown { background: #666; }
 
 /* Responsive */
 @media (max-width: 768px) {

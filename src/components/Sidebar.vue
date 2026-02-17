@@ -148,6 +148,7 @@ const showAdvancedTaxonomy = ref(false)
 
 // Database Update section
 const showUpdateDatabase = ref(false)
+const showImageSource = ref(false)
 const updateSanger = ref(true)  // Default checked
 const updateGbif = ref(false)
 const updatePassword = ref('')
@@ -740,14 +741,26 @@ const updateExportHeight = (value) => {
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
+      </div>
 
-        <div class="proxy-selector">
-          <div class="proxy-selector-title">Image source</div>
-          <label class="proxy-option" v-for="opt in proxyOptions" :key="opt.value"
-                 @click.prevent="setProxyMode(opt.value)">
+      <!-- Image Source (collapsible) -->
+      <div class="filter-section collapsible">
+        <button
+          class="collapse-toggle"
+          @click="showImageSource = !showImageSource"
+          :class="{ expanded: showImageSource }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Image source
+        </button>
+        <div v-show="showImageSource" class="collapse-content">
+          <label class="proxy-option" v-for="opt in proxyOptions" :key="opt.value">
             <input type="radio" name="proxy-mode"
                    :value="opt.value"
-                   :checked="proxyState.mode.value === opt.value" />
+                   :checked="proxyState.mode.value === opt.value"
+                   @change="setProxyMode(opt.value)" />
             <div class="proxy-option-content">
               <div class="proxy-option-header">
                 <span class="proxy-option-name">{{ opt.label }}</span>
@@ -1267,21 +1280,7 @@ const updateExportHeight = (value) => {
   font-weight: 500;
 }
 
-/* Proxy Selector */
-.proxy-selector {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border-radius: 6px;
-  padding: 10px 14px;
-  margin-top: 6px;
-}
-
-.proxy-selector-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text-primary, #e0e0e0);
-  margin-bottom: 8px;
-}
-
+/* Proxy Options (inside collapse-content) */
 .proxy-option {
   display: flex;
   align-items: flex-start;
