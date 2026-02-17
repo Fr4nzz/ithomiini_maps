@@ -1,13 +1,14 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
-import { getProxiedUrl, getThumbnailUrl } from '../utils/imageProxy'
+import { getProxiedUrl, getThumbnailUrl, notifyWsrvBanned, getWsrvState, toggleWsrvEnabled } from '../utils/imageProxy'
 import { useGalleryData } from '../composables/useGalleryData'
 import GallerySidebar from './GallerySidebar.vue'
 import Panzoom from '@panzoom/panzoom'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
+const wsrvState = getWsrvState()
 
 // Gallery data from composable
 const {
@@ -268,6 +269,26 @@ const currentSpecimen = computed(() => {
   return specimensWithImages.value[currentIndex.value] || null
 })
 
+// Resolved image URL — reactive to proxy toggle/ban state
+const resolvedImageUrl = computed(() => {
+  // Touch reactive refs so Vue tracks the dependency
+  void wsrvState.enabled.value
+  void wsrvState.banned.value
+  return currentSpecimen.value?.image_url
+    ? getProxiedUrl(currentSpecimen.value.image_url)
+    : ''
+})
+
+// Proxy-version counter — incremented when proxy state changes so
+// template expressions that call resolvedThumbUrl() re-evaluate.
+const proxyVersion = computed(() => `${wsrvState.enabled.value}-${wsrvState.banned.value}`)
+
+// Thumbnail URL helper — reactive wrapper for use in v-for templates
+const resolvedThumbUrl = (url) => {
+  void proxyVersion.value
+  return getThumbnailUrl(url)
+}
+
 // Navigation
 const hasPrev = computed(() => currentIndex.value > 0)
 const hasNext = computed(() => currentIndex.value < specimensWithImages.value.length - 1)
@@ -348,6 +369,15 @@ const onImageLoad = () => {
 }
 
 const onImageError = () => {
+  // If the failing URL was proxied through wsrv.nl, auto-disable and retry
+  const url = currentSpecimen.value?.image_url
+  if (url && getProxiedUrl(url).includes('wsrv.nl')) {
+    notifyWsrvBanned()
+    // Reactive URL will update — trigger a fresh load attempt
+    isLoading.value = true
+    loadError.value = false
+    return
+  }
   isLoading.value = false
   loadError.value = true
 }
@@ -606,7 +636,8 @@ watch(currentIndex, () => {
               v-if="currentSpecimen?.image_url"
               v-show="!isLoading && !loadError"
               ref="imageEl"
-              :src="getProxiedUrl(currentSpecimen.image_url)"
+              :src="resolvedImageUrl"
+              referrerpolicy="no-referrer"
               :alt="currentSpecimen.scientific_name"
               class="gallery-image"
               @load="onImageLoad"
@@ -659,6 +690,16 @@ watch(currentIndex, () => {
             </button>
           </div>
 
+          <!-- Proxy toggle -->
+          <label class="proxy-toggle" :class="{ banned: wsrvState.banned.value }"
+            :title="wsrvState.banned.value ? 'wsrv.nl blocked your IP — using direct Google Drive URLs' : 'wsrv.nl caches images for faster loading with slight quality loss'">
+            <input type="checkbox"
+              :checked="wsrvState.enabled.value && !wsrvState.banned.value"
+              :disabled="wsrvState.banned.value"
+              @change="toggleWsrvEnabled()" />
+            <span>Proxy{{ wsrvState.banned.value ? ' (blocked)' : '' }}</span>
+          </label>
+
           <!-- Image counter -->
           <div class="image-counter">
             {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
@@ -710,9 +751,10 @@ watch(currentIndex, () => {
                 >
                   <img
                     v-if="speciesGroup.subspecies[0]?.individuals[0]?.image_url"
-                    :src="getThumbnailUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
+                    :src="resolvedThumbUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
                     :alt="speciesGroup.name"
                     loading="lazy"
+                    referrerpolicy="no-referrer"
                   />
                   <span class="expand-badge" @click.stop="toggleSpeciesCollapse(speciesGroup.name)" title="Expand group">+</span>
                 </button>
@@ -752,9 +794,10 @@ watch(currentIndex, () => {
                       >
                         <img
                           v-if="subspGroup.individuals[0]?.image_url"
-                          :src="getThumbnailUrl(subspGroup.individuals[0].image_url)"
+                          :src="resolvedThumbUrl(subspGroup.individuals[0].image_url)"
                           :alt="subspGroup.name"
                           loading="lazy"
+                          referrerpolicy="no-referrer"
                         />
                         <span class="expand-badge" @click.stop="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)" title="Expand group">+</span>
                       </button>
@@ -771,9 +814,10 @@ watch(currentIndex, () => {
                         :title="specimen.id"
                       >
                         <img
-                          :src="getThumbnailUrl(specimen.image_url)"
+                          :src="resolvedThumbUrl(specimen.image_url)"
                           :alt="specimen.id"
                           loading="lazy"
+                          referrerpolicy="no-referrer"
                         />
                       </button>
                     </div>
@@ -1044,6 +1088,38 @@ watch(currentIndex, () => {
 }
 
 /* Image counter */
+.proxy-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 140px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: #888;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 6px;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.proxy-toggle.banned {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.proxy-toggle input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  accent-color: var(--color-accent, #4ade80);
+}
+
+.proxy-toggle.banned input[type="checkbox"] {
+  cursor: not-allowed;
+}
+
 .image-counter {
   position: absolute;
   bottom: 20px;
@@ -1105,7 +1181,9 @@ watch(currentIndex, () => {
   gap: 2px;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
+  /* No scroll-behavior: smooth — positionToActiveThumbnail() must scroll
+     instantly to avoid lazy-loading intermediate thumbnails on gallery open.
+     Arrow buttons use explicit behavior:'smooth' in scrollBy(). */
 }
 
 /* Species group */

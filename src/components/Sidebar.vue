@@ -8,6 +8,7 @@ import DateFilter from './DateFilter.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
 import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
 import { ASPECT_RATIOS } from '../utils/constants'
+import { getWsrvState, toggleWsrvEnabled } from '../utils/imageProxy'
 
 const props = defineProps({
   currentView: {
@@ -21,6 +22,7 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 const store = useDataStore()
 const persistenceStore = usePersistenceStore()
 const legendStore = useLegendStore()
+const wsrvState = getWsrvState()
 
 // Toggle persistence
 function togglePersistence() {
@@ -724,6 +726,17 @@ const updateExportHeight = (value) => {
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
+        <label class="thumbnail-toggle" :class="{ disabled: wsrvState.banned.value }">
+          <input type="checkbox"
+            :checked="wsrvState.enabled.value && !wsrvState.banned.value"
+            :disabled="wsrvState.banned.value"
+            @change="toggleWsrvEnabled()" />
+          <span>
+            Image proxy (wsrv.nl)
+            <small class="proxy-hint" v-if="wsrvState.banned.value">Blocked — using direct URLs</small>
+            <small class="proxy-hint" v-else>Faster loading, slightly lower quality</small>
+          </span>
+        </label>
       </div>
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->
@@ -1230,6 +1243,19 @@ const updateExportHeight = (value) => {
   font-size: 0.9rem;
   color: var(--color-text-primary, #e0e0e0);
   font-weight: 500;
+}
+
+.thumbnail-toggle.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.proxy-hint {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-muted, #888);
+  margin-top: 2px;
 }
 
 /* CAMID Autocomplete */

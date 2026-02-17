@@ -11,6 +11,7 @@ import { ASPECT_RATIOS } from './utils/constants'
 import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
 import { toPng } from 'html-to-image'
+import { checkWsrvAvailability } from './utils/imageProxy'
 
 const store = useDataStore()
 
@@ -207,7 +208,8 @@ provide('openImageGallery', openImageGallery)
 
 onMounted(() => {
   store.loadMapData()
-  
+  checkWsrvAvailability()
+
   // Check URL for view param
   const params = new URLSearchParams(window.location.search)
   if (params.get('view') === 'table') {

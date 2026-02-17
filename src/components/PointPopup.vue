@@ -330,6 +330,7 @@ const openGallery = () => {
             :src="getThumbnailUrl(currentPhoto.url)"
             :alt="currentIndividual?.id || 'Specimen'"
             loading="lazy"
+            referrerpolicy="no-referrer"
             @error="$event.target.style.display = 'none'"
           />
           <div v-else class="no-photo">

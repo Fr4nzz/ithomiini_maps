@@ -329,10 +329,11 @@ const handleImageError = (e, originalUrl) => {
               <div class="photo-cell">
                 <template v-if="getPhotoInfo(row)">
                   <div class="photo-wrapper" :class="{ 'other-individual': !getPhotoInfo(row).sameIndividual }" @click="openGalleryForRow(row)">
-                    <img 
+                    <img
                       :src="getTableThumbnailUrl(getPhotoInfo(row).url)"
                       @error="(e) => handleImageError(e, getPhotoInfo(row).url)"
                       loading="lazy"
+                      referrerpolicy="no-referrer"
                       :title="getPhotoInfo(row).sameIndividual ? 'Photo of this individual' : 'Photo from another individual of same species'"
                     />
                     <span 
