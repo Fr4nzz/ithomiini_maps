@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { STATUS_COLORS } from '../utils/constants'
 import { getProxyState, setProxyMode } from '../utils/imageProxy'
 
@@ -28,6 +28,7 @@ const emit = defineEmits([
 
 const subspeciesCount = computed(() => props.subspeciesList?.length || 0)
 
+const showImageCache = ref(false)
 const proxyState = getProxyState()
 const proxyOptions = [
   { value: 'auto', label: 'Auto', desc: 'wsrv.nl \u2192 lh3 \u2192 thumbnail' },
@@ -225,23 +226,32 @@ function statusClass(tier) {
       </div>
     </div>
 
-    <!-- Image Source -->
-    <div class="sidebar-section">
-      <div class="section-header">Image source</div>
-      <label class="proxy-option" v-for="opt in proxyOptions" :key="opt.value">
-        <input type="radio" name="gallery-proxy-mode"
-          :value="opt.value"
-          :checked="proxyState.mode.value === opt.value"
-          @change="setProxyMode(opt.value)" />
-        <div class="proxy-option-content">
-          <div class="proxy-option-header">
-            <span class="proxy-option-name">{{ opt.label }}</span>
-            <span v-if="opt.value !== 'auto'" class="proxy-status-dot"
-                  :class="statusClass(opt.value)" />
+    <!-- Image Cache -->
+    <div class="sidebar-section collapsible-section">
+      <button class="collapse-toggle"
+        @click="showImageCache = !showImageCache"
+        :class="{ expanded: showImageCache }">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m9 18 6-6-6-6"/>
+        </svg>
+        Image cache
+      </button>
+      <div v-show="showImageCache" class="collapse-content">
+        <label class="proxy-option" v-for="opt in proxyOptions" :key="opt.value">
+          <input type="radio" name="gallery-proxy-mode"
+            :value="opt.value"
+            :checked="proxyState.mode.value === opt.value"
+            @change="setProxyMode(opt.value)" />
+          <div class="proxy-option-content">
+            <div class="proxy-option-header">
+              <span class="proxy-option-name">{{ opt.label }}</span>
+              <span v-if="opt.value !== 'auto'" class="proxy-status-dot"
+                    :class="statusClass(opt.value)" />
+            </div>
+            <small class="proxy-option-desc">{{ opt.desc }}</small>
           </div>
-          <small class="proxy-option-desc">{{ opt.desc }}</small>
-        </div>
-      </label>
+        </label>
+      </div>
     </div>
   </div>
 </template>
@@ -482,6 +492,42 @@ function statusClass(tier) {
 
 .stat-row.total-row .stat-value {
   font-size: 0.9rem;
+}
+
+/* Collapsible Section */
+.collapsible-section {
+  border-top: 1px solid #3d3d5c;
+  padding-top: 8px;
+}
+
+.collapse-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.collapse-toggle:hover { color: #e0e0e0; }
+
+.collapse-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+}
+
+.collapse-toggle.expanded svg {
+  transform: rotate(90deg);
+}
+
+.collapse-content {
+  padding-top: 4px;
 }
 
 /* Proxy Options */

@@ -8,7 +8,6 @@ import DateFilter from './DateFilter.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
 import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
 import { ASPECT_RATIOS } from '../utils/constants'
-import { getProxyState, setProxyMode } from '../utils/imageProxy'
 
 const props = defineProps({
   currentView: {
@@ -22,21 +21,6 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 const store = useDataStore()
 const persistenceStore = usePersistenceStore()
 const legendStore = useLegendStore()
-const proxyState = getProxyState()
-
-const proxyOptions = [
-  { value: 'auto', label: 'Auto (recommended)', desc: 'Tries wsrv.nl \u2192 lh3 \u2192 thumbnail' },
-  { value: 'wsrv', label: 'wsrv.nl proxy', desc: 'Cached, WebP compressed, fastest' },
-  { value: 'lh3', label: 'Google CDN (lh3)', desc: 'Direct, highest quality' },
-  { value: 'thumbnail', label: 'Drive thumbnail', desc: 'Direct, lower quality fallback' },
-]
-
-function statusClass(tier) {
-  const s = proxyState.tierStatus.value[tier]
-  if (s === 'ok') return 'status-ok'
-  if (s === 'blocked') return 'status-blocked'
-  return 'status-unknown'
-}
 
 // Toggle persistence
 function togglePersistence() {
@@ -148,7 +132,6 @@ const showAdvancedTaxonomy = ref(false)
 
 // Database Update section
 const showUpdateDatabase = ref(false)
-const showImageSource = ref(false)
 const updateSanger = ref(true)  // Default checked
 const updateGbif = ref(false)
 const updatePassword = ref('')
@@ -743,37 +726,6 @@ const updateExportHeight = (value) => {
         </label>
       </div>
 
-      <!-- Image Source (collapsible) -->
-      <div class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="showImageSource = !showImageSource"
-          :class="{ expanded: showImageSource }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Image source
-        </button>
-        <div v-show="showImageSource" class="collapse-content">
-          <label class="proxy-option" v-for="opt in proxyOptions" :key="opt.value">
-            <input type="radio" name="proxy-mode"
-                   :value="opt.value"
-                   :checked="proxyState.mode.value === opt.value"
-                   @change="setProxyMode(opt.value)" />
-            <div class="proxy-option-content">
-              <div class="proxy-option-header">
-                <span class="proxy-option-name">{{ opt.label }}</span>
-                <span v-if="opt.value !== 'auto'"
-                      class="proxy-status-dot"
-                      :class="statusClass(opt.value)" />
-              </div>
-              <small class="proxy-option-desc">{{ opt.desc }}</small>
-            </div>
-          </label>
-        </div>
-      </div>
-
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->
       <SidebarMapSettings v-if="currentView === 'map'" />
 
@@ -1279,57 +1231,6 @@ const updateExportHeight = (value) => {
   color: var(--color-text-primary, #e0e0e0);
   font-weight: 500;
 }
-
-/* Proxy Options (inside collapse-content) */
-.proxy-option {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 6px 4px;
-  cursor: pointer;
-  border-radius: 4px;
-  user-select: none;
-}
-
-.proxy-option:hover {
-  background: var(--color-bg-hover, #363653);
-}
-
-.proxy-option input[type="radio"] {
-  margin-top: 3px;
-  accent-color: var(--color-accent, #4ade80);
-  cursor: pointer;
-}
-
-.proxy-option-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.proxy-option-name {
-  font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.proxy-option-desc {
-  font-size: 0.73rem;
-  color: var(--color-text-muted, #888);
-  display: block;
-  margin-top: 1px;
-}
-
-.proxy-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
-
-.status-ok { background: #4ade80; }
-.status-blocked { background: #ef4444; }
-.status-unknown { background: #666; }
 
 /* CAMID Autocomplete */
 .camid-autocomplete {
