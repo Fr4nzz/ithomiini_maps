@@ -1,66 +1,115 @@
 /**
- * Image proxy utility — conditionally routes Google Drive images through
- * wsrv.nl for caching/compression, with lh3.googleusercontent.com as fallback.
+ * Image proxy utility — 3-tier image source system for Google Drive images.
+ *
+ * Tiers (in priority order):
+ *   1. wsrv.nl proxy   — cached, WebP compressed, fastest
+ *   2. Google CDN (lh3) — direct, highest quality
+ *   3. Drive thumbnail  — direct, lower quality fallback
+ *
  * Non-Drive images (iNaturalist, Zenodo, Harvard, etc.) always load directly.
  */
 import { ref } from 'vue'
 
 // ═══════════════════════════════════════════════════════════════════════════
+// LOCAL STORAGE HELPERS (no Pinia — safe at module init time)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function readLocal(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key)
+    if (raw !== null) return JSON.parse(raw)
+  } catch { /* ignore */ }
+  return fallback
+}
+
+function writeLocal(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)) } catch { /* ignore */ }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // REACTIVE STATE
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Read directly from localStorage at module init to avoid calling Pinia
-// before app.use(pinia) has run. storageHelpers.js uses usePersistenceStore()
-// which would crash at top-level import time.
-function readInitialValue() {
-  try {
-    const raw = localStorage.getItem('wsrv-proxy-enabled')
-    if (raw !== null) return JSON.parse(raw)
-  } catch { /* ignore */ }
-  return true // default: enabled
+// Migrate old boolean toggle → new mode system
+function readInitialMode() {
+  const mode = readLocal('proxy-mode', null)
+  if (mode) return mode
+
+  // Migration: old key was 'wsrv-proxy-enabled' (boolean)
+  const oldVal = readLocal('wsrv-proxy-enabled', null)
+  if (oldVal === false) return 'lh3'
+  return 'auto'
 }
 
-const wsrvEnabled = ref(readInitialValue())
-const wsrvBanned = ref(false) // runtime-only, reset on each page load
+/** Mode: 'auto' | 'wsrv' | 'lh3' | 'thumbnail' */
+const proxyMode = ref(readInitialMode())
 
-/** Whether wsrv.nl is currently usable (enabled AND not banned) */
-export function isWsrvEnabled() { return wsrvEnabled.value && !wsrvBanned.value }
+/** Per-tier reachability: 'ok' | 'blocked' | 'unknown' */
+const tierStatus = ref({
+  wsrv: 'unknown',
+  lh3: 'unknown',
+  thumbnail: 'unknown',
+})
 
-export function setWsrvEnabled(enabled) {
-  wsrvEnabled.value = enabled
-  try { localStorage.setItem('wsrv-proxy-enabled', JSON.stringify(enabled)) } catch { /* ignore */ }
+// ═══════════════════════════════════════════════════════════════════════════
+// PUBLIC STATE API
+// ═══════════════════════════════════════════════════════════════════════════
+
+/** Expose reactive state for UI binding */
+export function getProxyState() {
+  return { mode: proxyMode, tierStatus }
 }
 
-export function toggleWsrvEnabled() { setWsrvEnabled(!wsrvEnabled.value) }
+/** Set the proxy mode and persist */
+export function setProxyMode(mode) {
+  proxyMode.value = mode
+  writeLocal('proxy-mode', mode)
+}
 
-/** Expose reactive refs for UI binding */
-export function getWsrvState() { return { enabled: wsrvEnabled, banned: wsrvBanned } }
+// ═══════════════════════════════════════════════════════════════════════════
+// STARTUP PROBES
+// ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Mark wsrv.nl as banned (called when image loads fail on wsrv.nl URLs).
- * This is runtime-only — a page reload re-checks availability.
+ * Probe all 3 tiers in parallel to determine reachability.
+ * Uses a known Google Drive file ID to load a tiny image from each tier.
+ * @param {string} testFileId - A known-public Google Drive file ID
  */
-export function notifyWsrvBanned() {
-  if (wsrvBanned.value) return
-  wsrvBanned.value = true
-}
+export function checkAllTiers(testFileId) {
+  if (!testFileId) return Promise.resolve()
 
-/**
- * Probe wsrv.nl at startup to detect IP bans before the user sees broken images.
- * Uses a tiny test image; if it fails to load, marks wsrv.nl as banned.
- */
-export function checkWsrvAvailability() {
-  if (!wsrvEnabled.value || wsrvBanned.value) return Promise.resolve()
-  return new Promise((resolve) => {
-    const img = new Image()
-    img.onload = () => resolve()
-    img.onerror = () => {
-      wsrvBanned.value = true
-      resolve()
-    }
-    // Tiny 1x1 PNG via wsrv.nl — cache-bust with timestamp
-    img.src = 'https://wsrv.nl/?url=https://via.placeholder.com/1x1.png&w=1&output=webp&t=' + Date.now()
+  const probes = Object.keys(tierStatus.value).map(tier => {
+    return new Promise(resolve => {
+      const img = new Image()
+      img.referrerPolicy = 'no-referrer'
+      img.onload = () => { tierStatus.value[tier] = 'ok'; resolve() }
+      img.onerror = () => { tierStatus.value[tier] = 'blocked'; resolve() }
+
+      let src
+      if (tier === 'wsrv') src = buildWsrvUrl(testFileId, 1) + '&t=' + Date.now()
+      else if (tier === 'lh3') src = buildLh3Url(testFileId, 1)
+      else src = buildThumbnailUrl(testFileId, 1)
+      img.src = src
+    })
   })
+  return Promise.all(probes)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RUNTIME FAILURE DETECTION
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Called from onImageError when an image fails to load.
+ * Identifies which tier the URL belongs to and marks it as blocked.
+ * In auto mode, the next reactive render will cascade to the next tier.
+ * @param {string} url - The resolved URL that failed to load
+ */
+export function notifyTierFailed(url) {
+  if (!url) return
+  if (url.includes('wsrv.nl')) tierStatus.value.wsrv = 'blocked'
+  else if (url.includes('lh3.google')) tierStatus.value.lh3 = 'blocked'
+  else if (url.includes('drive.google')) tierStatus.value.thumbnail = 'blocked'
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -82,48 +131,83 @@ function unwrapWsrvUrl(url) {
 }
 
 /**
- * Extract a Google Drive file ID from various URL patterns:
- * - drive.google.com/uc?id={ID}
- * - drive.google.com/file/d/{ID}/...
- * - drive.usercontent.google.com/download?id={ID}
+ * Extract a Google Drive file ID from various URL patterns.
  * Returns null for non-Drive URLs.
  */
-function extractGoogleDriveFileId(url) {
+export function extractGoogleDriveFileId(url) {
   if (!url) return null
+
+  // Unwrap wsrv.nl proxy URLs first
+  const cleanUrl = unwrapWsrvUrl(url)
+
   try {
-    const urlObj = new URL(url)
+    const urlObj = new URL(cleanUrl)
     const host = urlObj.hostname
 
-    // drive.google.com/uc?id=... or drive.google.com/open?id=...
     if (host === 'drive.google.com') {
       const id = urlObj.searchParams.get('id')
       if (id) return id
-      // drive.google.com/file/d/{ID}/...
       const match = urlObj.pathname.match(/\/file\/d\/([^/]+)/)
       if (match) return match[1]
     }
 
-    // drive.usercontent.google.com/download?id=...
     if (host === 'drive.usercontent.google.com') {
       return urlObj.searchParams.get('id') || null
     }
   } catch {
-    // Fallback: regex for malformed URLs
-    const match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/)
+    const match = cleanUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/)
     if (match) return match[1]
   }
   return null
 }
 
-/** Build a Google lh3 direct URL with resize parameter */
-function buildDriveDirectUrl(fileId, width) {
+// ── URL builders ─────────────────────────────────────────────────────────
+
+function buildWsrvUrl(fileId, width) {
+  const inner = encodeURIComponent(`https://drive.google.com/uc?id=${fileId}`)
+  return `https://wsrv.nl/?url=${inner}&w=${width}&q=85&output=webp`
+}
+
+function buildLh3Url(fileId, width) {
   return `https://lh3.googleusercontent.com/d/${fileId}=w${width}`
 }
 
-/** Build a wsrv.nl proxy URL */
-function buildWsrvUrl(innerUrl, width) {
-  const encoded = encodeURIComponent(innerUrl)
-  return `https://wsrv.nl/?url=${encoded}&w=${width}&q=85&output=webp`
+function buildThumbnailUrl(fileId, width) {
+  return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${width}`
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CORE RESOLUTION
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Resolve an image URL to the best available source.
+ * - Google Drive images → selected tier (or auto-cascade)
+ * - Non-Drive images → direct URL (no proxy)
+ */
+function resolveUrl(originalUrl, width) {
+  if (!originalUrl) return ''
+
+  const cleanUrl = unwrapWsrvUrl(originalUrl)
+  const fileId = extractGoogleDriveFileId(cleanUrl)
+
+  if (!fileId) return cleanUrl // non-Drive → always direct
+
+  const mode = proxyMode.value
+
+  if (mode === 'auto') {
+    // Cascade: use best available tier
+    if (tierStatus.value.wsrv !== 'blocked') return buildWsrvUrl(fileId, width)
+    if (tierStatus.value.lh3 !== 'blocked') return buildLh3Url(fileId, width)
+    return buildThumbnailUrl(fileId, width)
+  }
+
+  // Manual mode: use selected tier directly
+  if (mode === 'wsrv') return buildWsrvUrl(fileId, width)
+  if (mode === 'lh3') return buildLh3Url(fileId, width)
+  if (mode === 'thumbnail') return buildThumbnailUrl(fileId, width)
+
+  return cleanUrl
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -131,36 +215,7 @@ function buildWsrvUrl(innerUrl, width) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Resolve an image URL to the best available source.
- * - Google Drive images → wsrv.nl (if enabled) or lh3 fallback
- * - Non-Drive images → direct URL (no proxy needed)
- */
-function resolveUrl(originalUrl, width) {
-  if (!originalUrl) return ''
-
-  // Strip any existing wsrv.nl wrapper to get the real source URL
-  const cleanUrl = unwrapWsrvUrl(originalUrl)
-  const fileId = extractGoogleDriveFileId(cleanUrl)
-
-  if (fileId) {
-    // Google Drive image
-    if (isWsrvEnabled()) {
-      return buildWsrvUrl(`https://drive.google.com/uc?id=${fileId}`, width)
-    }
-    // Fallback: Google's own image CDN with built-in resize
-    return buildDriveDirectUrl(fileId, width)
-  }
-
-  // Non-Drive image (iNaturalist, Zenodo, Harvard, etc.) — always direct
-  return cleanUrl
-}
-
-/**
  * Get optimized image URL (full size for gallery display)
- * @param {string} originalUrl - The original image URL (may be wsrv.nl-wrapped)
- * @param {Object} options - Optional overrides
- * @param {number} options.width - Max width (default: 2000)
- * @returns {string} Resolved URL
  */
 export function getProxiedUrl(originalUrl, options = {}) {
   return resolveUrl(originalUrl, options.width || 2000)
@@ -168,8 +223,6 @@ export function getProxiedUrl(originalUrl, options = {}) {
 
 /**
  * Get thumbnail URL (medium size for previews, popups, mimicry cards)
- * @param {string} originalUrl - The original image URL
- * @returns {string} Resolved thumbnail URL
  */
 export function getThumbnailUrl(originalUrl) {
   return resolveUrl(originalUrl, 400)
@@ -177,8 +230,6 @@ export function getThumbnailUrl(originalUrl) {
 
 /**
  * Get small thumbnail for table rows
- * @param {string} originalUrl - The original image URL
- * @returns {string} Resolved small thumbnail URL
  */
 export function getTableThumbnailUrl(originalUrl) {
   return resolveUrl(originalUrl, 120)

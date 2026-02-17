@@ -8,7 +8,7 @@ import DateFilter from './DateFilter.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
 import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
 import { ASPECT_RATIOS } from '../utils/constants'
-import { getWsrvState, toggleWsrvEnabled } from '../utils/imageProxy'
+import { getProxyState, setProxyMode } from '../utils/imageProxy'
 
 const props = defineProps({
   currentView: {
@@ -22,7 +22,21 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 const store = useDataStore()
 const persistenceStore = usePersistenceStore()
 const legendStore = useLegendStore()
-const wsrvState = getWsrvState()
+const proxyState = getProxyState()
+
+const proxyOptions = [
+  { value: 'auto', label: 'Auto (recommended)', desc: 'Tries wsrv.nl \u2192 lh3 \u2192 thumbnail' },
+  { value: 'wsrv', label: 'wsrv.nl proxy', desc: 'Cached, WebP compressed, fastest' },
+  { value: 'lh3', label: 'Google CDN (lh3)', desc: 'Direct, highest quality' },
+  { value: 'thumbnail', label: 'Drive thumbnail', desc: 'Direct, lower quality fallback' },
+]
+
+function statusClass(tier) {
+  const s = proxyState.tierStatus.value[tier]
+  if (s === 'ok') return 'status-ok'
+  if (s === 'blocked') return 'status-blocked'
+  return 'status-unknown'
+}
 
 // Toggle persistence
 function togglePersistence() {
@@ -726,17 +740,25 @@ const updateExportHeight = (value) => {
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
-        <label class="thumbnail-toggle" :class="{ disabled: wsrvState.banned.value }">
-          <input type="checkbox"
-            :checked="wsrvState.enabled.value && !wsrvState.banned.value"
-            :disabled="wsrvState.banned.value"
-            @change="toggleWsrvEnabled()" />
-          <span>
-            Image proxy (wsrv.nl)
-            <small class="proxy-hint" v-if="wsrvState.banned.value">Blocked — using direct URLs</small>
-            <small class="proxy-hint" v-else>Faster loading, slightly lower quality</small>
-          </span>
-        </label>
+
+        <div class="proxy-selector">
+          <div class="proxy-selector-title">Image source</div>
+          <label class="proxy-option" v-for="opt in proxyOptions" :key="opt.value"
+                 @click.prevent="setProxyMode(opt.value)">
+            <input type="radio" name="proxy-mode"
+                   :value="opt.value"
+                   :checked="proxyState.mode.value === opt.value" />
+            <div class="proxy-option-content">
+              <div class="proxy-option-header">
+                <span class="proxy-option-name">{{ opt.label }}</span>
+                <span v-if="opt.value !== 'auto'"
+                      class="proxy-status-dot"
+                      :class="statusClass(opt.value)" />
+              </div>
+              <small class="proxy-option-desc">{{ opt.desc }}</small>
+            </div>
+          </label>
+        </div>
       </div>
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->
@@ -1245,18 +1267,70 @@ const updateExportHeight = (value) => {
   font-weight: 500;
 }
 
-.thumbnail-toggle.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* Proxy Selector */
+.proxy-selector {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-top: 6px;
 }
 
-.proxy-hint {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--color-text-muted, #888);
-  margin-top: 2px;
+.proxy-selector-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #e0e0e0);
+  margin-bottom: 8px;
 }
+
+.proxy-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.proxy-option:hover {
+  background: var(--color-bg-hover, #363653);
+}
+
+.proxy-option input[type="radio"] {
+  margin-top: 3px;
+  accent-color: var(--color-accent, #4ade80);
+  cursor: pointer;
+}
+
+.proxy-option-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.proxy-option-name {
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.proxy-option-desc {
+  font-size: 0.73rem;
+  color: var(--color-text-muted, #888);
+  display: block;
+  margin-top: 1px;
+}
+
+.proxy-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-ok { background: #4ade80; }
+.status-blocked { background: #ef4444; }
+.status-unknown { background: #666; }
 
 /* CAMID Autocomplete */
 .camid-autocomplete {

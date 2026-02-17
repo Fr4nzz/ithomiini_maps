@@ -1,14 +1,14 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
-import { getProxiedUrl, getThumbnailUrl, notifyWsrvBanned, getWsrvState, toggleWsrvEnabled } from '../utils/imageProxy'
+import { getProxiedUrl, getThumbnailUrl, notifyTierFailed, getProxyState } from '../utils/imageProxy'
 import { useGalleryData } from '../composables/useGalleryData'
 import GallerySidebar from './GallerySidebar.vue'
 import Panzoom from '@panzoom/panzoom'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
-const wsrvState = getWsrvState()
+const proxyState = getProxyState()
 
 // Gallery data from composable
 const {
@@ -269,19 +269,20 @@ const currentSpecimen = computed(() => {
   return specimensWithImages.value[currentIndex.value] || null
 })
 
-// Resolved image URL — reactive to proxy toggle/ban state
+// Resolved image URL — reactive to proxy mode/tier changes
 const resolvedImageUrl = computed(() => {
   // Touch reactive refs so Vue tracks the dependency
-  void wsrvState.enabled.value
-  void wsrvState.banned.value
+  void proxyState.mode.value
+  void proxyState.tierStatus.value
   return currentSpecimen.value?.image_url
     ? getProxiedUrl(currentSpecimen.value.image_url)
     : ''
 })
 
-// Proxy-version counter — incremented when proxy state changes so
-// template expressions that call resolvedThumbUrl() re-evaluate.
-const proxyVersion = computed(() => `${wsrvState.enabled.value}-${wsrvState.banned.value}`)
+// Proxy-version counter — forces re-evaluation of thumbnail URLs in v-for
+const proxyVersion = computed(() =>
+  `${proxyState.mode.value}-${JSON.stringify(proxyState.tierStatus.value)}`
+)
 
 // Thumbnail URL helper — reactive wrapper for use in v-for templates
 const resolvedThumbUrl = (url) => {
@@ -369,15 +370,23 @@ const onImageLoad = () => {
 }
 
 const onImageError = () => {
-  // If the failing URL was proxied through wsrv.nl, auto-disable and retry
-  const url = currentSpecimen.value?.image_url
-  if (url && getProxiedUrl(url).includes('wsrv.nl')) {
-    notifyWsrvBanned()
-    // Reactive URL will update — trigger a fresh load attempt
-    isLoading.value = true
-    loadError.value = false
-    return
+  // In auto mode, mark the current tier as blocked and retry with next tier
+  const currentUrl = resolvedImageUrl.value
+  if (proxyState.mode.value === 'auto' && currentUrl) {
+    const ts = proxyState.tierStatus.value
+    // Only retry if there's a tier below that isn't blocked yet
+    const hasLowerTier =
+      (currentUrl.includes('wsrv.nl') && ts.lh3 !== 'blocked') ||
+      (currentUrl.includes('lh3.google') && ts.thumbnail !== 'blocked')
+    if (hasLowerTier) {
+      notifyTierFailed(currentUrl)
+      isLoading.value = true
+      loadError.value = false
+      return
+    }
   }
+  // No more fallbacks — show error
+  if (currentUrl) notifyTierFailed(currentUrl)
   isLoading.value = false
   loadError.value = true
 }
@@ -689,16 +698,6 @@ watch(currentIndex, () => {
               Reset
             </button>
           </div>
-
-          <!-- Proxy toggle -->
-          <label class="proxy-toggle" :class="{ banned: wsrvState.banned.value }"
-            :title="wsrvState.banned.value ? 'wsrv.nl blocked your IP — using direct Google Drive URLs' : 'wsrv.nl caches images for faster loading with slight quality loss'">
-            <input type="checkbox"
-              :checked="wsrvState.enabled.value && !wsrvState.banned.value"
-              :disabled="wsrvState.banned.value"
-              @change="toggleWsrvEnabled()" />
-            <span>Proxy{{ wsrvState.banned.value ? ' (blocked)' : '' }}</span>
-          </label>
 
           <!-- Image counter -->
           <div class="image-counter">
@@ -1088,38 +1087,6 @@ watch(currentIndex, () => {
 }
 
 /* Image counter */
-.proxy-toggle {
-  position: absolute;
-  bottom: 20px;
-  right: 140px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.8rem;
-  color: #888;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 5px 10px;
-  border-radius: 6px;
-  z-index: 5;
-  cursor: pointer;
-}
-
-.proxy-toggle.banned {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.proxy-toggle input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
-  cursor: pointer;
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.proxy-toggle.banned input[type="checkbox"] {
-  cursor: not-allowed;
-}
-
 .image-counter {
   position: absolute;
   bottom: 20px;
