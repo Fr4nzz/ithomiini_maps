@@ -454,7 +454,8 @@ watch(
     () => legendStore.speciesBorderColors,
     () => legendStore.shapeSettings,
     () => legendStore.groupShapes,
-    () => legendStore.hiddenItems
+    () => legendStore.hiddenItems,
+    () => legendStore.shownLabels
   ],
   () => {
     if (!isMapReady()) return

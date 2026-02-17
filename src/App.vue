@@ -11,6 +11,7 @@ import { ASPECT_RATIOS } from './utils/constants'
 import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
 import { toPng } from 'html-to-image'
+import { checkAllTiers, extractGoogleDriveFileId } from './utils/imageProxy'
 
 const store = useDataStore()
 
@@ -205,9 +206,16 @@ const onMapReady = (map) => {
 provide('openMimicrySelector', openMimicrySelector)
 provide('openImageGallery', openImageGallery)
 
-onMounted(() => {
-  store.loadMapData()
-  
+onMounted(async () => {
+  await store.loadMapData()
+
+  // Probe all 3 image tiers using the first available Drive file ID
+  const firstWithImage = store.allFeatures.find(f => f.image_url)
+  if (firstWithImage) {
+    const fileId = extractGoogleDriveFileId(firstWithImage.image_url)
+    if (fileId) checkAllTiers(fileId)
+  }
+
   // Check URL for view param
   const params = new URLSearchParams(window.location.search)
   if (params.get('view') === 'table') {

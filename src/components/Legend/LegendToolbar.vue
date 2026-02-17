@@ -9,14 +9,15 @@ import {
   Palette,
   Layers,
   Type,
-  Circle,
   MapPin,
-  WrapText
+  WrapText,
+  ListOrdered
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { computePopupPosition } from '../../composables/usePopupPosition'
 import LegendDropdown from './LegendDropdown.vue'
+import LegendColorPicker from './LegendColorPicker.vue'
 
 const props = defineProps({
   isExportMode: {
@@ -152,11 +153,6 @@ function updateTextScale(e) {
   legendStore.setTextScale(parseFloat(e.target.value))
 }
 
-// Update legend dot scale
-function updateLegendDotScale(e) {
-  legendStore.setDotScale(parseFloat(e.target.value))
-}
-
 // Update map point size
 function updateMapPointSize(e) {
   dataStore.mapStyle.pointSize = parseInt(e.target.value)
@@ -170,6 +166,12 @@ function updateMapBorderWidth(e) {
 // Update map fill opacity
 function updateMapFillOpacity(e) {
   dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
+}
+
+// Update manual max-items count
+function handleManualCountInput(e) {
+  const val = parseInt(e.target.value)
+  if (!isNaN(val) && val >= 1) legendStore.setMaxItemsManual(val)
 }
 
 // Click outside handler
@@ -290,25 +292,6 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <!-- Legend Dot size -->
-        <div class="settings-row">
-          <label class="settings-label">
-            <Circle :size="14" />
-            Dot Size
-          </label>
-          <div class="settings-control">
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              :value="legendStore.dotScale"
-              @input="updateLegendDotScale"
-            />
-            <span class="value-display">{{ (legendStore.dotScale * 100).toFixed(0) }}%</span>
-          </div>
-        </div>
-
         <!-- Divider -->
         <div class="settings-divider"></div>
 
@@ -350,6 +333,35 @@ onUnmounted(() => {
               {{ legendStore.showCounts ? 'ON' : 'OFF' }}
             </button>
             <span class="value-display">per item</span>
+          </div>
+        </div>
+
+        <!-- Max Legend Items -->
+        <div class="settings-row">
+          <label class="settings-label"><ListOrdered :size="14" /> Max Items</label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.isManualMode }"
+              @click="legendStore.toggleMaxItemsMode()"
+            >
+              {{ legendStore.isManualMode ? 'MANUAL' : 'AUTO' }}
+            </button>
+            <span class="value-display">{{ legendStore.isManualMode ? '' : 'fit to size' }}</span>
+          </div>
+        </div>
+        <div v-if="legendStore.isManualMode" class="settings-row manual-count-row">
+          <div class="settings-control">
+            <input
+              type="number"
+              class="manual-count-input"
+              :value="legendStore.maxItemsManual"
+              min="1"
+              max="500"
+              @input="handleManualCountInput"
+              @keydown.enter="$event.target.blur()"
+            />
+            <span class="value-display">items</span>
           </div>
         </div>
 
@@ -422,10 +434,12 @@ onUnmounted(() => {
             Border Color
           </label>
           <div class="settings-control color-control">
-            <input
-              type="color"
-              v-model="dataStore.mapStyle.borderColor"
-              class="color-picker"
+            <LegendColorPicker
+              trigger-type="swatch"
+              :color="dataStore.mapStyle.borderColor"
+              :default-color="'#ffffff'"
+              :show-reset="false"
+              @update:color="dataStore.mapStyle.borderColor = $event"
             />
             <input
               type="text"
@@ -458,12 +472,11 @@ onUnmounted(() => {
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
-  border: 1px solid var(--color-border, #3d3d5c); /* Normal border — NOT accent green */
-  border-bottom: none; /* Merge with legend below */
+  border: 1px solid var(--color-border, #3d3d5c);
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
-  border-radius: 8px 8px 0 0; /* Only round top corners */
+  border-radius: 8px; /* Fully rounded — separate floating element */
   position: absolute;
-  bottom: 100%; /* Position above the legend */
+  bottom: calc(100% + 2px); /* Float above legend with small gap so green border is visible */
   left: -1px; /* Align with legend border */
   /* Let toolbar expand wider than legend so all buttons are reachable */
   right: auto;
@@ -697,25 +710,6 @@ onUnmounted(() => {
   gap: 8px;
 }
 
-.color-picker {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  cursor: pointer;
-  background: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 2px;
-  border: none;
-}
-
 .color-input {
   flex: 1;
   padding: 6px 8px;
@@ -769,6 +763,35 @@ onUnmounted(() => {
   background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
   border-color: var(--color-accent, #4ade80);
   color: var(--color-accent, #4ade80);
+}
+
+/* Manual count input (Max Items) */
+.manual-count-row {
+  margin-top: -4px;
+  padding-left: 20px;
+}
+
+.manual-count-input {
+  width: 70px;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.manual-count-input::-webkit-inner-spin-button,
+.manual-count-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.manual-count-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
 }
 
 /* Transitions */

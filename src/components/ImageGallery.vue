@@ -1,13 +1,14 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
-import { getProxiedUrl, getThumbnailUrl } from '../utils/imageProxy'
+import { getProxiedUrl, getThumbnailUrl, notifyTierFailed, getProxyState } from '../utils/imageProxy'
 import { useGalleryData } from '../composables/useGalleryData'
 import GallerySidebar from './GallerySidebar.vue'
 import Panzoom from '@panzoom/panzoom'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
+const proxyState = getProxyState()
 
 // Gallery data from composable
 const {
@@ -268,6 +269,27 @@ const currentSpecimen = computed(() => {
   return specimensWithImages.value[currentIndex.value] || null
 })
 
+// Resolved image URL — reactive to proxy mode/tier changes
+const resolvedImageUrl = computed(() => {
+  // Touch reactive refs so Vue tracks the dependency
+  void proxyState.mode.value
+  void proxyState.tierStatus.value
+  return currentSpecimen.value?.image_url
+    ? getProxiedUrl(currentSpecimen.value.image_url)
+    : ''
+})
+
+// Proxy-version counter — forces re-evaluation of thumbnail URLs in v-for
+const proxyVersion = computed(() =>
+  `${proxyState.mode.value}-${JSON.stringify(proxyState.tierStatus.value)}`
+)
+
+// Thumbnail URL helper — reactive wrapper for use in v-for templates
+const resolvedThumbUrl = (url) => {
+  void proxyVersion.value
+  return getThumbnailUrl(url)
+}
+
 // Navigation
 const hasPrev = computed(() => currentIndex.value > 0)
 const hasNext = computed(() => currentIndex.value < specimensWithImages.value.length - 1)
@@ -348,6 +370,23 @@ const onImageLoad = () => {
 }
 
 const onImageError = () => {
+  // In auto mode, mark the current tier as blocked and retry with next tier
+  const currentUrl = resolvedImageUrl.value
+  if (proxyState.mode.value === 'auto' && currentUrl) {
+    const ts = proxyState.tierStatus.value
+    // Only retry if there's a tier below that isn't blocked yet
+    const hasLowerTier =
+      (currentUrl.includes('wsrv.nl') && ts.lh3 !== 'blocked') ||
+      (currentUrl.includes('lh3.google') && ts.thumbnail !== 'blocked')
+    if (hasLowerTier) {
+      notifyTierFailed(currentUrl)
+      isLoading.value = true
+      loadError.value = false
+      return
+    }
+  }
+  // No more fallbacks — show error
+  if (currentUrl) notifyTierFailed(currentUrl)
   isLoading.value = false
   loadError.value = true
 }
@@ -606,7 +645,8 @@ watch(currentIndex, () => {
               v-if="currentSpecimen?.image_url"
               v-show="!isLoading && !loadError"
               ref="imageEl"
-              :src="getProxiedUrl(currentSpecimen.image_url)"
+              :src="resolvedImageUrl"
+              referrerpolicy="no-referrer"
               :alt="currentSpecimen.scientific_name"
               class="gallery-image"
               @load="onImageLoad"
@@ -710,9 +750,10 @@ watch(currentIndex, () => {
                 >
                   <img
                     v-if="speciesGroup.subspecies[0]?.individuals[0]?.image_url"
-                    :src="getThumbnailUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
+                    :src="resolvedThumbUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
                     :alt="speciesGroup.name"
                     loading="lazy"
+                    referrerpolicy="no-referrer"
                   />
                   <span class="expand-badge" @click.stop="toggleSpeciesCollapse(speciesGroup.name)" title="Expand group">+</span>
                 </button>
@@ -752,9 +793,10 @@ watch(currentIndex, () => {
                       >
                         <img
                           v-if="subspGroup.individuals[0]?.image_url"
-                          :src="getThumbnailUrl(subspGroup.individuals[0].image_url)"
+                          :src="resolvedThumbUrl(subspGroup.individuals[0].image_url)"
                           :alt="subspGroup.name"
                           loading="lazy"
+                          referrerpolicy="no-referrer"
                         />
                         <span class="expand-badge" @click.stop="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)" title="Expand group">+</span>
                       </button>
@@ -771,9 +813,10 @@ watch(currentIndex, () => {
                         :title="specimen.id"
                       >
                         <img
-                          :src="getThumbnailUrl(specimen.image_url)"
+                          :src="resolvedThumbUrl(specimen.image_url)"
                           :alt="specimen.id"
                           loading="lazy"
+                          referrerpolicy="no-referrer"
                         />
                       </button>
                     </div>
@@ -1105,7 +1148,9 @@ watch(currentIndex, () => {
   gap: 2px;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
+  /* No scroll-behavior: smooth — positionToActiveThumbnail() must scroll
+     instantly to avoid lazy-loading intermediate thumbnails on gallery open.
+     Arrow buttons use explicit behavior:'smooth' in scrollBy(). */
 }
 
 /* Species group */
@@ -1343,10 +1388,6 @@ watch(currentIndex, () => {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .gallery-sidebar {
-    display: none;
-  }
-
   .nav-btn {
     width: 40px;
     height: 60px;

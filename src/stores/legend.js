@@ -27,7 +27,15 @@ export const useLegendStore = defineStore('legend', () => {
 
   const showLegend = ref(true)
   const textScale = ref(getStorage('legend-text-scale', 1))
-  const dotScale = ref(getStorage('legend-dot-scale', 1))
+
+  // Labels currently shown in the legend (updated by Legend.vue).
+  // Items in the color map but NOT in this set render as grey on the map.
+  const shownLabels = ref(new Set())
+
+  function setShownLabels(labels) {
+    shownLabels.value = labels instanceof Set ? labels : new Set(labels)
+  }
+
   // ═══════════════════════════════════════════════════════════════════════════
   // BEHAVIOR SETTINGS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -130,6 +138,12 @@ export const useLegendStore = defineStore('legend', () => {
   // Whether to show individual counts per legend item
   const showCounts = ref(getStorage('legend-show-counts', true))
 
+  // Max legend items mode: 'auto' (measure-to-fit) or 'manual' (user-specified count)
+  const maxItemsMode = ref(getStorage('legend-max-items-mode', 'auto'))
+
+  // Manual max items count (used only when maxItemsMode === 'manual')
+  const maxItemsManual = ref(getStorage('legend-max-items-manual', 20))
+
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════
@@ -146,6 +160,9 @@ export const useLegendStore = defineStore('legend', () => {
   // Non-taxonomy groupBy modes (status, mimicry, source) need headers instead of prefixes
   const NON_TAXONOMY_GROUP_BY = new Set(['status', 'mimicry', 'source'])
   const isNonTaxonomyGroupBy = computed(() => NON_TAXONOMY_GROUP_BY.has(effectiveGroupBy.value))
+
+  // Whether the user has overridden auto-fit with a manual item count
+  const isManualMode = computed(() => maxItemsMode.value === 'manual')
 
   // The actual groupBy value to use (validates against current colorBy)
   const effectiveGroupBy = computed(() => {
@@ -215,16 +232,6 @@ export const useLegendStore = defineStore('legend', () => {
     return options
   })
 
-  // Smart prefix behavior: show prefix when headers are hidden (auto mode)
-  const shouldShowPrefix = computed(() => {
-    const prefixEnabled = groupingSettings.value.prefixEnabled
-    if (prefixEnabled === 'auto') {
-      // Auto: show prefix when headers hidden
-      return !groupingSettings.value.showHeaders
-    }
-    return prefixEnabled === true
-  })
-
   // Check if there are any customizations
   const hasCustomizations = computed(() => {
     return Object.keys(customLabels.value).length > 0 ||
@@ -248,7 +255,8 @@ export const useLegendStore = defineStore('legend', () => {
            sortBy.value !== 'alphabetical' ||
            sortOrder.value !== 'asc' ||
            wrapLabels.value !== true ||
-           showCounts.value !== true
+           showCounts.value !== true ||
+           maxItemsMode.value !== 'auto'
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -276,11 +284,6 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-text-scale', scale)
   }
 
-  function setDotScale(scale) {
-    dotScale.value = scale
-    setStorage('legend-dot-scale', scale)
-  }
-
   function setStickyEdges(enabled) {
     stickyEdges.value = enabled
     setStorage('legend-sticky', enabled)
@@ -296,10 +299,6 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-custom-labels', customLabels.value)
   }
 
-  function getDisplayLabel(originalLabel) {
-    return customLabels.value[originalLabel] || originalLabel
-  }
-
   function setCustomColor(label, color) {
     if (color) {
       customColors.value[label] = color
@@ -307,10 +306,6 @@ export const useLegendStore = defineStore('legend', () => {
       delete customColors.value[label]
     }
     setStorage('legend-custom-colors', customColors.value)
-  }
-
-  function getDisplayColor(label, defaultColor) {
-    return customColors.value[label] || defaultColor
   }
 
   function toggleItemVisibility(label) {
@@ -358,32 +353,10 @@ export const useLegendStore = defineStore('legend', () => {
     // Wrap labels & counts
     resetRef(wrapLabels, 'legend-wrap-labels', true)
     resetRef(showCounts, 'legend-show-counts', true)
-  }
 
-  function resetPosition() {
-    resetRef(position, 'legend-position', { x: 40, y: null })
-  }
-
-  function resetSize() {
-    resetRef(size, 'legend-size', { width: 'auto', height: 'auto' })
-  }
-
-  function resetAll() {
-    resetCustomizations()
-    resetPosition()
-    resetSize()
-    resetSpeciesStyling()
-    resetShapeSettings()
-    resetRef(textScale, 'legend-text-scale', 1)
-    resetRef(dotScale, 'legend-dot-scale', 1)
-    resetRef(stickyEdges, 'legend-sticky', true)
-    resetRef(groupingSettings, 'legend-grouping', {
-      enabled: true,
-      groupBy: 'species',
-      abbreviationStyle: 'first-letter',
-      showHeaders: false,
-      prefixEnabled: 'auto',
-    })
+    // Max items mode
+    resetRef(maxItemsMode, 'legend-max-items-mode', 'auto')
+    resetRef(maxItemsManual, 'legend-max-items-manual', 20)
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -400,35 +373,14 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-grouping', groupingSettings.value)
   }
 
-  function setAbbreviationStyle(style) {
-    groupingSettings.value.abbreviationStyle = style
-    setStorage('legend-grouping', groupingSettings.value)
-  }
-
   function setShowHeaders(show) {
     groupingSettings.value.showHeaders = show
-    setStorage('legend-grouping', groupingSettings.value)
-  }
-
-  function toggleHeaders() {
-    groupingSettings.value.showHeaders = !groupingSettings.value.showHeaders
-    setStorage('legend-grouping', groupingSettings.value)
-  }
-
-  function setPrefixEnabled(value) {
-    // value can be true, false, or 'auto'
-    groupingSettings.value.prefixEnabled = value
     setStorage('legend-grouping', groupingSettings.value)
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // SPECIES STYLING ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
-
-  function setSpeciesBorderColorEnabled(enabled) {
-    speciesStyling.value.borderColor = enabled
-    setStorage('legend-species-styling', speciesStyling.value)
-  }
 
   function setSpeciesBorderColor(species, color) {
     if (color) {
@@ -442,13 +394,6 @@ export const useLegendStore = defineStore('legend', () => {
       delete speciesBorderColors.value[species]
     }
     setStorage('legend-species-borders', speciesBorderColors.value)
-  }
-
-  function resetSpeciesStyling() {
-    resetRef(speciesStyling, 'legend-species-styling', { borderColor: false })
-    resetRef(speciesBorderColors, 'legend-species-borders', {})
-    resetRef(speciesAbbreviations, 'legend-species-abbreviations', {})
-    resetRef(speciesAbbreviationVisible, 'legend-species-abbrev-visible', {})
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -607,6 +552,25 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // MAX ITEMS MODE ACTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setMaxItemsMode(mode) {
+    maxItemsMode.value = mode
+    setStorage('legend-max-items-mode', mode)
+  }
+
+  function toggleMaxItemsMode() {
+    setMaxItemsMode(maxItemsMode.value === 'auto' ? 'manual' : 'auto')
+  }
+
+  function setMaxItemsManual(count) {
+    const clamped = Math.max(1, Math.min(500, Math.round(count)))
+    maxItemsManual.value = clamped
+    setStorage('legend-max-items-manual', clamped)
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // SHAPE ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -639,20 +603,15 @@ export const useLegendStore = defineStore('legend', () => {
     return groupShapes.value[groupKey] || 'circle'
   }
 
-  function resetShapeSettings() {
-    resetRef(shapeSettings, 'legend-shape-settings', { enabled: false, assignBy: 'species' })
-    resetRef(groupShapes, 'legend-group-shapes', {})
-  }
-
   return {
     // State
     position,
     size,
     showLegend,
     textScale,
-    dotScale,
     stickyEdges,
     snapThreshold,
+    shownLabels,
     customLabels,
     customColors,
     hiddenItems,
@@ -683,8 +642,13 @@ export const useLegendStore = defineStore('legend', () => {
     // Show counts state
     showCounts,
 
+    // Max items state
+    maxItemsMode,
+    maxItemsManual,
+
     // Computed
     hasCustomizations,
+    isManualMode,
     isGrouped,
     effectiveGroupBy,
     groupByOptions,
@@ -695,8 +659,8 @@ export const useLegendStore = defineStore('legend', () => {
     updatePosition,
     updateSize,
     setTextScale,
-    setDotScale,
     setStickyEdges,
+    setShownLabels,
     setCustomLabel,
     setCustomColor,
     toggleItemVisibility,
@@ -720,6 +684,9 @@ export const useLegendStore = defineStore('legend', () => {
     setGroupShape,
     getGroupShape,
     toggleWrapLabels,
-    toggleShowCounts
+    toggleShowCounts,
+    setMaxItemsMode,
+    toggleMaxItemsMode,
+    setMaxItemsManual
   }
 })

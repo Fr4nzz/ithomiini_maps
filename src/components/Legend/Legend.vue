@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
@@ -21,6 +21,9 @@ const props = defineProps({
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
+
+// Minimum gap between the legend and container edges (used for snapping/clamping)
+const STICKY_MARGIN = 10
 
 // Refs
 const legendRef = ref(null)
@@ -81,13 +84,17 @@ const bottomAttributionMargin = computed(() => {
 })
 
 // Should show toolbar/edit UI? (hidden by default, shown on hover OR when popup is open)
-const showEditUI = computed(() => isHovered.value || hasOpenPopup.value)
-const showToolbar = showEditUI
+// Suppressed during resize so user sees normal (non-edit) layout for accurate item count feedback
+const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
 
-// (hasModalOpen removed — showEditUI now used directly for group headers)
-
-// Get container dimensions
+// Get container dimensions — prefer the reactive prevContainerBounds (updated by
+// ResizeObserver) so that autoWidth/maxLegendHeight/targetLegendHeight reactively
+// update when the container resizes. Falls back to direct DOM read before the
+// ResizeObserver has populated prevContainerBounds.
 const containerBounds = computed(() => {
+  if (prevContainerBounds.value.width > 0) {
+    return prevContainerBounds.value
+  }
   if (props.containerRef) {
     return {
       width: props.containerRef.clientWidth || 800,
@@ -238,10 +245,76 @@ const sortedAllItems = computed(() => {
   return items
 })
 
+// Fair distribution of legend slots across groups.
+// When grouped, allocates slots equally to each group so every group
+// gets representation (e.g., half Sanger, half iNaturalist).
+function fairGroupedSlice(allItems, maxItems) {
+  const groups = new Map()
+  for (const item of allItems) {
+    const group = getGroupForItem(item.label)
+    if (group) {
+      if (!groups.has(group)) groups.set(group, [])
+      groups.get(group).push(item)
+    }
+  }
+
+  const groupNames = [...groups.keys()]
+  const numGroups = groupNames.length
+  if (numGroups === 0) return allItems.slice(0, maxItems)
+
+  // Equal base allocation per group
+  const basePerGroup = Math.floor(maxItems / numGroups)
+  let remainder = maxItems - basePerGroup * numGroups
+
+  // Allocate: base + up to 1 extra (remainder goes to largest groups first)
+  const allocations = new Map()
+  const bySize = [...groupNames].sort((a, b) => groups.get(b).length - groups.get(a).length)
+
+  for (const name of bySize) {
+    const extra = remainder > 0 ? 1 : 0
+    if (remainder > 0) remainder--
+    allocations.set(name, Math.min(basePerGroup + extra, groups.get(name).length))
+  }
+
+  // Redistribute unused slots from small groups to larger ones
+  let totalAlloc = 0
+  for (const v of allocations.values()) totalAlloc += v
+  let surplus = maxItems - totalAlloc
+
+  while (surplus > 0) {
+    let distributed = false
+    for (const name of bySize) {
+      if (surplus <= 0) break
+      if (allocations.get(name) < groups.get(name).length) {
+        allocations.set(name, allocations.get(name) + 1)
+        surplus--
+        distributed = true
+      }
+    }
+    if (!distributed) break
+  }
+
+  // Collect items preserving original group order
+  const result = []
+  for (const name of groupNames) {
+    const quota = allocations.get(name) || 0
+    result.push(...groups.get(name).slice(0, quota))
+  }
+
+  return result
+}
+
 // Get items sliced to fit, with hidden items appended for edit mode
 const legendItems = computed(() => {
   const maxItems = effectiveMaxItems.value
-  const items = sortedAllItems.value.slice(0, maxItems)
+  let items
+
+  // When grouping is active, distribute slots fairly across groups
+  if (legendStore.isGrouped) {
+    items = fairGroupedSlice(sortedAllItems.value, maxItems)
+  } else {
+    items = sortedAllItems.value.slice(0, maxItems)
+  }
 
   // Add hidden items at the end (for edit mode)
   if (!isExportMode.value) {
@@ -360,6 +433,20 @@ const moreCount = computed(() => {
   return Math.max(0, totalVisible - maxItems)
 })
 
+// Total point count for overflow (grey) items — shown when counts enabled
+const morePointCount = computed(() => {
+  if (!legendStore.showCounts || moreCount.value === 0) return null
+  const shownSet = new Set(legendItems.value.filter(i => i.visible !== false).map(i => i.label))
+  const counts = legendCounts.value
+  let total = 0
+  for (const [label, cnt] of Object.entries(counts)) {
+    if (!shownSet.has(label)) {
+      total += cnt
+    }
+  }
+  return total
+})
+
 // ═══════════════════════════════════════════════════════════════════════════
 // LEGEND COUNTS (for abundance sorting and display)
 // Counts features by the current colorBy attribute (subspecies, species, genus, etc.)
@@ -384,55 +471,41 @@ const legendCounts = computed(() => {
 // AUTO-SIZING
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Measure text width using canvas
-let _measureCanvas = null
+// Measure text width using a hidden DOM element (matches actual CSS font rendering)
+let _measureSpan = null
 function measureTextWidth(text, fontSizePx) {
-  if (!_measureCanvas) {
-    _measureCanvas = document.createElement('canvas')
+  if (!_measureSpan) {
+    _measureSpan = document.createElement('span')
+    _measureSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-style:italic;pointer-events:none;top:-9999px;left:-9999px;'
+    document.body.appendChild(_measureSpan)
   }
-  const ctx = _measureCanvas.getContext('2d')
-  ctx.font = `italic ${fontSizePx}px system-ui, -apple-system, sans-serif`
-  return ctx.measureText(text).width
+  _measureSpan.style.fontSize = fontSizePx + 'px'
+  _measureSpan.textContent = text
+  return _measureSpan.getBoundingClientRect().width
 }
 
-// Collect all displayed label texts for width calculation
-const allDisplayedLabels = computed(() => {
-  const labels = []
-  const data = groupedLegendData.value
-  if (data.type === 'flat') {
-    for (const item of data.items) {
-      labels.push(item.label)
-    }
-  } else if (data.groups) {
-    for (const group of data.groups) {
-      // Include group header text
-      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
-        labels.push(group.name)
-      }
-      for (const item of group.items) {
-        labels.push(item.displayLabel || item.label)
-      }
-    }
-  }
-  return labels
-})
-
-// Calculate auto width from content
+// Calculate auto width from content.
+// Uses ALL sorted items' labels (not just displayed ones) so autoWidth is
+// stable across measurement changes. If autoWidth depended on
+// allDisplayedLabels (which changes when measuredItemCount changes), the
+// width would shift after measurement, making items reflow to different
+// heights — but no re-measurement would happen for that shift.
 const autoWidth = computed(() => {
-  const labels = allDisplayedLabels.value
-  if (!labels.length) return 200
+  const items = sortedAllItems.value
+  if (!items.length) return 200
 
   const maxContainerWidth = containerBounds.value.width * 0.25
   const fontSizePx = Math.round(14 * legendStore.textScale)
 
   let maxTextWidth = 0
-  for (const label of labels) {
+  for (const item of items) {
+    const label = item.displayLabel || item.label
     const width = measureTextWidth(label, fontSizePx)
     if (width > maxTextWidth) maxTextWidth = width
   }
 
   // Add dot size + gap + padding + extra margin
-  const dotSz = Math.round(10 * legendStore.dotScale)
+  const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
   const padding = 16 * 2 // left + right content padding
   const gap = 8
   const scrollbarWidth = 8
@@ -443,79 +516,140 @@ const autoWidth = computed(() => {
   return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
 })
 
-// Max legend height based on container (80% of map height)
+// Max legend height based on container (80% of map height) — hard cap for resize
 const maxLegendHeight = computed(() => {
   return Math.floor(containerBounds.value.height * 0.80)
 })
 
-// Item limit computed from available space (no post-render adjustment needed;
-// CSS overflow-y: auto handles any remaining overflow).
-const effectiveMaxItems = computed(() => {
-  // Estimate from available space
-  const fontSizePx = Math.round(14 * legendStore.textScale)
-  // Generous estimate for wrapped text (allows 2-line items)
-  const itemHeight = legendStore.wrapLabels ? fontSizePx * 2 + 10 : fontSizePx + 10
-  const headerHeight = fontSizePx + 10
-  const titleHeight = 32
-  const padding = 24
-
-  const available = maxLegendHeight.value - titleHeight - padding
-
-  // Compute group overhead from actual data instead of fixed multiplier.
-  // When grouped, each species gets a header row. If most species have only
-  // 1 subspecies (common in abundance sort), overhead approaches 2x, not 1.2x.
-  // Headers are visible either when showHeaders is true OR during hover
-  // (hidden headers become display:flex when hovered).
-  let effectiveItemHeight = itemHeight
-  const headersVisible = legendStore.isGrouped &&
-    (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy || isHovered.value)
-  if (headersVisible) {
-    const allItems = sortedAllItems.value
-    const sampleSize = Math.min(20, allItems.length)
-    if (sampleSize > 0) {
-      const groupsSeen = new Set()
-      for (let i = 0; i < sampleSize; i++) {
-        const group = getGroupForItem(allItems[i].label)
-        if (group) groupsSeen.add(group)
-      }
-      // Each group header adds headerHeight per (items/groups) items
-      const headersPerItem = groupsSeen.size / sampleSize
-      effectiveItemHeight = itemHeight + headersPerItem * headerHeight
-    }
-  }
-
-  const est = Math.max(1, Math.floor(available / effectiveItemHeight))
-  return est
+// Target height for auto-sizing (smaller than the hard cap to avoid giant legends)
+const targetLegendHeight = computed(() => {
+  return Math.floor(containerBounds.value.height * 0.75)
 })
 
-// Calculate auto height from content (using effectiveMaxItems)
-const autoHeight = computed(() => {
-  const data = groupedLegendData.value
-  const fontSizePx = Math.round(14 * legendStore.textScale)
-  const itemHeight = legendStore.wrapLabels ? fontSizePx + 12 : fontSizePx + 8
-  const titleHeight = 32 // title + border
-  const moreHeight = moreCount.value > 0 ? 30 : 0
-  const padding = 24 // top + bottom content padding
+// Generous upper-bound: how many items COULD fit (deliberately over-estimates).
+// The actual count is determined by post-render DOM measurement.
+const renderUpperBound = computed(() => {
+  const minItemHeight = 22 // smallest possible: fontSize(14) + padding(4+4)
+  const gap = 2
+  const titleHeight = 32
+  const padding = 24
+  const moreReserve = 40
 
-  let totalItems = 0
-  let groupHeaders = 0
-
-  if (data.type === 'flat') {
-    totalItems = data.items.length
-  } else if (data.groups) {
-    for (const group of data.groups) {
-      if (legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy) {
-        groupHeaders++
-      }
-      totalItems += group.items.length
-    }
+  let availableHeight
+  if (isResizing.value && resizeOverride.value) {
+    availableHeight = resizeOverride.value.height
+  } else if (!isAutoHeight.value) {
+    availableHeight = currentHeight.value || targetLegendHeight.value
+  } else {
+    availableHeight = targetLegendHeight.value
   }
 
-  const groupHeaderHeight = fontSizePx + 10
-  const idealHeight = titleHeight + (totalItems * itemHeight) + (groupHeaders * groupHeaderHeight) + moreHeight + padding
+  const available = availableHeight - titleHeight - padding - moreReserve
+  return Math.max(1, Math.ceil(available / (minItemHeight + gap)))
+})
 
-  // Cap at 75% of container height
-  return Math.min(Math.max(Math.ceil(idealHeight), 80), maxLegendHeight.value)
+// Post-render measured count (null = not yet measured, use upper bound)
+const measuredItemCount = ref(null)
+// Tracks measurement passes (0 = fresh, 1 = first pass done, 2 = final/verified)
+const measurePassCount = ref(0)
+
+// ── Centralized measurement scheduler ──────────────────────────────────
+// Prevents overlapping measurement cycles by ensuring only ONE cycle is
+// in-flight at a time.  Uses double-requestAnimationFrame instead of
+// nextTick so the browser has completed CSS layout before we read
+// getBoundingClientRect() values.
+let pendingMeasurementRAF = null
+let pendingVerifyRAF = null
+
+/**
+ * Schedule a full measurement cycle.  All watchers call this instead of
+ * directly invoking measureAndTrimItems().
+ * @param {boolean} resetState  true → reset measuredItemCount/measurePassCount
+ *                              false → keep current state (initial mount, verify re-measure)
+ */
+function scheduleMeasurement(resetState = true) {
+  // Cancel any in-flight measurement or verify from a prior cycle
+  if (pendingMeasurementRAF !== null) {
+    cancelAnimationFrame(pendingMeasurementRAF)
+    pendingMeasurementRAF = null
+  }
+  if (pendingVerifyRAF !== null) {
+    cancelAnimationFrame(pendingVerifyRAF)
+    pendingVerifyRAF = null
+  }
+  // Manual mode: skip measurement entirely — effectiveMaxItems uses the user value
+  if (legendStore.isManualMode) return
+  if (resetState) {
+    measuredItemCount.value = null
+    measurePassCount.value = 0
+  }
+  // Double rAF: first fires after Vue DOM update + browser layout;
+  // second fires after paint — getBoundingClientRect() is accurate.
+  pendingMeasurementRAF = requestAnimationFrame(() => {
+    pendingMeasurementRAF = requestAnimationFrame(() => {
+      pendingMeasurementRAF = null
+      measureAndTrimItems()
+    })
+  })
+}
+
+/**
+ * Schedule the verify-and-reclaim pass after an initial measurement.
+ * A subsequent scheduleMeasurement() call will cancel this if a new
+ * full cycle is triggered before the verify runs.
+ */
+function scheduleVerify() {
+  if (pendingVerifyRAF !== null) {
+    cancelAnimationFrame(pendingVerifyRAF)
+  }
+  pendingVerifyRAF = requestAnimationFrame(() => {
+    pendingVerifyRAF = requestAnimationFrame(() => {
+      pendingVerifyRAF = null
+      verifyAndReclaim()
+    })
+  })
+}
+
+// The actual item limit: measured value when available, upper bound otherwise
+const effectiveMaxItems = computed(() => {
+  // Manual mode: user-specified count, bypass measurement
+  if (legendStore.isManualMode) return legendStore.maxItemsManual
+
+  // Auto mode: render-then-measure
+  if (isResizing.value) return renderUpperBound.value
+  if (measuredItemCount.value !== null) return measuredItemCount.value
+  return renderUpperBound.value
+})
+
+// In manual mode allow vertical scrolling so items beyond the visible area
+// are accessible; in auto mode keep overflow hidden for the measure pass.
+const legendContentStyle = computed(() => {
+  if (legendStore.isManualMode) return { overflow: 'hidden auto' }
+  return {}
+})
+
+// Calculate auto height from content.
+// Before measurement: use full target height so container is large enough
+// for measureAndTrimItems() to find the real cutoff.
+// After measurement: if items were trimmed (overflow), keep full target height
+// so the container doesn't shrink due to inaccurate per-item estimates.
+// Only shrink-to-fit when ALL items fit (small data set).
+const autoHeight = computed(() => {
+  if (measuredItemCount.value === null) {
+    return targetLegendHeight.value
+  }
+  // Items were trimmed → keep full target height (don't shrink)
+  if (measuredItemCount.value < sortedAllItems.value.length) {
+    return targetLegendHeight.value
+  }
+  // All items fit → size to content (estimate is fine for small counts)
+  const fontSizePx = Math.round(14 * legendStore.textScale)
+  const titleHeight = 32
+  const padding = 24
+  const itemCount = sortedAllItems.value.length
+  const itemHeight = fontSizePx + 10 + 2
+  const idealHeight = titleHeight + (itemCount * itemHeight) + padding
+  return Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
 })
 
 // Effective width (auto or manual)
@@ -550,8 +684,151 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   }
 })
 
+// ═══════════════════════════════════════════════════════════════════════════
+// POST-RENDER DOM MEASUREMENT (render-then-measure pattern)
+// Instead of estimating item heights, we render a generous number of items
+// with overflow:hidden, then measure the actual DOM to find the exact cutoff.
+// ═══════════════════════════════════════════════════════════════════════════
+
+function measureAndTrimItems() {
+  const contentEl = contentRef.value
+  if (!contentEl || isResizing.value) return
+
+  const itemsEl = contentEl.querySelector('.legend-items')
+  if (!itemsEl || !itemsEl.children.length) return
+
+  const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
+  const contentPaddingBottom = 12
+  const moreIndicatorReserve = 40
+
+  // In grouped mode, walk individual .legend-item elements (not .legend-group
+  // containers). Each item's getBoundingClientRect already includes any group
+  // header height above it, so the bottom check naturally accounts for overhead.
+  const isGroupedView = itemsEl.classList.contains('grouped')
+  const measurableItems = isGroupedView
+    ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
+    : itemsEl.children
+
+  const totalSorted = sortedAllItems.value.length
+
+  if (!measurableItems.length) return
+
+  // Check if ALL items fit without needing "+N more"
+  const lastItem = measurableItems[measurableItems.length - 1]
+  if (measurableItems.length >= totalSorted &&
+      lastItem.getBoundingClientRect().bottom <= contentBottom - contentPaddingBottom) {
+    if (measuredItemCount.value !== totalSorted) {
+      measuredItemCount.value = totalSorted
+    }
+    return
+  }
+
+  // Not all fit — reserve space for "+N more" and find cutoff
+  const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
+  let count = 0
+  for (let i = 0; i < measurableItems.length; i++) {
+    if (measurableItems[i].getBoundingClientRect().bottom > maxBottom) break
+    count++
+  }
+
+  count = Math.max(1, count)
+  if (count !== measuredItemCount.value) {
+    measuredItemCount.value = count
+  }
+
+  // After first pass, schedule verification to reclaim empty space
+  // (the final render may have shorter items than during measurement)
+  if (measurePassCount.value < 2 && count < totalSorted) {
+    measurePassCount.value = Math.max(measurePassCount.value, 1)
+    scheduleVerify()
+  }
+}
+
+// Verification pass: after the first measurement reduces item count and Vue
+// re-renders, check if there's significant remaining space (items ended up
+// shorter than during measurement due to different group structure or wrapping).
+// If so, render more items and do a final measurement pass.
+function verifyAndReclaim() {
+  if (measurePassCount.value >= 2 || isResizing.value) return
+  const contentEl = contentRef.value
+  if (!contentEl) return
+  const itemsEl = contentEl.querySelector('.legend-items')
+  if (!itemsEl || measuredItemCount.value >= sortedAllItems.value.length) return
+
+  // Find last individual item
+  const isGroupedView = itemsEl.classList.contains('grouped')
+  const allItems = isGroupedView
+    ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
+    : itemsEl.children
+  const lastItem = allItems.length ? allItems[allItems.length - 1] : null
+  if (!lastItem) return
+
+  const maxBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight - 12 - 40
+  const remaining = maxBottom - lastItem.getBoundingClientRect().bottom
+  if (remaining < 22) return // No meaningful space
+
+  // Estimate extra items and re-measure
+  const extra = Math.max(1, Math.floor(remaining / 22))
+  measurePassCount.value = 2
+  measuredItemCount.value = Math.min(measuredItemCount.value + extra, sortedAllItems.value.length)
+  scheduleMeasurement(false)  // Don't reset — verify already set measurePassCount = 2
+}
+
+// Initial measurement: when contentRef first becomes a DOM element
+// (legend appears via v-if after data loads), trigger the first measurement.
+watch(contentRef, (el, oldEl) => {
+  if (el && !oldEl) {
+    scheduleMeasurement(false)  // State already at defaults on mount
+  }
+})
+
+// Re-measure when layout-affecting settings change
+watch([
+  () => legendStore.wrapLabels,
+  () => legendStore.textScale,
+  () => legendStore.showCounts,
+  () => legendStore.isGrouped,
+  () => legendStore.groupingSettings,
+], () => {
+  scheduleMeasurement()
+}, { deep: true })
+
+// Re-measure when data changes (new items, filters applied, colorBy changed)
+// NOTE: effectiveWidth is NOT watched here — it depends transitively on
+// measuredItemCount (via legendItems → autoWidth), which would create an
+// infinite reactive loop.
+watch(sortedAllItems, () => {
+  scheduleMeasurement()
+})
+
+// Re-measure after resize ends
+watch(isResizing, (resizing) => {
+  if (!resizing) {
+    scheduleMeasurement()
+  }
+})
+
+// When switching from manual → auto, trigger a fresh measurement
+watch(() => legendStore.maxItemsMode, (newMode) => {
+  if (newMode === 'auto') scheduleMeasurement()
+})
+
+// Re-measure when container dimensions change (horizontal resize causes text
+// reflow changing item heights; vertical resize changes available space).
+// We watch prevContainerBounds (set by containerResizeObserver) which is NOT
+// in the effectiveWidth → measuredItemCount dependency chain, so no loop risk.
+let containerResizeRemeasureTimeout = null
+watch(prevContainerBounds, (newBounds, oldBounds) => {
+  if (oldBounds.width > 0 && measuredItemCount.value !== null) {
+    if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
+    containerResizeRemeasureTimeout = setTimeout(() => {
+      scheduleMeasurement()
+    }, 150)
+  }
+}, { deep: true })
+
 // Scaled sizes
-const dotSize = computed(() => Math.round(10 * legendStore.dotScale))
+const dotSize = computed(() => Math.max(6, Math.min(16, dataStore.mapStyle.pointSize)))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
 
 // Position style
@@ -583,13 +860,12 @@ const positionStyle = computed(() => {
   // X position
   style.left = posX.value + 'px'
 
-  // Height - only set explicit height in manual mode (user has resized).
-  // In auto mode, let the container size to its content, capped by maxHeight.
-  if (!isAutoHeight.value) {
-    const h = effectiveHeight.value
-    if (h && h !== 'auto') {
-      style.height = h + 'px'
-    }
+  // Height - always set explicit height so the container has a known size
+  // for measureAndTrimItems(). In auto mode, autoHeight returns targetLegendHeight
+  // before measurement (giving room to measure) and the exact fit after.
+  const h = effectiveHeight.value
+  if (h && h !== 'auto') {
+    style.height = h + 'px'
   }
 
   return style
@@ -671,7 +947,7 @@ function onDrag(e) {
     const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
     const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
     const legendHeight = legendRef.value?.offsetHeight || 200
-    const margin = 10
+    const margin = STICKY_MARGIN
 
     // Snap to left edge
     if (newX >= 0 && newX < threshold) {
@@ -718,61 +994,6 @@ function endDrag() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Recalculate legend position when container bounds change.
- * Maintains relative sticky edge positions when switching export modes.
- */
-function adjustPositionForNewBounds(oldBounds, newBounds) {
-  if (!oldBounds.width || !newBounds.width) return
-
-  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
-  const legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = 10
-
-  let newX = posX.value
-  let newY = posY.value
-
-  // If stuck to right edge, maintain right-edge position
-  if (stickyEdge.value.right) {
-    newX = newBounds.width - legendWidth - margin
-  }
-  // If stuck to left edge, keep at left
-  else if (stickyEdge.value.left) {
-    newX = margin
-  }
-  // Otherwise, scale proportionally to new width
-  else if (oldBounds.width > 0) {
-    const relativeX = posX.value / oldBounds.width
-    newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, relativeX * newBounds.width))
-  }
-
-  // Handle Y position - if posY is null, legend uses CSS bottom positioning
-  // Treat null posY as "sticky to bottom" since that's the default position
-  const isUsingBottomPosition = posY.value === null
-
-  // If stuck to bottom edge OR using default bottom positioning, maintain bottom-edge position
-  if (stickyEdge.value.bottom || isUsingBottomPosition) {
-    newY = newBounds.height - legendHeight - margin
-  }
-  // If stuck to top edge, keep at top
-  else if (stickyEdge.value.top) {
-    newY = margin
-  }
-  // Otherwise, scale proportionally to new height
-  else if (oldBounds.height > 0 && posY.value !== null) {
-    const relativeY = posY.value / oldBounds.height
-    newY = Math.max(margin, Math.min(newBounds.height - legendHeight - margin, relativeY * newBounds.height))
-  }
-
-  // Ensure legend stays within bounds
-  newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
-  newY = Math.max(margin, Math.min(newBounds.height - legendHeight - margin, newY))
-
-  posX.value = newX
-  posY.value = newY
-  legendStore.updatePosition(newX, newY)
-}
-
-/**
  * Detect current sticky edge state based on current position.
  * Used to initialize sticky state when component mounts or bounds change.
  * @param {boolean} wasExportMode - Optional: the export mode state BEFORE a mode change (for transitions)
@@ -786,7 +1007,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
   const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
   const legendHeight = legendRef.value?.offsetHeight || 200
   const threshold = 20 // Detection threshold
-  const margin = 10
+  const margin = STICKY_MARGIN
 
   // Handle null posY (default bottom positioning via CSS)
   const effectiveY = posY.value !== null ? posY.value : bounds.height - legendHeight - 30
@@ -817,7 +1038,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
 function applyPositionForBounds(oldBounds, newBounds) {
   const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
   let legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = 10
+  const margin = STICKY_MARGIN
   const minHeight = 100
 
   // Calculate bottom margin (include attribution space when not in export mode)
@@ -1049,7 +1270,7 @@ function repositionForAttributionChange() {
   }
 
   const legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = 10
+  const margin = STICKY_MARGIN
   const bottomMargin = margin + bottomAttributionMargin.value
 
   // Only reposition if legend is stuck to bottom
@@ -1147,7 +1368,7 @@ onMounted(() => {
       setupContainerResizeObserver()
 
       const legendHeight = legendRef.value?.offsetHeight || 200
-      const margin = 10
+      const margin = STICKY_MARGIN
 
       // Check if legend is at default position (never been moved) or outside visible bounds
       const isDefaultPosition = posY.value === null || (posX.value === 40 && posY.value === legendStore.position.y)
@@ -1202,6 +1423,18 @@ onUnmounted(() => {
   if (legendResizeObserver) {
     legendResizeObserver.disconnect()
     legendResizeObserver = null
+  }
+
+  // Clean up measurement scheduler
+  if (pendingMeasurementRAF !== null) cancelAnimationFrame(pendingMeasurementRAF)
+  if (pendingVerifyRAF !== null) cancelAnimationFrame(pendingVerifyRAF)
+  if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
+  if (resizeTimeout) clearTimeout(resizeTimeout)
+
+  // Clean up hidden measure span
+  if (_measureSpan) {
+    _measureSpan.remove()
+    _measureSpan = null
   }
 })
 
@@ -1259,8 +1492,31 @@ watch(autoHeight, (newAutoHeight) => {
   }
 })
 
-// (Auto-sizing is handled by CSS overflow-y: auto on .legend-content,
-// combined with the computed effectiveMaxItems estimate above.)
+// (Auto-sizing is handled by overflow:hidden on .legend-content,
+// combined with post-render DOM measurement in measureAndTrimItems.)
+
+// Sync shown labels to the store so the map can grey out overflow items.
+// During resize, defer the sync to avoid rebuilding the map layer on every frame.
+watch(legendItems, (items) => {
+  if (isResizing.value) return // Defer — will sync when resize ends
+  const labels = new Set()
+  for (const item of items) {
+    if (item.visible !== false) labels.add(item.label)
+  }
+  legendStore.setShownLabels(labels)
+}, { immediate: true })
+
+// When resize ends, sync the final shown labels to trigger one map update
+watch(isResizing, (resizing) => {
+  if (!resizing) {
+    const items = legendItems.value
+    const labels = new Set()
+    for (const item of items) {
+      if (item.visible !== false) labels.add(item.label)
+    }
+    legendStore.setShownLabels(labels)
+  }
+})
 
 // ═══════════════════════════════════════════════════════════════════════════
 // BOTTOM-STICKY REPOSITIONING
@@ -1272,7 +1528,7 @@ function repositionIfBottomSticky() {
 
   const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
   const legendHeight = legendRef.value.offsetHeight
-  const margin = 10
+  const margin = STICKY_MARGIN
   const bottomMargin = margin + bottomAttributionMargin.value
   const targetY = bounds.height - legendHeight - bottomMargin
 
@@ -1296,16 +1552,6 @@ function setupLegendResizeObserver() {
 
   legendResizeObserver.observe(legendRef.value)
 }
-
-// Watch for container bounds changes (triggered by export mode toggle or other factors)
-// Note: This is a backup - main handling is in handleWindowResize and isExportMode watcher
-watch(containerBounds, (newBounds) => {
-  // Only update if not currently dragging
-  if (isDragging.value) return
-
-  // Just track bounds changes, don't reposition here
-  // Repositioning is handled by handleWindowResize and isExportMode watcher
-}, { deep: true })
 
 // Watch for export mode changes - capture sticky state BEFORE container resizes
 // The actual repositioning is handled by the containerResizeObserver
@@ -1337,7 +1583,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   >
     <!-- Toolbar (hidden by default, shown on hover) -->
     <LegendToolbar
-      v-show="showToolbar"
+      v-show="showEditUI"
       :is-export-mode="isExportMode"
       @settings-open="hasOpenPopup = true"
       @settings-close="hasOpenPopup = false"
@@ -1349,6 +1595,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
     <div
       ref="contentRef"
       class="legend-content"
+      :style="legendContentStyle"
     >
       <!-- Title with hover controls (sort dropdown + counts toggle) -->
       <div class="legend-title" @click.stop>
@@ -1487,18 +1734,20 @@ watch(isExportMode, (enabled, wasEnabled) => {
         </div>
       </div>
 
-      <!-- More indicator -->
+      <!-- More indicator (overflow items appear grey on the map) -->
       <div
         v-if="moreCount > 0"
         class="legend-more"
         :style="{ fontSize: fontSize + 'px' }"
       >
+        <span class="more-dot" />
         + {{ moreCount }} more
+        <span v-if="morePointCount !== null" class="more-count">{{ morePointCount.toLocaleString() }}</span>
       </div>
     </div>
 
     <!-- Multi-directional resize zones (shown on hover) -->
-    <template v-if="showToolbar && !isExportMode">
+    <template v-if="showEditUI && !isExportMode">
       <div v-for="dir in resizeDirections" :key="dir"
            :class="['resize-zone', `resize-${dir}`]"
            @mousedown.stop.prevent="startResize($event, dir)"
@@ -1537,7 +1786,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   max-width: 600px;
   min-height: 80px;
   /* max-height is set dynamically via positionStyle */
-  overflow: visible; /* Allow toolbar to overflow upwards */
+  overflow: visible; /* Allow toolbar to float above and resize zones to extend beyond edges */
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
@@ -1548,7 +1797,18 @@ watch(isExportMode, (enabled, wasEnabled) => {
 .legend-container.is-hovered:not(.is-export) {
   border-color: var(--color-accent, #4ade80);
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
-  border-radius: 0 0 8px 8px; /* Flat top corners where toolbar connects */
+}
+
+/* Invisible hover bridge above legend — keeps mouse "inside" the container
+   when crossing the gap between legend and floating toolbar */
+.legend-container::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: -1px;
+  right: -1px;
+  height: 10px; /* Covers the 2px gap plus toolbar overlap */
+  pointer-events: auto;
 }
 
 .legend-container.is-dragging {
@@ -1568,13 +1828,24 @@ watch(isExportMode, (enabled, wasEnabled) => {
 
 .legend-content {
   padding: 12px 16px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   /* flex-basis: auto so the container sizes to content, then max-height caps it.
      flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
   flex: 1 1 auto;
   min-height: 0;
+  /* Flex column so .legend-more can use margin-top:auto to fill empty space */
+  display: flex;
+  flex-direction: column;
 }
+
+/* Thin scrollbar for manual-mode overflow */
+.legend-content::-webkit-scrollbar { width: 6px; }
+.legend-content::-webkit-scrollbar-track { background: transparent; }
+.legend-content::-webkit-scrollbar-thumb {
+  background: var(--color-border, #3d3d5c);
+  border-radius: 3px;
+}
+.legend-content::-webkit-scrollbar-thumb:hover { background: #4d4d6d; }
 
 .legend-container.is-export .legend-content {
   padding: 10px 14px;
@@ -1584,6 +1855,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -1705,29 +1977,30 @@ watch(isExportMode, (enabled, wasEnabled) => {
 }
 
 .legend-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-style: italic;
   color: var(--color-text-muted, #666);
   padding-top: 8px;
-  margin-top: 8px;
+  margin-top: auto;
   border-top: 1px solid var(--color-border, #3d3d5c);
 }
 
-/* Scrollbar styling */
-.legend-content::-webkit-scrollbar {
-  width: 6px;
+.more-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6b7280;
+  flex-shrink: 0;
 }
 
-.legend-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.legend-content::-webkit-scrollbar-thumb {
-  background: var(--color-border, #3d3d5c);
-  border-radius: 3px;
-}
-
-.legend-content::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted, #666);
+.more-count {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 0.85em;
+  opacity: 0.6;
 }
 
 /* Grouped view styles */

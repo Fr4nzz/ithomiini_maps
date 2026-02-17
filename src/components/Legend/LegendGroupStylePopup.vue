@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted } from 'vue'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
+import LegendColorPicker from './LegendColorPicker.vue'
 
 const props = defineProps({
   open: {
@@ -48,7 +49,7 @@ const displayName = computed(() => {
 
 // Click outside handler
 function handleClickOutside(e) {
-  if (!e.target.closest('.group-style-popup')) {
+  if (!e.target.closest('.group-style-popup') && !e.target.closest('.picker-popover')) {
     emit('close')
   }
 }
@@ -97,11 +98,12 @@ onUnmounted(() => {
         <div class="style-section">
           <label class="section-label">Border Color</label>
           <div class="color-picker-row">
-            <input
-              type="color"
-              class="color-picker"
-              :value="borderColor"
-              @input="emit('update:borderColor', $event.target.value)"
+            <LegendColorPicker
+              trigger-type="swatch"
+              :color="borderColor"
+              :default-color="'#ffffff'"
+              :show-reset="false"
+              @update:color="emit('update:borderColor', $event)"
             />
             <input
               type="text"
@@ -211,30 +213,11 @@ onUnmounted(() => {
   color: var(--color-accent, #4ade80);
 }
 
-/* Color picker */
+/* Color picker row */
 .color-picker-row {
   display: flex;
   gap: 8px;
   align-items: center;
-}
-
-.color-picker {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  cursor: pointer;
-  background: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 3px;
-  border: none;
 }
 
 .color-input {

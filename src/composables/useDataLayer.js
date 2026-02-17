@@ -282,11 +282,20 @@ export function useDataLayer(map, options = {}) {
     const colorAttr = store.colorByAttribute
     const style = store.mapStyle
 
+    // Build color expression: items in the legend get their color,
+    // overflow items (in color map but not shown in legend) get grey
+    const shownLabels = legendStore.shownLabels
     const colorExpression = ['match', ['get', colorAttr]]
     Object.entries(colorMap).forEach(([value, color]) => {
-      colorExpression.push(value, color)
+      colorExpression.push(value, shownLabels.size > 0 && !shownLabels.has(value) ? '#6b7280' : color)
     })
     colorExpression.push('#6b7280')
+
+    // Sort key: colored (legend) points render above grey (overflow) points
+    const shownLabelsArray = Array.from(shownLabels)
+    const sortKeyExpression = shownLabelsArray.length > 0
+      ? ['case', ['in', ['get', colorAttr], ['literal', shownLabelsArray]], 1, 0]
+      : 1
 
     const baseSize = style.pointSize
     const sizeExpression = [
@@ -366,7 +375,8 @@ export function useDataLayer(map, options = {}) {
           'icon-image': iconImageExpression,
           'icon-size': iconSizeExpression,
           'icon-allow-overlap': true,
-          'icon-ignore-placement': true
+          'icon-ignore-placement': true,
+          'symbol-sort-key': sortKeyExpression
         },
         paint: { 'icon-opacity': style.fillOpacity }
       })
@@ -376,6 +386,9 @@ export function useDataLayer(map, options = {}) {
         type: 'circle',
         source: 'points-source',
         filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'],
+        layout: {
+          'circle-sort-key': sortKeyExpression
+        },
         paint: {
           'circle-radius': sizeExpression,
           'circle-color': colorExpression,

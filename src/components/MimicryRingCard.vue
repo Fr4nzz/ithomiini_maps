@@ -84,6 +84,7 @@ const onNextSubspecies = (event) => {
           :src="getThumbnailUrl(currentRep.image_url)"
           :alt="currentRep.scientific_name"
           loading="lazy"
+          referrerpolicy="no-referrer"
           @error="onImageError"
         />
 

@@ -1,11 +1,12 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, inject } from 'vue'
 import { useDataStore } from '../stores/data'
 import { parseDate } from '../utils/dateHelpers'
 import { getStatusColor } from '../utils/constants'
 import { getTableThumbnailUrl } from '../utils/imageProxy'
 
 const store = useDataStore()
+const openImageGallery = inject('openImageGallery')
 
 // Pagination
 const pageSize = ref(50)
@@ -213,6 +214,16 @@ const getPhotoInfo = (row) => {
   return store.getPhotoForItem(row)
 }
 
+const openGalleryForRow = (row) => {
+  if (!openImageGallery) return
+  store.gallerySelection = {
+    species: row.scientific_name,
+    subspecies: row.subspecies || null,
+    individualId: row.id
+  }
+  openImageGallery()
+}
+
 // Image load error handling
 const handleImageError = (e, originalUrl) => {
   // Try original URL without proxy if proxy fails
@@ -317,11 +328,12 @@ const handleImageError = (e, originalUrl) => {
             <td v-if="visibleColumns.photo" class="cell-photo">
               <div class="photo-cell">
                 <template v-if="getPhotoInfo(row)">
-                  <div class="photo-wrapper" :class="{ 'other-individual': !getPhotoInfo(row).sameIndividual }">
-                    <img 
+                  <div class="photo-wrapper" :class="{ 'other-individual': !getPhotoInfo(row).sameIndividual }" @click="openGalleryForRow(row)">
+                    <img
                       :src="getTableThumbnailUrl(getPhotoInfo(row).url)"
                       @error="(e) => handleImageError(e, getPhotoInfo(row).url)"
                       loading="lazy"
+                      referrerpolicy="no-referrer"
                       :title="getPhotoInfo(row).sameIndividual ? 'Photo of this individual' : 'Photo from another individual of same species'"
                     />
                     <span 
@@ -747,6 +759,7 @@ const handleImageError = (e, originalUrl) => {
   border-radius: 6px;
   overflow: hidden;
   background: var(--color-bg-tertiary, #2d2d4a);
+  cursor: pointer;
 }
 
 .photo-wrapper img {
