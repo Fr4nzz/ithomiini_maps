@@ -4,13 +4,23 @@
  * Non-Drive images (iNaturalist, Zenodo, Harvard, etc.) always load directly.
  */
 import { ref } from 'vue'
-import { getStorage, setStorage } from './storageHelpers'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // REACTIVE STATE
 // ═══════════════════════════════════════════════════════════════════════════
 
-const wsrvEnabled = ref(getStorage('wsrv-proxy-enabled', true))
+// Read directly from localStorage at module init to avoid calling Pinia
+// before app.use(pinia) has run. storageHelpers.js uses usePersistenceStore()
+// which would crash at top-level import time.
+function readInitialValue() {
+  try {
+    const raw = localStorage.getItem('wsrv-proxy-enabled')
+    if (raw !== null) return JSON.parse(raw)
+  } catch { /* ignore */ }
+  return true // default: enabled
+}
+
+const wsrvEnabled = ref(readInitialValue())
 const wsrvBanned = ref(false) // runtime-only, reset on each page load
 
 /** Whether wsrv.nl is currently usable (enabled AND not banned) */
@@ -18,7 +28,7 @@ export function isWsrvEnabled() { return wsrvEnabled.value && !wsrvBanned.value 
 
 export function setWsrvEnabled(enabled) {
   wsrvEnabled.value = enabled
-  setStorage('wsrv-proxy-enabled', enabled)
+  try { localStorage.setItem('wsrv-proxy-enabled', JSON.stringify(enabled)) } catch { /* ignore */ }
 }
 
 export function toggleWsrvEnabled() { setWsrvEnabled(!wsrvEnabled.value) }
