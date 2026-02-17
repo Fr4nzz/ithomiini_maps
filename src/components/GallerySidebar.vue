@@ -260,8 +260,8 @@ function statusClass(tier) {
 .gallery-sidebar {
   width: 220px;
   flex-shrink: 0;
-  background: #1a1a2e;
-  border-right: 1px solid #3d3d5c;
+  background: var(--color-bg-primary);
+  border-right: 1px solid var(--color-border);
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -282,8 +282,8 @@ function statusClass(tier) {
 }
 
 .count-badge {
-  background: rgba(74, 222, 128, 0.2);
-  color: #4ade80;
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
@@ -294,7 +294,7 @@ function statusClass(tier) {
 
 .section-label {
   font-size: 0.7rem;
-  color: #888;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -302,10 +302,10 @@ function statusClass(tier) {
 .sidebar-select {
   width: 100%;
   padding: 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   font-style: italic;
   cursor: pointer;
@@ -313,13 +313,13 @@ function statusClass(tier) {
 }
 
 .sidebar-select:hover {
-  border-color: #5d5d7c;
+  border-color: var(--color-border-light);
 }
 
 .sidebar-select:focus {
   outline: none;
-  border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-subtle);
 }
 
 .sidebar-select.individual-select {
@@ -329,17 +329,17 @@ function statusClass(tier) {
 
 .single-individual-id {
   padding: 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: #14b8a6;
+  color: var(--color-accent);
   font-size: 0.8rem;
   font-family: monospace;
 }
 
 .sidebar-divider {
   height: 1px;
-  background: #3d3d5c;
+  background: var(--color-border);
   margin: 4px 0;
 }
 
@@ -357,13 +357,13 @@ function statusClass(tier) {
 }
 
 .detail-label {
-  color: #888;
+  color: var(--color-text-muted);
   flex-shrink: 0;
   min-width: 50px;
 }
 
 .detail-value {
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   word-break: break-word;
 }
 
@@ -386,10 +386,10 @@ function statusClass(tier) {
   gap: 6px;
   margin-top: 8px;
   padding: 6px 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent);
   border-radius: 5px;
-  color: #4ade80;
+  color: var(--color-accent);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -397,9 +397,9 @@ function statusClass(tier) {
 }
 
 .observation-link:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
-  color: #86efac;
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent-hover);
+  color: var(--color-accent-hover);
 }
 
 .observation-link svg {
@@ -416,10 +416,10 @@ function statusClass(tier) {
   width: 100%;
   margin-top: 8px;
   padding: 8px 10px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: color-mix(in srgb, var(--color-info) 15%, transparent);
+  border: 1px solid var(--color-info);
   border-radius: 5px;
-  color: #60a5fa;
+  color: var(--color-info);
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
@@ -427,9 +427,9 @@ function statusClass(tier) {
 }
 
 .view-on-map-btn:hover {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: rgba(59, 130, 246, 0.6);
-  color: #93c5fd;
+  background: color-mix(in srgb, var(--color-info) 25%, transparent);
+  border-color: var(--color-info);
+  color: var(--color-info);
 }
 
 .view-on-map-btn svg {
@@ -448,15 +448,15 @@ function statusClass(tier) {
 }
 
 .search-summary {
-  background: rgba(74, 222, 128, 0.05);
-  border: 1px solid rgba(74, 222, 128, 0.15);
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent);
   border-radius: 6px;
   padding: 10px;
 }
 
 .summary-title {
   font-size: 0.7rem;
-  color: #4ade80;
+  color: var(--color-accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -476,18 +476,18 @@ function statusClass(tier) {
 }
 
 .stat-row .stat-label {
-  color: #888;
+  color: var(--color-text-muted);
 }
 
 .stat-row .stat-value {
-  color: #4ade80;
+  color: var(--color-accent);
   font-weight: 600;
 }
 
 .stat-row.total-row {
   margin-top: 4px;
   padding-top: 6px;
-  border-top: 1px solid rgba(74, 222, 128, 0.15);
+  border-top: 1px solid var(--color-border);
 }
 
 .stat-row.total-row .stat-value {
@@ -496,7 +496,7 @@ function statusClass(tier) {
 
 /* Collapsible Section */
 .collapsible-section {
-  border-top: 1px solid #3d3d5c;
+  border-top: 1px solid var(--color-border);
   padding-top: 8px;
 }
 
@@ -508,13 +508,13 @@ function statusClass(tier) {
   padding: 4px 0;
   background: none;
   border: none;
-  color: #aaa;
+  color: var(--color-text-secondary);
   font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
 }
 
-.collapse-toggle:hover { color: #e0e0e0; }
+.collapse-toggle:hover { color: var(--color-text-primary); }
 
 .collapse-toggle svg {
   width: 14px;
@@ -542,23 +542,23 @@ function statusClass(tier) {
 }
 
 .proxy-option:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-bg-tertiary);
 }
 
 .proxy-option input[type="radio"] {
   margin-top: 3px;
-  accent-color: #4ade80;
+  accent-color: var(--color-accent);
   cursor: pointer;
 }
 
 .proxy-option-name {
   font-size: 0.78rem;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
 }
 
 .proxy-option-desc {
   font-size: 0.68rem;
-  color: #888;
+  color: var(--color-text-muted);
   display: block;
   margin-top: 1px;
 }
@@ -577,9 +577,9 @@ function statusClass(tier) {
   flex-shrink: 0;
 }
 
-.status-ok { background: #4ade80; }
-.status-blocked { background: #ef4444; }
-.status-unknown { background: #666; }
+.status-ok { background: var(--color-accent); }
+.status-blocked { background: var(--color-danger); }
+.status-unknown { background: var(--color-text-muted); }
 
 /* Responsive */
 @media (max-width: 768px) {

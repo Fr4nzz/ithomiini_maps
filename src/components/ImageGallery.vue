@@ -1104,8 +1104,8 @@ watch(currentIndex, () => {
 .thumbnail-strip {
   display: flex;
   align-items: stretch;
-  background: rgba(0, 0, 0, 0.7);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-bg-primary);
+  border-top: 1px solid var(--color-border);
   height: 130px;
 }
 
@@ -1116,16 +1116,16 @@ watch(currentIndex, () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-bg-secondary);
   border: none;
-  color: #888;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .scroll-arrow:hover {
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .scroll-arrow svg {
@@ -1134,11 +1134,11 @@ watch(currentIndex, () => {
 }
 
 .scroll-arrow-left {
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid var(--color-border);
 }
 
 .scroll-arrow-right {
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid var(--color-border);
 }
 
 .thumbnail-scroll {
@@ -1168,10 +1168,10 @@ watch(currentIndex, () => {
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--color-bg-secondary);
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--species-color, #888);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--species-color, var(--color-text-muted));
   font-size: 0.7rem;
   font-weight: 600;
   font-style: italic;
@@ -1181,7 +1181,7 @@ watch(currentIndex, () => {
 }
 
 .species-header:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-bg-tertiary);
 }
 
 .collapse-icon {
@@ -1228,7 +1228,7 @@ watch(currentIndex, () => {
 }
 
 .preview-container:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-bg-tertiary);
 }
 
 .preview-thumb {
@@ -1239,11 +1239,11 @@ watch(currentIndex, () => {
 
 .preview-thumb img {
   object-fit: contain;
-  background: #222;
+  background: var(--color-bg-secondary);
 }
 
 .preview-thumb:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: var(--color-border-light);
 }
 
 .expand-badge {
@@ -1286,8 +1286,8 @@ watch(currentIndex, () => {
   padding: 2px 6px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: var(--subsp-color, #777);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--subsp-color, var(--color-text-muted));
   font-size: 0.65rem;
   font-style: italic;
   cursor: pointer;
@@ -1296,7 +1296,7 @@ watch(currentIndex, () => {
 }
 
 .subspecies-header:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--color-bg-tertiary);
 }
 
 .subspecies-header .collapse-icon {
@@ -1336,7 +1336,7 @@ watch(currentIndex, () => {
   width: 80px;
   height: 80px;
   padding: 0;
-  background: #333;
+  background: var(--color-bg-tertiary);
   border: 2px solid transparent;
   border-radius: 4px;
   cursor: pointer;
@@ -1345,7 +1345,7 @@ watch(currentIndex, () => {
 }
 
 .thumbnail:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: var(--color-border-light);
   transform: scale(1.05);
 }
 
@@ -1370,20 +1370,20 @@ watch(currentIndex, () => {
 .thumbnail-scroll::-webkit-scrollbar-track,
 .species-content::-webkit-scrollbar-track,
 .thumbnails-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-bg-tertiary);
 }
 
 .thumbnail-scroll::-webkit-scrollbar-thumb,
 .species-content::-webkit-scrollbar-thumb,
 .thumbnails-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--color-text-muted);
   border-radius: 2px;
 }
 
 .thumbnail-scroll::-webkit-scrollbar-thumb:hover,
 .species-content::-webkit-scrollbar-thumb:hover,
 .thumbnails-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--color-text-secondary);
 }
 
 /* Responsive */
