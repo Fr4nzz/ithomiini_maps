@@ -1388,10 +1388,6 @@ watch(currentIndex, () => {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .gallery-sidebar {
-    display: none;
-  }
-
   .nav-btn {
     width: 40px;
     height: 60px;

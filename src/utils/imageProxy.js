@@ -188,10 +188,9 @@ function buildThumbnailUrl(fileId, width) {
 function resolveUrl(originalUrl, width) {
   if (!originalUrl) return ''
 
-  const cleanUrl = unwrapWsrvUrl(originalUrl)
-  const fileId = extractGoogleDriveFileId(cleanUrl)
+  const fileId = extractGoogleDriveFileId(originalUrl) // unwraps wsrv.nl internally
 
-  if (!fileId) return cleanUrl // non-Drive → always direct
+  if (!fileId) return unwrapWsrvUrl(originalUrl) // non-Drive → strip any wsrv.nl wrapper
 
   const mode = proxyMode.value
 
