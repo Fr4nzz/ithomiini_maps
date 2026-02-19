@@ -824,8 +824,9 @@ function measureAndTrimItems() {
   // The more indicator uses ~40px — often more than the items it replaces (~26px each).
   // Use a tighter fit check (just the visible content boundary) to avoid wasting space
   // on "+1 more" or "+2 more" when the items would physically fit.
+  // Use the last DOM item (not totalSorted-1) to account for multi-group expansion.
   if (totalSorted <= 5 && measurableItems.length >= totalSorted) {
-    const lastOfAll = measurableItems[totalSorted - 1]
+    const lastOfAll = measurableItems[measurableItems.length - 1]
     if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
       if (measuredItemCount.value !== totalSorted) {
         measuredItemCount.value = totalSorted
@@ -838,18 +839,27 @@ function measureAndTrimItems() {
 
   // Not all fit — reserve space for "+N more" and find cutoff
   const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
-  let count = 0
+  let domFitCount = 0
   for (let i = 0; i < measurableItems.length; i++) {
     const itemBottom = measurableItems[i].getBoundingClientRect().bottom
     if (itemBottom > maxBottom) break
-    count++
+    domFitCount++
   }
-  count = Math.max(1, count)
+  domFitCount = Math.max(1, domFitCount)
 
-  // Pixel-perfect snug height: last fitting item + "+N more" indicator
-  measuredSnugHeight.value = computeSnugHeight(measurableItems[count - 1], true)
+  // When multi-group display creates more DOM elements than unique items
+  // (same species in multiple groups), translate the DOM fit count to a
+  // unique item count. E.g., 13 unique items → 22 DOM items, 15 fit →
+  // estimate ~9 unique items would produce DOM items that all fit.
+  let count = domFitCount
+  if (measurableItems.length > totalSorted && domFitCount < measurableItems.length) {
+    count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
+  }
 
-  console.log(`[Legend] measured: OVERFLOW ${count}/${totalSorted} (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value || '?'} hidden=${totalSorted - count})`)
+  // Pixel-perfect snug height: last fitting DOM item + "+N more" indicator
+  measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
+
+  console.log(`[Legend] measured: OVERFLOW ${count}/${totalSorted} (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value || '?'} dom=${domFitCount}/${measurableItems.length} hidden=${totalSorted - count})`)
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
