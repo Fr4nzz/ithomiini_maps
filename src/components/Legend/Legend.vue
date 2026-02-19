@@ -849,8 +849,12 @@ watch([
   () => legendStore.groupingSettings,
 ], () => {
   resetToAutoSize()
-  prevMeasuredCount.value = null // stale — settings changed
-  scheduleMeasurement(true, 'settings')
+  // Full reset: clear both counts so effectiveMaxItems falls through to
+  // renderUpperBound. Pass false to prevent scheduleMeasurement from
+  // re-saving the stale measuredItemCount into prevMeasuredCount.
+  measuredItemCount.value = null
+  prevMeasuredCount.value = null
+  scheduleMeasurement(false, 'settings')
 }, { deep: true })
 
 // Re-measure when data changes (new items, filters applied, colorBy changed).
@@ -861,8 +865,10 @@ watch([
 // infinite reactive loop.
 watch(sortedAllItems, () => {
   resetToAutoSize()
-  prevMeasuredCount.value = null // stale — data changed
-  scheduleMeasurement(true, 'dataChange')
+  // Full reset: same as settings watcher above.
+  measuredItemCount.value = null
+  prevMeasuredCount.value = null
+  scheduleMeasurement(false, 'dataChange')
 })
 
 // Re-measure and sync labels after resize ends
