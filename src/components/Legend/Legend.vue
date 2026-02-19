@@ -582,10 +582,10 @@ const renderUpperBound = computed(() => {
 
 // Post-render measured count (null = not yet measured, use upper bound)
 const measuredItemCount = ref(null)
-// Pixel-perfect height from DOM measurement when overflow occurs.
-// Set by measureAndTrimItems() so autoHeight can shrink-to-fit
-// instead of keeping the full targetLegendHeight.
-const measuredOverflowHeight = ref(null)
+// Pixel-perfect legend height from DOM measurement.
+// Set by measureAndTrimItems() in ALL cases (all-fit, small-fit, overflow)
+// so autoHeight uses actual content dimensions instead of inaccurate estimates.
+const measuredSnugHeight = ref(null)
 let containerResizeRemeasureTimeout = null // forward declaration for scheduleMeasurement
 // Previous measured count — used as the rendering hint during re-measurement
 // to prevent effectiveMaxItems from jumping to renderUpperBound (which would
@@ -621,7 +621,7 @@ function scheduleMeasurement(resetState = true, source = '') {
   if (resetState) {
     prevMeasuredCount.value = measuredItemCount.value
     measuredItemCount.value = null
-    measuredOverflowHeight.value = null
+    measuredSnugHeight.value = null
   }
   console.debug(`[Legend] scheduleMeasurement(reset=${resetState}) from: ${source || 'unknown'}`)
   // Double rAF: first fires after Vue DOM update + browser layout;
@@ -657,48 +657,14 @@ const effectiveMaxItems = computed(() => {
 // Calculate auto height from content.
 // Before measurement: use full target height so container is large enough
 // for measureAndTrimItems() to find the real cutoff.
-// After measurement with overflow: use pixel-perfect height from DOM measurement.
-// After measurement with all items fitting: shrink to content estimate.
+// After measurement: use pixel-perfect DOM-measured snug height.
 const autoHeight = computed(() => {
   if (measuredItemCount.value === null) {
     return targetLegendHeight.value
   }
-  // Items were trimmed → use DOM-measured snug height (pixel-perfect)
-  if (measuredItemCount.value < sortedAllItems.value.length) {
-    return measuredOverflowHeight.value || targetLegendHeight.value
-  }
-  // All items fit → size to content (estimate is fine for small counts)
-  const fontSizePx = Math.round(14 * legendStore.textScale)
-  const titleHeight = 32
-  const padding = 24
-  const itemCount = sortedAllItems.value.length
-  const itemHeight = fontSizePx + 10 + 2
-
-  let idealHeight = titleHeight + (itemCount * itemHeight) + padding
-
-  // When grouped, account for group headers and gaps between groups
-  if (legendStore.isGrouped) {
-    // Count displayed groups from sorted items
-    const displayedGroups = new Set()
-    for (const item of sortedAllItems.value) {
-      const group = getGroupForItem(item.label)
-      if (group) displayedGroups.add(group)
-    }
-    const numGroups = displayedGroups.size
-
-    // Group headers (when visible): ~12px font + 6px padding + spacing
-    const showHeaders = legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy
-    if (showHeaders && numGroups > 0) {
-      idealHeight += numGroups * 22
-    }
-
-    // Gap between groups (4px from .legend-items.grouped gap)
-    if (numGroups > 1) {
-      idealHeight += (numGroups - 1) * 4
-    }
-  }
-
-  return Math.min(Math.max(Math.ceil(idealHeight), 120), targetLegendHeight.value)
+  // Use DOM-measured snug height (pixel-perfect, accounts for text wrapping,
+  // count badges, group headers, etc.)
+  return measuredSnugHeight.value || targetLegendHeight.value
 })
 
 // Effective width (auto or manual)
@@ -778,6 +744,19 @@ function measureAndTrimItems() {
 
   if (!measurableItems.length) return
 
+  // Helper: compute pixel-perfect snug legend height from the last visible
+  // item's bottom position, plus extra space for optional "+N more" and padding.
+  function computeSnugHeight(lastItemEl, includeMoreIndicator) {
+    const legendEl = legendRef.value
+    if (!legendEl || !lastItemEl) return null
+    const legendTop = legendEl.getBoundingClientRect().top
+    const lastBottom = lastItemEl.getBoundingClientRect().bottom
+    const extra = includeMoreIndicator
+      ? moreIndicatorReserve + contentPaddingBottom  // "+N more" + bottom pad
+      : contentPaddingBottom                          // just bottom pad
+    return Math.max(120, Math.ceil(lastBottom - legendTop + extra))
+  }
+
   // Check if ALL items fit without needing "+N more"
   const lastItem = measurableItems[measurableItems.length - 1]
   const lastItemBottom = lastItem.getBoundingClientRect().bottom
@@ -788,8 +767,8 @@ function measureAndTrimItems() {
     if (measuredItemCount.value !== totalSorted) {
       measuredItemCount.value = totalSorted
     }
-    measuredOverflowHeight.value = null // no overflow
-    console.log(`[Legend] measured: ALL_FIT ${totalSorted} items (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight} slack=${Math.round(allFitBoundary - lastItemBottom)}px)`)
+    measuredSnugHeight.value = computeSnugHeight(lastItem, false)
+    console.log(`[Legend] measured: ALL_FIT ${totalSorted} items (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value})`)
     return
   }
 
@@ -803,8 +782,8 @@ function measureAndTrimItems() {
       if (measuredItemCount.value !== totalSorted) {
         measuredItemCount.value = totalSorted
       }
-      measuredOverflowHeight.value = null // no overflow
-      console.log(`[Legend] measured: SMALL_FIT ${totalSorted} items (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight})`)
+      measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
+      console.log(`[Legend] measured: SMALL_FIT ${totalSorted} items (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value})`)
       return
     }
   }
@@ -819,20 +798,10 @@ function measureAndTrimItems() {
   }
   count = Math.max(1, count)
 
-  // Calculate pixel-perfect snug height from DOM: distance from legend top
-  // to the last fitting item's bottom, plus space for "+N more" and padding.
-  const legendEl = legendRef.value
-  if (legendEl && count > 0) {
-    const legendTop = legendEl.getBoundingClientRect().top
-    const lastFitItem = measurableItems[count - 1]
-    const lastFitBottom = lastFitItem.getBoundingClientRect().bottom
-    // moreIndicator: 8px padding-top + ~lineHeight(font+6) + border-top(1) + bottom-pad
-    const moreSpace = moreIndicatorReserve + contentPaddingBottom
-    const snugHeight = Math.ceil(lastFitBottom - legendTop + moreSpace)
-    measuredOverflowHeight.value = Math.max(120, snugHeight)
-  }
+  // Pixel-perfect snug height: last fitting item + "+N more" indicator
+  measuredSnugHeight.value = computeSnugHeight(measurableItems[count - 1], true)
 
-  console.log(`[Legend] measured: OVERFLOW ${count}/${totalSorted} (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredOverflowHeight.value || '?'} hidden=${totalSorted - count})`)
+  console.log(`[Legend] measured: OVERFLOW ${count}/${totalSorted} (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value || '?'} hidden=${totalSorted - count})`)
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
@@ -861,7 +830,7 @@ watch([
   // re-saving the stale measuredItemCount into prevMeasuredCount.
   measuredItemCount.value = null
   prevMeasuredCount.value = null
-  measuredOverflowHeight.value = null
+  measuredSnugHeight.value = null
   scheduleMeasurement(false, 'settings')
 }, { deep: true })
 
@@ -876,7 +845,7 @@ watch(sortedAllItems, () => {
   // Full reset: same as settings watcher above.
   measuredItemCount.value = null
   prevMeasuredCount.value = null
-  measuredOverflowHeight.value = null
+  measuredSnugHeight.value = null
   scheduleMeasurement(false, 'dataChange')
 })
 
