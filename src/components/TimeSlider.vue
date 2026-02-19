@@ -4,85 +4,142 @@ import { useDataStore } from '../stores/data'
 
 const store = useDataStore()
 
-// Derived from temporal distribution
-const yearRange = computed(() => {
+const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
+// Month range computed from temporal distribution (year-based histogram)
+const monthRange = computed(() => {
   const dist = store.temporalDistribution
-  if (!dist.length) return { min: 2000, max: 2025 }
-  return { min: dist[0].year, max: dist[dist.length - 1].year }
+  if (!dist.length) return { min: 0, max: 0, minYear: 2000 }
+  const firstYear = dist[0].year
+  const lastYear = dist[dist.length - 1].year
+  return {
+    min: 0,
+    max: (lastYear - firstYear) * 12 + 11,
+    minYear: firstYear
+  }
 })
 
-// Local slider state (years as integers)
-const sliderMin = ref(yearRange.value.min)
-const sliderMax = ref(yearRange.value.max)
+// Convert month offset to { year, month }
+const offsetToDate = (offset) => {
+  const yr = monthRange.value.minYear + Math.floor(offset / 12)
+  const mo = (offset % 12) + 1
+  return { year: yr, month: mo }
+}
 
-// Sync from store filters (if set externally)
+// Convert { year, month } to month offset
+const dateToOffset = (year, month) => {
+  return (year - monthRange.value.minYear) * 12 + (month - 1)
+}
+
+// Format for live feedback: "Jan 2004"
+const formatOffset = (offset) => {
+  const { year, month } = offsetToDate(offset)
+  return `${MONTH_NAMES[month - 1]} ${year}`
+}
+
+// Drag state (purely visual, no store updates during drag)
+const dragMin = ref(monthRange.value.min)
+const dragMax = ref(monthRange.value.max)
+const isDragging = ref(false)
+
+// Sync from store filters when set externally (e.g., DateFilter or reset)
 watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => {
+  if (isDragging.value) return // Don't override drag position
   if (start) {
     const d = new Date(start)
-    sliderMin.value = d.getFullYear()
+    dragMin.value = dateToOffset(d.getFullYear(), d.getMonth() + 1)
   } else {
-    sliderMin.value = yearRange.value.min
+    dragMin.value = monthRange.value.min
   }
   if (end) {
     const d = new Date(end)
-    sliderMax.value = d.getFullYear()
+    dragMax.value = dateToOffset(d.getFullYear(), d.getMonth() + 1)
   } else {
-    sliderMax.value = yearRange.value.max
+    dragMax.value = monthRange.value.max
   }
 }, { immediate: true })
 
-// Update when year range changes (e.g., new data loaded)
-watch(yearRange, (range) => {
-  if (!store.filters.dateStart) sliderMin.value = range.min
-  if (!store.filters.dateEnd) sliderMax.value = range.max
+// Update when month range changes (e.g., new data loaded)
+watch(monthRange, (range) => {
+  if (!store.filters.dateStart) dragMin.value = range.min
+  if (!store.filters.dateEnd) dragMax.value = range.max
 })
 
-// Update store when slider changes
+// Get last day of month for end date
+const lastDayOfMonth = (year, month) => {
+  return new Date(year, month, 0).getDate()
+}
+
+// Apply filter to store — only called on release (@change)
 const applySliderRange = () => {
-  const isFullRange = sliderMin.value <= yearRange.value.min && sliderMax.value >= yearRange.value.max
-  store.filters.dateStart = isFullRange ? null : `${sliderMin.value}-01-01`
-  store.filters.dateEnd = isFullRange ? null : `${sliderMax.value}-12-31`
-}
-
-const onMinChange = (e) => {
-  const val = parseInt(e.target.value)
-  if (val < sliderMax.value) {
-    sliderMin.value = val
-    applySliderRange()
+  const isFullRange = dragMin.value <= monthRange.value.min && dragMax.value >= monthRange.value.max
+  if (isFullRange) {
+    store.filters.dateStart = null
+    store.filters.dateEnd = null
+  } else {
+    const startDate = offsetToDate(dragMin.value)
+    const endDate = offsetToDate(dragMax.value)
+    const pad = (n) => String(n).padStart(2, '0')
+    store.filters.dateStart = `${startDate.year}-${pad(startDate.month)}-01`
+    const lastDay = lastDayOfMonth(endDate.year, endDate.month)
+    store.filters.dateEnd = `${endDate.year}-${pad(endDate.month)}-${pad(lastDay)}`
   }
 }
 
-const onMaxChange = (e) => {
+// @input handlers: update drag position only (no filtering)
+const onMinInput = (e) => {
   const val = parseInt(e.target.value)
-  if (val > sliderMin.value) {
-    sliderMax.value = val
-    applySliderRange()
-  }
+  if (val < dragMax.value) dragMin.value = val
+  isDragging.value = true
+}
+
+const onMaxInput = (e) => {
+  const val = parseInt(e.target.value)
+  if (val > dragMin.value) dragMax.value = val
+  isDragging.value = true
+}
+
+// @change handlers: apply filter on release
+const onMinCommit = () => {
+  isDragging.value = false
+  applySliderRange()
+}
+
+const onMaxCommit = () => {
+  isDragging.value = false
+  applySliderRange()
 }
 
 const resetRange = () => {
-  sliderMin.value = yearRange.value.min
-  sliderMax.value = yearRange.value.max
+  dragMin.value = monthRange.value.min
+  dragMax.value = monthRange.value.max
+  isDragging.value = false
   store.filters.dateStart = null
   store.filters.dateEnd = null
 }
 
-// Histogram bars
+// Histogram bars (year-based, colored by drag position)
 const maxCount = computed(() => {
   return Math.max(1, ...store.temporalDistribution.map(d => d.count))
 })
 
 const histogramBars = computed(() => {
-  return store.temporalDistribution.map(d => ({
-    year: d.year,
-    count: d.count,
-    height: (d.count / maxCount.value) * 100,
-    inRange: d.year >= sliderMin.value && d.year <= sliderMax.value
-  }))
+  return store.temporalDistribution.map(d => {
+    const yearStartOffset = dateToOffset(d.year, 1)
+    const yearEndOffset = dateToOffset(d.year, 12)
+    // A year is "in range" if any of its months overlap with drag range
+    const inRange = yearEndOffset >= dragMin.value && yearStartOffset <= dragMax.value
+    return {
+      year: d.year,
+      count: d.count,
+      height: (d.count / maxCount.value) * 100,
+      inRange
+    }
+  })
 })
 
 const isFilterActive = computed(() => {
-  return sliderMin.value > yearRange.value.min || sliderMax.value < yearRange.value.max
+  return dragMin.value > monthRange.value.min || dragMax.value < monthRange.value.max
 })
 </script>
 
@@ -100,33 +157,33 @@ const isFilterActive = computed(() => {
       />
     </div>
 
+    <!-- Live feedback label -->
+    <div class="drag-feedback" :class="{ active: isFilterActive }">
+      <span>{{ formatOffset(dragMin) }}</span>
+      <span class="drag-separator">—</span>
+      <span>{{ formatOffset(dragMax) }}</span>
+    </div>
+
     <!-- Dual range slider -->
     <div class="slider-container">
       <input
         type="range"
         class="range-input range-min"
-        :min="yearRange.min"
-        :max="yearRange.max"
-        :value="sliderMin"
-        @input="onMinChange"
+        :min="monthRange.min"
+        :max="monthRange.max"
+        :value="dragMin"
+        @input="onMinInput"
+        @change="onMinCommit"
       />
       <input
         type="range"
         class="range-input range-max"
-        :min="yearRange.min"
-        :max="yearRange.max"
-        :value="sliderMax"
-        @input="onMaxChange"
+        :min="monthRange.min"
+        :max="monthRange.max"
+        :value="dragMax"
+        @input="onMaxInput"
+        @change="onMaxCommit"
       />
-    </div>
-
-    <!-- Year labels -->
-    <div class="year-labels">
-      <span class="year-label">{{ sliderMin }}</span>
-      <span v-if="isFilterActive" class="year-count">
-        {{ store.filteredGeoJSON?.features?.length || 0 }} records
-      </span>
-      <span class="year-label">{{ sliderMax }}</span>
     </div>
 
     <!-- Reset button -->
@@ -169,7 +226,7 @@ const isFilterActive = computed(() => {
   flex: 1;
   min-width: 2px;
   border-radius: 1px 1px 0 0;
-  transition: background-color 0.15s, height 0.15s;
+  transition: background-color 0.1s;
 }
 
 .histogram-bar.in-range {
@@ -184,6 +241,28 @@ const isFilterActive = computed(() => {
 
 .histogram-bar:hover {
   opacity: 1;
+}
+
+/* Live feedback label */
+.drag-feedback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted, #666);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.15s;
+}
+
+.drag-feedback.active {
+  color: var(--color-accent, #4ade80);
+}
+
+.drag-separator {
+  color: var(--color-text-muted, #666);
 }
 
 /* Dual range slider */
@@ -264,27 +343,6 @@ const isFilterActive = computed(() => {
   cursor: pointer;
   pointer-events: all;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Year labels */
-.year-labels {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 4px;
-}
-
-.year-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-accent, #4ade80);
-  font-variant-numeric: tabular-nums;
-}
-
-.year-count {
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
-  font-style: italic;
 }
 
 /* Reset button */

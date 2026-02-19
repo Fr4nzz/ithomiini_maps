@@ -64,13 +64,10 @@ export const useDataStore = defineStore('data', () => {
     showClusterPoints: true,  // Show individual points of selected cluster (default true)
   }))
 
-  // Visualization mode: 'points' or 'heatmap'
+  // Visualization mode: 'points', 'clusters', or 'heatmap'
   const visualizationMode = ref(getStorage('app-visualization-mode', 'points'))
-  const heatmapSettings = ref(getStorage('app-heatmap-settings', {
-    radius: 20,
-    intensity: 1,
-    opacity: 0.8,
-  }))
+  const DEFAULT_HEATMAP_SETTINGS = { radius: 15, intensity: 1.5, opacity: 0.8 }
+  const heatmapSettings = ref(getStorage('app-heatmap-settings', DEFAULT_HEATMAP_SETTINGS))
 
   // Bounding box spatial filter (session-only, no persistence)
   const boundingBox = ref(null)
@@ -703,6 +700,11 @@ export const useDataStore = defineStore('data', () => {
   watch(() => filters.value.species, () => {
     filters.value.subspecies = []
   }, { deep: true })
+
+  // Sync clusteringEnabled with visualizationMode
+  watch(visualizationMode, (mode) => {
+    clusteringEnabled.value = mode === 'clusters'
+  })
 
   // When source filter changes, lazy-load any unloaded sources
   watch(() => filters.value.source, async (selectedSources) => {
@@ -1342,6 +1344,7 @@ export const useDataStore = defineStore('data', () => {
     clusterSettings,
     visualizationMode,
     heatmapSettings,
+    DEFAULT_HEATMAP_SETTINGS,
     boundingBox,
     scatterOverlappingPoints,
     mimicryPhotoLookup,

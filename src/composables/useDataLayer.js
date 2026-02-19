@@ -228,7 +228,7 @@ export function useDataLayer(map, options = {}) {
     }
 
     const isHeatmap = store.visualizationMode === 'heatmap'
-    const shouldCluster = store.clusteringEnabled && !isHeatmap
+    const shouldCluster = store.visualizationMode === 'clusters'
     const settings = store.clusterSettings
     const clusterRadiusPixels = settings.radiusPixels
 
@@ -252,22 +252,24 @@ export function useDataLayer(map, options = {}) {
           'heatmap-weight': 1,
           'heatmap-intensity': [
             'interpolate', ['linear'], ['zoom'],
-            0, heatSettings.intensity * 0.5,
-            9, heatSettings.intensity * 3
+            0, heatSettings.intensity * 0.3,
+            5, heatSettings.intensity * 1,
+            12, heatSettings.intensity * 3
           ],
           'heatmap-radius': [
             'interpolate', ['linear'], ['zoom'],
-            0, heatSettings.radius * 0.5,
-            9, heatSettings.radius * 2
+            0, heatSettings.radius * 0.3,
+            5, heatSettings.radius * 1,
+            12, heatSettings.radius * 2.5
           ],
           'heatmap-color': [
             'interpolate', ['linear'], ['heatmap-density'],
             0, 'rgba(0, 0, 0, 0)',
-            0.1, 'rgba(0, 0, 255, 0.4)',
-            0.3, 'rgba(0, 255, 255, 0.6)',
-            0.5, 'rgba(0, 255, 0, 0.7)',
-            0.7, 'rgba(255, 255, 0, 0.8)',
-            1, 'rgba(255, 0, 0, 0.9)'
+            0.2, 'rgba(25, 0, 255, 0.4)',
+            0.4, 'rgba(0, 200, 255, 0.6)',
+            0.6, 'rgba(0, 255, 100, 0.7)',
+            0.8, 'rgba(255, 255, 0, 0.8)',
+            1, 'rgba(255, 50, 0, 0.9)'
           ],
           'heatmap-opacity': heatSettings.opacity
         }
