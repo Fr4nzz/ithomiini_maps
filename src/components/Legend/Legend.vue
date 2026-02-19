@@ -496,6 +496,7 @@ const autoWidth = computed(() => {
 
   const maxContainerWidth = containerBounds.value.width * 0.25
   const fontSizePx = Math.round(14 * legendStore.textScale)
+  const isGrouped = legendStore.isGrouped
 
   let maxTextWidth = 0
   for (const item of items) {
@@ -511,9 +512,12 @@ const autoWidth = computed(() => {
   const scrollbarWidth = 8
   const extraMargin = 12
 
-  const idealWidth = maxTextWidth + dotSz + gap + padding + scrollbarWidth + extraMargin
+  // When grouped, items are indented (margin-left:16px + padding-left:4px)
+  const indentation = isGrouped ? 20 : 0
 
-  return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
+  const idealWidth = maxTextWidth + dotSz + gap + padding + scrollbarWidth + extraMargin + indentation
+
+  return Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
 })
 
 // Max legend height based on container (80% of map height) — hard cap for resize
@@ -648,8 +652,32 @@ const autoHeight = computed(() => {
   const padding = 24
   const itemCount = sortedAllItems.value.length
   const itemHeight = fontSizePx + 10 + 2
-  const idealHeight = titleHeight + (itemCount * itemHeight) + padding
-  return Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
+
+  let idealHeight = titleHeight + (itemCount * itemHeight) + padding
+
+  // When grouped, account for group headers and gaps between groups
+  if (legendStore.isGrouped) {
+    // Count displayed groups from sorted items
+    const displayedGroups = new Set()
+    for (const item of sortedAllItems.value) {
+      const group = getGroupForItem(item.label)
+      if (group) displayedGroups.add(group)
+    }
+    const numGroups = displayedGroups.size
+
+    // Group headers (when visible): ~12px font + 6px padding + spacing
+    const showHeaders = legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy
+    if (showHeaders && numGroups > 0) {
+      idealHeight += numGroups * 22
+    }
+
+    // Gap between groups (4px from .legend-items.grouped gap)
+    if (numGroups > 1) {
+      idealHeight += (numGroups - 1) * 4
+    }
+  }
+
+  return Math.min(Math.max(Math.ceil(idealHeight), 120), targetLegendHeight.value)
 })
 
 // Effective width (auto or manual)
@@ -672,7 +700,7 @@ const maxResizeWidth = computed(() => {
 // Multi-directional resize (composable handles all mouse/touch events)
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
-  getLimits: () => ({ minW: 150, maxW: maxResizeWidth.value, minH: 100, maxH: maxLegendHeight.value }),
+  getLimits: () => ({ minW: 200, maxW: maxResizeWidth.value, minH: 120, maxH: maxLegendHeight.value }),
   onEnd: ({ x, y, width, height }) => {
     posX.value = x
     posY.value = y
@@ -1782,9 +1810,9 @@ watch(isExportMode, (enabled, wasEnabled) => {
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
   z-index: 25; /* Above search bar (10) and map controls (20) so toolbar overlaps them */
-  min-width: 150px;
+  min-width: 200px;
   max-width: 600px;
-  min-height: 80px;
+  min-height: 120px;
   /* max-height is set dynamically via positionStyle */
   overflow: visible; /* Allow toolbar to float above and resize zones to extend beyond edges */
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
