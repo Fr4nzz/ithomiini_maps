@@ -494,7 +494,7 @@ const autoWidth = computed(() => {
   const items = sortedAllItems.value
   if (!items.length) return 200
 
-  const maxContainerWidth = containerBounds.value.width * 0.25
+  const maxContainerWidth = containerBounds.value.width * 0.35
   const fontSizePx = Math.round(14 * legendStore.textScale)
   const isGrouped = legendStore.isGrouped
 
@@ -749,6 +749,20 @@ function measureAndTrimItems() {
       measuredItemCount.value = totalSorted
     }
     return
+  }
+
+  // For small item counts (≤ 5), showing all items is always better than "+N more".
+  // The more indicator uses ~40px — often more than the items it replaces (~26px each).
+  // Use a tighter fit check (just the visible content boundary) to avoid wasting space
+  // on "+1 more" or "+2 more" when the items would physically fit.
+  if (totalSorted <= 5 && measurableItems.length >= totalSorted) {
+    const lastOfAll = measurableItems[totalSorted - 1]
+    if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
+      if (measuredItemCount.value !== totalSorted) {
+        measuredItemCount.value = totalSorted
+      }
+      return
+    }
   }
 
   // Not all fit — reserve space for "+N more" and find cutoff
