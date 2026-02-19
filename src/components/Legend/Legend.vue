@@ -505,17 +505,29 @@ const autoWidth = computed(() => {
     if (width > maxTextWidth) maxTextWidth = width
   }
 
-  // Add dot size + gap + padding + extra margin
+  // Add dot size + gap + content padding
   const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
   const padding = 16 * 2 // left + right content padding
   const gap = 8
-  const scrollbarWidth = 8
-  const extraMargin = 12
 
   // When grouped, items are indented (margin-left:16px + padding-left:4px)
   const indentation = isGrouped ? 20 : 0
 
-  const idealWidth = maxTextWidth + dotSz + gap + padding + scrollbarWidth + extraMargin + indentation
+  // When counts are shown, reserve space for the count badge
+  let countWidth = 0
+  if (legendStore.showCounts) {
+    const counts = legendCounts.value
+    let maxCount = 0
+    for (const item of items) {
+      const c = counts[item.label] || 0
+      if (c > maxCount) maxCount = c
+    }
+    // Measure the widest count number + gap before count
+    const countFontSize = fontSizePx - 2
+    countWidth = measureTextWidth(maxCount.toLocaleString(), countFontSize) + 8
+  }
+
+  const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth
 
   return Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
 })
@@ -692,6 +704,16 @@ const effectiveHeight = computed(() => {
   return currentHeight.value
 })
 
+// Reset legend to auto-sizing (called when data/filters change so the legend
+// adapts to new content instead of staying locked at a stale manual size).
+function resetToAutoSize() {
+  if (!isAutoWidth.value || !isAutoHeight.value) {
+    currentWidth.value = null
+    currentHeight.value = null
+    legendStore.updateSize('auto', 'auto')
+  }
+}
+
 // Max resize width (45% of container for manual, more generous than auto's 25%)
 const maxResizeWidth = computed(() => {
   return Math.min(Math.round(containerBounds.value.width * 0.45), 600)
@@ -824,7 +846,8 @@ watch(contentRef, (el, oldEl) => {
   }
 })
 
-// Re-measure when layout-affecting settings change
+// Re-measure when layout-affecting settings change.
+// Also reset to auto-sizing so the legend re-fits to content.
 watch([
   () => legendStore.wrapLabels,
   () => legendStore.textScale,
@@ -832,14 +855,18 @@ watch([
   () => legendStore.isGrouped,
   () => legendStore.groupingSettings,
 ], () => {
+  resetToAutoSize()
   scheduleMeasurement()
 }, { deep: true })
 
-// Re-measure when data changes (new items, filters applied, colorBy changed)
+// Re-measure when data changes (new items, filters applied, colorBy changed).
+// Also reset to auto-sizing so the legend adapts to new content instead of
+// staying locked at a manually-resized dimension that may no longer fit.
 // NOTE: effectiveWidth is NOT watched here — it depends transitively on
 // measuredItemCount (via legendItems → autoWidth), which would create an
 // infinite reactive loop.
 watch(sortedAllItems, () => {
+  resetToAutoSize()
   scheduleMeasurement()
 })
 
