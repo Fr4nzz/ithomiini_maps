@@ -5,6 +5,7 @@ import { usePersistenceStore } from '../stores/persistence'
 import { useLegendStore } from '../stores/legend'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
+import TimeSlider from './TimeSlider.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
 import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
 import { ASPECT_RATIOS } from '../utils/constants'
@@ -75,6 +76,7 @@ const showCopiedToast = ref(false)
 
 // Show date filter section
 const showDateFilter = ref(false)
+const showExactDates = ref(false)
 
 // ── Source filter with Apply/Cancel ────────────────────────────────────────
 // Sources are grouped: top-level items + GBIF parent with sub-datasets
@@ -297,6 +299,15 @@ const updateExportHeight = (value) => {
       <div class="record-count">
         <span class="count">{{ filteredRecords.toLocaleString() }}</span>
         <span class="label">of {{ totalRecords.toLocaleString() }} records</span>
+      </div>
+
+      <!-- Bounding Box Active Indicator -->
+      <div v-if="store.boundingBox" class="bbox-indicator">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+          <rect x="3" y="3" width="18" height="18" rx="0"/>
+        </svg>
+        <span>Spatial filter active</span>
+        <button class="bbox-clear" @click="store.boundingBox = null">Clear</button>
       </div>
 
       <!-- Quick Actions Row -->
@@ -586,9 +597,9 @@ const updateExportHeight = (value) => {
         </div>
       </div>
 
-      <!-- Date Filter (Collapsible) -->
+      <!-- Date Filter with Time Slider -->
       <div class="filter-section collapsible">
-        <button 
+        <button
           class="collapse-toggle"
           @click="showDateFilter = !showDateFilter"
           :class="{ expanded: showDateFilter }"
@@ -596,14 +607,31 @@ const updateExportHeight = (value) => {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="m9 18 6-6-6-6"/>
           </svg>
-          Date Range
+          Time Range
           <span v-if="store.filters.dateStart || store.filters.dateEnd" class="active-badge">
             Active
           </span>
         </button>
 
         <div v-show="showDateFilter" class="collapse-content no-padding">
-          <DateFilter />
+          <TimeSlider />
+
+          <!-- Expandable exact date inputs -->
+          <div class="exact-dates-section">
+            <button
+              class="subsection-toggle"
+              @click="showExactDates = !showExactDates"
+              :class="{ expanded: showExactDates }"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+              Exact Dates
+            </button>
+            <div v-show="showExactDates" class="subsection-content">
+              <DateFilter />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1005,6 +1033,47 @@ const updateExportHeight = (value) => {
   margin-left: 6px;
 }
 
+/* Bounding Box Indicator */
+.bbox-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--color-accent, #4ade80);
+}
+
+.bbox-indicator svg {
+  flex-shrink: 0;
+  color: var(--color-accent, #4ade80);
+}
+
+.bbox-indicator span {
+  flex: 1;
+  font-weight: 500;
+}
+
+.bbox-clear {
+  padding: 2px 8px;
+  background: transparent;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 3px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bbox-clear:hover {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: var(--color-accent, #4ade80);
+}
+
 /* Quick Actions */
 .quick-actions {
   display: flex;
@@ -1358,6 +1427,22 @@ const updateExportHeight = (value) => {
 
 .collapse-content.no-padding {
   padding: 0;
+}
+
+.exact-dates-section {
+  padding: 0 14px 12px;
+}
+
+.exact-dates-section .subsection-toggle {
+  margin-top: 0;
+}
+
+.exact-dates-section .subsection-content {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
 }
 
 /* Subsection Toggle (used within filter sections for nested expandable content) */

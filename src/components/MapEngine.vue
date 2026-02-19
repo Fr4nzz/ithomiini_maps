@@ -16,7 +16,8 @@ import {
   useScatterVisualization,
   useDataLayer,
   useStyleSwitcher,
-  useCountryBoundaries
+  useCountryBoundaries,
+  useBoundingBoxSelection
 } from '../composables/useMapEngine'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
@@ -110,9 +111,17 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
     if (showBoundaries.value) {
       addBoundariesLayer({ fromStyleSwitch: true })
     }
+    recreateBboxVisualization()
   }
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
+const {
+  isDrawing: isBboxDrawing,
+  enableDrawing: enableBboxDrawing,
+  clearBoundingBox,
+  recreateBboxVisualization,
+  clearBboxVisualization
+} = useBoundingBoxSelection(map)
 
 // Helper: check if map is operational (has a parsed style we can add layers to).
 // Uses getStyle() instead of isStyleLoaded() because the latter returns false
@@ -444,6 +453,35 @@ watch(
   { deep: true }
 )
 
+// Watch for visualization mode changes (points <-> heatmap)
+watch(
+  () => store.visualizationMode,
+  () => {
+    if (!isMapReady()) return
+    addDataLayer({ skipZoom: true })
+  }
+)
+
+// Watch for heatmap settings changes
+watch(
+  () => store.heatmapSettings,
+  () => {
+    if (!isMapReady()) return
+    if (store.visualizationMode === 'heatmap') {
+      addDataLayer({ skipZoom: true })
+    }
+  },
+  { deep: true }
+)
+
+// Watch for bounding box cleared externally (e.g., from sidebar reset)
+watch(
+  () => store.boundingBox,
+  (val) => {
+    if (!val) clearBboxVisualization()
+  }
+)
+
 // Watch for styling/color/shape changes that require map layer rebuild
 watch(
   [
@@ -608,6 +646,33 @@ watch(
           <span class="result-name">{{ result.name }}</span>
         </button>
       </div>
+    </div>
+
+    <!-- Bounding Box Controls -->
+    <div v-if="!store.exportSettings.enabled" class="bbox-controls">
+      <button
+        v-if="!store.boundingBox"
+        class="bbox-draw-btn"
+        :class="{ drawing: isBboxDrawing }"
+        @click="enableBboxDrawing"
+        :title="isBboxDrawing ? 'Drawing...' : 'Draw bounding box to filter area'"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="0" ry="0" stroke-dasharray="4 2"/>
+        </svg>
+      </button>
+      <button
+        v-else
+        class="bbox-clear-btn"
+        @click="clearBoundingBox"
+        title="Clear spatial filter"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+        <span>Clear Area</span>
+      </button>
     </div>
 
     <!-- Map Layer Controls -->
@@ -1364,6 +1429,54 @@ watch(
 :deep(.popup-info) {
   flex: 1;
   min-width: 0;
+}
+
+/* Bounding Box Controls */
+.bbox-controls {
+  position: absolute;
+  top: 56px;
+  right: 52px;
+  z-index: 10;
+}
+
+.bbox-draw-btn,
+.bbox-clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  color: var(--color-text-secondary, #aaa);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(4px);
+}
+
+.bbox-draw-btn:hover,
+.bbox-clear-btn:hover {
+  background: var(--color-bg-secondary, rgba(37, 37, 64, 0.98));
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
+}
+
+.bbox-draw-btn.drawing {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
+}
+
+.bbox-draw-btn svg,
+.bbox-clear-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.bbox-clear-btn span {
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 /* Responsive */

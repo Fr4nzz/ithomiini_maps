@@ -64,6 +64,14 @@ export const useDataStore = defineStore('data', () => {
     showClusterPoints: true,  // Show individual points of selected cluster (default true)
   }))
 
+  // Visualization mode: 'points', 'clusters', or 'heatmap'
+  const visualizationMode = ref(getStorage('app-visualization-mode', 'points'))
+  const DEFAULT_HEATMAP_SETTINGS = { radius: 15, intensity: 1.5, opacity: 0.8 }
+  const heatmapSettings = ref(getStorage('app-heatmap-settings', DEFAULT_HEATMAP_SETTINGS))
+
+  // Bounding box spatial filter (session-only, no persistence)
+  const boundingBox = ref(null)
+
   // Scatter overlapping points settings
   const scatterOverlappingPoints = ref(getStorage('app-scatter-overlapping', false))
 
@@ -529,6 +537,8 @@ export const useDataStore = defineStore('data', () => {
       dateStart: null,
       dateEnd: null,
     }
+    visualizationMode.value = 'points'
+    boundingBox.value = null
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -631,6 +641,39 @@ export const useDataStore = defineStore('data', () => {
   // Unique CAMIDs for autocomplete (sorted for binary search potential)
   const uniqueCamids = computed(() => uniqueValuesOf(allFeatures.value, 'id'))
 
+  // Temporal distribution of records for the time slider histogram
+  // Uses source filter only so the histogram shows total data context
+  const temporalDistribution = computed(() => {
+    let data = allFeatures.value
+    if (!data.length) return []
+
+    if (filters.value.source.length > 0) {
+      data = data.filter(i => filters.value.source.includes(i.source))
+    }
+
+    const yearCounts = {}
+    let minYear = Infinity
+    let maxYear = -Infinity
+
+    for (const item of data) {
+      const dateStr = item.observation_date || item.date || item.preservation_date
+      const d = parseDate(dateStr)
+      if (!d) continue
+      const year = d.getFullYear()
+      yearCounts[year] = (yearCounts[year] || 0) + 1
+      if (year < minYear) minYear = year
+      if (year > maxYear) maxYear = year
+    }
+
+    if (minYear === Infinity) return []
+
+    const result = []
+    for (let y = minYear; y <= maxYear; y++) {
+      result.push({ year: y, count: yearCounts[y] || 0 })
+    }
+    return result
+  })
+
   // ═══════════════════════════════════════════════════════════════════════════
   // CASCADE RESET WATCHERS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -657,6 +700,11 @@ export const useDataStore = defineStore('data', () => {
   watch(() => filters.value.species, () => {
     filters.value.subspecies = []
   }, { deep: true })
+
+  // Sync clusteringEnabled with visualizationMode
+  watch(visualizationMode, (mode) => {
+    clusteringEnabled.value = mode === 'clusters'
+  })
 
   // When source filter changes, lazy-load any unloaded sources
   watch(() => filters.value.source, async (selectedSources) => {
@@ -725,7 +773,14 @@ export const useDataStore = defineStore('data', () => {
         if (filters.value.dateStart && d < new Date(filters.value.dateStart)) return false
         if (filters.value.dateEnd && d > new Date(filters.value.dateEnd)) return false
       }
-      
+
+      // Bounding box spatial filter
+      if (boundingBox.value) {
+        const bb = boundingBox.value
+        if (item.lng < bb.sw.lng || item.lng > bb.ne.lng ||
+            item.lat < bb.sw.lat || item.lat > bb.ne.lat) return false
+      }
+
       return true
     })
 
@@ -1251,6 +1306,10 @@ export const useDataStore = defineStore('data', () => {
   watch(clusterSettings, (val) => setStorage('app-cluster-settings', val), { deep: true })
   watch(scatterOverlappingPoints, (val) => setStorage('app-scatter-overlapping', val))
 
+  // Watch and persist visualization mode & heatmap settings
+  watch(visualizationMode, (val) => setStorage('app-visualization-mode', val))
+  watch(heatmapSettings, (val) => setStorage('app-heatmap-settings', val), { deep: true })
+
   // Watch and persist map styling
   watch(colorBy, (val) => setStorage('map-color-by', val))
   watch(mapStyle, (val) => setStorage('map-style', val), { deep: true })
@@ -1283,6 +1342,10 @@ export const useDataStore = defineStore('data', () => {
     gallerySelection,
     clusteringEnabled,
     clusterSettings,
+    visualizationMode,
+    heatmapSettings,
+    DEFAULT_HEATMAP_SETTINGS,
+    boundingBox,
     scatterOverlappingPoints,
     mimicryPhotoLookup,
     gbifCitation,
@@ -1317,6 +1380,7 @@ export const useDataStore = defineStore('data', () => {
     uniqueSources,
     uniqueCountries,
     uniqueCamids,
+    temporalDistribution,
 
     // Computed (color mapping)
     baseColorMap,
