@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
@@ -763,6 +763,43 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
 // with overflow:hidden, then measure the actual DOM to find the exact cutoff.
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Build a context string for measurement logs so each log line is self-documenting.
+// Includes colorBy, groupBy (when active), and active filter summary.
+function logContext() {
+  const parts = []
+  parts.push(`colorBy=${dataStore.colorBy}`)
+  if (legendStore.isGrouped) {
+    parts.push(`groupBy=${legendStore.effectiveGroupBy}`)
+  }
+  // Summarize active filters
+  const f = dataStore.filters
+  const activeFilters = []
+  if (f.species?.length) activeFilters.push(`species=${f.species.length}`)
+  if (f.subspecies?.length) activeFilters.push(`subsp=${f.subspecies.length}`)
+  if (f.mimicry?.length) activeFilters.push(`mimicry=${f.mimicry.length}`)
+  if (f.status?.length) activeFilters.push(`status=${f.status.length}`)
+  if (f.source?.length > 1 || (f.source?.length === 1 && f.source[0] !== 'Sanger Institute')) {
+    activeFilters.push(`source=${f.source.join(',')}`)
+  }
+  if (f.genus !== 'All') activeFilters.push(`genus=${f.genus}`)
+  if (f.country !== 'All') activeFilters.push(`country=${f.country}`)
+  if (activeFilters.length) parts.push(`filters=[${activeFilters.join(' ')}]`)
+  return parts.join(' ')
+}
+
+// Post-measurement: check if content scrollbar appeared (fallback for measurement inaccuracy)
+function checkScrollOverflow() {
+  nextTick(() => {
+    // Double nextTick: first waits for items update, second for height/position update
+    nextTick(() => {
+      const el = contentRef.value
+      if (el && el.scrollHeight > el.clientHeight + 4) {
+        console.warn(`[Legend] scroll fallback active: ${el.scrollHeight - el.clientHeight}px overflow (scrollHeight=${el.scrollHeight} clientHeight=${el.clientHeight})`)
+      }
+    })
+  })
+}
+
 function measureAndTrimItems() {
   const contentEl = contentRef.value
   if (!contentEl || isResizing.value) return
@@ -816,7 +853,8 @@ function measureAndTrimItems() {
       measuredItemCount.value = totalSorted
     }
     measuredSnugHeight.value = computeSnugHeight(lastItem, false)
-    console.log(`[Legend] measured: ALL_FIT ${totalSorted} items (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value})`)
+    console.log(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
+    checkScrollOverflow()
     return
   }
 
@@ -832,7 +870,8 @@ function measureAndTrimItems() {
         measuredItemCount.value = totalSorted
       }
       measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
-      console.log(`[Legend] measured: SMALL_FIT ${totalSorted} items (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value})`)
+      console.log(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
+      checkScrollOverflow()
       return
     }
   }
@@ -859,10 +898,12 @@ function measureAndTrimItems() {
   // Pixel-perfect snug height: last fitting DOM item + "+N more" indicator
   measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
 
-  console.log(`[Legend] measured: OVERFLOW ${count}/${totalSorted} (${sizeMode} w=${effectiveWidth.value} h=${contentEl.clientHeight}→${measuredSnugHeight.value || '?'} dom=${domFitCount}/${measurableItems.length} hidden=${totalSorted - count})`)
+  const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
+  console.log(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
+  checkScrollOverflow()
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
@@ -881,7 +922,10 @@ watch([
   () => legendStore.showCounts,
   () => legendStore.isGrouped,
   () => legendStore.groupingSettings,
-], () => {
+], (newVals, oldVals) => {
+  // Detect which setting changed for descriptive logging
+  const settingNames = ['wrapLabels', 'textScale', 'showCounts', 'isGrouped', 'groupingSettings']
+  const changed = settingNames.filter((_, i) => JSON.stringify(newVals[i]) !== JSON.stringify(oldVals[i]))
   resetToAutoSize()
   // Full reset: clear all measurement state so effectiveMaxItems falls through to
   // renderUpperBound. Pass false to prevent scheduleMeasurement from
@@ -889,7 +933,7 @@ watch([
   measuredItemCount.value = null
   prevMeasuredCount.value = null
   measuredSnugHeight.value = null
-  scheduleMeasurement(false, 'settings')
+  scheduleMeasurement(false, `setting:${changed.join(',')}`)
 }, { deep: true })
 
 // Re-measure when data changes (new items, filters applied, colorBy changed).
@@ -898,13 +942,14 @@ watch([
 // NOTE: effectiveWidth is NOT watched here — it depends transitively on
 // measuredItemCount (via legendItems → autoWidth), which would create an
 // infinite reactive loop.
-watch(sortedAllItems, () => {
+watch(sortedAllItems, (newItems, oldItems) => {
+  const delta = newItems.length - (oldItems?.length || 0)
   resetToAutoSize()
   // Full reset: same as settings watcher above.
   measuredItemCount.value = null
   prevMeasuredCount.value = null
   measuredSnugHeight.value = null
-  scheduleMeasurement(false, 'dataChange')
+  scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
 })
 
 // Re-measure and sync labels after resize ends
