@@ -584,6 +584,11 @@ const renderUpperBound = computed(() => {
 
 // Post-render measured count (null = not yet measured, use upper bound)
 const measuredItemCount = ref(null)
+let containerResizeRemeasureTimeout = null // forward declaration for scheduleMeasurement
+// Previous measured count — used as the rendering hint during re-measurement
+// to prevent effectiveMaxItems from jumping to renderUpperBound (which would
+// render too many items, causing visible overflow without "+N more").
+const prevMeasuredCount = ref(null)
 
 // ── Centralized measurement scheduler ──────────────────────────────────
 // Prevents overlapping measurement cycles by ensuring only ONE cycle is
@@ -598,16 +603,24 @@ let pendingMeasurementRAF = null
  * @param {boolean} resetState  true → reset measuredItemCount
  *                              false → keep current state (initial mount)
  */
-function scheduleMeasurement(resetState = true) {
+function scheduleMeasurement(resetState = true, source = '') {
   if (pendingMeasurementRAF !== null) {
     cancelAnimationFrame(pendingMeasurementRAF)
     pendingMeasurementRAF = null
   }
+  // Cancel any pending container-resize re-measurement so it doesn't
+  // override results from this measurement cycle
+  if (containerResizeRemeasureTimeout) {
+    clearTimeout(containerResizeRemeasureTimeout)
+    containerResizeRemeasureTimeout = null
+  }
   // Manual mode: skip measurement entirely — effectiveMaxItems uses the user value
   if (legendStore.isManualMode) return
   if (resetState) {
+    prevMeasuredCount.value = measuredItemCount.value
     measuredItemCount.value = null
   }
+  if (source) console.log(`[Legend] scheduleMeasurement(${resetState}) from: ${source}`)
   // Double rAF: first fires after Vue DOM update + browser layout;
   // second fires after paint — getBoundingClientRect() is accurate.
   pendingMeasurementRAF = requestAnimationFrame(() => {
@@ -625,9 +638,18 @@ const effectiveMaxItems = computed(() => {
 
   // Auto mode: render-then-measure
   let result, src
-  if (isResizing.value) { result = renderUpperBound.value; src = 'resize' }
-  else if (measuredItemCount.value !== null) { result = measuredItemCount.value; src = 'measured' }
-  else { result = renderUpperBound.value; src = 'upperBound' }
+  if (isResizing.value) {
+    result = renderUpperBound.value; src = 'resize'
+  } else if (measuredItemCount.value !== null) {
+    result = measuredItemCount.value; src = 'measured'
+  } else if (prevMeasuredCount.value !== null) {
+    // Between measurements: use previous count as rendering hint to prevent
+    // effectiveMaxItems from jumping to upperBound (which renders too many
+    // items, causing visible overflow without "+N more")
+    result = prevMeasuredCount.value; src = 'prevMeasured'
+  } else {
+    result = renderUpperBound.value; src = 'upperBound'
+  }
   console.log(`[Legend] maxItems=${result}/${sortedAllItems.value.length} (${src})`)
   return result
 })
@@ -813,7 +835,7 @@ function measureAndTrimItems() {
 // (legend appears via v-if after data loads), trigger the first measurement.
 watch(contentRef, (el, oldEl) => {
   if (el && !oldEl) {
-    scheduleMeasurement(false)  // State already at defaults on mount
+    scheduleMeasurement(false, 'mount')
   }
 })
 
@@ -827,7 +849,7 @@ watch([
   () => legendStore.groupingSettings,
 ], () => {
   resetToAutoSize()
-  scheduleMeasurement()
+  scheduleMeasurement(true, 'settings')
 }, { deep: true })
 
 // Re-measure when data changes (new items, filters applied, colorBy changed).
@@ -838,13 +860,13 @@ watch([
 // infinite reactive loop.
 watch(sortedAllItems, () => {
   resetToAutoSize()
-  scheduleMeasurement()
+  scheduleMeasurement(true, 'dataChange')
 })
 
 // Re-measure and sync labels after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
-    scheduleMeasurement()
+    scheduleMeasurement(true, 'resizeEnd')
     // Sync shown labels deferred from legendItems watcher during resize
     const labels = new Set()
     for (const item of legendItems.value) {
@@ -856,19 +878,18 @@ watch(isResizing, (resizing) => {
 
 // When switching from manual → auto, trigger a fresh measurement
 watch(() => legendStore.maxItemsMode, (newMode) => {
-  if (newMode === 'auto') scheduleMeasurement()
+  if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
 })
 
 // Re-measure when container dimensions change (horizontal resize causes text
 // reflow changing item heights; vertical resize changes available space).
 // We watch prevContainerBounds (set by containerResizeObserver) which is NOT
 // in the effectiveWidth → measuredItemCount dependency chain, so no loop risk.
-let containerResizeRemeasureTimeout = null
 watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
     if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
     containerResizeRemeasureTimeout = setTimeout(() => {
-      scheduleMeasurement()
+      scheduleMeasurement(true, 'containerResize')
     }, 150)
   }
 }, { deep: true })
