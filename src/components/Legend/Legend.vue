@@ -494,21 +494,26 @@ const autoWidth = computed(() => {
   const items = sortedAllItems.value
   if (!items.length) return 200
 
-  const maxContainerWidth = containerBounds.value.width * 0.35
+  const maxContainerWidth = containerBounds.value.width * 0.30
   const fontSizePx = Math.round(14 * legendStore.textScale)
   const isGrouped = legendStore.isGrouped
 
   let maxTextWidth = 0
+  let widestLabel = ''
   for (const item of items) {
     const label = item.displayLabel || item.label
     const width = measureTextWidth(label, fontSizePx)
-    if (width > maxTextWidth) maxTextWidth = width
+    if (width > maxTextWidth) {
+      maxTextWidth = width
+      widestLabel = label
+    }
   }
 
-  // Add dot size + gap + content padding
+  // Add dot size + gap + content padding + safety margin for font rendering
   const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
   const padding = 16 * 2 // left + right content padding
   const gap = 8
+  const safetyMargin = 4 // subpixel rounding buffer
 
   // When grouped, items are indented (margin-left:16px + padding-left:4px)
   const indentation = isGrouped ? 20 : 0
@@ -527,9 +532,16 @@ const autoWidth = computed(() => {
     countWidth = measureTextWidth(maxCount.toLocaleString(), countFontSize) + 8
   }
 
-  const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth
+  const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth + safetyMargin
 
-  return Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
+  const result = Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
+  console.log('[Legend autoWidth]', {
+    widestLabel, maxTextWidth: Math.round(maxTextWidth * 10) / 10,
+    dotSz, gap, padding, indentation, countWidth: Math.round(countWidth * 10) / 10,
+    safetyMargin, idealWidth: Math.round(idealWidth),
+    maxContainerWidth: Math.round(maxContainerWidth), result
+  })
+  return result
 })
 
 // Max legend height based on container (80% of map height) — hard cap for resize
@@ -584,6 +596,7 @@ let pendingVerifyRAF = null
  *                              false → keep current state (initial mount, verify re-measure)
  */
 function scheduleMeasurement(resetState = true) {
+  console.log('[Legend scheduleMeasurement]', { resetState, isManualMode: legendStore.isManualMode })
   // Cancel any in-flight measurement or verify from a prior cycle
   if (pendingMeasurementRAF !== null) {
     cancelAnimationFrame(pendingMeasurementRAF)
@@ -632,9 +645,20 @@ const effectiveMaxItems = computed(() => {
   if (legendStore.isManualMode) return legendStore.maxItemsManual
 
   // Auto mode: render-then-measure
-  if (isResizing.value) return renderUpperBound.value
-  if (measuredItemCount.value !== null) return measuredItemCount.value
-  return renderUpperBound.value
+  let result
+  let source
+  if (isResizing.value) {
+    result = renderUpperBound.value
+    source = 'resizing→upperBound'
+  } else if (measuredItemCount.value !== null) {
+    result = measuredItemCount.value
+    source = 'measured'
+  } else {
+    result = renderUpperBound.value
+    source = 'initial→upperBound'
+  }
+  console.log('[Legend effectiveMaxItems]', source, '=', result, '(total:', sortedAllItems.value.length, ')')
+  return result
 })
 
 // In manual mode allow vertical scrolling so items beyond the visible area
@@ -652,10 +676,12 @@ const legendContentStyle = computed(() => {
 // Only shrink-to-fit when ALL items fit (small data set).
 const autoHeight = computed(() => {
   if (measuredItemCount.value === null) {
+    console.log('[Legend autoHeight] measuredItemCount=null → targetLegendHeight=', targetLegendHeight.value)
     return targetLegendHeight.value
   }
   // Items were trimmed → keep full target height (don't shrink)
   if (measuredItemCount.value < sortedAllItems.value.length) {
+    console.log('[Legend autoHeight] items trimmed:', measuredItemCount.value, '<', sortedAllItems.value.length, '→ targetLegendHeight=', targetLegendHeight.value)
     return targetLegendHeight.value
   }
   // All items fit → size to content (estimate is fine for small counts)
@@ -668,6 +694,8 @@ const autoHeight = computed(() => {
   let idealHeight = titleHeight + (itemCount * itemHeight) + padding
 
   // When grouped, account for group headers and gaps between groups
+  let numGroups = 0
+  let showHeaders = false
   if (legendStore.isGrouped) {
     // Count displayed groups from sorted items
     const displayedGroups = new Set()
@@ -675,10 +703,10 @@ const autoHeight = computed(() => {
       const group = getGroupForItem(item.label)
       if (group) displayedGroups.add(group)
     }
-    const numGroups = displayedGroups.size
+    numGroups = displayedGroups.size
 
     // Group headers (when visible): ~12px font + 6px padding + spacing
-    const showHeaders = legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy
+    showHeaders = legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy
     if (showHeaders && numGroups > 0) {
       idealHeight += numGroups * 22
     }
@@ -689,25 +717,33 @@ const autoHeight = computed(() => {
     }
   }
 
-  return Math.min(Math.max(Math.ceil(idealHeight), 120), targetLegendHeight.value)
+  const result = Math.min(Math.max(Math.ceil(idealHeight), 120), targetLegendHeight.value)
+  console.log('[Legend autoHeight] allFit:', {
+    itemCount, itemHeight, numGroups, showHeaders,
+    idealHeight: Math.round(idealHeight), result
+  })
+  return result
 })
 
 // Effective width (auto or manual)
 const effectiveWidth = computed(() => {
-  if (isAutoWidth.value) return autoWidth.value
-  return currentWidth.value || 200
+  const w = isAutoWidth.value ? autoWidth.value : (currentWidth.value || 200)
+  console.log('[Legend effectiveWidth]', isAutoWidth.value ? 'auto' : 'manual', '→', w)
+  return w
 })
 
 // Effective height (auto or manual)
 const effectiveHeight = computed(() => {
-  if (isAutoHeight.value) return autoHeight.value
-  return currentHeight.value
+  const h = isAutoHeight.value ? autoHeight.value : currentHeight.value
+  console.log('[Legend effectiveHeight]', isAutoHeight.value ? 'auto' : 'manual', '→', h)
+  return h
 })
 
 // Reset legend to auto-sizing (called when data/filters change so the legend
 // adapts to new content instead of staying locked at a stale manual size).
 function resetToAutoSize() {
   if (!isAutoWidth.value || !isAutoHeight.value) {
+    console.log('[Legend resetToAutoSize] was manual w=', currentWidth.value, 'h=', currentHeight.value, '→ auto')
     currentWidth.value = null
     currentHeight.value = null
     legendStore.updateSize('auto', 'auto')
@@ -724,6 +760,7 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
   getLimits: () => ({ minW: 200, maxW: maxResizeWidth.value, minH: 120, maxH: maxLegendHeight.value }),
   onEnd: ({ x, y, width, height }) => {
+    console.log('[Legend resize onEnd]', { width, height, x, y, prevAutoW: isAutoWidth.value, prevAutoH: isAutoHeight.value })
     posX.value = x
     posY.value = y
     currentWidth.value = width
@@ -747,7 +784,8 @@ function measureAndTrimItems() {
   const itemsEl = contentEl.querySelector('.legend-items')
   if (!itemsEl || !itemsEl.children.length) return
 
-  const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
+  const contentRect = contentEl.getBoundingClientRect()
+  const contentBottom = contentRect.top + contentEl.clientHeight
   const contentPaddingBottom = 12
   const moreIndicatorReserve = 40
 
@@ -755,19 +793,49 @@ function measureAndTrimItems() {
   // containers). Each item's getBoundingClientRect already includes any group
   // header height above it, so the bottom check naturally accounts for overhead.
   const isGroupedView = itemsEl.classList.contains('grouped')
-  const measurableItems = isGroupedView
+  const allMeasurableItems = isGroupedView
     ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
     : itemsEl.children
 
+  // Filter out hidden items (.is-hidden) — they're in the DOM for edit mode
+  // but should not count toward visible item measurement
+  const measurableItems = [...allMeasurableItems].filter(el => !el.classList.contains('is-hidden'))
+
   const totalSorted = sortedAllItems.value.length
+
+  console.log('[Legend measure]', {
+    totalSorted,
+    allDOMItems: allMeasurableItems.length,
+    visibleDOMItems: measurableItems.length,
+    hiddenDOMItems: allMeasurableItems.length - measurableItems.length,
+    contentHeight: contentEl.clientHeight,
+    contentTop: Math.round(contentRect.top),
+    contentBottom: Math.round(contentBottom),
+    isAutoW: isAutoWidth.value,
+    isAutoH: isAutoHeight.value,
+    isGrouped: isGroupedView,
+    measurePass: measurePassCount.value
+  })
 
   if (!measurableItems.length) return
 
   // Check if ALL items fit without needing "+N more"
   const lastItem = measurableItems[measurableItems.length - 1]
+  const lastItemBottom = lastItem.getBoundingClientRect().bottom
+  const allFitBoundary = contentBottom - contentPaddingBottom
+
+  console.log('[Legend measure] allFit check:', {
+    renderedCount: measurableItems.length,
+    totalSorted,
+    lastItemBottom: Math.round(lastItemBottom),
+    allFitBoundary: Math.round(allFitBoundary),
+    fits: measurableItems.length >= totalSorted && lastItemBottom <= allFitBoundary
+  })
+
   if (measurableItems.length >= totalSorted &&
-      lastItem.getBoundingClientRect().bottom <= contentBottom - contentPaddingBottom) {
+      lastItemBottom <= allFitBoundary) {
     if (measuredItemCount.value !== totalSorted) {
+      console.log('[Legend measure] → ALL FIT, setting count =', totalSorted)
       measuredItemCount.value = totalSorted
     }
     return
@@ -779,7 +847,15 @@ function measureAndTrimItems() {
   // on "+1 more" or "+2 more" when the items would physically fit.
   if (totalSorted <= 5 && measurableItems.length >= totalSorted) {
     const lastOfAll = measurableItems[totalSorted - 1]
-    if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
+    const lastOfAllBottom = lastOfAll ? lastOfAll.getBoundingClientRect().bottom : 0
+    console.log('[Legend measure] smallCount check:', {
+      totalSorted,
+      lastOfAllBottom: Math.round(lastOfAllBottom),
+      contentBottom: Math.round(contentBottom),
+      fits: lastOfAll && lastOfAllBottom <= contentBottom
+    })
+    if (lastOfAll && lastOfAllBottom <= contentBottom) {
+      console.log('[Legend measure] → SMALL COUNT FIT, setting count =', totalSorted)
       if (measuredItemCount.value !== totalSorted) {
         measuredItemCount.value = totalSorted
       }
@@ -791,11 +867,20 @@ function measureAndTrimItems() {
   const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
   let count = 0
   for (let i = 0; i < measurableItems.length; i++) {
-    if (measurableItems[i].getBoundingClientRect().bottom > maxBottom) break
+    const itemBottom = measurableItems[i].getBoundingClientRect().bottom
+    if (itemBottom > maxBottom) {
+      console.log('[Legend measure] cutoff at item', i, ':', {
+        itemBottom: Math.round(itemBottom),
+        maxBottom: Math.round(maxBottom),
+        label: measurableItems[i].textContent?.trim().slice(0, 30)
+      })
+      break
+    }
     count++
   }
 
   count = Math.max(1, count)
+  console.log('[Legend measure] → OVERFLOW, count =', count, 'of', totalSorted, '(hidden:', totalSorted - count, ')')
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
@@ -819,16 +904,24 @@ function verifyAndReclaim() {
   const itemsEl = contentEl.querySelector('.legend-items')
   if (!itemsEl || measuredItemCount.value >= sortedAllItems.value.length) return
 
-  // Find last individual item
+  // Find last visible (non-hidden) item
   const isGroupedView = itemsEl.classList.contains('grouped')
-  const allItems = isGroupedView
+  const allDOMItems = isGroupedView
     ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
     : itemsEl.children
-  const lastItem = allItems.length ? allItems[allItems.length - 1] : null
+  const visibleItems = [...allDOMItems].filter(el => !el.classList.contains('is-hidden'))
+  const lastItem = visibleItems.length ? visibleItems[visibleItems.length - 1] : null
   if (!lastItem) return
 
   const maxBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight - 12 - 40
   const remaining = maxBottom - lastItem.getBoundingClientRect().bottom
+  console.log('[Legend verify]', {
+    measuredCount: measuredItemCount.value,
+    total: sortedAllItems.value.length,
+    remaining: Math.round(remaining),
+    maxBottom: Math.round(maxBottom),
+    lastItemBottom: Math.round(lastItem.getBoundingClientRect().bottom)
+  })
   if (remaining < 22) return // No meaningful space
 
   // Estimate extra items and re-measure
