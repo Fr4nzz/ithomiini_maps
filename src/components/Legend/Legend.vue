@@ -1678,7 +1678,6 @@ watch(isExportMode, (enabled, wasEnabled) => {
     <div
       ref="contentRef"
       class="legend-content"
-      :style="legendStore.isManualMode ? { overflow: 'hidden auto' } : undefined"
     >
       <!-- Title with hover controls (sort dropdown + counts toggle) -->
       <div class="legend-title" @click.stop>
@@ -1911,7 +1910,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 
 .legend-content {
   padding: 12px 16px;
-  overflow: hidden;
+  overflow: hidden auto; /* hidden-x, auto-y: scrollbar appears as fallback if measurement under-counts */
   /* flex-basis: auto so the container sizes to content, then max-height caps it.
      flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
   flex: 1 1 auto;
