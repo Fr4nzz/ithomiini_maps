@@ -849,6 +849,7 @@ watch([
   () => legendStore.groupingSettings,
 ], () => {
   resetToAutoSize()
+  prevMeasuredCount.value = null // stale — settings changed
   scheduleMeasurement(true, 'settings')
 }, { deep: true })
 
@@ -860,6 +861,7 @@ watch([
 // infinite reactive loop.
 watch(sortedAllItems, () => {
   resetToAutoSize()
+  prevMeasuredCount.value = null // stale — data changed
   scheduleMeasurement(true, 'dataChange')
 })
 
