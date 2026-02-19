@@ -22,3 +22,9 @@ console.log('Ithomiini Maps')
 console.log('Build:', typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : 'dev')
 console.log('Commit:', typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'local')
 console.log('Theme:', themeStore.currentTheme)
+
+// Legend test harness — run with: window.runLegendTests()
+// Remove this import when legend overflow is resolved.
+import('../test/legend-overflow-test.js').then(({ runLegendTests }) => {
+  window.runLegendTests = runLegendTests
+})

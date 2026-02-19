@@ -787,17 +787,69 @@ function logContext() {
   return parts.join(' ')
 }
 
-// Post-measurement: check if content scrollbar appeared (fallback for measurement inaccuracy)
-function checkScrollOverflow() {
+// Post-measurement overflow convergence loop.
+// After measurement sets the initial item count, this checks the ACTUAL
+// rendered DOM for overflow. If content overflows (scrollHeight > clientHeight),
+// reduce item count by 1 and re-check. Converges in 0-3 steps.
+// This handles ALL edge cases that the initial measurement misses:
+// multi-group expansion, group headers, text wrapping, subpixel rounding.
+let overflowCorrectionPending = false
+function scheduleOverflowCorrection() {
+  if (overflowCorrectionPending) return
+  overflowCorrectionPending = true
   nextTick(() => {
-    // Double nextTick: first waits for items update, second for height/position update
     nextTick(() => {
-      const el = contentRef.value
-      if (el && el.scrollHeight > el.clientHeight + 4) {
-        console.warn(`[Legend] scroll fallback active: ${el.scrollHeight - el.clientHeight}px overflow (scrollHeight=${el.scrollHeight} clientHeight=${el.clientHeight})`)
-      }
+      requestAnimationFrame(() => {
+        overflowCorrectionPending = false
+        correctOverflow()
+      })
     })
   })
+}
+
+function correctOverflow() {
+  const el = contentRef.value
+  if (!el || isResizing.value || legendStore.isManualMode) return
+
+  const overflow = el.scrollHeight - el.clientHeight
+  if (overflow <= 4) {
+    // No overflow — recalculate snug height from actual DOM to avoid empty space
+    updateSnugHeightFromDOM()
+    return
+  }
+
+  // Content overflows — reduce item count and re-check
+  if (measuredItemCount.value !== null && measuredItemCount.value > 1) {
+    measuredItemCount.value--
+    console.log(`[Legend] overflow correction: ${overflow}px over → reduced to ${measuredItemCount.value} items`)
+    scheduleOverflowCorrection()
+  }
+}
+
+// After convergence, recalculate snug height from the actual rendered DOM
+// so the legend shrinks to fit content without empty space.
+function updateSnugHeightFromDOM() {
+  const el = contentRef.value
+  const legendEl = legendRef.value
+  if (!el || !legendEl || !isAutoHeight.value) return
+
+  // Find the bottom of the last visible content
+  const moreEl = el.querySelector('.legend-more')
+  const itemsEl = el.querySelector('.legend-items')
+  if (!itemsEl) return
+
+  // Use the lowest visible element: either "+N more" or the last item/group
+  const lastContent = moreEl || itemsEl.lastElementChild
+  if (!lastContent) return
+
+  const legendTop = legendEl.getBoundingClientRect().top
+  const lastBottom = lastContent.getBoundingClientRect().bottom
+  const padding = 12 // content bottom padding
+  const newSnug = Math.max(120, Math.ceil(lastBottom - legendTop + padding))
+
+  if (measuredSnugHeight.value && Math.abs(newSnug - measuredSnugHeight.value) > 4) {
+    measuredSnugHeight.value = newSnug
+  }
 }
 
 function measureAndTrimItems() {
@@ -854,7 +906,7 @@ function measureAndTrimItems() {
     }
     measuredSnugHeight.value = computeSnugHeight(lastItem, false)
     console.log(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
-    checkScrollOverflow()
+    scheduleOverflowCorrection()
     return
   }
 
@@ -871,7 +923,7 @@ function measureAndTrimItems() {
       }
       measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
       console.log(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
-      checkScrollOverflow()
+      scheduleOverflowCorrection()
       return
     }
   }
@@ -903,7 +955,7 @@ function measureAndTrimItems() {
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
-  checkScrollOverflow()
+  scheduleOverflowCorrection()
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
