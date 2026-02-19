@@ -18,8 +18,55 @@ function toggleLegend() {
 </script>
 
 <template>
-  <!-- Scatter Overlapping Points -->
+  <!-- Visualization Mode -->
   <div class="filter-section">
+    <label class="section-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
+      </svg>
+      Visualization
+    </label>
+    <div class="viz-mode-toggle">
+      <button
+        :class="{ active: store.visualizationMode === 'points' }"
+        @click="store.visualizationMode = 'points'"
+      >Points</button>
+      <button
+        :class="{ active: store.visualizationMode === 'heatmap' }"
+        @click="store.visualizationMode = 'heatmap'"
+      >Heatmap</button>
+    </div>
+
+    <!-- Heatmap settings -->
+    <div v-if="store.visualizationMode === 'heatmap'" class="settings-panel" style="margin-top: 12px;">
+      <div class="setting-row">
+        <label>Radius</label>
+        <div class="slider-group">
+          <input type="range" min="5" max="50" step="1" v-model.number="store.heatmapSettings.radius" />
+          <span class="slider-value">{{ store.heatmapSettings.radius }}px</span>
+        </div>
+      </div>
+      <div class="setting-row">
+        <label>Intensity</label>
+        <div class="slider-group">
+          <input type="range" min="0.1" max="3" step="0.1" v-model.number="store.heatmapSettings.intensity" />
+          <span class="slider-value">{{ store.heatmapSettings.intensity.toFixed(1) }}</span>
+        </div>
+      </div>
+      <div class="setting-row">
+        <label>Opacity</label>
+        <div class="slider-group">
+          <input type="range" min="0" max="1" step="0.05" v-model.number="store.heatmapSettings.opacity" />
+          <span class="slider-value">{{ Math.round(store.heatmapSettings.opacity * 100) }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scatter Overlapping Points -->
+  <div class="filter-section" v-if="store.visualizationMode === 'points'">
     <label class="toggle-row scatter-toggle">
       <input type="checkbox" v-model="store.scatterOverlappingPoints" />
       <span>Scatter overlapping points</span>
@@ -111,6 +158,62 @@ function toggleLegend() {
 <style scoped>
 .filter-section {
   margin-bottom: 20px;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary, #aaa);
+  margin-bottom: 10px;
+}
+
+.section-label svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+}
+
+.viz-mode-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.viz-mode-toggle button {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.viz-mode-toggle button:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.viz-mode-toggle button.active {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+}
+
+.slider-value {
+  min-width: 45px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent, #4ade80);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .filter-hint {

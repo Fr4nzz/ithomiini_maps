@@ -208,7 +208,7 @@ export function useDataLayer(map, options = {}) {
     // Remove existing layers/sources
     ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
       'cluster-extent-dynamic-outline', 'cluster-points-layer',
-      'points-layer', 'points-highlight'
+      'points-layer', 'points-highlight', 'heatmap-layer'
     ].forEach(id => removeLayerAndSource(map.value, id))
     ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source'
     ].forEach(id => removeLayerAndSource(map.value, null, id))
@@ -227,7 +227,8 @@ export function useDataLayer(map, options = {}) {
       mapData = { type: 'FeatureCollection', features: visibleFeatures }
     }
 
-    const shouldCluster = store.clusteringEnabled
+    const isHeatmap = store.visualizationMode === 'heatmap'
+    const shouldCluster = store.clusteringEnabled && !isHeatmap
     const settings = store.clusterSettings
     const clusterRadiusPixels = settings.radiusPixels
 
@@ -239,6 +240,44 @@ export function useDataLayer(map, options = {}) {
       clusterRadius: clusterRadiusPixels,
       clusterMinPoints: 2
     })
+
+    // Heatmap visualization mode
+    if (isHeatmap) {
+      const heatSettings = store.heatmapSettings
+      map.value.addLayer({
+        id: 'heatmap-layer',
+        type: 'heatmap',
+        source: 'points-source',
+        paint: {
+          'heatmap-weight': 1,
+          'heatmap-intensity': [
+            'interpolate', ['linear'], ['zoom'],
+            0, heatSettings.intensity * 0.5,
+            9, heatSettings.intensity * 3
+          ],
+          'heatmap-radius': [
+            'interpolate', ['linear'], ['zoom'],
+            0, heatSettings.radius * 0.5,
+            9, heatSettings.radius * 2
+          ],
+          'heatmap-color': [
+            'interpolate', ['linear'], ['heatmap-density'],
+            0, 'rgba(0, 0, 0, 0)',
+            0.1, 'rgba(0, 0, 255, 0.4)',
+            0.3, 'rgba(0, 255, 255, 0.6)',
+            0.5, 'rgba(0, 255, 0, 0.7)',
+            0.7, 'rgba(255, 255, 0, 0.8)',
+            1, 'rgba(255, 0, 0, 0.9)'
+          ],
+          'heatmap-opacity': heatSettings.opacity
+        }
+      })
+
+      if (!skipZoom) {
+        fitBoundsToData(geojson)
+      }
+      return
+    }
 
     if (shouldCluster) {
       map.value.addLayer({
