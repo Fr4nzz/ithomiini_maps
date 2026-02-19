@@ -183,7 +183,7 @@ const anyGroupHasCustomStyle = computed(() => {
   return groupList.value.some(name => hasCustomizedStyle(name))
 })
 
-// Get the group that an item belongs to (reverse lookup)
+// Get the FIRST group that an item belongs to (for slot allocation in fairGroupedSlice)
 function getGroupForItem(itemLabel) {
   for (const [group, items] of Object.entries(itemGroupMap.value)) {
     if (items.includes(itemLabel)) {
@@ -191,6 +191,19 @@ function getGroupForItem(itemLabel) {
     }
   }
   return null
+}
+
+// Get ALL groups that an item belongs to (for display grouping).
+// When grouping by non-taxonomy fields like sequencing_status, the same
+// species can have records in multiple groups.
+function getGroupsForItem(itemLabel) {
+  const groups = []
+  for (const [group, items] of Object.entries(itemGroupMap.value)) {
+    if (items.includes(itemLabel)) {
+      groups.push(group)
+    }
+  }
+  return groups
 }
 
 // Format label based on per-group abbreviation visibility
@@ -356,8 +369,10 @@ function sortItemsByAbundance(items, order, counts) {
 function groupItemsByGroup(items) {
   const byGroup = {}
   for (const item of items) {
-    const group = getGroupForItem(item.label)
-    if (group) {
+    // Place item in ALL matching groups (a species can have records in
+    // multiple sequencing statuses, sources, etc.)
+    const groups = getGroupsForItem(item.label)
+    for (const group of groups) {
       if (!byGroup[group]) byGroup[group] = []
       byGroup[group].push(item)
     }
@@ -466,6 +481,35 @@ const legendCounts = computed(() => {
   }
   return counts
 })
+
+// Per-group counts: keyed by "groupName\0itemLabel" for accurate counts
+// when the same item appears in multiple groups (e.g., same species in
+// different sequencing statuses).
+const legendGroupCounts = computed(() => {
+  const geo = dataStore.displayGeoJSON
+  if (!geo?.features) return {}
+  if (!legendStore.isGrouped) return {}
+  const attr = dataStore.colorByAttribute
+  const groupBy = legendStore.effectiveGroupBy
+  const groupProperty = groupByPropertyMap[groupBy]
+  if (!groupProperty) return {}
+  const hidden = new Set(legendStore.hiddenItems)
+  const counts = {}
+  for (const feature of geo.features) {
+    const val = feature.properties[attr]
+    const groupVal = feature.properties[groupProperty]
+    if (val && val !== 'Unknown' && val !== 'NA' && !hidden.has(val) && groupVal) {
+      const key = `${groupVal}\0${val}`
+      counts[key] = (counts[key] || 0) + 1
+    }
+  }
+  return counts
+})
+
+// Get count for an item within a specific group
+function getGroupItemCount(groupName, itemLabel) {
+  return legendGroupCounts.value[`${groupName}\0${itemLabel}`] || 0
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // AUTO-SIZING
@@ -604,8 +648,12 @@ let pendingMeasurementRAF = null
  * directly invoking measureAndTrimItems().
  * @param {boolean} resetState  true → reset measuredItemCount
  *                              false → keep current state (initial mount)
+ * @param {string}  source      label for debug logging
+ * @param {boolean} fullReset   also clear prevMeasuredCount so effectiveMaxItems
+ *                              falls through to renderUpperBound (needed after
+ *                              size changes where more items may fit)
  */
-function scheduleMeasurement(resetState = true, source = '') {
+function scheduleMeasurement(resetState = true, source = '', fullReset = false) {
   if (pendingMeasurementRAF !== null) {
     cancelAnimationFrame(pendingMeasurementRAF)
     pendingMeasurementRAF = null
@@ -619,11 +667,11 @@ function scheduleMeasurement(resetState = true, source = '') {
   // Manual mode: skip measurement entirely — effectiveMaxItems uses the user value
   if (legendStore.isManualMode) return
   if (resetState) {
-    prevMeasuredCount.value = measuredItemCount.value
+    prevMeasuredCount.value = fullReset ? null : measuredItemCount.value
     measuredItemCount.value = null
     measuredSnugHeight.value = null
   }
-  console.debug(`[Legend] scheduleMeasurement(reset=${resetState}) from: ${source || 'unknown'}`)
+  console.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
   // Double rAF: first fires after Vue DOM update + browser layout;
   // second fires after paint — getBoundingClientRect() is accurate.
   pendingMeasurementRAF = requestAnimationFrame(() => {
@@ -852,7 +900,7 @@ watch(sortedAllItems, () => {
 // Re-measure and sync labels after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
-    scheduleMeasurement(true, 'resizeEnd')
+    scheduleMeasurement(true, 'resizeEnd', true)
     // Sync shown labels deferred from legendItems watcher during resize
     const labels = new Set()
     for (const item of legendItems.value) {
@@ -875,7 +923,7 @@ watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
     if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
     containerResizeRemeasureTimeout = setTimeout(() => {
-      scheduleMeasurement(true, 'containerResize')
+      scheduleMeasurement(true, 'containerResize', true)
     }, 150)
   }
 }, { deep: true })
@@ -1747,7 +1795,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
               :indented="legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy"
               :shape="group.shape"
               :wrap-label="legendStore.wrapLabels"
-              :count="legendStore.showCounts ? (legendCounts[item.label] || 0) : null"
+              :count="legendStore.showCounts ? getGroupItemCount(group.name, item.label) : null"
               @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
               @update:custom-color="(val) => handleColorUpdate(item.label, val)"
               @toggle-visibility="() => handleToggleVisibility(item.label)"
