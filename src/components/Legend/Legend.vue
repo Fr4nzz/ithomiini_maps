@@ -584,8 +584,6 @@ const renderUpperBound = computed(() => {
 
 // Post-render measured count (null = not yet measured, use upper bound)
 const measuredItemCount = ref(null)
-// Tracks measurement passes (0 = fresh, 1 = first pass done, 2 = final/verified)
-const measurePassCount = ref(0)
 
 // ── Centralized measurement scheduler ──────────────────────────────────
 // Prevents overlapping measurement cycles by ensuring only ONE cycle is
@@ -593,29 +591,22 @@ const measurePassCount = ref(0)
 // nextTick so the browser has completed CSS layout before we read
 // getBoundingClientRect() values.
 let pendingMeasurementRAF = null
-let pendingVerifyRAF = null
 
 /**
  * Schedule a full measurement cycle.  All watchers call this instead of
  * directly invoking measureAndTrimItems().
- * @param {boolean} resetState  true → reset measuredItemCount/measurePassCount
- *                              false → keep current state (initial mount, verify re-measure)
+ * @param {boolean} resetState  true → reset measuredItemCount
+ *                              false → keep current state (initial mount)
  */
 function scheduleMeasurement(resetState = true) {
-  // Cancel any in-flight measurement or verify from a prior cycle
   if (pendingMeasurementRAF !== null) {
     cancelAnimationFrame(pendingMeasurementRAF)
     pendingMeasurementRAF = null
-  }
-  if (pendingVerifyRAF !== null) {
-    cancelAnimationFrame(pendingVerifyRAF)
-    pendingVerifyRAF = null
   }
   // Manual mode: skip measurement entirely — effectiveMaxItems uses the user value
   if (legendStore.isManualMode) return
   if (resetState) {
     measuredItemCount.value = null
-    measurePassCount.value = 0
   }
   // Double rAF: first fires after Vue DOM update + browser layout;
   // second fires after paint — getBoundingClientRect() is accurate.
@@ -623,23 +614,6 @@ function scheduleMeasurement(resetState = true) {
     pendingMeasurementRAF = requestAnimationFrame(() => {
       pendingMeasurementRAF = null
       measureAndTrimItems()
-    })
-  })
-}
-
-/**
- * Schedule the verify-and-reclaim pass after an initial measurement.
- * A subsequent scheduleMeasurement() call will cancel this if a new
- * full cycle is triggered before the verify runs.
- */
-function scheduleVerify() {
-  if (pendingVerifyRAF !== null) {
-    cancelAnimationFrame(pendingVerifyRAF)
-  }
-  pendingVerifyRAF = requestAnimationFrame(() => {
-    pendingVerifyRAF = requestAnimationFrame(() => {
-      pendingVerifyRAF = null
-      verifyAndReclaim()
     })
   })
 }
@@ -656,13 +630,6 @@ const effectiveMaxItems = computed(() => {
   else { result = renderUpperBound.value; src = 'upperBound' }
   console.log(`[Legend] maxItems=${result}/${sortedAllItems.value.length} (${src})`)
   return result
-})
-
-// In manual mode allow vertical scrolling so items beyond the visible area
-// are accessible; in auto mode keep overflow hidden for the measure pass.
-const legendContentStyle = computed(() => {
-  if (legendStore.isManualMode) return { overflow: 'hidden auto' }
-  return {}
 })
 
 // Calculate auto height from content.
@@ -840,45 +807,6 @@ function measureAndTrimItems() {
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
-
-  // After first pass, schedule verification to reclaim empty space
-  // (the final render may have shorter items than during measurement)
-  if (measurePassCount.value < 2 && count < totalSorted) {
-    measurePassCount.value = Math.max(measurePassCount.value, 1)
-    scheduleVerify()
-  }
-}
-
-// Verification pass: after the first measurement reduces item count and Vue
-// re-renders, check if there's significant remaining space (items ended up
-// shorter than during measurement due to different group structure or wrapping).
-// If so, render more items and do a final measurement pass.
-function verifyAndReclaim() {
-  if (measurePassCount.value >= 2 || isResizing.value) return
-  const contentEl = contentRef.value
-  if (!contentEl) return
-  const itemsEl = contentEl.querySelector('.legend-items')
-  if (!itemsEl || measuredItemCount.value >= sortedAllItems.value.length) return
-
-  // Find last visible (non-hidden) item
-  const isGroupedView = itemsEl.classList.contains('grouped')
-  const allDOMItems = isGroupedView
-    ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
-    : itemsEl.children
-  const visibleItems = [...allDOMItems].filter(el => !el.classList.contains('is-hidden'))
-  const lastItem = visibleItems.length ? visibleItems[visibleItems.length - 1] : null
-  if (!lastItem) return
-
-  const maxBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight - 12 - 40
-  const remaining = maxBottom - lastItem.getBoundingClientRect().bottom
-  console.log(`[Legend] verify: ${measuredItemCount.value}/${sortedAllItems.value.length} remaining=${Math.round(remaining)}px`)
-  if (remaining < 22) return // No meaningful space
-
-  // Estimate extra items and re-measure
-  const extra = Math.max(1, Math.floor(remaining / 22))
-  measurePassCount.value = 2
-  measuredItemCount.value = Math.min(measuredItemCount.value + extra, sortedAllItems.value.length)
-  scheduleMeasurement(false)  // Don't reset — verify already set measurePassCount = 2
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
@@ -913,10 +841,16 @@ watch(sortedAllItems, () => {
   scheduleMeasurement()
 })
 
-// Re-measure after resize ends
+// Re-measure and sync labels after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
     scheduleMeasurement()
+    // Sync shown labels deferred from legendItems watcher during resize
+    const labels = new Set()
+    for (const item of legendItems.value) {
+      if (item.visible !== false) labels.add(item.label)
+    }
+    legendStore.setShownLabels(labels)
   }
 })
 
@@ -1057,7 +991,7 @@ function onDrag(e) {
     // Use prevContainerBounds (updated by ResizeObserver) instead of containerBounds
     // containerBounds computed doesn't track DOM size changes reactively
     const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
-    const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+    const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
     const legendHeight = legendRef.value?.offsetHeight || 200
     const margin = STICKY_MARGIN
 
@@ -1116,7 +1050,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
   const bounds = useBounds || (prevContainerBounds.value.width ? prevContainerBounds.value : containerBounds.value)
   if (!bounds.width || !bounds.height) return
 
-  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+  const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
   const legendHeight = legendRef.value?.offsetHeight || 200
   const threshold = 20 // Detection threshold
   const margin = STICKY_MARGIN
@@ -1148,7 +1082,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
  * Also constrains legend height if too tall for new bounds.
  */
 function applyPositionForBounds(oldBounds, newBounds) {
-  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+  const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
   let legendHeight = legendRef.value?.offsetHeight || 200
   const margin = STICKY_MARGIN
   const minHeight = 100
@@ -1539,7 +1473,6 @@ onUnmounted(() => {
 
   // Clean up measurement scheduler
   if (pendingMeasurementRAF !== null) cancelAnimationFrame(pendingMeasurementRAF)
-  if (pendingVerifyRAF !== null) cancelAnimationFrame(pendingVerifyRAF)
   if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
   if (resizeTimeout) clearTimeout(resizeTimeout)
 
@@ -1590,22 +1523,6 @@ watch(() => legendStore.size, (newSize) => {
   }
 }, { deep: true })
 
-// Watch auto-width changes to update currentWidth in auto mode
-watch(autoWidth, (newAutoWidth) => {
-  if (isAutoWidth.value && !isResizing.value) {
-    currentWidth.value = newAutoWidth
-  }
-})
-
-// Watch auto-height changes to update currentHeight in auto mode
-watch(autoHeight, (newAutoHeight) => {
-  if (isAutoHeight.value && !isResizing.value) {
-    currentHeight.value = newAutoHeight
-  }
-})
-
-// (Auto-sizing is handled by overflow:hidden on .legend-content,
-// combined with post-render DOM measurement in measureAndTrimItems.)
 
 // Sync shown labels to the store so the map can grey out overflow items.
 // During resize, defer the sync to avoid rebuilding the map layer on every frame.
@@ -1618,17 +1535,6 @@ watch(legendItems, (items) => {
   legendStore.setShownLabels(labels)
 }, { immediate: true })
 
-// When resize ends, sync the final shown labels to trigger one map update
-watch(isResizing, (resizing) => {
-  if (!resizing) {
-    const items = legendItems.value
-    const labels = new Set()
-    for (const item of items) {
-      if (item.visible !== false) labels.add(item.label)
-    }
-    legendStore.setShownLabels(labels)
-  }
-})
 
 // ═══════════════════════════════════════════════════════════════════════════
 // BOTTOM-STICKY REPOSITIONING
@@ -1707,7 +1613,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
     <div
       ref="contentRef"
       class="legend-content"
-      :style="legendContentStyle"
+      :style="legendStore.isManualMode ? { overflow: 'hidden auto' } : undefined"
     >
       <!-- Title with hover controls (sort dropdown + counts toggle) -->
       <div class="legend-title" @click.stop>
