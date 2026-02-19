@@ -670,6 +670,7 @@ function scheduleMeasurement(resetState = true, source = '', fullReset = false) 
     prevMeasuredCount.value = fullReset ? null : measuredItemCount.value
     measuredItemCount.value = null
     measuredSnugHeight.value = null
+    resetCorrectionState()
   }
   console.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
   // Double rAF: first fires after Vue DOM update + browser layout;
@@ -787,13 +788,17 @@ function logContext() {
   return parts.join(' ')
 }
 
-// Post-measurement overflow convergence loop.
+// Post-measurement convergence loop (bidirectional).
 // After measurement sets the initial item count, this checks the ACTUAL
-// rendered DOM for overflow. If content overflows (scrollHeight > clientHeight),
-// reduce item count by 1 and re-check. Converges in 0-3 steps.
+// rendered DOM. If content overflows → reduce items. If significant unused
+// space exists and more items are available → try adding items. Oscillation
+// is prevented by tracking the last direction: expand→overflow triggers a
+// revert and stops; reduce→space triggers a stop. Converges in 0-5 steps.
 // This handles ALL edge cases that the initial measurement misses:
 // multi-group expansion, group headers, text wrapping, subpixel rounding.
 let overflowCorrectionPending = false
+let lastCorrectionDir = null // 'reduce' | 'expand' | null
+
 function scheduleOverflowCorrection() {
   if (overflowCorrectionPending) return
   overflowCorrectionPending = true
@@ -807,23 +812,55 @@ function scheduleOverflowCorrection() {
   })
 }
 
+function resetCorrectionState() {
+  lastCorrectionDir = null
+}
+
 function correctOverflow() {
   const el = contentRef.value
   if (!el || isResizing.value || legendStore.isManualMode) return
 
   const overflow = el.scrollHeight - el.clientHeight
-  if (overflow <= 4) {
-    // No overflow — recalculate snug height from actual DOM to avoid empty space
-    updateSnugHeightFromDOM()
+
+  if (overflow > 4) {
+    // Content overflows
+    if (lastCorrectionDir === 'expand') {
+      // Just expanded and it overflowed — revert and stop
+      measuredItemCount.value--
+      lastCorrectionDir = null
+      console.log(`[Legend] expand overflowed → reverted to ${measuredItemCount.value} items`)
+      scheduleOverflowCorrection() // one more pass to update snug height
+      return
+    }
+    // Regular overflow reduction
+    if (measuredItemCount.value !== null && measuredItemCount.value > 1) {
+      measuredItemCount.value--
+      lastCorrectionDir = 'reduce'
+      console.log(`[Legend] overflow correction: ${overflow}px over → reduced to ${measuredItemCount.value} items`)
+      scheduleOverflowCorrection()
+    }
     return
   }
 
-  // Content overflows — reduce item count and re-check
-  if (measuredItemCount.value !== null && measuredItemCount.value > 1) {
-    measuredItemCount.value--
-    console.log(`[Legend] overflow correction: ${overflow}px over → reduced to ${measuredItemCount.value} items`)
-    scheduleOverflowCorrection()
+  // No overflow — check if we can fit more items
+  if (lastCorrectionDir !== 'reduce') {
+    // Don't try expanding right after a reduce (that means we found the edge)
+    const totalItems = sortedAllItems.value.length
+    if (measuredItemCount.value !== null && measuredItemCount.value < totalItems) {
+      const unusedSpace = el.clientHeight - el.scrollHeight
+      if (unusedSpace > 10) {
+        measuredItemCount.value++
+        lastCorrectionDir = 'expand'
+        console.log(`[Legend] expand: ${unusedSpace}px unused → trying ${measuredItemCount.value} items`)
+        scheduleOverflowCorrection()
+        return
+      }
+    }
   }
+
+  // Converged — update snug height for auto-height mode
+  lastCorrectionDir = null
+  updateSnugHeightFromDOM()
 }
 
 // After convergence, recalculate snug height from the actual rendered DOM
