@@ -368,10 +368,15 @@ function sortItemsByAbundance(items, order, counts) {
 
 function groupItemsByGroup(items) {
   const byGroup = {}
+  // For taxonomy grouping (species, genus, tribe), each item belongs to exactly
+  // one group — use single assignment to avoid data-inconsistency duplicates.
+  // For non-taxonomy grouping (sequencing_status, source), items genuinely
+  // appear in multiple groups, so use multi-group assignment.
+  const useMultiGroup = legendStore.isNonTaxonomyGroupBy
   for (const item of items) {
-    // Place item in ALL matching groups (a species can have records in
-    // multiple sequencing statuses, sources, etc.)
-    const groups = getGroupsForItem(item.label)
+    const groups = useMultiGroup
+      ? getGroupsForItem(item.label)
+      : [getGroupForItem(item.label)].filter(Boolean)
     for (const group of groups) {
       if (!byGroup[group]) byGroup[group] = []
       byGroup[group].push(item)
@@ -1091,9 +1096,17 @@ watch(isResizing, (resizing) => {
   }
 })
 
-// When switching from manual → auto, trigger a fresh measurement
+// When switching between manual ↔ auto items mode
 watch(() => legendStore.maxItemsMode, (newMode) => {
+  console.log(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
   if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
+})
+
+// When manual item count changes
+watch(() => legendStore.maxItemsManual, (newCount) => {
+  if (legendStore.isManualMode) {
+    console.log(`[Legend] manual items → ${newCount}`)
+  }
 })
 
 // Re-measure when container dimensions change (horizontal resize causes text
@@ -1833,7 +1846,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
     @mousedown="startDrag"
-    @touchstart="startDrag"
+    @touchstart.prevent="startDrag"
   >
     <!-- Toolbar (hidden by default, shown on hover) -->
     <LegendToolbar
@@ -2004,7 +2017,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
       <div v-for="dir in resizeDirections" :key="dir"
            :class="['resize-zone', `resize-${dir}`]"
            @mousedown.stop.prevent="startResize($event, dir)"
-           @touchstart.stop="startResizeTouch($event, dir)">
+           @touchstart.stop.prevent="startResizeTouch($event, dir)">
         <!-- Visual affordance for SE corner -->
         <svg v-if="dir === 'se'" viewBox="0 0 10 10" class="resize-icon">
           <path d="M 8 2 L 2 8 M 8 5 L 5 8 M 8 8 L 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" />
