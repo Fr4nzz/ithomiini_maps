@@ -4,8 +4,8 @@ import { parseDate } from '../utils/dateHelpers'
 import { getStorage, setStorage } from '../utils/storageHelpers'
 import { normalizeCountryName } from '../utils/clusterStats'
 import { usePhotoLookup } from './dataPhotoLookup'
-import { useScatterVisualization } from './dataScatter'
-import { useColorMapping } from './dataColorMapping'
+import { useScatterVisualization } from './dataPointGrouping'
+import { useColorMapping } from './dataColorPalette'
 
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
