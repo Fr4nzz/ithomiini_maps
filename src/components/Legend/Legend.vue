@@ -368,15 +368,12 @@ function sortItemsByAbundance(items, order, counts) {
 
 function groupItemsByGroup(items) {
   const byGroup = {}
-  // For taxonomy grouping (species, genus, tribe), each item belongs to exactly
-  // one group — use single assignment to avoid data-inconsistency duplicates.
-  // For non-taxonomy grouping (sequencing_status, source), items genuinely
-  // appear in multiple groups, so use multi-group assignment.
-  const useMultiGroup = legendStore.isNonTaxonomyGroupBy
+  // Always use multi-group: the same subspecies name can exist under different
+  // species (e.g. data variants). Each (subspecies, species) pair is a distinct
+  // legend entry. For non-taxonomy grouping, items also genuinely appear in
+  // multiple groups (e.g. sequencing_status, source).
   for (const item of items) {
-    const groups = useMultiGroup
-      ? getGroupsForItem(item.label)
-      : [getGroupForItem(item.label)].filter(Boolean)
+    const groups = getGroupsForItem(item.label)
     for (const group of groups) {
       if (!byGroup[group]) byGroup[group] = []
       byGroup[group].push(item)
@@ -402,16 +399,34 @@ function sortGroups(groups, sortBy, sortOrder, counts) {
   return groups
 }
 
-function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts) {
+// Contract a species name to "X. epithet" form (e.g. "Heliconius erato" → "H. erato")
+function contractSpeciesName(speciesName) {
+  if (!speciesName) return ''
+  const parts = speciesName.split(' ')
+  if (parts.length >= 2) {
+    return `${parts[0][0]}. ${parts.slice(1).join(' ')}`
+  }
+  return speciesName
+}
+
+function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts, multiGroupLabels) {
   let customLabel = legendStore.getSpeciesDisplayName(groupName)
   if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
     customLabel = applyAbbreviationFormat(groupName, legendStore.displayNameFormat)
   }
 
-  let mappedItems = items.map(item => ({
-    ...item,
-    displayLabel: formatLabel(item.label, groupName)
-  }))
+  // When group headers are hidden and a subspecies appears in multiple species
+  // groups, append a species contraction to disambiguate (e.g. "cyrbia (H. erato)")
+  const headersHidden = !legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy
+  const needsDisambiguation = headersHidden && multiGroupLabels
+
+  let mappedItems = items.map(item => {
+    let displayLabel = formatLabel(item.label, groupName)
+    if (needsDisambiguation && multiGroupLabels.has(item.label)) {
+      displayLabel += ` (${contractSpeciesName(groupName)})`
+    }
+    return { ...item, displayLabel }
+  })
 
   mappedItems = sortByVal === 'abundance'
     ? sortItemsByAbundance(mappedItems, sortOrderVal, counts)
@@ -439,8 +454,23 @@ const groupedLegendData = computed(() => {
   }
 
   const itemsByGroup = groupItemsByGroup(legendItems.value)
+
+  // Detect items that appear in multiple groups (need disambiguation).
+  // Same subspecies name under different species = different entries.
+  const labelGroupCount = new Map()
+  for (const [groupName, items] of Object.entries(itemsByGroup)) {
+    for (const item of items) {
+      labelGroupCount.set(item.label, (labelGroupCount.get(item.label) || 0) + 1)
+    }
+  }
+  const multiGroupLabels = new Set()
+  for (const [label, count] of labelGroupCount) {
+    if (count > 1) multiGroupLabels.add(label)
+  }
+
   const groups = Object.keys(itemsByGroup).map(groupName =>
-    buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts)
+    buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts,
+      multiGroupLabels.size > 0 ? multiGroupLabels : null)
   )
 
   return { type: 'grouped', groups: sortGroups(groups, sortByVal, sortOrderVal, counts) }
