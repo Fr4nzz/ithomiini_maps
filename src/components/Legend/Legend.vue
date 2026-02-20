@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
@@ -122,7 +122,9 @@ const groupByPropertyMap = {
   'source': 'source'
 }
 
-// Build item→group mapping from displayed data (generic for any colorBy/groupBy)
+// Build item→group mapping from displayed data (generic for any colorBy/groupBy).
+// Also builds a reverse lookup (item→groups) for O(1) membership checks,
+// and a subspecies→species map when coloring by subspecies.
 const itemGroupMap = computed(() => {
   const geo = dataStore.displayGeoJSON
   if (!geo?.features) return {}
@@ -147,13 +149,33 @@ const itemGroupMap = computed(() => {
     map[groupVal].add(itemVal)
   }
 
-  // Convert sets to sorted arrays
-  const result = {}
-  for (const [group, items] of Object.entries(map)) {
-    result[group] = [...items].sort()
-  }
+  return map
+})
 
-  return result
+// Reverse lookup: item label → array of group names (O(1) per item)
+const itemToGroupsMap = computed(() => {
+  const reverse = new Map()
+  for (const [group, items] of Object.entries(itemGroupMap.value)) {
+    for (const item of items) {
+      if (!reverse.has(item)) reverse.set(item, [])
+      reverse.get(item).push(group)
+    }
+  }
+  return reverse
+})
+
+// Map subspecies label → species name (for prepending species context
+// when grouping by non-species fields like status, mimicry, source)
+const subspeciesSpeciesMap = computed(() => {
+  const geo = dataStore.displayGeoJSON
+  if (!geo?.features || dataStore.colorBy !== 'subspecies') return {}
+  const map = {}
+  for (const f of geo.features) {
+    const subsp = f.properties.subspecies
+    const species = f.properties.scientific_name
+    if (subsp && species && !map[subsp]) map[subsp] = species
+  }
+  return map
 })
 
 // Get list of groups (sorted)
@@ -183,18 +205,38 @@ const anyGroupHasCustomStyle = computed(() => {
   return groupList.value.some(name => hasCustomizedStyle(name))
 })
 
-// Get the group that an item belongs to (reverse lookup)
+// Get the FIRST group that an item belongs to (for slot allocation in fairGroupedSlice)
 function getGroupForItem(itemLabel) {
-  for (const [group, items] of Object.entries(itemGroupMap.value)) {
-    if (items.includes(itemLabel)) {
-      return group
-    }
-  }
-  return null
+  const groups = itemToGroupsMap.value.get(itemLabel)
+  return groups ? groups[0] : null
 }
 
-// Format label based on per-group abbreviation visibility
+// Get ALL groups that an item belongs to (for display grouping).
+// When grouping by non-taxonomy fields like sequencing_status, the same
+// species can have records in multiple groups.
+function getGroupsForItem(itemLabel) {
+  return itemToGroupsMap.value.get(itemLabel) || []
+}
+
+// Format label based on per-group abbreviation visibility.
+// When colorBy=subspecies and not grouped by species, auto-prepend species
+// abbreviation so users see taxonomic context (e.g. "M. p. isthmia" instead
+// of just "isthmia" under a "Mimicry Ring" group header).
 function formatLabel(itemLabel, groupName) {
+  const isGroupedBySpecies = legendStore.effectiveGroupBy === 'species'
+
+  if (dataStore.colorBy === 'subspecies' && !isGroupedBySpecies) {
+    // Non-species grouping: look up actual species for this subspecies
+    if (legendStore.prefixFormat === 'none') return itemLabel
+    const species = subspeciesSpeciesMap.value[itemLabel]
+    if (species) {
+      const abbreviation = legendStore.getSpeciesAbbreviation(species)
+      if (abbreviation) return `${abbreviation} ${itemLabel}`
+    }
+    return itemLabel
+  }
+
+  // Grouped by species: existing per-group abbreviation logic
   if (!groupName || !legendStore.isAbbreviationVisible(groupName)) {
     return itemLabel
   }
@@ -355,9 +397,13 @@ function sortItemsByAbundance(items, order, counts) {
 
 function groupItemsByGroup(items) {
   const byGroup = {}
+  // Always use multi-group: the same subspecies name can exist under different
+  // species (e.g. data variants). Each (subspecies, species) pair is a distinct
+  // legend entry. For non-taxonomy grouping, items also genuinely appear in
+  // multiple groups (e.g. sequencing_status, source).
   for (const item of items) {
-    const group = getGroupForItem(item.label)
-    if (group) {
+    const groups = getGroupsForItem(item.label)
+    for (const group of groups) {
       if (!byGroup[group]) byGroup[group] = []
       byGroup[group].push(item)
     }
@@ -382,16 +428,34 @@ function sortGroups(groups, sortBy, sortOrder, counts) {
   return groups
 }
 
-function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts) {
+// Contract a species name to "X. epithet" form (e.g. "Heliconius erato" → "H. erato")
+function contractSpeciesName(speciesName) {
+  if (!speciesName) return ''
+  const parts = speciesName.split(' ')
+  if (parts.length >= 2) {
+    return `${parts[0][0]}. ${parts.slice(1).join(' ')}`
+  }
+  return speciesName
+}
+
+function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts, multiGroupLabels) {
   let customLabel = legendStore.getSpeciesDisplayName(groupName)
   if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
     customLabel = applyAbbreviationFormat(groupName, legendStore.displayNameFormat)
   }
 
-  let mappedItems = items.map(item => ({
-    ...item,
-    displayLabel: formatLabel(item.label, groupName)
-  }))
+  // When group headers are hidden and a subspecies appears in multiple species
+  // groups, append a species contraction to disambiguate (e.g. "cyrbia (H. erato)")
+  const headersHidden = !legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy
+  const needsDisambiguation = headersHidden && multiGroupLabels
+
+  let mappedItems = items.map(item => {
+    let displayLabel = formatLabel(item.label, groupName)
+    if (needsDisambiguation && multiGroupLabels.has(item.label)) {
+      displayLabel += ` (${contractSpeciesName(groupName)})`
+    }
+    return { ...item, displayLabel }
+  })
 
   mappedItems = sortByVal === 'abundance'
     ? sortItemsByAbundance(mappedItems, sortOrderVal, counts)
@@ -419,11 +483,50 @@ const groupedLegendData = computed(() => {
   }
 
   const itemsByGroup = groupItemsByGroup(legendItems.value)
-  const groups = Object.keys(itemsByGroup).map(groupName =>
-    buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts)
+
+  // Detect items that appear in multiple groups (need disambiguation).
+  // Same subspecies name under different species = different entries.
+  const labelGroupCount = new Map()
+  for (const [groupName, items] of Object.entries(itemsByGroup)) {
+    for (const item of items) {
+      labelGroupCount.set(item.label, (labelGroupCount.get(item.label) || 0) + 1)
+    }
+  }
+  const multiGroupLabels = new Set()
+  for (const [label, count] of labelGroupCount) {
+    if (count > 1) multiGroupLabels.add(label)
+  }
+
+  let groups = Object.keys(itemsByGroup).map(groupName =>
+    buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts,
+      multiGroupLabels.size > 0 ? multiGroupLabels : null)
   )
 
-  return { type: 'grouped', groups: sortGroups(groups, sortByVal, sortOrderVal, counts) }
+  groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
+
+  // In manual mode, cap total displayed items to the user's explicit count.
+  // Multi-group expansion can cause N unique items to produce M > N DOM items
+  // (same subspecies in multiple species groups). Walk groups in order and
+  // keep items until we hit the target, trimming excess from later groups.
+  // In auto mode, the measurement loop already handles overflow by adjusting
+  // measuredItemCount based on actual DOM overflow, so no cap is needed.
+  const maxVisible = effectiveMaxItems.value
+  const totalDisplayed = groups.reduce((sum, g) => sum + g.items.length, 0)
+  if (legendStore.isManualMode && totalDisplayed > maxVisible) {
+    let remaining = maxVisible
+    groups = groups.map(g => {
+      if (remaining <= 0) return null
+      if (g.items.length <= remaining) {
+        remaining -= g.items.length
+        return g
+      }
+      const trimmed = { ...g, items: g.items.slice(0, remaining) }
+      remaining = 0
+      return trimmed
+    }).filter(Boolean)
+  }
+
+  return { type: 'grouped', groups }
 })
 
 // More items indicator (based on visible items that didn't fit)
@@ -467,6 +570,35 @@ const legendCounts = computed(() => {
   return counts
 })
 
+// Per-group counts: keyed by "groupName\0itemLabel" for accurate counts
+// when the same item appears in multiple groups (e.g., same species in
+// different sequencing statuses).
+const legendGroupCounts = computed(() => {
+  const geo = dataStore.displayGeoJSON
+  if (!geo?.features) return {}
+  if (!legendStore.isGrouped) return {}
+  const attr = dataStore.colorByAttribute
+  const groupBy = legendStore.effectiveGroupBy
+  const groupProperty = groupByPropertyMap[groupBy]
+  if (!groupProperty) return {}
+  const hidden = new Set(legendStore.hiddenItems)
+  const counts = {}
+  for (const feature of geo.features) {
+    const val = feature.properties[attr]
+    const groupVal = feature.properties[groupProperty]
+    if (val && val !== 'Unknown' && val !== 'NA' && !hidden.has(val) && groupVal) {
+      const key = `${groupVal}\0${val}`
+      counts[key] = (counts[key] || 0) + 1
+    }
+  }
+  return counts
+})
+
+// Get count for an item within a specific group
+function getGroupItemCount(groupName, itemLabel) {
+  return legendGroupCounts.value[`${groupName}\0${itemLabel}`] || 0
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // AUTO-SIZING
 // ═══════════════════════════════════════════════════════════════════════════
@@ -494,26 +626,47 @@ const autoWidth = computed(() => {
   const items = sortedAllItems.value
   if (!items.length) return 200
 
-  const maxContainerWidth = containerBounds.value.width * 0.25
+  const maxContainerWidth = containerBounds.value.width * 0.30
   const fontSizePx = Math.round(14 * legendStore.textScale)
+  const isGrouped = legendStore.isGrouped
 
   let maxTextWidth = 0
+  let widestLabel = ''
   for (const item of items) {
     const label = item.displayLabel || item.label
     const width = measureTextWidth(label, fontSizePx)
-    if (width > maxTextWidth) maxTextWidth = width
+    if (width > maxTextWidth) {
+      maxTextWidth = width
+      widestLabel = label
+    }
   }
 
-  // Add dot size + gap + padding + extra margin
+  // Add dot size + gap + content padding + safety margin for font rendering
   const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
   const padding = 16 * 2 // left + right content padding
   const gap = 8
-  const scrollbarWidth = 8
-  const extraMargin = 12
+  const safetyMargin = 4 // subpixel rounding buffer
 
-  const idealWidth = maxTextWidth + dotSz + gap + padding + scrollbarWidth + extraMargin
+  // When grouped, items are indented (margin-left:16px + padding-left:4px)
+  const indentation = isGrouped ? 20 : 0
 
-  return Math.min(Math.max(Math.ceil(idealWidth), 150), maxContainerWidth, 600)
+  // When counts are shown, reserve space for the count badge
+  let countWidth = 0
+  if (legendStore.showCounts) {
+    const counts = legendCounts.value
+    let maxCount = 0
+    for (const item of items) {
+      const c = counts[item.label] || 0
+      if (c > maxCount) maxCount = c
+    }
+    // Measure the widest count number + gap before count
+    const countFontSize = fontSizePx - 2
+    countWidth = measureTextWidth(maxCount.toLocaleString(), countFontSize) + 8
+  }
+
+  const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth + safetyMargin
+
+  return Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
 })
 
 // Max legend height based on container (80% of map height) — hard cap for resize
@@ -545,13 +698,31 @@ const renderUpperBound = computed(() => {
   }
 
   const available = availableHeight - titleHeight - padding - moreReserve
-  return Math.max(1, Math.ceil(available / (minItemHeight + gap)))
+  const estimate = Math.max(1, Math.ceil(available / (minItemHeight + gap)))
+
+  // For small total counts, always render ALL items so the measurement pass
+  // can check if they actually fit. The upper bound is a performance safeguard
+  // (avoid rendering 1000+ items with overflow:hidden); for small counts,
+  // rendering a few extra hidden items is harmless. Without this, a tight
+  // container (e.g. 120px) may estimate only 1 item fits due to moreReserve,
+  // never rendering item 2, so measurement can never discover it would fit.
+  const total = sortedAllItems.value.length
+  if (total <= 20) return Math.max(estimate, total)
+
+  return estimate
 })
 
 // Post-render measured count (null = not yet measured, use upper bound)
 const measuredItemCount = ref(null)
-// Tracks measurement passes (0 = fresh, 1 = first pass done, 2 = final/verified)
-const measurePassCount = ref(0)
+// Pixel-perfect legend height from DOM measurement.
+// Set by measureAndTrimItems() in ALL cases (all-fit, small-fit, overflow)
+// so autoHeight uses actual content dimensions instead of inaccurate estimates.
+const measuredSnugHeight = ref(null)
+let containerResizeRemeasureTimeout = null // forward declaration for scheduleMeasurement
+// Previous measured count — used as the rendering hint during re-measurement
+// to prevent effectiveMaxItems from jumping to renderUpperBound (which would
+// render too many items, causing visible overflow without "+N more").
+const prevMeasuredCount = ref(null)
 
 // ── Centralized measurement scheduler ──────────────────────────────────
 // Prevents overlapping measurement cycles by ensuring only ONE cycle is
@@ -559,30 +730,37 @@ const measurePassCount = ref(0)
 // nextTick so the browser has completed CSS layout before we read
 // getBoundingClientRect() values.
 let pendingMeasurementRAF = null
-let pendingVerifyRAF = null
 
 /**
  * Schedule a full measurement cycle.  All watchers call this instead of
  * directly invoking measureAndTrimItems().
- * @param {boolean} resetState  true → reset measuredItemCount/measurePassCount
- *                              false → keep current state (initial mount, verify re-measure)
+ * @param {boolean} resetState  true → reset measuredItemCount
+ *                              false → keep current state (initial mount)
+ * @param {string}  source      label for debug logging
+ * @param {boolean} fullReset   also clear prevMeasuredCount so effectiveMaxItems
+ *                              falls through to renderUpperBound (needed after
+ *                              size changes where more items may fit)
  */
-function scheduleMeasurement(resetState = true) {
-  // Cancel any in-flight measurement or verify from a prior cycle
+function scheduleMeasurement(resetState = true, source = '', fullReset = false) {
   if (pendingMeasurementRAF !== null) {
     cancelAnimationFrame(pendingMeasurementRAF)
     pendingMeasurementRAF = null
   }
-  if (pendingVerifyRAF !== null) {
-    cancelAnimationFrame(pendingVerifyRAF)
-    pendingVerifyRAF = null
+  // Cancel any pending container-resize re-measurement so it doesn't
+  // override results from this measurement cycle
+  if (containerResizeRemeasureTimeout) {
+    clearTimeout(containerResizeRemeasureTimeout)
+    containerResizeRemeasureTimeout = null
   }
   // Manual mode: skip measurement entirely — effectiveMaxItems uses the user value
   if (legendStore.isManualMode) return
   if (resetState) {
+    prevMeasuredCount.value = fullReset ? null : measuredItemCount.value
     measuredItemCount.value = null
-    measurePassCount.value = 0
+    measuredSnugHeight.value = null
+    resetCorrectionState()
   }
+  console.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
   // Double rAF: first fires after Vue DOM update + browser layout;
   // second fires after paint — getBoundingClientRect() is accurate.
   pendingMeasurementRAF = requestAnimationFrame(() => {
@@ -593,76 +771,59 @@ function scheduleMeasurement(resetState = true) {
   })
 }
 
-/**
- * Schedule the verify-and-reclaim pass after an initial measurement.
- * A subsequent scheduleMeasurement() call will cancel this if a new
- * full cycle is triggered before the verify runs.
- */
-function scheduleVerify() {
-  if (pendingVerifyRAF !== null) {
-    cancelAnimationFrame(pendingVerifyRAF)
-  }
-  pendingVerifyRAF = requestAnimationFrame(() => {
-    pendingVerifyRAF = requestAnimationFrame(() => {
-      pendingVerifyRAF = null
-      verifyAndReclaim()
-    })
-  })
-}
-
 // The actual item limit: measured value when available, upper bound otherwise
 const effectiveMaxItems = computed(() => {
   // Manual mode: user-specified count, bypass measurement
   if (legendStore.isManualMode) return legendStore.maxItemsManual
 
   // Auto mode: render-then-measure
-  if (isResizing.value) return renderUpperBound.value
-  if (measuredItemCount.value !== null) return measuredItemCount.value
-  return renderUpperBound.value
-})
-
-// In manual mode allow vertical scrolling so items beyond the visible area
-// are accessible; in auto mode keep overflow hidden for the measure pass.
-const legendContentStyle = computed(() => {
-  if (legendStore.isManualMode) return { overflow: 'hidden auto' }
-  return {}
+  if (isResizing.value) {
+    return renderUpperBound.value
+  } else if (measuredItemCount.value !== null) {
+    return measuredItemCount.value
+  } else if (prevMeasuredCount.value !== null) {
+    // Between measurements: use previous count as rendering hint to prevent
+    // effectiveMaxItems from jumping to upperBound (which renders too many
+    // items, causing visible overflow without "+N more")
+    return prevMeasuredCount.value
+  } else {
+    return renderUpperBound.value
+  }
 })
 
 // Calculate auto height from content.
 // Before measurement: use full target height so container is large enough
 // for measureAndTrimItems() to find the real cutoff.
-// After measurement: if items were trimmed (overflow), keep full target height
-// so the container doesn't shrink due to inaccurate per-item estimates.
-// Only shrink-to-fit when ALL items fit (small data set).
+// After measurement: use pixel-perfect DOM-measured snug height.
 const autoHeight = computed(() => {
   if (measuredItemCount.value === null) {
     return targetLegendHeight.value
   }
-  // Items were trimmed → keep full target height (don't shrink)
-  if (measuredItemCount.value < sortedAllItems.value.length) {
-    return targetLegendHeight.value
-  }
-  // All items fit → size to content (estimate is fine for small counts)
-  const fontSizePx = Math.round(14 * legendStore.textScale)
-  const titleHeight = 32
-  const padding = 24
-  const itemCount = sortedAllItems.value.length
-  const itemHeight = fontSizePx + 10 + 2
-  const idealHeight = titleHeight + (itemCount * itemHeight) + padding
-  return Math.min(Math.max(Math.ceil(idealHeight), 80), targetLegendHeight.value)
+  // Use DOM-measured snug height (pixel-perfect, accounts for text wrapping,
+  // count badges, group headers, etc.)
+  return measuredSnugHeight.value || targetLegendHeight.value
 })
 
 // Effective width (auto or manual)
 const effectiveWidth = computed(() => {
-  if (isAutoWidth.value) return autoWidth.value
-  return currentWidth.value || 200
+  return isAutoWidth.value ? autoWidth.value : (currentWidth.value || 200)
 })
 
 // Effective height (auto or manual)
 const effectiveHeight = computed(() => {
-  if (isAutoHeight.value) return autoHeight.value
-  return currentHeight.value
+  return isAutoHeight.value ? autoHeight.value : currentHeight.value
 })
+
+// Reset legend to auto-sizing (called when data/filters change so the legend
+// adapts to new content instead of staying locked at a stale manual size).
+function resetToAutoSize() {
+  if (!isAutoWidth.value || !isAutoHeight.value) {
+    console.debug(`[Legend] resetToAutoSize (was ${currentWidth.value}x${currentHeight.value})`)
+    currentWidth.value = null
+    currentHeight.value = null
+    legendStore.updateSize('auto', 'auto')
+  }
+}
 
 // Max resize width (45% of container for manual, more generous than auto's 25%)
 const maxResizeWidth = computed(() => {
@@ -672,8 +833,9 @@ const maxResizeWidth = computed(() => {
 // Multi-directional resize (composable handles all mouse/touch events)
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
-  getLimits: () => ({ minW: 150, maxW: maxResizeWidth.value, minH: 100, maxH: maxLegendHeight.value }),
+  getLimits: () => ({ minW: 200, maxW: maxResizeWidth.value, minH: 120, maxH: maxLegendHeight.value }),
   onEnd: ({ x, y, width, height }) => {
+    console.debug(`[Legend] resize end: ${width}x${height} at (${x},${y})`)
     posX.value = x
     posY.value = y
     currentWidth.value = width
@@ -690,6 +852,168 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
 // with overflow:hidden, then measure the actual DOM to find the exact cutoff.
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Build a context string for measurement logs so each log line is self-documenting.
+// Includes colorBy, groupBy (when active), and active filter summary.
+function logContext() {
+  const parts = []
+  parts.push(`colorBy=${dataStore.colorBy}`)
+  if (legendStore.isGrouped) {
+    parts.push(`groupBy=${legendStore.effectiveGroupBy}`)
+  }
+  // Summarize active filters
+  const f = dataStore.filters
+  const activeFilters = []
+  if (f.species?.length) activeFilters.push(`species=${f.species.length}`)
+  if (f.subspecies?.length) activeFilters.push(`subsp=${f.subspecies.length}`)
+  if (f.mimicry?.length) activeFilters.push(`mimicry=${f.mimicry.length}`)
+  if (f.status?.length) activeFilters.push(`status=${f.status.length}`)
+  if (f.source?.length > 1 || (f.source?.length === 1 && f.source[0] !== 'Sanger Institute')) {
+    activeFilters.push(`source=${f.source.join(',')}`)
+  }
+  if (f.genus !== 'All') activeFilters.push(`genus=${f.genus}`)
+  if (f.country !== 'All') activeFilters.push(`country=${f.country}`)
+  if (activeFilters.length) parts.push(`filters=[${activeFilters.join(' ')}]`)
+  return parts.join(' ')
+}
+
+// Post-measurement convergence loop (bidirectional).
+// After measurement sets the initial item count, this checks the ACTUAL
+// rendered DOM. If content overflows → reduce items. If significant unused
+// space exists and more items are available → try adding items. Oscillation
+// is prevented by tracking the last direction: expand→overflow triggers a
+// revert and stops; reduce→space triggers a stop. Converges in 0-5 steps.
+// This handles ALL edge cases that the initial measurement misses:
+// multi-group expansion, group headers, text wrapping, subpixel rounding.
+let overflowCorrectionPending = false
+let correctionGeneration = 0 // incremented on reset to invalidate stale corrections
+let lastCorrectionDir = null // 'reduce' | 'expand' | null
+let expandReverted = false // true after expand→overflow→revert, prevents re-expansion
+
+function scheduleOverflowCorrection() {
+  if (overflowCorrectionPending) return
+  overflowCorrectionPending = true
+  const gen = correctionGeneration
+  nextTick(() => {
+    nextTick(() => {
+      requestAnimationFrame(() => {
+        overflowCorrectionPending = false
+        if (gen !== correctionGeneration) return // stale — new measurement started
+        correctOverflow()
+      })
+    })
+  })
+}
+
+function resetCorrectionState() {
+  lastCorrectionDir = null
+  expandReverted = false
+  correctionGeneration++ // invalidate any pending corrections from previous cycle
+}
+
+function correctOverflow() {
+  const el = contentRef.value
+  if (!el || isResizing.value || legendStore.isManualMode) return
+
+  const overflow = el.scrollHeight - el.clientHeight
+
+  if (overflow > 4) {
+    // Content overflows
+    if (lastCorrectionDir === 'expand') {
+      // Just expanded and it overflowed — revert and stop
+      measuredItemCount.value--
+      lastCorrectionDir = null
+      expandReverted = true // prevent re-expansion on next pass
+      console.log(`[Legend] expand overflowed → reverted to ${measuredItemCount.value} items`)
+      scheduleOverflowCorrection() // one more pass to update snug height
+      return
+    }
+    // Regular overflow reduction
+    if (measuredItemCount.value !== null && measuredItemCount.value > 1) {
+      measuredItemCount.value--
+      lastCorrectionDir = 'reduce'
+      console.log(`[Legend] overflow correction: ${overflow}px over → reduced to ${measuredItemCount.value} items`)
+      scheduleOverflowCorrection()
+    }
+    return
+  }
+
+  // No scroll overflow — but .legend-more has margin-top:auto which absorbs
+  // unused space into the gap between items and "+N more", making
+  // scrollHeight ≈ clientHeight even when items don't fill the area.
+  // Measure the VISUAL gap to detect unused space accurately.
+  const unusedSpace = measureVisualGap(el)
+  const totalItems = sortedAllItems.value.length
+
+  if (!expandReverted &&
+      measuredItemCount.value !== null &&
+      measuredItemCount.value < totalItems &&
+      unusedSpace > 20) {
+    measuredItemCount.value++
+    lastCorrectionDir = 'expand'
+    console.log(`[Legend] expand: ${unusedSpace}px visual gap → trying ${measuredItemCount.value} items`)
+    scheduleOverflowCorrection()
+    return
+  }
+
+  // Converged
+  lastCorrectionDir = null
+  if (measuredItemCount.value !== null && measuredItemCount.value < totalItems) {
+    console.log(`[Legend] converged: ${measuredItemCount.value}/${totalItems} items | gap=${unusedSpace}px`)
+  }
+  updateSnugHeightFromDOM()
+}
+
+// Measure the visual gap between the last item and the "+N more" indicator
+// (or the bottom of the content area if no "+N more"). This detects unused
+// space that scrollHeight/clientHeight can't see because .legend-more uses
+// margin-top:auto which absorbs the gap into flexbox spacing.
+function measureVisualGap(contentEl) {
+  const moreEl = contentEl.querySelector('.legend-more')
+  const itemsEl = contentEl.querySelector('.legend-items')
+  if (!itemsEl) return 0
+
+  // Find the bottom of the last rendered item
+  const lastItem = itemsEl.lastElementChild
+  if (!lastItem) return 0
+  const itemsBottom = lastItem.getBoundingClientRect().bottom
+
+  if (moreEl) {
+    // Gap between last item and top of "+N more"
+    const moreTop = moreEl.getBoundingClientRect().top
+    return moreTop - itemsBottom
+  } else {
+    // No "+N more" — gap between last item and content bottom
+    const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
+    return contentBottom - itemsBottom
+  }
+}
+
+// After convergence, recalculate snug height from the actual rendered DOM
+// so the legend shrinks to fit content without empty space.
+function updateSnugHeightFromDOM() {
+  const el = contentRef.value
+  const legendEl = legendRef.value
+  if (!el || !legendEl || !isAutoHeight.value) return
+
+  // Find the bottom of the last visible content
+  const moreEl = el.querySelector('.legend-more')
+  const itemsEl = el.querySelector('.legend-items')
+  if (!itemsEl) return
+
+  // Use the lowest visible element: either "+N more" or the last item/group
+  const lastContent = moreEl || itemsEl.lastElementChild
+  if (!lastContent) return
+
+  const legendTop = legendEl.getBoundingClientRect().top
+  const lastBottom = lastContent.getBoundingClientRect().bottom
+  const padding = 12 // content bottom padding
+  const newSnug = Math.max(120, Math.ceil(lastBottom - legendTop + padding))
+
+  if (measuredSnugHeight.value && Math.abs(newSnug - measuredSnugHeight.value) > 4) {
+    measuredSnugHeight.value = newSnug
+  }
+}
+
 function measureAndTrimItems() {
   const contentEl = contentRef.value
   if (!contentEl || isResizing.value) return
@@ -697,7 +1021,8 @@ function measureAndTrimItems() {
   const itemsEl = contentEl.querySelector('.legend-items')
   if (!itemsEl || !itemsEl.children.length) return
 
-  const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
+  const contentRect = contentEl.getBoundingClientRect()
+  const contentBottom = contentRect.top + contentEl.clientHeight
   const contentPaddingBottom = 12
   const moreIndicatorReserve = 40
 
@@ -705,124 +1030,177 @@ function measureAndTrimItems() {
   // containers). Each item's getBoundingClientRect already includes any group
   // header height above it, so the bottom check naturally accounts for overhead.
   const isGroupedView = itemsEl.classList.contains('grouped')
-  const measurableItems = isGroupedView
+  const allMeasurableItems = isGroupedView
     ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
     : itemsEl.children
 
+  // Filter out hidden items (.is-hidden) — they're in the DOM for edit mode
+  // but should not count toward visible item measurement
+  const measurableItems = [...allMeasurableItems].filter(el => !el.classList.contains('is-hidden'))
+
   const totalSorted = sortedAllItems.value.length
+  const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
 
   if (!measurableItems.length) return
 
+  // Helper: compute pixel-perfect snug legend height from the last visible
+  // item's bottom position, plus extra space for optional "+N more" and padding.
+  function computeSnugHeight(lastItemEl, includeMoreIndicator) {
+    const legendEl = legendRef.value
+    if (!legendEl || !lastItemEl) return null
+    const legendTop = legendEl.getBoundingClientRect().top
+    const lastBottom = lastItemEl.getBoundingClientRect().bottom
+    const extra = includeMoreIndicator
+      ? moreIndicatorReserve + contentPaddingBottom  // "+N more" + bottom pad
+      : contentPaddingBottom                          // just bottom pad
+    return Math.max(120, Math.ceil(lastBottom - legendTop + extra))
+  }
+
   // Check if ALL items fit without needing "+N more"
   const lastItem = measurableItems[measurableItems.length - 1]
+  const lastItemBottom = lastItem.getBoundingClientRect().bottom
+  const allFitBoundary = contentBottom - contentPaddingBottom
+
   if (measurableItems.length >= totalSorted &&
-      lastItem.getBoundingClientRect().bottom <= contentBottom - contentPaddingBottom) {
+      lastItemBottom <= allFitBoundary) {
     if (measuredItemCount.value !== totalSorted) {
       measuredItemCount.value = totalSorted
     }
+    measuredSnugHeight.value = computeSnugHeight(lastItem, false)
+    console.log(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
+    scheduleOverflowCorrection()
     return
+  }
+
+  // For small item counts (≤ 5), showing all items is always better than "+N more".
+  // The more indicator uses ~40px — often more than the items it replaces (~26px each).
+  // Use a tighter fit check (just the visible content boundary) to avoid wasting space
+  // on "+1 more" or "+2 more" when the items would physically fit.
+  // Use the last DOM item (not totalSorted-1) to account for multi-group expansion.
+  if (totalSorted <= 5 && measurableItems.length >= totalSorted) {
+    const lastOfAll = measurableItems[measurableItems.length - 1]
+    if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
+      if (measuredItemCount.value !== totalSorted) {
+        measuredItemCount.value = totalSorted
+      }
+      measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
+      console.log(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
+      scheduleOverflowCorrection()
+      return
+    }
   }
 
   // Not all fit — reserve space for "+N more" and find cutoff
   const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
-  let count = 0
+  let domFitCount = 0
   for (let i = 0; i < measurableItems.length; i++) {
-    if (measurableItems[i].getBoundingClientRect().bottom > maxBottom) break
-    count++
+    const itemBottom = measurableItems[i].getBoundingClientRect().bottom
+    if (itemBottom > maxBottom) break
+    domFitCount++
+  }
+  domFitCount = Math.max(1, domFitCount)
+
+  // When multi-group display creates more DOM elements than unique items
+  // (same species in multiple groups), translate the DOM fit count to a
+  // unique item count. E.g., 13 unique items → 22 DOM items, 15 fit →
+  // estimate ~9 unique items would produce DOM items that all fit.
+  let count = domFitCount
+  if (measurableItems.length > totalSorted && domFitCount < measurableItems.length) {
+    count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
   }
 
-  count = Math.max(1, count)
+  // Pixel-perfect snug height: last fitting DOM item + "+N more" indicator
+  measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
+
+  const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
+  console.log(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
   if (count !== measuredItemCount.value) {
     measuredItemCount.value = count
   }
-
-  // After first pass, schedule verification to reclaim empty space
-  // (the final render may have shorter items than during measurement)
-  if (measurePassCount.value < 2 && count < totalSorted) {
-    measurePassCount.value = Math.max(measurePassCount.value, 1)
-    scheduleVerify()
-  }
-}
-
-// Verification pass: after the first measurement reduces item count and Vue
-// re-renders, check if there's significant remaining space (items ended up
-// shorter than during measurement due to different group structure or wrapping).
-// If so, render more items and do a final measurement pass.
-function verifyAndReclaim() {
-  if (measurePassCount.value >= 2 || isResizing.value) return
-  const contentEl = contentRef.value
-  if (!contentEl) return
-  const itemsEl = contentEl.querySelector('.legend-items')
-  if (!itemsEl || measuredItemCount.value >= sortedAllItems.value.length) return
-
-  // Find last individual item
-  const isGroupedView = itemsEl.classList.contains('grouped')
-  const allItems = isGroupedView
-    ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
-    : itemsEl.children
-  const lastItem = allItems.length ? allItems[allItems.length - 1] : null
-  if (!lastItem) return
-
-  const maxBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight - 12 - 40
-  const remaining = maxBottom - lastItem.getBoundingClientRect().bottom
-  if (remaining < 22) return // No meaningful space
-
-  // Estimate extra items and re-measure
-  const extra = Math.max(1, Math.floor(remaining / 22))
-  measurePassCount.value = 2
-  measuredItemCount.value = Math.min(measuredItemCount.value + extra, sortedAllItems.value.length)
-  scheduleMeasurement(false)  // Don't reset — verify already set measurePassCount = 2
+  scheduleOverflowCorrection()
 }
 
 // Initial measurement: when contentRef first becomes a DOM element
 // (legend appears via v-if after data loads), trigger the first measurement.
 watch(contentRef, (el, oldEl) => {
   if (el && !oldEl) {
-    scheduleMeasurement(false)  // State already at defaults on mount
+    scheduleMeasurement(false, 'mount')
   }
 })
 
-// Re-measure when layout-affecting settings change
+// Re-measure when layout-affecting settings change.
+// Also reset to auto-sizing so the legend re-fits to content.
 watch([
   () => legendStore.wrapLabels,
   () => legendStore.textScale,
   () => legendStore.showCounts,
   () => legendStore.isGrouped,
   () => legendStore.groupingSettings,
-], () => {
-  scheduleMeasurement()
+], (newVals, oldVals) => {
+  // Detect which setting changed for descriptive logging
+  const settingNames = ['wrapLabels', 'textScale', 'showCounts', 'isGrouped', 'groupingSettings']
+  const changed = settingNames.filter((_, i) => JSON.stringify(newVals[i]) !== JSON.stringify(oldVals[i]))
+  resetToAutoSize()
+  // Full reset: clear all measurement state so effectiveMaxItems falls through to
+  // renderUpperBound. Pass false to prevent scheduleMeasurement from
+  // re-saving the stale measuredItemCount into prevMeasuredCount.
+  measuredItemCount.value = null
+  prevMeasuredCount.value = null
+  measuredSnugHeight.value = null
+  scheduleMeasurement(false, `setting:${changed.join(',')}`)
 }, { deep: true })
 
-// Re-measure when data changes (new items, filters applied, colorBy changed)
+// Re-measure when data changes (new items, filters applied, colorBy changed).
+// Also reset to auto-sizing so the legend adapts to new content instead of
+// staying locked at a manually-resized dimension that may no longer fit.
 // NOTE: effectiveWidth is NOT watched here — it depends transitively on
 // measuredItemCount (via legendItems → autoWidth), which would create an
 // infinite reactive loop.
-watch(sortedAllItems, () => {
-  scheduleMeasurement()
+watch(sortedAllItems, (newItems, oldItems) => {
+  const delta = newItems.length - (oldItems?.length || 0)
+  resetToAutoSize()
+  // Full reset: same as settings watcher above.
+  measuredItemCount.value = null
+  prevMeasuredCount.value = null
+  measuredSnugHeight.value = null
+  scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
 })
 
-// Re-measure after resize ends
+// Re-measure and sync labels after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
-    scheduleMeasurement()
+    scheduleMeasurement(true, 'resizeEnd', true)
+    // Sync shown labels deferred from legendItems watcher during resize
+    const labels = new Set()
+    for (const item of legendItems.value) {
+      if (item.visible !== false) labels.add(item.label)
+    }
+    legendStore.setShownLabels(labels)
   }
 })
 
-// When switching from manual → auto, trigger a fresh measurement
+// When switching between manual ↔ auto items mode
 watch(() => legendStore.maxItemsMode, (newMode) => {
-  if (newMode === 'auto') scheduleMeasurement()
+  console.log(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
+  if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
+})
+
+// When manual item count changes
+watch(() => legendStore.maxItemsManual, (newCount) => {
+  if (legendStore.isManualMode) {
+    console.log(`[Legend] manual items → ${newCount}`)
+  }
 })
 
 // Re-measure when container dimensions change (horizontal resize causes text
 // reflow changing item heights; vertical resize changes available space).
 // We watch prevContainerBounds (set by containerResizeObserver) which is NOT
 // in the effectiveWidth → measuredItemCount dependency chain, so no loop risk.
-let containerResizeRemeasureTimeout = null
 watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
     if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
     containerResizeRemeasureTimeout = setTimeout(() => {
-      scheduleMeasurement()
+      scheduleMeasurement(true, 'containerResize', true)
     }, 150)
   }
 }, { deep: true })
@@ -945,7 +1323,7 @@ function onDrag(e) {
     // Use prevContainerBounds (updated by ResizeObserver) instead of containerBounds
     // containerBounds computed doesn't track DOM size changes reactively
     const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
-    const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+    const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
     const legendHeight = legendRef.value?.offsetHeight || 200
     const margin = STICKY_MARGIN
 
@@ -1004,7 +1382,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
   const bounds = useBounds || (prevContainerBounds.value.width ? prevContainerBounds.value : containerBounds.value)
   if (!bounds.width || !bounds.height) return
 
-  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+  const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
   const legendHeight = legendRef.value?.offsetHeight || 200
   const threshold = 20 // Detection threshold
   const margin = STICKY_MARGIN
@@ -1036,7 +1414,7 @@ function detectStickyEdges(wasExportMode = null, useBounds = null) {
  * Also constrains legend height if too tall for new bounds.
  */
 function applyPositionForBounds(oldBounds, newBounds) {
-  const legendWidth = legendRef.value?.offsetWidth || currentWidth.value
+  const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
   let legendHeight = legendRef.value?.offsetHeight || 200
   const margin = STICKY_MARGIN
   const minHeight = 100
@@ -1427,7 +1805,6 @@ onUnmounted(() => {
 
   // Clean up measurement scheduler
   if (pendingMeasurementRAF !== null) cancelAnimationFrame(pendingMeasurementRAF)
-  if (pendingVerifyRAF !== null) cancelAnimationFrame(pendingVerifyRAF)
   if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
   if (resizeTimeout) clearTimeout(resizeTimeout)
 
@@ -1478,22 +1855,6 @@ watch(() => legendStore.size, (newSize) => {
   }
 }, { deep: true })
 
-// Watch auto-width changes to update currentWidth in auto mode
-watch(autoWidth, (newAutoWidth) => {
-  if (isAutoWidth.value && !isResizing.value) {
-    currentWidth.value = newAutoWidth
-  }
-})
-
-// Watch auto-height changes to update currentHeight in auto mode
-watch(autoHeight, (newAutoHeight) => {
-  if (isAutoHeight.value && !isResizing.value) {
-    currentHeight.value = newAutoHeight
-  }
-})
-
-// (Auto-sizing is handled by overflow:hidden on .legend-content,
-// combined with post-render DOM measurement in measureAndTrimItems.)
 
 // Sync shown labels to the store so the map can grey out overflow items.
 // During resize, defer the sync to avoid rebuilding the map layer on every frame.
@@ -1506,17 +1867,6 @@ watch(legendItems, (items) => {
   legendStore.setShownLabels(labels)
 }, { immediate: true })
 
-// When resize ends, sync the final shown labels to trigger one map update
-watch(isResizing, (resizing) => {
-  if (!resizing) {
-    const items = legendItems.value
-    const labels = new Set()
-    for (const item of items) {
-      if (item.visible !== false) labels.add(item.label)
-    }
-    legendStore.setShownLabels(labels)
-  }
-})
 
 // ═══════════════════════════════════════════════════════════════════════════
 // BOTTOM-STICKY REPOSITIONING
@@ -1579,7 +1929,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
     @mousedown="startDrag"
-    @touchstart="startDrag"
+    @touchstart.prevent="startDrag"
   >
     <!-- Toolbar (hidden by default, shown on hover) -->
     <LegendToolbar
@@ -1595,7 +1945,6 @@ watch(isExportMode, (enabled, wasEnabled) => {
     <div
       ref="contentRef"
       class="legend-content"
-      :style="legendContentStyle"
     >
       <!-- Title with hover controls (sort dropdown + counts toggle) -->
       <div class="legend-title" @click.stop>
@@ -1722,7 +2071,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
               :indented="legendStore.groupingSettings.showHeaders || legendStore.isNonTaxonomyGroupBy"
               :shape="group.shape"
               :wrap-label="legendStore.wrapLabels"
-              :count="legendStore.showCounts ? (legendCounts[item.label] || 0) : null"
+              :count="legendStore.showCounts ? getGroupItemCount(group.name, item.label) : null"
               @update:custom-label="(val) => handleLabelUpdate(item.label, val)"
               @update:custom-color="(val) => handleColorUpdate(item.label, val)"
               @toggle-visibility="() => handleToggleVisibility(item.label)"
@@ -1751,7 +2100,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
       <div v-for="dir in resizeDirections" :key="dir"
            :class="['resize-zone', `resize-${dir}`]"
            @mousedown.stop.prevent="startResize($event, dir)"
-           @touchstart.stop="startResizeTouch($event, dir)">
+           @touchstart.stop.prevent="startResizeTouch($event, dir)">
         <!-- Visual affordance for SE corner -->
         <svg v-if="dir === 'se'" viewBox="0 0 10 10" class="resize-icon">
           <path d="M 8 2 L 2 8 M 8 5 L 5 8 M 8 8 L 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" />
@@ -1782,9 +2131,9 @@ watch(isExportMode, (enabled, wasEnabled) => {
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
   z-index: 25; /* Above search bar (10) and map controls (20) so toolbar overlaps them */
-  min-width: 150px;
+  min-width: 200px;
   max-width: 600px;
-  min-height: 80px;
+  min-height: 120px;
   /* max-height is set dynamically via positionStyle */
   overflow: visible; /* Allow toolbar to float above and resize zones to extend beyond edges */
   box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
@@ -1828,7 +2177,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 
 .legend-content {
   padding: 12px 16px;
-  overflow: hidden;
+  overflow: hidden auto; /* hidden-x, auto-y: scrollbar appears as fallback if measurement under-counts */
   /* flex-basis: auto so the container sizes to content, then max-height caps it.
      flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
   flex: 1 1 auto;
