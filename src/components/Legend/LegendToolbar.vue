@@ -138,6 +138,19 @@ function swapColorAndGroup() {
   legendStore.setGroupBy(newGroup)
 }
 
+// Show species prefix setting when coloring by subspecies
+const showSpeciesPrefixSetting = computed(() => dataStore.colorBy === 'subspecies')
+
+// Prefix format options (shortest to longest)
+const prefixFormatOptions = [
+  { value: 'none', label: 'Hidden' },
+  { value: 'firstLetterBoth', label: 'G. e.' },
+  { value: 'syllableBoth', label: 'Gen. epi.' },
+  { value: 'firstLetterGenus', label: 'G. epithet' },
+  { value: 'syllableGenus', label: 'Gen. epithet' },
+  { value: 'fullSpecies', label: 'Full name' }
+]
+
 // Toggle settings
 function toggleSettings() {
   if (!showSettings.value && settingsButtonRef.value) {
@@ -370,6 +383,27 @@ onUnmounted(() => {
               {{ legendStore.showCounts ? 'ON' : 'OFF' }}
             </button>
             <span class="value-display">per item</span>
+          </div>
+        </div>
+
+        <!-- Species Prefix (when coloring by subspecies) -->
+        <div v-if="showSpeciesPrefixSetting" class="settings-row">
+          <label class="settings-label">
+            <Palette :size="14" />
+            Species Prefix
+          </label>
+          <div class="settings-control">
+            <select
+              class="prefix-format-select"
+              :value="legendStore.prefixFormat"
+              @change="legendStore.setPrefixFormat($event.target.value)"
+            >
+              <option
+                v-for="opt in prefixFormatOptions"
+                :key="opt.value"
+                :value="opt.value"
+              >{{ opt.label }}</option>
+            </select>
           </div>
         </div>
 
@@ -769,6 +803,23 @@ onUnmounted(() => {
 /* Color control */
 .color-control {
   gap: 8px;
+}
+
+.prefix-format-select {
+  flex: 1;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.prefix-format-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
 }
 
 .color-input {

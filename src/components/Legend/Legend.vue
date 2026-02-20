@@ -206,8 +206,39 @@ function getGroupsForItem(itemLabel) {
   return groups
 }
 
-// Format label based on per-group abbreviation visibility
+// Map subspecies label → species name (for prepending species context
+// when grouping by non-species fields like status, mimicry, source)
+const subspeciesSpeciesMap = computed(() => {
+  const geo = dataStore.displayGeoJSON
+  if (!geo?.features || dataStore.colorBy !== 'subspecies') return {}
+  const map = {}
+  for (const f of geo.features) {
+    const subsp = f.properties.subspecies
+    const species = f.properties.scientific_name
+    if (subsp && species && !map[subsp]) map[subsp] = species
+  }
+  return map
+})
+
+// Format label based on per-group abbreviation visibility.
+// When colorBy=subspecies and not grouped by species, auto-prepend species
+// abbreviation so users see taxonomic context (e.g. "M. p. isthmia" instead
+// of just "isthmia" under a "Mimicry Ring" group header).
 function formatLabel(itemLabel, groupName) {
+  const isGroupedBySpecies = legendStore.effectiveGroupBy === 'species'
+
+  if (dataStore.colorBy === 'subspecies' && !isGroupedBySpecies) {
+    // Non-species grouping: look up actual species for this subspecies
+    if (legendStore.prefixFormat === 'none') return itemLabel
+    const species = subspeciesSpeciesMap.value[itemLabel]
+    if (species) {
+      const abbreviation = legendStore.getSpeciesAbbreviation(species)
+      if (abbreviation) return `${abbreviation} ${itemLabel}`
+    }
+    return itemLabel
+  }
+
+  // Grouped by species: existing per-group abbreviation logic
   if (!groupName || !legendStore.isAbbreviationVisible(groupName)) {
     return itemLabel
   }
