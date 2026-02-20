@@ -114,8 +114,8 @@ const showGroupBy = computed(() => {
   return legendStore.groupByOptions.length > 1
 })
 
-// Valid colorBy values (from colorByGroups)
-const validColorByValues = new Set(['subspecies', 'species', 'genus', 'status', 'mimicry', 'source'])
+// Valid colorBy values (derived from colorByGroups to stay in sync)
+const validColorByValues = new Set(colorByGroups.flatMap(g => g.options.map(o => o.value)))
 const taxonomyColorBy = new Set(['subspecies', 'species', 'genus'])
 
 // Whether color↔group swap is valid

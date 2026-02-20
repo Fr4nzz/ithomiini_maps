@@ -122,7 +122,9 @@ const groupByPropertyMap = {
   'source': 'source'
 }
 
-// Build item→group mapping from displayed data (generic for any colorBy/groupBy)
+// Build item→group mapping from displayed data (generic for any colorBy/groupBy).
+// Also builds a reverse lookup (item→groups) for O(1) membership checks,
+// and a subspecies→species map when coloring by subspecies.
 const itemGroupMap = computed(() => {
   const geo = dataStore.displayGeoJSON
   if (!geo?.features) return {}
@@ -147,13 +149,33 @@ const itemGroupMap = computed(() => {
     map[groupVal].add(itemVal)
   }
 
-  // Convert sets to sorted arrays
-  const result = {}
-  for (const [group, items] of Object.entries(map)) {
-    result[group] = [...items].sort()
-  }
+  return map
+})
 
-  return result
+// Reverse lookup: item label → array of group names (O(1) per item)
+const itemToGroupsMap = computed(() => {
+  const reverse = new Map()
+  for (const [group, items] of Object.entries(itemGroupMap.value)) {
+    for (const item of items) {
+      if (!reverse.has(item)) reverse.set(item, [])
+      reverse.get(item).push(group)
+    }
+  }
+  return reverse
+})
+
+// Map subspecies label → species name (for prepending species context
+// when grouping by non-species fields like status, mimicry, source)
+const subspeciesSpeciesMap = computed(() => {
+  const geo = dataStore.displayGeoJSON
+  if (!geo?.features || dataStore.colorBy !== 'subspecies') return {}
+  const map = {}
+  for (const f of geo.features) {
+    const subsp = f.properties.subspecies
+    const species = f.properties.scientific_name
+    if (subsp && species && !map[subsp]) map[subsp] = species
+  }
+  return map
 })
 
 // Get list of groups (sorted)
@@ -185,40 +207,16 @@ const anyGroupHasCustomStyle = computed(() => {
 
 // Get the FIRST group that an item belongs to (for slot allocation in fairGroupedSlice)
 function getGroupForItem(itemLabel) {
-  for (const [group, items] of Object.entries(itemGroupMap.value)) {
-    if (items.includes(itemLabel)) {
-      return group
-    }
-  }
-  return null
+  const groups = itemToGroupsMap.value.get(itemLabel)
+  return groups ? groups[0] : null
 }
 
 // Get ALL groups that an item belongs to (for display grouping).
 // When grouping by non-taxonomy fields like sequencing_status, the same
 // species can have records in multiple groups.
 function getGroupsForItem(itemLabel) {
-  const groups = []
-  for (const [group, items] of Object.entries(itemGroupMap.value)) {
-    if (items.includes(itemLabel)) {
-      groups.push(group)
-    }
-  }
-  return groups
+  return itemToGroupsMap.value.get(itemLabel) || []
 }
-
-// Map subspecies label → species name (for prepending species context
-// when grouping by non-species fields like status, mimicry, source)
-const subspeciesSpeciesMap = computed(() => {
-  const geo = dataStore.displayGeoJSON
-  if (!geo?.features || dataStore.colorBy !== 'subspecies') return {}
-  const map = {}
-  for (const f of geo.features) {
-    const subsp = f.properties.subspecies
-    const species = f.properties.scientific_name
-    if (subsp && species && !map[subsp]) map[subsp] = species
-  }
-  return map
-})
 
 // Format label based on per-group abbreviation visibility.
 // When colorBy=subspecies and not grouped by species, auto-prepend species
