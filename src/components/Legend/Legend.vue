@@ -475,13 +475,15 @@ const groupedLegendData = computed(() => {
 
   groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
 
-  // Cap total displayed items to effectiveMaxItems.
+  // In manual mode, cap total displayed items to the user's explicit count.
   // Multi-group expansion can cause N unique items to produce M > N DOM items
   // (same subspecies in multiple species groups). Walk groups in order and
   // keep items until we hit the target, trimming excess from later groups.
+  // In auto mode, the measurement loop already handles overflow by adjusting
+  // measuredItemCount based on actual DOM overflow, so no cap is needed.
   const maxVisible = effectiveMaxItems.value
   const totalDisplayed = groups.reduce((sum, g) => sum + g.items.length, 0)
-  if (totalDisplayed > maxVisible) {
+  if (legendStore.isManualMode && totalDisplayed > maxVisible) {
     let remaining = maxVisible
     groups = groups.map(g => {
       if (remaining <= 0) return null
