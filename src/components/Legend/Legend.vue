@@ -797,15 +797,19 @@ function logContext() {
 // This handles ALL edge cases that the initial measurement misses:
 // multi-group expansion, group headers, text wrapping, subpixel rounding.
 let overflowCorrectionPending = false
+let correctionGeneration = 0 // incremented on reset to invalidate stale corrections
 let lastCorrectionDir = null // 'reduce' | 'expand' | null
+let expandReverted = false // true after expand→overflow→revert, prevents re-expansion
 
 function scheduleOverflowCorrection() {
   if (overflowCorrectionPending) return
   overflowCorrectionPending = true
+  const gen = correctionGeneration
   nextTick(() => {
     nextTick(() => {
       requestAnimationFrame(() => {
         overflowCorrectionPending = false
+        if (gen !== correctionGeneration) return // stale — new measurement started
         correctOverflow()
       })
     })
@@ -814,6 +818,8 @@ function scheduleOverflowCorrection() {
 
 function resetCorrectionState() {
   lastCorrectionDir = null
+  expandReverted = false
+  correctionGeneration++ // invalidate any pending corrections from previous cycle
 }
 
 function correctOverflow() {
@@ -828,6 +834,7 @@ function correctOverflow() {
       // Just expanded and it overflowed — revert and stop
       measuredItemCount.value--
       lastCorrectionDir = null
+      expandReverted = true // prevent re-expansion on next pass
       console.log(`[Legend] expand overflowed → reverted to ${measuredItemCount.value} items`)
       scheduleOverflowCorrection() // one more pass to update snug height
       return
@@ -842,25 +849,55 @@ function correctOverflow() {
     return
   }
 
-  // No overflow — check if we can fit more items
-  if (lastCorrectionDir !== 'reduce') {
-    // Don't try expanding right after a reduce (that means we found the edge)
-    const totalItems = sortedAllItems.value.length
-    if (measuredItemCount.value !== null && measuredItemCount.value < totalItems) {
-      const unusedSpace = el.clientHeight - el.scrollHeight
-      if (unusedSpace > 10) {
-        measuredItemCount.value++
-        lastCorrectionDir = 'expand'
-        console.log(`[Legend] expand: ${unusedSpace}px unused → trying ${measuredItemCount.value} items`)
-        scheduleOverflowCorrection()
-        return
-      }
-    }
+  // No scroll overflow — but .legend-more has margin-top:auto which absorbs
+  // unused space into the gap between items and "+N more", making
+  // scrollHeight ≈ clientHeight even when items don't fill the area.
+  // Measure the VISUAL gap to detect unused space accurately.
+  const unusedSpace = measureVisualGap(el)
+  const totalItems = sortedAllItems.value.length
+
+  if (!expandReverted &&
+      measuredItemCount.value !== null &&
+      measuredItemCount.value < totalItems &&
+      unusedSpace > 20) {
+    measuredItemCount.value++
+    lastCorrectionDir = 'expand'
+    console.log(`[Legend] expand: ${unusedSpace}px visual gap → trying ${measuredItemCount.value} items`)
+    scheduleOverflowCorrection()
+    return
   }
 
-  // Converged — update snug height for auto-height mode
+  // Converged
   lastCorrectionDir = null
+  if (measuredItemCount.value !== null && measuredItemCount.value < totalItems) {
+    console.log(`[Legend] converged: ${measuredItemCount.value}/${totalItems} items | gap=${unusedSpace}px`)
+  }
   updateSnugHeightFromDOM()
+}
+
+// Measure the visual gap between the last item and the "+N more" indicator
+// (or the bottom of the content area if no "+N more"). This detects unused
+// space that scrollHeight/clientHeight can't see because .legend-more uses
+// margin-top:auto which absorbs the gap into flexbox spacing.
+function measureVisualGap(contentEl) {
+  const moreEl = contentEl.querySelector('.legend-more')
+  const itemsEl = contentEl.querySelector('.legend-items')
+  if (!itemsEl) return 0
+
+  // Find the bottom of the last rendered item
+  const lastItem = itemsEl.lastElementChild
+  if (!lastItem) return 0
+  const itemsBottom = lastItem.getBoundingClientRect().bottom
+
+  if (moreEl) {
+    // Gap between last item and top of "+N more"
+    const moreTop = moreEl.getBoundingClientRect().top
+    return moreTop - itemsBottom
+  } else {
+    // No "+N more" — gap between last item and content bottom
+    const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
+    return contentBottom - itemsBottom
+  }
 }
 
 // After convergence, recalculate snug height from the actual rendered DOM
