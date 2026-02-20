@@ -468,12 +468,34 @@ const groupedLegendData = computed(() => {
     if (count > 1) multiGroupLabels.add(label)
   }
 
-  const groups = Object.keys(itemsByGroup).map(groupName =>
+  let groups = Object.keys(itemsByGroup).map(groupName =>
     buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts,
       multiGroupLabels.size > 0 ? multiGroupLabels : null)
   )
 
-  return { type: 'grouped', groups: sortGroups(groups, sortByVal, sortOrderVal, counts) }
+  groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
+
+  // Cap total displayed items to effectiveMaxItems.
+  // Multi-group expansion can cause N unique items to produce M > N DOM items
+  // (same subspecies in multiple species groups). Walk groups in order and
+  // keep items until we hit the target, trimming excess from later groups.
+  const maxVisible = effectiveMaxItems.value
+  const totalDisplayed = groups.reduce((sum, g) => sum + g.items.length, 0)
+  if (totalDisplayed > maxVisible) {
+    let remaining = maxVisible
+    groups = groups.map(g => {
+      if (remaining <= 0) return null
+      if (g.items.length <= remaining) {
+        remaining -= g.items.length
+        return g
+      }
+      const trimmed = { ...g, items: g.items.slice(0, remaining) }
+      remaining = 0
+      return trimmed
+    }).filter(Boolean)
+  }
+
+  return { type: 'grouped', groups }
 })
 
 // More items indicator (based on visible items that didn't fit)
