@@ -124,7 +124,7 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
 
 const {
   measuredItemCount, measuredSnugHeight, prevMeasuredCount,
-  maxLegendHeight, effectiveMaxItems, effectiveWidth, effectiveHeight,
+  maxLegendHeight, renderUpperBound, measuredGroupSlots, effectiveMaxItems, effectiveWidth, effectiveHeight,
   maxResizeWidth, scheduleMeasurement, scheduleContainerResizeMeasurement,
   resetToAutoSize, cleanup: cleanupMeasurement
 } = useLegendMeasurement({
@@ -150,7 +150,7 @@ const {
   legendCounts, legendGroupCounts, getGroupItemCount,
   sortedAllItems, legendItems, groupedLegendData,
   moreCount, morePointCount
-} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode)
+} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode, () => measuredGroupSlots.value ?? renderUpperBound.value)
 
 // Bridge: keep measurement composable's refs in sync with item data
 watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })

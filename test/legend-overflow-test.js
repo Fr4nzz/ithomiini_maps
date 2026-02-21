@@ -171,12 +171,7 @@ async function testGroupByModes() {
   const groupByOptions = ['none', 'genus', 'tribe', 'subfamily']
 
   for (const groupBy of groupByOptions) {
-    if (groupBy === 'none') {
-      legendStore.isGrouped = false
-    } else {
-      legendStore.isGrouped = true
-      legendStore.groupBy = groupBy
-    }
+    legendStore.groupingSettings = { ...legendStore.groupingSettings, enabled: groupBy !== 'none', groupBy: groupBy === 'none' ? 'species' : groupBy }
     await waitForSettle(500)
 
     const ov = getOverflow()
@@ -197,8 +192,7 @@ async function testGroupByModes() {
   await waitForSettle(500)
 
   for (const groupBy of ['status', 'source']) {
-    legendStore.isGrouped = true
-    legendStore.groupBy = groupBy
+    legendStore.groupingSettings = { ...legendStore.groupingSettings, enabled: true, groupBy }
     await waitForSettle(500)
 
     const ov = getOverflow()
@@ -213,8 +207,7 @@ async function testGroupByModes() {
   }
 
   // Restore
-  legendStore.isGrouped = true
-  legendStore.groupBy = 'species'
+  legendStore.groupingSettings = { ...legendStore.groupingSettings, enabled: true, groupBy: 'species' }
   dataStore.colorBy = 'subspecies'
   await waitForSettle()
 
@@ -226,8 +219,7 @@ async function testGroupHeaders() {
   const { dataStore, legendStore } = getStores()
 
   dataStore.colorBy = 'subspecies'
-  legendStore.isGrouped = true
-  legendStore.groupBy = 'species'
+  legendStore.groupingSettings = { ...legendStore.groupingSettings, enabled: true, groupBy: 'species' }
   await waitForSettle(500)
 
   // Test with headers shown
@@ -267,8 +259,7 @@ async function testFiltering() {
 
   // Reset to known state
   dataStore.colorBy = 'subspecies'
-  legendStore.isGrouped = true
-  legendStore.groupBy = 'species'
+  legendStore.groupingSettings = { ...legendStore.groupingSettings, enabled: true, groupBy: 'species' }
   await waitForSettle(500)
 
   // Filter to a few species
@@ -289,7 +280,7 @@ async function testFiltering() {
   }
 
   // Test with non-taxonomy grouping + filter
-  legendStore.groupBy = 'status'
+  legendStore.groupingSettings = { ...legendStore.groupingSettings, groupBy: 'status' }
   await waitForSettle(500)
 
   let ov = getOverflow()
@@ -302,7 +293,7 @@ async function testFiltering() {
 
   // Clear filter
   dataStore.filters = { ...dataStore.filters, species: [] }
-  legendStore.groupBy = 'species'
+  legendStore.groupingSettings = { ...legendStore.groupingSettings, groupBy: 'species' }
   await waitForSettle()
 
   console.groupEnd()
@@ -409,6 +400,49 @@ async function testTextSettings() {
   console.groupEnd()
 }
 
+async function testCrossGroupCombinations() {
+  console.group('🔀 Cross-Group Combination Tests')
+  const { dataStore, legendStore } = getStores()
+
+  // These test colorBy/groupBy combinations where items span multiple groups
+  // (many-to-many relationship). Each color item exists in multiple groups,
+  // so the legend should show all relevant groups — not just the first one.
+
+  const combos = [
+    { colorBy: 'status', groupBy: 'species', label: 'colorBy=status groupBy=species' },
+    { colorBy: 'species', groupBy: 'status', label: 'colorBy=species groupBy=status' },
+    { colorBy: 'source', groupBy: 'species', label: 'colorBy=source groupBy=species' },
+    { colorBy: 'species', groupBy: 'source', label: 'colorBy=species groupBy=source' },
+    { colorBy: 'status', groupBy: 'genus', label: 'colorBy=status groupBy=genus' },
+    { colorBy: 'mimicry', groupBy: 'species', label: 'colorBy=mimicry groupBy=species' },
+  ]
+
+  for (const { colorBy, groupBy, label } of combos) {
+    dataStore.colorBy = colorBy
+    legendStore.groupingSettings = { ...legendStore.groupingSettings, enabled: true, groupBy }
+    await waitForSettle(500)
+
+    const ov = getOverflow()
+    const items = getItemCount()
+    const groups = getGroupCount()
+
+    if (ov.hasOverflow) {
+      fail(`${label}: no scrollbar`, `${ov.amount}px, ${items} items in ${groups} groups`)
+    } else if (items === 0) {
+      fail(`${label}: items visible`, `0 items rendered`)
+    } else {
+      pass(`${label}: no overflow`, `${items} items in ${groups} groups`)
+    }
+  }
+
+  // Restore
+  dataStore.colorBy = 'subspecies'
+  legendStore.groupingSettings = { ...legendStore.groupingSettings, enabled: true, groupBy: 'species' }
+  await waitForSettle()
+
+  console.groupEnd()
+}
+
 // ═══════════════════════════════════════════════════════════════════
 // MAIN TEST RUNNER
 // ═══════════════════════════════════════════════════════════════════
@@ -428,6 +462,7 @@ async function runLegendTests(suite = 'all') {
     filter: testFiltering,
     resize: testResize,
     text: testTextSettings,
+    crossgroup: testCrossGroupCombinations,
   }
 
   try {

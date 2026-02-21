@@ -25,7 +25,10 @@ const groupByPropertyMap = {
  * @param {Function} getEffectiveMaxItems - Getter for max items (lazy, avoids circular dep with measurement)
  * @param {import('vue').ComputedRef} isExportMode - Whether export mode is active
  */
-export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode) {
+/**
+ * @param {Function} getMaxDisplaySlots - Max DOM item slots (height-based), used to limit groups in cross-group scenarios
+ */
+export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode, getMaxDisplaySlots) {
 
   // Color map from data store (includes custom overrides - used for display)
   const colorMap = computed(() => dataStore.activeColorMap)
@@ -426,24 +429,41 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
 
     groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
 
-    // Cap total displayed items by trimming groups sequentially.
-    // Sequential trimming (fill groups top-to-bottom) is used instead of
-    // fair distribution because it minimizes visible group headers, which
-    // lets more items fit in the available height.
+    // ── Cap 1: unique items ──
+    // Count UNIQUE items across groups (not display instances). The
+    // maxVisible limit refers to unique color items, not per-group copies.
     const maxVisible = getEffectiveMaxItems()
-    const totalDisplayed = groups.reduce((sum, g) => sum + g.items.length, 0)
-    if (totalDisplayed > maxVisible) {
-      let remaining = maxVisible
+    const uniqueLabels = new Set()
+    for (const g of groups) {
+      for (const item of g.items) {
+        if (item.visible !== false) uniqueLabels.add(item.label)
+      }
+    }
+    if (uniqueLabels.size > maxVisible) {
+      const keepSet = new Set([...uniqueLabels].slice(0, maxVisible))
       groups = groups.map(g => {
-        if (remaining <= 0) return null
-        if (g.items.length <= remaining) {
-          remaining -= g.items.length
-          return g
-        }
-        const trimmed = { ...g, items: g.items.slice(0, remaining) }
-        remaining = 0
-        return trimmed
+        const filtered = g.items.filter(item =>
+          item.visible === false || keepSet.has(item.label)
+        )
+        if (filtered.length === 0) return null
+        return { ...g, items: filtered }
       }).filter(Boolean)
+    }
+
+    // ── Cap 2: cross-group instance limit ──
+    // When items appear in multiple groups (e.g. colorBy=status grouped by
+    // species), the total DOM instances can be much larger than unique items.
+    // Limit groups to fit within the height-based DOM slot budget.
+    const maxSlots = getMaxDisplaySlots?.() ?? Infinity
+    const totalInstances = groups.reduce((sum, g) => sum + g.items.length, 0)
+    if (totalInstances > maxSlots && groups.length > 1) {
+      const avgItemsPerGroup = totalInstances / groups.length
+      const showHeaders = legendStore.groupingSettings?.showHeaders !== false || legendStore.isNonTaxonomyGroupBy
+      const costPerGroup = avgItemsPerGroup + (showHeaders ? 1 : 0)
+      const maxGroups = Math.max(1, Math.floor(maxSlots / costPerGroup))
+      if (groups.length > maxGroups) {
+        groups = groups.slice(0, maxGroups)
+      }
     }
 
     return { type: 'grouped', groups }
