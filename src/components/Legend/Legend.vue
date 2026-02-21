@@ -239,10 +239,16 @@ watch(() => legendStore.position, (newPos) => {
   }
 }, { deep: true })
 
-watch(() => legendStore.size, (newSize) => {
+watch(() => legendStore.size, (newSize, oldSize) => {
   if (!isResizing.value) {
     currentWidth.value = newSize.width === 'auto' ? null : newSize.width
     currentHeight.value = newSize.height === 'auto' ? null : newSize.height
+    // Re-measure when size changes externally (e.g. settings panel, tests)
+    const widthChanged = newSize.width !== oldSize?.width
+    const heightChanged = newSize.height !== oldSize?.height
+    if (widthChanged || heightChanged) {
+      scheduleMeasurement(true, 'sizeChange', true)
+    }
   }
 }, { deep: true })
 

@@ -1,5 +1,5 @@
 // Legend auto-sizing and DOM measurement logic
-// Extracted from Legend.vue for maintainability (~400 lines)
+// Extracted from Legend.vue for maintainability
 //
 // Implements the "render-then-measure" pattern:
 // 1. Render a generous upper-bound of items with overflow:hidden
@@ -146,10 +146,14 @@ export function useLegendMeasurement({
   let correctionGeneration = 0
   let lastCorrectionDir = null
   let expandReverted = false
+  let correctionSteps = 0
 
   function resetCorrectionState() {
     lastCorrectionDir = null
     expandReverted = false
+    correctionSteps = 0
+    binarySearchActive = false
+    lastGapBeforeExpand = 0
     correctionGeneration++
   }
 
@@ -267,48 +271,144 @@ export function useLegendMeasurement({
     }
   }
 
+  // Detect actual scrollbar presence (more reliable than scrollHeight check
+  // for small overflow amounts that may be within subpixel tolerance)
+  function hasScrollbar(el) {
+    return el.scrollHeight > el.clientHeight + 1
+  }
+
+  // After a failed expand, try a "re-measure from scratch" approach:
+  // the initial measurement used renderUpperBound which may have been too
+  // generous or too conservative. Do a fresh binary-search-like measurement.
+  // After a failed expand, try a "binary search" approach to find the true
+  // maximum. This handles grouped views where adding 1 item can trigger
+  // a new group header that takes extra space.
+  let binarySearchActive = false
+  let binaryLo = 0
+  let binaryHi = 0
+  let binaryBest = 0
+  let lastGapBeforeExpand = 0  // gap measured before last expand attempt
+
   function correctOverflow() {
     const el = contentRef.value
     if (!el || isResizing.value || legendStore.isManualMode) return
 
+    correctionSteps++
     const overflow = el.scrollHeight - el.clientHeight
+    const scrollbarVisible = hasScrollbar(el)
+    const totalItems = sortedAllItems.value.length
+    const unusedSpace = measureVisualGap(el)
 
-    if (overflow > 4) {
+    // Safety: cap correction steps to avoid infinite loops
+    if (correctionSteps > 20) {
+      // If currently overflowing, reduce until stable
+      if (overflow > 2 || scrollbarVisible) {
+        if (binarySearchActive && binaryBest > 0) {
+          measuredItemCount.value = binaryBest
+        } else if (measuredItemCount.value > 1) {
+          measuredItemCount.value--
+        }
+      }
+      binarySearchActive = false
+      expandReverted = true
+      console.log(`[Legend] correction BAIL after ${correctionSteps} steps → ${measuredItemCount.value}/${totalItems}`)
+      correctionSteps = 0
+      updateSnugHeightFromDOM()
+      return
+    }
+
+    // ── Binary search mode ──────────────────────────────────────────
+    if (binarySearchActive) {
+      if (overflow > 2 || scrollbarVisible) {
+        // Current count overflows → it's too high
+        binaryHi = measuredItemCount.value - 1
+        console.log(`[Legend] correction#${correctionSteps} BSEARCH overflow → hi=${binaryHi} (${overflow}px)`)
+      } else {
+        // Current count fits → it's a candidate
+        binaryBest = measuredItemCount.value
+        if (unusedSpace > 20 && measuredItemCount.value < totalItems) {
+          binaryLo = measuredItemCount.value + 1
+          console.log(`[Legend] correction#${correctionSteps} BSEARCH fits → lo=${binaryLo} best=${binaryBest} (${Math.round(unusedSpace)}px gap)`)
+        } else {
+          // Converged in binary search
+          binaryLo = binaryHi + 1  // Force exit
+        }
+      }
+
+      if (binaryLo <= binaryHi) {
+        measuredItemCount.value = Math.floor((binaryLo + binaryHi) / 2)
+        console.log(`[Legend] correction#${correctionSteps} BSEARCH try ${measuredItemCount.value} [${binaryLo}..${binaryHi}]`)
+        scheduleOverflowCorrection()
+        return
+      }
+
+      // Binary search done — use best and prevent further expansion
+      binarySearchActive = false
+      expandReverted = true  // binary search already found the max; don't try expanding again
+      if (binaryBest !== measuredItemCount.value) {
+        measuredItemCount.value = binaryBest
+        console.log(`[Legend] correction#${correctionSteps} BSEARCH done → ${binaryBest}/${totalItems}`)
+        scheduleOverflowCorrection()
+        return
+      }
+      // Fall through to SETTLED
+    }
+
+    // ── Normal correction ───────────────────────────────────────────
+
+    if (overflow > 2 || scrollbarVisible) {
+      // Content overflows — reduce items
       if (lastCorrectionDir === 'expand') {
+        // Just expanded and it overflowed — revert
         measuredItemCount.value--
         lastCorrectionDir = null
+
+        // Use the gap we measured BEFORE the expand (not current, which is post-overflow).
+        // If the pre-expand gap was large, this means adding +1 item caused a big
+        // structural change (e.g. new group header in grouped view). Use binary search
+        // to find the optimal count by skipping over the "bad" counts.
+        if (lastGapBeforeExpand > 60 && measuredItemCount.value + 2 <= totalItems) {
+          binarySearchActive = true
+          binaryLo = measuredItemCount.value + 2  // +1 already failed
+          binaryHi = Math.min(totalItems, measuredItemCount.value + Math.ceil(lastGapBeforeExpand / 20))
+          binaryBest = measuredItemCount.value
+          console.log(`[Legend] correction#${correctionSteps} REVERT+BSEARCH → ${measuredItemCount.value}/${totalItems} (pre-expand gap=${Math.round(lastGapBeforeExpand)}px, searching [${binaryLo}..${binaryHi}])`)
+          measuredItemCount.value = Math.floor((binaryLo + binaryHi) / 2)
+          scheduleOverflowCorrection()
+          return
+        }
+
         expandReverted = true
-        console.log(`[Legend] expand overflowed → reverted to ${measuredItemCount.value} items`)
+        console.log(`[Legend] correction#${correctionSteps} REVERT → ${measuredItemCount.value}/${totalItems} (expand caused ${overflow}px overflow)`)
         scheduleOverflowCorrection()
         return
       }
       if (measuredItemCount.value !== null && measuredItemCount.value > 1) {
         measuredItemCount.value--
         lastCorrectionDir = 'reduce'
-        console.log(`[Legend] overflow correction: ${overflow}px over → reduced to ${measuredItemCount.value} items`)
+        console.log(`[Legend] correction#${correctionSteps} REDUCE → ${measuredItemCount.value}/${totalItems} (${overflow}px overflow, scrollbar=${scrollbarVisible})`)
         scheduleOverflowCorrection()
       }
       return
     }
 
-    const unusedSpace = measureVisualGap(el)
-    const totalItems = sortedAllItems.value.length
-
+    // No overflow — check if we can fit more items
     if (!expandReverted &&
         measuredItemCount.value !== null &&
         measuredItemCount.value < totalItems &&
         unusedSpace > 20) {
+      lastGapBeforeExpand = unusedSpace  // save gap for potential REVERT+BSEARCH
       measuredItemCount.value++
       lastCorrectionDir = 'expand'
-      console.log(`[Legend] expand: ${unusedSpace}px visual gap → trying ${measuredItemCount.value} items`)
+      console.log(`[Legend] correction#${correctionSteps} EXPAND → ${measuredItemCount.value}/${totalItems} (${Math.round(unusedSpace)}px gap)`)
       scheduleOverflowCorrection()
       return
     }
 
-    lastCorrectionDir = null
-    if (measuredItemCount.value !== null && measuredItemCount.value < totalItems) {
-      console.log(`[Legend] converged: ${measuredItemCount.value}/${totalItems} items | gap=${unusedSpace}px`)
-    }
+    // Converged — log final state
+    const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
+    console.log(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} | gap=${Math.round(unusedSpace)}px scroll=${overflow}px steps=${correctionSteps}`)
+    correctionSteps = 0
     updateSnugHeightFromDOM()
   }
 
@@ -383,7 +483,7 @@ export function useLegendMeasurement({
         measuredItemCount.value = totalSorted
       }
       measuredSnugHeight.value = computeSnugHeight(lastItem, false)
-      console.log(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
+      console.log(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
       scheduleOverflowCorrection()
       return
     }
@@ -396,32 +496,56 @@ export function useLegendMeasurement({
           measuredItemCount.value = totalSorted
         }
         measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
-        console.log(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
+        console.log(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
         scheduleOverflowCorrection()
         return
       }
     }
 
-    // Not all fit — reserve space for "+N more" and find cutoff
-    const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
+    // Not all fit — find cutoff. First try without "+N more" reserve to see
+    // if N+1 items fit (saves space vs showing "+1 more" which wastes ~40px).
+    const maxBottomWithMore = contentBottom - contentPaddingBottom - moreIndicatorReserve
+    const maxBottomWithoutMore = contentBottom - contentPaddingBottom
     let domFitCount = 0
+    let domFitCountNoMore = 0  // items that fit if we skip "+N more"
     for (let i = 0; i < measurableItems.length; i++) {
       const itemBottom = measurableItems[i].getBoundingClientRect().bottom
-      if (itemBottom > maxBottom) break
-      domFitCount++
+      if (itemBottom <= maxBottomWithMore) domFitCount = i + 1
+      if (itemBottom <= maxBottomWithoutMore) domFitCountNoMore = i + 1
     }
     domFitCount = Math.max(1, domFitCount)
 
     // Multi-group DOM→unique item count translation
     let count = domFitCount
-    if (measurableItems.length > totalSorted && domFitCount < measurableItems.length) {
-      count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
+    let countNoMore = domFitCountNoMore
+    if (measurableItems.length > totalSorted) {
+      if (domFitCount < measurableItems.length) {
+        count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
+      }
+      countNoMore = Math.max(1, Math.floor(domFitCountNoMore * totalSorted / measurableItems.length))
+    }
+
+    // If skipping "+N more" would only leave 1-2 items hidden, AND those items
+    // physically fit without the more indicator, use the higher count.
+    // The "+N more" indicator itself takes ~40px which often fits 1-2 items.
+    const hiddenWithoutMore = totalSorted - countNoMore
+    if (hiddenWithoutMore <= 2 && domFitCountNoMore >= totalSorted) {
+      // All items fit without the "+N more" — this shouldn't happen (caught by ALL_FIT above)
+      // but handle it defensively
+      count = totalSorted
+      measuredSnugHeight.value = computeSnugHeight(measurableItems[measurableItems.length - 1], false)
+      console.log(`[Legend] TIGHT_FIT ${count}/${totalSorted} items (no +more needed) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+      if (count !== measuredItemCount.value) {
+        measuredItemCount.value = count
+      }
+      scheduleOverflowCorrection()
+      return
     }
 
     measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
 
     const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
-    console.log(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
+    console.log(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
     if (count !== measuredItemCount.value) {
       measuredItemCount.value = count
     }

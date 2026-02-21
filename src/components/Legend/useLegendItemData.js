@@ -281,11 +281,12 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
     const maxItems = getEffectiveMaxItems()
     let items
 
-    if (legendStore.isGrouped) {
-      items = fairGroupedSlice(sortedAllItems.value, maxItems)
-    } else {
-      items = sortedAllItems.value.slice(0, maxItems)
-    }
+    // Simple top-to-bottom slice: items are already sorted by group/name,
+    // so this fills groups sequentially, minimizing group header overhead.
+    // fairGroupedSlice was previously used for aesthetic distribution but
+    // caused the measurement algorithm to under-count items because spreading
+    // items across many groups creates more group headers than sequential fill.
+    items = sortedAllItems.value.slice(0, maxItems)
 
     if (!isExportMode.value) {
       const baseMap = baseColors.value
@@ -425,10 +426,13 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
 
     groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
 
-    // In manual mode, cap total displayed items
+    // Cap total displayed items by trimming groups sequentially.
+    // Sequential trimming (fill groups top-to-bottom) is used instead of
+    // fair distribution because it minimizes visible group headers, which
+    // lets more items fit in the available height.
     const maxVisible = getEffectiveMaxItems()
     const totalDisplayed = groups.reduce((sum, g) => sum + g.items.length, 0)
-    if (legendStore.isManualMode && totalDisplayed > maxVisible) {
+    if (totalDisplayed > maxVisible) {
       let remaining = maxVisible
       groups = groups.map(g => {
         if (remaining <= 0) return null
