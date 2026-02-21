@@ -150,7 +150,7 @@ const {
   legendCounts, legendGroupCounts, getGroupItemCount,
   sortedAllItems, legendItems, groupedLegendData,
   moreCount, morePointCount
-} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode, () => measuredGroupSlots.value ?? renderUpperBound.value)
+} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode, () => measuredGroupSlots.value)
 
 // Bridge: keep measurement composable's refs in sync with item data
 watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })

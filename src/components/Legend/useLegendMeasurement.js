@@ -148,16 +148,12 @@ export function useLegendMeasurement({
 
   let overflowCorrectionPending = false
   let correctionGeneration = 0
-  let lastCorrectionDir = null
-  let expandReverted = false
   let correctionSteps = 0
 
   function resetCorrectionState() {
-    lastCorrectionDir = null
-    expandReverted = false
     correctionSteps = 0
     binarySearchActive = false
-    lastGapBeforeExpand = 0
+    binarySearchDone = false
     correctionGeneration++
   }
 
@@ -203,11 +199,15 @@ export function useLegendMeasurement({
     overflowCorrectionPending = false
     resetCorrectionState()
 
+    // Always clear cross-group slot limit — it's recomputed fresh by
+    // measureAndTrimItems. Stale values cause Cap 2 to over-limit groups
+    // when switching between cross-group and non-cross-group settings.
+    measuredGroupSlots.value = null
+
     if (resetState) {
       prevMeasuredCount.value = fullReset ? null : measuredItemCount.value
       measuredItemCount.value = null
       measuredSnugHeight.value = null
-      measuredGroupSlots.value = null
     }
     console.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
     pendingMeasurementRAF = requestAnimationFrame(() => {
@@ -231,13 +231,16 @@ export function useLegendMeasurement({
     if (overflowCorrectionPending) return
     overflowCorrectionPending = true
     const gen = correctionGeneration
-    // nextTick waits for Vue to flush reactive updates and update the DOM,
-    // then rAF ensures browser layout is complete before measuring.
+    // Double-nextTick ensures Vue fully flushes all reactive effects
+    // (including cascading watcher effects that schedule additional updates).
+    // rAF ensures browser layout is complete before measuring.
     nextTick(() => {
-      requestAnimationFrame(() => {
-        overflowCorrectionPending = false
-        if (gen !== correctionGeneration) return
-        correctOverflow()
+      nextTick(() => {
+        requestAnimationFrame(() => {
+          overflowCorrectionPending = false
+          if (gen !== correctionGeneration) return
+          correctOverflow()
+        })
       })
     })
   }
@@ -288,17 +291,13 @@ export function useLegendMeasurement({
     return el.scrollHeight > el.clientHeight + 1
   }
 
-  // After a failed expand, try a "re-measure from scratch" approach:
-  // the initial measurement used renderUpperBound which may have been too
-  // generous or too conservative. Do a fresh binary-search-like measurement.
-  // After a failed expand, try a "binary search" approach to find the true
-  // maximum. This handles grouped views where adding 1 item can trigger
-  // a new group header that takes extra space.
+  // Binary search state for overflow correction.
+  // Always uses binary search (no linear reduce/expand phases).
   let binarySearchActive = false
+  let binarySearchDone = false  // prevents re-initiation after convergence
   let binaryLo = 0
   let binaryHi = 0
   let binaryBest = 0
-  let lastGapBeforeExpand = 0  // gap measured before last expand attempt
 
   function correctOverflow() {
     const el = contentRef.value
@@ -309,143 +308,81 @@ export function useLegendMeasurement({
     const scrollbarVisible = hasScrollbar(el)
     const totalItems = sortedAllItems.value.length
     const unusedSpace = measureVisualGap(el)
+    const isOverflowing = overflow > 2 || scrollbarVisible
 
-    // Helper: get/set the value being adjusted (slots for cross-group, item count otherwise)
-    const isCGC = measuredGroupSlots.value !== null
-    const getVal = () => isCGC ? measuredGroupSlots.value : measuredItemCount.value
-    const setVal = (v) => { if (isCGC) measuredGroupSlots.value = v; else measuredItemCount.value = v }
-    const maxVal = isCGC ? renderUpperBound.value : totalItems
-    const suffix = isCGC ? ' slots' : `/${totalItems}`
+    // What are we adjusting? Groups (cross-group) or items (normal).
+    const isCG = measuredGroupSlots.value !== null
+    const getVal = () => isCG ? measuredGroupSlots.value : measuredItemCount.value
+    const setVal = (v) => { if (isCG) measuredGroupSlots.value = v; else measuredItemCount.value = v }
+    const maxVal = isCG ? renderUpperBound.value : totalItems
+    const label = isCG ? 'groups' : 'items'
 
-    // Safety: cap correction steps to avoid infinite loops
-    if (correctionSteps > 20) {
-      if (overflow > 2 || scrollbarVisible) {
-        if (binarySearchActive && binaryBest > 0) {
-          setVal(binaryBest)
-        } else if (getVal() > 1) {
-          setVal(getVal() - 1)
-        }
-      }
+    // Safety bail
+    if (correctionSteps > 8) {
+      if (binarySearchActive && binaryBest > 0) setVal(binaryBest)
+      else if (isOverflowing && getVal() > 1) setVal(getVal() - 1)
       binarySearchActive = false
-      expandReverted = true
-      console.log(`[Legend] correction BAIL after ${correctionSteps} steps → ${getVal()}${suffix}`)
+      binarySearchDone = true
+      console.log(`[Legend] BAIL after ${correctionSteps} steps → ${getVal()} ${label}`)
       correctionSteps = 0
       updateSnugHeightFromDOM()
       return
     }
 
-    // ── Binary search mode ──────────────────────────────────────────
-    if (binarySearchActive) {
-      if (overflow > 2 || scrollbarVisible) {
+    // ── Initialize or continue binary search ──────────────────────
+    if (!binarySearchActive) {
+      if (binarySearchDone) {
+        logSettled(el, unusedSpace, overflow)
+        return
+      }
+      if (isOverflowing) {
+        binarySearchActive = true
+        binaryBest = 0
         binaryHi = getVal() - 1
-        console.log(`[Legend] correction#${correctionSteps} BSEARCH overflow → hi=${binaryHi} (${overflow}px)`)
+        binaryLo = 1
+      } else if (unusedSpace > 20 && getVal() < maxVal) {
+        binarySearchActive = true
+        binaryBest = getVal()
+        binaryLo = getVal() + 1
+        binaryHi = Math.min(maxVal, getVal() + Math.max(2, Math.ceil(unusedSpace / 20)))
+      } else {
+        logSettled(el, unusedSpace, overflow)
+        return
+      }
+    } else {
+      if (isOverflowing) {
+        binaryHi = getVal() - 1
       } else {
         binaryBest = getVal()
         if (unusedSpace > 20 && getVal() < maxVal) {
           binaryLo = getVal() + 1
-          console.log(`[Legend] correction#${correctionSteps} BSEARCH fits → lo=${binaryLo} best=${binaryBest} (${Math.round(unusedSpace)}px gap)`)
         } else {
-          binaryLo = binaryHi + 1  // Force exit
+          binaryLo = binaryHi + 1
         }
       }
+    }
 
-      if (binaryLo <= binaryHi) {
-        setVal(Math.floor((binaryLo + binaryHi) / 2))
-        console.log(`[Legend] correction#${correctionSteps} BSEARCH try ${getVal()} [${binaryLo}..${binaryHi}]${isCGC ? ' slots' : ''}`)
-        scheduleOverflowCorrection()
-        return
-      }
-
+    if (binaryLo > binaryHi) {
       binarySearchActive = false
-      expandReverted = true
-      if (binaryBest !== getVal()) {
+      binarySearchDone = true
+      if (binaryBest > 0 && binaryBest !== getVal()) {
         setVal(binaryBest)
-        console.log(`[Legend] correction#${correctionSteps} BSEARCH done → ${binaryBest}${suffix}`)
         scheduleOverflowCorrection()
         return
       }
-      // Fall through to SETTLED
-    }
-
-    // ── Normal correction ───────────────────────────────────────────
-
-    // In cross-group mode, overflow is caused by too many groups, not too
-    // many unique items. Adjust measuredGroupSlots (which Cap 2 uses to
-    // limit groups) instead of measuredItemCount.
-    const isCrossGroupCorrection = measuredGroupSlots.value !== null
-
-    if (overflow > 2 || scrollbarVisible) {
-      // Content overflows — reduce
-      if (lastCorrectionDir === 'expand') {
-        // Just expanded and it overflowed — revert
-        if (isCrossGroupCorrection) {
-          measuredGroupSlots.value--
-        } else {
-          measuredItemCount.value--
-        }
-        lastCorrectionDir = null
-
-        // Use the gap we measured BEFORE the expand (not current, which is post-overflow).
-        // If the pre-expand gap was large, this means adding +1 item caused a big
-        // structural change (e.g. new group header in grouped view). Use binary search
-        // to find the optimal count by skipping over the "bad" counts.
-        const currentVal = isCrossGroupCorrection ? measuredGroupSlots.value : measuredItemCount.value
-        const maxVal = isCrossGroupCorrection ? renderUpperBound.value : totalItems
-        if (lastGapBeforeExpand > 60 && currentVal + 2 <= maxVal) {
-          binarySearchActive = true
-          binaryLo = currentVal + 2  // +1 already failed
-          binaryHi = Math.min(maxVal, currentVal + Math.ceil(lastGapBeforeExpand / 20))
-          binaryBest = currentVal
-          console.log(`[Legend] correction#${correctionSteps} REVERT+BSEARCH → ${currentVal}/${maxVal}${isCrossGroupCorrection ? ' slots' : ''} (pre-expand gap=${Math.round(lastGapBeforeExpand)}px, searching [${binaryLo}..${binaryHi}])`)
-          if (isCrossGroupCorrection) {
-            measuredGroupSlots.value = Math.floor((binaryLo + binaryHi) / 2)
-          } else {
-            measuredItemCount.value = Math.floor((binaryLo + binaryHi) / 2)
-          }
-          scheduleOverflowCorrection()
-          return
-        }
-
-        expandReverted = true
-        console.log(`[Legend] correction#${correctionSteps} REVERT → ${currentVal}/${maxVal}${isCrossGroupCorrection ? ' slots' : ''} (expand caused ${overflow}px overflow)`)
-        scheduleOverflowCorrection()
-        return
-      }
-      if (isCrossGroupCorrection && measuredGroupSlots.value > 1) {
-        measuredGroupSlots.value--
-        lastCorrectionDir = 'reduce'
-        console.log(`[Legend] correction#${correctionSteps} REDUCE-SLOTS → ${measuredGroupSlots.value} slots (${overflow}px overflow, scrollbar=${scrollbarVisible})`)
-        scheduleOverflowCorrection()
-      } else if (measuredItemCount.value !== null && measuredItemCount.value > 1) {
-        measuredItemCount.value--
-        lastCorrectionDir = 'reduce'
-        console.log(`[Legend] correction#${correctionSteps} REDUCE → ${measuredItemCount.value}/${totalItems} (${overflow}px overflow, scrollbar=${scrollbarVisible})`)
-        scheduleOverflowCorrection()
-      }
+      logSettled(el, unusedSpace, overflow)
       return
     }
 
-    // No overflow — check if we can fit more
-    const canExpand = isCrossGroupCorrection
-      ? (measuredGroupSlots.value < renderUpperBound.value)
-      : (measuredItemCount.value !== null && measuredItemCount.value < totalItems)
-    if (!expandReverted && canExpand && unusedSpace > 20) {
-      lastGapBeforeExpand = unusedSpace  // save gap for potential REVERT+BSEARCH
-      if (isCrossGroupCorrection) {
-        measuredGroupSlots.value++
-        console.log(`[Legend] correction#${correctionSteps} EXPAND-SLOTS → ${measuredGroupSlots.value} slots (${Math.round(unusedSpace)}px gap)`)
-      } else {
-        measuredItemCount.value++
-        console.log(`[Legend] correction#${correctionSteps} EXPAND → ${measuredItemCount.value}/${totalItems} (${Math.round(unusedSpace)}px gap)`)
-      }
-      lastCorrectionDir = 'expand'
-      scheduleOverflowCorrection()
-      return
-    }
+    const mid = Math.floor((binaryLo + binaryHi) / 2)
+    setVal(mid)
+    scheduleOverflowCorrection()
+  }
 
-    // Converged — log final state
+  function logSettled(el, unusedSpace, overflow) {
+    const totalItems = sortedAllItems.value.length
     const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
-    const slotsInfo = measuredGroupSlots.value !== null ? ` slots=${measuredGroupSlots.value}` : ''
+    const slotsInfo = measuredGroupSlots.value !== null ? ` groups=${measuredGroupSlots.value}` : ''
     console.log(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items${slotsInfo} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} | gap=${Math.round(unusedSpace)}px scroll=${overflow}px steps=${correctionSteps}`)
     correctionSteps = 0
     updateSnugHeightFromDOM()
@@ -524,12 +461,15 @@ export function useLegendMeasurement({
     const lastItem = measurableItems[measurableItems.length - 1]
     const lastItemBottom = lastItem.getBoundingClientRect().bottom
     const allFitBoundary = contentBottom - contentPaddingBottom
-    const isCrossGroup = measurableItems.length > totalSorted * 1.5
-
-    // Clear cross-group slot limit when not in cross-group mode
-    if (!isCrossGroup && measuredGroupSlots.value !== null) {
-      measuredGroupSlots.value = null
-    }
+    // Cross-group: items appear in multiple groups. Detect by comparing DOM
+    // item count against expected counts. Two complementary checks:
+    // 1) DOM items >> current render limit (catches initial render with few items)
+    // 2) DOM items > total unique items (catches pass 2 with all items rendered)
+    const currentItemLimit = effectiveMaxItems.value
+    const isCrossGroup = isGroupedView && (
+      measurableItems.length > currentItemLimit * 1.5 ||
+      measurableItems.length > totalSorted
+    )
 
     if (!isCrossGroup &&
         measurableItems.length >= totalSorted &&
@@ -574,15 +514,30 @@ export function useLegendMeasurement({
     let count = domFitCount
     let countNoMore = domFitCountNoMore
     if (isCrossGroup) {
-      // In cross-group mode (items appear in multiple groups), proportional
-      // translation is inaccurate because the DOM↔unique relationship is
-      // non-linear. Show all unique items and let Cap 2 in groupedLegendData
-      // limit the number of groups to fit the available height.
-      count = totalSorted
-      countNoMore = totalSorted
-      // Tell Cap 2 the actual number of DOM items that fit, so it can limit
-      // groups accurately instead of using the generous renderUpperBound.
-      measuredGroupSlots.value = domFitCount
+      // Cross-group mode needs two measurement passes:
+      // Pass 1: Ensure all unique items are rendered so each group shows its
+      //   full item set. Without this, groups render with partial items from
+      //   the initial renderUpperBound limit, giving inaccurate heights.
+      // Pass 2: All items rendered → accurately count fitting groups.
+      if (measuredItemCount.value !== totalSorted) {
+        measuredItemCount.value = totalSorted
+        console.log(`[Legend] CROSS-GROUP pass 1: rendering all ${totalSorted} unique items | ${logContext()}`)
+        scheduleMeasurement(false, 'crossGroupPass2')
+        return
+      }
+      // Pass 2: all unique items rendered — count groups that physically fit
+      let fittingGroups = 0
+      for (const groupEl of groupEls) {
+        if (groupEl.getBoundingClientRect().bottom <= maxBottomWithMore) fittingGroups++
+        else break
+      }
+      measuredGroupSlots.value = Math.max(1, fittingGroups)
+      measuredSnugHeight.value = fittingGroups > 0
+        ? computeSnugHeight(groupEls[Math.min(fittingGroups, groupEls.length) - 1], true)
+        : computeSnugHeight(measurableItems[0], true)
+      console.log(`[Legend] CROSS-GROUP pass 2: ${fittingGroups}/${groupEls.length} groups fit (${totalSorted} unique) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+      scheduleOverflowCorrection()
+      return
     } else if (measurableItems.length > totalSorted) {
       if (domFitCount < measurableItems.length) {
         count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
@@ -608,7 +563,7 @@ export function useLegendMeasurement({
 
     measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
 
-    const domInfo = isCrossGroup ? ` dom=${domFitCount}/${measurableItems.length} cross-group` : (measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : '')
+    const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
     console.log(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
     if (count !== measuredItemCount.value) {
       measuredItemCount.value = count

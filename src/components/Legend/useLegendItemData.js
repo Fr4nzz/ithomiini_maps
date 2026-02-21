@@ -26,9 +26,9 @@ const groupByPropertyMap = {
  * @param {import('vue').ComputedRef} isExportMode - Whether export mode is active
  */
 /**
- * @param {Function} getMaxDisplaySlots - Max DOM item slots (height-based), used to limit groups in cross-group scenarios
+ * @param {Function} getMaxDisplayGroups - Max groups to display (from cross-group measurement), or null if unlimited
  */
-export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode, getMaxDisplaySlots) {
+export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode, getMaxDisplayGroups) {
 
   // Color map from data store (includes custom overrides - used for display)
   const colorMap = computed(() => dataStore.activeColorMap)
@@ -450,20 +450,12 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
       }).filter(Boolean)
     }
 
-    // ── Cap 2: cross-group instance limit ──
+    // ── Cap 2: cross-group group limit ──
     // When items appear in multiple groups (e.g. colorBy=status grouped by
-    // species), the total DOM instances can be much larger than unique items.
-    // Limit groups to fit within the height-based DOM slot budget.
-    const maxSlots = getMaxDisplaySlots?.() ?? Infinity
-    const totalInstances = groups.reduce((sum, g) => sum + g.items.length, 0)
-    if (totalInstances > maxSlots && groups.length > 1) {
-      const avgItemsPerGroup = totalInstances / groups.length
-      const showHeaders = legendStore.groupingSettings?.showHeaders !== false || legendStore.isNonTaxonomyGroupBy
-      const costPerGroup = avgItemsPerGroup + (showHeaders ? 1 : 0)
-      const maxGroups = Math.max(1, Math.floor(maxSlots / costPerGroup))
-      if (groups.length > maxGroups) {
-        groups = groups.slice(0, maxGroups)
-      }
+    // species), limit groups to the measured count that physically fits.
+    const maxGroups = getMaxDisplayGroups?.()
+    if (maxGroups != null && groups.length > maxGroups) {
+      groups = groups.slice(0, maxGroups)
     }
 
     return { type: 'grouped', groups }
