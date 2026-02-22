@@ -243,7 +243,7 @@ export const useLegendStore = defineStore('legend', () => {
            Object.keys(groupShapes.value).length > 0 ||
            Object.keys(speciesDisplayNames.value).length > 0 ||
            // Grouping settings changed from defaults
-           groupingSettings.value.showHeaders !== false ||
+           groupingSettings.value.showHeaders !== true ||
            groupingSettings.value.prefixEnabled !== 'auto' ||
            groupingSettings.value.abbreviationStyle !== 'first-letter' ||
            // Species styling enabled
@@ -335,7 +335,7 @@ export const useLegendStore = defineStore('legend', () => {
     resetRef(groupShapes, 'legend-group-shapes', {})
 
     // Grouping settings (preserve enabled/groupBy, reset display options)
-    Object.assign(groupingSettings.value, { showHeaders: false, prefixEnabled: 'auto', abbreviationStyle: 'first-letter' })
+    Object.assign(groupingSettings.value, { showHeaders: true, prefixEnabled: 'auto', abbreviationStyle: 'first-letter' })
     setStorage('legend-grouping', groupingSettings.value)
 
     // Species styling flags
