@@ -24,6 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Test artifacts
+test-results/
+
 # Python
 __pycache__/
 

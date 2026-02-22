@@ -1,11 +1,13 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
-import { generateSpeciesBorderColors } from '../../utils/colors'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import { computePopupPosition } from '../../composables/usePopupPosition'
+import { useLegendItemData } from './useLegendItemData'
+import { useLegendMeasurement } from './useLegendMeasurement'
+import { useLegendPosition } from './useLegendPosition'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
@@ -22,19 +24,11 @@ const props = defineProps({
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
 
-// Minimum gap between the legend and container edges (used for snapping/clamping)
-const STICKY_MARGIN = 10
-
 // Refs
 const legendRef = ref(null)
 const contentRef = ref(null)
 const isHovered = ref(false)
-const isDragging = ref(false)
-const hasOpenPopup = ref(false) // Track if any popup (color picker, settings) is open
-
-// Legend resize observer (for bottom-sticky repositioning)
-let legendResizeObserver = null
-let lastLegendHeight = 0
+const hasOpenPopup = ref(false)
 
 // Popup state
 const stylePopupState = ref({
@@ -49,48 +43,22 @@ const isAutoHeight = computed(() => legendStore.size.height === 'auto')
 const currentWidth = ref(isAutoWidth.value ? null : legendStore.size.width)
 const currentHeight = ref(isAutoHeight.value ? null : legendStore.size.height)
 
-// Position state
-const posX = ref(legendStore.position.x || 40)
-const posY = ref(legendStore.position.y)
-
-// Drag state
-const dragStart = ref({ x: 0, y: 0 })
-const dragStartPos = ref({ x: 0, y: 0 })
-
-// Sticky edge state (which edges legend is stuck to)
-const stickyEdge = ref({
-  left: true,  // Default to left-bottom sticky
-  right: false,
-  top: false,
-  bottom: true  // Default to left-bottom sticky
-})
-
 // Previous container bounds (for detecting changes)
 const prevContainerBounds = ref({ width: 0, height: 0 })
 
-// Attribution state - dynamically calculated based on actual attribution element
-const attributionHeight = ref(24)  // Default fallback
-const isAttributionOpen = ref(true)  // Track if attribution is expanded
+// Attribution state
+const attributionHeight = ref(24)
+const isAttributionOpen = ref(true)
 
 // Is export mode active?
 const isExportMode = computed(() => dataStore.exportSettings.enabled)
 
-// Get the actual bottom margin needed based on attribution state
-// If attribution is open/visible, we need space above it (even in export mode, since it will be in the export)
-// If attribution is collapsed, no extra space needed (it won't be in export either)
 const bottomAttributionMargin = computed(() => {
-  if (!isAttributionOpen.value) return 0  // Attribution collapsed, no extra space needed
+  if (!isAttributionOpen.value) return 0
   return attributionHeight.value
 })
 
-// Should show toolbar/edit UI? (hidden by default, shown on hover OR when popup is open)
-// Suppressed during resize so user sees normal (non-edit) layout for accurate item count feedback
-const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
-
-// Get container dimensions — prefer the reactive prevContainerBounds (updated by
-// ResizeObserver) so that autoWidth/maxLegendHeight/targetLegendHeight reactively
-// update when the container resizes. Falls back to direct DOM read before the
-// ResizeObserver has populated prevContainerBounds.
+// Container dimensions
 const containerBounds = computed(() => {
   if (prevContainerBounds.value.width > 0) {
     return prevContainerBounds.value
@@ -104,733 +72,41 @@ const containerBounds = computed(() => {
   return { width: 800, height: 600 }
 })
 
-// Color map from data store (includes custom overrides - used for display)
-const colorMap = computed(() => dataStore.activeColorMap)
-// Base color map (without custom overrides - used for defaultColor/reset)
-const baseColors = computed(() => dataStore.baseColorMap)
+// ═══════════════════════════════════════════════════════════════════════════
+// POSITION (extracted composable)
+// ═══════════════════════════════════════════════════════════════════════════
 
-// Map groupBy setting to GeoJSON property name
-const groupByPropertyMap = {
-  'subspecies': 'subspecies',
-  'species': 'scientific_name',
-  'genus': 'genus',
-  'tribe': 'tribe',
-  'subfamily': 'subfamily',
-  'family': 'family',
-  'status': 'sequencing_status',
-  'mimicry': 'mimicry_ring',
-  'source': 'source'
-}
-
-// Build item→group mapping from displayed data (generic for any colorBy/groupBy).
-// Also builds a reverse lookup (item→groups) for O(1) membership checks,
-// and a subspecies→species map when coloring by subspecies.
-const itemGroupMap = computed(() => {
-  const geo = dataStore.displayGeoJSON
-  if (!geo?.features) return {}
-
-  const groupBy = legendStore.effectiveGroupBy
-  const groupProperty = groupByPropertyMap[groupBy]
-  if (!groupProperty) return {}
-
-  const itemProperty = dataStore.colorByAttribute
-
-  const map = {}
-  for (const feature of geo.features) {
-    const groupVal = feature.properties[groupProperty]
-    const itemVal = feature.properties[itemProperty]
-
-    if (!groupVal || !itemVal) continue
-    if (itemVal === 'Unknown' || itemVal === 'NA') continue
-
-    if (!map[groupVal]) {
-      map[groupVal] = new Set()
-    }
-    map[groupVal].add(itemVal)
-  }
-
-  return map
-})
-
-// Reverse lookup: item label → array of group names (O(1) per item)
-const itemToGroupsMap = computed(() => {
-  const reverse = new Map()
-  for (const [group, items] of Object.entries(itemGroupMap.value)) {
-    for (const item of items) {
-      if (!reverse.has(item)) reverse.set(item, [])
-      reverse.get(item).push(group)
-    }
-  }
-  return reverse
-})
-
-// Map subspecies label → species name (for prepending species context
-// when grouping by non-species fields like status, mimicry, source)
-const subspeciesSpeciesMap = computed(() => {
-  const geo = dataStore.displayGeoJSON
-  if (!geo?.features || dataStore.colorBy !== 'subspecies') return {}
-  const map = {}
-  for (const f of geo.features) {
-    const subsp = f.properties.subspecies
-    const species = f.properties.scientific_name
-    if (subsp && species && !map[subsp]) map[subsp] = species
-  }
-  return map
-})
-
-// Get list of groups (sorted)
-const groupList = computed(() => Object.keys(itemGroupMap.value).sort())
-
-// Generate border colors for groups
-const groupBorderColors = computed(() => {
-  if (!legendStore.speciesStyling.borderColor) return {}
-  return generateSpeciesBorderColors(groupList.value, legendStore.speciesBorderColors)
-})
-
-// Get border color for a group
-function getGroupBorderColor(groupName) {
-  return groupBorderColors.value[groupName] || dataStore.mapStyle.borderColor
-}
-
-// Check if group has customized style (shape or border color)
-function hasCustomizedStyle(groupName) {
-  const shape = legendStore.getGroupShape(groupName)
-  const hasCustomShape = shape && shape !== 'circle'
-  const hasCustomBorder = !!legendStore.speciesBorderColors[groupName]
-  return hasCustomShape || hasCustomBorder
-}
-
-// Check if ANY group has customized style (for showing all indicators when one is customized)
-const anyGroupHasCustomStyle = computed(() => {
-  return groupList.value.some(name => hasCustomizedStyle(name))
-})
-
-// Get the FIRST group that an item belongs to (for slot allocation in fairGroupedSlice)
-function getGroupForItem(itemLabel) {
-  const groups = itemToGroupsMap.value.get(itemLabel)
-  return groups ? groups[0] : null
-}
-
-// Get ALL groups that an item belongs to (for display grouping).
-// When grouping by non-taxonomy fields like sequencing_status, the same
-// species can have records in multiple groups.
-function getGroupsForItem(itemLabel) {
-  return itemToGroupsMap.value.get(itemLabel) || []
-}
-
-// Format label based on per-group abbreviation visibility.
-// When colorBy=subspecies and not grouped by species, auto-prepend species
-// abbreviation so users see taxonomic context (e.g. "M. p. isthmia" instead
-// of just "isthmia" under a "Mimicry Ring" group header).
-function formatLabel(itemLabel, groupName) {
-  const isGroupedBySpecies = legendStore.effectiveGroupBy === 'species'
-
-  if (dataStore.colorBy === 'subspecies' && !isGroupedBySpecies) {
-    // Non-species grouping: look up actual species for this subspecies
-    if (legendStore.prefixFormat === 'none') return itemLabel
-    const species = subspeciesSpeciesMap.value[itemLabel]
-    if (species) {
-      const abbreviation = legendStore.getSpeciesAbbreviation(species)
-      if (abbreviation) return `${abbreviation} ${itemLabel}`
-    }
-    return itemLabel
-  }
-
-  // Grouped by species: existing per-group abbreviation logic
-  if (!groupName || !legendStore.isAbbreviationVisible(groupName)) {
-    return itemLabel
-  }
-
-  const abbreviation = legendStore.getSpeciesAbbreviation(groupName)
-  return `${abbreviation} ${itemLabel}`
-}
-
-// All visible items from color map, sorted by current sort criteria
-// This sorts ALL items BEFORE slicing to effectiveMaxItems, so the top-N
-// by the chosen sort are shown (e.g., most abundant subspecies).
-const sortedAllItems = computed(() => {
-  const sortByVal = legendStore.sortBy
-  const sortOrderVal = legendStore.sortOrder
-  const counts = legendCounts.value
-  const entries = Object.entries(colorMap.value)
-
-  // Build full list of visible items
-  const items = []
-  const baseMap = baseColors.value
-  for (const [label, color] of entries) {
-    if (!legendStore.isItemVisible(label)) continue
-    items.push({
-      label,
-      color,
-      defaultColor: baseMap[label] || color,
-      customLabel: legendStore.customLabels[label] || '',
-      customColor: legendStore.customColors[label] || '',
-      visible: true
-    })
-  }
-
-  // Sort ALL items before slicing
-  if (sortByVal === 'abundance') {
-    items.sort((a, b) => {
-      const countA = counts[a.label] || 0
-      const countB = counts[b.label] || 0
-      return sortOrderVal === 'asc' ? countA - countB : countB - countA
-    })
-  } else {
-    items.sort((a, b) => {
-      const textA = a.label.toLowerCase()
-      const textB = b.label.toLowerCase()
-      return sortOrderVal === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
-    })
-  }
-
-  return items
-})
-
-// Fair distribution of legend slots across groups.
-// When grouped, allocates slots equally to each group so every group
-// gets representation (e.g., half Sanger, half iNaturalist).
-function fairGroupedSlice(allItems, maxItems) {
-  const groups = new Map()
-  for (const item of allItems) {
-    const group = getGroupForItem(item.label)
-    if (group) {
-      if (!groups.has(group)) groups.set(group, [])
-      groups.get(group).push(item)
-    }
-  }
-
-  const groupNames = [...groups.keys()]
-  const numGroups = groupNames.length
-  if (numGroups === 0) return allItems.slice(0, maxItems)
-
-  // Equal base allocation per group
-  const basePerGroup = Math.floor(maxItems / numGroups)
-  let remainder = maxItems - basePerGroup * numGroups
-
-  // Allocate: base + up to 1 extra (remainder goes to largest groups first)
-  const allocations = new Map()
-  const bySize = [...groupNames].sort((a, b) => groups.get(b).length - groups.get(a).length)
-
-  for (const name of bySize) {
-    const extra = remainder > 0 ? 1 : 0
-    if (remainder > 0) remainder--
-    allocations.set(name, Math.min(basePerGroup + extra, groups.get(name).length))
-  }
-
-  // Redistribute unused slots from small groups to larger ones
-  let totalAlloc = 0
-  for (const v of allocations.values()) totalAlloc += v
-  let surplus = maxItems - totalAlloc
-
-  while (surplus > 0) {
-    let distributed = false
-    for (const name of bySize) {
-      if (surplus <= 0) break
-      if (allocations.get(name) < groups.get(name).length) {
-        allocations.set(name, allocations.get(name) + 1)
-        surplus--
-        distributed = true
-      }
-    }
-    if (!distributed) break
-  }
-
-  // Collect items preserving original group order
-  const result = []
-  for (const name of groupNames) {
-    const quota = allocations.get(name) || 0
-    result.push(...groups.get(name).slice(0, quota))
-  }
-
-  return result
-}
-
-// Get items sliced to fit, with hidden items appended for edit mode
-const legendItems = computed(() => {
-  const maxItems = effectiveMaxItems.value
-  let items
-
-  // When grouping is active, distribute slots fairly across groups
-  if (legendStore.isGrouped) {
-    items = fairGroupedSlice(sortedAllItems.value, maxItems)
-  } else {
-    items = sortedAllItems.value.slice(0, maxItems)
-  }
-
-  // Add hidden items at the end (for edit mode)
-  if (!isExportMode.value) {
-    const baseMap = baseColors.value
-    for (const label of legendStore.hiddenItems) {
-      if (colorMap.value[label]) {
-        items.push({
-          label,
-          color: colorMap.value[label],
-          defaultColor: baseMap[label] || colorMap.value[label],
-          customLabel: legendStore.customLabels[label] || '',
-          customColor: legendStore.customColors[label] || '',
-          visible: false
-        })
-      }
-    }
-  }
-
-  return items
-})
-
-// Sort helper functions
-function sortItemsByText(items, order) {
-  return items.slice().sort((a, b) => {
-    const textA = (a.displayLabel || a.label).toLowerCase()
-    const textB = (b.displayLabel || b.label).toLowerCase()
-    return order === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
-  })
-}
-
-function sortItemsByAbundance(items, order, counts) {
-  return items.slice().sort((a, b) => {
-    const countA = counts[a.label] || 0
-    const countB = counts[b.label] || 0
-    return order === 'asc' ? countA - countB : countB - countA
-  })
-}
-
-function groupItemsByGroup(items) {
-  const byGroup = {}
-  // Always use multi-group: the same subspecies name can exist under different
-  // species (e.g. data variants). Each (subspecies, species) pair is a distinct
-  // legend entry. For non-taxonomy grouping, items also genuinely appear in
-  // multiple groups (e.g. sequencing_status, source).
-  for (const item of items) {
-    const groups = getGroupsForItem(item.label)
-    for (const group of groups) {
-      if (!byGroup[group]) byGroup[group] = []
-      byGroup[group].push(item)
-    }
-  }
-  return byGroup
-}
-
-function sortGroups(groups, sortBy, sortOrder, counts) {
-  if (sortBy === 'abundance') {
-    groups.sort((a, b) => {
-      const totalA = a.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
-      const totalB = b.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
-      return sortOrder === 'asc' ? totalA - totalB : totalB - totalA
-    })
-  } else {
-    groups.sort((a, b) => {
-      const textA = a.name.toLowerCase()
-      const textB = b.name.toLowerCase()
-      return sortOrder === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
-    })
-  }
-  return groups
-}
-
-// Contract a species name to "X. epithet" form (e.g. "Heliconius erato" → "H. erato")
-function contractSpeciesName(speciesName) {
-  if (!speciesName) return ''
-  const parts = speciesName.split(' ')
-  if (parts.length >= 2) {
-    return `${parts[0][0]}. ${parts.slice(1).join(' ')}`
-  }
-  return speciesName
-}
-
-function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts, multiGroupLabels) {
-  let customLabel = legendStore.getSpeciesDisplayName(groupName)
-  if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
-    customLabel = applyAbbreviationFormat(groupName, legendStore.displayNameFormat)
-  }
-
-  // When group headers are hidden and a subspecies appears in multiple species
-  // groups, append a species contraction to disambiguate (e.g. "cyrbia (H. erato)")
-  const headersHidden = !legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy
-  const needsDisambiguation = headersHidden && multiGroupLabels
-
-  let mappedItems = items.map(item => {
-    let displayLabel = formatLabel(item.label, groupName)
-    if (needsDisambiguation && multiGroupLabels.has(item.label)) {
-      displayLabel += ` (${contractSpeciesName(groupName)})`
-    }
-    return { ...item, displayLabel }
-  })
-
-  mappedItems = sortByVal === 'abundance'
-    ? sortItemsByAbundance(mappedItems, sortOrderVal, counts)
-    : sortItemsByText(mappedItems, sortOrderVal)
-
-  return {
-    name: groupName,
-    borderColor: getGroupBorderColor(groupName),
-    shape: legendStore.getGroupShape(groupName),
-    abbreviation: legendStore.getSpeciesAbbreviation(groupName),
-    abbreviationVisible: legendStore.isAbbreviationVisible(groupName),
-    customLabel: customLabel || '',
-    items: mappedItems
-  }
-}
-
-// Grouped legend data structure
-const groupedLegendData = computed(() => {
-  const sortByVal = legendStore.sortBy
-  const sortOrderVal = legendStore.sortOrder
-  const counts = legendCounts.value
-
-  if (!legendStore.isGrouped) {
-    return { type: 'flat', items: legendItems.value.slice() }
-  }
-
-  const itemsByGroup = groupItemsByGroup(legendItems.value)
-
-  // Detect items that appear in multiple groups (need disambiguation).
-  // Same subspecies name under different species = different entries.
-  const labelGroupCount = new Map()
-  for (const [groupName, items] of Object.entries(itemsByGroup)) {
-    for (const item of items) {
-      labelGroupCount.set(item.label, (labelGroupCount.get(item.label) || 0) + 1)
-    }
-  }
-  const multiGroupLabels = new Set()
-  for (const [label, count] of labelGroupCount) {
-    if (count > 1) multiGroupLabels.add(label)
-  }
-
-  let groups = Object.keys(itemsByGroup).map(groupName =>
-    buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts,
-      multiGroupLabels.size > 0 ? multiGroupLabels : null)
-  )
-
-  groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
-
-  // In manual mode, cap total displayed items to the user's explicit count.
-  // Multi-group expansion can cause N unique items to produce M > N DOM items
-  // (same subspecies in multiple species groups). Walk groups in order and
-  // keep items until we hit the target, trimming excess from later groups.
-  // In auto mode, the measurement loop already handles overflow by adjusting
-  // measuredItemCount based on actual DOM overflow, so no cap is needed.
-  const maxVisible = effectiveMaxItems.value
-  const totalDisplayed = groups.reduce((sum, g) => sum + g.items.length, 0)
-  if (legendStore.isManualMode && totalDisplayed > maxVisible) {
-    let remaining = maxVisible
-    groups = groups.map(g => {
-      if (remaining <= 0) return null
-      if (g.items.length <= remaining) {
-        remaining -= g.items.length
-        return g
-      }
-      const trimmed = { ...g, items: g.items.slice(0, remaining) }
-      remaining = 0
-      return trimmed
-    }).filter(Boolean)
-  }
-
-  return { type: 'grouped', groups }
-})
-
-// More items indicator (based on visible items that didn't fit)
-const moreCount = computed(() => {
-  const totalVisible = sortedAllItems.value.length
-  const maxItems = effectiveMaxItems.value
-  return Math.max(0, totalVisible - maxItems)
-})
-
-// Total point count for overflow (grey) items — shown when counts enabled
-const morePointCount = computed(() => {
-  if (!legendStore.showCounts || moreCount.value === 0) return null
-  const shownSet = new Set(legendItems.value.filter(i => i.visible !== false).map(i => i.label))
-  const counts = legendCounts.value
-  let total = 0
-  for (const [label, cnt] of Object.entries(counts)) {
-    if (!shownSet.has(label)) {
-      total += cnt
-    }
-  }
-  return total
+const {
+  STICKY_MARGIN, posX, posY, isDragging, stickyEdge,
+  startDrag, endDrag, detectStickyEdges,
+  applyPositionForBounds, repositionForAttributionChange,
+  repositionIfBottomSticky, setupLegendResizeObserver,
+  cleanup: cleanupPosition
+} = useLegendPosition({
+  legendRef,
+  getEffectiveWidth: () => effectiveWidth.value,
+  containerBounds,
+  prevContainerBounds,
+  bottomAttributionMargin,
+  isAttributionOpen,
+  currentWidth,
+  currentHeight,
+  legendStore,
+  props
 })
 
 // ═══════════════════════════════════════════════════════════════════════════
-// LEGEND COUNTS (for abundance sorting and display)
-// Counts features by the current colorBy attribute (subspecies, species, genus, etc.)
+// MEASUREMENT (extracted composable)
 // ═══════════════════════════════════════════════════════════════════════════
 
-const legendCounts = computed(() => {
-  const geo = dataStore.displayGeoJSON
-  if (!geo?.features) return {}
-  const attr = dataStore.colorByAttribute
-  const hidden = new Set(legendStore.hiddenItems)
-  const counts = {}
-  for (const feature of geo.features) {
-    const val = feature.properties[attr]
-    if (val && val !== 'Unknown' && val !== 'NA' && !hidden.has(val)) {
-      counts[val] = (counts[val] || 0) + 1
-    }
-  }
-  return counts
-})
+// We need a temporary placeholder for sortedAllItems/legendCounts since
+// measurement composable and item data composable have a dependency chain:
+// measurement → effectiveMaxItems → useLegendItemData → sortedAllItems → measurement
+// Solution: pass refs that get populated after useLegendItemData is called.
+const sortedAllItemsRef = ref([])
+const legendCountsRef = ref({})
 
-// Per-group counts: keyed by "groupName\0itemLabel" for accurate counts
-// when the same item appears in multiple groups (e.g., same species in
-// different sequencing statuses).
-const legendGroupCounts = computed(() => {
-  const geo = dataStore.displayGeoJSON
-  if (!geo?.features) return {}
-  if (!legendStore.isGrouped) return {}
-  const attr = dataStore.colorByAttribute
-  const groupBy = legendStore.effectiveGroupBy
-  const groupProperty = groupByPropertyMap[groupBy]
-  if (!groupProperty) return {}
-  const hidden = new Set(legendStore.hiddenItems)
-  const counts = {}
-  for (const feature of geo.features) {
-    const val = feature.properties[attr]
-    const groupVal = feature.properties[groupProperty]
-    if (val && val !== 'Unknown' && val !== 'NA' && !hidden.has(val) && groupVal) {
-      const key = `${groupVal}\0${val}`
-      counts[key] = (counts[key] || 0) + 1
-    }
-  }
-  return counts
-})
-
-// Get count for an item within a specific group
-function getGroupItemCount(groupName, itemLabel) {
-  return legendGroupCounts.value[`${groupName}\0${itemLabel}`] || 0
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// AUTO-SIZING
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Measure text width using a hidden DOM element (matches actual CSS font rendering)
-let _measureSpan = null
-function measureTextWidth(text, fontSizePx) {
-  if (!_measureSpan) {
-    _measureSpan = document.createElement('span')
-    _measureSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-style:italic;pointer-events:none;top:-9999px;left:-9999px;'
-    document.body.appendChild(_measureSpan)
-  }
-  _measureSpan.style.fontSize = fontSizePx + 'px'
-  _measureSpan.textContent = text
-  return _measureSpan.getBoundingClientRect().width
-}
-
-// Calculate auto width from content.
-// Uses ALL sorted items' labels (not just displayed ones) so autoWidth is
-// stable across measurement changes. If autoWidth depended on
-// allDisplayedLabels (which changes when measuredItemCount changes), the
-// width would shift after measurement, making items reflow to different
-// heights — but no re-measurement would happen for that shift.
-const autoWidth = computed(() => {
-  const items = sortedAllItems.value
-  if (!items.length) return 200
-
-  const maxContainerWidth = containerBounds.value.width * 0.30
-  const fontSizePx = Math.round(14 * legendStore.textScale)
-  const isGrouped = legendStore.isGrouped
-
-  let maxTextWidth = 0
-  let widestLabel = ''
-  for (const item of items) {
-    const label = item.displayLabel || item.label
-    const width = measureTextWidth(label, fontSizePx)
-    if (width > maxTextWidth) {
-      maxTextWidth = width
-      widestLabel = label
-    }
-  }
-
-  // Add dot size + gap + content padding + safety margin for font rendering
-  const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
-  const padding = 16 * 2 // left + right content padding
-  const gap = 8
-  const safetyMargin = 4 // subpixel rounding buffer
-
-  // When grouped, items are indented (margin-left:16px + padding-left:4px)
-  const indentation = isGrouped ? 20 : 0
-
-  // When counts are shown, reserve space for the count badge
-  let countWidth = 0
-  if (legendStore.showCounts) {
-    const counts = legendCounts.value
-    let maxCount = 0
-    for (const item of items) {
-      const c = counts[item.label] || 0
-      if (c > maxCount) maxCount = c
-    }
-    // Measure the widest count number + gap before count
-    const countFontSize = fontSizePx - 2
-    countWidth = measureTextWidth(maxCount.toLocaleString(), countFontSize) + 8
-  }
-
-  const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth + safetyMargin
-
-  return Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
-})
-
-// Max legend height based on container (80% of map height) — hard cap for resize
-const maxLegendHeight = computed(() => {
-  return Math.floor(containerBounds.value.height * 0.80)
-})
-
-// Target height for auto-sizing (smaller than the hard cap to avoid giant legends)
-const targetLegendHeight = computed(() => {
-  return Math.floor(containerBounds.value.height * 0.75)
-})
-
-// Generous upper-bound: how many items COULD fit (deliberately over-estimates).
-// The actual count is determined by post-render DOM measurement.
-const renderUpperBound = computed(() => {
-  const minItemHeight = 22 // smallest possible: fontSize(14) + padding(4+4)
-  const gap = 2
-  const titleHeight = 32
-  const padding = 24
-  const moreReserve = 40
-
-  let availableHeight
-  if (isResizing.value && resizeOverride.value) {
-    availableHeight = resizeOverride.value.height
-  } else if (!isAutoHeight.value) {
-    availableHeight = currentHeight.value || targetLegendHeight.value
-  } else {
-    availableHeight = targetLegendHeight.value
-  }
-
-  const available = availableHeight - titleHeight - padding - moreReserve
-  const estimate = Math.max(1, Math.ceil(available / (minItemHeight + gap)))
-
-  // For small total counts, always render ALL items so the measurement pass
-  // can check if they actually fit. The upper bound is a performance safeguard
-  // (avoid rendering 1000+ items with overflow:hidden); for small counts,
-  // rendering a few extra hidden items is harmless. Without this, a tight
-  // container (e.g. 120px) may estimate only 1 item fits due to moreReserve,
-  // never rendering item 2, so measurement can never discover it would fit.
-  const total = sortedAllItems.value.length
-  if (total <= 20) return Math.max(estimate, total)
-
-  return estimate
-})
-
-// Post-render measured count (null = not yet measured, use upper bound)
-const measuredItemCount = ref(null)
-// Pixel-perfect legend height from DOM measurement.
-// Set by measureAndTrimItems() in ALL cases (all-fit, small-fit, overflow)
-// so autoHeight uses actual content dimensions instead of inaccurate estimates.
-const measuredSnugHeight = ref(null)
-let containerResizeRemeasureTimeout = null // forward declaration for scheduleMeasurement
-// Previous measured count — used as the rendering hint during re-measurement
-// to prevent effectiveMaxItems from jumping to renderUpperBound (which would
-// render too many items, causing visible overflow without "+N more").
-const prevMeasuredCount = ref(null)
-
-// ── Centralized measurement scheduler ──────────────────────────────────
-// Prevents overlapping measurement cycles by ensuring only ONE cycle is
-// in-flight at a time.  Uses double-requestAnimationFrame instead of
-// nextTick so the browser has completed CSS layout before we read
-// getBoundingClientRect() values.
-let pendingMeasurementRAF = null
-
-/**
- * Schedule a full measurement cycle.  All watchers call this instead of
- * directly invoking measureAndTrimItems().
- * @param {boolean} resetState  true → reset measuredItemCount
- *                              false → keep current state (initial mount)
- * @param {string}  source      label for debug logging
- * @param {boolean} fullReset   also clear prevMeasuredCount so effectiveMaxItems
- *                              falls through to renderUpperBound (needed after
- *                              size changes where more items may fit)
- */
-function scheduleMeasurement(resetState = true, source = '', fullReset = false) {
-  if (pendingMeasurementRAF !== null) {
-    cancelAnimationFrame(pendingMeasurementRAF)
-    pendingMeasurementRAF = null
-  }
-  // Cancel any pending container-resize re-measurement so it doesn't
-  // override results from this measurement cycle
-  if (containerResizeRemeasureTimeout) {
-    clearTimeout(containerResizeRemeasureTimeout)
-    containerResizeRemeasureTimeout = null
-  }
-  // Manual mode: skip measurement entirely — effectiveMaxItems uses the user value
-  if (legendStore.isManualMode) return
-  if (resetState) {
-    prevMeasuredCount.value = fullReset ? null : measuredItemCount.value
-    measuredItemCount.value = null
-    measuredSnugHeight.value = null
-    resetCorrectionState()
-  }
-  console.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
-  // Double rAF: first fires after Vue DOM update + browser layout;
-  // second fires after paint — getBoundingClientRect() is accurate.
-  pendingMeasurementRAF = requestAnimationFrame(() => {
-    pendingMeasurementRAF = requestAnimationFrame(() => {
-      pendingMeasurementRAF = null
-      measureAndTrimItems()
-    })
-  })
-}
-
-// The actual item limit: measured value when available, upper bound otherwise
-const effectiveMaxItems = computed(() => {
-  // Manual mode: user-specified count, bypass measurement
-  if (legendStore.isManualMode) return legendStore.maxItemsManual
-
-  // Auto mode: render-then-measure
-  if (isResizing.value) {
-    return renderUpperBound.value
-  } else if (measuredItemCount.value !== null) {
-    return measuredItemCount.value
-  } else if (prevMeasuredCount.value !== null) {
-    // Between measurements: use previous count as rendering hint to prevent
-    // effectiveMaxItems from jumping to upperBound (which renders too many
-    // items, causing visible overflow without "+N more")
-    return prevMeasuredCount.value
-  } else {
-    return renderUpperBound.value
-  }
-})
-
-// Calculate auto height from content.
-// Before measurement: use full target height so container is large enough
-// for measureAndTrimItems() to find the real cutoff.
-// After measurement: use pixel-perfect DOM-measured snug height.
-const autoHeight = computed(() => {
-  if (measuredItemCount.value === null) {
-    return targetLegendHeight.value
-  }
-  // Use DOM-measured snug height (pixel-perfect, accounts for text wrapping,
-  // count badges, group headers, etc.)
-  return measuredSnugHeight.value || targetLegendHeight.value
-})
-
-// Effective width (auto or manual)
-const effectiveWidth = computed(() => {
-  return isAutoWidth.value ? autoWidth.value : (currentWidth.value || 200)
-})
-
-// Effective height (auto or manual)
-const effectiveHeight = computed(() => {
-  return isAutoHeight.value ? autoHeight.value : currentHeight.value
-})
-
-// Reset legend to auto-sizing (called when data/filters change so the legend
-// adapts to new content instead of staying locked at a stale manual size).
-function resetToAutoSize() {
-  if (!isAutoWidth.value || !isAutoHeight.value) {
-    console.debug(`[Legend] resetToAutoSize (was ${currentWidth.value}x${currentHeight.value})`)
-    currentWidth.value = null
-    currentHeight.value = null
-    legendStore.updateSize('auto', 'auto')
-  }
-}
-
-// Max resize width (45% of container for manual, more generous than auto's 25%)
-const maxResizeWidth = computed(() => {
-  return Math.min(Math.round(containerBounds.value.width * 0.45), 600)
-})
-
-// Multi-directional resize (composable handles all mouse/touch events)
+// Multi-directional resize (must come before measurement for isResizing)
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
   getLimits: () => ({ minW: 200, maxW: maxResizeWidth.value, minH: 120, maxH: maxLegendHeight.value }),
@@ -846,290 +122,50 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   }
 })
 
-// ═══════════════════════════════════════════════════════════════════════════
-// POST-RENDER DOM MEASUREMENT (render-then-measure pattern)
-// Instead of estimating item heights, we render a generous number of items
-// with overflow:hidden, then measure the actual DOM to find the exact cutoff.
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Build a context string for measurement logs so each log line is self-documenting.
-// Includes colorBy, groupBy (when active), and active filter summary.
-function logContext() {
-  const parts = []
-  parts.push(`colorBy=${dataStore.colorBy}`)
-  if (legendStore.isGrouped) {
-    parts.push(`groupBy=${legendStore.effectiveGroupBy}`)
-  }
-  // Summarize active filters
-  const f = dataStore.filters
-  const activeFilters = []
-  if (f.species?.length) activeFilters.push(`species=${f.species.length}`)
-  if (f.subspecies?.length) activeFilters.push(`subsp=${f.subspecies.length}`)
-  if (f.mimicry?.length) activeFilters.push(`mimicry=${f.mimicry.length}`)
-  if (f.status?.length) activeFilters.push(`status=${f.status.length}`)
-  if (f.source?.length > 1 || (f.source?.length === 1 && f.source[0] !== 'Sanger Institute')) {
-    activeFilters.push(`source=${f.source.join(',')}`)
-  }
-  if (f.genus !== 'All') activeFilters.push(`genus=${f.genus}`)
-  if (f.country !== 'All') activeFilters.push(`country=${f.country}`)
-  if (activeFilters.length) parts.push(`filters=[${activeFilters.join(' ')}]`)
-  return parts.join(' ')
-}
-
-// Post-measurement convergence loop (bidirectional).
-// After measurement sets the initial item count, this checks the ACTUAL
-// rendered DOM. If content overflows → reduce items. If significant unused
-// space exists and more items are available → try adding items. Oscillation
-// is prevented by tracking the last direction: expand→overflow triggers a
-// revert and stops; reduce→space triggers a stop. Converges in 0-5 steps.
-// This handles ALL edge cases that the initial measurement misses:
-// multi-group expansion, group headers, text wrapping, subpixel rounding.
-let overflowCorrectionPending = false
-let correctionGeneration = 0 // incremented on reset to invalidate stale corrections
-let lastCorrectionDir = null // 'reduce' | 'expand' | null
-let expandReverted = false // true after expand→overflow→revert, prevents re-expansion
-
-function scheduleOverflowCorrection() {
-  if (overflowCorrectionPending) return
-  overflowCorrectionPending = true
-  const gen = correctionGeneration
-  nextTick(() => {
-    nextTick(() => {
-      requestAnimationFrame(() => {
-        overflowCorrectionPending = false
-        if (gen !== correctionGeneration) return // stale — new measurement started
-        correctOverflow()
-      })
-    })
-  })
-}
-
-function resetCorrectionState() {
-  lastCorrectionDir = null
-  expandReverted = false
-  correctionGeneration++ // invalidate any pending corrections from previous cycle
-}
-
-function correctOverflow() {
-  const el = contentRef.value
-  if (!el || isResizing.value || legendStore.isManualMode) return
-
-  const overflow = el.scrollHeight - el.clientHeight
-
-  if (overflow > 4) {
-    // Content overflows
-    if (lastCorrectionDir === 'expand') {
-      // Just expanded and it overflowed — revert and stop
-      measuredItemCount.value--
-      lastCorrectionDir = null
-      expandReverted = true // prevent re-expansion on next pass
-      console.log(`[Legend] expand overflowed → reverted to ${measuredItemCount.value} items`)
-      scheduleOverflowCorrection() // one more pass to update snug height
-      return
-    }
-    // Regular overflow reduction
-    if (measuredItemCount.value !== null && measuredItemCount.value > 1) {
-      measuredItemCount.value--
-      lastCorrectionDir = 'reduce'
-      console.log(`[Legend] overflow correction: ${overflow}px over → reduced to ${measuredItemCount.value} items`)
-      scheduleOverflowCorrection()
-    }
-    return
-  }
-
-  // No scroll overflow — but .legend-more has margin-top:auto which absorbs
-  // unused space into the gap between items and "+N more", making
-  // scrollHeight ≈ clientHeight even when items don't fill the area.
-  // Measure the VISUAL gap to detect unused space accurately.
-  const unusedSpace = measureVisualGap(el)
-  const totalItems = sortedAllItems.value.length
-
-  if (!expandReverted &&
-      measuredItemCount.value !== null &&
-      measuredItemCount.value < totalItems &&
-      unusedSpace > 20) {
-    measuredItemCount.value++
-    lastCorrectionDir = 'expand'
-    console.log(`[Legend] expand: ${unusedSpace}px visual gap → trying ${measuredItemCount.value} items`)
-    scheduleOverflowCorrection()
-    return
-  }
-
-  // Converged
-  lastCorrectionDir = null
-  if (measuredItemCount.value !== null && measuredItemCount.value < totalItems) {
-    console.log(`[Legend] converged: ${measuredItemCount.value}/${totalItems} items | gap=${unusedSpace}px`)
-  }
-  updateSnugHeightFromDOM()
-}
-
-// Measure the visual gap between the last item and the "+N more" indicator
-// (or the bottom of the content area if no "+N more"). This detects unused
-// space that scrollHeight/clientHeight can't see because .legend-more uses
-// margin-top:auto which absorbs the gap into flexbox spacing.
-function measureVisualGap(contentEl) {
-  const moreEl = contentEl.querySelector('.legend-more')
-  const itemsEl = contentEl.querySelector('.legend-items')
-  if (!itemsEl) return 0
-
-  // Find the bottom of the last rendered item
-  const lastItem = itemsEl.lastElementChild
-  if (!lastItem) return 0
-  const itemsBottom = lastItem.getBoundingClientRect().bottom
-
-  if (moreEl) {
-    // Gap between last item and top of "+N more"
-    const moreTop = moreEl.getBoundingClientRect().top
-    return moreTop - itemsBottom
-  } else {
-    // No "+N more" — gap between last item and content bottom
-    const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
-    return contentBottom - itemsBottom
-  }
-}
-
-// After convergence, recalculate snug height from the actual rendered DOM
-// so the legend shrinks to fit content without empty space.
-function updateSnugHeightFromDOM() {
-  const el = contentRef.value
-  const legendEl = legendRef.value
-  if (!el || !legendEl || !isAutoHeight.value) return
-
-  // Find the bottom of the last visible content
-  const moreEl = el.querySelector('.legend-more')
-  const itemsEl = el.querySelector('.legend-items')
-  if (!itemsEl) return
-
-  // Use the lowest visible element: either "+N more" or the last item/group
-  const lastContent = moreEl || itemsEl.lastElementChild
-  if (!lastContent) return
-
-  const legendTop = legendEl.getBoundingClientRect().top
-  const lastBottom = lastContent.getBoundingClientRect().bottom
-  const padding = 12 // content bottom padding
-  const newSnug = Math.max(120, Math.ceil(lastBottom - legendTop + padding))
-
-  if (measuredSnugHeight.value && Math.abs(newSnug - measuredSnugHeight.value) > 4) {
-    measuredSnugHeight.value = newSnug
-  }
-}
-
-function measureAndTrimItems() {
-  const contentEl = contentRef.value
-  if (!contentEl || isResizing.value) return
-
-  const itemsEl = contentEl.querySelector('.legend-items')
-  if (!itemsEl || !itemsEl.children.length) return
-
-  const contentRect = contentEl.getBoundingClientRect()
-  const contentBottom = contentRect.top + contentEl.clientHeight
-  const contentPaddingBottom = 12
-  const moreIndicatorReserve = 40
-
-  // In grouped mode, walk individual .legend-item elements (not .legend-group
-  // containers). Each item's getBoundingClientRect already includes any group
-  // header height above it, so the bottom check naturally accounts for overhead.
-  const isGroupedView = itemsEl.classList.contains('grouped')
-  const allMeasurableItems = isGroupedView
-    ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
-    : itemsEl.children
-
-  // Filter out hidden items (.is-hidden) — they're in the DOM for edit mode
-  // but should not count toward visible item measurement
-  const measurableItems = [...allMeasurableItems].filter(el => !el.classList.contains('is-hidden'))
-
-  const totalSorted = sortedAllItems.value.length
-  const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
-
-  if (!measurableItems.length) return
-
-  // Helper: compute pixel-perfect snug legend height from the last visible
-  // item's bottom position, plus extra space for optional "+N more" and padding.
-  function computeSnugHeight(lastItemEl, includeMoreIndicator) {
-    const legendEl = legendRef.value
-    if (!legendEl || !lastItemEl) return null
-    const legendTop = legendEl.getBoundingClientRect().top
-    const lastBottom = lastItemEl.getBoundingClientRect().bottom
-    const extra = includeMoreIndicator
-      ? moreIndicatorReserve + contentPaddingBottom  // "+N more" + bottom pad
-      : contentPaddingBottom                          // just bottom pad
-    return Math.max(120, Math.ceil(lastBottom - legendTop + extra))
-  }
-
-  // Check if ALL items fit without needing "+N more"
-  const lastItem = measurableItems[measurableItems.length - 1]
-  const lastItemBottom = lastItem.getBoundingClientRect().bottom
-  const allFitBoundary = contentBottom - contentPaddingBottom
-
-  if (measurableItems.length >= totalSorted &&
-      lastItemBottom <= allFitBoundary) {
-    if (measuredItemCount.value !== totalSorted) {
-      measuredItemCount.value = totalSorted
-    }
-    measuredSnugHeight.value = computeSnugHeight(lastItem, false)
-    console.log(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
-    scheduleOverflowCorrection()
-    return
-  }
-
-  // For small item counts (≤ 5), showing all items is always better than "+N more".
-  // The more indicator uses ~40px — often more than the items it replaces (~26px each).
-  // Use a tighter fit check (just the visible content boundary) to avoid wasting space
-  // on "+1 more" or "+2 more" when the items would physically fit.
-  // Use the last DOM item (not totalSorted-1) to account for multi-group expansion.
-  if (totalSorted <= 5 && measurableItems.length >= totalSorted) {
-    const lastOfAll = measurableItems[measurableItems.length - 1]
-    if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
-      if (measuredItemCount.value !== totalSorted) {
-        measuredItemCount.value = totalSorted
-      }
-      measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
-      console.log(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value} | ${logContext()}`)
-      scheduleOverflowCorrection()
-      return
-    }
-  }
-
-  // Not all fit — reserve space for "+N more" and find cutoff
-  const maxBottom = contentBottom - contentPaddingBottom - moreIndicatorReserve
-  let domFitCount = 0
-  for (let i = 0; i < measurableItems.length; i++) {
-    const itemBottom = measurableItems[i].getBoundingClientRect().bottom
-    if (itemBottom > maxBottom) break
-    domFitCount++
-  }
-  domFitCount = Math.max(1, domFitCount)
-
-  // When multi-group display creates more DOM elements than unique items
-  // (same species in multiple groups), translate the DOM fit count to a
-  // unique item count. E.g., 13 unique items → 22 DOM items, 15 fit →
-  // estimate ~9 unique items would produce DOM items that all fit.
-  let count = domFitCount
-  if (measurableItems.length > totalSorted && domFitCount < measurableItems.length) {
-    count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
-  }
-
-  // Pixel-perfect snug height: last fitting DOM item + "+N more" indicator
-  measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
-
-  const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
-  console.log(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
-  if (count !== measuredItemCount.value) {
-    measuredItemCount.value = count
-  }
-  scheduleOverflowCorrection()
-}
-
-// Initial measurement: when contentRef first becomes a DOM element
-// (legend appears via v-if after data loads), trigger the first measurement.
-watch(contentRef, (el, oldEl) => {
-  if (el && !oldEl) {
-    scheduleMeasurement(false, 'mount')
-  }
+const {
+  measuredItemCount, measuredSnugHeight, prevMeasuredCount,
+  maxLegendHeight, renderUpperBound, measuredGroupSlots, effectiveMaxItems, effectiveWidth, effectiveHeight,
+  maxResizeWidth, scheduleMeasurement, scheduleContainerResizeMeasurement,
+  resetToAutoSize, cleanup: cleanupMeasurement
+} = useLegendMeasurement({
+  legendRef, contentRef, containerBounds,
+  isAutoWidth, isAutoHeight, currentWidth, currentHeight,
+  isResizing, resizeOverride,
+  sortedAllItems: sortedAllItemsRef,
+  legendCounts: legendCountsRef,
+  legendStore, dataStore
 })
 
-// Re-measure when layout-affecting settings change.
-// Also reset to auto-sizing so the legend re-fits to content.
+// Should show toolbar/edit UI?
+const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ITEM DATA (extracted composable)
+// ═══════════════════════════════════════════════════════════════════════════
+
+const {
+  colorMap, baseColors, itemGroupMap, itemToGroupsMap, subspeciesSpeciesMap,
+  groupList, groupBorderColors, getGroupBorderColor, hasCustomizedStyle, anyGroupHasCustomStyle,
+  getGroupForItem, getGroupsForItem, formatLabel,
+  legendCounts, legendGroupCounts, getGroupItemCount,
+  sortedAllItems, legendItems, groupedLegendData,
+  moreCount, morePointCount
+} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode, () => measuredGroupSlots.value)
+
+// Bridge: keep measurement composable's refs in sync with item data
+watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })
+watch(legendCounts, (counts) => { legendCountsRef.value = counts }, { immediate: true })
+
+// ═══════════════════════════════════════════════════════════════════════════
+// WATCHERS (measurement triggers)
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Initial measurement on mount
+watch(contentRef, (el, oldEl) => {
+  if (el && !oldEl) scheduleMeasurement(false, 'mount')
+})
+
+// Re-measure when layout-affecting settings change
 watch([
   () => legendStore.wrapLabels,
   () => legendStore.textScale,
@@ -1137,40 +173,29 @@ watch([
   () => legendStore.isGrouped,
   () => legendStore.groupingSettings,
 ], (newVals, oldVals) => {
-  // Detect which setting changed for descriptive logging
   const settingNames = ['wrapLabels', 'textScale', 'showCounts', 'isGrouped', 'groupingSettings']
   const changed = settingNames.filter((_, i) => JSON.stringify(newVals[i]) !== JSON.stringify(oldVals[i]))
   resetToAutoSize()
-  // Full reset: clear all measurement state so effectiveMaxItems falls through to
-  // renderUpperBound. Pass false to prevent scheduleMeasurement from
-  // re-saving the stale measuredItemCount into prevMeasuredCount.
   measuredItemCount.value = null
   prevMeasuredCount.value = null
   measuredSnugHeight.value = null
   scheduleMeasurement(false, `setting:${changed.join(',')}`)
 }, { deep: true })
 
-// Re-measure when data changes (new items, filters applied, colorBy changed).
-// Also reset to auto-sizing so the legend adapts to new content instead of
-// staying locked at a manually-resized dimension that may no longer fit.
-// NOTE: effectiveWidth is NOT watched here — it depends transitively on
-// measuredItemCount (via legendItems → autoWidth), which would create an
-// infinite reactive loop.
+// Re-measure when data changes
 watch(sortedAllItems, (newItems, oldItems) => {
   const delta = newItems.length - (oldItems?.length || 0)
   resetToAutoSize()
-  // Full reset: same as settings watcher above.
   measuredItemCount.value = null
   prevMeasuredCount.value = null
   measuredSnugHeight.value = null
   scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
 })
 
-// Re-measure and sync labels after resize ends
+// Re-measure after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
     scheduleMeasurement(true, 'resizeEnd', true)
-    // Sync shown labels deferred from legendItems watcher during resize
     const labels = new Set()
     for (const item of legendItems.value) {
       if (item.visible !== false) labels.add(item.label)
@@ -1179,39 +204,67 @@ watch(isResizing, (resizing) => {
   }
 })
 
-// When switching between manual ↔ auto items mode
+// Manual mode watchers
 watch(() => legendStore.maxItemsMode, (newMode) => {
   console.log(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
   if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
 })
 
-// When manual item count changes
 watch(() => legendStore.maxItemsManual, (newCount) => {
-  if (legendStore.isManualMode) {
-    console.log(`[Legend] manual items → ${newCount}`)
-  }
+  if (legendStore.isManualMode) console.log(`[Legend] manual items → ${newCount}`)
 })
 
-// Re-measure when container dimensions change (horizontal resize causes text
-// reflow changing item heights; vertical resize changes available space).
-// We watch prevContainerBounds (set by containerResizeObserver) which is NOT
-// in the effectiveWidth → measuredItemCount dependency chain, so no loop risk.
+// Container resize triggers re-measurement
 watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
-    if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
-    containerResizeRemeasureTimeout = setTimeout(() => {
-      scheduleMeasurement(true, 'containerResize', true)
-    }, 150)
+    scheduleContainerResizeMeasurement()
   }
 }, { deep: true })
 
-// Scaled sizes
+// Sync shown labels to store
+watch(legendItems, (items) => {
+  if (isResizing.value) return
+  const labels = new Set()
+  for (const item of items) {
+    if (item.visible !== false) labels.add(item.label)
+  }
+  legendStore.setShownLabels(labels)
+}, { immediate: true })
+
+// Position/size sync from store
+watch(() => legendStore.position, (newPos) => {
+  if (!isDragging.value) {
+    posX.value = newPos.x
+    posY.value = newPos.y
+  }
+}, { deep: true })
+
+watch(() => legendStore.size, (newSize, oldSize) => {
+  if (!isResizing.value) {
+    currentWidth.value = newSize.width === 'auto' ? null : newSize.width
+    currentHeight.value = newSize.height === 'auto' ? null : newSize.height
+    // Re-measure when size changes externally (e.g. settings panel, tests)
+    const widthChanged = newSize.width !== oldSize?.width
+    const heightChanged = newSize.height !== oldSize?.height
+    if (widthChanged || heightChanged) {
+      scheduleMeasurement(true, 'sizeChange', true)
+    }
+  }
+}, { deep: true })
+
+// Export mode → capture sticky state before container resizes
+watch(isExportMode, (enabled, wasEnabled) => {
+  detectStickyEdges(wasEnabled)
+})
+
+// ═══════════════════════════════════════════════════════════════════════════
+// VISUAL STATE
+// ═══════════════════════════════════════════════════════════════════════════
+
 const dotSize = computed(() => Math.max(6, Math.min(16, dataStore.mapStyle.pointSize)))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
 
-// Position style
 const positionStyle = computed(() => {
-  // During active resize, use override for immediate visual feedback
   if (resizeOverride.value) {
     return {
       width: resizeOverride.value.width + 'px',
@@ -1227,20 +280,14 @@ const positionStyle = computed(() => {
     maxHeight: maxLegendHeight.value + 'px'
   }
 
-  // Y position
   if (posY.value !== null) {
     style.top = posY.value + 'px'
   } else {
-    // Default to bottom
     style.bottom = '30px'
   }
 
-  // X position
   style.left = posX.value + 'px'
 
-  // Height - always set explicit height so the container has a known size
-  // for measureAndTrimItems(). In auto mode, autoHeight returns targetLegendHeight
-  // before measurement (giving room to measure) and the exact fit after.
   const h = effectiveHeight.value
   if (h && h !== 'auto') {
     style.height = h + 'px'
@@ -1249,250 +296,17 @@ const positionStyle = computed(() => {
   return style
 })
 
-// ═══════════════════════════════════════════════════════════════════════════
-// HOVER HANDLING (Lock content height to prevent growing when headers appear)
-// ═══════════════════════════════════════════════════════════════════════════
-
-function handleMouseEnter() {
-  isHovered.value = true
-}
-
-function handleMouseLeave() {
-  isHovered.value = false
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// DRAG HANDLING
-// ═══════════════════════════════════════════════════════════════════════════
-
-function startDrag(e) {
-  // Allow drag from anywhere in the legend except interactive elements
-  // Don't start drag if clicking on interactive elements
-  if (e.target.closest('button') ||
-      e.target.closest('select') ||
-      e.target.closest('input') ||
-      e.target.closest('.color-by-select') ||
-      e.target.closest('.legend-item') ||
-      e.target.closest('.legend-group-header') ||
-      e.target.closest('.color-picker-portal') ||
-      e.target.closest('.abbreviation-dropdown')) return
-
-  e.preventDefault()
-  isDragging.value = true
-
-  dragStart.value = {
-    x: e.clientX || e.touches?.[0]?.clientX || 0,
-    y: e.clientY || e.touches?.[0]?.clientY || 0
-  }
-
-  // Get current position
-  const rect = legendRef.value.getBoundingClientRect()
-  const containerRect = props.containerRef?.getBoundingClientRect() || { left: 0, top: 0 }
-
-  dragStartPos.value = {
-    x: rect.left - containerRect.left,
-    y: rect.top - containerRect.top
-  }
-
-  document.addEventListener('mousemove', onDrag)
-  document.addEventListener('mouseup', endDrag)
-  document.addEventListener('touchmove', onDrag, { passive: false })
-  document.addEventListener('touchend', endDrag)
-}
-
-function onDrag(e) {
-  if (!isDragging.value) return
-
-  e.preventDefault()
-
-  const clientX = e.clientX || e.touches?.[0]?.clientX || 0
-  const clientY = e.clientY || e.touches?.[0]?.clientY || 0
-
-  const deltaX = clientX - dragStart.value.x
-  const deltaY = clientY - dragStart.value.y
-
-  let newX = dragStartPos.value.x + deltaX
-  let newY = dragStartPos.value.y + deltaY
-
-  // Reset sticky edges
-  stickyEdge.value = { left: false, right: false, top: false, bottom: false }
-
-  // Apply sticky edges if enabled (soft snapping, not constraint)
-  if (legendStore.stickyEdges) {
-    const threshold = legendStore.snapThreshold
-    // Use prevContainerBounds (updated by ResizeObserver) instead of containerBounds
-    // containerBounds computed doesn't track DOM size changes reactively
-    const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
-    const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
-    const legendHeight = legendRef.value?.offsetHeight || 200
-    const margin = STICKY_MARGIN
-
-    // Snap to left edge
-    if (newX >= 0 && newX < threshold) {
-      newX = margin
-      stickyEdge.value.left = true
-    }
-    // Snap to right edge
-    if (newX > bounds.width - legendWidth - threshold && newX <= bounds.width - legendWidth) {
-      newX = bounds.width - legendWidth - margin
-      stickyEdge.value.right = true
-    }
-    // Snap to top edge
-    if (newY >= 0 && newY < threshold) {
-      newY = margin
-      stickyEdge.value.top = true
-    }
-    // Snap to bottom edge (above attribution)
-    const bottomSnapY = bounds.height - legendHeight - margin - bottomAttributionMargin.value
-    if (newY > bottomSnapY - threshold && newY <= bounds.height - legendHeight) {
-      newY = bottomSnapY
-      stickyEdge.value.bottom = true
-    }
-  }
-
-  // No constraint - allow legend to be positioned outside visible area
-  posX.value = newX
-  posY.value = newY
-}
-
-function endDrag() {
-  if (isDragging.value) {
-    isDragging.value = false
-    legendStore.updatePosition(posX.value, posY.value)
-  }
-
-  document.removeEventListener('mousemove', onDrag)
-  document.removeEventListener('mouseup', endDrag)
-  document.removeEventListener('touchmove', onDrag)
-  document.removeEventListener('touchend', endDrag)
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// CONTAINER BOUNDS CHANGE HANDLING
-// ═══════════════════════════════════════════════════════════════════════════
-
-/**
- * Detect current sticky edge state based on current position.
- * Used to initialize sticky state when component mounts or bounds change.
- * @param {boolean} wasExportMode - Optional: the export mode state BEFORE a mode change (for transitions)
- * @param {Object} useBounds - Optional: specific bounds to use instead of reading from DOM
- */
-function detectStickyEdges(wasExportMode = null, useBounds = null) {
-  // Use provided bounds, or prevContainerBounds (stable), or fall back to computed (may be stale during transitions)
-  const bounds = useBounds || (prevContainerBounds.value.width ? prevContainerBounds.value : containerBounds.value)
-  if (!bounds.width || !bounds.height) return
-
-  const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
-  const legendHeight = legendRef.value?.offsetHeight || 200
-  const threshold = 20 // Detection threshold
-  const margin = STICKY_MARGIN
-
-  // Handle null posY (default bottom positioning via CSS)
-  const effectiveY = posY.value !== null ? posY.value : bounds.height - legendHeight - 30
-
-  // Calculate bottom edge position (where legend would be if at bottom)
-  // Attribution margin is based on whether attribution is open, regardless of export mode
-  // (since attribution is included in export when visible)
-  const attrMargin = isAttributionOpen.value ? attributionHeight.value : 0
-  const bottomEdgeY = bounds.height - legendHeight - margin - attrMargin
-
-  // Legend is at bottom if within threshold of where it should be
-  const isAtBottom = effectiveY >= bottomEdgeY - threshold
-
-  stickyEdge.value = {
-    left: posX.value <= threshold,
-    right: posX.value >= bounds.width - legendWidth - threshold,
-    top: effectiveY <= threshold,
-    // If posY is null, it's using CSS bottom positioning, so it's sticky to bottom
-    bottom: posY.value === null || isAtBottom
-  }
-}
-
-/**
- * Apply position for new bounds while preserving sticky edges.
- * Used for window resize and export mode changes.
- * Also constrains legend height if too tall for new bounds.
- */
-function applyPositionForBounds(oldBounds, newBounds) {
-  const legendWidth = legendRef.value?.offsetWidth || effectiveWidth.value
-  let legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = STICKY_MARGIN
-  const minHeight = 100
-
-  // Calculate bottom margin (include attribution space when not in export mode)
-  const bottomMargin = margin + bottomAttributionMargin.value
-
-  // Calculate maximum allowed height
-  const maxAllowedHeight = newBounds.height - margin - bottomMargin
-
-  // If legend is too tall, constrain it
-  if (legendHeight > maxAllowedHeight && maxAllowedHeight >= minHeight) {
-    currentHeight.value = maxAllowedHeight
-    legendHeight = maxAllowedHeight
-    legendStore.updateSize(currentWidth.value, maxAllowedHeight)
-  }
-
-  let newX = posX.value
-  let newY = posY.value
-
-  // Apply sticky edges to new bounds
-  if (stickyEdge.value.left) {
-    newX = margin
-  } else if (stickyEdge.value.right) {
-    newX = newBounds.width - legendWidth - margin
-  } else {
-    // Scale proportionally
-    if (oldBounds.width > 0) {
-      const relativeX = posX.value / oldBounds.width
-      newX = relativeX * newBounds.width
-    }
-    // Clamp to visible area
-    newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
-  }
-
-  if (stickyEdge.value.top) {
-    newY = margin
-  } else if (stickyEdge.value.bottom) {
-    newY = newBounds.height - legendHeight - bottomMargin
-  } else {
-    // Scale proportionally
-    if (oldBounds.height > 0) {
-      const relativeY = posY.value / oldBounds.height
-      newY = relativeY * newBounds.height
-    }
-    // Clamp to visible area
-    newY = Math.max(margin, Math.min(newBounds.height - legendHeight - bottomMargin, newY))
-  }
-
-  // Final safety check
-  newX = Math.max(margin, Math.min(newBounds.width - legendWidth - margin, newX))
-  newY = Math.max(margin, Math.min(newBounds.height - legendHeight - bottomMargin, newY))
-
-  posX.value = newX
-  posY.value = newY
-  legendStore.updatePosition(newX, newY)
-}
+function handleMouseEnter() { isHovered.value = true }
+function handleMouseLeave() { isHovered.value = false }
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ITEM HANDLERS
 // ═══════════════════════════════════════════════════════════════════════════
 
-function handleLabelUpdate(label, customLabel) {
-  legendStore.setCustomLabel(label, customLabel)
-}
-
-function handleColorUpdate(label, color) {
-  legendStore.setCustomColor(label, color)
-}
-
-function handleToggleVisibility(label) {
-  legendStore.toggleItemVisibility(label)
-}
-
-function handleResetColor(label) {
-  legendStore.setCustomColor(label, '')
-}
-
+function handleLabelUpdate(label, customLabel) { legendStore.setCustomLabel(label, customLabel) }
+function handleColorUpdate(label, color) { legendStore.setCustomColor(label, color) }
+function handleToggleVisibility(label) { legendStore.toggleItemVisibility(label) }
+function handleResetColor(label) { legendStore.setCustomColor(label, '') }
 
 // ═══════════════════════════════════════════════════════════════════════════
 // GROUP STYLE POPUP HANDLERS
@@ -1501,18 +315,11 @@ function handleResetColor(label) {
 function openGroupStylePopup(groupName, event) {
   const rect = event.target.getBoundingClientRect()
   const pos = computePopupPosition(rect, {
-    placement: 'bottom',
-    offset: 5,
-    popupWidth: 280,
-    popupHeight: 400
+    placement: 'bottom', offset: 5, popupWidth: 280, popupHeight: 400
   })
   stylePopupState.value = {
-    open: true,
-    groupName,
-    position: {
-      x: parseInt(pos.left),
-      y: parseInt(pos.top)
-    }
+    open: true, groupName,
+    position: { x: parseInt(pos.left), y: parseInt(pos.top) }
   }
   hasOpenPopup.value = true
 }
@@ -1522,54 +329,37 @@ function closeGroupStylePopup() {
   hasOpenPopup.value = false
 }
 
-function handleUpdateShape(shape) {
-  legendStore.setGroupShape(stylePopupState.value.groupName, shape)
-}
+function handleUpdateShape(shape) { legendStore.setGroupShape(stylePopupState.value.groupName, shape) }
+function handleUpdateBorderColor(color) { legendStore.setSpeciesBorderColor(stylePopupState.value.groupName, color) }
 
-function handleUpdateBorderColor(color) {
-  legendStore.setSpeciesBorderColor(stylePopupState.value.groupName, color)
+// ═══════════════════════════════════════════════════════════════════════════
+// ABBREVIATION / DISPLAY HANDLERS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function handleUpdateAbbreviation(species, abbreviation) { legendStore.setSpeciesAbbreviation(species, abbreviation) }
+function handleToggleAbbreviationVisible(species) { legendStore.toggleAbbreviationVisible(species) }
+function handleUpdateSpeciesCustomLabel(species, customLabel) { legendStore.setSpeciesDisplayName(species, customLabel) }
+function handleShowHeaders() { legendStore.setShowHeaders(true) }
+function handleHideHeaders() { legendStore.setShowHeaders(false) }
+function handleApplyDisplayFormatToAll(format) { legendStore.setDisplayNameFormat(format) }
+
+function handleApplyPrefixFormatToAll(format) {
+  legendStore.setPrefixFormat(format)
+  for (const groupName of groupList.value) {
+    const formatted = applyAbbreviationFormat(groupName, format)
+    legendStore.setSpeciesAbbreviation(groupName, format === 'none' ? '' : formatted)
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ABBREVIATION HANDLERS
+// SORT / UI
 // ═══════════════════════════════════════════════════════════════════════════
 
-function handleUpdateAbbreviation(species, abbreviation) {
-  legendStore.setSpeciesAbbreviation(species, abbreviation)
-}
-
-function handleToggleAbbreviationVisible(species) {
-  legendStore.toggleAbbreviationVisible(species)
-}
-
-function handleUpdateSpeciesCustomLabel(species, customLabel) {
-  // Use the new species display name setter
-  legendStore.setSpeciesDisplayName(species, customLabel)
-}
-
-function handleShowHeaders() {
-  legendStore.setShowHeaders(true)
-}
-
-function handleHideHeaders() {
-  legendStore.setShowHeaders(false)
-}
-
-// Handle applying display name format to all species
-function handleApplyDisplayFormatToAll(format) {
-  // Set global format
-  legendStore.setDisplayNameFormat(format)
-
-  // Apply format to all species (clear individual customizations, use global)
-  // The format will be applied via computed in groupedLegendData
-}
-
-// Sort dropdown state (single merged dropdown)
 const sortDropdownOpen = ref(false)
 
 const sortOptions = [
-  { by: 'alphabetical', order: 'asc', icon: ArrowUpAZ, label: 'A \u2192 Z' },
-  { by: 'alphabetical', order: 'desc', icon: ArrowDownZA, label: 'Z \u2192 A' },
+  { by: 'alphabetical', order: 'asc', icon: ArrowUpAZ, label: 'A → Z' },
+  { by: 'alphabetical', order: 'desc', icon: ArrowDownZA, label: 'Z → A' },
   { divider: true },
   { by: 'abundance', order: 'desc', icon: ChartBarDecreasing, label: 'Most abundant' },
   { by: 'abundance', order: 'asc', icon: ChartBarIncreasing, label: 'Least abundant' },
@@ -1583,33 +373,9 @@ function applySortOption(sortBy, sortOrder) {
   sortDropdownOpen.value = false
 }
 
-function toggleSortDropdown() {
-  sortDropdownOpen.value = !sortDropdownOpen.value
-}
-
-function closeSortDropdowns() {
-  sortDropdownOpen.value = false
-}
-
-function toggleShowCounts() {
-  legendStore.toggleShowCounts()
-}
-
-// Handle applying prefix format to all species
-function handleApplyPrefixFormatToAll(format) {
-  // Set global format
-  legendStore.setPrefixFormat(format)
-
-  // Apply format to all groups
-  for (const groupName of groupList.value) {
-    const formatted = applyAbbreviationFormat(groupName, format)
-    if (format === 'none') {
-      legendStore.setSpeciesAbbreviation(groupName, '')
-    } else {
-      legendStore.setSpeciesAbbreviation(groupName, formatted)
-    }
-  }
-}
+function toggleSortDropdown() { sortDropdownOpen.value = !sortDropdownOpen.value }
+function closeSortDropdowns() { sortDropdownOpen.value = false }
+function toggleShowCounts() { legendStore.toggleShowCounts() }
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ATTRIBUTION OBSERVER
@@ -1620,58 +386,28 @@ let containerResizeObserver = null
 
 function updateAttributionState() {
   if (!props.containerRef) return
-
   const attrEl = props.containerRef.querySelector('.maplibregl-ctrl-attrib')
   if (!attrEl) {
     isAttributionOpen.value = false
     attributionHeight.value = 0
     return
   }
-
-  // Check if the details element is open
   const wasOpen = isAttributionOpen.value
   isAttributionOpen.value = attrEl.hasAttribute('open')
   attributionHeight.value = attrEl.offsetHeight || 24
-
-  // If attribution state changed and legend is stuck to bottom, reposition
   if (wasOpen !== isAttributionOpen.value && stickyEdge.value.bottom) {
     repositionForAttributionChange()
   }
 }
 
-function repositionForAttributionChange() {
-  if (!props.containerRef) return
-
-  const bounds = {
-    width: props.containerRef.clientWidth || 800,
-    height: props.containerRef.clientHeight || 600
-  }
-
-  const legendHeight = legendRef.value?.offsetHeight || 200
-  const margin = STICKY_MARGIN
-  const bottomMargin = margin + bottomAttributionMargin.value
-
-  // Only reposition if legend is stuck to bottom
-  if (stickyEdge.value.bottom) {
-    posY.value = bounds.height - legendHeight - bottomMargin
-    legendStore.updatePosition(posX.value, posY.value)
-  }
-}
-
 function setupAttributionObserver() {
   if (!props.containerRef) return
-
   const attrEl = props.containerRef.querySelector('.maplibregl-ctrl-attrib')
   if (!attrEl) {
-    // Attribution element not yet mounted, retry later
     setTimeout(setupAttributionObserver, 100)
     return
   }
-
-  // Initialize attribution state
   updateAttributionState()
-
-  // Watch for open/close changes on the details element
   attributionObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
@@ -1679,7 +415,6 @@ function setupAttributionObserver() {
       }
     }
   })
-
   attributionObserver.observe(attrEl, { attributes: true })
 }
 
@@ -1689,32 +424,18 @@ function setupAttributionObserver() {
 
 function setupContainerResizeObserver() {
   if (!props.containerRef || containerResizeObserver) return
-
   containerResizeObserver = new ResizeObserver((entries) => {
     for (const entry of entries) {
-      const newBounds = {
-        width: entry.contentRect.width,
-        height: entry.contentRect.height
-      }
-
-      // Skip if bounds haven't actually changed or if currently dragging
+      const newBounds = { width: entry.contentRect.width, height: entry.contentRect.height }
       if (isDragging.value) return
       if (newBounds.width === prevContainerBounds.value.width &&
-          newBounds.height === prevContainerBounds.value.height) {
-        return
-      }
-
-      // Only reposition if we have previous bounds to compare with
+          newBounds.height === prevContainerBounds.value.height) return
       if (prevContainerBounds.value.width > 0) {
-        // Apply position for new bounds while preserving sticky edges
-        // Note: sticky edges should have been captured by isExportMode watcher before resize
         applyPositionForBounds(prevContainerBounds.value, newBounds)
       }
-
       prevContainerBounds.value = { ...newBounds }
     }
   })
-
   containerResizeObserver.observe(props.containerRef)
 }
 
@@ -1722,15 +443,27 @@ function setupContainerResizeObserver() {
 // LIFECYCLE
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Close sort dropdowns on any click outside
-function handleGlobalClick() {
-  closeSortDropdowns()
+function handleGlobalClick() { closeSortDropdowns() }
+
+let resizeTimeout = null
+function handleWindowResize() {
+  if (resizeTimeout) clearTimeout(resizeTimeout)
+  resizeTimeout = setTimeout(() => {
+    if (!props.containerRef) return
+    const newBounds = {
+      width: props.containerRef.clientWidth || 800,
+      height: props.containerRef.clientHeight || 600
+    }
+    if (newBounds.width === prevContainerBounds.value.width &&
+        newBounds.height === prevContainerBounds.value.height) return
+    applyPositionForBounds(prevContainerBounds.value, newBounds)
+    prevContainerBounds.value = { ...newBounds }
+  }, 100)
 }
 
 onMounted(() => {
   document.addEventListener('click', handleGlobalClick)
 
-  // Initialize previous bounds and position after a short delay to let the DOM settle
   setTimeout(() => {
     if (props.containerRef) {
       const bounds = {
@@ -1738,179 +471,41 @@ onMounted(() => {
         height: props.containerRef.clientHeight || 600
       }
       prevContainerBounds.value = { ...bounds }
-
-      // Setup attribution observer (will also initialize attributionHeight)
       setupAttributionObserver()
-
-      // Setup container resize observer to detect export mode changes
       setupContainerResizeObserver()
 
       const legendHeight = legendRef.value?.offsetHeight || 200
       const margin = STICKY_MARGIN
 
-      // Check if legend is at default position (never been moved) or outside visible bounds
       const isDefaultPosition = posY.value === null || (posX.value === 40 && posY.value === legendStore.position.y)
       const isOutsideBounds = posY.value !== null && (
-        posY.value < 0 ||
-        posY.value > bounds.height - legendHeight - margin
+        posY.value < 0 || posY.value > bounds.height - legendHeight - margin
       )
 
       if (isDefaultPosition || isOutsideBounds) {
-        // Initialize to bottom-left, above attribution
         posX.value = margin
         posY.value = bounds.height - legendHeight - margin - bottomAttributionMargin.value
         stickyEdge.value = { left: true, right: false, top: false, bottom: true }
         legendStore.updatePosition(posX.value, posY.value)
       } else {
-        // Detect sticky edges from existing position
         detectStickyEdges()
       }
     }
   }, 150)
 
-  // Setup legend resize observer for bottom-sticky repositioning
-  setTimeout(() => {
-    setupLegendResizeObserver()
-  }, 300)
-
-  // Add window resize listener
+  setTimeout(() => { setupLegendResizeObserver() }, 300)
   window.addEventListener('resize', handleWindowResize)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleGlobalClick)
-  document.removeEventListener('mousemove', onDrag)
-  document.removeEventListener('mouseup', endDrag)
-  document.removeEventListener('touchmove', onDrag)
-  document.removeEventListener('touchend', endDrag)
   window.removeEventListener('resize', handleWindowResize)
-
-  // Clean up attribution observer
-  if (attributionObserver) {
-    attributionObserver.disconnect()
-    attributionObserver = null
-  }
-
-  // Clean up container resize observer
-  if (containerResizeObserver) {
-    containerResizeObserver.disconnect()
-    containerResizeObserver = null
-  }
-
-  // Clean up legend resize observer
-  if (legendResizeObserver) {
-    legendResizeObserver.disconnect()
-    legendResizeObserver = null
-  }
-
-  // Clean up measurement scheduler
-  if (pendingMeasurementRAF !== null) cancelAnimationFrame(pendingMeasurementRAF)
-  if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
+  if (attributionObserver) { attributionObserver.disconnect(); attributionObserver = null }
+  if (containerResizeObserver) { containerResizeObserver.disconnect(); containerResizeObserver = null }
   if (resizeTimeout) clearTimeout(resizeTimeout)
-
-  // Clean up hidden measure span
-  if (_measureSpan) {
-    _measureSpan.remove()
-    _measureSpan = null
-  }
+  cleanupPosition()
+  cleanupMeasurement()
 })
-
-// Debounced window resize handler
-let resizeTimeout = null
-function handleWindowResize() {
-  if (resizeTimeout) clearTimeout(resizeTimeout)
-  resizeTimeout = setTimeout(() => {
-    if (!props.containerRef) return
-
-    const newBounds = {
-      width: props.containerRef.clientWidth || 800,
-      height: props.containerRef.clientHeight || 600
-    }
-
-    // Skip if bounds haven't actually changed
-    if (newBounds.width === prevContainerBounds.value.width &&
-        newBounds.height === prevContainerBounds.value.height) {
-      return
-    }
-
-    // Apply sticky edges to new bounds
-    applyPositionForBounds(prevContainerBounds.value, newBounds)
-    prevContainerBounds.value = { ...newBounds }
-  }, 100)
-}
-
-// Watch for position changes from store
-watch(() => legendStore.position, (newPos) => {
-  if (!isDragging.value) {
-    posX.value = newPos.x
-    posY.value = newPos.y
-  }
-}, { deep: true })
-
-// Watch for size changes from store
-watch(() => legendStore.size, (newSize) => {
-  if (!isResizing.value) {
-    currentWidth.value = newSize.width === 'auto' ? null : newSize.width
-    currentHeight.value = newSize.height === 'auto' ? null : newSize.height
-  }
-}, { deep: true })
-
-
-// Sync shown labels to the store so the map can grey out overflow items.
-// During resize, defer the sync to avoid rebuilding the map layer on every frame.
-watch(legendItems, (items) => {
-  if (isResizing.value) return // Defer — will sync when resize ends
-  const labels = new Set()
-  for (const item of items) {
-    if (item.visible !== false) labels.add(item.label)
-  }
-  legendStore.setShownLabels(labels)
-}, { immediate: true })
-
-
-// ═══════════════════════════════════════════════════════════════════════════
-// BOTTOM-STICKY REPOSITIONING
-// ═══════════════════════════════════════════════════════════════════════════
-
-function repositionIfBottomSticky() {
-  if (!stickyEdge.value.bottom || !legendRef.value || posY.value === null) return
-  if (isDragging.value || isResizing.value) return
-
-  const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
-  const legendHeight = legendRef.value.offsetHeight
-  const margin = STICKY_MARGIN
-  const bottomMargin = margin + bottomAttributionMargin.value
-  const targetY = bounds.height - legendHeight - bottomMargin
-
-  if (Math.abs(posY.value - targetY) > 2) {
-    posY.value = targetY
-    legendStore.updatePosition(posX.value, posY.value)
-  }
-}
-
-function setupLegendResizeObserver() {
-  if (!legendRef.value || legendResizeObserver) return
-
-  lastLegendHeight = legendRef.value.offsetHeight
-
-  legendResizeObserver = new ResizeObserver((entries) => {
-    const newHeight = entries[0]?.contentRect?.height || 0
-    if (newHeight === 0 || Math.abs(newHeight - lastLegendHeight) < 2) return
-    lastLegendHeight = newHeight
-    repositionIfBottomSticky()
-  })
-
-  legendResizeObserver.observe(legendRef.value)
-}
-
-// Watch for export mode changes - capture sticky state BEFORE container resizes
-// The actual repositioning is handled by the containerResizeObserver
-watch(isExportMode, (enabled, wasEnabled) => {
-  // Capture current sticky state BEFORE container resizes
-  // IMPORTANT: Pass the OLD export mode state since the container hasn't resized yet
-  detectStickyEdges(wasEnabled)
-})
-
 </script>
 
 <template>
@@ -1993,6 +588,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
       <div v-if="groupedLegendData.type === 'flat'" class="legend-items">
         <LegendItem
           v-for="item in groupedLegendData.items"
+          v-show="item.visible !== false || showEditUI"
           :key="item.label"
           :label="item.label"
           :color="item.color"
@@ -2055,6 +651,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
           <div class="legend-group-items">
             <LegendItem
               v-for="item in group.items"
+              v-show="item.visible !== false || showEditUI"
               :key="item.label"
               :label="item.displayLabel || item.label"
               :color="item.color"
@@ -2122,285 +719,4 @@ watch(isExportMode, (enabled, wasEnabled) => {
   </div>
 </template>
 
-<style scoped>
-.legend-container {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 8px;
-  z-index: 25; /* Above search bar (10) and map controls (20) so toolbar overlaps them */
-  min-width: 200px;
-  max-width: 600px;
-  min-height: 120px;
-  /* max-height is set dynamically via positionStyle */
-  overflow: visible; /* Allow toolbar to float above and resize zones to extend beyond edges */
-  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
-  backdrop-filter: blur(4px);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
-  user-select: none;
-  cursor: grab; /* Indicate draggable */
-}
-
-.legend-container.is-hovered:not(.is-export) {
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
-}
-
-/* Invisible hover bridge above legend — keeps mouse "inside" the container
-   when crossing the gap between legend and floating toolbar */
-.legend-container::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: -1px;
-  right: -1px;
-  height: 10px; /* Covers the 2px gap plus toolbar overlap */
-  pointer-events: auto;
-}
-
-.legend-container.is-dragging {
-  cursor: grabbing;
-  opacity: 0.9;
-}
-
-.legend-container.is-resizing {
-  opacity: 0.9;
-}
-
-/* Export mode - cleaner appearance */
-.legend-container.is-export {
-  border-color: transparent;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.legend-content {
-  padding: 12px 16px;
-  overflow: hidden auto; /* hidden-x, auto-y: scrollbar appears as fallback if measurement under-counts */
-  /* flex-basis: auto so the container sizes to content, then max-height caps it.
-     flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
-  flex: 1 1 auto;
-  min-height: 0;
-  /* Flex column so .legend-more can use margin-top:auto to fill empty space */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Thin scrollbar for manual-mode overflow */
-.legend-content::-webkit-scrollbar { width: 6px; }
-.legend-content::-webkit-scrollbar-track { background: transparent; }
-.legend-content::-webkit-scrollbar-thumb {
-  background: var(--color-border, #3d3d5c);
-  border-radius: 3px;
-}
-.legend-content::-webkit-scrollbar-thumb:hover { background: #4d4d6d; }
-
-.legend-container.is-export .legend-content {
-  padding: 10px 14px;
-}
-
-.legend-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-text-muted, #666);
-  padding-bottom: 8px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
-}
-
-.title-hover-controls {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  flex-shrink: 0;
-}
-
-.title-control-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 2px 4px;
-  background: transparent;
-  border: none;
-  color: var(--color-text-muted, #666);
-  cursor: pointer;
-  border-radius: 3px;
-  transition: all 0.15s ease;
-  opacity: 0.6;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-.title-control-button:hover {
-  opacity: 1;
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.08));
-  color: var(--color-text-secondary, #aaa);
-}
-
-.title-control-button.active {
-  opacity: 1;
-  color: var(--color-accent, #4ade80);
-}
-
-.sort-label {
-  text-transform: uppercase;
-  font-size: 10px;
-}
-
-.sort-chevron {
-  opacity: 0.5;
-}
-
-.sort-dropdown-wrapper {
-  position: relative;
-}
-
-.sort-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 50;
-  min-width: 150px;
-  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.98));
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  padding: 4px;
-  margin-top: 2px;
-}
-
-.sort-dropdown-header {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-text-muted, #666);
-  padding: 4px 10px 2px;
-}
-
-.sort-dropdown-divider {
-  height: 1px;
-  background: var(--color-border, #3d3d5c);
-  margin: 4px 6px;
-}
-
-.sort-dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 6px 10px;
-  background: transparent;
-  border: none;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.1s ease;
-  white-space: nowrap;
-}
-
-.sort-dropdown-item:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.08));
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.sort-dropdown-item.selected {
-  color: var(--color-accent, #4ade80);
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
-}
-
-.legend-items {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.legend-more {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-style: italic;
-  color: var(--color-text-muted, #666);
-  padding-top: 8px;
-  margin-top: auto;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-}
-
-.more-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #6b7280;
-  flex-shrink: 0;
-}
-
-.more-count {
-  margin-left: auto;
-  font-style: normal;
-  font-size: 0.85em;
-  opacity: 0.6;
-}
-
-/* Grouped view styles */
-.legend-items.grouped {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.legend-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.legend-group-items {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-left: 16px;
-  padding-left: 4px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   MULTI-DIRECTIONAL RESIZE ZONES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.resize-zone {
-  position: absolute;
-  z-index: 5;
-  touch-action: none;
-}
-
-/* Edge handles: thin invisible strips */
-.resize-n { top: -3px; left: 10px; right: 10px; height: 6px; cursor: n-resize; }
-.resize-s { bottom: -3px; left: 10px; right: 10px; height: 6px; cursor: s-resize; }
-.resize-e { right: -3px; top: 10px; bottom: 10px; width: 6px; cursor: e-resize; }
-.resize-w { left: -3px; top: 10px; bottom: 10px; width: 6px; cursor: w-resize; }
-
-/* Corner handles: small squares at each corner */
-.resize-ne { top: -3px; right: -3px; width: 12px; height: 12px; cursor: ne-resize; z-index: 6; }
-.resize-nw { top: -3px; left: -3px; width: 12px; height: 12px; cursor: nw-resize; z-index: 6; }
-.resize-se { bottom: -3px; right: -3px; width: 16px; height: 16px; cursor: se-resize; z-index: 6;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--color-text-muted, #666); border-radius: 0 0 8px 0; transition: color 0.15s ease; }
-.resize-sw { bottom: -3px; left: -3px; width: 12px; height: 12px; cursor: sw-resize; z-index: 6; }
-
-.resize-se:hover { color: var(--color-text-secondary, #aaa); }
-.legend-container.is-resizing .resize-se { color: var(--color-accent, #4ade80); }
-
-.resize-icon {
-  width: 10px;
-  height: 10px;
-}
-</style>
+<style scoped src="./legend-styles.css"></style>

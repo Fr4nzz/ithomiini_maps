@@ -1,0 +1,280 @@
+.legend-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  z-index: 25; /* Above search bar (10) and map controls (20) so toolbar overlaps them */
+  min-width: 200px;
+  max-width: 600px;
+  min-height: 120px;
+  /* max-height is set dynamically via positionStyle */
+  overflow: visible; /* Allow toolbar to float above and resize zones to extend beyond edges */
+  box-shadow: 0 2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(4px);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+  cursor: grab; /* Indicate draggable */
+}
+
+.legend-container.is-hovered:not(.is-export) {
+  border-color: var(--color-accent, #4ade80);
+  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
+}
+
+/* Invisible hover bridge above legend — keeps mouse "inside" the container
+   when crossing the gap between legend and floating toolbar */
+.legend-container::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: -1px;
+  right: -1px;
+  height: 10px; /* Covers the 2px gap plus toolbar overlap */
+  pointer-events: auto;
+}
+
+.legend-container.is-dragging {
+  cursor: grabbing;
+  opacity: 0.9;
+}
+
+.legend-container.is-resizing {
+  opacity: 0.9;
+}
+
+/* Export mode - cleaner appearance */
+.legend-container.is-export {
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.legend-content {
+  padding: 12px 16px;
+  overflow: hidden auto; /* hidden-x, auto-y: scrollbar appears as fallback if measurement under-counts */
+  /* flex-basis: auto so the container sizes to content, then max-height caps it.
+     flex-basis: 0% (from flex:1) would collapse the container without explicit height. */
+  flex: 1 1 auto;
+  min-height: 0;
+  /* Flex column so .legend-more can use margin-top:auto to fill empty space */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Thin scrollbar for manual-mode overflow */
+.legend-content::-webkit-scrollbar { width: 6px; }
+.legend-content::-webkit-scrollbar-track { background: transparent; }
+.legend-content::-webkit-scrollbar-thumb {
+  background: var(--color-border, #3d3d5c);
+  border-radius: 3px;
+}
+.legend-content::-webkit-scrollbar-thumb:hover { background: #4d4d6d; }
+
+.legend-container.is-export .legend-content {
+  padding: 10px 14px;
+}
+
+.legend-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted, #666);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--color-border, #3d3d5c);
+}
+
+.title-hover-controls {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.title-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 2px 4px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted, #666);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+  opacity: 0.6;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.title-control-button:hover {
+  opacity: 1;
+  background: var(--color-bg-tertiary, rgba(255,255,255,0.08));
+  color: var(--color-text-secondary, #aaa);
+}
+
+.title-control-button.active {
+  opacity: 1;
+  color: var(--color-accent, #4ade80);
+}
+
+.sort-label {
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.sort-chevron {
+  opacity: 0.5;
+}
+
+.sort-dropdown-wrapper {
+  position: relative;
+}
+
+.sort-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 50;
+  min-width: 150px;
+  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.98));
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 4px;
+  margin-top: 2px;
+}
+
+.sort-dropdown-header {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted, #666);
+  padding: 4px 10px 2px;
+}
+
+.sort-dropdown-divider {
+  height: 1px;
+  background: var(--color-border, #3d3d5c);
+  margin: 4px 6px;
+}
+
+.sort-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.1s ease;
+  white-space: nowrap;
+}
+
+.sort-dropdown-item:hover {
+  background: var(--color-bg-tertiary, rgba(255,255,255,0.08));
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.sort-dropdown-item.selected {
+  color: var(--color-accent, #4ade80);
+  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.legend-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-style: italic;
+  color: var(--color-text-muted, #666);
+  padding-top: 8px;
+  margin-top: auto;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.more-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6b7280;
+  flex-shrink: 0;
+}
+
+.more-count {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
+/* Grouped view styles */
+.legend-items.grouped {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.legend-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 16px;
+  padding-left: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MULTI-DIRECTIONAL RESIZE ZONES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.resize-zone {
+  position: absolute;
+  z-index: 5;
+  touch-action: none;
+}
+
+/* Edge handles: thin invisible strips */
+.resize-n { top: -3px; left: 10px; right: 10px; height: 6px; cursor: n-resize; }
+.resize-s { bottom: -3px; left: 10px; right: 10px; height: 6px; cursor: s-resize; }
+.resize-e { right: -3px; top: 10px; bottom: 10px; width: 6px; cursor: e-resize; }
+.resize-w { left: -3px; top: 10px; bottom: 10px; width: 6px; cursor: w-resize; }
+
+/* Corner handles: small squares at each corner */
+.resize-ne { top: -3px; right: -3px; width: 12px; height: 12px; cursor: ne-resize; z-index: 6; }
+.resize-nw { top: -3px; left: -3px; width: 12px; height: 12px; cursor: nw-resize; z-index: 6; }
+.resize-se { bottom: -3px; right: -3px; width: 16px; height: 16px; cursor: se-resize; z-index: 6;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted, #666); border-radius: 0 0 8px 0; transition: color 0.15s ease; }
+.resize-sw { bottom: -3px; left: -3px; width: 12px; height: 12px; cursor: sw-resize; z-index: 6; }
+
+.resize-se:hover { color: var(--color-text-secondary, #aaa); }
+.legend-container.is-resizing .resize-se { color: var(--color-accent, #4ade80); }
+
+.resize-icon {
+  width: 10px;
+  height: 10px;
+}
