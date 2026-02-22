@@ -378,8 +378,13 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
     const needsDisambiguation = headersHidden && multiGroupLabels
 
     let mappedItems = items.map(item => {
-      let displayLabel = formatLabel(item.label, groupName)
-      if (needsDisambiguation && multiGroupLabels.has(item.label)) {
+      const shouldDisambiguate = needsDisambiguation && multiGroupLabels.has(item.label)
+      // When disambiguating, skip the abbreviation prefix from formatLabel
+      // to avoid double species info (prefix + suffix).
+      let displayLabel = shouldDisambiguate
+        ? item.label
+        : formatLabel(item.label, groupName)
+      if (shouldDisambiguate) {
         displayLabel += ` (${contractSpeciesName(groupName)})`
       }
       return { ...item, displayLabel }

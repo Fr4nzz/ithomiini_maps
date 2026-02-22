@@ -67,7 +67,7 @@ export const useLegendStore = defineStore('legend', () => {
     enabled: true,                     // Enable grouping
     groupBy: 'species',                // 'none' | 'species' | 'genus' | 'tribe' | 'subfamily' | 'family'
     abbreviationStyle: 'first-letter', // 'first-letter' | 'first-three'
-    showHeaders: false,                // Headers visible (default hidden)
+    showHeaders: true,                 // Headers visible (default shown)
     prefixEnabled: 'auto',             // true | false | 'auto' (smart default)
   }))
 
