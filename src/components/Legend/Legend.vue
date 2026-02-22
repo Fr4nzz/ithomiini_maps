@@ -588,6 +588,7 @@ onUnmounted(() => {
       <div v-if="groupedLegendData.type === 'flat'" class="legend-items">
         <LegendItem
           v-for="item in groupedLegendData.items"
+          v-show="item.visible !== false || showEditUI"
           :key="item.label"
           :label="item.label"
           :color="item.color"
@@ -650,6 +651,7 @@ onUnmounted(() => {
           <div class="legend-group-items">
             <LegendItem
               v-for="item in group.items"
+              v-show="item.visible !== false || showEditUI"
               :key="item.label"
               :label="item.displayLabel || item.label"
               :color="item.color"
