@@ -22,7 +22,8 @@ async function main() {
   })
 
   console.log('Loading app...')
-  await page.goto('http://localhost:5176/ithomiini_maps/', { waitUntil: 'networkidle', timeout: 30000 })
+  const port = process.env.PORT || 5173
+  await page.goto(`http://localhost:${port}/ithomiini_maps/`, { waitUntil: 'networkidle', timeout: 30000 })
 
   // Wait for app to initialize
   await page.waitForSelector('.legend-container', { timeout: 15000 })

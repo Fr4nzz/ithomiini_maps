@@ -461,19 +461,37 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
     return { type: 'grouped', groups }
   })
 
+  // Count unique visible labels actually shown after all caps (Cap 1 + Cap 2)
+  function countShownLabels() {
+    const gld = groupedLegendData.value
+    const shown = new Set()
+    if (gld.type === 'grouped') {
+      for (const g of gld.groups) {
+        for (const item of g.items) {
+          if (item.visible !== false) shown.add(item.label)
+        }
+      }
+    } else {
+      for (const item of (gld.items || [])) {
+        if (item.visible !== false) shown.add(item.label)
+      }
+    }
+    return shown
+  }
+
   const moreCount = computed(() => {
     const totalVisible = sortedAllItems.value.length
-    const maxItems = getEffectiveMaxItems()
-    return Math.max(0, totalVisible - maxItems)
+    const shown = countShownLabels()
+    return Math.max(0, totalVisible - shown.size)
   })
 
   const morePointCount = computed(() => {
     if (!legendStore.showCounts || moreCount.value === 0) return null
-    const shownSet = new Set(legendItems.value.filter(i => i.visible !== false).map(i => i.label))
+    const shown = countShownLabels()
     const counts = legendCounts.value
     let total = 0
     for (const [label, cnt] of Object.entries(counts)) {
-      if (!shownSet.has(label)) {
+      if (!shown.has(label)) {
         total += cnt
       }
     }

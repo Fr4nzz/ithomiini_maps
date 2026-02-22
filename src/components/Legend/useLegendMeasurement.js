@@ -383,7 +383,7 @@ export function useLegendMeasurement({
     const totalItems = sortedAllItems.value.length
     const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
     const slotsInfo = measuredGroupSlots.value !== null ? ` groups=${measuredGroupSlots.value}` : ''
-    console.log(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items${slotsInfo} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} | gap=${Math.round(unusedSpace)}px scroll=${overflow}px steps=${correctionSteps}`)
+    console.log(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items${slotsInfo} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
     correctionSteps = 0
     updateSnugHeightFromDOM()
   }
@@ -478,7 +478,7 @@ export function useLegendMeasurement({
         measuredItemCount.value = totalSorted
       }
       measuredSnugHeight.value = computeSnugHeight(lastItem, false)
-      console.log(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+      console.debug(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
       scheduleOverflowCorrection()
       return
     }
@@ -491,7 +491,7 @@ export function useLegendMeasurement({
           measuredItemCount.value = totalSorted
         }
         measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
-        console.log(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+        console.debug(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
         scheduleOverflowCorrection()
         return
       }
@@ -521,7 +521,7 @@ export function useLegendMeasurement({
       // Pass 2: All items rendered → accurately count fitting groups.
       if (measuredItemCount.value !== totalSorted) {
         measuredItemCount.value = totalSorted
-        console.log(`[Legend] CROSS-GROUP pass 1: rendering all ${totalSorted} unique items | ${logContext()}`)
+        console.debug(`[Legend] CROSS-GROUP pass 1: rendering all ${totalSorted} unique items | ${logContext()}`)
         scheduleMeasurement(false, 'crossGroupPass2')
         return
       }
@@ -535,7 +535,7 @@ export function useLegendMeasurement({
       measuredSnugHeight.value = fittingGroups > 0
         ? computeSnugHeight(groupEls[Math.min(fittingGroups, groupEls.length) - 1], true)
         : computeSnugHeight(measurableItems[0], true)
-      console.log(`[Legend] CROSS-GROUP pass 2: ${fittingGroups}/${groupEls.length} groups fit (${totalSorted} unique) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+      console.debug(`[Legend] CROSS-GROUP pass 2: ${fittingGroups}/${groupEls.length} groups fit (${totalSorted} unique) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
       scheduleOverflowCorrection()
       return
     } else if (measurableItems.length > totalSorted) {
@@ -553,7 +553,7 @@ export function useLegendMeasurement({
     if (!isCrossGroup && hiddenWithoutMore <= 2 && countNoMore >= totalSorted) {
       count = totalSorted
       measuredSnugHeight.value = computeSnugHeight(measurableItems[measurableItems.length - 1], false)
-      console.log(`[Legend] TIGHT_FIT ${count}/${totalSorted} items (no +more needed) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+      console.debug(`[Legend] TIGHT_FIT ${count}/${totalSorted} items (no +more needed) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
       if (count !== measuredItemCount.value) {
         measuredItemCount.value = count
       }
@@ -564,7 +564,7 @@ export function useLegendMeasurement({
     measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
 
     const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
-    console.log(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
+    console.debug(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
     if (count !== measuredItemCount.value) {
       measuredItemCount.value = count
     }
