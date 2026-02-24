@@ -42,3 +42,6 @@ public/data/taxonomic_corrections_applied.json
 *_curated.tsv
 *_curated.json
 *_curated_corrections.json
+
+# External repos cloned for manuscript fact-checking
+paper/external_repos/
