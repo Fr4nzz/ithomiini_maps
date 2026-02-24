@@ -1,13 +1,14 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
-import { getProxiedUrl, getThumbnailUrl } from '../utils/imageProxy'
+import { getProxiedUrl, getThumbnailUrl, notifyTierFailed, getProxyState } from '../utils/imageProxy'
 import { useGalleryData } from '../composables/useGalleryData'
 import GallerySidebar from './GallerySidebar.vue'
 import Panzoom from '@panzoom/panzoom'
 
 const store = useDataStore()
 const emit = defineEmits(['close'])
+const proxyState = getProxyState()
 
 // Gallery data from composable
 const {
@@ -268,6 +269,27 @@ const currentSpecimen = computed(() => {
   return specimensWithImages.value[currentIndex.value] || null
 })
 
+// Resolved image URL — reactive to proxy mode/tier changes
+const resolvedImageUrl = computed(() => {
+  // Touch reactive refs so Vue tracks the dependency
+  void proxyState.mode.value
+  void proxyState.tierStatus.value
+  return currentSpecimen.value?.image_url
+    ? getProxiedUrl(currentSpecimen.value.image_url)
+    : ''
+})
+
+// Proxy-version counter — forces re-evaluation of thumbnail URLs in v-for
+const proxyVersion = computed(() =>
+  `${proxyState.mode.value}-${JSON.stringify(proxyState.tierStatus.value)}`
+)
+
+// Thumbnail URL helper — reactive wrapper for use in v-for templates
+const resolvedThumbUrl = (url) => {
+  void proxyVersion.value
+  return getThumbnailUrl(url)
+}
+
 // Navigation
 const hasPrev = computed(() => currentIndex.value > 0)
 const hasNext = computed(() => currentIndex.value < specimensWithImages.value.length - 1)
@@ -348,6 +370,23 @@ const onImageLoad = () => {
 }
 
 const onImageError = () => {
+  // In auto mode, mark the current tier as blocked and retry with next tier
+  const currentUrl = resolvedImageUrl.value
+  if (proxyState.mode.value === 'auto' && currentUrl) {
+    const ts = proxyState.tierStatus.value
+    // Only retry if there's a tier below that isn't blocked yet
+    const hasLowerTier =
+      (currentUrl.includes('wsrv.nl') && ts.lh3 !== 'blocked') ||
+      (currentUrl.includes('lh3.google') && ts.thumbnail !== 'blocked')
+    if (hasLowerTier) {
+      notifyTierFailed(currentUrl)
+      isLoading.value = true
+      loadError.value = false
+      return
+    }
+  }
+  // No more fallbacks — show error
+  if (currentUrl) notifyTierFailed(currentUrl)
   isLoading.value = false
   loadError.value = true
 }
@@ -606,7 +645,8 @@ watch(currentIndex, () => {
               v-if="currentSpecimen?.image_url"
               v-show="!isLoading && !loadError"
               ref="imageEl"
-              :src="getProxiedUrl(currentSpecimen.image_url)"
+              :src="resolvedImageUrl"
+              referrerpolicy="no-referrer"
               :alt="currentSpecimen.scientific_name"
               class="gallery-image"
               @load="onImageLoad"
@@ -710,9 +750,10 @@ watch(currentIndex, () => {
                 >
                   <img
                     v-if="speciesGroup.subspecies[0]?.individuals[0]?.image_url"
-                    :src="getThumbnailUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
+                    :src="resolvedThumbUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
                     :alt="speciesGroup.name"
                     loading="lazy"
+                    referrerpolicy="no-referrer"
                   />
                   <span class="expand-badge" @click.stop="toggleSpeciesCollapse(speciesGroup.name)" title="Expand group">+</span>
                 </button>
@@ -752,9 +793,10 @@ watch(currentIndex, () => {
                       >
                         <img
                           v-if="subspGroup.individuals[0]?.image_url"
-                          :src="getThumbnailUrl(subspGroup.individuals[0].image_url)"
+                          :src="resolvedThumbUrl(subspGroup.individuals[0].image_url)"
                           :alt="subspGroup.name"
                           loading="lazy"
+                          referrerpolicy="no-referrer"
                         />
                         <span class="expand-badge" @click.stop="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)" title="Expand group">+</span>
                       </button>
@@ -771,9 +813,10 @@ watch(currentIndex, () => {
                         :title="specimen.id"
                       >
                         <img
-                          :src="getThumbnailUrl(specimen.image_url)"
+                          :src="resolvedThumbUrl(specimen.image_url)"
                           :alt="specimen.id"
                           loading="lazy"
+                          referrerpolicy="no-referrer"
                         />
                       </button>
                     </div>
@@ -795,594 +838,5 @@ watch(currentIndex, () => {
   </div>
 </template>
 
-<style scoped>
-.image-gallery {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.95);
-  z-index: 2000;
-  display: flex;
-  flex-direction: column;
-}
 
-/* Close button */
-.btn-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.2s;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-close:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.btn-close svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* Empty state */
-.empty-state {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #888;
-  text-align: center;
-  padding: 40px;
-}
-
-.empty-state svg {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 20px;
-  opacity: 0.5;
-}
-
-.empty-state h3 {
-  font-size: 1.5rem;
-  color: #ccc;
-  margin-bottom: 10px;
-}
-
-.empty-state p {
-  font-size: 1rem;
-  margin-bottom: 24px;
-}
-
-.btn-back {
-  padding: 12px 24px;
-  background: var(--color-accent, #4ade80);
-  border: none;
-  border-radius: 8px;
-  color: #1a1a2e;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-/* Gallery layout with sidebar */
-.gallery-layout {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-}
-
-/* Image viewer wrapper */
-.image-viewer-wrapper {
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Image viewer */
-.image-viewer {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  user-select: none;
-}
-
-.gallery-image {
-  max-width: 90%;
-  max-height: 100%;
-  object-fit: contain;
-  cursor: grab;
-}
-
-.gallery-image:active {
-  cursor: grabbing;
-}
-
-/* Loading */
-.image-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-loading .spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--color-accent, #4ade80);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-/* Error */
-.image-error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #888;
-}
-
-.image-error svg {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 12px;
-}
-
-/* Navigation buttons - positioned within wrapper */
-.nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 80px;
-  background: rgba(0, 0, 0, 0.4);
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-}
-
-.nav-btn:hover:not(:disabled) {
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.nav-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.nav-btn svg {
-  width: 30px;
-  height: 30px;
-}
-
-.nav-prev {
-  left: 0;
-  border-radius: 0 8px 8px 0;
-}
-
-.nav-next {
-  right: 0;
-  border-radius: 8px 0 0 8px;
-}
-
-/* Zoom controls */
-.zoom-controls {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  z-index: 5;
-}
-
-.zoom-controls button {
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.zoom-controls button.reset-btn {
-  width: auto;
-  padding: 0 12px;
-  font-size: 0.8rem;
-}
-
-.zoom-controls button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.zoom-controls button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.zoom-controls button svg {
-  width: 20px;
-  height: 20px;
-}
-
-.zoom-level {
-  font-size: 0.85rem;
-  color: #aaa;
-  min-width: 50px;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Image counter */
-.image-counter {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 0.9rem;
-  color: #888;
-  font-variant-numeric: tabular-nums;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 6px 12px;
-  border-radius: 6px;
-  z-index: 5;
-}
-
-/* Thumbnail strip with grouped layout */
-.thumbnail-strip {
-  display: flex;
-  align-items: stretch;
-  background: rgba(0, 0, 0, 0.7);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  height: 130px;
-}
-
-/* Scroll arrows */
-.scroll-arrow {
-  flex-shrink: 0;
-  width: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  color: #888;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.scroll-arrow:hover {
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-}
-
-.scroll-arrow svg {
-  width: 20px;
-  height: 20px;
-}
-
-.scroll-arrow-left {
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.scroll-arrow-right {
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.thumbnail-scroll {
-  flex: 1;
-  display: flex;
-  align-items: stretch;
-  gap: 2px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-}
-
-/* Species group */
-.species-group {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  background: var(--species-bg, rgba(100, 100, 100, 0.1));
-  border-left: 3px solid var(--species-color, #666);
-  min-width: 80px;
-}
-
-.species-header {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background: rgba(0, 0, 0, 0.3);
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--species-color, #888);
-  font-size: 0.7rem;
-  font-weight: 600;
-  font-style: italic;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-}
-
-.species-header:hover {
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.collapse-icon {
-  width: 12px;
-  height: 12px;
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-
-.collapse-icon.collapsed {
-  transform: rotate(-90deg);
-}
-
-.species-name {
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.species-count {
-  margin-left: auto;
-  padding: 1px 5px;
-  background: var(--species-color, #666);
-  color: #000;
-  font-size: 0.6rem;
-  font-weight: 700;
-  font-style: normal;
-  border-radius: 3px;
-}
-
-.species-content {
-  display: flex;
-  overflow-x: visible;
-  overflow-y: hidden;
-}
-
-/* Preview container for collapsed groups */
-.preview-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  cursor: pointer;
-}
-
-.preview-container:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.preview-thumb {
-  position: relative;
-  width: 90px;
-  height: 90px;
-}
-
-.preview-thumb img {
-  object-fit: contain;
-  background: #222;
-}
-
-.preview-thumb:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.expand-badge {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 20px;
-  text-align: center;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.expand-badge:hover {
-  background: var(--color-accent, #4ade80);
-  color: #000;
-  transform: scale(1.1);
-}
-
-/* Subspecies group */
-.subspecies-group {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  background: var(--subsp-bg, rgba(100, 100, 100, 0.08));
-  border-left: 2px solid var(--subsp-color, #555);
-  min-width: 60px;
-}
-
-.subspecies-header {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  padding: 2px 6px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: var(--subsp-color, #777);
-  font-size: 0.65rem;
-  font-style: italic;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-}
-
-.subspecies-header:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.subspecies-header .collapse-icon {
-  width: 10px;
-  height: 10px;
-}
-
-.subspecies-name {
-  max-width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.subspecies-count {
-  margin-left: auto;
-  padding: 0 4px;
-  background: var(--subsp-color, #555);
-  color: #000;
-  font-size: 0.55rem;
-  font-weight: 700;
-  font-style: normal;
-  border-radius: 2px;
-}
-
-/* Thumbnails container */
-.thumbnails-container {
-  display: flex;
-  align-items: stretch;
-  gap: 4px;
-  padding: 3px;
-  overflow-x: visible;
-  overflow-y: hidden;
-}
-
-.thumbnail {
-  flex-shrink: 0;
-  width: 80px;
-  height: 80px;
-  padding: 0;
-  background: #333;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  cursor: pointer;
-  overflow: hidden;
-  transition: all 0.15s;
-}
-
-.thumbnail:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: scale(1.05);
-}
-
-.thumbnail.active {
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
-}
-
-.thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Scrollbar */
-.thumbnail-scroll::-webkit-scrollbar,
-.species-content::-webkit-scrollbar,
-.thumbnails-container::-webkit-scrollbar {
-  height: 4px;
-}
-
-.thumbnail-scroll::-webkit-scrollbar-track,
-.species-content::-webkit-scrollbar-track,
-.thumbnails-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.thumbnail-scroll::-webkit-scrollbar-thumb,
-.species-content::-webkit-scrollbar-thumb,
-.thumbnails-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-}
-
-.thumbnail-scroll::-webkit-scrollbar-thumb:hover,
-.species-content::-webkit-scrollbar-thumb:hover,
-.thumbnails-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .gallery-sidebar {
-    display: none;
-  }
-
-  .nav-btn {
-    width: 40px;
-    height: 60px;
-  }
-
-  .zoom-controls {
-    bottom: 160px;
-  }
-
-  .image-counter {
-    bottom: 160px;
-  }
-
-  .thumbnail-strip {
-    height: 120px;
-  }
-
-  .species-header {
-    font-size: 0.6rem;
-    padding: 3px 6px;
-  }
-
-  .subspecies-header {
-    font-size: 0.55rem;
-    padding: 2px 4px;
-  }
-
-  .scroll-arrow {
-    width: 28px;
-  }
-
-  .expand-badge {
-    width: 18px;
-    height: 18px;
-    font-size: 12px;
-    line-height: 18px;
-  }
-}
-</style>
+<style scoped src="./image-gallery-styles.css"></style>

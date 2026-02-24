@@ -6,15 +6,19 @@ import {
   Lock,
   Unlock,
   GripVertical,
-  ChevronDown,
   Palette,
+  Layers,
   Type,
-  Circle,
   MapPin,
-  WrapText
+  WrapText,
+  ListOrdered,
+  ArrowLeftRight
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
+import { computePopupPosition } from '../../composables/usePopupPosition'
+import LegendDropdown from './LegendDropdown.vue'
+import LegendColorPicker from './LegendColorPicker.vue'
 
 const props = defineProps({
   isExportMode: {
@@ -23,10 +27,14 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['settings-open', 'settings-close'])
+const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close'])
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
+
+// Dropdown refs
+const colorDropdownRef = ref(null)
+const groupDropdownRef = ref(null)
 
 // Settings panel visibility
 const showSettings = ref(false)
@@ -34,15 +42,52 @@ const settingsButtonRef = ref(null)
 const settingsPanelRef = ref(null)
 const settingsPanelStyle = ref({})
 
-// Color by options
-const colorByOptions = [
-  { value: 'subspecies', label: 'Subspecies' },
-  { value: 'species', label: 'Species' },
-  { value: 'genus', label: 'Genus' },
-  { value: 'status', label: 'Sequencing Status' },
-  { value: 'mimicry', label: 'Mimicry Ring' },
-  { value: 'source', label: 'Data Source' }
+// Color by options with section groups
+const colorByGroups = [
+  {
+    label: 'Taxonomy',
+    options: [
+      { value: 'subspecies', label: 'Subspecies' },
+      { value: 'species', label: 'Species' },
+      { value: 'genus', label: 'Genus' }
+    ]
+  },
+  {
+    label: 'Other',
+    options: [
+      { value: 'status', label: 'Sequencing Status' },
+      { value: 'mimicry', label: 'Mimicry Ring' },
+      { value: 'source', label: 'Data Source' }
+    ]
+  }
 ]
+
+// Group by options structured with optgroups for consistent header style
+const groupByGroups = computed(() => {
+  const raw = legendStore.groupByOptions
+  const groups = []
+  let currentGroup = null
+
+  for (const opt of raw) {
+    if (opt.disabled) {
+      // Header item - start a new optgroup
+      // Extract clean label from "── Taxonomy ──" -> "Taxonomy"
+      const label = opt.label.replace(/[─\s]/g, '').trim() || opt.label
+      currentGroup = { label, options: [] }
+      groups.push(currentGroup)
+    } else if (currentGroup) {
+      currentGroup.options.push(opt)
+    } else {
+      // "None" option before any header - put in a standalone group
+      if (!groups.length || groups[0].label !== '') {
+        groups.unshift({ label: '', options: [] })
+      }
+      groups[0].options.push(opt)
+    }
+  }
+
+  return groups
+})
 
 // Current colorBy
 const colorBy = computed({
@@ -50,15 +95,71 @@ const colorBy = computed({
   set: (value) => { dataStore.colorBy = value }
 })
 
+// Current groupBy
+const groupBy = computed({
+  get: () => legendStore.effectiveGroupBy,
+  set: (value) => {
+    legendStore.setGroupBy(value)
+    // If setting to 'none', disable grouping; otherwise enable it
+    if (value === 'none') {
+      legendStore.setGroupingEnabled(false)
+    } else {
+      legendStore.setGroupingEnabled(true)
+    }
+  }
+})
+
+// Whether to show the group by dropdown (only for taxonomy-based colorBy)
+const showGroupBy = computed(() => {
+  return legendStore.groupByOptions.length > 1
+})
+
+// Valid colorBy values (derived from colorByGroups to stay in sync)
+const validColorByValues = new Set(colorByGroups.flatMap(g => g.options.map(o => o.value)))
+const taxonomyColorBy = new Set(['subspecies', 'species', 'genus'])
+
+// Whether color↔group swap is valid
+const canSwapColorGroup = computed(() => {
+  const currentGroup = groupBy.value
+  if (currentGroup === 'none') return false
+  // groupBy value must be a valid colorBy option (tribe/subfamily/family are not)
+  if (!validColorByValues.has(currentGroup)) return false
+  // If both are taxonomy, swap is invalid (would reverse the hierarchy)
+  if (taxonomyColorBy.has(colorBy.value) && taxonomyColorBy.has(currentGroup)) return false
+  return true
+})
+
+// Swap color and group values
+function swapColorAndGroup() {
+  if (!canSwapColorGroup.value) return
+  const newColor = groupBy.value
+  const newGroup = colorBy.value
+  dataStore.colorBy = newColor
+  legendStore.setGroupBy(newGroup)
+}
+
+// Show species prefix setting when coloring by subspecies
+const showSpeciesPrefixSetting = computed(() => dataStore.colorBy === 'subspecies')
+
+// Prefix format options (shortest to longest)
+const prefixFormatOptions = [
+  { value: 'none', label: 'Hidden' },
+  { value: 'firstLetterBoth', label: 'G. e.' },
+  { value: 'syllableBoth', label: 'Gen. epi.' },
+  { value: 'firstLetterGenus', label: 'G. epithet' },
+  { value: 'syllableGenus', label: 'Gen. epithet' },
+  { value: 'fullSpecies', label: 'Full name' }
+]
+
 // Toggle settings
 function toggleSettings() {
   if (!showSettings.value && settingsButtonRef.value) {
-    // Position the panel near the button
     const rect = settingsButtonRef.value.getBoundingClientRect()
-    settingsPanelStyle.value = {
-      top: `${rect.bottom + 8}px`,
-      left: `${Math.max(10, rect.left - 100)}px`
-    }
+    settingsPanelStyle.value = computePopupPosition(rect, {
+      placement: 'bottom',
+      popupWidth: 300,
+      popupHeight: 500
+    })
     showSettings.value = true
     emit('settings-open')
   } else {
@@ -90,11 +191,6 @@ function updateTextScale(e) {
   legendStore.setTextScale(parseFloat(e.target.value))
 }
 
-// Update legend dot scale
-function updateLegendDotScale(e) {
-  legendStore.setDotScale(parseFloat(e.target.value))
-}
-
 // Update map point size
 function updateMapPointSize(e) {
   dataStore.mapStyle.pointSize = parseInt(e.target.value)
@@ -110,9 +206,10 @@ function updateMapFillOpacity(e) {
   dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
 }
 
-// Update max items
-function updateMaxItems(e) {
-  legendStore.setMaxItems(parseInt(e.target.value))
+// Update manual max-items count
+function handleManualCountInput(e) {
+  const val = parseInt(e.target.value)
+  if (!isNaN(val) && val >= 1) legendStore.setMaxItemsManual(val)
 }
 
 // Click outside handler
@@ -148,18 +245,39 @@ onUnmounted(() => {
     </div>
 
     <!-- Color by dropdown -->
-    <div class="toolbar-item color-by-select">
-      <Palette :size="14" />
-      <select v-model="colorBy" class="color-by-dropdown">
-        <option
-          v-for="option in colorByOptions"
-          :key="option.value"
-          :value="option.value"
-        >
-          {{ option.label }}
-        </option>
-      </select>
-      <ChevronDown :size="12" class="dropdown-icon" />
+    <div class="toolbar-item dropdown-with-label" @click.stop="colorDropdownRef?.open()">
+      <span class="dropdown-label"><Palette :size="11" /> Color</span>
+      <LegendDropdown
+        ref="colorDropdownRef"
+        v-model="colorBy"
+        :groups="colorByGroups"
+        @open="emit('dropdown-open')"
+        @close="emit('dropdown-close')"
+      />
+    </div>
+
+    <!-- Swap color/group button -->
+    <button
+      v-if="showGroupBy"
+      class="swap-button"
+      :class="{ disabled: !canSwapColorGroup }"
+      :disabled="!canSwapColorGroup"
+      title="Swap Color and Group"
+      @click.stop="swapColorAndGroup"
+    >
+      <ArrowLeftRight :size="12" />
+    </button>
+
+    <!-- Group by dropdown -->
+    <div v-if="showGroupBy" class="toolbar-item dropdown-with-label" @click.stop="groupDropdownRef?.open()">
+      <span class="dropdown-label"><Layers :size="11" /> Group</span>
+      <LegendDropdown
+        ref="groupDropdownRef"
+        v-model="groupBy"
+        :groups="groupByGroups"
+        @open="emit('dropdown-open')"
+        @close="emit('dropdown-close')"
+      />
     </div>
 
     <!-- Sticky toggle -->
@@ -224,43 +342,6 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <!-- Legend Dot size -->
-        <div class="settings-row">
-          <label class="settings-label">
-            <Circle :size="14" />
-            Dot Size
-          </label>
-          <div class="settings-control">
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              :value="legendStore.dotScale"
-              @input="updateLegendDotScale"
-            />
-            <span class="value-display">{{ (legendStore.dotScale * 100).toFixed(0) }}%</span>
-          </div>
-        </div>
-
-        <!-- Max items -->
-        <div class="settings-row">
-          <label class="settings-label">
-            Max Items
-          </label>
-          <div class="settings-control">
-            <input
-              type="range"
-              min="5"
-              max="30"
-              step="1"
-              :value="legendStore.maxItems"
-              @input="updateMaxItems"
-            />
-            <span class="value-display">{{ legendStore.maxItems }}</span>
-          </div>
-        </div>
-
         <!-- Divider -->
         <div class="settings-divider"></div>
 
@@ -302,6 +383,56 @@ onUnmounted(() => {
               {{ legendStore.showCounts ? 'ON' : 'OFF' }}
             </button>
             <span class="value-display">per item</span>
+          </div>
+        </div>
+
+        <!-- Species Prefix (when coloring by subspecies) -->
+        <div v-if="showSpeciesPrefixSetting" class="settings-row">
+          <label class="settings-label">
+            <Palette :size="14" />
+            Species Prefix
+          </label>
+          <div class="settings-control">
+            <select
+              class="prefix-format-select"
+              :value="legendStore.prefixFormat"
+              @change="legendStore.setPrefixFormat($event.target.value)"
+            >
+              <option
+                v-for="opt in prefixFormatOptions"
+                :key="opt.value"
+                :value="opt.value"
+              >{{ opt.label }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Max Legend Items -->
+        <div class="settings-row">
+          <label class="settings-label"><ListOrdered :size="14" /> Max Items</label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.isManualMode }"
+              @click="legendStore.toggleMaxItemsMode()"
+            >
+              {{ legendStore.isManualMode ? 'MANUAL' : 'AUTO' }}
+            </button>
+            <span class="value-display">{{ legendStore.isManualMode ? '' : 'fit to size' }}</span>
+          </div>
+        </div>
+        <div v-if="legendStore.isManualMode" class="settings-row manual-count-row">
+          <div class="settings-control">
+            <input
+              type="number"
+              class="manual-count-input"
+              :value="legendStore.maxItemsManual"
+              min="1"
+              max="500"
+              @input="handleManualCountInput"
+              @keydown.enter="$event.target.blur()"
+            />
+            <span class="value-display">items</span>
           </div>
         </div>
 
@@ -374,10 +505,12 @@ onUnmounted(() => {
             Border Color
           </label>
           <div class="settings-control color-control">
-            <input
-              type="color"
-              v-model="dataStore.mapStyle.borderColor"
-              class="color-picker"
+            <LegendColorPicker
+              trigger-type="swatch"
+              :color="dataStore.mapStyle.borderColor"
+              :default-color="'#ffffff'"
+              :show-reset="false"
+              @update:color="dataStore.mapStyle.borderColor = $event"
             />
             <input
               type="text"
@@ -410,12 +543,11 @@ onUnmounted(() => {
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
-  border: 1px solid var(--color-border, #3d3d5c); /* Normal border — NOT accent green */
-  border-bottom: none; /* Merge with legend below */
+  border: 1px solid var(--color-border, #3d3d5c);
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
-  border-radius: 8px 8px 0 0; /* Only round top corners */
+  border-radius: 8px; /* Fully rounded — separate floating element */
   position: absolute;
-  bottom: 100%; /* Position above the legend */
+  bottom: calc(100% + 2px); /* Float above legend with small gap so green border is visible */
   left: -1px; /* Align with legend border */
   /* Let toolbar expand wider than legend so all buttons are reachable */
   right: auto;
@@ -456,38 +588,52 @@ onUnmounted(() => {
   gap: 4px;
 }
 
-.color-by-select {
-  position: relative;
-  padding: 4px 8px;
+.dropdown-with-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 3px 6px;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  cursor: pointer;
 }
 
-.color-by-dropdown {
-  appearance: none;
+.dropdown-label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--color-text-muted, #666);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.swap-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
   background: transparent;
   border: none;
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 12px;
-  cursor: pointer;
-  padding-right: 16px;
-  outline: none;
-}
-
-.color-by-dropdown option {
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.dropdown-icon {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
   color: var(--color-text-muted, #666);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.swap-button:hover:not(.disabled) {
+  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
+  color: var(--color-accent, #4ade80);
+}
+
+.swap-button.disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
 }
 
 .toolbar-button {
@@ -527,7 +673,8 @@ onUnmounted(() => {
   z-index: 1000;
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
   min-width: 280px;
-  max-height: 80vh;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
   overflow-y: auto;
 }
 
@@ -658,23 +805,21 @@ onUnmounted(() => {
   gap: 8px;
 }
 
-.color-picker {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
+.prefix-format-select {
+  flex: 1;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
   cursor: pointer;
-  background: none;
+  appearance: auto;
 }
 
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 2px;
-  border: none;
+.prefix-format-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
 }
 
 .color-input {
@@ -730,6 +875,35 @@ onUnmounted(() => {
   background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
   border-color: var(--color-accent, #4ade80);
   color: var(--color-accent, #4ade80);
+}
+
+/* Manual count input (Max Items) */
+.manual-count-row {
+  margin-top: -4px;
+  padding-left: 20px;
+}
+
+.manual-count-input {
+  width: 70px;
+  padding: 6px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 12px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.manual-count-input::-webkit-inner-spin-button,
+.manual-count-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.manual-count-input:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
 }
 
 /* Transitions */

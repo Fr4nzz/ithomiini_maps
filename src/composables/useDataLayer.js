@@ -208,7 +208,7 @@ export function useDataLayer(map, options = {}) {
     // Remove existing layers/sources
     ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
       'cluster-extent-dynamic-outline', 'cluster-points-layer',
-      'points-layer', 'points-highlight'
+      'points-layer', 'points-highlight', 'heatmap-layer'
     ].forEach(id => removeLayerAndSource(map.value, id))
     ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source'
     ].forEach(id => removeLayerAndSource(map.value, null, id))
@@ -216,18 +216,70 @@ export function useDataLayer(map, options = {}) {
     const geojson = store.displayGeoJSON
     if (!geojson) return
 
-    const shouldCluster = store.clusteringEnabled
+    // Filter out hidden legend items from map data
+    let mapData = geojson
+    if (legendStore.hiddenItems.length > 0) {
+      const colorAttrKey = store.colorByAttribute
+      const hiddenSet = new Set(legendStore.hiddenItems)
+      const visibleFeatures = geojson.features.filter(
+        f => !hiddenSet.has(f.properties[colorAttrKey])
+      )
+      mapData = { type: 'FeatureCollection', features: visibleFeatures }
+    }
+
+    const isHeatmap = store.visualizationMode === 'heatmap'
+    const shouldCluster = store.visualizationMode === 'clusters'
     const settings = store.clusterSettings
     const clusterRadiusPixels = settings.radiusPixels
 
     map.value.addSource('points-source', {
       type: 'geojson',
-      data: geojson,
+      data: mapData,
       cluster: shouldCluster,
       clusterMaxZoom: 14,
       clusterRadius: clusterRadiusPixels,
       clusterMinPoints: 2
     })
+
+    // Heatmap visualization mode
+    if (isHeatmap) {
+      const heatSettings = store.heatmapSettings
+      map.value.addLayer({
+        id: 'heatmap-layer',
+        type: 'heatmap',
+        source: 'points-source',
+        paint: {
+          'heatmap-weight': 1,
+          'heatmap-intensity': [
+            'interpolate', ['linear'], ['zoom'],
+            0, heatSettings.intensity * 0.3,
+            5, heatSettings.intensity * 1,
+            12, heatSettings.intensity * 3
+          ],
+          'heatmap-radius': [
+            'interpolate', ['linear'], ['zoom'],
+            0, heatSettings.radius * 0.3,
+            5, heatSettings.radius * 1,
+            12, heatSettings.radius * 2.5
+          ],
+          'heatmap-color': [
+            'interpolate', ['linear'], ['heatmap-density'],
+            0, 'rgba(0, 0, 0, 0)',
+            0.2, 'rgba(25, 0, 255, 0.4)',
+            0.4, 'rgba(0, 200, 255, 0.6)',
+            0.6, 'rgba(0, 255, 100, 0.7)',
+            0.8, 'rgba(255, 255, 0, 0.8)',
+            1, 'rgba(255, 50, 0, 0.9)'
+          ],
+          'heatmap-opacity': heatSettings.opacity
+        }
+      })
+
+      if (!skipZoom) {
+        fitBoundsToData(geojson)
+      }
+      return
+    }
 
     if (shouldCluster) {
       map.value.addLayer({
@@ -271,11 +323,20 @@ export function useDataLayer(map, options = {}) {
     const colorAttr = store.colorByAttribute
     const style = store.mapStyle
 
+    // Build color expression: items in the legend get their color,
+    // overflow items (in color map but not shown in legend) get grey
+    const shownLabels = legendStore.shownLabels
     const colorExpression = ['match', ['get', colorAttr]]
     Object.entries(colorMap).forEach(([value, color]) => {
-      colorExpression.push(value, color)
+      colorExpression.push(value, shownLabels.size > 0 && !shownLabels.has(value) ? '#6b7280' : color)
     })
     colorExpression.push('#6b7280')
+
+    // Sort key: colored (legend) points render above grey (overflow) points
+    const shownLabelsArray = Array.from(shownLabels)
+    const sortKeyExpression = shownLabelsArray.length > 0
+      ? ['case', ['in', ['get', colorAttr], ['literal', shownLabelsArray]], 1, 0]
+      : 1
 
     const baseSize = style.pointSize
     const sizeExpression = [
@@ -355,7 +416,8 @@ export function useDataLayer(map, options = {}) {
           'icon-image': iconImageExpression,
           'icon-size': iconSizeExpression,
           'icon-allow-overlap': true,
-          'icon-ignore-placement': true
+          'icon-ignore-placement': true,
+          'symbol-sort-key': sortKeyExpression
         },
         paint: { 'icon-opacity': style.fillOpacity }
       })
@@ -365,6 +427,9 @@ export function useDataLayer(map, options = {}) {
         type: 'circle',
         source: 'points-source',
         filter: shouldCluster ? ['!', ['has', 'point_count']] : ['all'],
+        layout: {
+          'circle-sort-key': sortKeyExpression
+        },
         paint: {
           'circle-radius': sizeExpression,
           'circle-color': colorExpression,

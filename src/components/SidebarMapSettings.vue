@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 import { useDataStore } from '../stores/data'
 import { useLegendStore } from '../stores/legend'
 import { Eye, EyeOff } from 'lucide-vue-next'
@@ -7,86 +6,116 @@ import { Eye, EyeOff } from 'lucide-vue-next'
 const store = useDataStore()
 const legendStore = useLegendStore()
 
-// UI state for collapsible sections
-const showClusterSettings = ref(false)
-
 // Toggle legend visibility
 function toggleLegend() {
   legendStore.showLegend = !legendStore.showLegend
   store.legendSettings.showLegend = legendStore.showLegend
 }
+
+function resetHeatmapSettings() {
+  store.heatmapSettings = { ...store.DEFAULT_HEATMAP_SETTINGS }
+}
 </script>
 
 <template>
-  <!-- Scatter Overlapping Points -->
+  <!-- Visualization Mode -->
   <div class="filter-section">
-    <label class="toggle-row scatter-toggle">
-      <input type="checkbox" v-model="store.scatterOverlappingPoints" />
-      <span>Scatter overlapping points</span>
-    </label>
-    <p class="filter-hint">
-      Evenly distribute overlapping points within 2.5km radius with connecting lines
-    </p>
-  </div>
-
-  <!-- Clustering Settings -->
-  <div class="filter-section collapsible">
-    <button
-      class="collapse-toggle"
-      @click="showClusterSettings = !showClusterSettings"
-      :class="{ expanded: showClusterSettings }"
-    >
+    <label class="section-label">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m9 18 6-6-6-6"/>
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
       </svg>
-      Point Clustering
-      <span
-        class="toggle-badge"
-        :class="{ active: store.clusteringEnabled }"
-        @click.stop="store.clusteringEnabled = !store.clusteringEnabled"
-        title="Click to toggle clustering"
-      >
-        {{ store.clusteringEnabled ? 'ON' : 'OFF' }}
-      </span>
-    </button>
+      Visualization
+    </label>
+    <div class="viz-mode-toggle">
+      <button
+        :class="{ active: store.visualizationMode === 'points' }"
+        @click="store.visualizationMode = 'points'"
+      >Points</button>
+      <button
+        :class="{ active: store.visualizationMode === 'clusters' }"
+        @click="store.visualizationMode = 'clusters'"
+      >Clusters</button>
+      <button
+        :class="{ active: store.visualizationMode === 'heatmap' }"
+        @click="store.visualizationMode = 'heatmap'"
+      >Heatmap</button>
+    </div>
 
-    <div v-show="showClusterSettings" class="collapse-content">
-      <p class="filter-hint" style="margin-top: 0; margin-bottom: 12px;">
+    <!-- Points settings -->
+    <div v-if="store.visualizationMode === 'points'" style="margin-top: 12px;">
+      <label class="toggle-row scatter-toggle">
+        <input type="checkbox" v-model="store.scatterOverlappingPoints" />
+        <span>Scatter overlapping points</span>
+      </label>
+      <p class="filter-hint">
+        Evenly distribute overlapping points within 2.5km radius with connecting lines
+      </p>
+    </div>
+
+    <!-- Clusters settings -->
+    <div v-if="store.visualizationMode === 'clusters'" class="settings-panel" style="margin-top: 12px;">
+      <p class="filter-hint" style="margin-top: 0; margin-bottom: 8px;">
         Groups nearby points into clusters. Click a cluster to view all points.
       </p>
-
-      <div v-if="store.clusteringEnabled" class="settings-panel">
-        <div class="setting-row">
-          <label>Cluster Radius <span class="unit-label">(pixels)</span></label>
-          <div class="slider-group">
-            <input
-              type="range"
-              min="20"
-              max="200"
-              step="10"
-              v-model.number="store.clusterSettings.radiusPixels"
-            />
-            <input
-              type="number"
-              class="setting-input"
-              min="10"
-              max="500"
-              v-model.number.lazy="store.clusterSettings.radiusPixels"
-              @keydown.enter="$event.target.blur()"
-            />
-          </div>
-          <p class="count-mode-hint">
-            Points within this pixel distance are grouped into clusters.
-            Lower values create more clusters; higher values merge nearby points.
-          </p>
+      <div class="setting-row">
+        <label>Cluster Radius <span class="unit-label">(pixels)</span></label>
+        <div class="slider-group">
+          <input
+            type="range"
+            min="20"
+            max="200"
+            step="10"
+            v-model.number="store.clusterSettings.radiusPixels"
+          />
+          <input
+            type="number"
+            class="setting-input"
+            min="10"
+            max="500"
+            v-model.number.lazy="store.clusterSettings.radiusPixels"
+            @keydown.enter="$event.target.blur()"
+          />
         </div>
-
-        <label class="toggle-row cluster-points-toggle">
-          <input type="checkbox" v-model="store.clusterSettings.showClusterPoints" />
-          <span>Show points of selected cluster</span>
-        </label>
-
+        <p class="count-mode-hint">
+          Points within this pixel distance are grouped into clusters.
+          Lower values create more clusters; higher values merge nearby points.
+        </p>
       </div>
+
+      <label class="toggle-row cluster-points-toggle">
+        <input type="checkbox" v-model="store.clusterSettings.showClusterPoints" />
+        <span>Show points of selected cluster</span>
+      </label>
+    </div>
+
+    <!-- Heatmap settings -->
+    <div v-if="store.visualizationMode === 'heatmap'" class="settings-panel" style="margin-top: 12px;">
+      <div class="setting-row">
+        <label>Radius</label>
+        <div class="slider-group">
+          <input type="range" min="5" max="50" step="1" v-model.number="store.heatmapSettings.radius" />
+          <span class="slider-value">{{ store.heatmapSettings.radius }}px</span>
+        </div>
+      </div>
+      <div class="setting-row">
+        <label>Intensity</label>
+        <div class="slider-group">
+          <input type="range" min="0.1" max="3" step="0.1" v-model.number="store.heatmapSettings.intensity" />
+          <span class="slider-value">{{ store.heatmapSettings.intensity.toFixed(1) }}</span>
+        </div>
+      </div>
+      <div class="setting-row">
+        <label>Opacity</label>
+        <div class="slider-group">
+          <input type="range" min="0" max="1" step="0.05" v-model.number="store.heatmapSettings.opacity" />
+          <span class="slider-value">{{ Math.round(store.heatmapSettings.opacity * 100) }}%</span>
+        </div>
+      </div>
+      <button class="btn-reset-heatmap" @click="resetHeatmapSettings">
+        Reset to defaults
+      </button>
     </div>
   </div>
 
@@ -111,6 +140,62 @@ function toggleLegend() {
 <style scoped>
 .filter-section {
   margin-bottom: 20px;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary, #aaa);
+  margin-bottom: 10px;
+}
+
+.section-label svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+}
+
+.viz-mode-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.viz-mode-toggle button {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.viz-mode-toggle button:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.viz-mode-toggle button.active {
+  background: var(--color-accent, #4ade80);
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+}
+
+.slider-value {
+  min-width: 45px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent, #4ade80);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .filter-hint {
@@ -170,77 +255,7 @@ function toggleLegend() {
   border-color: rgba(74, 222, 128, 0.3);
 }
 
-/* Collapsible Sections */
-.collapsible {
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 8px;
-}
-
-.collapse-toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: none;
-  color: var(--color-text-secondary, #aaa);
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.collapse-toggle:hover {
-  background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-.collapse-toggle svg {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s;
-}
-
-.collapse-toggle.expanded svg {
-  transform: rotate(90deg);
-}
-
-.collapse-content {
-  padding: 12px 14px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-}
-
 /* Toggle Badges */
-.toggle-badge {
-  margin-left: auto;
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: rgba(107, 114, 128, 0.2);
-  color: #888;
-  border: 1px solid transparent;
-}
-
-.toggle-badge:hover {
-  background: rgba(107, 114, 128, 0.3);
-  border-color: rgba(107, 114, 128, 0.4);
-}
-
-.toggle-badge.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  border-color: rgba(74, 222, 128, 0.3);
-}
-
-.toggle-badge.active:hover {
-  background: rgba(74, 222, 128, 0.25);
-  border-color: rgba(74, 222, 128, 0.5);
-}
-
 .toggle-badge-inline {
   margin-left: auto;
   padding: 2px 8px;
@@ -269,7 +284,6 @@ function toggleLegend() {
   background: rgba(74, 222, 128, 0.25);
   border-color: rgba(74, 222, 128, 0.5);
 }
-
 
 /* Settings Panel & Rows */
 .settings-panel {
@@ -381,4 +395,23 @@ function toggleLegend() {
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
+/* Reset Heatmap Button */
+.btn-reset-heatmap {
+  width: 100%;
+  padding: 6px 12px;
+  margin-top: 4px;
+  background: transparent;
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-reset-heatmap:hover {
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-primary, #e0e0e0);
+  border-color: var(--color-text-muted, #666);
+}
 </style>

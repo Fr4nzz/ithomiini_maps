@@ -20,23 +20,6 @@ const SPECIES_BORDER_PALETTE = [
   '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#000000',
 ]
 
-// Base hues for species color gradients (evenly distributed on color wheel)
-const SPECIES_HUE_PALETTE = [
-  210, 120, 30, 270, 180, 330, 60, 300, 150, 0,
-]
-
-export function hslToHex(h, s, l) {
-  s /= 100
-  l /= 100
-  const a = s * Math.min(l, 1 - l)
-  const f = n => {
-    const k = (n + h / 30) % 12
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)
-    return Math.round(255 * color).toString(16).padStart(2, '0')
-  }
-  return `#${f(0)}${f(8)}${f(4)}`
-}
-
 export function generateSpeciesBorderColors(speciesList, existing = {}) {
   const result = { ...existing }
   let colorIndex = 0
@@ -49,75 +32,4 @@ export function generateSpeciesBorderColors(speciesList, existing = {}) {
   }
 
   return result
-}
-
-export function generateSpeciesBaseHues(speciesList, existing = {}) {
-  const result = { ...existing }
-  let hueIndex = 0
-
-  for (const species of speciesList) {
-    if (result[species] === undefined) {
-      result[species] = SPECIES_HUE_PALETTE[hueIndex % SPECIES_HUE_PALETTE.length]
-      hueIndex++
-    }
-  }
-
-  return result
-}
-
-export function generateSpeciesGradientColors(subspeciesList, baseHue) {
-  const colors = {}
-  const count = subspeciesList.length
-  const saturation = 70
-  const lightnessRange = [60, 45, 30]
-
-  subspeciesList.forEach((subspecies, index) => {
-    const position = count > 1 ? index / (count - 1) : 0.5
-
-    let lightness
-    if (position <= 0.5) {
-      const t = position * 2
-      lightness = lightnessRange[0] + (lightnessRange[1] - lightnessRange[0]) * t
-    } else {
-      const t = (position - 0.5) * 2
-      lightness = lightnessRange[1] + (lightnessRange[2] - lightnessRange[1]) * t
-    }
-
-    // Small hue variation for additional distinction (+-15 degrees max)
-    const hueOffset = (position - 0.5) * 30
-    const hue = (baseHue + hueOffset + 360) % 360
-
-    colors[subspecies] = hslToHex(hue, saturation, lightness)
-  })
-
-  return colors
-}
-
-export function generate3ColorPreview(baseHue) {
-  const saturation = 70
-  const lightnessRange = [60, 45, 30]
-  const hueOffsets = [-15, 0, 15]
-
-  return lightnessRange.map((lightness, i) => {
-    const hue = (baseHue + hueOffsets[i] + 360) % 360
-    return hslToHex(hue, saturation, lightness)
-  })
-}
-
-export function generateGroupedColorMap(speciesSubspeciesMap, hueAssignments, customColors = {}) {
-  const colorMap = {}
-  const speciesList = Object.keys(speciesSubspeciesMap).sort()
-  const hues = generateSpeciesBaseHues(speciesList, hueAssignments)
-
-  for (const species of speciesList) {
-    const subspecies = speciesSubspeciesMap[species]
-    const baseHue = hues[species]
-    const speciesColors = generateSpeciesGradientColors(subspecies, baseHue)
-
-    for (const ssp of subspecies) {
-      colorMap[ssp] = customColors[ssp] || speciesColors[ssp]
-    }
-  }
-
-  return colorMap
 }

@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { SHAPE_OPTIONS } from '../../utils/shapes'
-import { generate3ColorPreview } from '../../utils/colors'
+import LegendColorPicker from './LegendColorPicker.vue'
 
 const props = defineProps({
   open: {
@@ -20,14 +20,6 @@ const props = defineProps({
     type: String,
     default: '#ffffff'
   },
-  baseHue: {
-    type: Number,
-    default: 210
-  },
-  useGradient: {
-    type: Boolean,
-    default: false
-  },
   position: {
     type: Object,
     default: () => ({ x: 0, y: 0 })
@@ -37,24 +29,8 @@ const props = defineProps({
 const emit = defineEmits([
   'close',
   'update:shape',
-  'update:borderColor',
-  'update:hue',
-  'update:useGradient'
+  'update:borderColor'
 ])
-
-// Local hue for slider (updates on input, emits on change)
-const localHue = ref(props.baseHue)
-
-// Gradient preview colors
-const gradientColors = computed(() => generate3ColorPreview(localHue.value))
-
-// Gradient CSS style
-const gradientStyle = computed(() => {
-  const [light, medium, dark] = gradientColors.value
-  return {
-    background: `linear-gradient(to right, ${light}, ${medium}, ${dark})`
-  }
-})
 
 // Position style for popup
 const positionStyle = computed(() => ({
@@ -71,19 +47,9 @@ const displayName = computed(() => {
   return props.groupName
 })
 
-// Handle hue slider input (preview only)
-function handleHueInput(e) {
-  localHue.value = parseInt(e.target.value)
-}
-
-// Handle hue slider change (commit)
-function handleHueChange(e) {
-  emit('update:hue', parseInt(e.target.value))
-}
-
 // Click outside handler
 function handleClickOutside(e) {
-  if (!e.target.closest('.group-style-popup')) {
+  if (!e.target.closest('.group-style-popup') && !e.target.closest('.picker-popover')) {
     emit('close')
   }
 }
@@ -132,11 +98,12 @@ onUnmounted(() => {
         <div class="style-section">
           <label class="section-label">Border Color</label>
           <div class="color-picker-row">
-            <input
-              type="color"
-              class="color-picker"
-              :value="borderColor"
-              @input="emit('update:borderColor', $event.target.value)"
+            <LegendColorPicker
+              trigger-type="swatch"
+              :color="borderColor"
+              :default-color="'#ffffff'"
+              :show-reset="false"
+              @update:color="emit('update:borderColor', $event)"
             />
             <input
               type="text"
@@ -144,37 +111,6 @@ onUnmounted(() => {
               :value="borderColor"
               @input="emit('update:borderColor', $event.target.value)"
             />
-          </div>
-        </div>
-
-        <!-- Gradient picker -->
-        <div class="style-section">
-          <div class="section-header">
-            <label class="section-label">Color Gradient</label>
-            <label class="checkbox-label">
-              <input
-                type="checkbox"
-                :checked="useGradient"
-                @change="emit('update:useGradient', $event.target.checked)"
-              />
-              <span>Enable</span>
-            </label>
-          </div>
-          <div class="gradient-controls" :class="{ disabled: !useGradient }">
-            <div class="gradient-preview" :style="gradientStyle"></div>
-            <div class="hue-slider-row">
-              <input
-                type="range"
-                class="hue-slider"
-                min="0"
-                max="360"
-                :value="localHue"
-                :disabled="!useGradient"
-                @input="handleHueInput"
-                @change="handleHueChange"
-              />
-              <span class="hue-value">{{ localHue }}°</span>
-            </div>
           </div>
         </div>
       </div>
@@ -245,40 +181,6 @@ onUnmounted(() => {
   color: var(--color-text-muted, #666);
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--color-text-secondary, #aaa);
-  cursor: pointer;
-}
-
-.checkbox-label input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
-  cursor: pointer;
-  accent-color: var(--color-accent, #4ade80);
-}
-
-.gradient-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: opacity 0.15s ease;
-}
-
-.gradient-controls.disabled {
-  opacity: 0.4;
-  pointer-events: none;
-}
-
 /* Shape options */
 .shape-options {
   display: flex;
@@ -311,30 +213,11 @@ onUnmounted(() => {
   color: var(--color-accent, #4ade80);
 }
 
-/* Color picker */
+/* Color picker row */
 .color-picker-row {
   display: flex;
   gap: 8px;
   align-items: center;
-}
-
-.color-picker {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 2px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  cursor: pointer;
-  background: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.color-picker::-webkit-color-swatch {
-  border-radius: 3px;
-  border: none;
 }
 
 .color-input {
@@ -352,55 +235,5 @@ onUnmounted(() => {
 .color-input:focus {
   outline: none;
   border-color: var(--color-accent, #4ade80);
-}
-
-/* Gradient preview */
-.gradient-preview {
-  height: 24px;
-  border-radius: 6px;
-  border: 1px solid var(--color-border, #3d3d5c);
-}
-
-.hue-slider-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.hue-slider {
-  flex: 1;
-  height: 6px;
-  appearance: none;
-  border-radius: 3px;
-  background: linear-gradient(
-    to right,
-    hsl(0, 70%, 50%),
-    hsl(60, 70%, 50%),
-    hsl(120, 70%, 50%),
-    hsl(180, 70%, 50%),
-    hsl(240, 70%, 50%),
-    hsl(300, 70%, 50%),
-    hsl(360, 70%, 50%)
-  );
-  cursor: pointer;
-}
-
-.hue-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 2px solid var(--color-text-primary, #e0e0e0);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.hue-value {
-  font-size: 11px;
-  color: var(--color-text-muted, #666);
-  font-family: monospace;
-  min-width: 36px;
-  text-align: right;
 }
 </style>
