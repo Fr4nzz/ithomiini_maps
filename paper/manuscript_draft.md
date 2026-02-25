@@ -100,7 +100,7 @@ The application deploys through GitHub Actions. Code changes trigger an automate
 
 ## 3.1 Data Summary
 
-The platform integrates 104,382 occurrence records from five data sources (Table 1). The largest contributors are the Dore et al. (2023) dataset (28,927 records), GBIF records from non-UNAM institutions (27,819), and the UNAM museum collections (21,586). iNaturalist contributes 19,328 research-grade observations, and the Sanger Institute collection adds 6,722 specimens with sequencing status data. The merged dataset spans 751 species, 1,365 subspecies, and 178 genera across 33 countries.
+The platform integrates 104,382 occurrence records from five data sources (Table 1). The largest contributors are the Dore et al. (2023) dataset (28,927 records), GBIF records from other institutions (27,819), and the UNAM museum collections (21,586). iNaturalist contributes 19,328 research-grade observations, and the Sanger Institute collection adds 6,722 specimens with sequencing status data. The merged dataset spans 751 species, 1,365 subspecies, and 178 genera across 33 countries.
 
 **Table 1.** Data sources integrated in Ithomiini Maps. GBIF data (DOI: https://doi.org/10.15468/dl.pbs3eu) were pre-filtered for valid coordinates, no geospatial issues, confirmed presence, and excluding fossils and living specimens.
 
