@@ -109,7 +109,7 @@ Clone into `paper/external_repos/` (gitignored):
 ## Writing Style Guidelines
 
 ### Voice and Register
-- Active voice, not passive. Replace vague/fuzzy verbs with specific, energizing, informative ones.
+- Prefer active voice, but use passive when it is shorter or sounds more natural. Replace vague/fuzzy verbs with specific, informative ones, but only when the result sounds human (not mechanical).
 - Common English words (authors are non-native speakers, text should sound natural and human-made).
 - Technical terms allowed but explain niche concepts so text is didactic.
 - Avoid jargon, em dashes, overuse of lists/tables. Prefer flowing paragraphs.
