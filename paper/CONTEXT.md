@@ -6,7 +6,7 @@ This file preserves project context for the manuscript about the Ithomiini toolk
 
 Three connected open-source apps covering the specimen-to-map pipeline for Ithomiini butterflies:
 1. **AI Photo Processor** — Desktop app (Python/PyQt5) using Google Gemini AI to batch-read handwritten specimen IDs from wing photos and auto-rename files. Repo: https://github.com/Fr4nzz/rename_photos_AI
-2. **Wings Gallery** — Serverless Vue.js gallery for browsing/filtering/sharing wing photos stored on Google Cloud. Repo: https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery
+2. **Wings Gallery** — Serverless Vue.js gallery for browsing/filtering/sharing wing photos stored on Google Drive. Repo: https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery
 3. **Ithomiini Maps** — Interactive Vue.js/MapLibre mapping platform aggregating occurrence records from Dore et al., Sanger Institute, GBIF, iNaturalist, UNAM. Repo: https://github.com/rapidspeciation/ithomiini_maps (main repo, this one)
 
 All hosted on GitHub Pages (free, serverless). Data pipelines run via GitHub Actions.
@@ -68,11 +68,31 @@ Feature requests (most now implemented):
 - Historical climate data integration (ERA5-Land models)
 - Fix cluster number confusion
 
-## Manuscript Versions
+## Manuscript
 
-- `manuscript_draft.md` through `manuscript_draft_v4.md` — old versions, ignore
-- `manuscript_draft_v5.md` — current working version, base for v6
-- Target: produce `manuscript_draft_v6.md` with improvements
+- `manuscript_draft.md` — current working version (single file, old versions deleted, history in git)
+
+## Project Development Phases (Original Proposal)
+
+Three incremental phases over 2-3 months (Dec 2024 - Feb 2025):
+- **Month 1 (Core):** Map engine (Vue.js/Leaflet), taxonomy + CAMID + sequencing status filters, data pipeline (Python/Pandas), GitHub Pages deployment.
+- **Month 2 (Scientific Utilities):** GBIF integration, mimicry ring filters, URL sharing, specimen image viewing, data tables, citation generation, export.
+- **Month 3 (Advanced/Paper):** Taxonomic consistency handling, temporal analysis, species distribution modeling (SDMs), historical satellite layers, publication-ready maps.
+
+Franz proposed budget: $900 USD/month, half-time (concurrent with Master's thesis on Insect AI taxonomic ID at USFQ).
+
+## Project Importance (from proposal)
+
+- Centralizes validated data from multiple sources (iNaturalist, GBIF, unpublished)
+- Facilitates strategic species selection for research (sympatric/allopatric, endemism)
+- Aids fieldwork planning based on historical abundance and accessibility
+- Visualizes evolutionary patterns (gene flow, divergence, speciation)
+- Generates publication-ready maps without GIS software
+- Enables temporal analysis for climate change / urbanization studies
+
+## Background Note
+
+Franz's nephew originally planned this as undergraduate thesis but changed topic due to rigid tutor requirements (complex login protocols, no R/Shiny). Franz took over using Vue.js + GitHub Pages approach already proven with the Wings Gallery migration.
 
 ## Related Files in paper/
 
@@ -117,11 +137,18 @@ Clone into `paper/external_repos/` (gitignored):
 - Don't convert natural phrasing into nominalized jargon
 - Don't eliminate sentence length variation
 
-## Key Improvement for v6
+## Key Improvements Applied (v5 to current)
 
-Patricio's main concern: the paper reads like a software paper, but TLR publishes biology. The v6 must:
-1. **Expand research use cases** — Show how the platform enables specific biological questions (mimicry ring biogeography, sequencing gap analysis, species range overlap, etc.)
-2. **Add biological context** — More about Ithomiini ecology, why these tools matter for evolutionary biology
-3. **Reduce software architecture detail** — Keep enough for reproducibility but trim implementation specifics
-4. **Reference the Photos Processing Protocol** — Cite as separate publication (protocols.io, in prep) rather than duplicating content
-5. **Energize the writing** — Active voice, specific verbs, flowing paragraphs, funnel structure
+Patricio's main concern was addressed: paper was too software-focused for TLR (biology journal). Changes made:
+1. **Expanded research use cases** — Added Section 3.5 with mimicry ring biogeography, sequencing gap analysis, taxonomic verification, cross-source comparison
+2. **Added biological context** — More Ithomiini ecology, why tools matter for evolutionary biology
+3. **Reduced software architecture detail** — Trimmed implementation specifics, kept reproducibility info
+4. **Referenced Photos Processing Protocol** — Cited as separate publication (Chandi et al., in prep)
+5. **Energized writing** — Active voice, specific verbs, flowing paragraphs, funnel structure
+6. **Fixed factual errors** — Google Drive (not Cloud), 5 tabs (not 4), Gemini 3 Flash model name
+7. **Removed multi-API key rotation mention** — Potentially against Google TOS
+
+## Additional Reference Papers
+
+- Rosser & Mallet (2024) "Interactive maps for visualizing geographic distributions and phenotypes" — TLR, 34(1), 26-30 (saved as md in paper/)
+- Rosser et al. (2012) "Testing historical explanations for gradients in species richness in heliconiine butterflies of tropical America" — Biol J Linn Soc, 105(3), 479-497
