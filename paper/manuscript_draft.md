@@ -64,6 +64,8 @@ The gallery supports simultaneous zooming of all displayed images (via Shift+scr
 
 A central question in Ithomiini research is how mimicry ring distributions relate to geography, climate, and species ranges. Answering this question requires mapping thousands of occurrence records from sources that use different taxonomic names, different data formats, and different quality standards. Researchers also need to identify which species have been sequenced, where tissue samples are available, and how these genomic resources overlap with known distributions. Existing tools either require GIS expertise (QGIS, ArcGIS) or substantial programming effort in R to merge different datasets, curate taxonomic inconsistencies, and produce publication-ready maps, a process that can take considerable time even for experienced analysts. None of these general-purpose tools include mimicry ring classifications such as those published by Dore et al. (2023). Moreover, the platform provides access to specimen data that are still being prepared for publication and may take years before they become available through aggregators like GBIF, allowing researchers to work with the most current information from ongoing projects.
 
+### Data Sources and Processing Pipeline
+
 The Ithomiini Maps platform (https://rapidspeciation.github.io/ithomiini_maps/) consolidates five data sources into a single interface:
 
 **Dore et al. (2023) published records.** An Excel file containing 28,927 georeferenced occurrence records with full taxonomic classification, mimicry ring assignments for males and females, and observation metadata. This dataset provides the lookup table used to assign mimicry ring data to records from other sources.
@@ -74,9 +76,13 @@ The Ithomiini Maps platform (https://rapidspeciation.github.io/ithomiini_maps/) 
 
 **Data merging.** The processing pipeline loads all five sources, standardizes field names, and applies consistent taxonomic formatting. A mimicry ring lookup table built from the Dore et al. (2023) dataset links each species-subspecies pair to its male and female mimicry ring values. This lookup is then applied to Sanger Institute and GBIF records, first trying an exact match on species and subspecies, then falling back to a species-only match. This ensures mimicry ring data are available even for records that lack subspecies identification.
 
+### Taxonomic Curation
+
 Combining records from different sources requires resolving taxonomic inconsistencies: synonyms, misspellings, and outdated names. The curation pipeline processes each unique scientific name through multiple steps. First, known misspellings and reclassifications are corrected using a manually maintained corrections file. Second, names are checked against the GBIF backbone taxonomy; exact matches are accepted and synonyms are resolved to their currently accepted name. Third, names that GBIF cannot resolve are checked against a reference taxonomy compiled from Butterflies of America (Warren et al., 2023) and nymphalidae.net. Fourth, a similar process handles subspecies names, including edit-distance comparison to detect likely typographical errors.
 
 Each curated record includes a curation_basis field that documents how the name was resolved (e.g., "GBIF exact match," "GBIF synonym," "Reference taxonomy"), ensuring full traceability. Original names are preserved alongside corrected versions, and researchers can review all corrections in the data table. If corrections are confirmed as accurate, researchers can update the original databases accordingly. The number of corrections reported here may therefore decrease in future versions as upstream sources incorporate these fixes.
+
+### Web Interface
 
 The web interface uses Vue.js with MapLibre GL JS, a mapping library optimized for rendering tens of thousands of points smoothly. Researchers can choose from five base map styles (Dark, Light, Satellite, Terrain, and Streets). At low zoom levels, nearby points are grouped into clusters showing the number of records; clicking a cluster expands it to reveal individual points colored according to the active legend.
 
@@ -85,6 +91,8 @@ The sidebar organizes filters by category: cascading taxonomic filters from Fami
 Clicking a map point opens a popup showing specimen metadata, taxonomic classification, sequencing status, and a wing photograph when available. If no photograph exists for a specific individual, the system displays one from another individual of the same species or subspecies as a reference. A full-screen image gallery allows detailed examination with zoom, pan, and keyboard navigation. A sortable, paginated data table shows all records matching the current filters, with photo thumbnails and adjustable column visibility.
 
 The application exports the current map view as a high-resolution image (PNG or JPG, up to 300 DPI) suitable for publications, with customizable legend position, aspect ratio, and scale bar. For researchers who prefer to work in R, it generates a complete R/ggplot2 package as a ZIP file containing the filtered data as GeoJSON, map settings, legend configuration, a basemap image, and a ready-to-run R script that recreates the map as a vector graphic (PDF or SVG). The export panel also provides CSV and GeoJSON downloads of the filtered dataset, along with a formatted scientific citation that includes the Git commit hash for precise reproducibility.
+
+### Deployment
 
 The application deploys through GitHub Actions. Code changes trigger an automated build-and-publish workflow. A separate workflow can be triggered manually to refresh occurrence data, and team members can choose which sources to update (GBIF, Sanger Institute, or both). Since everything runs on GitHub's servers, no physical computer or paid hosting is needed. The application is accessible at https://rapidspeciation.github.io/ithomiini_maps/.
 
