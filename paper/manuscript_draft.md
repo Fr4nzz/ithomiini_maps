@@ -121,18 +121,17 @@ Of the 6,722 Sanger Institute specimens, 4,183 (62.2%) have been sequenced, 1,11
 
 ## 3.3 Taxonomic Curation
 
-As of February 2026, the automated curation pipeline resolved the taxonomy for all 104,382 records (Table 2). The majority (94.5%) were resolved through the GBIF backbone taxonomy cache, 3.6% through the reference taxonomy (Butterflies of America, nymphalidae.net), 0.8% required live GBIF API queries, 0.3% were synonyms resolved to their accepted names, and 0.2% were corrected through typographical error detection. In total, the pipeline actively corrected 2,396 records: 2,142 synonym resolutions, 202 typographical error corrections, 48 subspecies synonym resolutions, and 6 literature-based corrections. Of all curated records, 71.1% matched exactly, 11.9% were classified as nominotypical subspecies, and 2.1% had synonyms resolved. Only 0.6% could only be matched at a higher taxonomic rank, and just 2 records remained unresolved.
+As of February 2026, the automated curation pipeline resolved the taxonomy for all 104,382 records. Of the 797 species in the dataset, most were resolved through the GBIF backbone taxonomy (621 species), with the remainder resolved through the reference taxonomy compiled from Butterflies of America and nymphalidae.net (121 species), live GBIF API queries (51 species), or manual corrections. In total, the pipeline actively corrected 69 species and 82 subspecies, affecting 2,398 records (Table 2). The largest category was synonym resolution, where outdated species names were mapped to their currently accepted names. Typographical error detection identified misspelled subspecies names through edit-distance comparison. Only 2 records remained unresolved.
 
-**Table 2.** Taxonomic curation results. Curation basis indicates the method used to resolve each record's taxonomy.
+**Table 2.** Taxonomic corrections applied by the curation pipeline, counted per unique taxon. Some taxa appear in multiple categories; totals are deduplicated.
 
-| Curation Basis | Records | Percentage |
-| :---- | ----: | ----: |
-| GBIF backbone cache | 98,589 | 94.5% |
-| Reference taxonomy (BoA / nymphalidae.net) | 3,739 | 3.6% |
-| GBIF API (live query) | 853 | 0.8% |
-| GBIF synonym resolution | 263 | 0.3% |
-| Typographical error detection | 202 | 0.2% |
-| Literature corrections | 4 | <0.1% |
+| Correction Type | Species | Subspecies | Records Affected |
+| :---- | ----: | ----: | ----: |
+| Synonym resolution | 52 | 59 | 2,142 |
+| Typographical error detection | 16 | 18 | 202 |
+| Subspecies synonym resolution | 4 | 4 | 48 |
+| Literature-based correction | 3 | 2 | 6 |
+| **Total unique corrected** | **69** | **82** | **2,398** |
 
 ## 3.4 Mimicry Ring Coverage
 
