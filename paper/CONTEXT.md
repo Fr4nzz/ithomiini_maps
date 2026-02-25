@@ -109,32 +109,34 @@ Clone into `paper/external_repos/` (gitignored):
 ## Writing Style Guidelines
 
 ### Voice and Register
-- Active voice, not passive. Replace vague verbs with specific, energizing ones.
-- Common English words (authors are non-native speakers, text should sound natural).
+- Active voice, not passive. Replace vague/fuzzy verbs with specific, energizing, informative ones.
+- Common English words (authors are non-native speakers, text should sound natural and human-made).
 - Technical terms allowed but explain niche concepts so text is didactic.
 - Avoid jargon, em dashes, overuse of lists/tables. Prefer flowing paragraphs.
+- Remove information not relevant to a biology audience (per Patricio's feedback: TLR readers care about research applications, not software architecture).
 
 ### Structure
-- **Funnel shape:** Broad introduction, narrow to specifics, widen again in conclusion.
-- Each paragraph starts with a topic sentence and ends with a conclusion.
-- Each section poses a problem that creates curiosity, then satisfies it with a solution.
-- Manuscript as a whole follows the same problem-solution arc.
+- **Funnel shape:** Broad introduction, narrow to specifics, widen again in conclusion so the discussion supports the conclusion's broad impact.
+- Each paragraph starts with a topic sentence that introduces what the paragraph is about and ends with a conclusion.
+- Each section (and the manuscript as a whole) poses a problem that creates curiosity, then satisfies it with a solution/answer. Open-ended problems are fine.
+- Manuscript follows a problem-solution arc at every level: whole paper, each section, each paragraph.
 
 ### Conciseness Techniques (Human, Not AI)
 1. **Replace vague magnifiers with precise data** (or remove redundant data). Pick the right detail, don't strip all detail.
-2. **Replace metaphors with technical terms** — saves words AND increases precision.
+2. **Replace metaphors with technical terms** -- saves words AND increases precision. Trading a metaphor for the correct term gains register consistency even when it doesn't save words.
 3. **Swap wordy time/method phrases** for compact natural equivalents (e.g., "in early 2026" not "between January and February 2026").
-4. **Remove redundant framing** — cut "what this means is" / "it is important to note that" scaffolding.
-5. **Cut STRUCTURE words, not CONTENT words.** Keep adjectives, examples, explanatory asides. Remove scaffolding ("In other words," "This is significant because").
-6. **Never remove hedging, qualifiers, or attribution** — these make academic writing sound human.
+4. **Remove redundant framing** -- cut "what this means is" / "it is important to note that" scaffolding.
+5. **Cut STRUCTURE words, not CONTENT words.** Keep adjectives, examples, explanatory asides. Remove scaffolding ("In other words," "This is significant because"). Don't collapse "X did Y, which showed Z" into "X demonstrated Z" -- the middle clause often contains important reasoning.
+6. **Never remove hedging, qualifiers, or attribution** -- these make academic writing sound human.
 7. **Combine sentences** when one already implies the other.
+8. **Sentence length variation is a key human-writing signal.** Mix short punchy sentences among longer ones.
 
 ### What NOT to Do (Avoid AI Conciseness Patterns)
 - Don't strip adjectives/adverbs globally
 - Don't collapse reasoning chains into dense noun phrases
 - Don't remove transition sentences between paragraphs
 - Don't replace specific citations with "studies show"
-- Don't convert natural phrasing into nominalized jargon
+- Don't convert natural phrasing into nominalized jargon (e.g., "planting trees along riverbanks" not "riparian reforestation implementation")
 - Don't eliminate sentence length variation
 
 ## Key Improvements Applied (v5 to current)
@@ -150,5 +152,5 @@ Patricio's main concern was addressed: paper was too software-focused for TLR (b
 
 ## Additional Reference Papers
 
-- Rosser & Mallet (2024) "Interactive maps for visualizing geographic distributions and phenotypes" — TLR, 34(1), 26-30 (saved as md in paper/)
+- Rosser & Mallet (2024) "Interactive maps for visualizing geographic distributions and phenotypes" -- TLR, 34(2), 104-107. DOI: 10.5281/zenodo.13920055 (saved as md in paper/)
 - Rosser et al. (2012) "Testing historical explanations for gradients in species richness in heliconiine butterflies of tropical America" — Biol J Linn Soc, 105(3), 479-497
