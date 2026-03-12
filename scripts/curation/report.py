@@ -343,6 +343,6 @@ def save_report(quality_report, results, cache, api_call_count=0):
         },
         "results": results,
     }
-    with open(CURATION_REPORT, "w") as f:
+    with open(CURATION_REPORT, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, default=str)
     log.info(f"Report saved to {CURATION_REPORT}")

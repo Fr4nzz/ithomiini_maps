@@ -76,7 +76,7 @@ def load_data(input_file=None):
     ext = path.suffix.lower()
 
     if ext == ".json":
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             raw = json.load(f)
         preset = detect_column_preset(raw[0].keys()) if raw else "map_points"
         records = [normalize_record(r, preset) for r in raw]

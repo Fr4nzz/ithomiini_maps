@@ -747,7 +747,7 @@ def main():
     
     print(f"\n>> Saved to: {output_path}")
     print(f">> File size: {os.path.getsize(output_path) / 1024:.1f} KB")
-    print("\n✅ Done!")
+    print("\nDone!")
 
 
 if __name__ == "__main__":

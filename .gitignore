@@ -37,3 +37,10 @@ __pycache__/
 *_curated.xlsx
 *_curated.csv
 *_curated.tsv
+
+# Pipeline intermediate/cache files (persisted via GitHub Actions cache)
+public/data/gbif_occurrences.json
+public/data/gbif_taxonomy_cache.json
+public/data/gbif_taxon_keys.json
+public/data/full_dataset.json
+public/data/sanger_taxonomy.csv

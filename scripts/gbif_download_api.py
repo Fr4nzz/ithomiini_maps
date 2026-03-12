@@ -389,9 +389,9 @@ def download_and_extract(download_info):
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
                 downloaded += len(chunk)
-                if total_size > 0:
+                if total_size > 0 and downloaded % (1024 * 1024) < 8192:
                     pct = downloaded * 100 / total_size
-                    print(f"\r  Downloaded: {downloaded/1024/1024:.1f} MB ({pct:.1f}%)", end="")
+                    print(f"  Downloaded: {downloaded/1024/1024:.0f} MB / {total_size/1024/1024:.0f} MB ({pct:.0f}%)", flush=True)
 
         print(f"\n  Download complete: {zip_path}")
 
@@ -407,6 +407,10 @@ def download_and_extract(download_info):
 
     with zipfile.ZipFile(zip_path, 'r') as zf:
         zf.extractall(extract_dir)
+
+    # Delete the zip immediately to free disk space
+    zip_path.unlink()
+    print(f"  Deleted zip to free space")
 
     # DWCA format contains occurrence.txt and multimedia.txt
     occurrence_file = extract_dir / "occurrence.txt"
@@ -994,6 +998,9 @@ def main():
 
     # Enrich taxonomy cache from DWCA data
     enrich_taxonomy_cache(occurrence_file)
+
+    # Clean up extracted files now to free disk space
+    cleanup_temp()
 
     # Save occurrences
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

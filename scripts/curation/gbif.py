@@ -67,7 +67,7 @@ def resolve_genus_keys(records):
     """Build genus -> GBIF taxon key mapping from cache + API discovery."""
     cached_keys = {}
     if TAXON_KEYS_FILE.exists():
-        with open(TAXON_KEYS_FILE) as f:
+        with open(TAXON_KEYS_FILE, encoding="utf-8") as f:
             data = json.load(f)
         cached_keys = data.get("genera", {})
         log.info(f"Loaded {len(cached_keys)} pre-cached genus keys")
@@ -99,7 +99,7 @@ def resolve_genus_keys(records):
             else:
                 log.warning(f"  Genus '{genus}' not found in GBIF backbone")
 
-        with open(TAXON_KEYS_FILE, "w") as f:
+        with open(TAXON_KEYS_FILE, "w", encoding="utf-8") as f:
             json.dump({"created": time.strftime("%Y-%m-%dT%H:%M:%S"), "genera": cached_keys}, f, indent=2)
         log.info(f"Updated genus keys file: {len(cached_keys)} total genera")
 
@@ -212,7 +212,7 @@ def load_or_build_cache(records, force_rebuild=False):
     """Load taxonomy cache from disk, or build it from GBIF."""
     if not force_rebuild and TAXONOMY_CACHE_FILE.exists():
         log.info(f"Loading taxonomy cache from {TAXONOMY_CACHE_FILE}")
-        with open(TAXONOMY_CACHE_FILE) as f:
+        with open(TAXONOMY_CACHE_FILE, encoding="utf-8") as f:
             cache = json.load(f)
         meta = cache.get("metadata", {})
         bulk_date = meta.get("bulk_enriched_at", "never")
@@ -230,7 +230,7 @@ def load_or_build_cache(records, force_rebuild=False):
     genus_keys = resolve_genus_keys(records)
     cache = build_taxonomy_cache(genus_keys)
 
-    with open(TAXONOMY_CACHE_FILE, "w") as f:
+    with open(TAXONOMY_CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(cache, f, indent=2, default=str)
     log.info(f"Cache saved to {TAXONOMY_CACHE_FILE}")
 

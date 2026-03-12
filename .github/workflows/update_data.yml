@@ -53,6 +53,18 @@ jobs:
         run: |
           pip install -r scripts/requirements.txt
 
+      - name: Restore pipeline cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            public/data/gbif_occurrences.json
+            public/data/gbif_taxonomy_cache.json
+            public/data/gbif_taxon_keys.json
+            public/data/sanger_taxonomy.csv
+          key: pipeline-cache-${{ hashFiles('scripts/gbif_download_api.py', 'scripts/process_data.py') }}
+          restore-keys: |
+            pipeline-cache-
+
       - name: Update GBIF data (if requested)
         if: ${{ inputs.update_gbif == 'true' }}
         run: |
@@ -92,7 +104,7 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-          git add -f public/data/*.json
+          git add -f public/data/map_points_*.json public/data/data_manifest.json public/data/gbif_citation.json
           git commit -m "🔄 Auto-update database from Google Sheets/GBIF
 
           Triggered by: ${{ github.actor }}
