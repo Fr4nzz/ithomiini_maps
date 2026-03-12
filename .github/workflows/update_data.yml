@@ -24,7 +24,7 @@ on:
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 45  # GBIF download (~15min) + processing + curation
+    timeout-minutes: 60  # GBIF download (~25min) + processing + curation
 
     permissions:
       contents: write  # Needed to commit changes
