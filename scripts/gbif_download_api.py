@@ -264,17 +264,15 @@ def wait_for_download(download_key, credentials):
             data = response.json()
 
             status = data.get('status')
-            print(f"  [{attempt+1}] Status: {status}", end="")
 
             if status == 'SUCCEEDED':
-                print(" - Download ready!")
+                print(f"  [{attempt+1}] Status: {status} - Download ready!", flush=True)
                 return data
             elif status in ['FAILED', 'KILLED', 'CANCELLED']:
-                print(f"\nERROR: Download {status}")
-                # TODO: ideally raise an exception instead of sys.exit() in a utility function
+                print(f"  [{attempt+1}] Status: {status} - ERROR!", flush=True)
                 sys.exit(1)
             else:
-                print(f" (waiting {POLL_INTERVAL_SECONDS}s...)")
+                print(f"  [{attempt+1}] Status: {status} (waiting {POLL_INTERVAL_SECONDS}s...)", flush=True)
                 time.sleep(POLL_INTERVAL_SECONDS)
 
         except Exception as e:

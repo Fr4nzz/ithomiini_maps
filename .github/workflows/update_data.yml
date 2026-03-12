@@ -24,7 +24,7 @@ on:
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Allow up to 30 minutes for GBIF download
+    timeout-minutes: 45  # GBIF download (~15min) + processing + curation
 
     permissions:
       contents: write  # Needed to commit changes
