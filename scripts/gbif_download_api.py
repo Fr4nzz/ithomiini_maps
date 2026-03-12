@@ -46,8 +46,8 @@ CITATION_FILE = OUTPUT_DIR / "gbif_citation.json"
 TAXON_KEYS_FILE = OUTPUT_DIR / "gbif_taxon_keys.json"
 TAXONOMY_CACHE_FILE = OUTPUT_DIR / "gbif_taxonomy_cache.json"
 
-# Cache duration - skip new download if citation is less than this old
-CACHE_DAYS = 30
+# Cache duration - skip new download if data is less than this old
+CACHE_HOURS = 24
 
 # Polling interval for download status
 POLL_INTERVAL_SECONDS = 30
@@ -637,9 +637,15 @@ def save_citation(download_info, source_counts, total_records):
     print(f"  Citation: {citation['citation_text']}")
 
 
-def should_use_cache():
-    """Check if we should use cached data instead of new download."""
-    if not CITATION_FILE.exists():
+def should_use_cache(taxon_keys):
+    """Check if we should use cached data instead of new download.
+
+    Reuses cache if:
+    1. The output file and citation exist
+    2. The download is less than CACHE_HOURS old
+    3. The taxon keys (query) haven't changed
+    """
+    if not CITATION_FILE.exists() or not OUTPUT_FILE.exists():
         return False
 
     try:
@@ -652,13 +658,24 @@ def should_use_cache():
 
         dt = datetime.strptime(download_date, '%Y-%m-%d')
         age = datetime.now() - dt
+        age_hours = age.total_seconds() / 3600
 
-        if age.days < CACHE_DAYS:
-            print(f"Cache is {age.days} days old (threshold: {CACHE_DAYS} days)")
-            return True
-        else:
-            print(f"Cache is {age.days} days old, exceeds threshold of {CACHE_DAYS} days")
+        if age_hours >= CACHE_HOURS:
+            print(f"Cache is {age_hours:.1f}h old, exceeds {CACHE_HOURS}h threshold")
             return False
+
+        # Check if the query (taxon keys) changed
+        if TAXON_KEYS_FILE.exists():
+            with open(TAXON_KEYS_FILE, 'r') as f:
+                cached_keys_data = json.load(f)
+            cached_keys = set(str(v) for v in cached_keys_data.get('genera', {}).values())
+            current_keys = set(str(v) for v in taxon_keys.values())
+            if cached_keys != current_keys:
+                print(f"Taxon keys changed ({len(cached_keys)} -> {len(current_keys)}), downloading fresh data")
+                return False
+
+        print(f"Cache is {age_hours:.1f}h old (threshold: {CACHE_HOURS}h), query unchanged - reusing cached data")
+        return True
 
     except Exception as e:
         print(f"Error checking cache: {e}")
@@ -851,12 +868,6 @@ def main():
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 70)
 
-    # Check cache
-    if not args.force and not args.keys_only:
-        if should_use_cache():
-            print("\nUsing cached data. Use --force to download fresh data.")
-            return
-
     # Load credentials
     credentials = load_credentials()
     print(f"Credentials loaded for: {credentials['GBIF_USERNAME']}")
@@ -871,6 +882,12 @@ def main():
     if args.keys_only:
         print("\n--keys-only specified, exiting")
         return
+
+    # Check cache (needs taxon_keys to verify query hasn't changed)
+    if not args.force:
+        if should_use_cache(taxon_keys):
+            print("\nUsing cached data. Use --force to download fresh data.")
+            return
 
     # Submit download request
     download_key = submit_download_request(credentials, taxon_keys)
