@@ -29,6 +29,7 @@ import zipfile
 import csv
 import re
 import argparse
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
@@ -586,7 +587,7 @@ def process_occurrence_file(occurrence_path, multimedia_lookup=None):
 
     records = []
     skipped = 0
-    source_counts = {'iNaturalist': 0, 'GBIF': 0}
+    source_counts = defaultdict(int)
     with_images = 0
 
     # DWCA uses tab-separated values
