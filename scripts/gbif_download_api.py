@@ -44,6 +44,7 @@ TEMP_DIR = PROJECT_ROOT / "temp_gbif_download"
 OUTPUT_FILE = OUTPUT_DIR / "gbif_occurrences.json"
 CITATION_FILE = OUTPUT_DIR / "gbif_citation.json"
 TAXON_KEYS_FILE = OUTPUT_DIR / "gbif_taxon_keys.json"
+TAXONOMY_CACHE_FILE = OUTPUT_DIR / "gbif_taxonomy_cache.json"
 
 # Cache duration - skip new download if citation is less than this old
 CACHE_DAYS = 30
@@ -657,6 +658,165 @@ def should_use_cache():
         return False
 
 
+def enrich_taxonomy_cache(occurrence_path):
+    """
+    Extract taxonomy data from DWCA occurrence.txt and merge into the
+    taxonomy cache. The DWCA contains pre-resolved taxonomy from GBIF
+    (taxonKey, acceptedTaxonKey, taxonomicStatus, etc.), so we can
+    populate the cache without making API calls.
+
+    Updates metadata with 'bulk_enriched_at' date for the GBIF download
+    portion. Names resolved via API fallback retain their own date.
+    """
+    print("\n>> Enriching taxonomy cache from GBIF download...")
+
+    # Load existing cache or start fresh
+    cache = None
+    if TAXONOMY_CACHE_FILE.exists():
+        try:
+            with open(TAXONOMY_CACHE_FILE) as f:
+                cache = json.load(f)
+            print(f"   Loaded existing cache: {len(cache.get('species', {}))} species, "
+                  f"{len(cache.get('subspecies', {}))} subspecies, "
+                  f"{len(cache.get('synonyms', {}))} synonyms")
+        except Exception as e:
+            print(f"   Warning: Could not load existing cache: {e}")
+
+    if cache is None:
+        cache = {
+            "metadata": {},
+            "species": {},
+            "subspecies": {},
+            "synonyms": {},
+            "species_by_key": {},
+            "children": {},
+        }
+
+    species = cache.setdefault("species", {})
+    subspecies = cache.setdefault("subspecies", {})
+    synonyms = cache.setdefault("synonyms", {})
+    species_by_key = cache.setdefault("species_by_key", {})
+    children = cache.setdefault("children", {})
+
+    added_species = 0
+    added_subspecies = 0
+    added_synonyms = 0
+    seen = set()
+
+    with open(occurrence_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, delimiter='\t')
+
+        for row in reader:
+            # DWCA taxonomy fields
+            taxon_key = row.get('taxonKey') or row.get('speciesKey')
+            accepted_key = row.get('acceptedTaxonKey')
+            accepted_name = row.get('acceptedScientificName', '')
+            taxonomic_status = row.get('taxonomicStatus', '')
+            taxon_rank = row.get('taxonRank', '')
+            genus = row.get('genus', '') or ''
+            species_epithet = row.get('specificEpithet', '') or ''
+            infraspecific = row.get('infraspecificEpithet', '') or ''
+            scientific_name_raw = row.get('scientificName', '')
+            species_name = row.get('species', '')
+
+            if not genus or not species_epithet:
+                continue
+
+            canonical = f"{genus} {species_epithet}"
+            canonical_lower = canonical.lower()
+
+            # Build trinomial if subspecies present
+            trinomial = None
+            trinomial_lower = None
+            if infraspecific and infraspecific.strip():
+                infraspecific = infraspecific.strip()
+                trinomial = f"{genus} {species_epithet} {infraspecific}"
+                trinomial_lower = trinomial.lower()
+
+            # Clean accepted name (remove author citation)
+            if accepted_name:
+                accepted_name = re.sub(r'\s*\([A-Z][a-zA-Z&\s.\-]+,?\s*\d{4}\)', '', accepted_name)
+                accepted_name = re.sub(r'\s+[A-Z][a-zA-Z&\s.\-]+,\s*\d{4}$', '', accepted_name)
+                accepted_name = ' '.join(accepted_name.split())
+
+            is_synonym = taxonomic_status in ('SYNONYM', 'HETEROTYPIC_SYNONYM',
+                                               'HOMOTYPIC_SYNONYM', 'PROPARTE_SYNONYM')
+
+            # ── Species-level entry ──
+            if canonical_lower not in seen:
+                seen.add(canonical_lower)
+
+                entry = {
+                    "key": int(taxon_key) if taxon_key and taxon_key.isdigit() else None,
+                    "canonicalName": canonical,
+                    "scientificName": scientific_name_raw,
+                    "status": taxonomic_status or "ACCEPTED",
+                    "acceptedKey": int(accepted_key) if accepted_key and accepted_key.isdigit() else None,
+                    "acceptedName": accepted_name or "",
+                    "rank": "SPECIES",
+                    "genus": genus,
+                }
+
+                if is_synonym:
+                    if canonical_lower not in synonyms:
+                        synonyms[canonical_lower] = entry
+                        added_synonyms += 1
+                elif canonical_lower not in species:
+                    species[canonical_lower] = entry
+                    if entry["key"]:
+                        species_by_key[str(entry["key"])] = entry
+                    added_species += 1
+
+            # ── Subspecies-level entry ──
+            if trinomial_lower and trinomial_lower not in seen:
+                seen.add(trinomial_lower)
+
+                ssp_entry = {
+                    "key": int(taxon_key) if taxon_key and taxon_key.isdigit() else None,
+                    "canonicalName": trinomial,
+                    "scientificName": scientific_name_raw,
+                    "status": taxonomic_status or "ACCEPTED",
+                    "acceptedKey": int(accepted_key) if accepted_key and accepted_key.isdigit() else None,
+                    "acceptedName": accepted_name or "",
+                    "rank": "SUBSPECIES",
+                    "genus": genus,
+                }
+
+                if is_synonym:
+                    if trinomial_lower not in synonyms:
+                        synonyms[trinomial_lower] = ssp_entry
+                        added_synonyms += 1
+                elif trinomial_lower not in subspecies:
+                    subspecies[trinomial_lower] = ssp_entry
+                    added_subspecies += 1
+                    # Track parent-child relationship
+                    parent = species.get(canonical_lower)
+                    if parent and parent.get("key"):
+                        pkey = str(parent["key"])
+                        existing_children = children.get(pkey, [])
+                        if trinomial not in existing_children:
+                            children.setdefault(pkey, []).append(trinomial)
+
+    # Update metadata
+    now_utc = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+    meta = cache.setdefault("metadata", {})
+    meta["bulk_enriched_at"] = now_utc
+    meta["total_species"] = len(species)
+    meta["total_subspecies"] = len(subspecies)
+    meta["total_synonyms"] = len(synonyms)
+
+    # Save
+    with open(TAXONOMY_CACHE_FILE, 'w') as f:
+        json.dump(cache, f, indent=2, default=str)
+
+    print(f"   Added from GBIF download: {added_species} species, "
+          f"{added_subspecies} subspecies, {added_synonyms} synonyms")
+    print(f"   Cache totals: {len(species)} species, "
+          f"{len(subspecies)} subspecies, {len(synonyms)} synonyms")
+    print(f"   Bulk enriched at: {now_utc}")
+    print(f"   Saved to {TAXONOMY_CACHE_FILE}")
+
+
 def cleanup_temp():
     """Clean up temporary files."""
     import shutil
@@ -724,6 +884,9 @@ def main():
     if not records:
         print("ERROR: No records processed")
         sys.exit(1)
+
+    # Enrich taxonomy cache from DWCA data
+    enrich_taxonomy_cache(occurrence_file)
 
     # Save occurrences
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

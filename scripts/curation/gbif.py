@@ -130,7 +130,7 @@ def build_taxonomy_cache(genus_keys):
     """Build a taxonomy cache by bulk-fetching all taxa from GBIF."""
     cache = {
         "metadata": {
-            "built_at": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
+            "api_built_at": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
             "source": "GBIF Backbone Taxonomy via species/search API",
             "genera_fetched": len(genus_keys),
         },
@@ -215,12 +215,15 @@ def load_or_build_cache(records, force_rebuild=False):
         with open(TAXONOMY_CACHE_FILE) as f:
             cache = json.load(f)
         meta = cache.get("metadata", {})
+        bulk_date = meta.get("bulk_enriched_at", "never")
+        api_date = meta.get("api_built_at", meta.get("built_at", "never"))
         log.info(
             f"Cache loaded: {len(cache.get('species', {}))} species, "
             f"{len(cache.get('subspecies', {}))} subspecies, "
-            f"{len(cache.get('synonyms', {}))} synonyms "
-            f"(built {meta.get('built_at', '?')})"
+            f"{len(cache.get('synonyms', {}))} synonyms"
         )
+        log.info(f"  GBIF download enrichment: {bulk_date}")
+        log.info(f"  API fallback last updated: {api_date}")
         return cache
 
     log.info("Building taxonomy cache from GBIF (bulk fetch)...")
@@ -230,4 +233,7 @@ def load_or_build_cache(records, force_rebuild=False):
     with open(TAXONOMY_CACHE_FILE, "w") as f:
         json.dump(cache, f, indent=2, default=str)
     log.info(f"Cache saved to {TAXONOMY_CACHE_FILE}")
+
+    meta = cache.get("metadata", {})
+    log.info(f"  API fallback built at: {meta.get('api_built_at', '?')}")
     return cache
