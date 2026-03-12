@@ -186,6 +186,85 @@ def get_all_taxon_keys(use_cache=True):
 # DOWNLOAD API
 # ═══════════════════════════════════════════════════════════════════
 
+def find_recent_download(credentials, taxon_keys, max_age_hours=24):
+    """Check GBIF account for a recent completed download with matching taxon keys.
+
+    Returns download info dict if found, None otherwise.
+    """
+    print("\nChecking for recent completed downloads on GBIF account...", flush=True)
+    username = credentials['GBIF_USERNAME']
+    url = f"https://api.gbif.org/v1/occurrence/download/user/{username}"
+
+    try:
+        response = requests.get(
+            url,
+            params={"limit": 10, "offset": 0},
+            auth=(username, credentials['GBIF_PASSWORD']),
+            timeout=30
+        )
+        response.raise_for_status()
+        data = response.json()
+
+        current_keys = set(str(v) for v in taxon_keys.values())
+
+        for dl in data.get('results', []):
+            status = dl.get('status')
+            if status != 'SUCCEEDED':
+                continue
+
+            # Check age
+            created = dl.get('created')
+            if created:
+                try:
+                    # GBIF returns ISO format like "2026-03-12T13:25:00.000+00:00"
+                    created_str = created.split('.')[0]  # strip milliseconds
+                    dt = datetime.strptime(created_str, '%Y-%m-%dT%H:%M:%S')
+                    age_hours = (datetime.utcnow() - dt).total_seconds() / 3600
+                    if age_hours > max_age_hours:
+                        continue
+                except Exception:
+                    continue
+
+            # Check if taxon keys match
+            predicate = dl.get('request', {}).get('predicate', {})
+            dl_keys = _extract_taxon_keys_from_predicate(predicate)
+            if dl_keys and dl_keys == current_keys:
+                dl_key = dl.get('key')
+                print(f"  Found matching download: {dl_key} ({age_hours:.1f}h old)", flush=True)
+                return dl
+
+        print("  No matching recent download found", flush=True)
+        return None
+
+    except Exception as e:
+        print(f"  Could not check recent downloads: {e}", flush=True)
+        return None
+
+
+def _extract_taxon_keys_from_predicate(predicate):
+    """Extract TAXON_KEY values from a GBIF download predicate."""
+    if not predicate:
+        return None
+
+    pred_type = predicate.get('type', '')
+
+    if pred_type == 'in' and predicate.get('key') == 'TAXON_KEY':
+        return set(str(v) for v in predicate.get('values', []))
+
+    # Recurse into compound predicates
+    for sub in predicate.get('predicates', []):
+        result = _extract_taxon_keys_from_predicate(sub)
+        if result:
+            return result
+
+    # Check nested predicate (e.g. "not" type)
+    nested = predicate.get('predicate')
+    if nested:
+        return _extract_taxon_keys_from_predicate(nested)
+
+    return None
+
+
 def submit_download_request(credentials, taxon_keys):
     """Submit async download request to GBIF."""
     print("\nSubmitting download request to GBIF...")
@@ -889,11 +968,15 @@ def main():
             print("\nUsing cached data. Use --force to download fresh data.")
             return
 
-    # Submit download request
-    download_key = submit_download_request(credentials, taxon_keys)
+    # Check for a recent completed download on GBIF account (e.g. from a timed-out run)
+    download_info = find_recent_download(credentials, taxon_keys)
 
-    # Wait for completion
-    download_info = wait_for_download(download_key, credentials)
+    if not download_info:
+        # Submit new download request
+        download_key = submit_download_request(credentials, taxon_keys)
+
+        # Wait for completion
+        download_info = wait_for_download(download_key, credentials)
 
     # Download and extract
     extract_dir = download_and_extract(download_info)
