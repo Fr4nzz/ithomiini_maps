@@ -2,7 +2,7 @@
   "sources": {
     "Sanger Institute": {
       "file": "map_points_sanger.json",
-      "records": 6155,
+      "records": 7163,
       "default": true
     },
     "GBIF (UNAM)": {
@@ -22,10 +22,10 @@
     },
     "iNaturalist": {
       "file": "map_points_inaturalist.json",
-      "records": 19328,
+      "records": 0,
       "default": false
     }
   },
   "image_supplement": "map_points_images.json",
-  "generated_at": "2026-03-12T16:45:54Z"
+  "generated_at": "2026-03-12T18:40:05Z"
 }
