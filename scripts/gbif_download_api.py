@@ -77,17 +77,28 @@ ITHOMIINI_GENERA = [
 # ═══════════════════════════════════════════════════════════════════
 
 def load_credentials():
-    """Load GBIF credentials from env file."""
+    """Load GBIF credentials from environment variables or env file."""
+    import os
+
+    credentials = {}
+    required = ['GBIF_USERNAME', 'GBIF_PASSWORD', 'GBIF_EMAIL']
+
+    # First try environment variables (used by GitHub Actions secrets)
+    if all(os.environ.get(k) for k in required):
+        for key in required:
+            credentials[key] = os.environ[key]
+        return credentials
+
+    # Fall back to credentials file (local development)
     if not CREDENTIALS_FILE.exists():
-        print(f"ERROR: Credentials file not found: {CREDENTIALS_FILE}")
-        print("Create gbif_credentials.env with:")
+        print("ERROR: No GBIF credentials found.")
+        print("Set GBIF_USERNAME, GBIF_PASSWORD, GBIF_EMAIL environment variables,")
+        print(f"or create {CREDENTIALS_FILE} with:")
         print("  GBIF_USERNAME=your_username")
         print("  GBIF_PASSWORD=your_password")
         print("  GBIF_EMAIL=your_email")
-        # TODO: ideally raise an exception instead of sys.exit() in a utility function
         sys.exit(1)
 
-    credentials = {}
     with open(CREDENTIALS_FILE, 'r') as f:
         for line in f:
             line = line.strip()
@@ -95,11 +106,9 @@ def load_credentials():
                 key, value = line.split('=', 1)
                 credentials[key.strip()] = value.strip()
 
-    required = ['GBIF_USERNAME', 'GBIF_PASSWORD', 'GBIF_EMAIL']
     for key in required:
         if key not in credentials:
             print(f"ERROR: Missing {key} in credentials file")
-            # TODO: ideally raise an exception instead of sys.exit() in a utility function
             sys.exit(1)
 
     return credentials
