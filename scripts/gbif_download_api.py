@@ -44,9 +44,10 @@ TEMP_DIR = PROJECT_ROOT / "temp_gbif_download"
 OUTPUT_FILE = OUTPUT_DIR / "gbif_occurrences.json"
 CITATION_FILE = OUTPUT_DIR / "gbif_citation.json"
 TAXON_KEYS_FILE = OUTPUT_DIR / "gbif_taxon_keys.json"
+TAXONOMY_CACHE_FILE = OUTPUT_DIR / "gbif_taxonomy_cache.json"
 
-# Cache duration - skip new download if citation is less than this old
-CACHE_DAYS = 30
+# Cache duration - skip new download if data is less than this old
+CACHE_HOURS = 24
 
 # Polling interval for download status
 POLL_INTERVAL_SECONDS = 30
@@ -76,17 +77,28 @@ ITHOMIINI_GENERA = [
 # ═══════════════════════════════════════════════════════════════════
 
 def load_credentials():
-    """Load GBIF credentials from env file."""
+    """Load GBIF credentials from environment variables or env file."""
+    import os
+
+    credentials = {}
+    required = ['GBIF_USERNAME', 'GBIF_PASSWORD', 'GBIF_EMAIL']
+
+    # First try environment variables (used by GitHub Actions secrets)
+    if all(os.environ.get(k) for k in required):
+        for key in required:
+            credentials[key] = os.environ[key]
+        return credentials
+
+    # Fall back to credentials file (local development)
     if not CREDENTIALS_FILE.exists():
-        print(f"ERROR: Credentials file not found: {CREDENTIALS_FILE}")
-        print("Create gbif_credentials.env with:")
+        print("ERROR: No GBIF credentials found.")
+        print("Set GBIF_USERNAME, GBIF_PASSWORD, GBIF_EMAIL environment variables,")
+        print(f"or create {CREDENTIALS_FILE} with:")
         print("  GBIF_USERNAME=your_username")
         print("  GBIF_PASSWORD=your_password")
         print("  GBIF_EMAIL=your_email")
-        # TODO: ideally raise an exception instead of sys.exit() in a utility function
         sys.exit(1)
 
-    credentials = {}
     with open(CREDENTIALS_FILE, 'r') as f:
         for line in f:
             line = line.strip()
@@ -94,11 +106,9 @@ def load_credentials():
                 key, value = line.split('=', 1)
                 credentials[key.strip()] = value.strip()
 
-    required = ['GBIF_USERNAME', 'GBIF_PASSWORD', 'GBIF_EMAIL']
     for key in required:
         if key not in credentials:
             print(f"ERROR: Missing {key} in credentials file")
-            # TODO: ideally raise an exception instead of sys.exit() in a utility function
             sys.exit(1)
 
     return credentials
@@ -175,6 +185,85 @@ def get_all_taxon_keys(use_cache=True):
 # ═══════════════════════════════════════════════════════════════════
 # DOWNLOAD API
 # ═══════════════════════════════════════════════════════════════════
+
+def find_recent_download(credentials, taxon_keys, max_age_hours=24):
+    """Check GBIF account for a recent completed download with matching taxon keys.
+
+    Returns download info dict if found, None otherwise.
+    """
+    print("\nChecking for recent completed downloads on GBIF account...", flush=True)
+    username = credentials['GBIF_USERNAME']
+    url = f"https://api.gbif.org/v1/occurrence/download/user/{username}"
+
+    try:
+        response = requests.get(
+            url,
+            params={"limit": 10, "offset": 0},
+            auth=(username, credentials['GBIF_PASSWORD']),
+            timeout=30
+        )
+        response.raise_for_status()
+        data = response.json()
+
+        current_keys = set(str(v) for v in taxon_keys.values())
+
+        for dl in data.get('results', []):
+            status = dl.get('status')
+            if status != 'SUCCEEDED':
+                continue
+
+            # Check age
+            created = dl.get('created')
+            if created:
+                try:
+                    # GBIF returns ISO format like "2026-03-12T13:25:00.000+00:00"
+                    created_str = created.split('.')[0]  # strip milliseconds
+                    dt = datetime.strptime(created_str, '%Y-%m-%dT%H:%M:%S')
+                    age_hours = (datetime.utcnow() - dt).total_seconds() / 3600
+                    if age_hours > max_age_hours:
+                        continue
+                except Exception:
+                    continue
+
+            # Check if taxon keys match
+            predicate = dl.get('request', {}).get('predicate', {})
+            dl_keys = _extract_taxon_keys_from_predicate(predicate)
+            if dl_keys and dl_keys == current_keys:
+                dl_key = dl.get('key')
+                print(f"  Found matching download: {dl_key} ({age_hours:.1f}h old)", flush=True)
+                return dl
+
+        print("  No matching recent download found", flush=True)
+        return None
+
+    except Exception as e:
+        print(f"  Could not check recent downloads: {e}", flush=True)
+        return None
+
+
+def _extract_taxon_keys_from_predicate(predicate):
+    """Extract TAXON_KEY values from a GBIF download predicate."""
+    if not predicate:
+        return None
+
+    pred_type = predicate.get('type', '')
+
+    if pred_type == 'in' and predicate.get('key') == 'TAXON_KEY':
+        return set(str(v) for v in predicate.get('values', []))
+
+    # Recurse into compound predicates
+    for sub in predicate.get('predicates', []):
+        result = _extract_taxon_keys_from_predicate(sub)
+        if result:
+            return result
+
+    # Check nested predicate (e.g. "not" type)
+    nested = predicate.get('predicate')
+    if nested:
+        return _extract_taxon_keys_from_predicate(nested)
+
+    return None
+
 
 def submit_download_request(credentials, taxon_keys):
     """Submit async download request to GBIF."""
@@ -254,17 +343,15 @@ def wait_for_download(download_key, credentials):
             data = response.json()
 
             status = data.get('status')
-            print(f"  [{attempt+1}] Status: {status}", end="")
 
             if status == 'SUCCEEDED':
-                print(" - Download ready!")
+                print(f"  [{attempt+1}] Status: {status} - Download ready!", flush=True)
                 return data
             elif status in ['FAILED', 'KILLED', 'CANCELLED']:
-                print(f"\nERROR: Download {status}")
-                # TODO: ideally raise an exception instead of sys.exit() in a utility function
+                print(f"  [{attempt+1}] Status: {status} - ERROR!", flush=True)
                 sys.exit(1)
             else:
-                print(f" (waiting {POLL_INTERVAL_SECONDS}s...)")
+                print(f"  [{attempt+1}] Status: {status} (waiting {POLL_INTERVAL_SECONDS}s...)", flush=True)
                 time.sleep(POLL_INTERVAL_SECONDS)
 
         except Exception as e:
@@ -302,9 +389,9 @@ def download_and_extract(download_info):
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
                 downloaded += len(chunk)
-                if total_size > 0:
+                if total_size > 0 and downloaded % (1024 * 1024) < 8192:
                     pct = downloaded * 100 / total_size
-                    print(f"\r  Downloaded: {downloaded/1024/1024:.1f} MB ({pct:.1f}%)", end="")
+                    print(f"  Downloaded: {downloaded/1024/1024:.0f} MB / {total_size/1024/1024:.0f} MB ({pct:.0f}%)", flush=True)
 
         print(f"\n  Download complete: {zip_path}")
 
@@ -320,6 +407,10 @@ def download_and_extract(download_info):
 
     with zipfile.ZipFile(zip_path, 'r') as zf:
         zf.extractall(extract_dir)
+
+    # Delete the zip immediately to free disk space
+    zip_path.unlink()
+    print(f"  Deleted zip to free space")
 
     # DWCA format contains occurrence.txt and multimedia.txt
     occurrence_file = extract_dir / "occurrence.txt"
@@ -629,9 +720,15 @@ def save_citation(download_info, source_counts, total_records):
     print(f"  Citation: {citation['citation_text']}")
 
 
-def should_use_cache():
-    """Check if we should use cached data instead of new download."""
-    if not CITATION_FILE.exists():
+def should_use_cache(taxon_keys):
+    """Check if we should use cached data instead of new download.
+
+    Reuses cache if:
+    1. The output file and citation exist
+    2. The download is less than CACHE_HOURS old
+    3. The taxon keys (query) haven't changed
+    """
+    if not CITATION_FILE.exists() or not OUTPUT_FILE.exists():
         return False
 
     try:
@@ -644,17 +741,187 @@ def should_use_cache():
 
         dt = datetime.strptime(download_date, '%Y-%m-%d')
         age = datetime.now() - dt
+        age_hours = age.total_seconds() / 3600
 
-        if age.days < CACHE_DAYS:
-            print(f"Cache is {age.days} days old (threshold: {CACHE_DAYS} days)")
-            return True
-        else:
-            print(f"Cache is {age.days} days old, exceeds threshold of {CACHE_DAYS} days")
+        if age_hours >= CACHE_HOURS:
+            print(f"Cache is {age_hours:.1f}h old, exceeds {CACHE_HOURS}h threshold")
             return False
+
+        # Check if the query (taxon keys) changed
+        if TAXON_KEYS_FILE.exists():
+            with open(TAXON_KEYS_FILE, 'r') as f:
+                cached_keys_data = json.load(f)
+            cached_keys = set(str(v) for v in cached_keys_data.get('genera', {}).values())
+            current_keys = set(str(v) for v in taxon_keys.values())
+            if cached_keys != current_keys:
+                print(f"Taxon keys changed ({len(cached_keys)} -> {len(current_keys)}), downloading fresh data")
+                return False
+
+        print(f"Cache is {age_hours:.1f}h old (threshold: {CACHE_HOURS}h), query unchanged - reusing cached data")
+        return True
 
     except Exception as e:
         print(f"Error checking cache: {e}")
         return False
+
+
+def enrich_taxonomy_cache(occurrence_path):
+    """
+    Extract taxonomy data from DWCA occurrence.txt and merge into the
+    taxonomy cache. The DWCA contains pre-resolved taxonomy from GBIF
+    (taxonKey, acceptedTaxonKey, taxonomicStatus, etc.), so we can
+    populate the cache without making API calls.
+
+    Updates metadata with 'bulk_enriched_at' date for the GBIF download
+    portion. Names resolved via API fallback retain their own date.
+    """
+    print("\n>> Enriching taxonomy cache from GBIF download...")
+
+    # Load existing cache or start fresh
+    cache = None
+    if TAXONOMY_CACHE_FILE.exists():
+        try:
+            with open(TAXONOMY_CACHE_FILE) as f:
+                cache = json.load(f)
+            print(f"   Loaded existing cache: {len(cache.get('species', {}))} species, "
+                  f"{len(cache.get('subspecies', {}))} subspecies, "
+                  f"{len(cache.get('synonyms', {}))} synonyms")
+        except Exception as e:
+            print(f"   Warning: Could not load existing cache: {e}")
+
+    if cache is None:
+        cache = {
+            "metadata": {},
+            "species": {},
+            "subspecies": {},
+            "synonyms": {},
+            "species_by_key": {},
+            "children": {},
+        }
+
+    species = cache.setdefault("species", {})
+    subspecies = cache.setdefault("subspecies", {})
+    synonyms = cache.setdefault("synonyms", {})
+    species_by_key = cache.setdefault("species_by_key", {})
+    children = cache.setdefault("children", {})
+
+    added_species = 0
+    added_subspecies = 0
+    added_synonyms = 0
+    seen = set()
+
+    with open(occurrence_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, delimiter='\t')
+
+        for row in reader:
+            # DWCA taxonomy fields
+            taxon_key = row.get('taxonKey') or row.get('speciesKey')
+            accepted_key = row.get('acceptedTaxonKey')
+            accepted_name = row.get('acceptedScientificName', '')
+            taxonomic_status = row.get('taxonomicStatus', '')
+            taxon_rank = row.get('taxonRank', '')
+            genus = row.get('genus', '') or ''
+            species_epithet = row.get('specificEpithet', '') or ''
+            infraspecific = row.get('infraspecificEpithet', '') or ''
+            scientific_name_raw = row.get('scientificName', '')
+            species_name = row.get('species', '')
+
+            if not genus or not species_epithet:
+                continue
+
+            canonical = f"{genus} {species_epithet}"
+            canonical_lower = canonical.lower()
+
+            # Build trinomial if subspecies present
+            trinomial = None
+            trinomial_lower = None
+            if infraspecific and infraspecific.strip():
+                infraspecific = infraspecific.strip()
+                trinomial = f"{genus} {species_epithet} {infraspecific}"
+                trinomial_lower = trinomial.lower()
+
+            # Clean accepted name (remove author citation)
+            if accepted_name:
+                accepted_name = re.sub(r'\s*\([A-Z][a-zA-Z&\s.\-]+,?\s*\d{4}\)', '', accepted_name)
+                accepted_name = re.sub(r'\s+[A-Z][a-zA-Z&\s.\-]+,\s*\d{4}$', '', accepted_name)
+                accepted_name = ' '.join(accepted_name.split())
+
+            is_synonym = taxonomic_status in ('SYNONYM', 'HETEROTYPIC_SYNONYM',
+                                               'HOMOTYPIC_SYNONYM', 'PROPARTE_SYNONYM')
+
+            # ── Species-level entry ──
+            if canonical_lower not in seen:
+                seen.add(canonical_lower)
+
+                entry = {
+                    "key": int(taxon_key) if taxon_key and taxon_key.isdigit() else None,
+                    "canonicalName": canonical,
+                    "scientificName": scientific_name_raw,
+                    "status": taxonomic_status or "ACCEPTED",
+                    "acceptedKey": int(accepted_key) if accepted_key and accepted_key.isdigit() else None,
+                    "acceptedName": accepted_name or "",
+                    "rank": "SPECIES",
+                    "genus": genus,
+                }
+
+                if is_synonym:
+                    if canonical_lower not in synonyms:
+                        synonyms[canonical_lower] = entry
+                        added_synonyms += 1
+                elif canonical_lower not in species:
+                    species[canonical_lower] = entry
+                    if entry["key"]:
+                        species_by_key[str(entry["key"])] = entry
+                    added_species += 1
+
+            # ── Subspecies-level entry ──
+            if trinomial_lower and trinomial_lower not in seen:
+                seen.add(trinomial_lower)
+
+                ssp_entry = {
+                    "key": int(taxon_key) if taxon_key and taxon_key.isdigit() else None,
+                    "canonicalName": trinomial,
+                    "scientificName": scientific_name_raw,
+                    "status": taxonomic_status or "ACCEPTED",
+                    "acceptedKey": int(accepted_key) if accepted_key and accepted_key.isdigit() else None,
+                    "acceptedName": accepted_name or "",
+                    "rank": "SUBSPECIES",
+                    "genus": genus,
+                }
+
+                if is_synonym:
+                    if trinomial_lower not in synonyms:
+                        synonyms[trinomial_lower] = ssp_entry
+                        added_synonyms += 1
+                elif trinomial_lower not in subspecies:
+                    subspecies[trinomial_lower] = ssp_entry
+                    added_subspecies += 1
+                    # Track parent-child relationship
+                    parent = species.get(canonical_lower)
+                    if parent and parent.get("key"):
+                        pkey = str(parent["key"])
+                        existing_children = children.get(pkey, [])
+                        if trinomial not in existing_children:
+                            children.setdefault(pkey, []).append(trinomial)
+
+    # Update metadata
+    now_utc = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+    meta = cache.setdefault("metadata", {})
+    meta["bulk_enriched_at"] = now_utc
+    meta["total_species"] = len(species)
+    meta["total_subspecies"] = len(subspecies)
+    meta["total_synonyms"] = len(synonyms)
+
+    # Save
+    with open(TAXONOMY_CACHE_FILE, 'w') as f:
+        json.dump(cache, f, indent=2, default=str)
+
+    print(f"   Added from GBIF download: {added_species} species, "
+          f"{added_subspecies} subspecies, {added_synonyms} synonyms")
+    print(f"   Cache totals: {len(species)} species, "
+          f"{len(subspecies)} subspecies, {len(synonyms)} synonyms")
+    print(f"   Bulk enriched at: {now_utc}")
+    print(f"   Saved to {TAXONOMY_CACHE_FILE}")
 
 
 def cleanup_temp():
@@ -684,12 +951,6 @@ def main():
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 70)
 
-    # Check cache
-    if not args.force and not args.keys_only:
-        if should_use_cache():
-            print("\nUsing cached data. Use --force to download fresh data.")
-            return
-
     # Load credentials
     credentials = load_credentials()
     print(f"Credentials loaded for: {credentials['GBIF_USERNAME']}")
@@ -705,11 +966,21 @@ def main():
         print("\n--keys-only specified, exiting")
         return
 
-    # Submit download request
-    download_key = submit_download_request(credentials, taxon_keys)
+    # Check cache (needs taxon_keys to verify query hasn't changed)
+    if not args.force:
+        if should_use_cache(taxon_keys):
+            print("\nUsing cached data. Use --force to download fresh data.")
+            return
 
-    # Wait for completion
-    download_info = wait_for_download(download_key, credentials)
+    # Check for a recent completed download on GBIF account (e.g. from a timed-out run)
+    download_info = find_recent_download(credentials, taxon_keys)
+
+    if not download_info:
+        # Submit new download request
+        download_key = submit_download_request(credentials, taxon_keys)
+
+        # Wait for completion
+        download_info = wait_for_download(download_key, credentials)
 
     # Download and extract
     extract_dir = download_and_extract(download_info)
@@ -724,6 +995,12 @@ def main():
     if not records:
         print("ERROR: No records processed")
         sys.exit(1)
+
+    # Enrich taxonomy cache from DWCA data
+    enrich_taxonomy_cache(occurrence_file)
+
+    # Clean up extracted files now to free disk space
+    cleanup_temp()
 
     # Save occurrences
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

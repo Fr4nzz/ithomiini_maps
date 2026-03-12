@@ -36,7 +36,7 @@ def load_corrections(corrections_file=None):
         return {"spelling": {}, "overrides": {}, "subspecies_remap": {},
                 "valid_not_in_gbif": set(), "ssp_typos": {}}
 
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
     # Spelling corrections: {original: corrected}

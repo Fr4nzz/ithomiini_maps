@@ -24,12 +24,21 @@ on:
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Allow up to 30 minutes for GBIF download
+    timeout-minutes: 60  # GBIF download (~25min) + processing + curation
 
     permissions:
       contents: write  # Needed to commit changes
 
     steps:
+      - name: Free up disk space
+        if: ${{ inputs.update_gbif == 'true' }}
+        run: |
+          echo "Before cleanup:"
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/share/boost
+          echo "After cleanup:"
+          df -h /
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -44,12 +53,23 @@ jobs:
         run: |
           pip install -r scripts/requirements.txt
 
+      - name: Restore pipeline cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            public/data/gbif_occurrences.json
+            public/data/gbif_taxonomy_cache.json
+            public/data/gbif_taxon_keys.json
+            public/data/sanger_taxonomy.csv
+          key: pipeline-cache-${{ hashFiles('scripts/gbif_download_api.py', 'scripts/process_data.py') }}
+          restore-keys: |
+            pipeline-cache-
+
       - name: Update GBIF data (if requested)
         if: ${{ inputs.update_gbif == 'true' }}
         run: |
           echo "🌐 Downloading fresh GBIF/iNaturalist data..."
-          cd scripts
-          python gbif_download_api.py --force
+          python scripts/gbif_download_api.py
         env:
           GBIF_USERNAME: ${{ secrets.GBIF_USERNAME }}
           GBIF_PASSWORD: ${{ secrets.GBIF_PASSWORD }}
@@ -58,8 +78,7 @@ jobs:
       - name: Run data processing pipeline
         run: |
           echo "📊 Processing data from all sources..."
-          cd scripts
-          python process_data.py
+          python scripts/process_data.py
         env:
           GBIF_USERNAME: ${{ secrets.GBIF_USERNAME }}
           GBIF_PASSWORD: ${{ secrets.GBIF_PASSWORD }}
@@ -85,7 +104,7 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-          git add public/data/*.json
+          git add -f public/data/map_points_*.json public/data/data_manifest.json public/data/gbif_citation.json
           git commit -m "🔄 Auto-update database from Google Sheets/GBIF
 
           Triggered by: ${{ github.actor }}
