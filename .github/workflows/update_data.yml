@@ -30,6 +30,15 @@ jobs:
       contents: write  # Needed to commit changes
 
     steps:
+      - name: Free up disk space
+        if: ${{ inputs.update_gbif == 'true' }}
+        run: |
+          echo "Before cleanup:"
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/share/boost
+          echo "After cleanup:"
+          df -h /
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
