@@ -7,12 +7,12 @@
     },
     "GBIF (UNAM)": {
       "file": "map_points_gbif_unam.json",
-      "records": 21586,
+      "records": 0,
       "default": false
     },
     "GBIF (Other Institutions)": {
       "file": "map_points_gbif_other.json",
-      "records": 28182,
+      "records": 0,
       "default": false
     },
     "Dore et al. (2025)": {
@@ -22,10 +22,10 @@
     },
     "iNaturalist": {
       "file": "map_points_inaturalist.json",
-      "records": 19901,
+      "records": 0,
       "default": false
     }
   },
   "image_supplement": "map_points_images.json",
-  "generated_at": "2026-03-12T21:12:53Z"
+  "generated_at": "2026-03-15T18:24:04Z"
 }
