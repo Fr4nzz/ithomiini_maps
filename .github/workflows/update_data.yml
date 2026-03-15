@@ -108,7 +108,6 @@ jobs:
           Triggered by: ${{ github.actor }}
           Workflow run: ${{ github.run_id }}"
 
-          git pull --rebase
           git push
 
       - name: Report no changes
