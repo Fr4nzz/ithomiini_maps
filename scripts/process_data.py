@@ -659,22 +659,8 @@ def main():
     # ═══════════════════════════════════════════════════════════════════════
 
     # Standardize country names (ISO 2-letter codes -> full names)
-    import pycountry
-
-    def standardize_country(name):
-        if not name or name in ('Unknown', 'nan', ''):
-            return name
-        # Try as ISO 2-letter code first
-        if len(name) == 2 and name.isupper():
-            country = pycountry.countries.get(alpha_2=name)
-            if country:
-                return getattr(country, 'common_name', country.name)
-        # Normalize variant spellings (e.g. hyphens, ampersands)
-        normalized = name.replace('-', ' ').replace('&', 'and')
-        if normalized != name:
-            return normalized
-        return name
-
+    sys.path.insert(0, str(Path(__file__).parent))
+    from country_utils import standardize_country
     df_merged['country'] = df_merged['country'].apply(standardize_country)
 
     # Ensure all string fields are properly typed

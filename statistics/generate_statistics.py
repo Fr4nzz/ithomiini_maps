@@ -15,24 +15,9 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-import pycountry
-
-
-def standardize_country(name):
-    """Convert ISO 2-letter codes to full names and normalize variant spellings."""
-    if not name or name in ('Unknown', 'nan', ''):
-        return name
-    if len(name) == 2 and name.isupper():
-        country = pycountry.countries.get(alpha_2=name)
-        if country:
-            return getattr(country, 'common_name', country.name)
-    normalized = name.replace('-', ' ').replace('&', 'and')
-    if normalized != name:
-        return normalized
-    return name
-
-
 PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+from country_utils import standardize_country
 DATA_DIR = PROJECT_ROOT / "public" / "data"
 OUTPUT_DIR = Path(__file__).parent
 

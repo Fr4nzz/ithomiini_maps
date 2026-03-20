@@ -11,6 +11,10 @@ import logging
 from collections import Counter
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from country_utils import standardize_country
+
 from .config import (
     OUTPUT_DIR, SOURCE_DATA_FILES, IMAGE_SUPPLEMENT_FILE,
     CORRECTIONS_LOG_FILE, MANIFEST_FILE, PROJECT_ROOT,
@@ -36,6 +40,11 @@ def write_app_outputs(curated_records, corrections_log, records, stats,
                       correction_tables, sanger_species, merged_ssp_typos=None):
     """Write split-by-source outputs for the app's lazy-loading pipeline."""
     sanitize_for_json(curated_records)
+
+    # Standardize country names
+    for rec in curated_records:
+        if 'country' in rec:
+            rec['country'] = standardize_country(rec['country'])
 
     # Group records by source
     source_groups = {}
