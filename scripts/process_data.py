@@ -182,17 +182,30 @@ def get_google_export_url(gid):
 
 def determine_sequencing_status(row):
     """
-    Determine sequencing status based on Sanger tube/rack data.
-    Returns: 'Sequenced', 'Tissue Available', or 'Preserved Specimen'
+    Determine sequencing status based on Sanger tube/rack data and ToLID.
+    Returns: 'Sequenced', 'Tissue at Sanger', 'Tissue Available', or 'Preserved Specimen'
+
+    - Sequenced: has an actual ToLID (Tree of Life ID), meaning sequencing was completed.
+    - Tissue at Sanger: tube is in a rack at Sanger (submitted to TOL pipeline) but not yet sequenced.
+    - Tissue Available: tissue has been collected but not yet sent to Sanger.
+    - Preserved Specimen: no tissue collected yet.
     """
+    tolid = str(row.get('ToLID', ''))
+    has_tolid = tolid not in ('', 'nan', 'Not in STS') and len(tolid) > 0 and 'NOT_FOUND' not in tolid
+
     rack_1 = str(row.get('Tube_1_rack', ''))
-    if 'Not in TOL' not in rack_1 and len(rack_1) > 5:
+    has_rack = 'Not in TOL' not in rack_1 and len(rack_1) > 5
+
+    if has_tolid:
         return "Sequenced"
-    
+
+    if has_rack:
+        return "Tissue at Sanger"
+
     tissue_1 = str(row.get('Tube_1_tissue', ''))
     if 'NOT_COLLECTED' not in tissue_1 and tissue_1 not in ['nan', '']:
         return "Tissue Available"
-    
+
     return "Preserved Specimen"
 
 
@@ -611,7 +624,7 @@ def main():
     df_local = load_local_data()
     
     if df_local.empty:
-        print("\n⚠️  WARNING: Dore data not loaded - mimicry lookup will be empty!")
+        print("\nWARNING: Dore data not loaded - mimicry lookup will be empty!")
         print("   Other data sources will have 'Unknown' mimicry rings.")
     
     # ═══════════════════════════════════════════════════════════════════════
@@ -644,7 +657,28 @@ def main():
     # ═══════════════════════════════════════════════════════════════════════
     # FINAL CLEANING
     # ═══════════════════════════════════════════════════════════════════════
-    
+
+    # Standardize country names (ISO 2-letter codes -> full names)
+    country_code_to_name = {
+        'AR': 'Argentina', 'BO': 'Bolivia', 'BR': 'Brazil', 'BZ': 'Belize',
+        'CA': 'Canada', 'CL': 'Chile', 'CN': 'China', 'CO': 'Colombia',
+        'CR': 'Costa Rica', 'CU': 'Cuba', 'DE': 'Germany', 'DK': 'Denmark',
+        'DO': 'Dominican Republic', 'EC': 'Ecuador', 'GF': 'French Guiana',
+        'GT': 'Guatemala', 'GY': 'Guyana', 'HN': 'Honduras', 'HT': 'Haiti',
+        'JM': 'Jamaica', 'MN': 'Mongolia', 'MX': 'Mexico', 'NI': 'Nicaragua',
+        'NO': 'Norway', 'PA': 'Panama', 'PE': 'Peru', 'PY': 'Paraguay',
+        'RU': 'Russia', 'SR': 'Suriname', 'SV': 'El Salvador',
+        'TT': 'Trinidad and Tobago', 'US': 'United States', 'UY': 'Uruguay',
+        'VE': 'Venezuela',
+    }
+    # Also normalize variant spellings
+    country_name_fixes = {
+        'French-Guiana': 'French Guiana',
+        'Trinidad & Tobago': 'Trinidad and Tobago',
+    }
+    df_merged['country'] = df_merged['country'].replace(country_code_to_name)
+    df_merged['country'] = df_merged['country'].replace(country_name_fixes)
+
     # Ensure all string fields are properly typed
     str_cols = ['id', 'scientific_name', 'genus', 'species', 'family', 'tribe',
                 'mimicry_ring', 'sequencing_status', 'source', 'country']
@@ -714,6 +748,15 @@ def main():
     print("\nBy Sequencing Status:")
     print(df_merged['sequencing_status'].value_counts().to_string())
 
+    # Sanger-specific breakdown for manuscript
+    sanger = df_merged[df_merged['source'] == 'Sanger Institute']
+    print(f"\n--- Sanger Institute Sequencing Breakdown (for manuscript) ---")
+    print(f"Total Sanger specimens: {len(sanger)}")
+    for status in ['Sequenced', 'Tissue at Sanger', 'Tissue Available', 'Preserved Specimen']:
+        count = (sanger['sequencing_status'] == status).sum()
+        pct = 100 * count / len(sanger) if len(sanger) > 0 else 0
+        print(f"  {status}: {count} ({pct:.1f}%)")
+
     print("\nBy Sex:")
     sex_counts = df_merged['sex'].value_counts(dropna=False)
     print(sex_counts.to_string())
@@ -747,7 +790,7 @@ def main():
     
     print(f"\n>> Saved to: {output_path}")
     print(f">> File size: {os.path.getsize(output_path) / 1024:.1f} KB")
-    print("\n✅ Done!")
+    print("\nDone!")
 
 
 if __name__ == "__main__":
