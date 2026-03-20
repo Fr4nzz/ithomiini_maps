@@ -426,6 +426,7 @@ export const useDataStore = defineStore('data', () => {
 
   const filteredGeoJSON = computed(() => {
     if (!allFeatures.value.length) return null
+    const t0 = performance.now()
 
     let searchTerms = null
     if (filters.value.camidSearch) {
@@ -437,36 +438,48 @@ export const useDataStore = defineStore('data', () => {
       if (searchTerms.length === 0) searchTerms = null
     }
 
+    // Pre-build Sets for O(1) lookups instead of O(n) .includes() per feature
+    const speciesSet = filters.value.species.length > 0 ? new Set(filters.value.species) : null
+    const subspeciesSet = filters.value.subspecies.length > 0 ? new Set(filters.value.subspecies) : null
+    const mimicrySet = filters.value.mimicry.length > 0 ? new Set(filters.value.mimicry) : null
+    const statusSet = filters.value.status.length > 0 ? new Set(filters.value.status) : null
+    const sourceSet = filters.value.source.length > 0 ? new Set(filters.value.source) : null
+
+    const f = filters.value
+    const bb = boundingBox.value
+    const hasDateFilter = f.dateStart || f.dateEnd
+    const dateStart = f.dateStart ? new Date(f.dateStart) : null
+    const dateEnd = f.dateEnd ? new Date(f.dateEnd) : null
+
     const filtered = allFeatures.value.filter(item => {
       if (searchTerms) {
         const itemId = (item.id || '').toUpperCase()
         if (!searchTerms.some(term => itemId.includes(term))) return false
       }
 
-      if (filters.value.family !== 'All' && item.family !== filters.value.family) return false
-      if (filters.value.tribe !== 'All' && item.tribe !== filters.value.tribe) return false
-      if (filters.value.genus !== 'All' && item.genus !== filters.value.genus) return false
-      if (filters.value.species.length > 0 && !filters.value.species.includes(item.scientific_name)) return false
-      if (filters.value.subspecies.length > 0 && !filters.value.subspecies.includes(item.subspecies)) return false
-      if (filters.value.mimicry.length > 0 && !filters.value.mimicry.includes(item.mimicry_ring)) return false
-      if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
-      if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false
-      if (filters.value.country !== 'All' && item.country !== filters.value.country) return false
-      if (filters.value.sex !== 'all') {
-        if (filters.value.sex === 'male' && item.sex !== 'male') return false
-        if (filters.value.sex === 'female' && item.sex !== 'female') return false
+      if (f.family !== 'All' && item.family !== f.family) return false
+      if (f.tribe !== 'All' && item.tribe !== f.tribe) return false
+      if (f.genus !== 'All' && item.genus !== f.genus) return false
+      if (speciesSet && !speciesSet.has(item.scientific_name)) return false
+      if (subspeciesSet && !subspeciesSet.has(item.subspecies)) return false
+      if (mimicrySet && !mimicrySet.has(item.mimicry_ring)) return false
+      if (statusSet && !statusSet.has(item.sequencing_status)) return false
+      if (sourceSet && !sourceSet.has(item.source)) return false
+      if (f.country !== 'All' && item.country !== f.country) return false
+      if (f.sex !== 'all') {
+        if (f.sex === 'male' && item.sex !== 'male') return false
+        if (f.sex === 'female' && item.sex !== 'female') return false
       }
 
-      if (filters.value.dateStart || filters.value.dateEnd) {
+      if (hasDateFilter) {
         const itemDateStr = item.observation_date || item.date || item.preservation_date
         const d = parseDate(itemDateStr)
         if (!d) return false
-        if (filters.value.dateStart && d < new Date(filters.value.dateStart)) return false
-        if (filters.value.dateEnd && d > new Date(filters.value.dateEnd)) return false
+        if (dateStart && d < dateStart) return false
+        if (dateEnd && d > dateEnd) return false
       }
 
-      if (boundingBox.value) {
-        const bb = boundingBox.value
+      if (bb) {
         if (item.lng < bb.sw.lng || item.lng > bb.ne.lng ||
             item.lat < bb.sw.lat || item.lat > bb.ne.lat) return false
       }
@@ -474,7 +487,7 @@ export const useDataStore = defineStore('data', () => {
       return true
     })
 
-    return {
+    const result = {
       type: 'FeatureCollection',
       features: filtered.map(item => ({
         type: 'Feature',
@@ -482,6 +495,8 @@ export const useDataStore = defineStore('data', () => {
         properties: item
       }))
     }
+    console.log(`[Perf] filteredGeoJSON: ${(performance.now() - t0).toFixed(1)}ms, ${allFeatures.value.length} → ${filtered.length} features`)
+    return result
   })
 
   // ═══════════════════════════════════════════════════════════════════════════

@@ -384,6 +384,7 @@ export function useLegendMeasurement({
     const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
     const slotsInfo = measuredGroupSlots.value !== null ? ` groups=${measuredGroupSlots.value}` : ''
     console.log(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items${slotsInfo} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
+    console.log(`[Perf] legendMeasurement: settled in ${correctionSteps} steps`)
     correctionSteps = 0
     updateSnugHeightFromDOM()
   }
@@ -414,6 +415,7 @@ export function useLegendMeasurement({
   // ── Main measurement ──────────────────────────────────────────────────
 
   function measureAndTrimItems() {
+    const t0 = performance.now()
     const contentEl = contentRef.value
     if (!contentEl || isResizing.value) return
 
