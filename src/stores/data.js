@@ -202,7 +202,11 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
-  const loadSource = async (sourceName) => {
+  // Pending features from batch loading — flushed once all sources in a batch finish
+  let pendingBatchFeatures = []
+  let activeBatchLoads = 0
+
+  const loadSource = async (sourceName, { batch = false } = {}) => {
     if (loadedSources.has(sourceName)) return
     if (sourceLoading.has(sourceName)) return
 
@@ -211,6 +215,7 @@ export const useDataStore = defineStore('data', () => {
     if (!fileName) return
 
     sourceLoading.add(sourceName)
+    if (batch) activeBatchLoads++
 
     try {
       const basePath = import.meta.env.BASE_URL || '/'
@@ -224,21 +229,44 @@ export const useDataStore = defineStore('data', () => {
         if (item.source !== sourceName) item.source = sourceName
       }
 
-      allFeatures.value = [...allFeatures.value, ...data]
       loadedSources.add(sourceName)
-      console.log(`Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
+
+      if (batch) {
+        // Accumulate without triggering reactivity
+        pendingBatchFeatures.push(...data)
+        console.log(`Loaded ${data.length} ${sourceName} records (batch pending: ${pendingBatchFeatures.length})`)
+      } else {
+        allFeatures.value = [...allFeatures.value, ...data]
+        console.log(`Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
+      }
 
       addPhotosFromData(data)
     } catch (e) {
-      console.error(`❌ Failed to load ${sourceName}:`, e)
+      console.error(`Failed to load ${sourceName}:`, e)
     } finally {
       sourceLoading.delete(sourceName)
+      if (batch) {
+        activeBatchLoads--
+        if (activeBatchLoads === 0 && pendingBatchFeatures.length > 0) {
+          // All batch loads done — flush once
+          const t0 = performance.now()
+          allFeatures.value = [...allFeatures.value, ...pendingBatchFeatures]
+          console.log(`[Perf] Batch flush: ${pendingBatchFeatures.length} records in ${(performance.now() - t0).toFixed(1)}ms (total: ${allFeatures.value.length})`)
+          pendingBatchFeatures = []
+        }
+      }
     }
   }
 
   const loadSourcesForFilters = async () => {
     const needed = filters.value.source.filter(s => !loadedSources.has(s))
-    await Promise.all(needed.map(s => loadSource(s)))
+    if (needed.length <= 1) {
+      // Single source: load immediately (no batching needed)
+      await Promise.all(needed.map(s => loadSource(s)))
+    } else {
+      // Multiple sources: batch to avoid repeated map rebuilds
+      await Promise.all(needed.map(s => loadSource(s, { batch: true })))
+    }
   }
 
   const restoreFiltersFromURL = () => {
@@ -413,10 +441,11 @@ export const useDataStore = defineStore('data', () => {
   })
 
   watch(() => filters.value.source, async (selectedSources) => {
-    for (const source of selectedSources) {
-      if (!loadedSources.has(source)) {
-        await loadSource(source)
-      }
+    const needed = selectedSources.filter(s => !loadedSources.has(s))
+    if (needed.length <= 1) {
+      for (const source of needed) await loadSource(source)
+    } else {
+      await Promise.all(needed.map(s => loadSource(s, { batch: true })))
     }
   }, { deep: true })
 
