@@ -2,16 +2,16 @@
   "source_stats": [
     {
       "source": "Sanger Institute",
-      "total_records": 6722,
-      "unique_genera": 169,
-      "unique_species": 459,
-      "unique_subspecies": 579,
-      "unique_scientific_names": 476,
-      "unique_countries": 6,
+      "total_records": 7265,
+      "unique_genera": 173,
+      "unique_species": 494,
+      "unique_subspecies": 597,
+      "unique_scientific_names": 513,
+      "unique_countries": 8,
       "unique_mimicry_rings": 37,
-      "records_with_images": 4086,
-      "records_with_coords": 6722,
-      "records_with_date": 6695,
+      "records_with_images": 4072,
+      "records_with_coords": 7265,
+      "records_with_date": 7239,
       "genera_list": [
         "Abaeis",
         "Actinote",
@@ -72,6 +72,7 @@
         "Eresia",
         "Eryphanis",
         "Erythia",
+        "Eucyane",
         "Eueides",
         "Eunica",
         "Euptychia",
@@ -83,10 +84,12 @@
         "Fountainea",
         "Godyris",
         "Greta",
+        "Haematera",
         "Haetera",
         "Hamadryas",
         "Harjesia",
         "Heliconius",
+        "Helicopis",
         "Hermeuptychia",
         "Heterosais",
         "Historis",
@@ -173,6 +176,7 @@
         "Taygetis",
         "Tegosa",
         "Temenis",
+        "Teratophthalma",
         "Thyridia",
         "Tigridia",
         "Tithorea",
@@ -226,30 +230,32 @@
         "Brazil",
         "Colombia",
         "Ecuador",
-        "French-Guiana",
+        "French Guiana",
+        "Guyana",
         "Panama",
-        "Peru"
+        "Peru",
+        "Suriname"
       ],
       "sequencing_statuses": {
-        "Sequenced": 4183,
-        "Preserved Specimen": 1420,
-        "Tissue Available": 1119
+        "Sequenced": 4600,
+        "Preserved Specimen": 1428,
+        "Tissue Available": 1237
       },
       "curation_bases": {
-        "GBIF": 5270,
-        "Ref. Taxonomy": 1099,
-        "GBIF API": 66,
-        "Typo Detection": 24
+        "GBIF": 5725,
+        "Ref. Taxonomy": 1179,
+        "GBIF API": 76,
+        "Typo Detection": 22
       },
       "curation_statuses": {
-        "verified": 2934,
-        "subspecies_unresolved": 1528,
-        "synonym_resolved": 778,
-        "verified_nominotypical": 550,
-        "verified_literature": 322,
+        "verified": 3313,
+        "subspecies_unresolved": 1575,
+        "synonym_resolved": 837,
+        "verified_nominotypical": 585,
+        "verified_literature": 343,
         "not_curated": 261,
-        "non_standard_subspecies": 244,
-        "undescribed": 101,
+        "non_standard_subspecies": 245,
+        "undescribed": 102,
         "not_found": 2,
         "subspecies_synonym": 2
       },
@@ -300,7 +306,7 @@
         "Mamercus"
       ],
       "countries_list": [
-        "MX"
+        "Mexico"
       ],
       "sequencing_statuses": {
         "Museum Specimen": 19358,
@@ -317,16 +323,16 @@
     },
     {
       "source": "GBIF (Other Institutions)",
-      "total_records": 27819,
+      "total_records": 28182,
       "unique_genera": 43,
-      "unique_species": 415,
-      "unique_subspecies": 461,
-      "unique_scientific_names": 426,
+      "unique_species": 417,
+      "unique_subspecies": 469,
+      "unique_scientific_names": 428,
       "unique_countries": 32,
       "unique_mimicry_rings": 42,
-      "records_with_images": 4603,
-      "records_with_coords": 27817,
-      "records_with_date": 23181,
+      "records_with_images": 4910,
+      "records_with_coords": 28180,
+      "records_with_date": 23367,
       "genera_list": [
         "Aeria",
         "Athesis",
@@ -417,57 +423,56 @@
         "Vestilla"
       ],
       "countries_list": [
-        "AR",
-        "BO",
-        "BR",
-        "BZ",
-        "CA",
-        "CN",
-        "CO",
-        "CR",
-        "CU",
-        "DE",
-        "DK",
-        "DO",
-        "EC",
-        "GF",
-        "GT",
-        "GY",
-        "HN",
-        "HT",
-        "JM",
-        "MN",
-        "MX",
-        "NI",
-        "NO",
-        "PA",
-        "PE",
-        "PY",
-        "RU",
-        "SR",
-        "SV",
-        "TT",
-        "US",
-        "VE"
+        "Argentina",
+        "Belize",
+        "Bolivia",
+        "Brazil",
+        "Canada",
+        "China",
+        "Colombia",
+        "Costa Rica",
+        "Cuba",
+        "Denmark",
+        "Dominican Republic",
+        "Ecuador",
+        "El Salvador",
+        "French Guiana",
+        "Germany",
+        "Guatemala",
+        "Guyana",
+        "Haiti",
+        "Honduras",
+        "Jamaica",
+        "Mexico",
+        "Mongolia",
+        "Nicaragua",
+        "Norway",
+        "Panama",
+        "Paraguay",
+        "Peru",
+        "Russia",
+        "Suriname",
+        "Trinidad and Tobago",
+        "United States",
+        "Venezuela"
       ],
       "sequencing_statuses": {
-        "Museum Specimen": 24651,
-        "Observation": 2334,
-        "GBIF Record": 834
+        "Museum Specimen": 24985,
+        "Observation": 2362,
+        "GBIF Record": 835
       },
       "curation_bases": {
-        "GBIF": 27294,
-        "Ref. Taxonomy": 268,
-        "GBIF Synonym": 198,
-        "Typo Detection": 55,
-        "Literature": 4
+        "GBIF": 27601,
+        "Ref. Taxonomy": 267,
+        "GBIF Synonym": 217,
+        "Typo Detection": 65,
+        "GBIF API": 32
       },
       "curation_statuses": {
-        "verified": 25550,
-        "verified_nominotypical": 1751,
-        "synonym_resolved": 460,
+        "verified": 25876,
+        "verified_nominotypical": 1774,
+        "synonym_resolved": 480,
         "subspecies_synonym": 46,
-        "verified_literature": 6,
         "corrected_literature": 6
       },
       "basis_of_record": {}
@@ -602,7 +607,7 @@
         "Paraguay",
         "Peru",
         "Suriname",
-        "Trinidad & Tobago",
+        "Trinidad and Tobago",
         "Venezuela"
       ],
       "sequencing_statuses": {
@@ -629,16 +634,16 @@
     },
     {
       "source": "iNaturalist",
-      "total_records": 19328,
+      "total_records": 19901,
       "unique_genera": 41,
-      "unique_species": 253,
+      "unique_species": 252,
       "unique_subspecies": 175,
-      "unique_scientific_names": 253,
+      "unique_scientific_names": 252,
       "unique_countries": 25,
       "unique_mimicry_rings": 39,
-      "records_with_images": 18577,
-      "records_with_coords": 19328,
-      "records_with_date": 19328,
+      "records_with_images": 19132,
+      "records_with_coords": 19901,
+      "records_with_date": 19901,
       "genera_list": [
         "Aeria",
         "Athesis",
@@ -724,58 +729,58 @@
         "Theudelinda"
       ],
       "countries_list": [
-        "AR",
-        "BO",
-        "BR",
-        "BZ",
-        "CO",
-        "CR",
-        "CU",
-        "DO",
-        "EC",
-        "GF",
-        "GT",
-        "GY",
-        "HN",
-        "HT",
-        "MX",
-        "NI",
-        "PA",
-        "PE",
-        "PY",
-        "SR",
-        "SV",
-        "TT",
-        "US",
-        "UY",
-        "VE"
+        "Argentina",
+        "Belize",
+        "Bolivia",
+        "Brazil",
+        "Colombia",
+        "Costa Rica",
+        "Cuba",
+        "Dominican Republic",
+        "Ecuador",
+        "El Salvador",
+        "French Guiana",
+        "Guatemala",
+        "Guyana",
+        "Haiti",
+        "Honduras",
+        "Mexico",
+        "Nicaragua",
+        "Panama",
+        "Paraguay",
+        "Peru",
+        "Suriname",
+        "Trinidad and Tobago",
+        "United States",
+        "Uruguay",
+        "Venezuela"
       ],
       "sequencing_statuses": {
-        "Observation": 19328
+        "Observation": 19901
       },
       "curation_bases": {
-        "GBIF": 19169,
+        "GBIF": 19738,
         "Ref. Taxonomy": 117,
-        "Typo Detection": 40,
+        "Typo Detection": 42,
+        "GBIF Synonym": 2,
         "GBIF API": 2
       },
       "curation_statuses": {
-        "verified": 18380,
-        "verified_nominotypical": 829,
-        "synonym_resolved": 115,
-        "verified_literature": 2,
+        "verified": 18939,
+        "verified_nominotypical": 841,
+        "synonym_resolved": 119,
         "higher_rank_only": 2
       },
       "basis_of_record": {}
     }
   ],
   "merged_stats": {
-    "total_records": 104382,
-    "unique_genera": 178,
-    "unique_species": 751,
-    "unique_subspecies": 1365,
-    "unique_scientific_names": 818,
-    "unique_countries": 57,
+    "total_records": 105861,
+    "unique_genera": 182,
+    "unique_species": 782,
+    "unique_subspecies": 1380,
+    "unique_scientific_names": 849,
+    "unique_countries": 33,
     "unique_mimicry_rings": 44,
     "genera_list": [
       "Abaeis",
@@ -840,6 +845,7 @@
       "Eresia",
       "Eryphanis",
       "Erythia",
+      "Eucyane",
       "Eueides",
       "Eunica",
       "Euptychia",
@@ -853,11 +859,13 @@
       "Genus2",
       "Godyris",
       "Greta",
+      "Haematera",
       "Haenschia",
       "Haetera",
       "Hamadryas",
       "Harjesia",
       "Heliconius",
+      "Helicopis",
       "Hermeuptychia",
       "Heterosais",
       "Historis",
@@ -947,6 +955,7 @@
       "Taygetis",
       "Tegosa",
       "Temenis",
+      "Teratophthalma",
       "Thyridia",
       "Tigridia",
       "Tithorea",
@@ -1004,69 +1013,45 @@
       "Vestilla"
     ],
     "countries_list": [
-      "AR",
       "Argentina",
-      "BO",
-      "BR",
-      "BZ",
       "Belize",
       "Bolivia",
       "Brazil",
-      "CA",
-      "CN",
-      "CO",
-      "CR",
-      "CU",
+      "Canada",
+      "China",
       "Colombia",
       "Costa Rica",
       "Cuba",
-      "DE",
-      "DK",
-      "DO",
+      "Denmark",
       "Dominican Republic",
-      "EC",
       "Ecuador",
       "El Salvador",
       "French Guiana",
-      "French-Guiana",
-      "GF",
-      "GT",
-      "GY",
+      "Germany",
       "Guatemala",
       "Guyana",
-      "HN",
-      "HT",
+      "Haiti",
       "Honduras",
-      "JM",
       "Jamaica",
-      "MN",
-      "MX",
       "Mexico",
-      "NI",
-      "NO",
+      "Mongolia",
       "Nicaragua",
-      "PA",
-      "PE",
-      "PY",
+      "Norway",
       "Panama",
       "Paraguay",
       "Peru",
-      "RU",
-      "SR",
-      "SV",
+      "Russia",
       "Suriname",
-      "TT",
-      "Trinidad & Tobago",
-      "US",
-      "UY",
-      "VE",
+      "Trinidad and Tobago",
+      "United States",
+      "Uruguay",
       "Venezuela"
     ]
   },
   "mimicry_ring_table": [
     {
       "mimicry_ring": "Acrisione",
-      "total_records": 46,
+      "total_records": 48,
       "unique_species": 1,
       "unique_subspecies": 1,
       "representative_species": [
@@ -1074,14 +1059,14 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 32,
-        "iNaturalist": 10,
+        "iNaturalist": 11,
         "Sanger Institute": 3,
-        "GBIF (Other Institutions)": 1
+        "GBIF (Other Institutions)": 2
       }
     },
     {
       "mimicry_ring": "Agnosia",
-      "total_records": 14930,
+      "total_records": 15021,
       "unique_species": 83,
       "unique_subspecies": 132,
       "representative_species": [
@@ -1092,14 +1077,14 @@
       "records_by_source": {
         "GBIF (UNAM)": 7051,
         "Dore et al. (2025)": 2813,
-        "iNaturalist": 2594,
-        "GBIF (Other Institutions)": 2318,
-        "Sanger Institute": 154
+        "iNaturalist": 2657,
+        "GBIF (Other Institutions)": 2337,
+        "Sanger Institute": 163
       }
     },
     {
       "mimicry_ring": "Amalda",
-      "total_records": 2514,
+      "total_records": 2531,
       "unique_species": 9,
       "unique_subspecies": 15,
       "representative_species": [
@@ -1109,15 +1094,15 @@
       ],
       "records_by_source": {
         "GBIF (UNAM)": 1247,
-        "GBIF (Other Institutions)": 707,
-        "iNaturalist": 381,
+        "GBIF (Other Institutions)": 712,
+        "iNaturalist": 393,
         "Dore et al. (2025)": 168,
         "Sanger Institute": 11
       }
     },
     {
       "mimicry_ring": "Aureliana",
-      "total_records": 739,
+      "total_records": 745,
       "unique_species": 12,
       "unique_subspecies": 25,
       "representative_species": [
@@ -1127,14 +1112,14 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 380,
-        "GBIF (Other Institutions)": 184,
-        "Sanger Institute": 124,
-        "iNaturalist": 51
+        "GBIF (Other Institutions)": 186,
+        "Sanger Institute": 125,
+        "iNaturalist": 54
       }
     },
     {
       "mimicry_ring": "Banjana-M",
-      "total_records": 2007,
+      "total_records": 2013,
       "unique_species": 43,
       "unique_subspecies": 65,
       "representative_species": [
@@ -1144,14 +1129,14 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 1124,
-        "GBIF (Other Institutions)": 574,
-        "iNaturalist": 211,
+        "GBIF (Other Institutions)": 578,
+        "iNaturalist": 213,
         "Sanger Institute": 98
       }
     },
     {
       "mimicry_ring": "Confusa",
-      "total_records": 6022,
+      "total_records": 6191,
       "unique_species": 20,
       "unique_subspecies": 51,
       "representative_species": [
@@ -1160,10 +1145,10 @@
         "Callithomia lenea"
       ],
       "records_by_source": {
-        "iNaturalist": 3294,
+        "iNaturalist": 3418,
         "Dore et al. (2025)": 1607,
-        "GBIF (Other Institutions)": 859,
-        "Sanger Institute": 152,
+        "GBIF (Other Institutions)": 898,
+        "Sanger Institute": 158,
         "GBIF (UNAM)": 110
       }
     },
@@ -1184,7 +1169,7 @@
     },
     {
       "mimicry_ring": "Dilucida",
-      "total_records": 6606,
+      "total_records": 6675,
       "unique_species": 40,
       "unique_subspecies": 81,
       "representative_species": [
@@ -1194,15 +1179,15 @@
       ],
       "records_by_source": {
         "GBIF (UNAM)": 2242,
-        "GBIF (Other Institutions)": 2082,
+        "GBIF (Other Institutions)": 2107,
         "Dore et al. (2025)": 1437,
-        "iNaturalist": 684,
-        "Sanger Institute": 161
+        "iNaturalist": 715,
+        "Sanger Institute": 174
       }
     },
     {
       "mimicry_ring": "Doto",
-      "total_records": 756,
+      "total_records": 781,
       "unique_species": 15,
       "unique_subspecies": 35,
       "representative_species": [
@@ -1211,10 +1196,10 @@
         "Dircenna dero"
       ],
       "records_by_source": {
-        "GBIF (Other Institutions)": 380,
+        "GBIF (Other Institutions)": 382,
         "Dore et al. (2025)": 311,
-        "iNaturalist": 47,
-        "Sanger Institute": 18
+        "iNaturalist": 48,
+        "Sanger Institute": 40
       }
     },
     {
@@ -1236,7 +1221,7 @@
     },
     {
       "mimicry_ring": "Duillia",
-      "total_records": 238,
+      "total_records": 240,
       "unique_species": 3,
       "unique_subspecies": 2,
       "representative_species": [
@@ -1246,9 +1231,9 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 112,
-        "iNaturalist": 49,
+        "iNaturalist": 50,
         "Sanger Institute": 47,
-        "GBIF (Other Institutions)": 30
+        "GBIF (Other Institutions)": 31
       }
     },
     {
@@ -1269,7 +1254,7 @@
     },
     {
       "mimicry_ring": "Eurimedia",
-      "total_records": 6652,
+      "total_records": 6733,
       "unique_species": 35,
       "unique_subspecies": 113,
       "representative_species": [
@@ -1279,15 +1264,15 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 2648,
-        "GBIF (Other Institutions)": 1663,
-        "iNaturalist": 1479,
-        "Sanger Institute": 627,
+        "GBIF (Other Institutions)": 1693,
+        "iNaturalist": 1529,
+        "Sanger Institute": 628,
         "GBIF (UNAM)": 235
       }
     },
     {
       "mimicry_ring": "Excelsa",
-      "total_records": 3014,
+      "total_records": 3079,
       "unique_species": 17,
       "unique_subspecies": 49,
       "representative_species": [
@@ -1296,8 +1281,8 @@
         "Dircenna olyras"
       ],
       "records_by_source": {
-        "GBIF (Other Institutions)": 1208,
-        "iNaturalist": 898,
+        "GBIF (Other Institutions)": 1223,
+        "iNaturalist": 948,
         "Dore et al. (2025)": 681,
         "GBIF (UNAM)": 176,
         "Sanger Institute": 51
@@ -1305,7 +1290,7 @@
     },
     {
       "mimicry_ring": "Hemixanthe",
-      "total_records": 390,
+      "total_records": 395,
       "unique_species": 7,
       "unique_subspecies": 7,
       "representative_species": [
@@ -1315,16 +1300,16 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 293,
-        "iNaturalist": 66,
-        "GBIF (Other Institutions)": 25,
+        "iNaturalist": 67,
+        "GBIF (Other Institutions)": 29,
         "Sanger Institute": 6
       }
     },
     {
       "mimicry_ring": "Hermias",
-      "total_records": 12393,
+      "total_records": 12521,
       "unique_species": 50,
-      "unique_subspecies": 204,
+      "unique_subspecies": 209,
       "representative_species": [
         "Athyrtis mechanitis",
         "Callithomia alexirrhoe",
@@ -1333,14 +1318,14 @@
       "records_by_source": {
         "GBIF (UNAM)": 3523,
         "Dore et al. (2025)": 3393,
-        "GBIF (Other Institutions)": 3333,
-        "iNaturalist": 1776,
-        "Sanger Institute": 368
+        "GBIF (Other Institutions)": 3382,
+        "iNaturalist": 1813,
+        "Sanger Institute": 410
       }
     },
     {
       "mimicry_ring": "Hewitsoni",
-      "total_records": 937,
+      "total_records": 938,
       "unique_species": 27,
       "unique_subspecies": 40,
       "representative_species": [
@@ -1350,7 +1335,7 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 513,
-        "GBIF (Other Institutions)": 172,
+        "GBIF (Other Institutions)": 173,
         "Sanger Institute": 131,
         "iNaturalist": 121
       }
@@ -1369,7 +1354,7 @@
     },
     {
       "mimicry_ring": "Illinissa",
-      "total_records": 162,
+      "total_records": 166,
       "unique_species": 6,
       "unique_subspecies": 8,
       "representative_species": [
@@ -1378,15 +1363,15 @@
         "Hyposcada illinissa"
       ],
       "records_by_source": {
-        "GBIF (Other Institutions)": 107,
-        "iNaturalist": 21,
+        "GBIF (Other Institutions)": 109,
+        "iNaturalist": 23,
         "Dore et al. (2025)": 19,
         "Sanger Institute": 15
       }
     },
     {
       "mimicry_ring": "Lerida",
-      "total_records": 12262,
+      "total_records": 12343,
       "unique_species": 65,
       "unique_subspecies": 158,
       "representative_species": [
@@ -1396,10 +1381,10 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 4705,
-        "GBIF (Other Institutions)": 3000,
+        "GBIF (Other Institutions)": 3027,
         "GBIF (UNAM)": 2291,
-        "iNaturalist": 1568,
-        "Sanger Institute": 698
+        "iNaturalist": 1605,
+        "Sanger Institute": 715
       }
     },
     {
@@ -1421,7 +1406,7 @@
     },
     {
       "mimicry_ring": "Lysimnia",
-      "total_records": 2352,
+      "total_records": 2407,
       "unique_species": 5,
       "unique_subspecies": 13,
       "representative_species": [
@@ -1430,32 +1415,32 @@
         "Mechanitis lysimnia"
       ],
       "records_by_source": {
-        "iNaturalist": 793,
-        "GBIF (Other Institutions)": 709,
+        "iNaturalist": 812,
+        "GBIF (Other Institutions)": 743,
         "Dore et al. (2025)": 568,
-        "Sanger Institute": 282
+        "Sanger Institute": 284
       }
     },
     {
       "mimicry_ring": "Maelus",
-      "total_records": 4516,
+      "total_records": 4594,
       "unique_species": 16,
-      "unique_subspecies": 56,
+      "unique_subspecies": 59,
       "representative_species": [
         "Callithomia alexirrhoe",
         "Ceratinia neso",
         "Ceratinia poecila"
       ],
       "records_by_source": {
-        "GBIF (Other Institutions)": 1741,
-        "iNaturalist": 1454,
+        "GBIF (Other Institutions)": 1755,
+        "iNaturalist": 1487,
         "Dore et al. (2025)": 738,
-        "Sanger Institute": 583
+        "Sanger Institute": 614
       }
     },
     {
       "mimicry_ring": "Mamercus",
-      "total_records": 11452,
+      "total_records": 11552,
       "unique_species": 58,
       "unique_subspecies": 178,
       "representative_species": [
@@ -1465,10 +1450,10 @@
       ],
       "records_by_source": {
         "GBIF (UNAM)": 3878,
-        "GBIF (Other Institutions)": 2798,
+        "GBIF (Other Institutions)": 2831,
         "Dore et al. (2025)": 2748,
-        "iNaturalist": 1370,
-        "Sanger Institute": 658
+        "iNaturalist": 1410,
+        "Sanger Institute": 685
       }
     },
     {
@@ -1507,7 +1492,7 @@
     },
     {
       "mimicry_ring": "Mothone",
-      "total_records": 1546,
+      "total_records": 1550,
       "unique_species": 14,
       "unique_subspecies": 26,
       "representative_species": [
@@ -1516,7 +1501,7 @@
         "Hypothyris anastasia"
       ],
       "records_by_source": {
-        "Sanger Institute": 769,
+        "Sanger Institute": 773,
         "Dore et al. (2025)": 491,
         "GBIF (Other Institutions)": 225,
         "iNaturalist": 61
@@ -1524,7 +1509,7 @@
     },
     {
       "mimicry_ring": "Ocna",
-      "total_records": 511,
+      "total_records": 525,
       "unique_species": 13,
       "unique_subspecies": 33,
       "representative_species": [
@@ -1534,14 +1519,14 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 283,
-        "GBIF (Other Institutions)": 148,
-        "Sanger Institute": 40,
-        "iNaturalist": 40
+        "GBIF (Other Institutions)": 151,
+        "Sanger Institute": 50,
+        "iNaturalist": 41
       }
     },
     {
       "mimicry_ring": "Orestes",
-      "total_records": 1316,
+      "total_records": 1348,
       "unique_species": 15,
       "unique_subspecies": 29,
       "representative_species": [
@@ -1550,15 +1535,15 @@
         "Forbestra olivencia"
       ],
       "records_by_source": {
-        "iNaturalist": 514,
-        "GBIF (Other Institutions)": 479,
+        "iNaturalist": 529,
+        "GBIF (Other Institutions)": 484,
         "Dore et al. (2025)": 280,
-        "Sanger Institute": 43
+        "Sanger Institute": 55
       }
     },
     {
       "mimicry_ring": "Ozia",
-      "total_records": 731,
+      "total_records": 735,
       "unique_species": 19,
       "unique_subspecies": 16,
       "representative_species": [
@@ -1568,14 +1553,14 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 514,
-        "iNaturalist": 107,
-        "GBIF (Other Institutions)": 103,
+        "iNaturalist": 110,
+        "GBIF (Other Institutions)": 104,
         "Sanger Institute": 7
       }
     },
     {
       "mimicry_ring": "Panthyale",
-      "total_records": 610,
+      "total_records": 612,
       "unique_species": 39,
       "unique_subspecies": 71,
       "representative_species": [
@@ -1585,14 +1570,14 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 434,
-        "GBIF (Other Institutions)": 142,
+        "GBIF (Other Institutions)": 144,
         "iNaturalist": 29,
         "Sanger Institute": 5
       }
     },
     {
       "mimicry_ring": "Parallelis",
-      "total_records": 596,
+      "total_records": 605,
       "unique_species": 7,
       "unique_subspecies": 14,
       "representative_species": [
@@ -1603,13 +1588,13 @@
       "records_by_source": {
         "GBIF (Other Institutions)": 260,
         "Dore et al. (2025)": 214,
-        "iNaturalist": 103,
-        "Sanger Institute": 19
+        "iNaturalist": 111,
+        "Sanger Institute": 20
       }
     },
     {
       "mimicry_ring": "Pavonii",
-      "total_records": 223,
+      "total_records": 227,
       "unique_species": 2,
       "unique_subspecies": 6,
       "representative_species": [
@@ -1617,14 +1602,14 @@
         "Elzunia pavonii"
       ],
       "records_by_source": {
-        "iNaturalist": 100,
+        "iNaturalist": 103,
         "Dore et al. (2025)": 81,
-        "GBIF (Other Institutions)": 42
+        "GBIF (Other Institutions)": 43
       }
     },
     {
       "mimicry_ring": "Polita",
-      "total_records": 1042,
+      "total_records": 1082,
       "unique_species": 10,
       "unique_subspecies": 12,
       "representative_species": [
@@ -1633,10 +1618,10 @@
         "Episcada polita"
       ],
       "records_by_source": {
-        "iNaturalist": 444,
-        "GBIF (Other Institutions)": 429,
+        "iNaturalist": 460,
+        "GBIF (Other Institutions)": 436,
         "Dore et al. (2025)": 166,
-        "Sanger Institute": 3
+        "Sanger Institute": 20
       }
     },
     {
@@ -1654,7 +1639,7 @@
     },
     {
       "mimicry_ring": "Praxilla",
-      "total_records": 207,
+      "total_records": 208,
       "unique_species": 9,
       "unique_subspecies": 17,
       "representative_species": [
@@ -1664,14 +1649,14 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 99,
-        "GBIF (Other Institutions)": 95,
+        "GBIF (Other Institutions)": 96,
         "iNaturalist": 12,
         "Sanger Institute": 1
       }
     },
     {
       "mimicry_ring": "Quintina",
-      "total_records": 186,
+      "total_records": 188,
       "unique_species": 6,
       "unique_subspecies": 6,
       "representative_species": [
@@ -1683,7 +1668,7 @@
         "Dore et al. (2025)": 103,
         "GBIF (Other Institutions)": 66,
         "iNaturalist": 14,
-        "Sanger Institute": 3
+        "Sanger Institute": 5
       }
     },
     {
@@ -1705,7 +1690,7 @@
     },
     {
       "mimicry_ring": "Susiana",
-      "total_records": 330,
+      "total_records": 335,
       "unique_species": 12,
       "unique_subspecies": 18,
       "representative_species": [
@@ -1715,8 +1700,8 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 148,
-        "iNaturalist": 72,
-        "GBIF (Other Institutions)": 63,
+        "iNaturalist": 75,
+        "GBIF (Other Institutions)": 65,
         "Sanger Institute": 47
       }
     },
@@ -1738,7 +1723,7 @@
     },
     {
       "mimicry_ring": "Theudelinda",
-      "total_records": 181,
+      "total_records": 187,
       "unique_species": 8,
       "unique_subspecies": 14,
       "representative_species": [
@@ -1748,9 +1733,9 @@
       ],
       "records_by_source": {
         "Dore et al. (2025)": 81,
-        "Sanger Institute": 44,
-        "iNaturalist": 35,
-        "GBIF (Other Institutions)": 21
+        "Sanger Institute": 46,
+        "iNaturalist": 38,
+        "GBIF (Other Institutions)": 22
       }
     },
     {
@@ -1798,56 +1783,52 @@
     }
   ],
   "curation_stats": {
-    "total_records": 104382,
+    "total_records": 105861,
     "curation_basis_breakdown": {
       "GBIF": {
-        "count": 98589,
-        "percentage": 94.5
+        "count": 99920,
+        "percentage": 94.4
       },
       "Ref. Taxonomy": {
-        "count": 3739,
+        "count": 3818,
         "percentage": 3.6
       },
       "GBIF API": {
-        "count": 853,
+        "count": 895,
         "percentage": 0.8
       },
       "GBIF Synonym": {
-        "count": 263,
+        "count": 284,
         "percentage": 0.3
       },
       "Typo Detection": {
-        "count": 202,
+        "count": 212,
         "percentage": 0.2
-      },
-      "Literature": {
-        "count": 4,
-        "percentage": 0.0
       }
     },
     "curation_status_breakdown": {
       "verified": {
-        "count": 74170,
-        "percentage": 71.1
+        "count": 75434,
+        "percentage": 71.3
       },
       "verified_nominotypical": {
-        "count": 12433,
-        "percentage": 11.9
+        "count": 12503,
+        "percentage": 11.8
       },
       "subspecies_unresolved": {
-        "count": 9907,
-        "percentage": 9.5
-      },
-      "undescribed": {
-        "count": 2224,
-        "percentage": 2.1
+        "count": 9954,
+        "percentage": 9.4
       },
       "synonym_resolved": {
-        "count": 2142,
+        "count": 2225,
+        "percentage": 2.1
+      },
+      "undescribed": {
+        "count": 2225,
         "percentage": 2.1
       },
       "verified_literature": {
-        "count": 1861,
+        "count": 1874,
         "percentage": 1.8
       },
       "not_curated": {
@@ -1859,7 +1840,7 @@
         "percentage": 0.6
       },
       "non_standard_subspecies": {
-        "count": 244,
+        "count": 245,
         "percentage": 0.2
       },
       "subspecies_synonym": {
@@ -1887,42 +1868,42 @@
         "mb": 27.64
       },
       "map_points_gbif_other.json": {
-        "bytes": 18314480,
-        "mb": 17.47
+        "bytes": 18488423,
+        "mb": 17.63
       },
       "map_points_gbif_unam.json": {
-        "bytes": 13200721,
-        "mb": 12.59
+        "bytes": 13178969,
+        "mb": 12.57
       },
       "map_points_images.json": {
-        "bytes": 28040,
-        "mb": 0.03
+        "bytes": 2,
+        "mb": 0.0
       },
       "map_points_inaturalist.json": {
-        "bytes": 13054661,
-        "mb": 12.45
+        "bytes": 14046300,
+        "mb": 13.4
       },
       "map_points_sanger.json": {
-        "bytes": 4166673,
-        "mb": 3.97
+        "bytes": 4451060,
+        "mb": 4.24
       }
     },
-    "total_data_bytes": 92939313,
-    "total_data_mb": 88.63,
+    "total_data_bytes": 94339492,
+    "total_data_mb": 89.97,
     "js_total_bytes": 0,
     "css_total_bytes": 0,
     "app_total_kb": "N/A (run npm build first)"
   },
   "gbif_citation": {
-    "doi": "10.15468/dl.pbs3eu",
-    "doi_url": "https://doi.org/10.15468/dl.pbs3eu",
-    "download_key": "0075469-251120083545085",
-    "download_date": "2026-01-05",
-    "total_records": 68733,
-    "citation_text": "GBIF Occurrence Download https://doi.org/10.15468/dl.pbs3eu accessed via GBIF.org on 2026-01-05",
+    "doi": "10.15468/dl.9mzws4",
+    "doi_url": "https://doi.org/10.15468/dl.9mzws4",
+    "download_key": "0033034-260226173443078",
+    "download_date": "2026-03-12",
+    "total_records": 69669,
+    "citation_text": "GBIF Occurrence Download https://doi.org/10.15468/dl.9mzws4 accessed via GBIF.org on 2026-03-12",
     "dataset_breakdown": {
-      "iNaturalist": 19328,
-      "Other GBIF": 49405
+      "iNaturalist": 19901,
+      "Other GBIF": 0
     },
     "filters_applied": "Ithomiini genera, coordinates present, no geospatial issues, present occurrences, excludes fossils/living specimens"
   }
