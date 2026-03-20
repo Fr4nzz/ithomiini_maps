@@ -15,6 +15,23 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+import pycountry
+
+
+def standardize_country(name):
+    """Convert ISO 2-letter codes to full names and normalize variant spellings."""
+    if not name or name in ('Unknown', 'nan', ''):
+        return name
+    if len(name) == 2 and name.isupper():
+        country = pycountry.countries.get(alpha_2=name)
+        if country:
+            return getattr(country, 'common_name', country.name)
+    normalized = name.replace('-', ' ').replace('&', 'and')
+    if normalized != name:
+        return normalized
+    return name
+
+
 PROJECT_ROOT = Path(__file__).parent.parent
 DATA_DIR = PROJECT_ROOT / "public" / "data"
 OUTPUT_DIR = Path(__file__).parent
@@ -325,24 +342,6 @@ def main():
     print("Loading data manifest...")
     manifest = load_json(MANIFEST_FILE)
 
-    # Standardize country names (ISO 2-letter codes -> full names)
-    country_code_to_name = {
-        'AR': 'Argentina', 'BO': 'Bolivia', 'BR': 'Brazil', 'BZ': 'Belize',
-        'CA': 'Canada', 'CL': 'Chile', 'CN': 'China', 'CO': 'Colombia',
-        'CR': 'Costa Rica', 'CU': 'Cuba', 'DE': 'Germany', 'DK': 'Denmark',
-        'DO': 'Dominican Republic', 'EC': 'Ecuador', 'GF': 'French Guiana',
-        'GT': 'Guatemala', 'GY': 'Guyana', 'HN': 'Honduras', 'HT': 'Haiti',
-        'JM': 'Jamaica', 'MN': 'Mongolia', 'MX': 'Mexico', 'NI': 'Nicaragua',
-        'NO': 'Norway', 'PA': 'Panama', 'PE': 'Peru', 'PY': 'Paraguay',
-        'RU': 'Russia', 'SR': 'Suriname', 'SV': 'El Salvador',
-        'TT': 'Trinidad and Tobago', 'US': 'United States', 'UY': 'Uruguay',
-        'VE': 'Venezuela',
-    }
-    country_name_fixes = {
-        'French-Guiana': 'French Guiana',
-        'Trinidad & Tobago': 'Trinidad and Tobago',
-    }
-
     # Load all source files
     all_records = []
     source_stats = []
@@ -359,11 +358,7 @@ def main():
 
         # Standardize country names before computing stats
         for rec in records:
-            c = rec.get('country', '')
-            if c in country_code_to_name:
-                rec['country'] = country_code_to_name[c]
-            elif c in country_name_fixes:
-                rec['country'] = country_name_fixes[c]
+            rec['country'] = standardize_country(rec.get('country', ''))
 
         stats = compute_source_stats(records, source_name)
         source_stats.append(stats)

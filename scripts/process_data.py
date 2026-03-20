@@ -659,25 +659,23 @@ def main():
     # ═══════════════════════════════════════════════════════════════════════
 
     # Standardize country names (ISO 2-letter codes -> full names)
-    country_code_to_name = {
-        'AR': 'Argentina', 'BO': 'Bolivia', 'BR': 'Brazil', 'BZ': 'Belize',
-        'CA': 'Canada', 'CL': 'Chile', 'CN': 'China', 'CO': 'Colombia',
-        'CR': 'Costa Rica', 'CU': 'Cuba', 'DE': 'Germany', 'DK': 'Denmark',
-        'DO': 'Dominican Republic', 'EC': 'Ecuador', 'GF': 'French Guiana',
-        'GT': 'Guatemala', 'GY': 'Guyana', 'HN': 'Honduras', 'HT': 'Haiti',
-        'JM': 'Jamaica', 'MN': 'Mongolia', 'MX': 'Mexico', 'NI': 'Nicaragua',
-        'NO': 'Norway', 'PA': 'Panama', 'PE': 'Peru', 'PY': 'Paraguay',
-        'RU': 'Russia', 'SR': 'Suriname', 'SV': 'El Salvador',
-        'TT': 'Trinidad and Tobago', 'US': 'United States', 'UY': 'Uruguay',
-        'VE': 'Venezuela',
-    }
-    # Also normalize variant spellings
-    country_name_fixes = {
-        'French-Guiana': 'French Guiana',
-        'Trinidad & Tobago': 'Trinidad and Tobago',
-    }
-    df_merged['country'] = df_merged['country'].replace(country_code_to_name)
-    df_merged['country'] = df_merged['country'].replace(country_name_fixes)
+    import pycountry
+
+    def standardize_country(name):
+        if not name or name in ('Unknown', 'nan', ''):
+            return name
+        # Try as ISO 2-letter code first
+        if len(name) == 2 and name.isupper():
+            country = pycountry.countries.get(alpha_2=name)
+            if country:
+                return getattr(country, 'common_name', country.name)
+        # Normalize variant spellings (e.g. hyphens, ampersands)
+        normalized = name.replace('-', ' ').replace('&', 'and')
+        if normalized != name:
+            return normalized
+        return name
+
+    df_merged['country'] = df_merged['country'].apply(standardize_country)
 
     # Ensure all string fields are properly typed
     str_cols = ['id', 'scientific_name', 'genus', 'species', 'family', 'tribe',
