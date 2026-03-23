@@ -1,0 +1,1910 @@
+{
+  "source_stats": [
+    {
+      "source": "Sanger Institute",
+      "total_records": 7265,
+      "unique_genera": 173,
+      "unique_species": 494,
+      "unique_subspecies": 597,
+      "unique_scientific_names": 513,
+      "unique_countries": 8,
+      "unique_mimicry_rings": 37,
+      "records_with_images": 4072,
+      "records_with_coords": 7265,
+      "records_with_date": 7239,
+      "genera_list": [
+        "Abaeis",
+        "Actinote",
+        "Adelpha",
+        "Aeria",
+        "Amarynthis",
+        "Anartia",
+        "Ancyluris",
+        "Anteros",
+        "Anthanassa",
+        "Antirrhea",
+        "Aphrissa",
+        "Arawacus",
+        "Archaeoprepona",
+        "Archonias",
+        "Athesis",
+        "Batesia",
+        "Bia",
+        "Biblis",
+        "Brevioleria",
+        "Caligo",
+        "Callicore",
+        "Callicorina",
+        "Callithomia",
+        "Calycopis",
+        "Cartea",
+        "Castilia",
+        "Catoblepia",
+        "Catonephele",
+        "Ceratinia",
+        "Chalodeta",
+        "Charis",
+        "Charonias",
+        "Chetone",
+        "Chloreuptychia",
+        "Cithaerias",
+        "Coenophlebia",
+        "Colobura",
+        "Consul",
+        "Corades",
+        "Corderopedaliodes",
+        "Crocozona",
+        "Cyrenia",
+        "Danaus",
+        "Diaethria",
+        "Dione",
+        "Dircenna",
+        "Dismorphia",
+        "Doxocopa",
+        "Dryadula",
+        "Dryas",
+        "Dulcedo",
+        "Dynamine",
+        "Echydna",
+        "Emesis",
+        "Episcada",
+        "Epityches",
+        "Eresia",
+        "Eryphanis",
+        "Erythia",
+        "Eucyane",
+        "Eueides",
+        "Eunica",
+        "Euptychia",
+        "Eurybia",
+        "Euselasia",
+        "Eutresis",
+        "Evenus",
+        "Forbestra",
+        "Fountainea",
+        "Godyris",
+        "Greta",
+        "Haematera",
+        "Haetera",
+        "Hamadryas",
+        "Harjesia",
+        "Heliconius",
+        "Helicopis",
+        "Hermeuptychia",
+        "Heterosais",
+        "Historis",
+        "Hyalenna",
+        "Hyalyris",
+        "Hypanartia",
+        "Hypna",
+        "Hypoleria",
+        "Hypomenitis",
+        "Hyposcada",
+        "Hypothyris",
+        "Itaballia",
+        "Ithomeis",
+        "Ithomia",
+        "Ithomiola",
+        "Junonia",
+        "Lasaia",
+        "Lasiophila",
+        "Leptophobia",
+        "Leucochimona",
+        "Lieinix",
+        "Lycorea",
+        "Lyropteryx",
+        "Macrosoma",
+        "Marpesia",
+        "Mcclungia",
+        "Mechanitis",
+        "Megoleria",
+        "Melinaea",
+        "Memphis",
+        "Mesene",
+        "Mesenopsis",
+        "Mesosemia",
+        "Metamorpha",
+        "Methona",
+        "Methone",
+        "Modestia",
+        "Morpho",
+        "Moschoneura",
+        "Myselasia",
+        "Napeogenes",
+        "Narope",
+        "Necyria",
+        "Nessaea",
+        "Nica",
+        "Oleria",
+        "Olyras",
+        "Opsiphanes",
+        "Oressinoma",
+        "Ourocnemis",
+        "Pagyris",
+        "Panacea",
+        "Panara",
+        "Parcella",
+        "Pareuptychia",
+        "Patia",
+        "Patricia",
+        "Pereute",
+        "Perisama",
+        "Perrhybris",
+        "Pheles",
+        "Philaethria",
+        "Pierella",
+        "Placidina",
+        "Podotricha",
+        "Posttaygetis",
+        "Prepona",
+        "Pronophila",
+        "Pseudodebis",
+        "Pseudohaetera",
+        "Pseudoscada",
+        "Pteronymia",
+        "Pyrrhogyra",
+        "Rhetus",
+        "Riodina",
+        "Sais",
+        "Sanguinea",
+        "Sarota",
+        "Scada",
+        "Siproeta",
+        "Splendeuptychia",
+        "Stalachtis",
+        "Symmachia",
+        "Taygetis",
+        "Tegosa",
+        "Temenis",
+        "Teratophthalma",
+        "Thyridia",
+        "Tigridia",
+        "Tithorea",
+        "Vanessa",
+        "Veladyris",
+        "Velamysta",
+        "Vila",
+        "Yphthimoides",
+        "Zaretis"
+      ],
+      "mimicry_rings_list": [
+        "Acrisione",
+        "Agnosia",
+        "Amalda",
+        "Aureliana",
+        "Banjana-M",
+        "Confusa",
+        "Dercyllidas",
+        "Dilucida",
+        "Doto",
+        "Duessa",
+        "Duillia",
+        "Eurimedia",
+        "Excelsa",
+        "Hemixanthe",
+        "Hermias",
+        "Hewitsoni",
+        "Illinissa",
+        "Lerida",
+        "Libethris",
+        "Lysimnia",
+        "Maelus",
+        "Mamercus",
+        "Mantineus",
+        "Mestra",
+        "Mothone",
+        "Ocna",
+        "Orestes",
+        "Ozia",
+        "Panthyale",
+        "Parallelis",
+        "Polita",
+        "Praxilla",
+        "Quintina",
+        "Sinilia",
+        "Susiana",
+        "Theudelinda",
+        "Ticidam"
+      ],
+      "countries_list": [
+        "Brazil",
+        "Colombia",
+        "Ecuador",
+        "French Guiana",
+        "Guyana",
+        "Panama",
+        "Peru",
+        "Suriname"
+      ],
+      "sequencing_statuses": {
+        "Sequenced": 4600,
+        "Preserved Specimen": 1428,
+        "Tissue Available": 1237
+      },
+      "curation_bases": {
+        "GBIF": 5725,
+        "Ref. Taxonomy": 1179,
+        "GBIF API": 76,
+        "Typo Detection": 22
+      },
+      "curation_statuses": {
+        "verified": 3313,
+        "subspecies_unresolved": 1575,
+        "synonym_resolved": 837,
+        "verified_nominotypical": 585,
+        "verified_literature": 343,
+        "not_curated": 261,
+        "non_standard_subspecies": 245,
+        "undescribed": 102,
+        "not_found": 2,
+        "subspecies_synonym": 2
+      },
+      "basis_of_record": {}
+    },
+    {
+      "source": "GBIF (UNAM)",
+      "total_records": 21586,
+      "unique_genera": 19,
+      "unique_species": 34,
+      "unique_subspecies": 25,
+      "unique_scientific_names": 35,
+      "unique_countries": 1,
+      "unique_mimicry_rings": 9,
+      "records_with_images": 0,
+      "records_with_coords": 21586,
+      "records_with_date": 21231,
+      "genera_list": [
+        "Aeria",
+        "Callithomia",
+        "Ceratinia",
+        "Dircenna",
+        "Episcada",
+        "Godyris",
+        "Greta",
+        "Hypoleria",
+        "Hyposcada",
+        "Hypothyris",
+        "Ithomia",
+        "Mechanitis",
+        "Melinaea",
+        "Napeogenes",
+        "Oleria",
+        "Olyras",
+        "Pteronymia",
+        "Thyridia",
+        "Tithorea"
+      ],
+      "mimicry_rings_list": [
+        "Agnosia",
+        "Amalda",
+        "Confusa",
+        "Dilucida",
+        "Eurimedia",
+        "Excelsa",
+        "Hermias",
+        "Lerida",
+        "Mamercus"
+      ],
+      "countries_list": [
+        "Mexico"
+      ],
+      "sequencing_statuses": {
+        "Museum Specimen": 19358,
+        "GBIF Record": 2228
+      },
+      "curation_bases": {
+        "GBIF": 21586
+      },
+      "curation_statuses": {
+        "verified": 15819,
+        "verified_nominotypical": 5767
+      },
+      "basis_of_record": {}
+    },
+    {
+      "source": "GBIF (Other Institutions)",
+      "total_records": 28182,
+      "unique_genera": 43,
+      "unique_species": 417,
+      "unique_subspecies": 469,
+      "unique_scientific_names": 428,
+      "unique_countries": 32,
+      "unique_mimicry_rings": 42,
+      "records_with_images": 4910,
+      "records_with_coords": 28180,
+      "records_with_date": 23367,
+      "genera_list": [
+        "Aeria",
+        "Athesis",
+        "Athyrtis",
+        "Brevioleria",
+        "Callithomia",
+        "Ceratinia",
+        "Dircenna",
+        "Elzunia",
+        "Episcada",
+        "Epityches",
+        "Eutresis",
+        "Forbestra",
+        "Godyris",
+        "Greta",
+        "Haenschia",
+        "Heterosais",
+        "Hyalenna",
+        "Hyalyris",
+        "Hypoleria",
+        "Hypomenitis",
+        "Hyposcada",
+        "Hypothyris",
+        "Ithomia",
+        "Mcclungia",
+        "Mechanitis",
+        "Megoleria",
+        "Melinaea",
+        "Methona",
+        "Napeogenes",
+        "Oleria",
+        "Olyras",
+        "Pagyris",
+        "Paititia",
+        "Patricia",
+        "Placidina",
+        "Pseudoscada",
+        "Pteronymia",
+        "Sais",
+        "Scada",
+        "Thyridia",
+        "Tithorea",
+        "Veladyris",
+        "Velamysta"
+      ],
+      "mimicry_rings_list": [
+        "Acrisione",
+        "Agnosia",
+        "Amalda",
+        "Aureliana",
+        "Banjana-M",
+        "Confusa",
+        "Dercyllidas",
+        "Dilucida",
+        "Doto",
+        "Duessa",
+        "Duillia",
+        "Egra",
+        "Eurimedia",
+        "Excelsa",
+        "Hemixanthe",
+        "Hermias",
+        "Hewitsoni",
+        "Illinissa",
+        "Lerida",
+        "Libethris",
+        "Lysimnia",
+        "Maelus",
+        "Mamercus",
+        "Mantineus",
+        "Mestra",
+        "Mothone",
+        "Ocna",
+        "Orestes",
+        "Ozia",
+        "Panthyale",
+        "Parallelis",
+        "Pavonii",
+        "Polita",
+        "Praestans",
+        "Praxilla",
+        "Quintina",
+        "Sinilia",
+        "Susiana",
+        "Thabena-F",
+        "Theudelinda",
+        "Ticidam",
+        "Vestilla"
+      ],
+      "countries_list": [
+        "Argentina",
+        "Belize",
+        "Bolivia",
+        "Brazil",
+        "Canada",
+        "China",
+        "Colombia",
+        "Costa Rica",
+        "Cuba",
+        "Denmark",
+        "Dominican Republic",
+        "Ecuador",
+        "El Salvador",
+        "French Guiana",
+        "Germany",
+        "Guatemala",
+        "Guyana",
+        "Haiti",
+        "Honduras",
+        "Jamaica",
+        "Mexico",
+        "Mongolia",
+        "Nicaragua",
+        "Norway",
+        "Panama",
+        "Paraguay",
+        "Peru",
+        "Russian Federation",
+        "Suriname",
+        "Trinidad and Tobago",
+        "United States",
+        "Venezuela"
+      ],
+      "sequencing_statuses": {
+        "Museum Specimen": 24985,
+        "Observation": 2362,
+        "GBIF Record": 835
+      },
+      "curation_bases": {
+        "GBIF": 27601,
+        "Ref. Taxonomy": 267,
+        "GBIF Synonym": 217,
+        "Typo Detection": 65,
+        "GBIF API": 32
+      },
+      "curation_statuses": {
+        "verified": 25876,
+        "verified_nominotypical": 1774,
+        "synonym_resolved": 480,
+        "subspecies_synonym": 46,
+        "corrected_literature": 6
+      },
+      "basis_of_record": {}
+    },
+    {
+      "source": "Dore et al. (2025)",
+      "total_records": 28927,
+      "unique_genera": 48,
+      "unique_species": 374,
+      "unique_subspecies": 999,
+      "unique_scientific_names": 387,
+      "unique_countries": 23,
+      "unique_mimicry_rings": 44,
+      "records_with_images": 0,
+      "records_with_coords": 28927,
+      "records_with_date": 0,
+      "genera_list": [
+        "Aeria",
+        "Aremfoxia",
+        "Athesis",
+        "Athyrtis",
+        "Brevioleria",
+        "Callithomia",
+        "Ceratinia",
+        "Dircenna",
+        "Elzunia",
+        "Episcada",
+        "Epityches",
+        "Eutresis",
+        "Forbestra",
+        "Genus1",
+        "Genus2",
+        "Godyris",
+        "Greta",
+        "Haenschia",
+        "Heterosais",
+        "Hyalenna",
+        "Hyalyris",
+        "Hypoleria",
+        "Hypomenitis",
+        "Hyposcada",
+        "Hypothyris",
+        "Ithomia",
+        "Mcclungia",
+        "Mechanitis",
+        "Megoleria",
+        "Melinaea",
+        "Methona",
+        "Napeogenes",
+        "Oleria",
+        "Ollantaya",
+        "Olyras",
+        "Pachacutia",
+        "Pagyris",
+        "Paititia",
+        "Patricia",
+        "Placidina",
+        "Pseudoscada",
+        "Pteronymia",
+        "Sais",
+        "Scada",
+        "Thyridia",
+        "Tithorea",
+        "Veladyris",
+        "Velamysta"
+      ],
+      "mimicry_rings_list": [
+        "Acrisione",
+        "Agnosia",
+        "Amalda",
+        "Aureliana",
+        "Banjana-M",
+        "Confusa",
+        "Dercyllidas",
+        "Dilucida",
+        "Doto",
+        "Duessa",
+        "Duillia",
+        "Egra",
+        "Eurimedia",
+        "Excelsa",
+        "Hemixanthe",
+        "Hermias",
+        "Hewitsoni",
+        "Humboldt",
+        "Illinissa",
+        "Lerida",
+        "Libethris",
+        "Lysimnia",
+        "Maelus",
+        "Mamercus",
+        "Mantineus",
+        "Mestra",
+        "Mothone",
+        "Ocna",
+        "Orestes",
+        "Ozia",
+        "Panthyale",
+        "Parallelis",
+        "Pavonii",
+        "Polita",
+        "Praestans",
+        "Praxilla",
+        "Quintina",
+        "Sinilia",
+        "Susiana",
+        "Thabena-F",
+        "Theudelinda",
+        "Ticidam",
+        "Umbrosa",
+        "Vestilla"
+      ],
+      "countries_list": [
+        "Argentina",
+        "Belize",
+        "Bolivia",
+        "Brazil",
+        "Colombia",
+        "Costa Rica",
+        "Cuba",
+        "Dominican Republic",
+        "Ecuador",
+        "El Salvador",
+        "French Guiana",
+        "Guatemala",
+        "Guyana",
+        "Honduras",
+        "Jamaica",
+        "Mexico",
+        "Nicaragua",
+        "Panama",
+        "Paraguay",
+        "Peru",
+        "Suriname",
+        "Trinidad and Tobago",
+        "Venezuela"
+      ],
+      "sequencing_statuses": {
+        "Published": 28927
+      },
+      "curation_bases": {
+        "GBIF": 25270,
+        "Ref. Taxonomy": 2255,
+        "GBIF API": 785,
+        "Typo Detection": 83,
+        "GBIF Synonym": 65
+      },
+      "curation_statuses": {
+        "verified": 11487,
+        "subspecies_unresolved": 8379,
+        "verified_nominotypical": 3536,
+        "undescribed": 2123,
+        "verified_literature": 1531,
+        "synonym_resolved": 789,
+        "higher_rank_only": 613,
+        "not_curated": 469
+      },
+      "basis_of_record": {}
+    },
+    {
+      "source": "iNaturalist",
+      "total_records": 19901,
+      "unique_genera": 41,
+      "unique_species": 252,
+      "unique_subspecies": 175,
+      "unique_scientific_names": 252,
+      "unique_countries": 25,
+      "unique_mimicry_rings": 39,
+      "records_with_images": 19132,
+      "records_with_coords": 19901,
+      "records_with_date": 19901,
+      "genera_list": [
+        "Aeria",
+        "Athesis",
+        "Athyrtis",
+        "Brevioleria",
+        "Callithomia",
+        "Ceratinia",
+        "Dircenna",
+        "Elzunia",
+        "Episcada",
+        "Epityches",
+        "Eutresis",
+        "Forbestra",
+        "Godyris",
+        "Greta",
+        "Haenschia",
+        "Heterosais",
+        "Hyalenna",
+        "Hyalyris",
+        "Hypoleria",
+        "Hypomenitis",
+        "Hyposcada",
+        "Hypothyris",
+        "Ithomia",
+        "Mcclungia",
+        "Mechanitis",
+        "Megoleria",
+        "Melinaea",
+        "Methona",
+        "Napeogenes",
+        "Oleria",
+        "Olyras",
+        "Pagyris",
+        "Patricia",
+        "Pseudoscada",
+        "Pteronymia",
+        "Sais",
+        "Scada",
+        "Thyridia",
+        "Tithorea",
+        "Veladyris",
+        "Velamysta"
+      ],
+      "mimicry_rings_list": [
+        "Acrisione",
+        "Agnosia",
+        "Amalda",
+        "Aureliana",
+        "Banjana-M",
+        "Confusa",
+        "Dercyllidas",
+        "Dilucida",
+        "Doto",
+        "Duessa",
+        "Duillia",
+        "Egra",
+        "Eurimedia",
+        "Excelsa",
+        "Hemixanthe",
+        "Hermias",
+        "Hewitsoni",
+        "Illinissa",
+        "Lerida",
+        "Libethris",
+        "Lysimnia",
+        "Maelus",
+        "Mamercus",
+        "Mantineus",
+        "Mestra",
+        "Mothone",
+        "Ocna",
+        "Orestes",
+        "Ozia",
+        "Panthyale",
+        "Parallelis",
+        "Pavonii",
+        "Polita",
+        "Praxilla",
+        "Quintina",
+        "Sinilia",
+        "Susiana",
+        "Thabena-F",
+        "Theudelinda"
+      ],
+      "countries_list": [
+        "Argentina",
+        "Belize",
+        "Bolivia",
+        "Brazil",
+        "Colombia",
+        "Costa Rica",
+        "Cuba",
+        "Dominican Republic",
+        "Ecuador",
+        "El Salvador",
+        "French Guiana",
+        "Guatemala",
+        "Guyana",
+        "Haiti",
+        "Honduras",
+        "Mexico",
+        "Nicaragua",
+        "Panama",
+        "Paraguay",
+        "Peru",
+        "Suriname",
+        "Trinidad and Tobago",
+        "United States",
+        "Uruguay",
+        "Venezuela"
+      ],
+      "sequencing_statuses": {
+        "Observation": 19901
+      },
+      "curation_bases": {
+        "GBIF": 19738,
+        "Ref. Taxonomy": 117,
+        "Typo Detection": 42,
+        "GBIF Synonym": 2,
+        "GBIF API": 2
+      },
+      "curation_statuses": {
+        "verified": 18939,
+        "verified_nominotypical": 841,
+        "synonym_resolved": 119,
+        "higher_rank_only": 2
+      },
+      "basis_of_record": {}
+    }
+  ],
+  "merged_stats": {
+    "total_records": 105861,
+    "unique_genera": 182,
+    "unique_species": 782,
+    "unique_subspecies": 1380,
+    "unique_scientific_names": 849,
+    "unique_countries": 33,
+    "unique_mimicry_rings": 44,
+    "genera_list": [
+      "Abaeis",
+      "Actinote",
+      "Adelpha",
+      "Aeria",
+      "Amarynthis",
+      "Anartia",
+      "Ancyluris",
+      "Anteros",
+      "Anthanassa",
+      "Antirrhea",
+      "Aphrissa",
+      "Arawacus",
+      "Archaeoprepona",
+      "Archonias",
+      "Aremfoxia",
+      "Athesis",
+      "Athyrtis",
+      "Batesia",
+      "Bia",
+      "Biblis",
+      "Brevioleria",
+      "Caligo",
+      "Callicore",
+      "Callicorina",
+      "Callithomia",
+      "Calycopis",
+      "Cartea",
+      "Castilia",
+      "Catoblepia",
+      "Catonephele",
+      "Ceratinia",
+      "Chalodeta",
+      "Charis",
+      "Charonias",
+      "Chetone",
+      "Chloreuptychia",
+      "Cithaerias",
+      "Coenophlebia",
+      "Colobura",
+      "Consul",
+      "Corades",
+      "Corderopedaliodes",
+      "Crocozona",
+      "Cyrenia",
+      "Danaus",
+      "Diaethria",
+      "Dione",
+      "Dircenna",
+      "Dismorphia",
+      "Doxocopa",
+      "Dryadula",
+      "Dryas",
+      "Dulcedo",
+      "Dynamine",
+      "Echydna",
+      "Elzunia",
+      "Emesis",
+      "Episcada",
+      "Epityches",
+      "Eresia",
+      "Eryphanis",
+      "Erythia",
+      "Eucyane",
+      "Eueides",
+      "Eunica",
+      "Euptychia",
+      "Eurybia",
+      "Euselasia",
+      "Eutresis",
+      "Evenus",
+      "Forbestra",
+      "Fountainea",
+      "Genus1",
+      "Genus2",
+      "Godyris",
+      "Greta",
+      "Haematera",
+      "Haenschia",
+      "Haetera",
+      "Hamadryas",
+      "Harjesia",
+      "Heliconius",
+      "Helicopis",
+      "Hermeuptychia",
+      "Heterosais",
+      "Historis",
+      "Hyalenna",
+      "Hyalyris",
+      "Hypanartia",
+      "Hypna",
+      "Hypoleria",
+      "Hypomenitis",
+      "Hyposcada",
+      "Hypothyris",
+      "Itaballia",
+      "Ithomeis",
+      "Ithomia",
+      "Ithomiola",
+      "Junonia",
+      "Lasaia",
+      "Lasiophila",
+      "Leptophobia",
+      "Leucochimona",
+      "Lieinix",
+      "Lycorea",
+      "Lyropteryx",
+      "Macrosoma",
+      "Marpesia",
+      "Mcclungia",
+      "Mechanitis",
+      "Megoleria",
+      "Melinaea",
+      "Memphis",
+      "Mesene",
+      "Mesenopsis",
+      "Mesosemia",
+      "Metamorpha",
+      "Methona",
+      "Methone",
+      "Modestia",
+      "Morpho",
+      "Moschoneura",
+      "Myselasia",
+      "Napeogenes",
+      "Narope",
+      "Necyria",
+      "Nessaea",
+      "Nica",
+      "Oleria",
+      "Ollantaya",
+      "Olyras",
+      "Opsiphanes",
+      "Oressinoma",
+      "Ourocnemis",
+      "Pachacutia",
+      "Pagyris",
+      "Paititia",
+      "Panacea",
+      "Panara",
+      "Parcella",
+      "Pareuptychia",
+      "Patia",
+      "Patricia",
+      "Pereute",
+      "Perisama",
+      "Perrhybris",
+      "Pheles",
+      "Philaethria",
+      "Pierella",
+      "Placidina",
+      "Podotricha",
+      "Posttaygetis",
+      "Prepona",
+      "Pronophila",
+      "Pseudodebis",
+      "Pseudohaetera",
+      "Pseudoscada",
+      "Pteronymia",
+      "Pyrrhogyra",
+      "Rhetus",
+      "Riodina",
+      "Sais",
+      "Sanguinea",
+      "Sarota",
+      "Scada",
+      "Siproeta",
+      "Splendeuptychia",
+      "Stalachtis",
+      "Symmachia",
+      "Taygetis",
+      "Tegosa",
+      "Temenis",
+      "Teratophthalma",
+      "Thyridia",
+      "Tigridia",
+      "Tithorea",
+      "Vanessa",
+      "Veladyris",
+      "Velamysta",
+      "Vila",
+      "Yphthimoides",
+      "Zaretis"
+    ],
+    "mimicry_rings_list": [
+      "Acrisione",
+      "Agnosia",
+      "Amalda",
+      "Aureliana",
+      "Banjana-M",
+      "Confusa",
+      "Dercyllidas",
+      "Dilucida",
+      "Doto",
+      "Duessa",
+      "Duillia",
+      "Egra",
+      "Eurimedia",
+      "Excelsa",
+      "Hemixanthe",
+      "Hermias",
+      "Hewitsoni",
+      "Humboldt",
+      "Illinissa",
+      "Lerida",
+      "Libethris",
+      "Lysimnia",
+      "Maelus",
+      "Mamercus",
+      "Mantineus",
+      "Mestra",
+      "Mothone",
+      "Ocna",
+      "Orestes",
+      "Ozia",
+      "Panthyale",
+      "Parallelis",
+      "Pavonii",
+      "Polita",
+      "Praestans",
+      "Praxilla",
+      "Quintina",
+      "Sinilia",
+      "Susiana",
+      "Thabena-F",
+      "Theudelinda",
+      "Ticidam",
+      "Umbrosa",
+      "Vestilla"
+    ],
+    "countries_list": [
+      "Argentina",
+      "Belize",
+      "Bolivia",
+      "Brazil",
+      "Canada",
+      "China",
+      "Colombia",
+      "Costa Rica",
+      "Cuba",
+      "Denmark",
+      "Dominican Republic",
+      "Ecuador",
+      "El Salvador",
+      "French Guiana",
+      "Germany",
+      "Guatemala",
+      "Guyana",
+      "Haiti",
+      "Honduras",
+      "Jamaica",
+      "Mexico",
+      "Mongolia",
+      "Nicaragua",
+      "Norway",
+      "Panama",
+      "Paraguay",
+      "Peru",
+      "Russian Federation",
+      "Suriname",
+      "Trinidad and Tobago",
+      "United States",
+      "Uruguay",
+      "Venezuela"
+    ]
+  },
+  "mimicry_ring_table": [
+    {
+      "mimicry_ring": "Acrisione",
+      "total_records": 48,
+      "unique_species": 1,
+      "unique_subspecies": 1,
+      "representative_species": [
+        "Athesis acrisione"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 32,
+        "iNaturalist": 11,
+        "Sanger Institute": 3,
+        "GBIF (Other Institutions)": 2
+      }
+    },
+    {
+      "mimicry_ring": "Agnosia",
+      "total_records": 15021,
+      "unique_species": 83,
+      "unique_subspecies": 132,
+      "representative_species": [
+        "Brevioleria arzalia",
+        "Brevioleria seba",
+        "Dircenna adina"
+      ],
+      "records_by_source": {
+        "GBIF (UNAM)": 7051,
+        "Dore et al. (2025)": 2813,
+        "iNaturalist": 2657,
+        "GBIF (Other Institutions)": 2337,
+        "Sanger Institute": 163
+      }
+    },
+    {
+      "mimicry_ring": "Amalda",
+      "total_records": 2531,
+      "unique_species": 9,
+      "unique_subspecies": 15,
+      "representative_species": [
+        "Hypoleria lavinia",
+        "Hyposcada schausi",
+        "Ithomia diasia"
+      ],
+      "records_by_source": {
+        "GBIF (UNAM)": 1247,
+        "GBIF (Other Institutions)": 712,
+        "iNaturalist": 393,
+        "Dore et al. (2025)": 168,
+        "Sanger Institute": 11
+      }
+    },
+    {
+      "mimicry_ring": "Aureliana",
+      "total_records": 745,
+      "unique_species": 12,
+      "unique_subspecies": 25,
+      "representative_species": [
+        "Brevioleria aelia",
+        "Brevioleria arzalia",
+        "Brevioleria seba"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 380,
+        "GBIF (Other Institutions)": 186,
+        "Sanger Institute": 125,
+        "iNaturalist": 54
+      }
+    },
+    {
+      "mimicry_ring": "Banjana-M",
+      "total_records": 2013,
+      "unique_species": 43,
+      "unique_subspecies": 65,
+      "representative_species": [
+        "Episcada salvinia",
+        "Genus1 nsp1",
+        "Godyris lauta"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 1124,
+        "GBIF (Other Institutions)": 578,
+        "iNaturalist": 213,
+        "Sanger Institute": 98
+      }
+    },
+    {
+      "mimicry_ring": "Confusa",
+      "total_records": 6191,
+      "unique_species": 20,
+      "unique_subspecies": 51,
+      "representative_species": [
+        "Aremfoxia ferra",
+        "Athesis acrisione",
+        "Callithomia lenea"
+      ],
+      "records_by_source": {
+        "iNaturalist": 3418,
+        "Dore et al. (2025)": 1607,
+        "GBIF (Other Institutions)": 898,
+        "Sanger Institute": 158,
+        "GBIF (UNAM)": 110
+      }
+    },
+    {
+      "mimicry_ring": "Dercyllidas",
+      "total_records": 188,
+      "unique_species": 1,
+      "unique_subspecies": 2,
+      "representative_species": [
+        "Patricia dercyllidas"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 72,
+        "GBIF (Other Institutions)": 67,
+        "iNaturalist": 48,
+        "Sanger Institute": 1
+      }
+    },
+    {
+      "mimicry_ring": "Dilucida",
+      "total_records": 6675,
+      "unique_species": 40,
+      "unique_subspecies": 81,
+      "representative_species": [
+        "Athesis clearista",
+        "Callithomia lenea",
+        "Ceratinia neso"
+      ],
+      "records_by_source": {
+        "GBIF (UNAM)": 2242,
+        "GBIF (Other Institutions)": 2107,
+        "Dore et al. (2025)": 1437,
+        "iNaturalist": 715,
+        "Sanger Institute": 174
+      }
+    },
+    {
+      "mimicry_ring": "Doto",
+      "total_records": 781,
+      "unique_species": 15,
+      "unique_subspecies": 35,
+      "representative_species": [
+        "Callithomia lenea",
+        "Ceratinia neso",
+        "Dircenna dero"
+      ],
+      "records_by_source": {
+        "GBIF (Other Institutions)": 382,
+        "Dore et al. (2025)": 311,
+        "iNaturalist": 48,
+        "Sanger Institute": 40
+      }
+    },
+    {
+      "mimicry_ring": "Duessa",
+      "total_records": 142,
+      "unique_species": 4,
+      "unique_subspecies": 12,
+      "representative_species": [
+        "Hyalyris oulita",
+        "Hypothyris leprieuri",
+        "Hypothyris thea"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 72,
+        "GBIF (Other Institutions)": 53,
+        "Sanger Institute": 13,
+        "iNaturalist": 4
+      }
+    },
+    {
+      "mimicry_ring": "Duillia",
+      "total_records": 240,
+      "unique_species": 3,
+      "unique_subspecies": 2,
+      "representative_species": [
+        "Godyris duillia",
+        "Hypomenitis alphesiboea",
+        "Pachacutia baroni"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 112,
+        "iNaturalist": 50,
+        "Sanger Institute": 47,
+        "GBIF (Other Institutions)": 31
+      }
+    },
+    {
+      "mimicry_ring": "Egra",
+      "total_records": 114,
+      "unique_species": 11,
+      "unique_subspecies": 13,
+      "representative_species": [
+        "Hypoleria alema",
+        "Hypoleria mulviana",
+        "Hypoleria sarepta"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 105,
+        "GBIF (Other Institutions)": 8,
+        "iNaturalist": 1
+      }
+    },
+    {
+      "mimicry_ring": "Eurimedia",
+      "total_records": 6733,
+      "unique_species": 35,
+      "unique_subspecies": 113,
+      "representative_species": [
+        "Aeria elara",
+        "Aeria eurimedia",
+        "Aeria olena"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 2648,
+        "GBIF (Other Institutions)": 1693,
+        "iNaturalist": 1529,
+        "Sanger Institute": 628,
+        "GBIF (UNAM)": 235
+      }
+    },
+    {
+      "mimicry_ring": "Excelsa",
+      "total_records": 3079,
+      "unique_species": 17,
+      "unique_subspecies": 49,
+      "representative_species": [
+        "Callithomia hezia",
+        "Callithomia hydra",
+        "Dircenna olyras"
+      ],
+      "records_by_source": {
+        "GBIF (Other Institutions)": 1223,
+        "iNaturalist": 948,
+        "Dore et al. (2025)": 681,
+        "GBIF (UNAM)": 176,
+        "Sanger Institute": 51
+      }
+    },
+    {
+      "mimicry_ring": "Hemixanthe",
+      "total_records": 395,
+      "unique_species": 7,
+      "unique_subspecies": 7,
+      "representative_species": [
+        "Episcada hemixanthe",
+        "Episcada zajciwi",
+        "Hyalyris leptalina"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 293,
+        "iNaturalist": 67,
+        "GBIF (Other Institutions)": 29,
+        "Sanger Institute": 6
+      }
+    },
+    {
+      "mimicry_ring": "Hermias",
+      "total_records": 12521,
+      "unique_species": 50,
+      "unique_subspecies": 209,
+      "representative_species": [
+        "Athyrtis mechanitis",
+        "Callithomia alexirrhoe",
+        "Callithomia lenea"
+      ],
+      "records_by_source": {
+        "GBIF (UNAM)": 3523,
+        "Dore et al. (2025)": 3393,
+        "GBIF (Other Institutions)": 3382,
+        "iNaturalist": 1813,
+        "Sanger Institute": 410
+      }
+    },
+    {
+      "mimicry_ring": "Hewitsoni",
+      "total_records": 938,
+      "unique_species": 27,
+      "unique_subspecies": 40,
+      "representative_species": [
+        "Athesis vitrala",
+        "Episcada apuleia",
+        "Godyris hewitsoni"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 513,
+        "GBIF (Other Institutions)": 173,
+        "Sanger Institute": 131,
+        "iNaturalist": 121
+      }
+    },
+    {
+      "mimicry_ring": "Humboldt",
+      "total_records": 34,
+      "unique_species": 1,
+      "unique_subspecies": 3,
+      "representative_species": [
+        "Elzunia humboldt"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 34
+      }
+    },
+    {
+      "mimicry_ring": "Illinissa",
+      "total_records": 166,
+      "unique_species": 6,
+      "unique_subspecies": 8,
+      "representative_species": [
+        "Brevioleria aelia",
+        "Hyposcada anchiala",
+        "Hyposcada illinissa"
+      ],
+      "records_by_source": {
+        "GBIF (Other Institutions)": 109,
+        "iNaturalist": 23,
+        "Dore et al. (2025)": 19,
+        "Sanger Institute": 15
+      }
+    },
+    {
+      "mimicry_ring": "Lerida",
+      "total_records": 12343,
+      "unique_species": 65,
+      "unique_subspecies": 158,
+      "representative_species": [
+        "Brevioleria aelia",
+        "Brevioleria nsp1",
+        "Brevioleria plisthenes"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 4705,
+        "GBIF (Other Institutions)": 3027,
+        "GBIF (UNAM)": 2291,
+        "iNaturalist": 1605,
+        "Sanger Institute": 715
+      }
+    },
+    {
+      "mimicry_ring": "Libethris",
+      "total_records": 534,
+      "unique_species": 21,
+      "unique_subspecies": 26,
+      "representative_species": [
+        "Dircenna adina",
+        "Episcada clausina",
+        "Episcada hymenaea"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 384,
+        "GBIF (Other Institutions)": 97,
+        "Sanger Institute": 27,
+        "iNaturalist": 26
+      }
+    },
+    {
+      "mimicry_ring": "Lysimnia",
+      "total_records": 2407,
+      "unique_species": 5,
+      "unique_subspecies": 13,
+      "representative_species": [
+        "Hyalyris fiammetta",
+        "Hypothyris ninonia",
+        "Mechanitis lysimnia"
+      ],
+      "records_by_source": {
+        "iNaturalist": 812,
+        "GBIF (Other Institutions)": 743,
+        "Dore et al. (2025)": 568,
+        "Sanger Institute": 284
+      }
+    },
+    {
+      "mimicry_ring": "Maelus",
+      "total_records": 4594,
+      "unique_species": 16,
+      "unique_subspecies": 59,
+      "representative_species": [
+        "Callithomia alexirrhoe",
+        "Ceratinia neso",
+        "Ceratinia poecila"
+      ],
+      "records_by_source": {
+        "GBIF (Other Institutions)": 1755,
+        "iNaturalist": 1487,
+        "Dore et al. (2025)": 738,
+        "Sanger Institute": 614
+      }
+    },
+    {
+      "mimicry_ring": "Mamercus",
+      "total_records": 11552,
+      "unique_species": 58,
+      "unique_subspecies": 178,
+      "representative_species": [
+        "Callithomia alexirrhoe",
+        "Callithomia hezia",
+        "Callithomia hydra"
+      ],
+      "records_by_source": {
+        "GBIF (UNAM)": 3878,
+        "GBIF (Other Institutions)": 2831,
+        "Dore et al. (2025)": 2748,
+        "iNaturalist": 1410,
+        "Sanger Institute": 685
+      }
+    },
+    {
+      "mimicry_ring": "Mantineus",
+      "total_records": 359,
+      "unique_species": 5,
+      "unique_subspecies": 5,
+      "representative_species": [
+        "Ceratinia tutia",
+        "Ithomia cleora",
+        "Mechanitis menapis"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 282,
+        "iNaturalist": 38,
+        "Sanger Institute": 27,
+        "GBIF (Other Institutions)": 12
+      }
+    },
+    {
+      "mimicry_ring": "Mestra",
+      "total_records": 416,
+      "unique_species": 13,
+      "unique_subspecies": 27,
+      "representative_species": [
+        "Aremfoxia ferra",
+        "Dircenna adina",
+        "Hyalyris antea"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 332,
+        "GBIF (Other Institutions)": 41,
+        "iNaturalist": 31,
+        "Sanger Institute": 12
+      }
+    },
+    {
+      "mimicry_ring": "Mothone",
+      "total_records": 1550,
+      "unique_species": 14,
+      "unique_subspecies": 26,
+      "representative_species": [
+        "Ceratinia poecila",
+        "Hyposcada anchiala",
+        "Hypothyris anastasia"
+      ],
+      "records_by_source": {
+        "Sanger Institute": 773,
+        "Dore et al. (2025)": 491,
+        "GBIF (Other Institutions)": 225,
+        "iNaturalist": 61
+      }
+    },
+    {
+      "mimicry_ring": "Ocna",
+      "total_records": 525,
+      "unique_species": 13,
+      "unique_subspecies": 33,
+      "representative_species": [
+        "Callithomia hezia",
+        "Dircenna adina",
+        "Hyalyris antea"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 283,
+        "GBIF (Other Institutions)": 151,
+        "Sanger Institute": 50,
+        "iNaturalist": 41
+      }
+    },
+    {
+      "mimicry_ring": "Orestes",
+      "total_records": 1348,
+      "unique_species": 15,
+      "unique_subspecies": 29,
+      "representative_species": [
+        "Athyrtis mechanitis",
+        "Ceratinia poecila",
+        "Forbestra olivencia"
+      ],
+      "records_by_source": {
+        "iNaturalist": 529,
+        "GBIF (Other Institutions)": 484,
+        "Dore et al. (2025)": 280,
+        "Sanger Institute": 55
+      }
+    },
+    {
+      "mimicry_ring": "Ozia",
+      "total_records": 735,
+      "unique_species": 19,
+      "unique_subspecies": 16,
+      "representative_species": [
+        "Brevioleria coenina",
+        "Dircenna adina",
+        "Episcada nsp1"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 514,
+        "iNaturalist": 110,
+        "GBIF (Other Institutions)": 104,
+        "Sanger Institute": 7
+      }
+    },
+    {
+      "mimicry_ring": "Panthyale",
+      "total_records": 612,
+      "unique_species": 39,
+      "unique_subspecies": 71,
+      "representative_species": [
+        "Episcada apuleia",
+        "Episcada nsp1",
+        "Episcada ticidella"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 434,
+        "GBIF (Other Institutions)": 144,
+        "iNaturalist": 29,
+        "Sanger Institute": 5
+      }
+    },
+    {
+      "mimicry_ring": "Parallelis",
+      "total_records": 605,
+      "unique_species": 7,
+      "unique_subspecies": 14,
+      "representative_species": [
+        "Hyposcada anchiala",
+        "Hyposcada illinissa",
+        "Hyposcada virginiana"
+      ],
+      "records_by_source": {
+        "GBIF (Other Institutions)": 260,
+        "Dore et al. (2025)": 214,
+        "iNaturalist": 111,
+        "Sanger Institute": 20
+      }
+    },
+    {
+      "mimicry_ring": "Pavonii",
+      "total_records": 227,
+      "unique_species": 2,
+      "unique_subspecies": 6,
+      "representative_species": [
+        "Elzunia humboldt",
+        "Elzunia pavonii"
+      ],
+      "records_by_source": {
+        "iNaturalist": 103,
+        "Dore et al. (2025)": 81,
+        "GBIF (Other Institutions)": 43
+      }
+    },
+    {
+      "mimicry_ring": "Polita",
+      "total_records": 1082,
+      "unique_species": 10,
+      "unique_subspecies": 12,
+      "representative_species": [
+        "Dircenna jemina",
+        "Episcada hymenaea",
+        "Episcada polita"
+      ],
+      "records_by_source": {
+        "iNaturalist": 460,
+        "GBIF (Other Institutions)": 436,
+        "Dore et al. (2025)": 166,
+        "Sanger Institute": 20
+      }
+    },
+    {
+      "mimicry_ring": "Praestans",
+      "total_records": 11,
+      "unique_species": 1,
+      "unique_subspecies": 1,
+      "representative_species": [
+        "Olyras insignis"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 6,
+        "GBIF (Other Institutions)": 5
+      }
+    },
+    {
+      "mimicry_ring": "Praxilla",
+      "total_records": 208,
+      "unique_species": 9,
+      "unique_subspecies": 17,
+      "representative_species": [
+        "Hyalyris antea",
+        "Hyalyris lactea",
+        "Hyalyris mestra"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 99,
+        "GBIF (Other Institutions)": 96,
+        "iNaturalist": 12,
+        "Sanger Institute": 1
+      }
+    },
+    {
+      "mimicry_ring": "Quintina",
+      "total_records": 188,
+      "unique_species": 6,
+      "unique_subspecies": 6,
+      "representative_species": [
+        "Hyposcada illinissa",
+        "Hyposcada kena",
+        "Oleria estella"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 103,
+        "GBIF (Other Institutions)": 66,
+        "iNaturalist": 14,
+        "Sanger Institute": 5
+      }
+    },
+    {
+      "mimicry_ring": "Sinilia",
+      "total_records": 101,
+      "unique_species": 9,
+      "unique_subspecies": 14,
+      "representative_species": [
+        "Brevioleria aelia",
+        "Hyposcada illinissa",
+        "Hyposcada kena"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 85,
+        "GBIF (Other Institutions)": 11,
+        "Sanger Institute": 4,
+        "iNaturalist": 1
+      }
+    },
+    {
+      "mimicry_ring": "Susiana",
+      "total_records": 335,
+      "unique_species": 12,
+      "unique_subspecies": 18,
+      "representative_species": [
+        "Hyposcada attilodes",
+        "Hyposcada taliata",
+        "Megoleria orestilla"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 148,
+        "iNaturalist": 75,
+        "GBIF (Other Institutions)": 65,
+        "Sanger Institute": 47
+      }
+    },
+    {
+      "mimicry_ring": "Thabena-F",
+      "total_records": 89,
+      "unique_species": 6,
+      "unique_subspecies": 7,
+      "representative_species": [
+        "Oleria deronda",
+        "Oleria derondina",
+        "Ollantaya aegineta"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 74,
+        "GBIF (Other Institutions)": 10,
+        "iNaturalist": 5
+      }
+    },
+    {
+      "mimicry_ring": "Theudelinda",
+      "total_records": 187,
+      "unique_species": 8,
+      "unique_subspecies": 14,
+      "representative_species": [
+        "Hypomenitis hermana",
+        "Hypomenitis oneidodes",
+        "Hypomenitis theudelinda"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 81,
+        "Sanger Institute": 46,
+        "iNaturalist": 38,
+        "GBIF (Other Institutions)": 22
+      }
+    },
+    {
+      "mimicry_ring": "Ticidam",
+      "total_records": 251,
+      "unique_species": 8,
+      "unique_subspecies": 7,
+      "representative_species": [
+        "Episcada ticidella",
+        "Hyalenna sulmona",
+        "Ithomia avella"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 238,
+        "GBIF (Other Institutions)": 9,
+        "Sanger Institute": 4
+      }
+    },
+    {
+      "mimicry_ring": "Umbrosa",
+      "total_records": 42,
+      "unique_species": 3,
+      "unique_subspecies": 5,
+      "representative_species": [
+        "Godyris lauta",
+        "Hypomenitis depauperata",
+        "Hypomenitis ochretis"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 42
+      }
+    },
+    {
+      "mimicry_ring": "Vestilla",
+      "total_records": 20,
+      "unique_species": 1,
+      "unique_subspecies": 1,
+      "representative_species": [
+        "Pteronymia vestilla"
+      ],
+      "records_by_source": {
+        "Dore et al. (2025)": 17,
+        "GBIF (Other Institutions)": 3
+      }
+    }
+  ],
+  "curation_stats": {
+    "total_records": 105861,
+    "curation_basis_breakdown": {
+      "GBIF": {
+        "count": 99920,
+        "percentage": 94.4
+      },
+      "Ref. Taxonomy": {
+        "count": 3818,
+        "percentage": 3.6
+      },
+      "GBIF API": {
+        "count": 895,
+        "percentage": 0.8
+      },
+      "GBIF Synonym": {
+        "count": 284,
+        "percentage": 0.3
+      },
+      "Typo Detection": {
+        "count": 212,
+        "percentage": 0.2
+      }
+    },
+    "curation_status_breakdown": {
+      "verified": {
+        "count": 75434,
+        "percentage": 71.3
+      },
+      "verified_nominotypical": {
+        "count": 12503,
+        "percentage": 11.8
+      },
+      "subspecies_unresolved": {
+        "count": 9954,
+        "percentage": 9.4
+      },
+      "synonym_resolved": {
+        "count": 2225,
+        "percentage": 2.1
+      },
+      "undescribed": {
+        "count": 2225,
+        "percentage": 2.1
+      },
+      "verified_literature": {
+        "count": 1874,
+        "percentage": 1.8
+      },
+      "not_curated": {
+        "count": 730,
+        "percentage": 0.7
+      },
+      "higher_rank_only": {
+        "count": 615,
+        "percentage": 0.6
+      },
+      "non_standard_subspecies": {
+        "count": 245,
+        "percentage": 0.2
+      },
+      "subspecies_synonym": {
+        "count": 48,
+        "percentage": 0.0
+      },
+      "corrected_literature": {
+        "count": 6,
+        "percentage": 0.0
+      },
+      "not_found": {
+        "count": 2,
+        "percentage": 0.0
+      }
+    }
+  },
+  "file_sizes": {
+    "data_files": {
+      "map_points_dore.json": {
+        "bytes": 15189038,
+        "mb": 14.49
+      },
+      "map_points_gbif.json": {
+        "bytes": 28985700,
+        "mb": 27.64
+      },
+      "map_points_gbif_other.json": {
+        "bytes": 18488423,
+        "mb": 17.63
+      },
+      "map_points_gbif_unam.json": {
+        "bytes": 13178969,
+        "mb": 12.57
+      },
+      "map_points_images.json": {
+        "bytes": 2,
+        "mb": 0.0
+      },
+      "map_points_inaturalist.json": {
+        "bytes": 14046300,
+        "mb": 13.4
+      },
+      "map_points_sanger.json": {
+        "bytes": 4451060,
+        "mb": 4.24
+      }
+    },
+    "total_data_bytes": 94339492,
+    "total_data_mb": 89.97,
+    "js_total_bytes": 0,
+    "css_total_bytes": 0,
+    "app_total_kb": "N/A (run npm build first)"
+  },
+  "gbif_citation": {
+    "doi": "10.15468/dl.9mzws4",
+    "doi_url": "https://doi.org/10.15468/dl.9mzws4",
+    "download_key": "0033034-260226173443078",
+    "download_date": "2026-03-12",
+    "total_records": 69669,
+    "citation_text": "GBIF Occurrence Download https://doi.org/10.15468/dl.9mzws4 accessed via GBIF.org on 2026-03-12",
+    "dataset_breakdown": {
+      "iNaturalist": 19901,
+      "Other GBIF": 0
+    },
+    "filters_applied": "Ithomiini genera, coordinates present, no geospatial issues, present occurrences, excludes fossils/living specimens"
+  }
+}

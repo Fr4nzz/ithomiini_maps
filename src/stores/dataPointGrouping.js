@@ -82,6 +82,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
    * Groups all points in filteredGeoJSON by their exact coordinates
    */
   const coordinateGroups = computed(() => {
+    const t0 = performance.now()
     const groups = new Map()
     const geo = filteredGeoJSON.value
     if (!geo || !geo.features) return groups
@@ -103,6 +104,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
       }
     }
 
+    console.log(`[Perf] coordinateGroups: ${(performance.now() - t0).toFixed(1)}ms, ${multiGroups.size} groups with overlaps`)
     return multiGroups
   })
 
@@ -222,6 +224,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
    * The GeoJSON to display - handles scatter, clustering, and aggregation
    */
   const displayGeoJSON = computed(() => {
+    const t0 = performance.now()
     const geo = filteredGeoJSON.value
     if (!geo) return geo
 
@@ -267,10 +270,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
     }
 
     // Clustering mode - pass all points to MapLibre
-    if (clusteringEnabled.value) {
-      return geo
-    }
-
+    console.log(`[Perf] displayGeoJSON: ${(performance.now() - t0).toFixed(1)}ms, ${geo.features.length} features`)
     return geo
   })
 

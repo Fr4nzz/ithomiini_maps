@@ -182,14 +182,19 @@ watch([
   scheduleMeasurement(false, `setting:${changed.join(',')}`)
 }, { deep: true })
 
-// Re-measure when data changes
+// Re-measure when data changes (debounced to batch rapid source loads)
+let dataMeasureTimer = null
 watch(sortedAllItems, (newItems, oldItems) => {
   const delta = newItems.length - (oldItems?.length || 0)
   resetToAutoSize()
   measuredItemCount.value = null
   prevMeasuredCount.value = null
   measuredSnugHeight.value = null
-  scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
+  if (dataMeasureTimer) clearTimeout(dataMeasureTimer)
+  dataMeasureTimer = setTimeout(() => {
+    dataMeasureTimer = null
+    scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
+  }, 200)
 })
 
 // Re-measure after resize ends

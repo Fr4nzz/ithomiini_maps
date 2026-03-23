@@ -202,7 +202,11 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
-  const loadSource = async (sourceName) => {
+  // Pending features from batch loading — flushed once all sources in a batch finish
+  let pendingBatchFeatures = []
+  let activeBatchLoads = 0
+
+  const loadSource = async (sourceName, { batch = false } = {}) => {
     if (loadedSources.has(sourceName)) return
     if (sourceLoading.has(sourceName)) return
 
@@ -211,6 +215,7 @@ export const useDataStore = defineStore('data', () => {
     if (!fileName) return
 
     sourceLoading.add(sourceName)
+    if (batch) activeBatchLoads++
 
     try {
       const basePath = import.meta.env.BASE_URL || '/'
@@ -224,21 +229,44 @@ export const useDataStore = defineStore('data', () => {
         if (item.source !== sourceName) item.source = sourceName
       }
 
-      allFeatures.value = [...allFeatures.value, ...data]
       loadedSources.add(sourceName)
-      console.log(`Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
+
+      if (batch) {
+        // Accumulate without triggering reactivity
+        pendingBatchFeatures.push(...data)
+        console.log(`Loaded ${data.length} ${sourceName} records (batch pending: ${pendingBatchFeatures.length})`)
+      } else {
+        allFeatures.value = [...allFeatures.value, ...data]
+        console.log(`Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
+      }
 
       addPhotosFromData(data)
     } catch (e) {
-      console.error(`❌ Failed to load ${sourceName}:`, e)
+      console.error(`Failed to load ${sourceName}:`, e)
     } finally {
       sourceLoading.delete(sourceName)
+      if (batch) {
+        activeBatchLoads--
+        if (activeBatchLoads === 0 && pendingBatchFeatures.length > 0) {
+          // All batch loads done — flush once
+          const t0 = performance.now()
+          allFeatures.value = [...allFeatures.value, ...pendingBatchFeatures]
+          console.log(`[Perf] Batch flush: ${pendingBatchFeatures.length} records in ${(performance.now() - t0).toFixed(1)}ms (total: ${allFeatures.value.length})`)
+          pendingBatchFeatures = []
+        }
+      }
     }
   }
 
   const loadSourcesForFilters = async () => {
     const needed = filters.value.source.filter(s => !loadedSources.has(s))
-    await Promise.all(needed.map(s => loadSource(s)))
+    if (needed.length <= 1) {
+      // Single source: load immediately (no batching needed)
+      await Promise.all(needed.map(s => loadSource(s)))
+    } else {
+      // Multiple sources: batch to avoid repeated map rebuilds
+      await Promise.all(needed.map(s => loadSource(s, { batch: true })))
+    }
   }
 
   const restoreFiltersFromURL = () => {
@@ -413,10 +441,11 @@ export const useDataStore = defineStore('data', () => {
   })
 
   watch(() => filters.value.source, async (selectedSources) => {
-    for (const source of selectedSources) {
-      if (!loadedSources.has(source)) {
-        await loadSource(source)
-      }
+    const needed = selectedSources.filter(s => !loadedSources.has(s))
+    if (needed.length <= 1) {
+      for (const source of needed) await loadSource(source)
+    } else {
+      await Promise.all(needed.map(s => loadSource(s, { batch: true })))
     }
   }, { deep: true })
 
@@ -426,6 +455,7 @@ export const useDataStore = defineStore('data', () => {
 
   const filteredGeoJSON = computed(() => {
     if (!allFeatures.value.length) return null
+    const t0 = performance.now()
 
     let searchTerms = null
     if (filters.value.camidSearch) {
@@ -437,36 +467,48 @@ export const useDataStore = defineStore('data', () => {
       if (searchTerms.length === 0) searchTerms = null
     }
 
+    // Pre-build Sets for O(1) lookups instead of O(n) .includes() per feature
+    const speciesSet = filters.value.species.length > 0 ? new Set(filters.value.species) : null
+    const subspeciesSet = filters.value.subspecies.length > 0 ? new Set(filters.value.subspecies) : null
+    const mimicrySet = filters.value.mimicry.length > 0 ? new Set(filters.value.mimicry) : null
+    const statusSet = filters.value.status.length > 0 ? new Set(filters.value.status) : null
+    const sourceSet = filters.value.source.length > 0 ? new Set(filters.value.source) : null
+
+    const f = filters.value
+    const bb = boundingBox.value
+    const hasDateFilter = f.dateStart || f.dateEnd
+    const dateStart = f.dateStart ? new Date(f.dateStart) : null
+    const dateEnd = f.dateEnd ? new Date(f.dateEnd) : null
+
     const filtered = allFeatures.value.filter(item => {
       if (searchTerms) {
         const itemId = (item.id || '').toUpperCase()
         if (!searchTerms.some(term => itemId.includes(term))) return false
       }
 
-      if (filters.value.family !== 'All' && item.family !== filters.value.family) return false
-      if (filters.value.tribe !== 'All' && item.tribe !== filters.value.tribe) return false
-      if (filters.value.genus !== 'All' && item.genus !== filters.value.genus) return false
-      if (filters.value.species.length > 0 && !filters.value.species.includes(item.scientific_name)) return false
-      if (filters.value.subspecies.length > 0 && !filters.value.subspecies.includes(item.subspecies)) return false
-      if (filters.value.mimicry.length > 0 && !filters.value.mimicry.includes(item.mimicry_ring)) return false
-      if (filters.value.status.length > 0 && !filters.value.status.includes(item.sequencing_status)) return false
-      if (filters.value.source.length > 0 && !filters.value.source.includes(item.source)) return false
-      if (filters.value.country !== 'All' && item.country !== filters.value.country) return false
-      if (filters.value.sex !== 'all') {
-        if (filters.value.sex === 'male' && item.sex !== 'male') return false
-        if (filters.value.sex === 'female' && item.sex !== 'female') return false
+      if (f.family !== 'All' && item.family !== f.family) return false
+      if (f.tribe !== 'All' && item.tribe !== f.tribe) return false
+      if (f.genus !== 'All' && item.genus !== f.genus) return false
+      if (speciesSet && !speciesSet.has(item.scientific_name)) return false
+      if (subspeciesSet && !subspeciesSet.has(item.subspecies)) return false
+      if (mimicrySet && !mimicrySet.has(item.mimicry_ring)) return false
+      if (statusSet && !statusSet.has(item.sequencing_status)) return false
+      if (sourceSet && !sourceSet.has(item.source)) return false
+      if (f.country !== 'All' && item.country !== f.country) return false
+      if (f.sex !== 'all') {
+        if (f.sex === 'male' && item.sex !== 'male') return false
+        if (f.sex === 'female' && item.sex !== 'female') return false
       }
 
-      if (filters.value.dateStart || filters.value.dateEnd) {
+      if (hasDateFilter) {
         const itemDateStr = item.observation_date || item.date || item.preservation_date
         const d = parseDate(itemDateStr)
         if (!d) return false
-        if (filters.value.dateStart && d < new Date(filters.value.dateStart)) return false
-        if (filters.value.dateEnd && d > new Date(filters.value.dateEnd)) return false
+        if (dateStart && d < dateStart) return false
+        if (dateEnd && d > dateEnd) return false
       }
 
-      if (boundingBox.value) {
-        const bb = boundingBox.value
+      if (bb) {
         if (item.lng < bb.sw.lng || item.lng > bb.ne.lng ||
             item.lat < bb.sw.lat || item.lat > bb.ne.lat) return false
       }
@@ -474,7 +516,7 @@ export const useDataStore = defineStore('data', () => {
       return true
     })
 
-    return {
+    const result = {
       type: 'FeatureCollection',
       features: filtered.map(item => ({
         type: 'Feature',
@@ -482,6 +524,8 @@ export const useDataStore = defineStore('data', () => {
         properties: item
       }))
     }
+    console.log(`[Perf] filteredGeoJSON: ${(performance.now() - t0).toFixed(1)}ms, ${allFeatures.value.length} → ${filtered.length} features`)
+    return result
   })
 
   // ═══════════════════════════════════════════════════════════════════════════

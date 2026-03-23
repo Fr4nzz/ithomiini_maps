@@ -11,6 +11,10 @@ import logging
 from collections import Counter
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from country_utils import standardize_country
+
 from .config import (
     OUTPUT_DIR, SOURCE_DATA_FILES, IMAGE_SUPPLEMENT_FILE,
     CORRECTIONS_LOG_FILE, MANIFEST_FILE, PROJECT_ROOT,
@@ -37,6 +41,11 @@ def write_app_outputs(curated_records, corrections_log, records, stats,
     """Write split-by-source outputs for the app's lazy-loading pipeline."""
     sanitize_for_json(curated_records)
 
+    # Standardize country names
+    for rec in curated_records:
+        if 'country' in rec:
+            rec['country'] = standardize_country(rec['country'])
+
     # Group records by source
     source_groups = {}
     for rec in curated_records:
@@ -61,8 +70,8 @@ def write_app_outputs(curated_records, corrections_log, records, stats,
     canonical_groups = {}
     for filename, (canonical_source, recs) in file_groups.items():
         filepath = OUTPUT_DIR / filename
-        with open(filepath, "w") as f:
-            json.dump(recs, f, separators=(",", ":"), default=str)
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(recs, f, separators=(",", ":"), default=str, ensure_ascii=False)
         log.info(f"  {canonical_source}: {len(recs)} records -> {filepath.name}")
         canonical_groups[canonical_source] = recs
 
@@ -137,8 +146,8 @@ def _write_image_supplement(curated_records, source_groups):
             if need_ring:
                 filled_rings.add(ring)
 
-    with open(IMAGE_SUPPLEMENT_FILE, "w") as f:
-        json.dump(supplement, f, separators=(",", ":"), default=str)
+    with open(IMAGE_SUPPLEMENT_FILE, "w", encoding="utf-8") as f:
+        json.dump(supplement, f, separators=(",", ":"), default=str, ensure_ascii=False)
     log.info(f"  Image supplement: {len(supplement)} records -> "
              f"{IMAGE_SUPPLEMENT_FILE.name} "
              f"(species gaps: {len(filled_species)}, ring gaps: {len(filled_rings)})")
@@ -164,7 +173,7 @@ def _write_manifest(source_groups):
         "image_supplement": IMAGE_SUPPLEMENT_FILE.name,
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    with open(MANIFEST_FILE, "w") as f:
+    with open(MANIFEST_FILE, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)
     log.info(f"  Manifest: {MANIFEST_FILE.name}")
 
@@ -198,7 +207,7 @@ def write_corrections_log(corrections_log, records, stats,
             "sanger_taxonomy_species_count": len(sanger_species),
         },
     }
-    with open(out_path, "w") as f:
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, default=str)
     log.info(f"Corrections log written to {out_path}")
 
@@ -244,8 +253,8 @@ def write_external_output(curated_records, corrections_log, records,
         out_records.append(out)
 
     if ext == ".json":
-        with open(out_path, "w") as f:
-            json.dump(out_records, f, indent=2, default=str)
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(out_records, f, indent=2, default=str, ensure_ascii=False)
     elif ext in (".csv", ".tsv"):
         if out_records:
             delimiter = "\t" if ext == ".tsv" else ","
