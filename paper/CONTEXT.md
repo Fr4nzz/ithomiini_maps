@@ -1,156 +1,129 @@
 # Paper Context
 
-This file preserves project context for the manuscript about the Ithomiini toolkit (AI Photo Processor, Wings Gallery, Ithomiini Maps). It survives context compaction across chat sessions.
+Context file for the Ithomiini toolkit manuscript (AI Photo Processor, Wings Gallery, Ithomiini Maps). Preserves project state across chat sessions.
 
-## Project Overview
+## Three Apps
 
-Three connected open-source apps covering the specimen-to-map pipeline for Ithomiini butterflies:
-1. **AI Photo Processor** — Desktop app (Python/PyQt5) using Google Gemini AI to batch-read handwritten specimen IDs from wing photos and auto-rename files. Repo: https://github.com/Fr4nzz/rename_photos_AI
-2. **Wings Gallery** — Serverless Vue.js gallery for browsing/filtering/sharing wing photos stored on Google Drive. Repo: https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery
-3. **Ithomiini Maps** — Interactive Vue.js/MapLibre mapping platform aggregating occurrence records from Dore et al., Sanger Institute, GBIF, iNaturalist, UNAM. Repo: https://github.com/rapidspeciation/ithomiini_maps (main repo, this one)
+1. **AI Photo Processor** — Desktop (Python/PyQt5), uses Google Gemini AI to batch-read handwritten specimen IDs from wing photos, auto-rename files. 900 images/day free. Repo: https://github.com/Fr4nzz/rename_photos_AI
+2. **Wings Gallery** — Serverless Vue.js gallery for browsing/filtering wing photos stored on Google Drive. Repo: https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery
+3. **Ithomiini Maps** — Vue.js/MapLibre mapping platform, 104,382 occurrence records from 5 sources (Dore et al. 2023, Sanger Institute, iNaturalist, GBIF-UNAM, GBIF-Other). 849 species, 33 countries. Live: https://rapidspeciation.github.io/ithomiini_maps/ Repo: https://github.com/rapidspeciation/ithomiini_maps
 
-All hosted on GitHub Pages (free, serverless). Data pipelines run via GitHub Actions.
+All on GitHub Pages (free, serverless). Data pipelines via GitHub Actions. Only cost: Google Drive storage.
 
 ## Authors
 
-- Franz Chandi (Universidad San Francisco de Quito) — lead developer
-- Patricio A. Salazar Carrion (Dept. Zoology, Cambridge & Sanger Institute) — collaborator
-- Joana I. Meier (Tree of Life Programme, Sanger Institute) — PI
+- Franz Chandi (USFQ, Quito) — lead developer, Master's student
+- Patricio A. Salazar Carrión (Cambridge/Sanger) — collaborator
+- Joana I. Meier (Sanger/Cambridge) — PI, funder ($950/month)
 
 ## Target Journal
 
-Tropical Lepidoptera Research (TLR), where Rosser & Mallet (2024) published "Interactive maps for visualizing geographic distributions and phenotypes" about Heliconius maps. Keith Willmott is Editor-in-Chief. The reference paper is saved as `Interactive maps for visualizing geographic distributions and phenotypes.md`.
+Tropical Lepidoptera Research (TLR). Reference: Rosser & Mallet (2024) "Interactive maps for visualizing geographic distributions and phenotypes," TLR 34(1), 26-30. Keith Willmott is TLR Editor-in-Chief. Neil Rosser suggested as reviewer.
 
-## Patricio's Feedback (Key Points)
+## Joana's Unresolved Comments on Manuscript (Mar 1, 2026)
 
-1. **Too technical / software-focused.** The manuscript leans too much toward software architecture and tools. TLR focuses on biology of tropical butterflies, so the paper needs more content on potential research uses of the platform.
-2. **Dore dataset year.** Patricio unsure whether Dore dataset is actually from a 2025 paper (check: it's Dore et al. 2023, Ecology Letters).
-3. **User perspective needed.** Suggested sharing prototype with Keith Willmott, Marianne Elias, and Andrei Freitas for usability feedback before publication.
-4. **Potential data contributors.** Andrei Freitas and others may have unpublished curated data to add. If they contribute data, co-authorship would be appropriate.
-5. **Reviewer suggestions.** Neil Rosser would be a great reviewer. Avoid Jim Mallet (known for heavy revisions).
-6. **Group internal testing.** Also invite Karin, Fernando, Eva from the group to test.
+These are inline comments in manuscript.md that still need addressing:
 
-## Joana's Feedback (WhatsApp Dec 31, 2025)
+- **id="0"**: Intro paragraph about R-Shiny on EC2 — Joana asks "citations?" for the server hosting claim. Franz replied he was referring to old Wings Gallery versions and added Heliconius maps citation.
+- **id="2"**: Section 1 end, "Chandi et al., in prep" — Joana asks "will this be a protocols.io paper? Why not make it part of this paper?"
+- **id="3"**: Section 2.1 — "all of these require citations" (Vue.js, Python, Pandas, GitHub Pages, GitHub Actions).
+- **id="4/5"**: Section 2.2 — Joana says Windows download link is broken. Franz says fixed, plans web version soon.
+- **id="6"**: Section 2.3 — Joana asks about Wings Gallery replacing R-Shiny version: "so this is your own tool? If so, you should not mention it here or in the Introduction." (Unclear what she means — may need clarification.)
+- **id="7"**: Section 2.5 GBIF data — Joana: "It would be great to include the data from Brown's thesis in collaboration with André Freitas."
+- **id="8"**: Section 3.2 — Joana flags sequencing numbers as wrong: "this cannot be true. I am not sure where this information comes from. We have sequenced way less." Must verify/fix.
+- **id="11"**: Section 4.2 (AI discussion) — Joana: "this is all nice but feels a bit repetitive. It has all already been written above." Consider cutting or heavily condensing.
+- **id="12"**: Section 4.4 — Joana suggests adding: ecological distribution modeling (not just visualize occurrences but where species likely occur), and genomic info from GoaT (Genomes on a Tree) — chromosome count, genome size, reference genome availability.
+- **id="13"**: Section 4.4 last paragraph — Joana: "This is already written above and can thus be removed here." (About replicability/adapting to other taxa.)
+- **id="14"**: Section 6 (Data Availability) — Joana: "here you should only describe data that was produced by us. Doré et al was already cited above and GBIF as well. That should be part of methods not the data availability statement."
 
-Feature requests (most now implemented):
-- Legend customization to show only selected species (done)
-- Country boundaries on satellite map (done)
-- Export as vector format SVG/PDF (partially done via R script export)
-- Fix confusing cluster numbers (in progress)
-- Sex filter (done)
-- Clarify whether data is live or snapshot (snapshot with manual update trigger)
+## Patricio's Feedback (Key Points, Feb 3 2026)
 
-## Features Status
+1. Paper too software-focused for TLR (biology journal) — needs more research use cases. *Partially addressed: Section 3.5 added.*
+2. Dore dataset is 2023, Ecology Letters (not 2025). *Fixed.*
+3. Suggested sharing prototype with Keith Willmott, Marianne Elias, Andrei Freitas for feedback. Also group members Karin, Fernando, Eva.
+4. Andrei/others may have unpublished data → co-authorship if contributed.
+5. Neil Rosser good reviewer. Avoid Jim Mallet (heavy revisions).
+6. Joana also suggested Kanchon and Chris Jiggins/Nicola Nadeau (collections on Earthcape: https://heliconius.ecdb.io/).
 
-### Implemented
-- App themes (dark/light, multiple colors)
-- Legend customization
-- Country boundaries
-- Map image export (PNG/JPG up to 300 DPI)
-- R script export for vector output (partial)
-- Sex filter
-- Taxonomic cascading filters
-- Sequencing status filters
-- Mimicry ring selector
-- Date range filter
-- URL sharing (filter state in URL)
-- Data table with photo thumbnails
-- Image gallery
-- Data export (CSV, GeoJSON)
-- Citation generation with Git commit hash
-- Point clustering
-- Multiple base map styles
+## Meeting Status (as of Mar 2026)
 
-### Planned / In Progress
-- Improved temporal filters (more user-friendly)
-- Species distribution modeling (e.g., MaxEnt via GitHub Actions)
-- Host plant distributions (known Ithomiini host plants, primarily Solanaceae)
-- Historical climate data integration (ERA5-Land models)
-- Fix cluster number confusion
+Joana proposed Thu Mar 19 and Fri Mar 20, 7-8am Ecuador/Florida, 9-10am Campinas, 12-1pm UK, 1-2pm France for collaborator demo meeting. Franz's schedule: classes 8:30am-1pm Ecuador, available 7-8am or 2-3pm.
 
-## Manuscript
+## Latest Updates (Mar 2026)
 
-- `manuscript_draft.md` — current working version (single file, old versions deleted, history in git)
+- Eva added specimens from Surinam and Guyana; Franz updated database (Mar 15).
+- "Update database" button now works (password: Hyalyris).
+- Joana paid Feb+Mar invoices ($950/month).
+- Joana requested colorblind-safe default palettes.
+- Joana flagged sequencing status numbers in manuscript as too high — must verify.
 
-## Project Development Phases (Original Proposal)
+## Implemented Features
 
-Three incremental phases over 2-3 months (Dec 2024 - Feb 2025):
-- **Month 1 (Core):** Map engine (Vue.js/Leaflet), taxonomy + CAMID + sequencing status filters, data pipeline (Python/Pandas), GitHub Pages deployment.
-- **Month 2 (Scientific Utilities):** GBIF integration, mimicry ring filters, URL sharing, specimen image viewing, data tables, citation generation, export.
-- **Month 3 (Advanced/Paper):** Taxonomic consistency handling, temporal analysis, species distribution modeling (SDMs), historical satellite layers, publication-ready maps.
+App themes, legend customization, country boundaries, map export (PNG/JPG 300 DPI), R script export (partial), sex filter, cascading taxonomy filters, sequencing status filters, mimicry ring selector, date range slider, URL sharing, data table with thumbnails, image gallery, CSV/GeoJSON export, citation with Git hash, point clustering, heatmap visualization, 5 base map styles, time slider, legend grouping by sequencing status or mimicry rings.
 
-Franz proposed budget: $900 USD/month, half-time (concurrent with Master's thesis on Insect AI taxonomic ID at USFQ).
+## Planned Features
 
-## Project Importance (from proposal)
+Improved temporal filters, improve R code export (currently partial), species distribution modeling (MaxEnt via GitHub Actions), host plant overlays (Solanaceae), historical climate data (ERA5-Land), ecological distribution modeling (predict where species likely occur, not just observed), GoaT genomic data integration (chromosomes, genome size, reference genome availability), historical satellite layers (compare habitat/forest cover across years), polygon-based distribution maps for publications, fix cluster number confusion, colorblind-safe default palettes, web version of AI Photo Processor.
 
-- Centralizes validated data from multiple sources (iNaturalist, GBIF, unpublished)
-- Facilitates strategic species selection for research (sympatric/allopatric, endemism)
-- Aids fieldwork planning based on historical abundance and accessibility
-- Visualizes evolutionary patterns (gene flow, divergence, speciation)
-- Generates publication-ready maps without GIS software
-- Enables temporal analysis for climate change / urbanization studies
+**Potential new data sources:** Brown's thesis data via André Freitas (Joana's request), Chris Jiggins/Nicola Nadeau collections (currently on Earthcape: https://heliconius.ecdb.io/), Kanchon's and Chris's large collections (Joana's suggestion).
 
-## Background Note
+## Key Improvements Already Applied (earlier versions → current)
 
-Franz's nephew originally planned this as undergraduate thesis but changed topic due to rigid tutor requirements (complex login protocols, no R/Shiny). Franz took over using Vue.js + GitHub Pages approach already proven with the Wings Gallery migration.
+- Expanded research use cases (Section 3.5: mimicry ring biogeography, sequencing gaps, taxonomic verification, cross-source comparison)
+- More biological context, less software architecture
+- Photos Processing Protocol cited as separate publication (Chandi et al., in prep)
+- Active voice, specific verbs, funnel structure
+- Fixed: Google Drive (not Cloud), 5 tabs (not 4), removed multi-API key rotation mention (TOS concern)
 
-## Related Files in paper/
+## Manuscript Structure
 
-- `Photos Processing Protocol.md` — Step-by-step protocol for wing photography to gallery pipeline. Joana suggested publishing separately on protocols.io. Could cite as "in prep" and reference key info here.
-- `Interactive maps for visualizing geographic distributions and phenotypes.md` — AI-readable version of Rosser & Mallet (2024) reference paper from TLR.
-- `generate_statistics.py`, `statistics.json`, `statistics_report.txt` — Data stats generation tools.
+1. Introduction — fragmented workflows → why we built this → toolkit overview
+2. Methods: 2.1 Architecture, 2.2 AI Photo Processor, 2.3 Wings Gallery, 2.4 Photography workflow, 2.5 Specimen Maps (data sources, taxonomic curation, web interface, deployment)
+3. Results: 3.1 Data Summary (Table 1), 3.2 Sequencing Status, 3.3 Taxonomic Curation (Table 2), 3.5 Research Applications
+4. Discussion: 4.1 Comparison with existing tools, 4.2 AI-assisted renaming (Joana says repetitive), 4.3 Sustainability/reproducibility, 4.4 Limitations/future directions
+5. Conclusions, 6. Data Availability, 7. Acknowledgments, References
 
-## External Repos to Clone (for fact-checking manuscript)
+## Data Stats (Table 1)
 
-Clone into `paper/external_repos/` (gitignored):
-- `https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery` — Wings Gallery
-- `https://github.com/Fr4nzz/rename_photos_AI` — AI Photo Processor
+Dore et al. 2023: 28,927 records, 387 spp. Sanger: 7,265, 513 spp. iNaturalist: 19,901, 252 spp. GBIF-UNAM: 21,586, 35 spp. GBIF-Other: 28,182, 428 spp. Total merged: 105,861 records, 849 spp, 1,380 subspp, 184 genera, 33 countries.
 
-## Writing Style Guidelines
+## Related Files
 
-### Voice and Register
-- Prefer active voice, but use passive when it is shorter or sounds more natural. Replace vague/fuzzy verbs with specific, informative ones, but only when the result sounds human (not mechanical).
-- Common English words (authors are non-native speakers, text should sound natural and human-made).
-- Technical terms allowed but explain niche concepts so text is didactic.
-- Avoid jargon, em dashes, overuse of lists/tables. Prefer flowing paragraphs.
-- Remove information not relevant to a biology audience (per Patricio's feedback: TLR readers care about research applications, not software architecture).
+- `Photos Processing Protocol.md` — photography-to-gallery protocol. Joana suggested protocols.io or include in paper.
+- `Interactive maps for visualizing geographic distributions and phenotypes.md` — Rosser & Mallet 2024 reference.
+- `generate_statistics.py`, `statistics.json` — data stats generation.
 
-### Structure
-- **Funnel shape:** Broad introduction, narrow to specifics, widen again in conclusion so the discussion supports the conclusion's broad impact.
-- Each paragraph starts with a topic sentence that introduces what the paragraph is about and ends with a conclusion.
-- Each section (and the manuscript as a whole) poses a problem that creates curiosity, then satisfies it with a solution/answer. Open-ended problems are fine.
-- Manuscript follows a problem-solution arc at every level: whole paper, each section, each paragraph.
+## Writing Style
 
-### Conciseness Techniques (Human, Not AI)
-1. **Replace vague magnifiers with precise data** (or remove redundant data). Pick the right detail, don't strip all detail.
-2. **Replace metaphors with technical terms** -- saves words AND increases precision. Trading a metaphor for the correct term gains register consistency even when it doesn't save words.
-3. **Swap wordy time/method phrases** for compact natural equivalents (e.g., "in early 2026" not "between January and February 2026").
-4. **Remove redundant framing** -- cut "what this means is" / "it is important to note that" scaffolding.
-5. **Cut STRUCTURE words, not CONTENT words.** Keep adjectives, examples, explanatory asides. Remove scaffolding ("In other words," "This is significant because"). Don't collapse "X did Y, which showed Z" into "X demonstrated Z" -- the middle clause often contains important reasoning.
-6. **Never remove hedging, qualifiers, or attribution** -- these make academic writing sound human.
-7. **Combine sentences** when one already implies the other.
-8. **Sentence length variation is a key human-writing signal.** Mix short punchy sentences among longer ones.
+**Voice:** Prefer active voice, but use passive when it is shorter or sounds more natural. Common English (non-native authors — text should sound like we wrote it). Technical terms OK but explain niche concepts. Avoid jargon, em dashes, excessive lists. Flowing paragraphs over bullet points.
 
-### What NOT to Do (Avoid AI Conciseness Patterns)
-- Don't strip adjectives/adverbs globally
-- Don't collapse reasoning chains into dense noun phrases
-- Don't remove transition sentences between paragraphs
-- Don't replace specific citations with "studies show"
-- Don't convert natural phrasing into nominalized jargon (e.g., "planting trees along riverbanks" not "riparian reforestation implementation")
-- Don't eliminate sentence length variation
+**Structure:** Funnel shape (broad intro → narrow specifics → broad conclusion). Each paragraph: topic sentence → body → conclusion. Problem-solution arc at every level (paper, section, paragraph).
 
-## Key Improvements Applied (v5 to current)
+**Conciseness (human, not AI):**
+- Replace vague magnifiers with precise data (or vice versa when data is redundant)
+- Replace metaphors with technical terms for precision
+- Swap wordy phrases for compact natural equivalents
+- Remove scaffolding ("It is important to note that," "What this means is") but keep content words, hedging, qualifiers, attributions
+- Combine sentences when one implies the other
+- Vary sentence length (short punchy + longer explanatory)
 
-Patricio's main concern was addressed: paper was too software-focused for TLR (biology journal). Changes made:
-1. **Expanded research use cases** — Added Section 3.5 with mimicry ring biogeography, sequencing gap analysis, taxonomic verification, cross-source comparison
-2. **Added biological context** — More Ithomiini ecology, why tools matter for evolutionary biology
-3. **Reduced software architecture detail** — Trimmed implementation specifics, kept reproducibility info
-4. **Referenced Photos Processing Protocol** — Cited as separate publication (Chandi et al., in prep)
-5. **Energized writing** — Active voice, specific verbs, flowing paragraphs, funnel structure
-6. **Fixed factual errors** — Google Drive (not Cloud), 5 tabs (not 4), Gemini 3 Flash model name
-7. **Removed multi-API key rotation mention** — Potentially against Google TOS
+**Key examples from past edits (illustrate preferred style):**
+- "spilling across a floodplain the size of England" → "flooding millions of hectares of surrounding lowlands" (replace literary metaphor with precise data)
+- "turning what should function as living corridors into dead ends" → "converting what should function as migration corridors into population sinks" (replace metaphor with actual ecological term, even if same word count)
+- "between January and February 2026" → "in early 2026" (nobody talks like the first version)
+- BAD AI conciseness: "Dams fragment rivers. Fish decline." (stripped too much, sounds robotic)
+- GOOD human conciseness: "Dams sever the longitudinal corridors migratory fish depend on." (kept specificity, removed nothing meaningful)
+- "Sediment carried thousands of kilometers from the Andes" → "Sediment carried from the Andes" (the Andes already implies distance, "thousands of kilometers" was filler)
+- "planting trees along riverbanks" stays as-is, never convert to "riparian reforestation implementation"
+- Don't collapse "X did Y, which showed Z" into "X demonstrated Z" — the middle clause often has important reasoning
 
-## Additional Reference Papers
+**Do NOT:**
+- Strip adjectives/adverbs globally or collapse reasoning chains
+- Remove transition sentences between paragraphs
+- Replace specific citations with "studies show"
+- Convert natural phrasing to nominalized jargon
+- Use AI-typical phrases ("To maximize accessibility," "ensuring full traceability")
+- Over-explain obvious things or add marketing-speak
+- Remove hedging, qualifiers, or attribution phrases — these make academic writing sound human
 
-- Rosser & Mallet (2024) "Interactive maps for visualizing geographic distributions and phenotypes" -- TLR, 34(2), 104-107. DOI: 10.5281/zenodo.13920055 (saved as md in paper/)
-- Rosser et al. (2012) "Testing historical explanations for gradients in species richness in heliconiine butterflies of tropical America" — Biol J Linn Soc, 105(3), 479-497
+**Word preferences:** "ID" over "identifier," "irrelevant" over "extraneous," simple verbs. Keep some details vague when specificity could cause policy/TOS issues.
