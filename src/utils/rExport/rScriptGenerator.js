@@ -219,13 +219,19 @@ legend_dot <- function(x, y, color, shape, use_shapes, style, stroke_color = "wh
   circleGrob(x = x, y = y, r = size, gp = gpar(fill = color, col = alpha(stroke_color, stroke_alpha), lwd = 0.5))
 }
 
-legend_more_indicator <- function(count, x0, y0, more_h, style) {
-  textGrob(
-    sprintf("+ %d more...", count),
-    x = x0 + style$legend_padding,
-    y = y0 + style$legend_padding + more_h / 2,
-    just = c("left", "center"),
-    gp = gpar(col = style$legend_title_color, fontsize = style$legend_font_size - 1, fontface = "italic")
+legend_more_indicator <- function(count, x0, y0, more_h, style, indent = 0) {
+  iy <- y0 + style$legend_padding + more_h / 2
+  grobTree(
+    circleGrob(
+      x = x0 + style$legend_padding + indent + 0.012, y = iy, r = 0.006,
+      gp = gpar(fill = "#888888", col = alpha("white", 0.3), lwd = 0.5)
+    ),
+    textGrob(
+      sprintf("+ %d more...", count),
+      x = x0 + style$legend_padding + indent + 0.028, y = iy,
+      just = c("left", "center"),
+      gp = gpar(col = style$legend_title_color, fontsize = style$legend_font_size - 1, fontface = "italic")
+    )
   )
 }
 
