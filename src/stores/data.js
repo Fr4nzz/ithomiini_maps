@@ -78,11 +78,11 @@ export const useDataStore = defineStore('data', () => {
   const colorBy = ref(getStorage('map-color-by', 'subspecies'))
 
   const mapStyle = ref(getStorage('map-style', {
-    pointSize: 8,
-    borderWidth: 1.5,
+    pointSize: 10,
+    borderWidth: 2,
     borderColor: '#ffffff',
-    fillOpacity: 0.85,
-    borderOpacity: 0.6
+    fillOpacity: 0.9,
+    borderOpacity: 0.85
   }))
 
   const legendSettings = ref({
