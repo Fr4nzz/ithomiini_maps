@@ -229,12 +229,16 @@ legend_more_indicator <- function(count, x0, y0, more_h, style) {
   )
 }
 
-smart_legend_width <- function(labels, style) {
-  if (length(labels) == 0) return(min(0.12, style$legend_width))
+smart_legend_width <- function(labels, style, indent = 0) {
+  if (length(labels) == 0) return(0.12)
   lengths <- nchar(labels)
-  target_len <- as.numeric(stats::quantile(lengths, probs = 0.9, na.rm = TRUE, names = FALSE))
-  width_guess <- 0.006 * max(8, target_len) + 0.05
-  min(style$legend_width, max(0.12, width_guess))
+  # Use max length when few items; P90 quantile for very large legends
+  target_len <- if (length(labels) <= 30) max(lengths) else as.numeric(stats::quantile(lengths, probs = 0.9, na.rm = TRUE, names = FALSE))
+  # Width = left_padding + indent + dot_space + text + right_padding
+  label_start <- style$legend_padding + indent + 0.028
+  width_guess <- label_start + 0.0065 * max(8, target_len) + 0.02
+  # Cap at legend_width only for very large legends (>30 items)
+  if (length(labels) <= 30) max(0.12, width_guess) else min(style$legend_width, max(0.12, width_guess))
 }
 
 legend_max_chars <- function(legend_w, style, indent = 0) {
@@ -292,16 +296,15 @@ create_grouped_legend <- function(items, groups, title, max_items, style = STYLE
 
   for (sp in sorted_species) {
     subspecies_list <- groups[[sp]]
+    remaining <- max_items - items_shown
+    if (remaining <= 0) { truncated <- TRUE; break }
     if (show_headers) {
-      if (items_shown + 1 + length(subspecies_list) <= max_items) {
-        items_shown <- items_shown + length(subspecies_list)
-        headers_shown <- headers_shown + 1
-      } else {
-        truncated <- TRUE
-        break
-      }
+      # Show partial groups: fit as many subspecies as possible
+      can_fit <- min(length(subspecies_list), remaining)
+      items_shown <- items_shown + can_fit
+      headers_shown <- headers_shown + 1
+      if (can_fit < length(subspecies_list)) { truncated <- TRUE; break }
     } else {
-      remaining <- max_items - items_shown
       if (remaining >= length(subspecies_list)) {
         items_shown <- items_shown + length(subspecies_list)
       } else {
@@ -319,7 +322,8 @@ create_grouped_legend <- function(items, groups, title, max_items, style = STYLE
   content_h <- if (show_headers) headers_shown * header_h + items_shown * item_h else items_shown * item_h
   total_h <- title_h + content_h + more_h + style$legend_padding * 3
   header_labels <- if (show_headers && !is.null(display_names)) unlist(display_names) else character(0)
-  legend_w <- smart_legend_width(c(items$label, header_labels), style)
+  indent <- if (show_headers) 0.016 else 0
+  legend_w <- smart_legend_width(c(items$label, header_labels), style, indent)
   max_item_chars <- legend_max_chars(legend_w, style, if (show_headers) 0.016 else 0)
   max_header_chars <- legend_max_chars(legend_w, style, if (use_shapes) 0.024 else 0)
   x0 <- pos_x
