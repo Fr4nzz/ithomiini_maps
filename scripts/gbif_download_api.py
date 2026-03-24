@@ -33,6 +33,9 @@ from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from country_utils import standardize_country
+
 # ═══════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════
@@ -659,7 +662,7 @@ def process_occurrence_file(occurrence_path, multimedia_lookup=None):
                 'tribe': 'Ithomiini',
                 'lat': lat,
                 'lng': lng,
-                'country': row.get('country') or row.get('countryCode'),
+                'country': standardize_country(row.get('country') or row.get('countryCode')),
                 'collection_location': collection_location,
                 'state_province': row.get('stateProvince'),
                 'collection_date': row.get('eventDate'),

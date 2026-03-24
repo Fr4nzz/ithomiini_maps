@@ -386,6 +386,27 @@ const handleOpenGallery = () => {
   emit('open-gallery')
 }
 
+// Debounced addDataLayer to batch rapid successive calls
+let addDataLayerTimer = null
+let pendingLayerOptions = null
+const debouncedAddDataLayer = (options = {}) => {
+  // Merge options: skipZoom is false if ANY call wants zoom
+  if (pendingLayerOptions) {
+    pendingLayerOptions.skipZoom = pendingLayerOptions.skipZoom && (options.skipZoom !== false)
+  } else {
+    pendingLayerOptions = { ...options }
+  }
+  if (addDataLayerTimer) clearTimeout(addDataLayerTimer)
+  addDataLayerTimer = setTimeout(() => {
+    const opts = pendingLayerOptions || {}
+    pendingLayerOptions = null
+    addDataLayerTimer = null
+    if (performance.PERF_DEBUG) console.time('[Perf] addDataLayer')
+    addDataLayer(opts)
+    if (performance.PERF_DEBUG) console.timeEnd('[Perf] addDataLayer')
+  }, 50)
+}
+
 // Watch for displayGeoJSON changes
 watch(
   () => store.displayGeoJSON,
@@ -409,13 +430,12 @@ watch(
       clusteringJustToggled = false
     }
 
-    addDataLayer({ skipZoom: shouldSkipZoom })
+    debouncedAddDataLayer({ skipZoom: shouldSkipZoom })
 
     if (store.scatterOverlappingPoints) {
       updateScatterVisualization()
     }
-  },
-  { deep: true }
+  }
 )
 
 // Watch for scatter toggle changes
@@ -438,7 +458,7 @@ watch(
   (enabled) => {
     clusteringJustToggled = true
     if (!isMapReady()) return
-    addDataLayer({ skipZoom: true })
+    debouncedAddDataLayer({ skipZoom: true })
   },
   { flush: 'sync' }
 )
@@ -448,7 +468,7 @@ watch(
   () => store.clusterSettings,
   () => {
     if (!isMapReady()) return
-    addDataLayer({ skipZoom: true })
+    debouncedAddDataLayer({ skipZoom: true })
   },
   { deep: true }
 )
@@ -458,7 +478,7 @@ watch(
   () => store.visualizationMode,
   () => {
     if (!isMapReady()) return
-    addDataLayer({ skipZoom: true })
+    debouncedAddDataLayer({ skipZoom: true })
   }
 )
 
@@ -468,7 +488,7 @@ watch(
   () => {
     if (!isMapReady()) return
     if (store.visualizationMode === 'heatmap') {
-      addDataLayer({ skipZoom: true })
+      debouncedAddDataLayer({ skipZoom: true })
     }
   },
   { deep: true }
@@ -497,7 +517,7 @@ watch(
   ],
   () => {
     if (!isMapReady()) return
-    addDataLayer({ skipZoom: true })
+    debouncedAddDataLayer({ skipZoom: true })
   },
   { deep: true }
 )

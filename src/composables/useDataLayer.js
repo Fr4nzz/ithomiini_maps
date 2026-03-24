@@ -23,6 +23,9 @@ export function useDataLayer(map, options = {}) {
 
   let clusterHandlersRegistered = false
   let pointsHandlersRegistered = false
+  let lastHoveredPointId = null
+  let _lastClusterState = null
+  let _lastClusterRadius = null
 
   // Store current cluster extent parameters for recreation after style change
   const currentExtentParams = ref(null)
@@ -201,17 +204,10 @@ export function useDataLayer(map, options = {}) {
   }
 
   const addDataLayer = (layerOptions = {}) => {
+    const t0 = performance.now()
     const { skipZoom = false } = layerOptions
 
     if (!map.value) return
-
-    // Remove existing layers/sources
-    ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
-      'cluster-extent-dynamic-outline', 'cluster-points-layer',
-      'points-layer', 'points-highlight', 'heatmap-layer'
-    ].forEach(id => removeLayerAndSource(map.value, id))
-    ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source'
-    ].forEach(id => removeLayerAndSource(map.value, null, id))
 
     const geojson = store.displayGeoJSON
     if (!geojson) return
@@ -232,14 +228,47 @@ export function useDataLayer(map, options = {}) {
     const settings = store.clusterSettings
     const clusterRadiusPixels = settings.radiusPixels
 
-    map.value.addSource('points-source', {
-      type: 'geojson',
-      data: mapData,
-      cluster: shouldCluster,
-      clusterMaxZoom: 14,
-      clusterRadius: clusterRadiusPixels,
-      clusterMinPoints: 2
-    })
+    // Check if we can update the existing source instead of full rebuild
+    const existingSource = map.value.getSource('points-source')
+    const needsSourceRebuild = !existingSource ||
+      (shouldCluster !== _lastClusterState) ||
+      (clusterRadiusPixels !== _lastClusterRadius)
+
+    if (needsSourceRebuild) {
+      // Full rebuild: remove everything and recreate
+      ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
+        'cluster-extent-dynamic-outline', 'cluster-points-layer',
+        'points-layer', 'points-highlight', 'heatmap-layer'
+      ].forEach(id => removeLayerAndSource(map.value, id))
+      ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source'
+      ].forEach(id => removeLayerAndSource(map.value, null, id))
+
+      const t1 = performance.now()
+      map.value.addSource('points-source', {
+        type: 'geojson',
+        data: mapData,
+        cluster: shouldCluster,
+        clusterMaxZoom: 14,
+        clusterRadius: clusterRadiusPixels,
+        clusterMinPoints: 2
+      })
+      console.log(`[Perf] addSource (full rebuild): ${(performance.now() - t1).toFixed(1)}ms`)
+      _lastClusterState = shouldCluster
+      _lastClusterRadius = clusterRadiusPixels
+    } else {
+      // Fast path: only update data, keep layers
+      const t1 = performance.now()
+      existingSource.setData(mapData)
+      console.log(`[Perf] setData (fast update): ${(performance.now() - t1).toFixed(1)}ms`)
+
+      // Still need to rebuild layers for styling changes
+      ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
+        'cluster-extent-dynamic-outline', 'cluster-points-layer',
+        'points-layer', 'points-highlight', 'heatmap-layer'
+      ].forEach(id => {
+        if (map.value.getLayer(id)) map.value.removeLayer(id)
+      })
+    }
 
     // Heatmap visualization mode
     if (isHeatmap) {
@@ -595,6 +624,8 @@ export function useDataLayer(map, options = {}) {
 
         if (e.features && e.features.length > 0) {
           const id = e.features[0].properties.id
+          if (id === lastHoveredPointId) return  // skip redundant setFilter
+          lastHoveredPointId = id
           const isClustering = store.clusteringEnabled
           const filter = isClustering
             ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
@@ -605,6 +636,7 @@ export function useDataLayer(map, options = {}) {
 
       map.value.on('mouseleave', 'points-layer', () => {
         map.value.getCanvas().style.cursor = ''
+        lastHoveredPointId = null
         const isClustering = store.clusteringEnabled
         const filter = isClustering
           ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
@@ -616,6 +648,7 @@ export function useDataLayer(map, options = {}) {
     if (!skipZoom) {
       fitBoundsToData(geojson)
     }
+    console.log(`[Perf] addDataLayer: ${(performance.now() - t0).toFixed(1)}ms, ${mapData.features.length} features, shapes=${legendStore.shapeSettings.enabled}`)
   }
 
   const fitBoundsToData = (geojson) => {

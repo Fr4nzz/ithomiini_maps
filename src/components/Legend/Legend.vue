@@ -182,14 +182,19 @@ watch([
   scheduleMeasurement(false, `setting:${changed.join(',')}`)
 }, { deep: true })
 
-// Re-measure when data changes
+// Re-measure when data changes (debounced to batch rapid source loads)
+let dataMeasureTimer = null
 watch(sortedAllItems, (newItems, oldItems) => {
   const delta = newItems.length - (oldItems?.length || 0)
   resetToAutoSize()
   measuredItemCount.value = null
   prevMeasuredCount.value = null
   measuredSnugHeight.value = null
-  scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
+  if (dataMeasureTimer) clearTimeout(dataMeasureTimer)
+  dataMeasureTimer = setTimeout(() => {
+    dataMeasureTimer = null
+    scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
+  }, 200)
 })
 
 // Re-measure after resize ends
@@ -261,7 +266,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 // VISUAL STATE
 // ═══════════════════════════════════════════════════════════════════════════
 
-const dotSize = computed(() => Math.max(6, Math.min(16, dataStore.mapStyle.pointSize)))
+const dotSize = computed(() => Math.max(10, Math.min(20, dataStore.mapStyle.pointSize * 1.4)))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
 
 const positionStyle = computed(() => {

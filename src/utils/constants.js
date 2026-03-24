@@ -8,35 +8,35 @@ export const ASPECT_RATIOS = {
   'A4L': { width: 3508, height: 2480 },
 }
 
-// Status colors for sequencing status badges
+// Colorblind-safe status colors (Okabe-Ito derived)
 export const STATUS_COLORS = {
-  'Sequenced': '#3b82f6',
-  'Tissue Available': '#10b981',
-  'Preserved Specimen': '#f59e0b',
-  'Published': '#a855f7',
-  'GBIF Record': '#6b7280',
-  'Observation': '#22c55e',
-  'Museum Specimen': '#8b5cf6',
-  'Living Specimen': '#14b8a6',
+  'Sequenced': '#0072B2',
+  'Tissue Available': '#009E73',
+  'Preserved Specimen': '#E69F00',
+  'Published': '#CC79A7',
+  'GBIF Record': '#999999',
+  'Observation': '#56B4E9',
+  'Museum Specimen': '#D55E00',
+  'Living Specimen': '#F0E442',
 }
 
-// Source colors for data source badges
+// Colorblind-safe source colors
 export const SOURCE_COLORS = {
-  'Sanger Institute': '#3b82f6',
-  'Dore et al.': '#f59e0b',
-  'Dore et al. (2025)': '#f59e0b',
-  'iNaturalist': '#74ac00',
-  'GBIF': '#6b7280',
-  'GBIF (UNAM)': '#8b5cf6',
-  'GBIF (Other Institutions)': '#6b7280',
+  'Sanger Institute': '#0072B2',
+  'Dore et al.': '#E69F00',
+  'Dore et al. (2025)': '#E69F00',
+  'iNaturalist': '#009E73',
+  'GBIF': '#999999',
+  'GBIF (UNAM)': '#CC79A7',
+  'GBIF (Other Institutions)': '#999999',
 }
 
-// Default color palette for dynamic categories
+// Colorblind-safe palette for dynamic categories (Okabe-Ito base + Paul Tol extended)
 export const DYNAMIC_COLORS = [
-  '#3b82f6', '#10b981', '#f59e0b', '#a855f7', '#ef4444',
-  '#22d3ee', '#f97316', '#84cc16', '#ec4899', '#6366f1',
-  '#14b8a6', '#eab308', '#8b5cf6', '#06b6d4', '#f43f5e',
-  '#0ea5e9', '#22c55e', '#d946ef', '#64748b', '#fb923c'
+  '#0072B2', '#E69F00', '#009E73', '#CC79A7', '#56B4E9',
+  '#D55E00', '#F0E442', '#332288', '#882255', '#44AA99',
+  '#DDCC77', '#117733', '#AA4499', '#88CCEE', '#661100',
+  '#6699CC', '#999933', '#CC6677', '#855C75', '#DC3220'
 ]
 
 // Get status color with fallback
