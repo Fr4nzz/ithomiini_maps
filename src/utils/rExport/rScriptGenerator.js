@@ -229,6 +229,18 @@ legend_more_indicator <- function(count, x0, y0, more_h, style) {
   )
 }
 
+# Cap items to fit within available vertical space (prevents legend exceeding image)
+max_items_for_height <- function(pos_y, style, has_headers = FALSE) {
+  available_h <- pos_y - 0.03  # bottom margin
+  title_h <- style$legend_item_height * 1.8
+  more_h <- style$legend_item_height * 1.2
+  usable_h <- available_h - title_h - more_h - style$legend_padding * 3
+  if (usable_h <= 0) return(1)
+  # Headers use 1.4x item height; estimate ~1 header per 4 items for grouped legends
+  effective_h <- if (has_headers) style$legend_item_height * 1.15 else style$legend_item_height
+  max(1, floor(usable_h / effective_h))
+}
+
 smart_legend_width <- function(labels, style, indent = 0) {
   if (length(labels) == 0) return(0.12)
   lengths <- nchar(labels)
@@ -252,6 +264,7 @@ truncate_label <- function(label, max_chars) {
 }
 
 create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE, pos_x = 0.02, pos_y = 0.92, use_shapes = FALSE) {
+  max_items <- min(max_items, max_items_for_height(pos_y, style))
   n_items <- min(nrow(items), max_items)
   has_more <- nrow(items) > max_items
   title_h <- style$legend_item_height * 1.8
@@ -294,31 +307,30 @@ create_grouped_legend <- function(items, groups, title, max_items, style = STYLE
   headers_shown <- 0
   truncated <- FALSE
 
-  for (sp in sorted_species) {
-    subspecies_list <- groups[[sp]]
-    remaining <- max_items - items_shown
-    if (remaining <= 0) { truncated <- TRUE; break }
-    if (show_headers) {
-      # Show partial groups: fit as many subspecies as possible
-      can_fit <- min(length(subspecies_list), remaining)
-      items_shown <- items_shown + can_fit
-      headers_shown <- headers_shown + 1
-      if (can_fit < length(subspecies_list)) { truncated <- TRUE; break }
-    } else {
-      if (remaining >= length(subspecies_list)) {
-        items_shown <- items_shown + length(subspecies_list)
-      } else {
-        items_shown <- items_shown + remaining
-        truncated <- TRUE
-        break
-      }
-    }
-  }
-
   title_h <- style$legend_item_height * 1.8
   header_h <- if (show_headers) style$legend_item_height * 1.4 else 0
   item_h <- style$legend_item_height
-  more_h <- if (truncated) style$legend_item_height * 1.2 else 0
+  more_h <- style$legend_item_height * 1.2
+  max_legend_h <- pos_y - 0.03  # leave bottom margin
+  base_h <- title_h + more_h + style$legend_padding * 3
+  current_h <- base_h
+
+  for (sp in sorted_species) {
+    subspecies_list <- groups[[sp]]
+    if (items_shown >= max_items) { truncated <- TRUE; break }
+    # Check if header fits
+    if (show_headers && current_h + header_h > max_legend_h) { truncated <- TRUE; break }
+    if (show_headers) { current_h <- current_h + header_h; headers_shown <- headers_shown + 1 }
+    # Fit as many subspecies as possible
+    for (j in seq_along(subspecies_list)) {
+      if (items_shown >= max_items || current_h + item_h > max_legend_h) { truncated <- TRUE; break }
+      current_h <- current_h + item_h
+      items_shown <- items_shown + 1
+    }
+    if (truncated) break
+  }
+
+  if (!truncated) more_h <- 0  # no "more" indicator needed if all items shown
   content_h <- if (show_headers) headers_shown * header_h + items_shown * item_h else items_shown * item_h
   total_h <- title_h + content_h + more_h + style$legend_padding * 3
   header_labels <- if (show_headers && !is.null(display_names)) unlist(display_names) else character(0)
