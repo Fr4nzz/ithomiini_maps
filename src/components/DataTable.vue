@@ -106,9 +106,55 @@ const rawData = computed(() => {
   return geo.features.map(f => f.properties)
 })
 
+const columnFilteredData = computed(() => {
+  const data = rawData.value
+  const filters = columnFilters.value
+  const activeFilters = Object.entries(filters).filter(([_, v]) => v && v.trim())
+
+  if (activeFilters.length === 0) return data
+
+  return data.filter(row => {
+    return activeFilters.every(([col, filterVal]) => {
+      const val = filterVal.trim().toLowerCase()
+
+      if (col === 'goat_chromosome') {
+        const chr = store.getChromosomeNumber(row.scientific_name)
+        if (!chr) return false
+        const chrVal = chr.value
+        if (val.includes('-')) {
+          const [min, max] = val.split('-').map(Number)
+          return chrVal >= min && chrVal <= max
+        }
+        return String(chrVal).includes(val)
+      }
+
+      if (col === 'goat_genome') {
+        const hasDirect = store.hasDirectGoatData(row.scientific_name)
+        const hasData = store.hasGoatData(row.scientific_name)
+        const status = hasDirect ? 'direct' : hasData ? 'estimated' : 'none'
+        return status.includes(val) || (val === 'est' && status === 'estimated') || (val === 'est.' && status === 'estimated')
+      }
+
+      if (col === 'observation_date') {
+        const dateStr = row.observation_date || ''
+        return dateStr.toLowerCase().includes(val)
+      }
+
+      if (col === 'curated') {
+        const info = getCorrectionInfo(row)
+        const type = info ? info.type.toLowerCase() : ''
+        return type.includes(val)
+      }
+
+      const cellVal = String(row[col] || '').toLowerCase()
+      return cellVal.includes(val)
+    })
+  })
+})
+
 // Sorted data
 const sortedData = computed(() => {
-  const data = [...rawData.value]
+  const data = [...columnFilteredData.value]
 
   data.sort((a, b) => {
     let valA = a[sortColumn.value] || ''
@@ -136,7 +182,19 @@ const sortedData = computed(() => {
       if (!dateB) return -1
       valA = dateA.getTime()
       valB = dateB.getTime()
-    } else {
+    }
+    else if (sortColumn.value === 'goat_chromosome') {
+      const chrA = store.getChromosomeNumber(a.scientific_name)
+      const chrB = store.getChromosomeNumber(b.scientific_name)
+      valA = chrA ? chrA.value : -1
+      valB = chrB ? chrB.value : -1
+    }
+    else if (sortColumn.value === 'goat_genome') {
+      // Sort: direct (2) > estimated (1) > none (0)
+      valA = store.hasDirectGoatData(a.scientific_name) ? 2 : store.hasGoatData(a.scientific_name) ? 1 : 0
+      valB = store.hasDirectGoatData(b.scientific_name) ? 2 : store.hasGoatData(b.scientific_name) ? 1 : 0
+    }
+    else {
       valA = String(valA).toLowerCase()
       valB = String(valB).toLowerCase()
     }
@@ -158,7 +216,8 @@ const paginatedData = computed(() => {
 
 // Total pages
 const totalPages = computed(() => {
-  return Math.ceil(sortedData.value.length / pageSize.value)
+  const count = tableView.value === 'species' ? sortedSpeciesData.value.length : sortedData.value.length
+  return Math.ceil(count / pageSize.value)
 })
 
 // Page numbers to display
@@ -195,7 +254,6 @@ watch(rawData, () => {
 // Sort handler
 const toggleSort = (column) => {
   if (column === 'photo') return // Don't sort by photo
-  if (column === 'goat_chromosome' || column === 'goat_genome') return
 
   if (sortColumn.value === column) {
     sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
@@ -208,6 +266,111 @@ const toggleSort = (column) => {
 
 // Column toggle panel
 const showColumnSettings = ref(false)
+const showColumnFilters = ref(false)
+const columnFilters = ref({})
+const tableView = ref('records')
+
+const clearColumnFilters = () => {
+  columnFilters.value = {}
+}
+
+const activeFilterCount = computed(() => {
+  return Object.values(columnFilters.value).filter(v => v && v.trim()).length
+})
+
+const getFilterPlaceholder = (key) => {
+  const placeholders = {
+    id: 'Filter ID...',
+    scientific_name: 'Filter species...',
+    subspecies: 'Filter...',
+    goat_chromosome: 'e.g. 30 or 20-40',
+    goat_genome: 'direct/est.',
+    sex: 'Filter...',
+    mimicry_ring: 'Filter...',
+    sequencing_status: 'Filter...',
+    source: 'Filter...',
+    curated: 'Filter...',
+    observation_date: 'e.g. 2023',
+    country: 'Filter...',
+    lat: 'Filter...',
+    lng: 'Filter...',
+  }
+  return placeholders[key] || 'Filter...'
+}
+
+const speciesData = computed(() => {
+  if (tableView.value !== 'species') return []
+
+  const speciesMap = new Map()
+  for (const row of rawData.value) {
+    const name = row.scientific_name
+    if (!name || speciesMap.has(name)) continue
+
+    const goat = store.getGoatForSpecies(name)
+    const chr = store.getChromosomeNumber(name)
+    const hasDirect = store.hasDirectGoatData(name)
+    const hasData = store.hasGoatData(name)
+
+    speciesMap.set(name, {
+      scientific_name: name,
+      records: rawData.value.filter(r => r.scientific_name === name).length,
+      chromosome_number: chr?.value ?? null,
+      chr_source: chr?.source ?? null,
+      genome_size: goat?.genome_size?.value ?? null,
+      genome_size_source: goat?.genome_size?.source ?? null,
+      haploid_number: goat?.haploid_number?.value ?? null,
+      assembly_level: goat?.assembly_level?.value ?? null,
+      bioproject: goat?.bioproject?.value ?? null,
+      goat_status: hasDirect ? 'Direct' : hasData ? 'Estimated' : 'No data',
+      taxon_id: goat?.taxon_id ?? null,
+    })
+  }
+
+  return [...speciesMap.values()]
+})
+
+const sortedSpeciesData = computed(() => {
+  const data = [...speciesData.value]
+  data.sort((a, b) => {
+    let valA, valB
+    const col = sortColumn.value
+
+    if (col === 'goat_chromosome' || col === 'chromosome_number') {
+      valA = a.chromosome_number ?? -1
+      valB = b.chromosome_number ?? -1
+    } else if (col === 'genome_size') {
+      valA = a.genome_size ?? -1
+      valB = b.genome_size ?? -1
+    } else if (col === 'records') {
+      valA = a.records
+      valB = b.records
+    } else {
+      valA = String(a[col] || '').toLowerCase()
+      valB = String(b[col] || '').toLowerCase()
+    }
+
+    if (valA < valB) return sortDirection.value === 'asc' ? -1 : 1
+    if (valA > valB) return sortDirection.value === 'asc' ? 1 : -1
+    return 0
+  })
+  return data
+})
+
+const paginatedSpeciesData = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value
+  return sortedSpeciesData.value.slice(start, start + pageSize.value)
+})
+
+const speciesColumns = [
+  { key: 'scientific_name', label: 'Species', width: '200px' },
+  { key: 'records', label: 'Records', width: '80px' },
+  { key: 'goat_status', label: 'GoaT Status', width: '100px' },
+  { key: 'chromosome_number', label: '2n', width: '70px' },
+  { key: 'haploid_number', label: 'n', width: '60px' },
+  { key: 'genome_size', label: 'Genome Size', width: '120px' },
+  { key: 'assembly_level', label: 'Assembly', width: '120px' },
+  { key: 'bioproject', label: 'BioProject', width: '130px' },
+]
 
 // Visible columns array for v-for
 const activeColumns = computed(() => {
@@ -247,7 +410,9 @@ const handleImageError = (e, originalUrl) => {
     <div class="table-header">
       <div class="header-left">
         <span class="record-count">
-          <strong>{{ sortedData.length.toLocaleString() }}</strong> records
+          <strong>{{ tableView === 'species' ? sortedSpeciesData.length.toLocaleString() : sortedData.length.toLocaleString() }}</strong>
+          {{ tableView === 'species' ? 'species' : 'records' }}
+          <span v-if="activeFilterCount > 0" class="filter-indicator">(filtered)</span>
         </span>
         <span class="page-info">
           Page {{ currentPage }} of {{ totalPages }}
@@ -255,6 +420,17 @@ const handleImageError = (e, originalUrl) => {
       </div>
       
       <div class="header-right">
+        <div class="view-mode-toggle">
+          <button
+            :class="{ active: tableView === 'records' }"
+            @click="tableView = 'records'; currentPage = 1"
+          >Records</button>
+          <button
+            :class="{ active: tableView === 'species' }"
+            @click="tableView = 'species'; currentPage = 1"
+          >Species (GoaT)</button>
+        </div>
+
         <!-- Page Size -->
         <select v-model="pageSize" class="page-size-select" @change="currentPage = 1">
           <option :value="25">25 rows</option>
@@ -262,9 +438,24 @@ const handleImageError = (e, originalUrl) => {
           <option :value="100">100 rows</option>
           <option :value="200">200 rows</option>
         </select>
-        
+
+        <button
+          v-if="tableView === 'records'"
+          class="column-filter-toggle"
+          :class="{ active: showColumnFilters }"
+          @click="showColumnFilters = !showColumnFilters"
+          title="Toggle column filters"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+          Filters
+          <span v-if="activeFilterCount > 0" class="filter-count">{{ activeFilterCount }}</span>
+        </button>
+
         <!-- Column Settings -->
         <button 
+          v-if="tableView === 'records'"
           class="btn-columns"
           @click="showColumnSettings = !showColumnSettings"
           :class="{ active: showColumnSettings }"
@@ -280,7 +471,7 @@ const handleImageError = (e, originalUrl) => {
         
         <!-- Column Settings Dropdown -->
         <Transition name="fade">
-          <div v-if="showColumnSettings" class="column-dropdown">
+          <div v-if="tableView === 'records' && showColumnSettings" class="column-dropdown">
             <label 
               v-for="col in columns" 
               :key="col.key"
@@ -299,7 +490,7 @@ const handleImageError = (e, originalUrl) => {
 
     <!-- Table -->
     <div class="table-wrapper">
-      <table class="data-table">
+      <table v-if="tableView === 'records'" class="data-table">
         <thead>
           <tr>
             <th 
@@ -324,6 +515,20 @@ const handleImageError = (e, originalUrl) => {
                   <path d="m18 15-6-6-6 6"/>
                 </svg>
               </div>
+            </th>
+          </tr>
+          <tr v-if="showColumnFilters" class="filter-row">
+            <th v-for="col in activeColumns" :key="'filter-' + col.key" class="filter-cell">
+              <template v-if="col.key === 'photo'">
+                <!-- No filter for photo -->
+              </template>
+              <input
+                v-else
+                type="text"
+                class="column-filter-input"
+                :placeholder="getFilterPlaceholder(col.key)"
+                v-model="columnFilters[col.key]"
+              />
             </th>
           </tr>
         </thead>
@@ -394,20 +599,8 @@ const handleImageError = (e, originalUrl) => {
               <span v-else class="text-muted">—</span>
             </td>
             <td v-if="visibleColumns.goat_genome" class="cell-genome">
-              <template v-if="store.hasDirectGoatData(row.scientific_name)">
-                <span class="genome-badge direct" title="Has direct genomic measurements">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                    <path d="M12 2v20M9 5h6M9 9h6M9 13h6M9 17h6M7 7h10M7 15h10M7 11h10M7 19h10"/>
-                  </svg>
-                </span>
-              </template>
-              <template v-else-if="store.hasGoatData(row.scientific_name)">
-                <span class="genome-badge estimated" title="Estimated from phylogenetic relatives">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                    <path d="M12 2v20M9 5h6M9 9h6M9 13h6M9 17h6M7 7h10M7 15h10M7 11h10M7 19h10"/>
-                  </svg>
-                </span>
-              </template>
+              <span v-if="store.hasDirectGoatData(row.scientific_name)" class="genome-text direct" title="Has direct genomic measurements">Direct</span>
+              <span v-else-if="store.hasGoatData(row.scientific_name)" class="genome-text estimated" title="Estimated from phylogenetic relatives">Est.</span>
               <span v-else class="text-muted">—</span>
             </td>
             <td v-if="visibleColumns.sex" class="cell-sex">
@@ -473,6 +666,75 @@ const handleImageError = (e, originalUrl) => {
                   <path d="m21 21-4.3-4.3"/>
                 </svg>
                 <p>No records match your filters</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table v-if="tableView === 'species'" class="data-table species-table">
+        <thead>
+          <tr>
+            <th
+              v-for="col in speciesColumns"
+              :key="col.key"
+              :style="{ width: col.width, minWidth: col.width }"
+              class="sortable"
+              :class="{ sorted: sortColumn === col.key }"
+              @click="toggleSort(col.key)"
+            >
+              {{ col.label }}
+              <span v-if="sortColumn === col.key" class="sort-indicator">
+                {{ sortDirection === 'asc' ? '↑' : '↓' }}
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="sp in paginatedSpeciesData" :key="sp.scientific_name">
+            <td class="cell-species"><em>{{ sp.scientific_name }}</em></td>
+            <td class="cell-records">{{ sp.records }}</td>
+            <td class="cell-genome">
+              <span v-if="sp.goat_status === 'Direct'" class="genome-text direct">Direct</span>
+              <span v-else-if="sp.goat_status === 'Estimated'" class="genome-text estimated">Est.</span>
+              <span v-else class="text-muted">—</span>
+            </td>
+            <td class="cell-chr">
+              <span v-if="sp.chromosome_number != null" class="chr-value">
+                {{ sp.chromosome_number }}
+                <span v-if="sp.chr_source === 'ancestor'" class="chr-est">(est.)</span>
+              </span>
+              <span v-else class="text-muted">—</span>
+            </td>
+            <td>
+              <span v-if="sp.haploid_number != null">
+                {{ sp.haploid_number }}
+              </span>
+              <span v-else class="text-muted">—</span>
+            </td>
+            <td>
+              <span v-if="sp.genome_size != null">
+                {{ store.formatGenomeSize(sp.genome_size) }}
+                <span v-if="sp.genome_size_source === 'ancestor'" class="chr-est">(est.)</span>
+              </span>
+              <span v-else class="text-muted">—</span>
+            </td>
+            <td>{{ sp.assembly_level || '—' }}</td>
+            <td>
+              <a v-if="sp.bioproject" :href="`https://www.ncbi.nlm.nih.gov/bioproject/${sp.bioproject}`" target="_blank" rel="noopener noreferrer" class="bioproject-link">
+                {{ sp.bioproject }}
+              </a>
+              <span v-else class="text-muted">—</span>
+            </td>
+          </tr>
+          <tr v-if="paginatedSpeciesData.length === 0">
+            <td :colspan="speciesColumns.length" class="empty-state">
+              <div class="empty-content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <p>No species with GoaT data in current selection</p>
               </div>
             </td>
           </tr>
@@ -596,6 +858,38 @@ const handleImageError = (e, originalUrl) => {
   cursor: pointer;
 }
 
+/* View Mode Toggle */
+.view-mode-toggle {
+  display: flex;
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.view-mode-toggle button {
+  padding: 6px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: none;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-mode-toggle button:not(:last-child) {
+  border-right: 1px solid var(--color-border, #3d3d5c);
+}
+
+.view-mode-toggle button:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.view-mode-toggle button.active {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
 .btn-columns {
   display: flex;
   align-items: center;
@@ -619,6 +913,43 @@ const handleImageError = (e, originalUrl) => {
 .btn-columns svg {
   width: 14px;
   height: 14px;
+}
+
+/* Column Filter Toggle */
+.column-filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.column-filter-toggle:hover {
+  background: #353558;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.column-filter-toggle.active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #60a5fa;
+  color: #60a5fa;
+}
+
+.filter-count {
+  background: #60a5fa;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
 }
 
 /* Column Dropdown */
@@ -712,6 +1043,50 @@ const handleImageError = (e, originalUrl) => {
 
 .sort-icon.desc {
   transform: rotate(180deg);
+}
+
+.sort-indicator {
+  margin-left: 6px;
+  color: #60a5fa;
+}
+
+/* Filter Row */
+.filter-row {
+  background: var(--color-bg-secondary, #1e1e3a);
+}
+
+.filter-cell {
+  padding: 4px 6px !important;
+  top: 42px;
+  z-index: 9;
+}
+
+.column-filter-input {
+  width: 100%;
+  padding: 5px 8px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.75rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.column-filter-input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.column-filter-input::placeholder {
+  color: var(--color-text-muted, #666);
+  font-size: 0.7rem;
+}
+
+.filter-indicator {
+  font-size: 0.75rem;
+  color: #60a5fa;
+  font-weight: 400;
 }
 
 .data-table td {
@@ -918,23 +1293,38 @@ const handleImageError = (e, originalUrl) => {
   text-align: center;
 }
 
-.genome-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+.genome-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
 }
 
-.genome-badge.direct {
+.genome-text.direct {
   background: rgba(74, 222, 128, 0.15);
   color: #4ade80;
 }
 
-.genome-badge.estimated {
+.genome-text.estimated {
   background: rgba(250, 204, 21, 0.15);
   color: #facc15;
+}
+
+.bioproject-link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.bioproject-link:hover {
+  text-decoration: underline;
+  color: #93c5fd;
+}
+
+.cell-records {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Empty State */
