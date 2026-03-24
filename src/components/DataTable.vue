@@ -447,16 +447,25 @@ const handleImageError = (e, originalUrl) => {
   }
 }
 
-const getGenomeEstRank = (scientificName) => {
+const getGoatUrl = (scientificName) => {
   const goat = store.getGoatForSpecies(scientificName)
-  if (!goat) return '?'
-  const rank = goat.genome_size?.aggregation_rank || goat.chromosome_number?.aggregation_rank || 'relative'
-  return rank
+  if (!goat?.taxon_id) return null
+  return `https://goat.genomehubs.org/record?recordId=${goat.taxon_id}&result=taxon&taxonomy=ncbi`
 }
 
-const getGenomeEstTitle = (scientificName) => {
-  const rank = getGenomeEstRank(scientificName)
-  return `Estimated from phylogenetic relatives at ${rank} level`
+const getGenomeSummary = (scientificName) => {
+  const goat = store.getGoatForSpecies(scientificName)
+  if (!goat) return null
+  const hasDirect = store.hasDirectGoatData(scientificName)
+  const parts = []
+  if (goat.genome_size) parts.push(store.formatGenomeSize(goat.genome_size.value))
+  if (goat.chromosome_number) parts.push(`2n=${goat.chromosome_number.value}`)
+  return {
+    hasDirect,
+    label: hasDirect ? 'Direct' : 'Est.',
+    detail: parts.join(', '),
+    rank: goat.genome_size?.aggregation_rank || goat.chromosome_number?.aggregation_rank,
+  }
 }
 </script>
 
@@ -728,10 +737,15 @@ const getGenomeEstTitle = (scientificName) => {
               <span v-else class="text-muted">—</span>
             </td>
             <td v-if="visibleColumns.goat_genome" class="cell-genome">
-              <span v-if="store.hasDirectGoatData(row.scientific_name)" class="genome-text direct" title="Has direct genomic measurements">Direct</span>
-              <template v-else-if="store.hasGoatData(row.scientific_name)">
-                <span class="genome-text estimated" :title="getGenomeEstTitle(row.scientific_name)">
-                  Est. ({{ getGenomeEstRank(row.scientific_name) }})
+              <template v-if="getGenomeSummary(row.scientific_name)">
+                <a v-if="getGoatUrl(row.scientific_name)" :href="getGoatUrl(row.scientific_name)" target="_blank" rel="noopener noreferrer"
+                  class="genome-link" :class="{ direct: getGenomeSummary(row.scientific_name).hasDirect }"
+                  :title="getGenomeSummary(row.scientific_name).detail + (getGenomeSummary(row.scientific_name).rank ? ' (est. from ' + getGenomeSummary(row.scientific_name).rank + ')' : '')">
+                  {{ getGenomeSummary(row.scientific_name).label }}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+                <span v-else class="genome-text" :class="{ direct: getGenomeSummary(row.scientific_name).hasDirect, estimated: !getGenomeSummary(row.scientific_name).hasDirect }">
+                  {{ getGenomeSummary(row.scientific_name).label }}
                 </span>
               </template>
               <span v-else class="text-muted">—</span>
@@ -828,8 +842,12 @@ const getGenomeEstTitle = (scientificName) => {
             <td class="cell-species"><em>{{ sp.scientific_name }}</em></td>
             <td class="cell-records">{{ sp.records }}</td>
             <td class="cell-genome">
-              <span v-if="sp.goat_status === 'Direct'" class="genome-text direct">Direct</span>
-              <span v-else-if="sp.goat_status === 'Estimated'" class="genome-text estimated">Est.</span>
+              <a v-if="sp.taxon_id && sp.goat_status !== 'No data'" :href="`https://goat.genomehubs.org/record?recordId=${sp.taxon_id}&result=taxon&taxonomy=ncbi`" target="_blank" rel="noopener noreferrer"
+                class="genome-link" :class="{ direct: sp.goat_status === 'Direct' }"
+                :title="sp.goat_status === 'Direct' ? 'Direct genomic data — view on GoaT' : 'Estimated from phylogenetic relatives — view on GoaT'">
+                {{ sp.goat_status === 'Direct' ? 'Direct' : 'Est.' }}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
               <span v-else class="text-muted">—</span>
             </td>
             <td class="cell-chr">
@@ -1475,21 +1493,30 @@ const getGenomeEstTitle = (scientificName) => {
   text-align: center;
 }
 
-.genome-text {
+.genome-text, .genome-link {
   font-size: 0.75rem;
   font-weight: 600;
   padding: 2px 8px;
   border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
-.genome-text.direct {
+.genome-text.direct, .genome-link.direct {
   background: rgba(74, 222, 128, 0.15);
   color: #4ade80;
 }
 
-.genome-text.estimated {
-  background: rgba(250, 204, 21, 0.15);
-  color: #facc15;
+.genome-text.estimated, .genome-link:not(.direct) {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+}
+
+.genome-link:hover {
+  filter: brightness(1.2);
+  text-decoration: underline;
 }
 
 .bioproject-link {
