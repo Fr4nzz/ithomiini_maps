@@ -42,7 +42,7 @@ const columns = [
   { key: 'scientific_name', label: 'Species', width: '200px' },
   { key: 'subspecies', label: 'Subspecies', width: '130px' },
   { key: 'goat_chromosome', label: '2n', width: '70px' },
-  { key: 'goat_genome', label: 'Genome', width: '80px' },
+  { key: 'goat_genome', label: 'Genome', width: '120px' },
   { key: 'sex', label: 'Sex', width: '70px' },
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
@@ -109,13 +109,14 @@ const rawData = computed(() => {
 const columnFilteredData = computed(() => {
   const data = rawData.value
   const filters = columnFilters.value
-  const activeFilters = Object.entries(filters).filter(([_, v]) => v && v.trim())
+  const skipFilters = new Set(['goat_chromosome_min', 'goat_chromosome_max', 'date_year_min', 'date_year_max'])
+  const activeFilters = Object.entries(filters).filter(([k, v]) => !skipFilters.has(k) && v && String(v).trim())
 
   if (activeFilters.length === 0) return data
 
   return data.filter(row => {
     return activeFilters.every(([col, filterVal]) => {
-      const val = filterVal.trim().toLowerCase()
+      const val = String(filterVal).trim().toLowerCase()
 
       if (col === 'goat_chromosome') {
         const chr = store.getChromosomeNumber(row.scientific_name)
@@ -132,11 +133,20 @@ const columnFilteredData = computed(() => {
         const hasDirect = store.hasDirectGoatData(row.scientific_name)
         const hasData = store.hasGoatData(row.scientific_name)
         const status = hasDirect ? 'direct' : hasData ? 'estimated' : 'none'
-        return status.includes(val) || (val === 'est' && status === 'estimated') || (val === 'est.' && status === 'estimated')
+        return status === val
       }
 
       if (col === 'observation_date') {
         const dateStr = row.observation_date || ''
+        if (val === '__year_range__' || val === '__year_min__' || val === '__year_max__') {
+          const yearMatch = dateStr.match(/(\d{2,4})$/)
+          if (!yearMatch) return false
+          let year = parseInt(yearMatch[1])
+          if (year < 100) year += 2000
+          const minYear = parseInt(columnFilters.value.date_year_min) || 0
+          const maxYear = parseInt(columnFilters.value.date_year_max) || 9999
+          return year >= minYear && year <= maxYear
+        }
         return dateStr.toLowerCase().includes(val)
       }
 
@@ -275,7 +285,8 @@ const clearColumnFilters = () => {
 }
 
 const activeFilterCount = computed(() => {
-  return Object.values(columnFilters.value).filter(v => v && v.trim()).length
+  const skip = new Set(['goat_chromosome_min', 'goat_chromosome_max', 'date_year_min', 'date_year_max'])
+  return Object.entries(columnFilters.value).filter(([k, v]) => !skip.has(k) && v && String(v).trim()).length
 })
 
 const getFilterPlaceholder = (key) => {
@@ -296,6 +307,39 @@ const getFilterPlaceholder = (key) => {
     lng: 'Filter...',
   }
   return placeholders[key] || 'Filter...'
+}
+
+const uniqueValues = (key) => {
+  const vals = new Set()
+  for (const row of rawData.value) {
+    const v = row[key]
+    if (v && v !== 'Unknown') vals.add(v)
+  }
+  return [...vals].sort()
+}
+
+const syncChromosomeFilter = () => {
+  const min = columnFilters.value.goat_chromosome_min
+  const max = columnFilters.value.goat_chromosome_max
+  if (min || max) {
+    columnFilters.value.goat_chromosome = `${min || '0'}-${max || '999'}`
+  } else {
+    delete columnFilters.value.goat_chromosome
+  }
+}
+
+const syncDateFilter = () => {
+  const min = columnFilters.value.date_year_min
+  const max = columnFilters.value.date_year_max
+  if (min && max) {
+    columnFilters.value.observation_date = '__year_range__'
+  } else if (min) {
+    columnFilters.value.observation_date = '__year_min__'
+  } else if (max) {
+    columnFilters.value.observation_date = '__year_max__'
+  } else {
+    delete columnFilters.value.observation_date
+  }
 }
 
 const speciesData = computed(() => {
@@ -401,6 +445,18 @@ const handleImageError = (e, originalUrl) => {
     // Hide broken image
     e.target.style.display = 'none'
   }
+}
+
+const getGenomeEstRank = (scientificName) => {
+  const goat = store.getGoatForSpecies(scientificName)
+  if (!goat) return '?'
+  const rank = goat.genome_size?.aggregation_rank || goat.chromosome_number?.aggregation_rank || 'relative'
+  return rank
+}
+
+const getGenomeEstTitle = (scientificName) => {
+  const rank = getGenomeEstRank(scientificName)
+  return `Estimated from phylogenetic relatives at ${rank} level`
 }
 </script>
 
@@ -520,8 +576,81 @@ const handleImageError = (e, originalUrl) => {
           <tr v-if="showColumnFilters" class="filter-row">
             <th v-for="col in activeColumns" :key="'filter-' + col.key" class="filter-cell">
               <template v-if="col.key === 'photo'">
-                <!-- No filter for photo -->
               </template>
+
+              <template v-else-if="col.key === 'goat_chromosome'">
+                <div class="filter-range">
+                  <input type="number" class="column-filter-input range-input" placeholder="Min" v-model="columnFilters.goat_chromosome_min" @input="syncChromosomeFilter" />
+                  <span class="range-sep">–</span>
+                  <input type="number" class="column-filter-input range-input" placeholder="Max" v-model="columnFilters.goat_chromosome_max" @input="syncChromosomeFilter" />
+                </div>
+              </template>
+
+              <template v-else-if="col.key === 'observation_date'">
+                <div class="filter-range">
+                  <input type="number" class="column-filter-input range-input" placeholder="From" v-model="columnFilters.date_year_min" min="2000" max="2030" @input="syncDateFilter" />
+                  <span class="range-sep">–</span>
+                  <input type="number" class="column-filter-input range-input" placeholder="To" v-model="columnFilters.date_year_max" min="2000" max="2030" @input="syncDateFilter" />
+                </div>
+              </template>
+
+              <select
+                v-else-if="col.key === 'sex'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+
+              <select
+                v-else-if="col.key === 'goat_genome'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option value="direct">Direct</option>
+                <option value="estimated">Estimated</option>
+                <option value="none">No data</option>
+              </select>
+
+              <select
+                v-else-if="col.key === 'sequencing_status'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option v-for="val in uniqueValues('sequencing_status')" :key="val" :value="val">{{ val }}</option>
+              </select>
+
+              <select
+                v-else-if="col.key === 'source'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option v-for="val in uniqueValues('source')" :key="val" :value="val">{{ val }}</option>
+              </select>
+
+              <select
+                v-else-if="col.key === 'country'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option v-for="val in uniqueValues('country')" :key="val" :value="val">{{ val }}</option>
+              </select>
+
+              <select
+                v-else-if="col.key === 'mimicry_ring'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option v-for="val in uniqueValues('mimicry_ring')" :key="val" :value="val">{{ val }}</option>
+              </select>
+
               <input
                 v-else
                 type="text"
@@ -600,7 +729,11 @@ const handleImageError = (e, originalUrl) => {
             </td>
             <td v-if="visibleColumns.goat_genome" class="cell-genome">
               <span v-if="store.hasDirectGoatData(row.scientific_name)" class="genome-text direct" title="Has direct genomic measurements">Direct</span>
-              <span v-else-if="store.hasGoatData(row.scientific_name)" class="genome-text estimated" title="Estimated from phylogenetic relatives">Est.</span>
+              <template v-else-if="store.hasGoatData(row.scientific_name)">
+                <span class="genome-text estimated" :title="getGenomeEstTitle(row.scientific_name)">
+                  Est. ({{ getGenomeEstRank(row.scientific_name) }})
+                </span>
+              </template>
               <span v-else class="text-muted">—</span>
             </td>
             <td v-if="visibleColumns.sex" class="cell-sex">
@@ -1081,6 +1214,55 @@ const handleImageError = (e, originalUrl) => {
 .column-filter-input::placeholder {
   color: var(--color-text-muted, #666);
   font-size: 0.7rem;
+}
+
+.column-filter-select {
+  width: 100%;
+  padding: 5px 6px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.75rem;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 22px;
+}
+
+.column-filter-select:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.filter-range {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.range-input {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 4px !important;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.range-input::-webkit-outer-spin-button,
+.range-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.range-sep {
+  color: var(--color-text-muted, #666);
+  font-size: 0.8rem;
+  flex-shrink: 0;
 }
 
 .filter-indicator {
