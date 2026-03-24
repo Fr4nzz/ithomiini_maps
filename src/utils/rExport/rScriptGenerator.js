@@ -210,9 +210,22 @@ legend_more_indicator <- function(count, x0, y0, more_h, style) {
   )
 }
 
-legend_width_from_labels <- function(labels) {
-  if (length(labels) == 0) return(0.12)
-  max(0.12, 0.006 * max(nchar(labels)) + 0.05)
+smart_legend_width <- function(labels, style) {
+  if (length(labels) == 0) return(min(0.12, style$legend_width))
+  lengths <- nchar(labels)
+  target_len <- as.numeric(stats::quantile(lengths, probs = 0.9, na.rm = TRUE, names = FALSE))
+  width_guess <- 0.006 * max(8, target_len) + 0.05
+  min(style$legend_width, max(0.12, width_guess))
+}
+
+legend_max_chars <- function(legend_w, style, indent = 0) {
+  label_x <- style$legend_padding + indent + 0.028
+  available_w <- max(0.05, legend_w - label_x - 0.01)
+  max(10, floor(available_w / 0.006))
+}
+
+truncate_label <- function(label, max_chars) {
+  stringr::str_trunc(label, width = max_chars, ellipsis = "...")
 }
 
 create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE, pos_x = 0.02, pos_y = 0.92, use_shapes = FALSE) {
@@ -223,7 +236,8 @@ create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE
   more_h <- if (has_more) style$legend_item_height * 1.2 else 0
   total_h <- title_h + content_h + more_h + style$legend_padding * 3
   visible_labels <- if (n_items > 0) items$label[seq_len(n_items)] else character(0)
-  legend_w <- legend_width_from_labels(visible_labels)
+  legend_w <- smart_legend_width(visible_labels, style)
+  max_chars <- legend_max_chars(legend_w, style)
   x0 <- pos_x
   y0 <- pos_y - total_h  # pos_y is TOP edge, convert to bottom for grob placement
 
@@ -237,7 +251,7 @@ create_legend <- function(items, title, max_items, italic = FALSE, style = STYLE
     item_shape <- if (use_shapes && "shape" %in% names(items)) items$shape[i] else "circle"
     grobs[[paste0("dot_", i)]] <- legend_dot(x0 + style$legend_padding + 0.012, item_y, items$color[i], item_shape, use_shapes, style)
     grobs[[paste0("label_", i)]] <- textGrob(
-      items$label[i],
+      truncate_label(items$label[i], max_chars),
       x = x0 + style$legend_padding + 0.028,
       y = item_y,
       just = c("left", "center"),
@@ -286,7 +300,9 @@ create_grouped_legend <- function(items, groups, title, max_items, style = STYLE
   content_h <- if (show_headers) headers_shown * header_h + items_shown * item_h else items_shown * item_h
   total_h <- title_h + content_h + more_h + style$legend_padding * 3
   header_labels <- if (show_headers && !is.null(display_names)) unlist(display_names) else character(0)
-  legend_w <- legend_width_from_labels(c(items$label, header_labels))
+  legend_w <- smart_legend_width(c(items$label, header_labels), style)
+  max_item_chars <- legend_max_chars(legend_w, style, if (show_headers) 0.016 else 0)
+  max_header_chars <- legend_max_chars(legend_w, style, if (use_shapes) 0.024 else 0)
   x0 <- pos_x
   y0 <- pos_y - total_h  # pos_y is TOP edge, convert to bottom for grob placement
 
@@ -315,7 +331,7 @@ create_grouped_legend <- function(items, groups, title, max_items, style = STYLE
       }
       header_x <- if (use_shapes) x0 + style$legend_padding + 0.024 else x0 + style$legend_padding
       grobs[[paste0("header_", grob_idx)]] <- textGrob(
-        sp_display,
+        truncate_label(sp_display, max_header_chars),
         x = header_x,
         y = current_y,
         just = c("left", "center"),
@@ -336,7 +352,7 @@ create_grouped_legend <- function(items, groups, title, max_items, style = STYLE
         items$color[item_row], "circle", FALSE, style
       )
       grobs[[paste0("label_", grob_idx)]] <- textGrob(
-        items$label[item_row],
+        truncate_label(items$label[item_row], max_item_chars),
         x = x0 + style$legend_padding + indent + 0.028,
         y = current_y,
         just = c("left", "center"),
