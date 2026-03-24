@@ -76,6 +76,8 @@ const showCopiedToast = ref(false)
 
 // Show date filter section
 const showDateFilter = ref(false)
+const goatChromosomeMinInput = ref('')
+const goatChromosomeMaxInput = ref('')
 const showExactDates = ref(false)
 
 // ── Source filter with Apply/Cancel ────────────────────────────────────────
@@ -127,6 +129,15 @@ const applySourceFilter = () => {
 
 const cancelSourceFilter = () => {
   stagedSources.value = [...store.filters.source]
+}
+
+const toggleGoatSource = (source) => {
+  const idx = store.filters.goatDataSource.indexOf(source)
+  if (idx >= 0) {
+    store.filters.goatDataSource.splice(idx, 1)
+  } else {
+    store.filters.goatDataSource.push(source)
+  }
 }
 
 // Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
@@ -708,6 +719,107 @@ const updateExportHeight = (value) => {
         <p class="filter-hint" v-else-if="store.filters.source.length === 0">
           No sources selected - showing all data
         </p>
+      </div>
+
+      <div class="filter-section collapsible">
+        <button
+          class="collapse-toggle"
+          @click="store.showGoatFilter = !store.showGoatFilter"
+          :class="{ expanded: store.showGoatFilter }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Genomic Data (GoaT)
+          <span v-if="store.filters.goatCoverage !== 'all' || store.filters.goatDataSource.length > 0 || store.filters.goatChromosomeMin != null || store.filters.goatChromosomeMax != null" class="active-badge">
+            Active
+          </span>
+          <span v-if="store.goatLoading" class="active-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
+            Loading...
+          </span>
+        </button>
+
+        <div v-show="store.showGoatFilter" class="collapse-content">
+          <div class="goat-filter-group">
+            <label class="goat-filter-label">GoaT Coverage</label>
+            <div class="goat-toggle-group">
+              <button
+                :class="{ active: store.filters.goatCoverage === 'all' }"
+                @click="store.filters.goatCoverage = 'all'"
+              >All</button>
+              <button
+                :class="{ active: store.filters.goatCoverage === 'in_goat' }"
+                @click="store.filters.goatCoverage = 'in_goat'"
+              >In GoaT</button>
+              <button
+                :class="{ active: store.filters.goatCoverage === 'not_in_goat' }"
+                @click="store.filters.goatCoverage = 'not_in_goat'"
+              >Not in GoaT</button>
+            </div>
+          </div>
+
+          <div class="goat-filter-group">
+            <label class="goat-filter-label">Genome Data Source</label>
+            <div class="goat-checkboxes">
+              <label class="source-checkbox">
+                <input
+                  type="checkbox"
+                  :checked="store.filters.goatDataSource.includes('direct')"
+                  @change="toggleGoatSource('direct')"
+                />
+                <span>Direct (measured)</span>
+              </label>
+              <label class="source-checkbox">
+                <input
+                  type="checkbox"
+                  :checked="store.filters.goatDataSource.includes('estimated')"
+                  @change="toggleGoatSource('estimated')"
+                />
+                <span>Estimated (phylogenetic)</span>
+              </label>
+              <label class="source-checkbox">
+                <input
+                  type="checkbox"
+                  :checked="store.filters.goatDataSource.includes('none')"
+                  @change="toggleGoatSource('none')"
+                />
+                <span>No GoaT data</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="goat-filter-group">
+            <label class="goat-filter-label">Chromosome Number (2n)</label>
+            <div class="chr-range-inputs">
+              <input
+                type="number"
+                class="chr-input"
+                placeholder="Min"
+                v-model="goatChromosomeMinInput"
+                @change="store.filters.goatChromosomeMin = goatChromosomeMinInput ? Number(goatChromosomeMinInput) : null"
+                :min="store.chromosomeRange.min"
+                :max="store.chromosomeRange.max"
+              />
+              <span class="chr-separator">–</span>
+              <input
+                type="number"
+                class="chr-input"
+                placeholder="Max"
+                v-model="goatChromosomeMaxInput"
+                @change="store.filters.goatChromosomeMax = goatChromosomeMaxInput ? Number(goatChromosomeMaxInput) : null"
+                :min="store.chromosomeRange.min"
+                :max="store.chromosomeRange.max"
+              />
+            </div>
+          </div>
+
+          <p v-if="store.goatLoaded && store.goatMeta" class="filter-hint">
+            {{ store.goatMeta.totalSpecies.toLocaleString() }} species from GoaT
+          </p>
+          <p v-else-if="!store.goatLoaded && !store.goatLoading" class="filter-hint">
+            GoaT data not available
+          </p>
+        </div>
       </div>
 
       <!-- Country Filter -->

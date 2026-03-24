@@ -22,6 +22,8 @@ const visibleColumns = ref({
   id: true,
   scientific_name: true,
   subspecies: true,
+  goat_chromosome: true,
+  goat_genome: false,
   sex: true,
   mimicry_ring: true,
   sequencing_status: true,
@@ -39,6 +41,8 @@ const columns = [
   { key: 'id', label: 'ID', width: '120px' },
   { key: 'scientific_name', label: 'Species', width: '200px' },
   { key: 'subspecies', label: 'Subspecies', width: '130px' },
+  { key: 'goat_chromosome', label: '2n', width: '70px' },
+  { key: 'goat_genome', label: 'Genome', width: '80px' },
   { key: 'sex', label: 'Sex', width: '70px' },
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
@@ -191,7 +195,8 @@ watch(rawData, () => {
 // Sort handler
 const toggleSort = (column) => {
   if (column === 'photo') return // Don't sort by photo
-  
+  if (column === 'goat_chromosome' || column === 'goat_genome') return
+
   if (sortColumn.value === column) {
     sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
   } else {
@@ -378,6 +383,32 @@ const handleImageError = (e, originalUrl) => {
               >
                 was: <em>{{ row.subspecies_original }}</em>
               </span>
+            </td>
+            <td v-if="visibleColumns.goat_chromosome" class="cell-chr">
+              <template v-if="store.getChromosomeNumber(row.scientific_name)">
+                <span class="chr-value">
+                  {{ store.getChromosomeNumber(row.scientific_name).value }}
+                  <span v-if="store.getChromosomeNumber(row.scientific_name).source === 'ancestor'" class="chr-est">(est.)</span>
+                </span>
+              </template>
+              <span v-else class="text-muted">—</span>
+            </td>
+            <td v-if="visibleColumns.goat_genome" class="cell-genome">
+              <template v-if="store.hasDirectGoatData(row.scientific_name)">
+                <span class="genome-badge direct" title="Has direct genomic measurements">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <path d="M12 2v20M9 5h6M9 9h6M9 13h6M9 17h6M7 7h10M7 15h10M7 11h10M7 19h10"/>
+                  </svg>
+                </span>
+              </template>
+              <template v-else-if="store.hasGoatData(row.scientific_name)">
+                <span class="genome-badge estimated" title="Estimated from phylogenetic relatives">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <path d="M12 2v20M9 5h6M9 9h6M9 13h6M9 17h6M7 7h10M7 15h10M7 11h10M7 19h10"/>
+                  </svg>
+                </span>
+              </template>
+              <span v-else class="text-muted">—</span>
             </td>
             <td v-if="visibleColumns.sex" class="cell-sex">
               <span v-if="row.sex === 'male'" class="sex-badge male" title="Male">♂</span>
@@ -864,6 +895,46 @@ const handleImageError = (e, originalUrl) => {
 
 .text-muted {
   color: var(--color-text-muted, #666);
+}
+
+.cell-chr {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.chr-value {
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.chr-est {
+  font-size: 0.6rem;
+  color: var(--color-text-muted, #888);
+  font-style: italic;
+  margin-left: 2px;
+}
+
+.cell-genome {
+  text-align: center;
+}
+
+.genome-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.genome-badge.direct {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+}
+
+.genome-badge.estimated {
+  background: rgba(250, 204, 21, 0.15);
+  color: #facc15;
 }
 
 /* Empty State */

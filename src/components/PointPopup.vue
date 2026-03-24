@@ -36,6 +36,11 @@ const emit = defineEmits(['close', 'open-gallery'])
 
 const store = useDataStore()
 
+const goatData = computed(() => {
+  if (!currentIndividual.value?.scientific_name) return null
+  return store.getGoatForSpecies(currentIndividual.value.scientific_name)
+})
+
 // State
 const selectedSpecies = ref(null)
 const selectedSubspecies = ref(null)
@@ -436,6 +441,71 @@ const openGallery = () => {
             </svg>
             <span v-if="currentIndividual?.source === 'iNaturalist'">View on iNaturalist</span>
             <span v-else>View on GBIF</span>
+          </a>
+        </div>
+
+        <div v-if="goatData" class="goat-section">
+          <div class="section-header">
+            <span class="goat-badge">GoaT</span>
+            <span class="section-label">Genomic Data</span>
+          </div>
+
+          <div v-if="goatData.genome_size" class="detail-row">
+            <span class="detail-label">Genome:</span>
+            <span class="detail-value">
+              {{ store.formatGenomeSize(goatData.genome_size.value) }}
+              <span v-if="goatData.genome_size.source === 'ancestor'" class="est-tag" :title="`Estimated from ${goatData.genome_size.aggregation_rank || 'relatives'}`">(est.)</span>
+            </span>
+          </div>
+
+          <div v-if="goatData.chromosome_number" class="detail-row">
+            <span class="detail-label">2n:</span>
+            <span class="detail-value">
+              {{ goatData.chromosome_number.value }}
+              <span v-if="goatData.chromosome_number.source === 'ancestor'" class="est-tag" :title="`Estimated from ${goatData.chromosome_number.aggregation_rank || 'relatives'}`">(est.)</span>
+            </span>
+          </div>
+
+          <div v-if="goatData.haploid_number" class="detail-row">
+            <span class="detail-label">n:</span>
+            <span class="detail-value">
+              {{ goatData.haploid_number.value }}
+              <span v-if="goatData.haploid_number.source === 'ancestor'" class="est-tag" :title="`Estimated from ${goatData.haploid_number.aggregation_rank || 'relatives'}`">(est.)</span>
+            </span>
+          </div>
+
+          <div v-if="goatData.assembly_level" class="detail-row">
+            <span class="detail-label">Assembly:</span>
+            <span class="detail-value">
+              {{ goatData.assembly_level.value }}
+            </span>
+          </div>
+
+          <div v-if="goatData.busco_completeness" class="detail-row">
+            <span class="detail-label">BUSCO:</span>
+            <span class="detail-value">
+              {{ typeof goatData.busco_completeness.value === 'number' ? goatData.busco_completeness.value.toFixed(1) + '%' : goatData.busco_completeness.value }}
+            </span>
+          </div>
+
+          <div v-if="goatData.gc_percent" class="detail-row">
+            <span class="detail-label">GC%:</span>
+            <span class="detail-value">
+              {{ typeof goatData.gc_percent.value === 'number' ? goatData.gc_percent.value.toFixed(1) + '%' : goatData.gc_percent.value }}
+            </span>
+          </div>
+
+          <div v-if="goatData.bioproject" class="detail-row">
+            <span class="detail-label">BioProject:</span>
+            <span class="detail-value">
+              <a :href="`https://www.ncbi.nlm.nih.gov/bioproject/${goatData.bioproject.value}`" target="_blank" rel="noopener noreferrer" class="goat-link">
+                {{ goatData.bioproject.value }}
+              </a>
+            </span>
+          </div>
+
+          <a href="https://goat.genomehubs.org" target="_blank" rel="noopener noreferrer" class="goat-attribution">
+            <span>GoaT</span> · Genomes on a Tree
           </a>
         </div>
       </div>
@@ -942,5 +1012,64 @@ const openGallery = () => {
 
 .sex-count.unknown {
   color: var(--color-text-muted, #9ca3af); /* Gray for unknown */
+}
+
+/* GoaT Genomic Data Section */
+.goat-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border, #3d3d5c);
+}
+
+.goat-badge {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.est-tag {
+  color: var(--color-text-muted, #888);
+  font-size: 0.65rem;
+  font-style: italic;
+  cursor: help;
+}
+
+.goat-link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-family: monospace;
+  font-size: 0.7rem;
+}
+
+.goat-link:hover {
+  text-decoration: underline;
+  color: #93c5fd;
+}
+
+.goat-attribution {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 0.6rem;
+  color: var(--color-text-muted, #666);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.goat-attribution:hover {
+  color: #60a5fa;
+}
+
+.goat-attribution span {
+  color: #60a5fa;
+  font-weight: 600;
 }
 </style>
