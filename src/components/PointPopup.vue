@@ -36,11 +36,6 @@ const emit = defineEmits(['close', 'open-gallery'])
 
 const store = useDataStore()
 
-const goatData = computed(() => {
-  if (!currentIndividual.value?.scientific_name) return null
-  return store.getGoatForSpecies(currentIndividual.value.scientific_name)
-})
-
 // State
 const selectedSpecies = ref(null)
 const selectedSubspecies = ref(null)
@@ -313,6 +308,29 @@ const openGallery = () => {
   // Emit to open gallery
   emit('open-gallery')
 }
+
+const goatInfo = computed(() => {
+  if (!selectedSpecies.value) return null
+  return store.getGoatForSpecies(selectedSpecies.value)
+})
+
+const isEstimated = (field) => field?.source === 'ancestor'
+
+const goatSourceLabel = (field) => {
+  if (!field || field.source !== 'ancestor') return ''
+  return `Estimated from ${field.aggregation_rank || 'relatives'}`
+}
+
+const goatTaxonUrl = computed(() => {
+  if (!goatInfo.value?.taxon_id) return null
+  return `https://goat.genomehubs.org/record?recordId=${goatInfo.value.taxon_id}&result=taxon&taxonomy=ncbi`
+})
+
+const bioprojectUrl = computed(() => {
+  const bp = goatInfo.value?.bioproject
+  if (!bp?.value) return null
+  return `https://www.ncbi.nlm.nih.gov/bioproject/${bp.value}`
+})
 </script>
 
 <template>
@@ -444,70 +462,6 @@ const openGallery = () => {
           </a>
         </div>
 
-        <div v-if="goatData" class="goat-section">
-          <div class="section-header">
-            <span class="goat-badge">GoaT</span>
-            <span class="section-label">Genomic Data</span>
-          </div>
-
-          <div v-if="goatData.genome_size" class="detail-row">
-            <span class="detail-label">Genome:</span>
-            <span class="detail-value">
-              {{ store.formatGenomeSize(goatData.genome_size.value) }}
-              <span v-if="goatData.genome_size.source === 'ancestor'" class="est-tag" :title="`Estimated from ${goatData.genome_size.aggregation_rank || 'relatives'}`">(est.)</span>
-            </span>
-          </div>
-
-          <div v-if="goatData.chromosome_number" class="detail-row">
-            <span class="detail-label">2n:</span>
-            <span class="detail-value">
-              {{ goatData.chromosome_number.value }}
-              <span v-if="goatData.chromosome_number.source === 'ancestor'" class="est-tag" :title="`Estimated from ${goatData.chromosome_number.aggregation_rank || 'relatives'}`">(est.)</span>
-            </span>
-          </div>
-
-          <div v-if="goatData.haploid_number" class="detail-row">
-            <span class="detail-label">n:</span>
-            <span class="detail-value">
-              {{ goatData.haploid_number.value }}
-              <span v-if="goatData.haploid_number.source === 'ancestor'" class="est-tag" :title="`Estimated from ${goatData.haploid_number.aggregation_rank || 'relatives'}`">(est.)</span>
-            </span>
-          </div>
-
-          <div v-if="goatData.assembly_level" class="detail-row">
-            <span class="detail-label">Assembly:</span>
-            <span class="detail-value">
-              {{ goatData.assembly_level.value }}
-            </span>
-          </div>
-
-          <div v-if="goatData.busco_completeness" class="detail-row">
-            <span class="detail-label">BUSCO:</span>
-            <span class="detail-value">
-              {{ typeof goatData.busco_completeness.value === 'number' ? goatData.busco_completeness.value.toFixed(1) + '%' : goatData.busco_completeness.value }}
-            </span>
-          </div>
-
-          <div v-if="goatData.gc_percent" class="detail-row">
-            <span class="detail-label">GC%:</span>
-            <span class="detail-value">
-              {{ typeof goatData.gc_percent.value === 'number' ? goatData.gc_percent.value.toFixed(1) + '%' : goatData.gc_percent.value }}
-            </span>
-          </div>
-
-          <div v-if="goatData.bioproject" class="detail-row">
-            <span class="detail-label">BioProject:</span>
-            <span class="detail-value">
-              <a :href="`https://www.ncbi.nlm.nih.gov/bioproject/${goatData.bioproject.value}`" target="_blank" rel="noopener noreferrer" class="goat-link">
-                {{ goatData.bioproject.value }}
-              </a>
-            </span>
-          </div>
-
-          <a href="https://goat.genomehubs.org" target="_blank" rel="noopener noreferrer" class="goat-attribution">
-            <span>GoaT</span> · Genomes on a Tree
-          </a>
-        </div>
       </div>
 
       <!-- Right Column: Species, Subspecies & Location -->
@@ -617,6 +571,91 @@ const openGallery = () => {
             </span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div v-if="goatInfo && !store.goatLoading" class="goat-section">
+      <div class="goat-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="goat-icon">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <path d="M8 12h.01M12 12h.01M16 12h.01M8 8h.01M12 8h.01M16 8h.01M8 16h.01M12 16h.01M16 16h.01"/>
+        </svg>
+        <span class="goat-title">Genomic Data</span>
+        <a v-if="goatTaxonUrl" :href="goatTaxonUrl" target="_blank" rel="noopener noreferrer" class="goat-header-link" title="View on GoaT">
+          GoaT
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="goat-grid">
+        <div v-if="goatInfo.genome_size" class="goat-field">
+          <span class="goat-label">Genome Size</span>
+          <span class="goat-value" :class="{ estimated: isEstimated(goatInfo.genome_size) }">
+            {{ store.formatGenomeSize(goatInfo.genome_size.value) }}
+            <span v-if="isEstimated(goatInfo.genome_size)" class="est-badge" :title="goatSourceLabel(goatInfo.genome_size)">(est.)</span>
+          </span>
+        </div>
+
+        <div v-if="goatInfo.chromosome_number" class="goat-field">
+          <span class="goat-label">2n</span>
+          <span class="goat-value" :class="{ estimated: isEstimated(goatInfo.chromosome_number) }">
+            {{ goatInfo.chromosome_number.value }}
+            <span v-if="isEstimated(goatInfo.chromosome_number)" class="est-badge" :title="goatSourceLabel(goatInfo.chromosome_number)">(est.)</span>
+          </span>
+        </div>
+
+        <div v-if="goatInfo.haploid_number" class="goat-field">
+          <span class="goat-label">n</span>
+          <span class="goat-value" :class="{ estimated: isEstimated(goatInfo.haploid_number) }">
+            {{ goatInfo.haploid_number.value }}
+            <span v-if="isEstimated(goatInfo.haploid_number)" class="est-badge" :title="goatSourceLabel(goatInfo.haploid_number)">(est.)</span>
+          </span>
+        </div>
+
+        <div v-if="goatInfo.gc_percent" class="goat-field">
+          <span class="goat-label">GC%</span>
+          <span class="goat-value" :class="{ estimated: isEstimated(goatInfo.gc_percent) }">
+            {{ typeof goatInfo.gc_percent.value === 'number' ? goatInfo.gc_percent.value.toFixed(1) + '%' : goatInfo.gc_percent.value }}
+            <span v-if="isEstimated(goatInfo.gc_percent)" class="est-badge" :title="goatSourceLabel(goatInfo.gc_percent)">(est.)</span>
+          </span>
+        </div>
+
+        <div v-if="goatInfo.busco_completeness" class="goat-field">
+          <span class="goat-label">BUSCO</span>
+          <span class="goat-value" :class="{ estimated: isEstimated(goatInfo.busco_completeness) }">
+            {{ typeof goatInfo.busco_completeness.value === 'number' ? goatInfo.busco_completeness.value.toFixed(1) + '%' : goatInfo.busco_completeness.value }}
+            <span v-if="isEstimated(goatInfo.busco_completeness)" class="est-badge" :title="goatSourceLabel(goatInfo.busco_completeness)">(est.)</span>
+          </span>
+        </div>
+
+        <div v-if="goatInfo.assembly_level" class="goat-field goat-field-wide">
+          <span class="goat-label">Assembly</span>
+          <span class="goat-value" :class="{ estimated: isEstimated(goatInfo.assembly_level) }">
+            {{ goatInfo.assembly_level.value }}
+            <span v-if="isEstimated(goatInfo.assembly_level)" class="est-badge" :title="goatSourceLabel(goatInfo.assembly_level)">(est.)</span>
+          </span>
+        </div>
+
+        <div v-if="goatInfo.bioproject && goatInfo.bioproject.source === 'direct'" class="goat-field goat-field-wide">
+          <span class="goat-label">BioProject</span>
+          <a v-if="bioprojectUrl" :href="bioprojectUrl" target="_blank" rel="noopener noreferrer" class="goat-bioproject-link">
+            {{ goatInfo.bioproject.value }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+          <span v-else class="goat-value">{{ goatInfo.bioproject.value }}</span>
+        </div>
+      </div>
+
+      <div class="goat-citation">
+        Challis et al. 2023, Wellcome Open Research, 8:24
       </div>
     </div>
   </div>
@@ -1016,60 +1055,119 @@ const openGallery = () => {
 
 /* GoaT Genomic Data Section */
 .goat-section {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding-top: 8px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  margin-top: 12px;
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
 }
 
-.goat-badge {
-  background: rgba(59, 130, 246, 0.2);
+.goat-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.goat-icon {
+  width: 14px;
+  height: 14px;
   color: #60a5fa;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.goat-title {
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: #60a5fa;
 }
 
-.est-tag {
-  color: var(--color-text-muted, #888);
+.goat-header-link {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 3px;
   font-size: 0.65rem;
-  font-style: italic;
-  cursor: help;
-}
-
-.goat-link {
+  font-weight: 500;
   color: #60a5fa;
   text-decoration: none;
-  font-family: monospace;
-  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: all 0.2s;
 }
 
-.goat-link:hover {
-  text-decoration: underline;
+.goat-header-link:hover {
+  background: rgba(59, 130, 246, 0.15);
   color: #93c5fd;
 }
 
-.goat-attribution {
+.goat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.goat-field {
   display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.goat-field-wide {
+  grid-column: span 3;
+}
+
+.goat-label {
+  font-size: 0.6rem;
+  color: var(--color-text-muted, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.goat-value {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #e0e0e0);
+  font-variant-numeric: tabular-nums;
+}
+
+.goat-value.estimated {
+  color: var(--color-text-secondary, #aaa);
+}
+
+.est-badge {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: #f59e0b;
+  cursor: help;
+}
+
+.goat-bioproject-link {
+  display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin-top: 4px;
-  font-size: 0.6rem;
-  color: var(--color-text-muted, #666);
+  font-size: 0.75rem;
+  color: #60a5fa;
   text-decoration: none;
-  transition: color 0.2s;
+  font-weight: 500;
 }
 
-.goat-attribution:hover {
-  color: #60a5fa;
+.goat-bioproject-link:hover {
+  color: #93c5fd;
+  text-decoration: underline;
 }
 
-.goat-attribution span {
-  color: #60a5fa;
-  font-weight: 600;
+.goat-citation {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(59, 130, 246, 0.15);
+  font-size: 0.55rem;
+  color: var(--color-text-muted, #666);
+  font-style: italic;
 }
 </style>
