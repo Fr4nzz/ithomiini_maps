@@ -23,9 +23,18 @@ cat(sprintf("  Bounds: [%.2f, %.2f] to [%.2f, %.2f]\\n", bounds$xmin, bounds$ymi
 cat(sprintf("  Aspect ratio: %.3f\\n", aspect_ratio))
 
 # ── 3. Load basemap ──
+# Available providers (change basemap_provider below):
+#   "CartoDB.DarkMatter"       Dark theme (default, matches web app) - retina OK
+#   "CartoDB.Positron"         Light theme - retina OK
+#   "CartoDB.Voyager"          Colored roads - retina OK
+#   "Stadia.AlidadeSmooth"     Smooth light - retina OK
+#   "Stadia.AlidadeSmoothDark" Smooth dark - retina OK
+#   "OpenStreetMap"            Standard OSM (no retina)
+#   "Esri.WorldImagery"        Satellite imagery (no retina)
+#   "Esri.WorldTopoMap"        Topographic (no retina)
 basemap_provider <- "CartoDB.DarkMatter"
-basemap_zoom <- NULL
-basemap_retina <- TRUE
+basemap_zoom <- NULL      # NULL = auto-detect, or 1-18 (higher = more detail, slower)
+basemap_retina <- TRUE    # TRUE = 2x resolution tiles for CartoDB/Stadia providers
 cat(sprintf("\\nLoading basemap (%s, retina=%s)...\\n", basemap_provider, basemap_retina))
 buffer <- 0.5
 bbox_expanded <- st_bbox(c(xmin = bounds$xmin - buffer, ymin = bounds$ymin - buffer, xmax = bounds$xmax + buffer, ymax = bounds$ymax + buffer), crs = 4326)
@@ -52,6 +61,10 @@ legend_df$order_idx <- seq_len(nrow(legend_df))
 cat(sprintf("\\nLegend: %d categories (showing max %d)\\n", nrow(legend_df), legend_max_items))
 
 # ── 5. Display name formatting functions ──
+# display_name_format options: "full" (Mechanitis polymnia), "firstLetterGenus" (M. polymnia),
+#   "syllableGenus" (Mec. polymnia), "custom" (from legend_data$displayNames)
+# prefix_format options: "none" (casabranca), "firstLetterBoth" (M. p. casabranca),
+#   "syllableBoth" (Mec. pol. casabranca), "custom" (from legend_data$abbreviations)
 get_first_syllable <- function(word) {
   if (is.null(word) || nchar(word) <= 3) return(word)
   vowels <- c("a", "e", "i", "o", "u", "y")
@@ -118,6 +131,7 @@ apply_prefix_format <- function(species_name, format, custom_abbrevs = NULL) {
 }
 
 # ── 6. Shape utilities ──
+# Filled shapes that support fill + border: 21=circle, 22=square, 23=diamond, 24=triangle-up, 25=triangle-down
 SHAPES <- c(circle = 21, square = 22, triangle = 24, rhombus = 23)
 
 # ── 7. Legend settings (from export) ──
@@ -142,15 +156,17 @@ cat(sprintf("  Group by: %s\\n", group_by))
 cat(sprintf("  Shapes enabled: %s\\n", shapes_enabled))
 
 # ── 8. Styling configuration ──
+# For light themes, try: bg_color="#f5f5f5", legend_bg="#ffffff", legend_border="#cccccc",
+#   legend_title_color="#666666", legend_text_color="#333333", scale_bar_color="#333333"
 STYLE <- list(
-  bg_color = "#1a1a2e",
+  bg_color = "#1a1a2e",       # "#f5f5f5" for light themes
   point_size = 2.5,
   point_alpha = 0.85,
   point_stroke_color = "white",
   point_stroke_alpha = 0.3,
   point_stroke_width = 0.5,
   legend_bg = "#252540",
-  legend_bg_alpha = 0.95,
+  legend_bg_alpha = 0.95,     # 0 = transparent, 1 = opaque
   legend_border = "#3d3d5c",
   legend_title_color = "#888888",
   legend_text_color = "#e0e0e0",
@@ -159,9 +175,12 @@ STYLE <- list(
   legend_width = 0.22,
   legend_padding = 0.015,
   legend_item_height = 0.028,
-  scale_bar_color = "#e0e0e0",
-  base_size = 12,
-  dpi = 300
+  scale_bar_color = "#e0e0e0", # "#333333" for light themes
+  # DPI affects text/points/vectors but NOT basemap tile resolution.
+  # For sharper basemaps, use basemap_retina=TRUE and/or increase basemap_zoom.
+  # PDF/SVG are vector formats - only the basemap raster is affected by DPI.
+  base_size = 12,  # base dimension in inches (width for landscape, height for portrait)
+  dpi = 300        # dots per inch for PNG rasterization
 )
 if (aspect_ratio >= 1) {
   output_width <- STYLE$base_size
