@@ -87,6 +87,11 @@ jobs:
           echo "🔬 Running taxonomic curation pipeline..."
           python scripts/taxonomic_curation.py --apply
 
+      - name: Fetch GoaT genomic data
+        run: |
+          echo "🧬 Fetching GoaT (Genomes on a Tree) data..."
+          python scripts/fetch_goat_data.py
+
       - name: Check for changes
         id: check_changes
         run: |
@@ -102,7 +107,7 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-          git add -f public/data/map_points_*.json public/data/data_manifest.json public/data/gbif_citation.json public/data/taxonomic_corrections_applied.json public/data/taxonomic_curation_report.json
+          git add -f public/data/map_points_*.json public/data/data_manifest.json public/data/gbif_citation.json public/data/taxonomic_corrections_applied.json public/data/taxonomic_curation_report.json public/data/goat_lepidoptera.json
           git commit -m "🔄 Auto-update database from Google Sheets/GBIF
 
           Triggered by: ${{ github.actor }}

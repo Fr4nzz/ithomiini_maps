@@ -6,6 +6,7 @@ import { normalizeCountryName } from '../utils/clusterStats'
 import { usePhotoLookup } from './dataPhotoLookup'
 import { useScatterVisualization } from './dataPointGrouping'
 import { useColorMapping } from './dataColorPalette'
+import { useGoatData } from './goatData'
 
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
@@ -46,6 +47,7 @@ export const useDataStore = defineStore('data', () => {
   // Filter visibility state (for expand/collapse)
   const showAdvancedFilters = ref(getStorage('app-show-advanced-filters', false))
   const showMimicryFilter = ref(getStorage('app-show-mimicry-filter', false))
+  const showGoatFilter = ref(getStorage('app-show-goat-filter', false))
 
   // UI preferences
   const showThumbnail = ref(true)
@@ -130,10 +132,14 @@ export const useDataStore = defineStore('data', () => {
     source: ['Sanger Institute'],
     sex: 'all',
     country: 'All',
-    camidSearch: '',
-    dateStart: null,
-    dateEnd: null,
-  })
+      camidSearch: '',
+      dateStart: null,
+      dateEnd: null,
+      goatCoverage: 'all',
+      goatDataSource: [],
+      goatChromosomeMin: null,
+      goatChromosomeMax: null,
+    })
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PHOTO LOOKUP (extracted composable)
@@ -143,6 +149,12 @@ export const useDataStore = defineStore('data', () => {
     photoLookup, mimicryPhotoLookup, gbifCitation,
     rebuildPhotoLookups, addPhotosFromData, loadGbifCitation, getPhotoForItem
   } = usePhotoLookup(allFeatures, imageSupplement)
+
+  const {
+    goatSpecies, goatLoaded, goatLoading, goatMeta,
+    loadGoatData, getGoatForSpecies, hasGoatData, hasDirectGoatData,
+    getChromosomeNumber, formatGenomeSize, chromosomeRange,
+  } = useGoatData()
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ACTIONS
@@ -192,6 +204,7 @@ export const useDataStore = defineStore('data', () => {
 
       rebuildPhotoLookups()
       loadGbifCitation()
+      loadGoatData()
       restoreFiltersFromURL()
       await loadSourcesForFilters()
     } catch (e) {
@@ -285,6 +298,10 @@ export const useDataStore = defineStore('data', () => {
     if (params.get('cam')) filters.value.camidSearch = params.get('cam')
     if (params.get('from')) filters.value.dateStart = params.get('from')
     if (params.get('to')) filters.value.dateEnd = params.get('to')
+    if (params.get('goat')) { filters.value.goatCoverage = params.get('goat'); showGoatFilter.value = true }
+    if (params.get('goat_src')) { filters.value.goatDataSource = params.get('goat_src').split(','); showGoatFilter.value = true }
+    if (params.get('chr_min')) { filters.value.goatChromosomeMin = Number(params.get('chr_min')); showGoatFilter.value = true }
+    if (params.get('chr_max')) { filters.value.goatChromosomeMax = Number(params.get('chr_max')); showGoatFilter.value = true }
   }
 
   const resetAllFilters = () => {
@@ -302,6 +319,10 @@ export const useDataStore = defineStore('data', () => {
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
+      goatCoverage: 'all',
+      goatDataSource: [],
+      goatChromosomeMin: null,
+      goatChromosomeMax: null,
     }
     visualizationMode.value = 'points'
     boundingBox.value = null
@@ -480,6 +501,10 @@ export const useDataStore = defineStore('data', () => {
     const dateStart = f.dateStart ? new Date(f.dateStart) : null
     const dateEnd = f.dateEnd ? new Date(f.dateEnd) : null
 
+    const hasGoatFilter = f.goatCoverage !== 'all' || f.goatDataSource.length > 0 ||
+      f.goatChromosomeMin != null || f.goatChromosomeMax != null
+    const goatDataSourceSet = f.goatDataSource.length > 0 ? new Set(f.goatDataSource) : null
+
     const filtered = allFeatures.value.filter(item => {
       if (searchTerms) {
         const itemId = (item.id || '').toUpperCase()
@@ -511,6 +536,34 @@ export const useDataStore = defineStore('data', () => {
       if (bb) {
         if (item.lng < bb.sw.lng || item.lng > bb.ne.lng ||
             item.lat < bb.sw.lat || item.lat > bb.ne.lat) return false
+      }
+
+      if (hasGoatFilter && goatLoaded.value) {
+        const inGoat = hasGoatData(item.scientific_name)
+        const hasDirect = hasDirectGoatData(item.scientific_name)
+
+        if (f.goatCoverage === 'in_goat' && !inGoat) return false
+        if (f.goatCoverage === 'not_in_goat' && inGoat) return false
+
+        if (goatDataSourceSet) {
+          const wantDirect = goatDataSourceSet.has('direct')
+          const wantEstimated = goatDataSourceSet.has('estimated')
+          const wantNone = goatDataSourceSet.has('none')
+
+          let passes = false
+          if (wantDirect && hasDirect) passes = true
+          if (wantEstimated && inGoat && !hasDirect) passes = true
+          if (wantNone && !inGoat) passes = true
+          if (!passes) return false
+        }
+
+        if (f.goatChromosomeMin != null || f.goatChromosomeMax != null) {
+          const chrData = getChromosomeNumber(item.scientific_name)
+          if (!chrData) return false
+          const chrVal = chrData.value
+          if (f.goatChromosomeMin != null && chrVal < f.goatChromosomeMin) return false
+          if (f.goatChromosomeMax != null && chrVal > f.goatChromosomeMax) return false
+        }
       }
 
       return true
@@ -582,6 +635,10 @@ export const useDataStore = defineStore('data', () => {
       if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
       if (newFilters.dateStart) params.set('from', newFilters.dateStart)
       if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)
+      if (newFilters.goatCoverage !== 'all') params.set('goat', newFilters.goatCoverage)
+      if (newFilters.goatDataSource.length > 0) params.set('goat_src', newFilters.goatDataSource.join(','))
+      if (newFilters.goatChromosomeMin != null) params.set('chr_min', newFilters.goatChromosomeMin)
+      if (newFilters.goatChromosomeMax != null) params.set('chr_max', newFilters.goatChromosomeMax)
 
       const newURL = params.toString()
         ? `${window.location.pathname}?${params}`
@@ -597,6 +654,7 @@ export const useDataStore = defineStore('data', () => {
 
   watch(showAdvancedFilters, (val) => setStorage('app-show-advanced-filters', val))
   watch(showMimicryFilter, (val) => setStorage('app-show-mimicry-filter', val))
+  watch(showGoatFilter, (val) => setStorage('app-show-goat-filter', val))
   watch(clusteringEnabled, (val) => setStorage('app-clustering-enabled', val))
   watch(clusterSettings, (val) => setStorage('app-cluster-settings', val), { deep: true })
   watch(scatterOverlappingPoints, (val) => setStorage('app-scatter-overlapping', val))
@@ -624,6 +682,7 @@ export const useDataStore = defineStore('data', () => {
     filters,
     showAdvancedFilters,
     showMimicryFilter,
+    showGoatFilter,
     showThumbnail,
     focusPoint,
     gallerySelection,
@@ -643,6 +702,18 @@ export const useDataStore = defineStore('data', () => {
     legendSettings,
     exportSettings,
     mapView,
+
+    // GoaT genomic data
+    goatLoaded,
+    goatLoading,
+    goatMeta,
+    goatSpecies,
+    getGoatForSpecies,
+    hasGoatData,
+    hasDirectGoatData,
+    getChromosomeNumber,
+    formatGenomeSize,
+    chromosomeRange,
 
     // Actions
     loadMapData,
