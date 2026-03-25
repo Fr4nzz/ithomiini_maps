@@ -507,25 +507,36 @@ const handleImageError = (e, originalUrl) => {
   }
 }
 
-const genusDirectRangeCache = {}
+const genusDirectRanges = computed(() => {
+  const ranges = {}
+  const datasetSpecies = new Set(rawData.value.map(r => r.scientific_name).filter(Boolean))
+
+  for (const name of datasetSpecies) {
+    const genus = name.split(' ')[0]
+    if (ranges[genus]) continue
+
+    let min = Infinity, max = -Infinity
+    const directSpp = []
+    for (const sp of datasetSpecies) {
+      if (!sp.startsWith(genus + ' ')) continue
+      const cn = store.getChromosomeNumber(sp)
+      if (cn?.source === 'direct' && cn.value != null) {
+        if (cn.value < min) min = cn.value
+        if (cn.value > max) max = cn.value
+        directSpp.push(sp)
+      }
+    }
+
+    ranges[genus] = directSpp.length >= 2 && min !== max
+      ? { min, max, count: directSpp.length, species: directSpp }
+      : null
+  }
+  return ranges
+})
+
 const getGenusDirectRange = (scientificName) => {
   const genus = scientificName.split(' ')[0]
-  if (genusDirectRangeCache[genus] !== undefined) return genusDirectRangeCache[genus]
-
-  const allSpecies = store.goatSpecies
-  let min = Infinity, max = -Infinity, count = 0
-  for (const [name, data] of Object.entries(allSpecies)) {
-    if (!name.startsWith(genus + ' ')) continue
-    const cn = data.chromosome_number
-    if (cn?.source === 'direct' && cn.value != null) {
-      if (cn.value < min) min = cn.value
-      if (cn.value > max) max = cn.value
-      count++
-    }
-  }
-
-  genusDirectRangeCache[genus] = count >= 2 && min !== max ? { min, max, count } : null
-  return genusDirectRangeCache[genus]
+  return genusDirectRanges.value[genus] || null
 }
 
 const getChrTooltip = (scientificName) => {
