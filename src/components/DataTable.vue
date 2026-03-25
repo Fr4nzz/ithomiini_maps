@@ -41,14 +41,14 @@ const columns = [
   { key: 'id', label: 'ID', width: '120px' },
   { key: 'scientific_name', label: 'Species', width: '200px' },
   { key: 'subspecies', label: 'Subspecies', width: '130px' },
-  { key: 'goat_chromosome', label: '2n', width: '70px' },
+  { key: 'goat_chromosome', label: '2n', width: '100px' },
   { key: 'goat_genome', label: 'Genome', width: '120px' },
   { key: 'sex', label: 'Sex', width: '70px' },
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
   { key: 'source', label: 'Source', width: '130px' },
   { key: 'curated', label: 'Curated', width: '130px' },
-  { key: 'observation_date', label: 'Date', width: '100px' },
+  { key: 'observation_date', label: 'Date', width: '130px' },
   { key: 'country', label: 'Country', width: '100px' },
   { key: 'lat', label: 'Latitude', width: '90px' },
   { key: 'lng', label: 'Longitude', width: '90px' },
@@ -117,6 +117,11 @@ const columnFilteredData = computed(() => {
   return data.filter(row => {
     return activeFilters.every(([col, filterVal]) => {
       const val = String(filterVal).trim().toLowerCase()
+
+      if (col === 'photo') {
+        const hasPhoto = !!store.getPhotoForItem(row)
+        return val === 'has' ? hasPhoto : !hasPhoto
+      }
 
       if (col === 'goat_chromosome') {
         const chr = store.getChromosomeNumber(row.scientific_name)
@@ -226,7 +231,7 @@ const paginatedData = computed(() => {
 
 // Total pages
 const totalPages = computed(() => {
-  const count = tableView.value === 'species' ? sortedSpeciesData.value.length : sortedData.value.length
+  const count = tableView.value === 'species' ? filteredSpeciesData.value.length : sortedData.value.length
   return Math.ceil(count / pageSize.value)
 })
 
@@ -373,8 +378,51 @@ const speciesData = computed(() => {
   return [...speciesMap.values()]
 })
 
+const filteredSpeciesData = computed(() => {
+  const data = speciesData.value
+  const filters = columnFilters.value
+  const skipKeys = new Set(['goat_chromosome_min', 'goat_chromosome_max', 'date_year_min', 'date_year_max', 'photo'])
+  const active = Object.entries(filters).filter(([k, v]) => !skipKeys.has(k) && v && String(v).trim())
+  if (active.length === 0) return data
+
+  return data.filter(sp => {
+    return active.every(([col, filterVal]) => {
+      const val = String(filterVal).trim().toLowerCase()
+
+      if (col === 'scientific_name') return sp.scientific_name.toLowerCase().includes(val)
+      if (col === 'goat_status') {
+        const status = sp.goat_status.toLowerCase()
+        if (val === 'direct') return status === 'direct'
+        if (val === 'estimated') return status === 'estimated'
+        if (val === 'none') return status === 'no data'
+        return status.includes(val)
+      }
+      if (col === 'chromosome_number' || col === 'goat_chromosome') {
+        if (sp.chromosome_number == null) return false
+        if (val.includes('-')) {
+          const [min, max] = val.split('-').map(Number)
+          return sp.chromosome_number >= min && sp.chromosome_number <= max
+        }
+        return String(sp.chromosome_number).includes(val)
+      }
+      if (col === 'genome_size') {
+        return sp.genome_size != null
+      }
+      if (col === 'assembly_level') {
+        return (sp.assembly_level || '').toLowerCase().includes(val)
+      }
+      if (col === 'bioproject') {
+        if (val === 'has') return !!sp.bioproject
+        if (val === 'no' || val === 'none') return !sp.bioproject
+        return String(sp.bioproject || '').toLowerCase().includes(val)
+      }
+      return String(sp[col] || '').toLowerCase().includes(val)
+    })
+  })
+})
+
 const sortedSpeciesData = computed(() => {
-  const data = [...speciesData.value]
+  const data = [...filteredSpeciesData.value]
   data.sort((a, b) => {
     let valA, valB
     const col = sortColumn.value
@@ -490,7 +538,7 @@ const getGenomeSummary = (scientificName) => {
     <div class="table-header">
       <div class="header-left">
         <span class="record-count">
-          <strong>{{ tableView === 'species' ? sortedSpeciesData.length.toLocaleString() : sortedData.length.toLocaleString() }}</strong>
+          <strong>{{ tableView === 'species' ? filteredSpeciesData.length.toLocaleString() : sortedData.length.toLocaleString() }}</strong>
           {{ tableView === 'species' ? 'species' : 'records' }}
           <span v-if="activeFilterCount > 0" class="filter-indicator">(filtered)</span>
         </span>
@@ -520,7 +568,6 @@ const getGenomeSummary = (scientificName) => {
         </select>
 
         <button
-          v-if="tableView === 'records'"
           class="column-filter-toggle"
           :class="{ active: showColumnFilters }"
           @click="showColumnFilters = !showColumnFilters"
@@ -600,6 +647,11 @@ const getGenomeSummary = (scientificName) => {
           <tr v-if="showColumnFilters" class="filter-row">
             <th v-for="col in activeColumns" :key="'filter-' + col.key" class="filter-cell">
               <template v-if="col.key === 'photo'">
+                <select class="column-filter-select filter-select-narrow" v-model="columnFilters.photo">
+                  <option value="">All</option>
+                  <option value="has">Has</option>
+                  <option value="no">None</option>
+                </select>
               </template>
 
               <template v-else-if="col.key === 'goat_chromosome'">
@@ -850,10 +902,49 @@ const getGenomeSummary = (scientificName) => {
               :class="{ sorted: sortColumn === col.key }"
               @click="toggleSort(col.key)"
             >
-              {{ col.label }}
-              <span v-if="sortColumn === col.key" class="sort-indicator">
-                {{ sortDirection === 'asc' ? '↑' : '↓' }}
-              </span>
+              <div class="th-content">
+                <span>{{ col.label }}</span>
+                <svg
+                  v-if="sortColumn === col.key"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  class="sort-icon" :class="{ desc: sortDirection === 'desc' }"
+                >
+                  <path d="m18 15-6-6-6 6"/>
+                </svg>
+              </div>
+            </th>
+          </tr>
+          <tr v-if="showColumnFilters" class="filter-row">
+            <th class="filter-cell">
+              <input type="text" class="column-filter-input" placeholder="Filter species..." v-model="columnFilters.scientific_name" />
+            </th>
+            <th class="filter-cell"></th>
+            <th class="filter-cell">
+              <select class="column-filter-select" v-model="columnFilters.goat_status">
+                <option value="">All</option>
+                <option value="direct">Direct</option>
+                <option value="estimated">Estimated</option>
+                <option value="none">No data</option>
+              </select>
+            </th>
+            <th class="filter-cell">
+              <div class="filter-range">
+                <input type="number" class="column-filter-input range-input" placeholder="Min" v-model="columnFilters.goat_chromosome_min" @input="syncChromosomeFilter" />
+                <span class="range-sep">–</span>
+                <input type="number" class="column-filter-input range-input" placeholder="Max" v-model="columnFilters.goat_chromosome_max" @input="syncChromosomeFilter" />
+              </div>
+            </th>
+            <th class="filter-cell"></th>
+            <th class="filter-cell"></th>
+            <th class="filter-cell">
+              <input type="text" class="column-filter-input" placeholder="Filter..." v-model="columnFilters.assembly_level" />
+            </th>
+            <th class="filter-cell">
+              <select class="column-filter-select" v-model="columnFilters.bioproject">
+                <option value="">All</option>
+                <option value="has">Has BioProject</option>
+                <option value="none">None</option>
+              </select>
             </th>
           </tr>
         </thead>
@@ -1301,6 +1392,11 @@ const getGenomeSummary = (scientificName) => {
   color: var(--color-text-muted, #666);
   font-size: 0.8rem;
   flex-shrink: 0;
+}
+
+.filter-select-narrow {
+  padding-right: 18px !important;
+  font-size: 0.7rem !important;
 }
 
 .filter-indicator {
