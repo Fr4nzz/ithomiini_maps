@@ -458,13 +458,28 @@ const getGenomeSummary = (scientificName) => {
   if (!goat) return null
   const hasDirect = store.hasDirectGoatData(scientificName)
   const parts = []
-  if (goat.genome_size) parts.push(store.formatGenomeSize(goat.genome_size.value))
-  if (goat.chromosome_number) parts.push(`2n=${goat.chromosome_number.value}`)
+  if (goat.genome_size) {
+    let gs = store.formatGenomeSize(goat.genome_size.value)
+    if (goat.genome_size.source !== 'direct' && goat.genome_size.aggregation_rank)
+      gs += ` (est. from ${goat.genome_size.aggregation_rank})`
+    parts.push(gs)
+  }
+  if (goat.chromosome_number) {
+    const cn = goat.chromosome_number
+    let chr = `2n=${cn.value}`
+    if (cn.min != null && cn.max != null) chr = `2n=${cn.min}–${cn.max}`
+    if (cn.source !== 'direct' && cn.aggregation_rank) chr += ` (est. from ${cn.aggregation_rank})`
+    if (cn.source === 'direct' && cn.count) chr += ` (${cn.count} source${cn.count > 1 ? 's' : ''})`
+    parts.push(chr)
+  }
+  if (goat.busco_completeness?.source === 'direct')
+    parts.push(`BUSCO ${goat.busco_completeness.value}%`)
+  if (goat.assembly_level?.source === 'direct')
+    parts.push(goat.assembly_level.value)
   return {
     hasDirect,
     label: hasDirect ? 'Direct' : 'Est.',
-    detail: parts.join(', '),
-    rank: goat.genome_size?.aggregation_rank || goat.chromosome_number?.aggregation_rank,
+    detail: parts.join(' · '),
   }
 }
 </script>
@@ -729,8 +744,13 @@ const getGenomeSummary = (scientificName) => {
             </td>
             <td v-if="visibleColumns.goat_chromosome" class="cell-chr">
               <template v-if="store.getChromosomeNumber(row.scientific_name)">
-                <span class="chr-value">
-                  {{ store.getChromosomeNumber(row.scientific_name).value }}
+                <span class="chr-value" :title="store.getChromosomeNumber(row.scientific_name).source === 'ancestor' ? `Estimated from ${store.getChromosomeNumber(row.scientific_name).aggregation_rank || 'relatives'}` : 'Direct measurement'">
+                  <template v-if="store.getChromosomeNumber(row.scientific_name).min != null">
+                    {{ store.getChromosomeNumber(row.scientific_name).min }}–{{ store.getChromosomeNumber(row.scientific_name).max }}
+                  </template>
+                  <template v-else>
+                    {{ store.getChromosomeNumber(row.scientific_name).value }}
+                  </template>
                   <span v-if="store.getChromosomeNumber(row.scientific_name).source === 'ancestor'" class="chr-est">(est.)</span>
                 </span>
               </template>
@@ -740,7 +760,7 @@ const getGenomeSummary = (scientificName) => {
               <template v-if="getGenomeSummary(row.scientific_name)">
                 <a v-if="getGoatUrl(row.scientific_name)" :href="getGoatUrl(row.scientific_name)" target="_blank" rel="noopener noreferrer"
                   class="genome-link" :class="{ direct: getGenomeSummary(row.scientific_name).hasDirect }"
-                  :title="getGenomeSummary(row.scientific_name).detail + (getGenomeSummary(row.scientific_name).rank ? ' (est. from ' + getGenomeSummary(row.scientific_name).rank + ')' : '')">
+                  :title="getGenomeSummary(row.scientific_name).detail">
                   {{ getGenomeSummary(row.scientific_name).label }}
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 </a>

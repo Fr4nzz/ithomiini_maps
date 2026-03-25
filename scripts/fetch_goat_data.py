@@ -150,18 +150,9 @@ def extract_field(fields_dict, field_name):
     """
     Extract a field from GoaT's nested response structure.
 
-    GoaT fields have this structure:
-    {
-        "value": 283620000,
-        "aggregation_source": ["ancestor"],  # ARRAY, not string!
-        "aggregation_method": "median",
-        "aggregation_rank": "genus",
-        "min": 283620000,
-        "max": 283620000,
-        "count": 1
-    }
-
-    Returns a simplified dict or None if field doesn't exist.
+    CRITICAL: aggregation_source can be either a STRING ("direct") or an
+    ARRAY (["ancestor"]). The API is inconsistent — direct measurements
+    use a bare string, while phylogenetic estimates use an array.
     """
     if not fields_dict or field_name not in fields_dict:
         return None
@@ -174,22 +165,30 @@ def extract_field(fields_dict, field_name):
     if value is None:
         return None
 
-    # aggregation_source is an ARRAY - check first element
     agg_source = field.get("aggregation_source", [])
-    source = agg_source[0] if isinstance(agg_source, list) and agg_source else "unknown"
+    if isinstance(agg_source, str):
+        source = agg_source
+    elif isinstance(agg_source, list) and agg_source:
+        source = agg_source[0]
+    else:
+        source = "unknown"
 
     result = {
         "value": value,
         "source": source,
     }
 
-    # Add count if available
     count = field.get("count")
     if count is not None:
         result["count"] = count
 
-    # For estimated values, include the rank it was estimated from
-    if source == "ancestor":
+    field_min = field.get("min")
+    field_max = field.get("max")
+    if field_min is not None and field_max is not None and field_min != field_max:
+        result["min"] = field_min
+        result["max"] = field_max
+
+    if source == "ancestor" or source == "descendant":
         agg_rank = field.get("aggregation_rank")
         if agg_rank:
             result["aggregation_rank"] = agg_rank
