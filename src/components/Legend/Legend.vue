@@ -266,7 +266,7 @@ watch(isExportMode, (enabled, wasEnabled) => {
 // VISUAL STATE
 // ═══════════════════════════════════════════════════════════════════════════
 
-const dotSize = computed(() => Math.max(6, Math.min(16, dataStore.mapStyle.pointSize)))
+const dotSize = computed(() => Math.max(10, Math.min(20, dataStore.mapStyle.pointSize * 1.4)))
 const fontSize = computed(() => Math.round(14 * legendStore.textScale))
 
 const positionStyle = computed(() => {
