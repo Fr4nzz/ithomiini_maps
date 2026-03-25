@@ -323,6 +323,15 @@ const uniqueValues = (key) => {
   return [...vals].sort()
 }
 
+const uniqueAssemblyLevels = computed(() => {
+  const vals = new Set()
+  for (const sp of Object.values(store.goatSpecies)) {
+    const al = sp.assembly_level
+    if (al?.value && al.source === 'direct') vals.add(al.value)
+  }
+  return [...vals].sort()
+})
+
 const syncChromosomeFilter = () => {
   const min = columnFilters.value.goat_chromosome_min
   const max = columnFilters.value.goat_chromosome_max
@@ -406,10 +415,13 @@ const filteredSpeciesData = computed(() => {
         return String(sp.chromosome_number).includes(val)
       }
       if (col === 'genome_size') {
+        if (val === 'has') return sp.genome_size != null
+        if (val === 'none') return sp.genome_size == null
         return sp.genome_size != null
       }
       if (col === 'assembly_level') {
-        return (sp.assembly_level || '').toLowerCase().includes(val)
+        if (!val) return true
+        return (sp.assembly_level || '').toLowerCase() === val.toLowerCase()
       }
       if (col === 'bioproject') {
         if (val === 'has') return !!sp.bioproject
@@ -495,6 +507,41 @@ const handleImageError = (e, originalUrl) => {
   }
 }
 
+const genusDirectRangeCache = {}
+const getGenusDirectRange = (scientificName) => {
+  const genus = scientificName.split(' ')[0]
+  if (genusDirectRangeCache[genus] !== undefined) return genusDirectRangeCache[genus]
+
+  const allSpecies = store.goatSpecies
+  let min = Infinity, max = -Infinity, count = 0
+  for (const [name, data] of Object.entries(allSpecies)) {
+    if (!name.startsWith(genus + ' ')) continue
+    const cn = data.chromosome_number
+    if (cn?.source === 'direct' && cn.value != null) {
+      if (cn.value < min) min = cn.value
+      if (cn.value > max) max = cn.value
+      count++
+    }
+  }
+
+  genusDirectRangeCache[genus] = count >= 2 && min !== max ? { min, max, count } : null
+  return genusDirectRangeCache[genus]
+}
+
+const getChrTooltip = (scientificName) => {
+  const chr = store.getChromosomeNumber(scientificName)
+  if (!chr) return ''
+  if (chr.source === 'direct') {
+    return chr.count > 1 ? `Direct measurement (${chr.count} sources)` : 'Direct measurement'
+  }
+  const genus = scientificName.split(' ')[0]
+  const range = getGenusDirectRange(scientificName)
+  if (range) {
+    return `Estimated (${chr.aggregation_rank || 'genus'}). Genus ${genus}: 2n=${range.min}–${range.max} from ${range.count} species with direct counts`
+  }
+  return `Estimated from ${chr.aggregation_rank || 'relatives'}`
+}
+
 const getGoatUrl = (scientificName) => {
   const goat = store.getGoatForSpecies(scientificName)
   if (!goat?.taxon_id) return null
@@ -515,9 +562,13 @@ const getGenomeSummary = (scientificName) => {
   if (goat.chromosome_number) {
     const cn = goat.chromosome_number
     let chr = `2n=${cn.value}`
-    if (cn.min != null && cn.max != null) chr = `2n=${cn.min}–${cn.max}`
-    if (cn.source !== 'direct' && cn.aggregation_rank) chr += ` (est. from ${cn.aggregation_rank})`
-    if (cn.source === 'direct' && cn.count) chr += ` (${cn.count} source${cn.count > 1 ? 's' : ''})`
+    if (cn.source === 'direct') {
+      if (cn.count) chr += ` (${cn.count} source${cn.count > 1 ? 's' : ''})`
+    } else {
+      const range = getGenusDirectRange(scientificName)
+      if (range) chr += ` (est., genus: ${range.min}–${range.max})`
+      else chr += ` (est. from ${cn.aggregation_rank || 'relatives'})`
+    }
     parts.push(chr)
   }
   if (goat.busco_completeness?.source === 'direct')
@@ -796,14 +847,9 @@ const getGenomeSummary = (scientificName) => {
             </td>
             <td v-if="visibleColumns.goat_chromosome" class="cell-chr">
               <template v-if="store.getChromosomeNumber(row.scientific_name)">
-                <span class="chr-value" :title="store.getChromosomeNumber(row.scientific_name).source === 'ancestor' ? `Estimated from ${store.getChromosomeNumber(row.scientific_name).aggregation_rank || 'relatives'}` : 'Direct measurement'">
-                  <template v-if="store.getChromosomeNumber(row.scientific_name).min != null">
-                    {{ store.getChromosomeNumber(row.scientific_name).min }}–{{ store.getChromosomeNumber(row.scientific_name).max }}
-                  </template>
-                  <template v-else>
-                    {{ store.getChromosomeNumber(row.scientific_name).value }}
-                  </template>
-                  <span v-if="store.getChromosomeNumber(row.scientific_name).source === 'ancestor'" class="chr-est">(est.)</span>
+                <span class="chr-value" :title="getChrTooltip(row.scientific_name)">
+                  {{ store.getChromosomeNumber(row.scientific_name).value }}
+                  <span v-if="store.getChromosomeNumber(row.scientific_name).source !== 'direct'" class="chr-est">(est.)</span>
                 </span>
               </template>
               <span v-else class="text-muted">—</span>
@@ -935,9 +981,18 @@ const getGenomeSummary = (scientificName) => {
               </div>
             </th>
             <th class="filter-cell"></th>
-            <th class="filter-cell"></th>
             <th class="filter-cell">
-              <input type="text" class="column-filter-input" placeholder="Filter..." v-model="columnFilters.assembly_level" />
+              <select class="column-filter-select" v-model="columnFilters.genome_size">
+                <option value="">All</option>
+                <option value="has">Has data</option>
+                <option value="none">No data</option>
+              </select>
+            </th>
+            <th class="filter-cell">
+              <select class="column-filter-select" v-model="columnFilters.assembly_level">
+                <option value="">All</option>
+                <option v-for="val in uniqueAssemblyLevels" :key="val" :value="val">{{ val }}</option>
+              </select>
             </th>
             <th class="filter-cell">
               <select class="column-filter-select" v-model="columnFilters.bioproject">
