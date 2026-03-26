@@ -1,40 +1,17 @@
-**From [butterfly p]{.insertion author="Joana Meier"
-date="2026-03-01T17:04:47Z"}[P]{.deletion author="Joana Meier"
-date="2026-03-01T17:04:47Z"}hotos to [m]{.insertion author="Joana Meier"
-date="2026-03-01T17:04:58Z"}[M]{.deletion author="Joana Meier"
-date="2026-03-01T17:04:58Z"}aps: Open-source tools for AI photo
-renaming,** [**an**]{.insertion author="Joana Meier"
-date="2026-03-01T17:21:40Z"} **image gallery, and interactive maps of
-Ithomiini butterflies**
+**From butterfly photos to maps: Open-source tools for AI photo
+renaming, an image gallery, and interactive maps of Ithomiini
+butterflies**
 
-**Franz Chandi**[¹]{.deletion author="Joana Meier"
-date="2026-03-01T17:04:09Z"}[^1^]{.insertion author="Joana Meier"
-date="2026-03-01T17:04:09Z"}, **Patricio A. Salazar
-Carrión**[²,³]{.deletion author="Joana Meier"
-date="2026-03-01T17:03:50Z"}[^2^]{.insertion author="Joana Meier"
-date="2026-03-01T17:03:50Z"}, **Joana I. Meier[^2,3^]{.insertion
-author="Joana Meier" date="2026-03-01T17:02:07Z"}**[³]{.deletion
-author="Joana Meier" date="2026-03-01T17:02:07Z"}
+**Franz Chandi**^1^, **Patricio A. Salazar Carrión**^2^, **Joana I.
+Meier^2,3^**
 
-[1]{.insertion author="Joana Meier"
-date="2026-03-01T17:02:01Z"}[¹]{.deletion author="Joana Meier"
-date="2026-03-01T17:02:01Z"} Universidad San Francisco de Quito, Quito,
-Ecuador
+1 Universidad San Francisco de Quito, Quito, Ecuador
 
-[2 Tree of Life Programme, Wellcome Sanger Institute, Hinxton,
-Cambridge, United Kingdom]{.insertion author="Joana Meier"
-date="2026-03-01T17:01:29Z"}[]{.paragraph-insertion author="Joana Meier"
-date="2026-03-01T17:01:29Z"}
+2 Tree of Life Programme, Wellcome Sanger Institute, Hinxton, Cambridge,
+United Kingdom
 
-[3]{.insertion author="Joana Meier"
-date="2026-03-01T17:01:29Z"}[²]{.deletion author="Joana Meier"
-date="2026-03-01T17:01:29Z"} Department of Zoology, University of
-Cambridge, Cambridge, United Kingdom
-
-[³ Tree of Life Programme, Wellcome Sanger Institute, Hinxton,
-Cambridge, United Kingdom]{.deletion author="Joana Meier"
-date="2026-03-01T17:01:29Z"}[]{.paragraph-deletion author="Joana Meier"
-date="2026-03-01T17:01:29Z"}
+3 Department of Zoology, University of Cambridge, Cambridge, United
+Kingdom
 
 # **Abstract**
 
@@ -48,20 +25,17 @@ connected open-source web applications that together cover the full
 workflow from specimen photography to interactive distribution mapping
 for Ithomiini butterflies. The AI Photo Processor uses Google\'s Gemini
 AI to read handwritten specimen identifiers from photographs and rename
-image files in batch[es]{.insertion author="Joana Meier"
-date="2026-03-01T17:22:13Z"}. The Wings Gallery provides a centralized,
+image files in batches. The Wings Gallery provides a centralized,
 filterable browser for high-resolution wing photographs stored on Google
 Drive. Ithomiini Maps integrates occurrence records from published
 datasets, institutional sequencing databases, and the Global
 Biodiversity Information Facility (GBIF) into a single filterable map
-interface. All three applications run entirely in [any
-internet]{.insertion author="Joana Meier" date="2026-03-01T17:22:42Z"}
-[the]{.deletion author="Joana Meier" date="2026-03-01T17:22:42Z"}
-browser and are hosted on GitHub Pages at no cost. We describe the
-architecture, data pipelines, and taxonomic curation procedures,
-illustrate how researchers can use these tools to explore questions in
-mimicry, biogeography, and genomic sampling, and discuss how this
-approach can be adapted to other taxa.
+interface. All three applications run entirely in any internet browser
+and are hosted on GitHub Pages at no cost. We describe the architecture,
+data pipelines, and taxonomic curation procedures, illustrate how
+researchers can use these tools to explore questions in mimicry,
+biogeography, and genomic sampling, and discuss how this approach can be
+adapted to other taxa.
 
 **Keywords:** biodiversity informatics, Nymphalidae, interactive maps,
 specimen digitization, Lepidoptera, open-source, mimicry rings, GBIF,
@@ -69,68 +43,77 @@ distribution mapping
 
 # **1. Introduction**
 
-[Fieldwork collections of thousands of specimens are highly valuable
-resources for diverse research projects, but they are also a challenge
-to manage (MORE DETAILS HERE).]{.insertion author="Joana Meier"
-date="2026-03-01T17:27:11Z"}[]{.paragraph-insertion author="Joana Meier"
-date="2026-03-01T17:27:11Z"}
-
-[Here, we have developed tools to rename photos, visualise them in
-various ways to facilitate species identification and comparison on
-phenotypes across sexes and species, and visualise them on maps. We have
-applied them to a large-scale collection of]{.insertion
-author="Joana Meier" date="2026-03-01T17:27:11Z"} [I would not make the
-manuscript about Ithomiini butterflies as we hope these tools will also
-be useful for researchers working on other taxonomic groups with
-large-scale datasets of photos with metadata.]{.comment-start id="1"
-author="Joana Meier" date="2026-03-01T17:27:05Z"}Ithomiini
-[]{.comment-end id="1"}butterflies (Nymphalidae: Danainae)[. These
-butterflies]{.insertion author="Joana Meier"
-date="2026-03-01T17:30:42Z"} are one of the most species-rich and
-ecologically important butterfly tribes in the Neotropics, with over 390
-described species found [mainly]{.deletion author="Joana Meier"
-date="2026-03-01T17:23:17Z"} across Central and South America (Willmott
-& Freitas, 2006; Chazot et al., 2019). Their remarkable diversity of
-wing color patterns, shaped by Müllerian mimicry complexes involving
-dozens of co-occurring species, has established them as a model system
-for studying speciation, adaptation, and ecological interactions (Elias
-et al., 2008; Jiggins, 2017; Dore et al., 2025). The recent publication
-of a large dataset of nearly 29,000 georeferenced occurrence records
-with mimicry ring classifications (Dore et al., 2025), together with
-ongoing [collection efforts and]{.insertion author="Joana Meier"
-date="2026-03-01T17:24:31Z"} genomic sequencing [efforts]{.deletion
-author="Joana Meier" date="2026-03-01T17:24:41Z"} at the Wellcome Sanger
-Institute, has created a unique opportunity to study Ithomiini
-biogeography at a broad scale.
-
-However, managing, visualizing, and sharing these
-[large-scale]{.insertion author="Joana Meier"
-date="2026-03-01T17:25:28Z"} data[sets]{.insertion author="Joana Meier"
-date="2026-03-01T17:25:32Z"} remains a practical challenge. Researchers
-working with [thousands of]{.insertion author="Joana Meier"
-date="2026-03-01T17:25:54Z"} [Ithomiini]{.deletion author="Joana Meier"
-date="2026-03-01T17:25:54Z"} specimens typically face a fragmented
-workflow: thousands of preserved wings may be physically stored waiting
-to be photographed, and the steps required to rename each photograph
-with its specimen identifier, upload images to the cloud, and make them
-available for colleagues are time-consuming and lack a straightforward
-pipeline. Meanwhile, geographic data from multiple sources (published
-records, institutional databases, GBIF, iNaturalist) must be manually
-combined, cleaned, and mapped using specialized GIS software. These
-disconnected steps introduce delays and potential errors that slow down
+Fieldwork collections of thousands of specimens are highly valuable
+resources for diverse research projects, but managing the data they
+generate remains a practical challenge. Photographing preserved
+specimens, linking each image to its unique identifier, sharing photos
+with collaborators, and mapping where specimens were collected all
+involve separate tools that rarely connect to each other. As collections
+grow, these disconnected steps become bottlenecks that slow down
 collaborative research.
 
-Early attempts to address the image sharing problem using R-Shiny
-applications hosted on free cloud instance[citations?]{.comment-start
-id="2" author="Joana Meier" date="2026-03-01T17:31:20Z"}s
-[]{.comment-end id="2"}encountered practical limitations: IP-based URLs
-were not user-friendly, and free DNS services used to provide custom
-domains were blocked by internet service providers in some countries,
-rendering applications unreachable for collaborators. These experiences
-led us to GitHub Pages, which provides free, reliable static hosting
-without such dependencies. This paper presents a simplified pipeline
-that covers the full process from specimen photography to serving images
-and occurrence data for researchers through unified web applications.
+Here, we have developed tools to rename photos, visualise them in ways
+to facilitate species identification and phenotype comparison across
+sexes and species, and visualise them on maps. We have applied them to a
+large-scale collection of Ithomiini butterflies (Nymphalidae: Danainae),
+but the tools are designed to work with any taxonomic group that
+maintains photo-based specimen records. These butterflies are one of the
+most species-rich and ecologically important butterfly tribes in the
+Neotropics, with over 390 described species found across Central and
+South America (Willmott & Freitas, 2006; Chazot et al., 2019). Their
+remarkable diversity of wing color patterns, shaped by Müllerian mimicry
+complexes involving dozens of co-occurring species, has established them
+as a model system for studying speciation, adaptation, and ecological
+interactions (Elias et al., 2008; Jiggins, 2017; Dore et al., 2023). The
+recent publication of a large dataset of nearly 29,000 georeferenced
+occurrence records with mimicry ring classifications (Dore et al.,
+2023), together with ongoing collection efforts and genomic sequencing
+at the Wellcome Sanger Institute, has created a unique opportunity to
+study Ithomiini biogeography at a broad scale.
+
+However, managing, visualizing, and sharing these large-scale datasets
+remains a practical challenge. Researchers working with thousands of
+specimens typically face a fragmented workflow: thousands of preserved
+wings may be physically stored waiting to be photographed, and the steps
+required to rename each photograph with its specimen identifier, upload
+images to the cloud, and make them available for colleagues are
+time-consuming and lack a straightforward pipeline. Meanwhile,
+geographic data from multiple sources (published records, institutional
+databases, GBIF, iNaturalist) must be manually combined, cleaned, and
+mapped using specialized GIS software. These disconnected steps
+introduce delays and potential errors that slow down collaborative
+research.
+
+Our early attempts to address the image sharing problem used R-Shiny
+applications hosted first on Google Cloud Run and later on Amazon EC2
+free-tier instance[citations?]{.comment-start id="0"
+author="Joana Meier" date="2026-03-01T17:31:20Z"}[I was referring to the
+old versions of the Wings Gallery that was running on R and needed to be
+hosted on a server, but I added citation to the Heliconius
+maps]{.comment-start id="1" author="Franz Chandi"
+date="2026-03-18T23:49:50Z"}s.[[]{.comment-end id="1"}]{.comment-end
+id="0"} We initially chose a server-based approach because static
+websites appeared unable to support dynamic filtering: existing static
+alternatives, such as the Heliconius maps (Rosser & Mallet, 2024),
+pre-rendered individual HTML pages for each species using R, while their
+interactive filtering required a separate Shiny server component. Free
+hosting services for Shiny apps exist (e.g., shinyapps.io, which the
+Heliconius maps platform uses for its data download component), but
+their free tier limits the number of hours the application can run each
+month, which may be acceptable for occasional data downloads but not for
+a tool intended to be always available for interactive exploration.
+Self-hosting on cloud platforms avoids this limit, but requires setting
+up and maintaining several layers of server software (the application
+itself, a web server to handle incoming traffic, and network security
+rules), creating infrastructure that is difficult for researchers
+without system administration experience to maintain or replicate.
+Additionally, the free DNS service we used for a custom domain was
+blocked on certain networks, making the application unreachable for some
+collaborators. These difficulties led us to explore modern JavaScript
+frameworks such as Vue.js, which can provide the same interactive
+filtering capabilities as a server-based tool with faster performance
+and no server maintenance, and to rebuild the toolkit as static sites
+hosted on GitHub Pages.
 
 Interactive web-based mapping tools have emerged as a solution for
 biodiversity visualization. Rosser & Mallet (2024) developed open-source
@@ -161,13 +144,11 @@ Ithomiini butterflies:
 > filtering, and sharing high-resolution wing photographs stored on
 > Google Cloud services, with one-click database updates.
 >
-> 3\. [**Specimen**]{.insertion author="Joana Meier"
-> date="2026-03-01T17:32:12Z"} [**Ithomiini**]{.deletion
-> author="Joana Meier" date="2026-03-01T17:32:12Z"} **Maps** --- An
-> interactive mapping platform that aggregates occurrence records from
-> published literature, institutional sequencing databases, and GBIF
-> into a single interface with taxonomic, phenotypic, and sequencing
-> status filters, along with map and data export features.
+> 3\. **Specimen Maps** --- An interactive mapping platform that
+> aggregates occurrence records from published literature, institutional
+> sequencing databases, and GBIF into a single interface with taxonomic,
+> phenotypic, and sequencing status filters, along with map and data
+> export features.
 
 All components use Vue.js for the web interface and Python for data
 processing, hosted as static sites on GitHub Pages. The applications run
@@ -177,9 +158,9 @@ photographs on Google Drive. Data processing pipelines run through
 GitHub Actions, so team members can refresh the databases with a single
 click. A detailed protocol for the complete photography-to-gallery
 workflow is available separately ([will this be a protocols.io paper?
-Why not make it part of this paper?]{.comment-start id="3"
+Why not make it part of this paper?]{.comment-start id="2"
 author="Joana Meier" date="2026-03-01T17:33:11Z"}Chandi[]{.comment-end
-id="3"} [Franz Response for Claude.ai to implement (form now on FR): I agree, check Photos Processing Protocol.md to see how we can include it here] et al., in prep.).
+id="2"} et al., in prep.).
 
 # **2. Methods and Implementation**
 
@@ -188,40 +169,36 @@ id="3"} [Franz Response for Claude.ai to implement (form now on FR): I agree, ch
 The toolkit separates data processing from data display (Figure 1).
 Processing runs in the cloud through GitHub Actions, and the resulting
 files are served as a static website via GitHub Pages. This separation
-keeps the website lightweight, lets team members refresh data [with a
-single click]{.insertion author="Joana Meier"
-date="2026-03-01T17:33:54Z"} by re-running processing scripts [with a
-single click]{.deletion author="Joana Meier"
-date="2026-03-01T17:33:51Z"}, and eliminates hosting costs beyond Google
-Drive storage for specimen photographs.
+keeps the website lightweight, lets team members refresh data with a
+single click by re-running processing scripts, and eliminates hosting
+costs beyond Google Drive storage for specimen photographs.
 
 All three applications share a common technology stack: Vue.js 3 for the
 web interface, Python with Pandas for data processing, GitHub Pages for
 hosting, and GitHub Actions for one-click data update[all of these
-require citations]{.comment-start id="4" author="Joana Meier"
-date="2026-03-01T17:34:17Z"}s.[]{.comment-end id="4"}
+require citations]{.comment-start id="3" author="Joana Meier"
+date="2026-03-01T17:34:17Z"}s.[]{.comment-end id="3"}
 
 ## **2.2 AI Photo Processor**
 
 Large-scale specimen photography generates thousands of image files with
-generic camera-assigned filenames. [For]{.insertion author="Joana Meier"
-date="2026-03-01T17:34:49Z"} [Each]{.deletion author="Joana Meier"
-date="2026-03-01T17:34:49Z"} [butterflies,]{.insertion
-author="Joana Meier" date="2026-03-01T17:34:49Z"} specimen\'s wings are
-typically photographed on both sides (dorsal and ventral), with a
+generic camera-assigned filenames. For butterflies, specimen\'s wings
+are typically photographed on both sides (dorsal and ventral), with a
 handwritten identifier label placed alongside them. Manually reading
 these identifiers and renaming each file is slow and error-prone,
 especially when processing hundreds or thousands of images.
 
 The AI Photo Processor ([I tried to download the Windows version and it
 said \"not found\". There seems to be something wrong with the
-link.]{.comment-start id="5" author="Joana Meier"
-date="2026-03-01T17:39:02Z"}https://github.com/Fr4nzz/rename_photos_AI[]{.comment-end
-id="5"}) [FR: I already fixed it so ignote this] is a desktop application that automates this task using
-Google\'s Gemini AI, a generative model that can interpret images and
-read text within them. The application is available both as Python
-source code and as a standalone Windows executable requiring no
-installation.
+link.]{.comment-start id="4" author="Joana Meier"
+date="2026-03-01T17:39:02Z"}[You are right, I fixed, but I will release
+a web version soon]{.comment-start id="5" author="Franz Chandi"
+date="2026-03-18T23:51:25Z"}https://github.com/Fr4nzz/rename_photos_AI[[]{.comment-end
+id="5"}]{.comment-end id="4"}) is a desktop application that automates
+this task using Google\'s Gemini AI, a generative model that can
+interpret images and read text within them. The application is available
+both as Python source code and as a standalone Windows executable
+requiring no installation.
 
 The application guides the researcher through a straightforward
 workflow. First, photographs are corrected for orientation and cropped
@@ -237,13 +214,10 @@ AI should extract. A review interface then displays each photograph
 alongside its AI-read identifier, flagging potential problems such as
 unpaired images, duplicates, and empty results. Current AI models can
 even interpret handwritten corrections where researchers have crossed
-out mistakes, though errors still occur, and [this]{.deletion
-author="Joana Meier" date="2026-03-01T17:39:59Z"} human validation
-[step, while still much faster than manual labeling,]{.deletion
-author="Joana Meier" date="2026-03-01T17:39:54Z"} ensures accuracy
-before the final renaming. Accepted identifiers are used to rename files
-with dorsal and ventral suffixes (e.g., CAM012345d.JPG, CAM012345v.JPG),
-and all renames are logged and reversible.
+out mistakes, though errors still occur, and human validation ensures
+accuracy before the final renaming. Accepted identifiers are used to
+rename files with dorsal and ventral suffixes (e.g., CAM012345d.JPG,
+CAM012345v.JPG), and all renames are logged and reversible.
 
 ## **2.3 Wings Gallery**
 
@@ -273,44 +247,77 @@ Subspecies) and sex. The Insectary tab displays specimens from the
 insectary collection, filtered by Insectary ID and biological metadata.
 The CRISPR tab shows CRISPR-injected specimens, allowing filtering by
 mutant phenotype. The Search tab enables fast lookup by specimen
-identifier ([here called]{.insertion author="Joana Meier"
-date="2026-03-01T17:40:52Z"} CAMID). The Update DB tab allows any team
-member to refresh the database with a single click, which triggers a
-GitHub Actions workflow that re-indexes all images and redeploys the
-website. No technical expertise is needed to keep the gallery
-[up-to-date]{.insertion author="Joana Meier"
-date="2026-03-01T17:41:06Z"}[current]{.deletion author="Joana Meier"
-date="2026-03-01T17:41:06Z"}.
+identifier (here called CAMID). The Update DB tab allows any team member
+to refresh the database with a single click, which triggers a GitHub
+Actions workflow that re-indexes all images and redeploys the website.
+No technical expertise is needed to keep the gallery up-to-date.
 
 The gallery supports simultaneous zooming of all displayed images (via
 Shift+scroll), which is particularly useful when researchers need to
-inspect wing details across many individuals at once, for
-example[,]{.insertion author="Joana Meier" date="2026-03-01T17:41:22Z"}
-when verifying that specimens of a small species were taxonomically
-correctly identified. Individual images can also be zoomed independently
-with Ctrl+scroll. As the researcher zooms in or out, the image grid
-adapts the number of columns to make the best use of the available
-screen space.
+inspect wing details across many individuals at once, for example, when
+verifying that specimens of a small species were taxonomically correctly
+identified. Individual images can also be zoomed independently with
+Ctrl+scroll. As the researcher zooms in or out, the image grid adapts
+the number of columns to make the best use of the available screen
+space.
 
-## **2.4** [**Specimen**]{.insertion author="Joana Meier" date="2026-03-01T17:41:45Z"} [**Ithomiini**]{.deletion author="Joana Meier" date="2026-03-01T17:41:45Z"} **Maps**
+## **2.4 Photography to Gallery Workflow**
 
-[start broadly again. Then explain how the tool was used for Ithomiini
-butterflies.]{.comment-start id="8" author="Joana Meier"
-date="2026-03-01T17:43:19Z"}A []{.comment-end id="8"}central question in
-Ithomiini research is how mimicry ring distributions relate to
-geography, climate, and species ranges. Answering this question requires
-mapping thousands of occurrence records from sources that use different
-taxonomic names, different data formats, and different quality
-standards. Researchers also need to identify which species have been
-sequenced, where tissue samples are available, and how these genomic
-resources overlap with known distributions. Existing tools either
-require GIS expertise (QGIS, ArcGIS) or substantial programming effort
-in R to merge different datasets, curate taxonomic inconsistencies, and
-produce publication-ready maps, a process that can take considerable
-time even for experienced analysts. None of these general-purpose tools
-include mimicry ring classifications such as those published by Dore et
-al. (2023). Moreover, the platform provides access to specimen data that
-are still being prepared for publication and may take years before they
+The three applications described above are connected by a step-by-step
+workflow that takes specimens from the photography stage through to
+online availability. We provide a detailed protocol as supplementary
+material, but summarize the main steps here.
+
+Wings are photographed with the camera mounted on an articulated arm,
+using manual focus and a remote shutter to avoid vibration. Each
+photograph includes the dorsal or ventral side of the wings, a color
+reference palette, and an envelope with the specimen\'s handwritten
+identifier (CAMID). Photos are organized into batch folders by date,
+then processed through the AI Photo Processor: files are rotated to a
+consistent orientation, the label region is cropped for the AI to read,
+and Gemini processes up to 900 images per day under the free API tier.
+After the researcher reviews and corrects the AI readings, files are
+renamed with their CAMID and a dorsal/ventral suffix.
+
+Renamed files are uploaded to a shared Google Drive account. A custom
+Google Apps Script indexes all files, recording metadata such as
+filename, direct URL, and capture date into a Google Sheets spreadsheet.
+The Wings Gallery website reads this spreadsheet to display the
+collection. Any team member can refresh the gallery by clicking an
+\"Update database\" button, which triggers a GitHub Actions workflow
+that re-indexes all images and redeploys the site. The complete
+protocol, including camera setup details and step-by-step screenshots,
+is available as Supplementary Material S1.
+
+## **2.5 Specimen Maps**
+
+Mapping specimen distributions from multiple data sources is a common
+need in biodiversity research, but it comes with practical challenges:
+different databases use different taxonomic names, data formats, and
+quality standards, and researchers often need project-specific metadata
+(such as sequencing status or phenotypic classifications) that
+general-purpose platforms do not provide. Existing tools either require
+GIS expertise (QGIS, ArcGIS) or substantial programming effort in R to
+merge different datasets, curate taxonomic inconsistencies, and produce
+publication-ready maps. Specimen Maps addresses this by providing a
+web-based interface that integrates and cleans data from multiple
+sources automatically.
+
+For Ithomiini butterflies, a central question in Ithomiini research is
+how mimicry ring distributions relate to geography, climate, and species
+ranges. Answering this question requires mapping thousands of occurrence
+records from sources that use different taxonomic names, different data
+formats, and different quality standards. Researchers also need to
+identify which species have been sequenced, where tissue samples are
+available, and how these genomic resources overlap with known
+distributions. Existing tools either require GIS expertise (QGIS,
+ArcGIS) or substantial programming effort in R to merge different
+datasets, curate taxonomic inconsistencies, and produce
+publication-ready maps, a process that can take considerable time even
+for experienced analysts. None of these general-purpose tools include
+mimicry ring classifications such as those published by Dore et al.
+(2023). Moreover, the platform provides access to specimen data that are
+still being prepared for publication and may take years before they
 become available through aggregators like GBIF, allowing researchers to
 work with the most current information from ongoing projects.
 
@@ -354,15 +361,13 @@ museum collections, a major Neotropical entomological collection, 21,586
 records), and **GBIF (Other Institutions)** (records from all remaining
 collections and datasets, 27,819 records)[It would be great to include
 the data from Brown\'s thesis in collaboration with André
-Freitas.]{.comment-start id="9" author="Joana Meier"
-date="2026-03-01T17:44:37Z"}.[]{.comment-end id="9"} This roughly
+Freitas.]{.comment-start id="7" author="Joana Meier"
+date="2026-03-01T17:44:37Z"}.[]{.comment-end id="7"} This roughly
 balanced split allows researchers to toggle each sub-source
-independently, [enabling them to assess]{.insertion author="Joana Meier"
-date="2026-03-01T17:43:59Z"}[assessing]{.deletion author="Joana Meier"
-date="2026-03-01T17:43:59Z"} data origin and quality at a glance. Each
-data source loads on demand when the researcher enables it, reducing
-initial page load times and conserving bandwidth since the combined
-dataset exceeds 88 MB.
+independently, enabling them to assess data origin and quality at a
+glance. Each data source loads on demand when the researcher enables it,
+reducing initial page load times and conserving bandwidth since the
+combined dataset exceeds 88 MB.
 
 **Data merging.** The processing pipeline loads all five sources,
 standardizes field names, and applies consistent taxonomic formatting. A
@@ -454,50 +459,59 @@ The Ithomiini Maps platform integrates 104,382 occurrence records from
 five data sources (Table 1). The largest contributors are the Doré et
 al. (2023) published dataset (28,927 records), GBIF records from other
 institutions (27,819), and the UNAM museum collections (21,586 records).
-iNaturalist research-grade observations contribute 19,328 records, and
-the Sanger Institute collection adds 6,722 specimens with sequencing
-status data. The merged dataset spans 751 species, 1,365 subspecies, and
-178 genera across 33 countries.
+iNaturalist research-grade observations contribute 19,901 records, and
+the Sanger Institute collection adds 7,265 specimens with sequencing
+status data. The merged dataset spans 849 species, 1,380 subspecies, and
+184 genera across 33 countries.
 
 **Table 1.** Data sources integrated in Ithomiini Maps. GBIF data (DOI:
 [[https://doi.org/10.15468/dl.pbs3eu]{.underline}](https://doi.org/10.15468/dl.pbs3eu))
 were pre-filtered for valid coordinates, no geospatial issues, confirmed
 presence, and excluding fossils and living specimens.
 
-  ----------------------------------------------------------------------------------------------
-  **Data Source**      **Records**   **Species**   **Subspecies**   **Genera**   **Countries**
-  -------------------- ------------- ------------- ---------------- ------------ ---------------
-  Doré et al. (2023)   28,927        374           999              48           23
++--------------------+--------+--------+----------+--------+---------+
+| > **Data Source**  | >      | >      | > **Subs | > **Ge | >       |
+|                    |  **Rec |  **Spe | pecies** | nera** |  **Coun |
+|                    | ords** | cies** |          |        | tries** |
++====================+========+========+==========+========+=========+
+| > Doré et al.      | >      | > 387  | > 999    | > 48   | > 23    |
+| > (2023)           | 28,927 |        |          |        |         |
++--------------------+--------+--------+----------+--------+---------+
+| > Sanger Institute | >      | > 513  | > 597    | > 175  | > 8     |
+|                    |  7,265 |        |          |        |         |
++--------------------+--------+--------+----------+--------+---------+
+| > iNaturalist      | >      | > 252  | > 175    | > 41   | > 25    |
+|                    | 19,901 |        |          |        |         |
++--------------------+--------+--------+----------+--------+---------+
+| > GBIF (UNAM)      | >      | > 35   | > 25     | > 19   | > 1     |
+|                    | 21,586 |        |          |        |         |
++--------------------+--------+--------+----------+--------+---------+
+| > GBIF (Other      | >      | > 428  | > 469    | > 43   | > 32    |
+| > Institutions)    | 28,182 |        |          |        |         |
++--------------------+--------+--------+----------+--------+---------+
+| > **Total          | >      | > *    | > *      | > *    | >       |
+| > (merged)**       |  **105 | *849** | *1,380** | *184** |  **33** |
+|                    | ,861** |        |          |        |         |
++--------------------+--------+--------+----------+--------+---------+
 
-  Sanger Institute     6,722         459           579              169          6
-
-  iNaturalist          19,328        253           175              41           25
-
-  GBIF (UNAM)          21,586        34            25               19           1
-
-  GBIF (Other          27,819        415           461              43           32
-  Institutions)                                                                  
-
-  **Total (merged)**   **104,382**   **751**       **1,365**        **178**      **33**
-  ----------------------------------------------------------------------------------------------
-
-The five most represented countries are Mexico (29,052 records), Ecuador
-(18,280), Brazil (15,422), Colombia (9,587), and Peru (8,936), followed
-by Costa Rica (8,291), Panama (3,456), Bolivia (2,515), and Venezuela
-(1,894). The high number of Mexican records is driven primarily by the
+The five most represented countries are Mexico (29,092 records), Ecuador
+(18,361), Brazil (15,746), Colombia (10,099), and Peru (8,964), followed
+by Costa Rica (8,383), Panama (3,538), Bolivia (2,522), and Venezuela
+(1,937). The high number of Mexican records is driven primarily by the
 UNAM museum collections.
 
 ## **3.2 Sequencing Status**
 
-Of the 6,722 Sanger Institute specimens,[this cannot be true. I am not
+Of the 6,273 Sanger Institute specimens,[this cannot be true. I am not
 sure where this information comes from. We have sequenced way
-less.]{.comment-start id="10" author="Joana Meier"
-date="2026-03-01T17:46:18Z"} [FR: commit and merge main to this branch so you can get current numbers] 4,183 (62.2%) have been
-sequenced[]{.comment-end id="10"}, 1,119 (16.6%) have tissue available
-for future sequencing, and 1,420 (21.1%) are preserved specimens waiting
-for tissue extraction. This breakdown is visible on the map through
-dedicated toggle filters, allowing researchers to identify geographic
-and taxonomic gaps in the sequencing effort.
+less.]{.comment-start id="8" author="Joana Meier"
+date="2026-03-01T17:46:18Z"} 2,074 (33.1%) have been
+sequenced[]{.comment-end id="8"}, 2,659 (42.4%) have tissue submitted to
+the Tree of Life sequencing pipeline, 1,105 (17.6%) have tissue
+available for future sequencing, and 435 (6.9%) are preserved specimens
+waiting for tissue extraction. This breakdown is visible on the map
+through dedicated toggle filters, allowing researchers to identify
+geographic and taxonomic gaps in the sequencing effort.
 
 ## **3.3 Taxonomic Curation**
 
@@ -516,20 +530,23 @@ through edit-distance comparison. Only 2 records remained unresolved.
 **Table 2.** Taxonomic curation results. Curation basis indicates the
 method used to resolve each record\'s taxonomy.
 
-  -------------------------------------------------------------------------------
-  **Curation Basis**                  **Species**   **Subspecies**   **Records
-                                                                     Affected**
-  ----------------------------------- ------------- ---------------- ------------
-  Synonym resolution                  52            59               2,142
-
-  Typographical error detection       16            18               202
-
-  Subspecies synonym resolution       4             4                48
-
-  Literature-based correction         3             2                6
-
-  **Total unique corrected**          **69**        **82**           **2,398**
-  -------------------------------------------------------------------------------
++--------------------------------+-----------+-----------+-------------+
+| > **Curation Basis**           | > **      | > **Sub   | > **Records |
+|                                | Species** | species** | >           |
+|                                |           |           |  Affected** |
++================================+===========+===========+=============+
+| > Synonym resolution           | > 52      | > 59      | > 2,142     |
++--------------------------------+-----------+-----------+-------------+
+| > Typographical error          | > 16      | > 18      | > 202       |
+| > detection                    |           |           |             |
++--------------------------------+-----------+-----------+-------------+
+| > Subspecies synonym           | > 4       | > 4       | > 48        |
+| > resolution                   |           |           |             |
++--------------------------------+-----------+-----------+-------------+
+| > Literature-based correction  | > 3       | > 2       | > 6         |
++--------------------------------+-----------+-----------+-------------+
+| > **Total unique corrected**   | > **69**  | > **82**  | > **2,398** |
++--------------------------------+-----------+-----------+-------------+
 
 ## **3.4 Mimicry Ring Coverage**
 
@@ -563,8 +580,8 @@ planning a collecting expedition to Peru, for instance, can filter by
 already have material, then identify nearby areas with occurrence
 records but no sequenced specimens. This kind of targeted planning can
 reduce redundant collecting and prioritize underrepresented regions[very
-nice!]{.comment-start id="11" author="Joana Meier"
-date="2026-03-01T17:48:00Z"}.[]{.comment-end id="11"}
+nice!]{.comment-start id="9" author="Joana Meier"
+date="2026-03-01T17:48:00Z"}.[]{.comment-end id="9"}
 
 The data table preserves both original and corrected taxonomic names, so
 researchers can review automated curation decisions. If a name was
@@ -590,13 +607,34 @@ interpreted with caution, since temporal variation in records often
 reflects changes in sampling effort rather than true ecological change,
 but they can generate hypotheses about range expansions, local
 extinctions, or the effects of land-use change that merit further
-investigation[also great points!]{.comment-start id="12"
+investigation[also great points!]{.comment-start id="10"
 author="Joana Meier" date="2026-03-01T17:48:51Z"}.[]{.comment-end
-id="12"}
+id="10"}
 
 # **4. Discussion**
 
-## **4.1** [it would be good to compare all of your tools to existing ones, not just the maps.]{.comment-start id="13" author="Joana Meier" date="2026-03-01T17:53:34Z"}[e.g. your tool for renaming photos compared to this one: https://github.com/biodiversity-aq/rename-photos-ocr or https://zookeys.pensoft.net/article/140726/]{.comment-start id="14" author="Joana Meier" date="2026-03-01T17:54:28Z"}**Comparison** [[]{.comment-end id="14"}]{.comment-end id="13"}**with Existing Tools**
+## **4.1 Comparison with Existing Tools**
+
+Several tools exist for automated specimen label reading. The
+biodiversity-aq/rename-photos-ocr package uses PaddleOCR to extract
+printed text labels from specimen photographs, but does not handle
+handwritten text, which is common in field collections. Giessen et al.
+(2025) demonstrated a smartphone-based workflow using built-in OCR
+features that avoids storing label images entirely. Our AI Photo
+Processor differs from these approaches by using generative AI (Gemini)
+rather than traditional OCR, which allows it to interpret handwritten
+text and even read corrections where researchers have crossed out
+mistakes. It also processes images in batch (up to 900 per day on the
+free API tier) and includes a graphical review interface for validating
+readings before renaming.
+
+For specimen image management, existing solutions range from
+institutional database systems like Earthcape
+([[https://earthcape.com]{.underline}](https://earthcape.com)) to
+general-purpose cloud storage. The Wings Gallery takes a lighter
+approach: it uses Google Drive as the storage backend and a static
+website as the viewer, so any research group can set it up with minimal
+technical effort and little hosting costs
 
 The Heliconius interactive maps (Rosser & Mallet, 2024) demonstrated the
 value of open-source, GitHub-hosted mapping tools for Lepidoptera
@@ -633,21 +671,18 @@ needs of evolutionary biology research groups.
 ## **4.2 AI-Assisted Specimen Photograph Renaming**
 
 [this is all nice but feels a bit repetitive. It has all already been
-written above.]{.comment-start id="15" author="Joana Meier"
+written above.]{.comment-start id="11" author="Joana Meier"
 date="2026-03-01T17:51:12Z"}The AI Photo Processor applies generative AI
 to a practical bottleneck in biodiversity research: reading handwritten
 specimen labels from photographs. Traditional text recognition struggles
 with handwriting, but generative AI models can interpret identifiers
 within their visual context without needing to isolate the text first.
 These models can even read labels where researchers have crossed out
-[mistakes]{.insertion author="Joana Meier" date="2026-03-01T17:50:13Z"}
-and corrected [them]{.insertion author="Joana Meier"
-date="2026-03-01T17:50:20Z"}[mistakes]{.deletion author="Joana Meier"
-date="2026-03-01T17:50:20Z"}, a common occurrence in handwritten
-specimen records. Since errors still occur, the application includes a
-human validation step where researchers review and correct the AI\'s
-readings before files are renamed. This step is still substantially
-faster than reading and typing each identifier manually.
+mistakes and corrected them, a common occurrence in handwritten specimen
+records. Since errors still occur, the application includes a human
+validation step where researchers review and correct the AI\'s readings
+before files are renamed. This step is still substantially faster than
+reading and typing each identifier manually.
 
 The grid-based approach combines multiple images into a single composite
 before sending to the AI, making practical use of each API request.
@@ -655,7 +690,7 @@ Processing 45 images per request under the free tier means a single
 day\'s quota handles roughly 900 images at no cost. Because the prompt
 is customizable, this approach extends beyond entomological collections
 to any specimen-based research that uses handwritten
-labels.[]{.comment-end id="15"}
+labels.[]{.comment-end id="11"}
 
 ## **4.3 Sustainability and Reproducibility**
 
@@ -679,14 +714,11 @@ criteria. The R export package lets researchers reproduce and customize
 maps entirely within their local R environment.
 
 Beyond reproducibility, the open-source codebase is designed to be
-replicable. Research groups working on other [taxonomic
-groups]{.insertion author="Joana Meier"
-date="2026-03-01T17:55:47Z"}[butterfly tribes, other insect
-orders,]{.deletion author="Joana Meier" date="2026-03-01T17:55:47Z"} or
-even non-biological datasets (e.g., geological or archaeological
-specimen collections) could adapt the data processing pipelines and web
-interface to their own data by replacing the taxonomic reference files
-and data sources. The modular separation between data processing and
+replicable. Research groups working on other taxonomic groups or even
+non-biological datasets (e.g., geological or archaeological specimen
+collections) could adapt the data processing pipelines and web interface
+to their own data by replacing the taxonomic reference files and data
+sources. The modular separation between data processing and
 visualization means that adapting the platform to a new taxon primarily
 requires configuring the data pipeline, without rewriting the web
 application.
@@ -695,11 +727,10 @@ application.
 
 While the automated taxonomic pipeline resolves many naming
 inconsistencies, it may still miss recently described taxa or contested
-synonym[i]{.deletion author="Joana Meier"
-date="2026-03-01T17:56:21Z"}es. The data table shows both original and
-corrected names for researcher review, and a manually maintained
-corrections file allows case-by-case overrides. As taxonomic databases
-continue to be updated, the pipeline\'s accuracy will improve.
+synonymes. The data table shows both original and corrected names for
+researcher review, and a manually maintained corrections file allows
+case-by-case overrides. As taxonomic databases continue to be updated,
+the pipeline\'s accuracy will improve.
 
 Several ecological layers could enrich the platform in the future.
 Predictive habitat suitability models (e.g., MaxEnt) could be computed
@@ -718,16 +749,16 @@ conditions that are suitable to them.\
 It would also be good to include other genomic information of species
 from GoaT (Genomes on a Tree), e.g. containing information on the number
 of chromosomes, genome size, if a reference genome is available,
-etc.]{.comment-start id="16" author="Joana Meier"
-date="2026-03-01T17:58:45Z"}.[]{.comment-end id="16"}
+etc.]{.comment-start id="12" author="Joana Meier"
+date="2026-03-01T17:58:45Z"}.[]{.comment-end id="12"}
 
 [This is already written above and can thus be removed
-here.]{.comment-start id="17" author="Joana Meier"
+here.]{.comment-start id="13" author="Joana Meier"
 date="2026-03-01T17:59:20Z"}As described in Section 4.3, the modular
 architecture means the platform could be adapted to other Lepidoptera,
 other organism groups, or even non-biological specimen collections,
 following the open-source spirit encouraged by Rosser & Mallet
-(2024).[]{.comment-end id="17"}
+(2024).[]{.comment-end id="13"}
 
 # **5. Conclusions**
 
@@ -746,45 +777,26 @@ improve the efficiency and accessibility of biodiversity research tools,
 while maintaining long-term sustainability through a fully serverless
 approach.
 
-All source code is freely available at:
-
-> • AI Photo Processor:
-> [[https://github.com/Fr4nzz/rename_photos_AI]{.underline}](https://github.com/Fr4nzz/rename_photos_AI)
->
-> • Wings Gallery:
-> [[https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery]{.underline}](https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery)
->
-> • Ithomiini Maps:
-> [[https://github.com/rapidspeciation/ithomiini_maps]{.underline}](https://github.com/rapidspeciation/ithomiini_maps)
+All source code is freely available. The AI Photo Processor can be found
+at
+[[https://github.com/Fr4nzz/rename_photos_AI]{.underline}](https://github.com/Fr4nzz/rename_photos_AI),
+the Wings Gallery at
+[[https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery]{.underline}](https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery),
+and Specimen Maps at
+[[https://github.com/rapidspeciation/ithomiini_maps]{.underline}](https://github.com/rapidspeciation/ithomiini_maps).
 
 # **6. Data Availability Statement**
 
 [here you should only describe data that was produced by us. Doré et al
 was already cited above and GBIF as well. That should be part of methods
-not the data availability statement.]{.comment-start id="18"
-author="Joana Meier" date="2026-03-01T18:00:46Z"}The []{.comment-end
-id="18"}occurrence data shown in Ithomiini Maps comes from:
-
--   [Doré et al. (2023): Published dataset available at \[repository DOI
-    > to be added\]]{.deletion author="Joana Meier"
-    > date="2026-03-01T18:00:53Z"}[]{.paragraph-deletion
-    > author="Joana Meier" date="2026-03-01T18:00:53Z"}
-
--   [GBIF occurrence data: Downloaded via the GBIF API (DOI:
-    > 10.15468/dl.pbs3eu), filtered for tribe Ithomiini (45 genera),
-    > with quality filters applied (coordinates present, no geospatial
-    > issues, confirmed presence, excluding fossils and living
-    > specimens). Records split into: iNaturalist research-grade
-    > observations, UNAM museum collections, and other institutional
-    > datasets.]{.deletion author="Joana Meier"
-    > date="2026-03-01T18:00:53Z"}
-
--   Sanger Institute collection data: Available upon request from the
-    > corresponding research group
-
-The processed data files and all source code are available in the GitHub
-repositories listed above. Version-specific data can be retrieved using
-the Git commit hashes included in the application\'s citation system.
+not the data availability statement.]{.comment-start id="14"
+author="Joana Meier" date="2026-03-01T18:00:46Z"}The[]{.comment-end
+id="14"} Sanger Institute collection data shown in Specimen Maps is
+available upon request from the corresponding research group. All source
+code, processed data files, and the data processing pipeline are
+available in the GitHub repositories listed above. Version-specific data
+can be retrieved using the Git commit hashes included in the
+application\'s citation system.
 
 # **7. Acknowledgments**
 
@@ -793,8 +805,8 @@ maps platform, which inspired the design of Ithomiini Maps. We
 acknowledge the Global Biodiversity Information Facility (GBIF) and its
 data publishers for providing open occurrence data. We acknowledge the
 use of AI coding assistants during software development, including
-OpenAI ChatGPT Codex, Google Gemini 3 Pro, and Anthropic Claude Code.
-\[Additional acknowledgments to be added.\]
+OpenAI GPT models, Google Gemini, and Anthropic Claude. \[Additional
+acknowledgments to be added.\]
 
 # **References**
 
