@@ -15,6 +15,8 @@ import {
   getThemeAccentColor,
   colorToRgba
 } from '../utils/mapHelpers'
+import { generateRangePolygons, generateHexBins, invalidateRangeCache } from '../utils/rangePolygons'
+import { DYNAMIC_COLORS } from '../utils/constants'
 
 export function useDataLayer(map, options = {}) {
   const store = useDataStore()
@@ -24,6 +26,7 @@ export function useDataLayer(map, options = {}) {
   let clusterHandlersRegistered = false
   let pointsHandlersRegistered = false
   let lastHoveredPointId = null
+  let rangePopup = null
   let _lastClusterState = null
   let _lastClusterRadius = null
 
@@ -224,6 +227,7 @@ export function useDataLayer(map, options = {}) {
     }
 
     const isHeatmap = store.visualizationMode === 'heatmap'
+    const isRanges = store.visualizationMode === 'ranges'
     const shouldCluster = store.visualizationMode === 'clusters'
     const settings = store.clusterSettings
     const clusterRadiusPixels = settings.radiusPixels
@@ -234,13 +238,17 @@ export function useDataLayer(map, options = {}) {
       (shouldCluster !== _lastClusterState) ||
       (clusterRadiusPixels !== _lastClusterRadius)
 
+    if (rangePopup) { rangePopup.remove(); rangePopup = null }
+
     if (needsSourceRebuild) {
       // Full rebuild: remove everything and recreate
       ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
         'cluster-extent-dynamic-outline', 'cluster-points-layer',
-        'points-layer', 'points-highlight', 'heatmap-layer'
+        'points-layer', 'points-highlight', 'heatmap-layer',
+        'range-fill', 'range-outline', 'range-points'
       ].forEach(id => removeLayerAndSource(map.value, id))
-      ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source'
+      ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source',
+        'range-source'
       ].forEach(id => removeLayerAndSource(map.value, null, id))
 
       const t1 = performance.now()
@@ -264,10 +272,12 @@ export function useDataLayer(map, options = {}) {
       // Still need to rebuild layers for styling changes
       ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
         'cluster-extent-dynamic-outline', 'cluster-points-layer',
-        'points-layer', 'points-highlight', 'heatmap-layer'
+        'points-layer', 'points-highlight', 'heatmap-layer',
+        'range-fill', 'range-outline', 'range-points'
       ].forEach(id => {
         if (map.value.getLayer(id)) map.value.removeLayer(id)
       })
+      removeLayerAndSource(map.value, null, 'range-source')
     }
 
     // Heatmap visualization mode
@@ -303,6 +313,206 @@ export function useDataLayer(map, options = {}) {
           'heatmap-opacity': heatSettings.opacity
         }
       })
+
+      if (!skipZoom) {
+        fitBoundsToData(geojson)
+      }
+      return
+    }
+
+    // Range polygon visualization mode
+    if (isRanges) {
+      const rangeSettings = store.rangeSettings
+      const isHexBin = rangeSettings.method === 'hexbin'
+
+      if (isHexBin) {
+        const hexGeoJSON = generateHexBins(geojson, rangeSettings)
+
+        if (hexGeoJSON.features.length > 0) {
+          map.value.addSource('range-source', {
+            type: 'geojson',
+            data: hexGeoJSON
+          })
+
+          map.value.addLayer({
+            id: 'range-fill',
+            type: 'fill',
+            source: 'range-source',
+            paint: {
+              'fill-color': [
+                'interpolate', ['linear'], ['get', 'density'],
+                0, '#FFE57F',
+                0.2, '#FFCA28',
+                0.4, '#FFA726',
+                0.6, '#FF7043',
+                0.8, '#F44336',
+                1, '#C62828'
+              ],
+              'fill-opacity': rangeSettings.opacity
+            }
+          })
+
+          map.value.addLayer({
+            id: 'range-outline',
+            type: 'line',
+            source: 'range-source',
+            paint: {
+              'line-color': '#000000',
+              'line-width': 0.5,
+              'line-opacity': 0.15
+            }
+          })
+        }
+
+        if (rangeSettings.showPoints) {
+          const pointColorMap = store.activeColorMap
+          const pointAttr = store.colorByAttribute
+          map.value.addLayer({
+            id: 'range-points',
+            type: 'circle',
+            source: 'points-source',
+            paint: {
+              'circle-radius': [
+                'interpolate', ['linear'], ['zoom'],
+                3, 1, 6, 2, 10, 3, 14, 5
+              ],
+              'circle-color': ['match', ['get', pointAttr],
+                ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
+                '#6b7280'
+              ],
+              'circle-opacity': 0.4,
+              'circle-stroke-width': 0,
+              'circle-stroke-opacity': 0
+            }
+          })
+        }
+
+        // Hex click popup
+        map.value.off('click', 'range-fill')
+        map.value.on('click', 'range-fill', (e) => {
+          if (!e.features?.length) return
+          const props = e.features[0].properties
+
+          if (rangePopup) rangePopup.remove()
+          rangePopup = new maplibregl.Popup({ maxWidth: '240px', className: 'custom-popup range-popup' })
+            .setLngLat(e.lngLat)
+            .setHTML(
+              `<div style="padding:8px;font-size:0.85rem;">` +
+              `<strong>${props.count} records</strong>` +
+              `</div>`
+            )
+            .addTo(map.value)
+        })
+
+        map.value.on('mouseenter', 'range-fill', () => {
+          map.value.getCanvas().style.cursor = 'pointer'
+        })
+        map.value.on('mouseleave', 'range-fill', () => {
+          map.value.getCanvas().style.cursor = ''
+        })
+
+      } else {
+        // Hull polygon method
+        const groupBy = rangeSettings.groupBy
+
+        // Build color map keyed by the groupBy attribute (not the legend's colorBy)
+        const GROUP_ATTR = { species: 'scientific_name', subspecies: 'subspecies', genus: 'genus', mimicry: 'mimicry_ring' }
+        const rangeAttr = GROUP_ATTR[groupBy] || 'scientific_name'
+        const uniqueGroups = [...new Set(
+          geojson.features.map(f => f.properties[rangeAttr]).filter(v => v && v !== 'Unknown' && v !== 'NA')
+        )].sort()
+        const rangeColorMap = {}
+        uniqueGroups.forEach((name, i) => {
+          rangeColorMap[name] = DYNAMIC_COLORS[i % DYNAMIC_COLORS.length]
+        })
+
+        const rangeGeoJSON = generateRangePolygons(geojson, rangeSettings, rangeColorMap)
+
+        if (rangeGeoJSON.features.length > 0) {
+          map.value.addSource('range-source', {
+            type: 'geojson',
+            data: rangeGeoJSON
+          })
+
+          const fillColorExpr = ['get', 'color']
+
+          map.value.addLayer({
+            id: 'range-fill',
+            type: 'fill',
+            source: 'range-source',
+            paint: {
+              'fill-color': fillColorExpr,
+              'fill-opacity': rangeSettings.opacity
+            }
+          })
+
+          map.value.addLayer({
+            id: 'range-outline',
+            type: 'line',
+            source: 'range-source',
+            paint: {
+              'line-color': fillColorExpr,
+              'line-width': [
+                'interpolate', ['linear'], ['zoom'],
+                3, 0.3, 8, 0.8, 14, 1.5
+              ],
+              'line-opacity': Math.min(0.6, rangeSettings.opacity * 0.7)
+            }
+          })
+        }
+
+        if (rangeSettings.showPoints) {
+          const pointColorMap = store.activeColorMap
+          const pointAttr = store.colorByAttribute
+          map.value.addLayer({
+            id: 'range-points',
+            type: 'circle',
+            source: 'points-source',
+            paint: {
+              'circle-radius': [
+                'interpolate', ['linear'], ['zoom'],
+                3, 1.5, 6, 2.5, 10, 4, 14, 6
+              ],
+              'circle-color': ['match', ['get', pointAttr],
+                ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
+                '#6b7280'
+              ],
+              'circle-opacity': 0.5,
+              'circle-stroke-width': 0.5,
+              'circle-stroke-color': '#ffffff',
+              'circle-stroke-opacity': 0.3
+            }
+          })
+        }
+
+        // Hull polygon click handler
+        if (rangeGeoJSON.features.length > 0) {
+          map.value.off('click', 'range-fill')
+          map.value.on('click', 'range-fill', (e) => {
+            if (!e.features?.length) return
+            const props = e.features[0].properties
+
+            if (rangePopup) rangePopup.remove()
+            rangePopup = new maplibregl.Popup({ maxWidth: '280px', className: 'custom-popup range-popup' })
+              .setLngLat(e.lngLat)
+              .setHTML(
+                `<div style="padding:8px;font-size:0.85rem;">` +
+                `<strong style="font-style:italic;">${props.group_name}</strong><br/>` +
+                `<span style="opacity:0.7;">${props.point_count.toLocaleString()} records</span><br/>` +
+                `<span style="opacity:0.7;">${props.area_km2.toLocaleString()} km²</span>` +
+                `</div>`
+              )
+              .addTo(map.value)
+          })
+
+          map.value.on('mouseenter', 'range-fill', () => {
+            map.value.getCanvas().style.cursor = 'pointer'
+          })
+          map.value.on('mouseleave', 'range-fill', () => {
+            map.value.getCanvas().style.cursor = ''
+          })
+        }
+      }
 
       if (!skipZoom) {
         fitBoundsToData(geojson)
