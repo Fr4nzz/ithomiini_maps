@@ -469,6 +469,29 @@ if (!is.null(basemap)) {
   p <- p + annotation_raster(basemap_png, xmin = bounds$xmin, xmax = bounds$xmax, ymin = bounds$ymin, ymax = bounds$ymax)
 }
 
+if (file.exists("range_polygons.geojson")) {
+  cat("  Loading range polygons...\\n")
+  range_polys <- st_read("range_polygons.geojson", quiet = TRUE)
+  if (nrow(range_polys) > 0) {
+    p <- p +
+      geom_sf(
+        data = range_polys,
+        aes(fill = color),
+        color = NA,
+        alpha = 0.3
+      ) +
+      geom_sf(
+        data = range_polys,
+        fill = NA,
+        aes(color = color),
+        linewidth = 0.4,
+        alpha = 0.6
+      ) +
+      scale_color_identity()
+    cat(sprintf("  %d range polygons added\\n", nrow(range_polys)))
+  }
+}
+
 if (shapes_enabled && "shape_code" %in% names(points)) {
   p <- p +
     geom_sf(

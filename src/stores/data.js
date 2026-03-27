@@ -65,10 +65,21 @@ export const useDataStore = defineStore('data', () => {
     showClusterPoints: true,
   }))
 
-  // Visualization mode: 'points', 'clusters', or 'heatmap'
+  // Visualization mode: 'points', 'clusters', 'heatmap', or 'ranges'
   const visualizationMode = ref(getStorage('app-visualization-mode', 'points'))
   const DEFAULT_HEATMAP_SETTINGS = { radius: 15, intensity: 1.5, opacity: 0.8 }
   const heatmapSettings = ref(getStorage('app-heatmap-settings', DEFAULT_HEATMAP_SETTINGS))
+
+  const DEFAULT_RANGE_SETTINGS = {
+    method: 'hexbin',
+    groupBy: 'species',
+    bufferKm: 50,
+    minPoints: 5,
+    opacity: 0.45,
+    showPoints: true,
+    hexSize: 50,
+  }
+  const rangeSettings = ref({ ...DEFAULT_RANGE_SETTINGS, ...getStorage('app-range-settings', DEFAULT_RANGE_SETTINGS) })
 
   // Bounding box spatial filter (session-only, no persistence)
   const boundingBox = ref(null)
@@ -302,6 +313,14 @@ export const useDataStore = defineStore('data', () => {
     if (params.get('goat_src')) { filters.value.goatDataSource = params.get('goat_src').split(','); showGoatFilter.value = true }
     if (params.get('chr_min')) { filters.value.goatChromosomeMin = Number(params.get('chr_min')); showGoatFilter.value = true }
     if (params.get('chr_max')) { filters.value.goatChromosomeMax = Number(params.get('chr_max')); showGoatFilter.value = true }
+
+    if (params.get('viz')) visualizationMode.value = params.get('viz')
+    if (params.get('range_method')) rangeSettings.value.method = params.get('range_method')
+    if (params.get('range_group')) rangeSettings.value.groupBy = params.get('range_group')
+    if (params.get('range_buffer')) rangeSettings.value.bufferKm = Number(params.get('range_buffer'))
+    if (params.get('range_min')) rangeSettings.value.minPoints = Number(params.get('range_min'))
+    if (params.get('range_opacity')) rangeSettings.value.opacity = Number(params.get('range_opacity')) / 100
+    if (params.get('range_hex')) rangeSettings.value.hexSize = Number(params.get('range_hex'))
   }
 
   const resetAllFilters = () => {
@@ -325,6 +344,7 @@ export const useDataStore = defineStore('data', () => {
       goatChromosomeMax: null,
     }
     visualizationMode.value = 'points'
+    rangeSettings.value = { ...DEFAULT_RANGE_SETTINGS }
     boundingBox.value = null
   }
 
@@ -615,38 +635,50 @@ export const useDataStore = defineStore('data', () => {
   // URL SYNC WATCHER
   // ═══════════════════════════════════════════════════════════════════════════
 
-  watch(
-    filters,
-    (newFilters) => {
-      const params = new URLSearchParams()
+  const syncURLState = () => {
+    const f = filters.value
+    const params = new URLSearchParams()
 
-      if (newFilters.family !== 'All') params.set('family', newFilters.family)
-      if (newFilters.tribe !== 'All') params.set('tribe', newFilters.tribe)
-      if (newFilters.genus !== 'All') params.set('genus', newFilters.genus)
-      if (newFilters.species.length > 0) params.set('sp', newFilters.species.join(','))
-      if (newFilters.subspecies.length > 0) params.set('ssp', newFilters.subspecies.join(','))
-      if (newFilters.mimicry.length > 0) params.set('mim', newFilters.mimicry.join(','))
-      if (newFilters.status.length > 0) params.set('status', newFilters.status.join(','))
-      if (newFilters.source.length > 0 && !(newFilters.source.length === 1 && newFilters.source[0] === 'Sanger Institute')) {
-        params.set('source', newFilters.source.join(','))
-      }
-      if (newFilters.country !== 'All') params.set('country', newFilters.country)
-      if (newFilters.sex !== 'all') params.set('sex', newFilters.sex)
-      if (newFilters.camidSearch) params.set('cam', newFilters.camidSearch)
-      if (newFilters.dateStart) params.set('from', newFilters.dateStart)
-      if (newFilters.dateEnd) params.set('to', newFilters.dateEnd)
-      if (newFilters.goatCoverage !== 'all') params.set('goat', newFilters.goatCoverage)
-      if (newFilters.goatDataSource.length > 0) params.set('goat_src', newFilters.goatDataSource.join(','))
-      if (newFilters.goatChromosomeMin != null) params.set('chr_min', newFilters.goatChromosomeMin)
-      if (newFilters.goatChromosomeMax != null) params.set('chr_max', newFilters.goatChromosomeMax)
+    if (f.family !== 'All') params.set('family', f.family)
+    if (f.tribe !== 'All') params.set('tribe', f.tribe)
+    if (f.genus !== 'All') params.set('genus', f.genus)
+    if (f.species.length > 0) params.set('sp', f.species.join(','))
+    if (f.subspecies.length > 0) params.set('ssp', f.subspecies.join(','))
+    if (f.mimicry.length > 0) params.set('mim', f.mimicry.join(','))
+    if (f.status.length > 0) params.set('status', f.status.join(','))
+    if (f.source.length > 0 && !(f.source.length === 1 && f.source[0] === 'Sanger Institute')) {
+      params.set('source', f.source.join(','))
+    }
+    if (f.country !== 'All') params.set('country', f.country)
+    if (f.sex !== 'all') params.set('sex', f.sex)
+    if (f.camidSearch) params.set('cam', f.camidSearch)
+    if (f.dateStart) params.set('from', f.dateStart)
+    if (f.dateEnd) params.set('to', f.dateEnd)
+    if (f.goatCoverage !== 'all') params.set('goat', f.goatCoverage)
+    if (f.goatDataSource.length > 0) params.set('goat_src', f.goatDataSource.join(','))
+    if (f.goatChromosomeMin != null) params.set('chr_min', f.goatChromosomeMin)
+    if (f.goatChromosomeMax != null) params.set('chr_max', f.goatChromosomeMax)
 
-      const newURL = params.toString()
-        ? `${window.location.pathname}?${params}`
-        : window.location.pathname
-      window.history.replaceState({}, '', newURL)
-    },
-    { deep: true }
-  )
+    if (visualizationMode.value !== 'points') params.set('viz', visualizationMode.value)
+    if (visualizationMode.value === 'ranges') {
+      const rs = rangeSettings.value
+      if (rs.method !== 'hexbin') params.set('range_method', rs.method)
+      if (rs.method === 'hulls' && rs.groupBy !== 'species') params.set('range_group', rs.groupBy)
+      if (rs.method === 'hulls' && rs.bufferKm !== 50) params.set('range_buffer', rs.bufferKm)
+      if (rs.method === 'hulls' && rs.minPoints !== 5) params.set('range_min', rs.minPoints)
+      if (rs.method === 'hexbin' && rs.hexSize !== 50) params.set('range_hex', rs.hexSize)
+      if (rs.opacity !== 0.45) params.set('range_opacity', Math.round(rs.opacity * 100))
+    }
+
+    const newURL = params.toString()
+      ? `${window.location.pathname}?${params}`
+      : window.location.pathname
+    window.history.replaceState({}, '', newURL)
+  }
+
+  watch(filters, syncURLState, { deep: true })
+  watch(visualizationMode, syncURLState)
+  watch(rangeSettings, syncURLState, { deep: true })
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PERSISTENCE WATCHERS
@@ -660,6 +692,7 @@ export const useDataStore = defineStore('data', () => {
   watch(scatterOverlappingPoints, (val) => setStorage('app-scatter-overlapping', val))
   watch(visualizationMode, (val) => setStorage('app-visualization-mode', val))
   watch(heatmapSettings, (val) => setStorage('app-heatmap-settings', val), { deep: true })
+  watch(rangeSettings, (val) => setStorage('app-range-settings', val), { deep: true })
   watch(colorBy, (val) => setStorage('map-color-by', val))
   watch(mapStyle, (val) => setStorage('map-style', val), { deep: true })
   watch(mapView, (val) => setStorage('map-view', val), { deep: true })
@@ -691,6 +724,8 @@ export const useDataStore = defineStore('data', () => {
     visualizationMode,
     heatmapSettings,
     DEFAULT_HEATMAP_SETTINGS,
+    rangeSettings,
+    DEFAULT_RANGE_SETTINGS,
     boundingBox,
     scatterOverlappingPoints,
     mimicryPhotoLookup,
