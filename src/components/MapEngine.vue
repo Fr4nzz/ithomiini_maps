@@ -494,6 +494,18 @@ watch(
   { deep: true }
 )
 
+// Watch for range settings changes
+watch(
+  () => store.rangeSettings,
+  () => {
+    if (!isMapReady()) return
+    if (store.visualizationMode === 'ranges') {
+      debouncedAddDataLayer({ skipZoom: true })
+    }
+  },
+  { deep: true }
+)
+
 // Watch for bounding box cleared externally (e.g., from sidebar reset)
 watch(
   () => store.boundingBox,

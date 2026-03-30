@@ -4,6 +4,7 @@ import { useLegendStore } from '../stores/legend'
 import { applyAbbreviationFormat } from './abbreviations'
 import { generateRScript } from './rExport/rScriptGenerator'
 import { generateReadme, generateMapHTML } from './rExport/htmlReadmeGenerators'
+import { generateRangePolygons } from './rangePolygons'
 
 // Build info (injected by Vite)
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
@@ -215,7 +216,8 @@ export async function exportForR(map) {
 
   // Capture basemap as raster (without data points)
   let basemapDataUrl = null
-  const dataLayers = ['points-layer', 'points-glow', 'clusters', 'cluster-count']
+  const dataLayers = ['points-layer', 'points-glow', 'clusters', 'cluster-count',
+    'range-fill', 'range-outline', 'range-points']
   const layerVisibility = {}
 
   try {
@@ -260,7 +262,12 @@ export async function exportForR(map) {
   // Generate HTML file for exact reproduction
   const mapHTML = generateMapHTML(exportGeoJSON, viewConfig, legendConfig, colorBy)
 
-  // Create ZIP file
+  const isRangesMode = store.visualizationMode === 'ranges'
+  let rangePolygonGeoJSON = null
+  if (isRangesMode) {
+    rangePolygonGeoJSON = generateRangePolygons(geo, store.rangeSettings, colorMap)
+  }
+
   const zip = new JSZip()
   zip.file('data.geojson', JSON.stringify(exportGeoJSON, null, 2))
   zip.file('view_config.json', JSON.stringify(viewConfig, null, 2))
@@ -268,6 +275,10 @@ export async function exportForR(map) {
   zip.file('generate_map.R', rScript)
   zip.file('map.html', mapHTML)
   zip.file('README.txt', generateReadme(citationText, shortHash))
+
+  if (rangePolygonGeoJSON) {
+    zip.file('range_polygons.geojson', JSON.stringify(rangePolygonGeoJSON, null, 2))
+  }
 
   // Add basemap if captured
   if (basemapDataUrl) {
