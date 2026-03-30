@@ -1,11 +1,4 @@
-import concave from '@turf/concave'
-import convex from '@turf/convex'
-import buffer from '@turf/buffer'
-import area from '@turf/area'
-import bbox from '@turf/bbox'
-import hexGrid from '@turf/hex-grid'
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
-import { featureCollection, point } from '@turf/helpers'
+import { concave, convex, buffer, area, bbox, hexGrid, booleanPointInPolygon, featureCollection, point } from '@turf/turf'
 
 const GROUP_KEYS = {
   species: 'scientific_name',
