@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, computed, nextTick } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { Check } from 'lucide-vue-next'
 import { generateAbbreviationOptions } from '../../utils/abbreviations'
 
@@ -123,20 +124,9 @@ function handleCustomKeydown(e) {
   }
 }
 
-// Click outside handler
-function handleClickOutside(e) {
-  if (dropdownRef.value && !dropdownRef.value.contains(e.target)) {
-    emit('close')
-  }
-}
-
-onMounted(() => {
-  document.addEventListener('mousedown', handleClickOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('mousedown', handleClickOutside)
-})
+onClickOutside(dropdownRef, () => {
+  emit('close')
+}, { event: 'mousedown' })
 </script>
 
 <template>

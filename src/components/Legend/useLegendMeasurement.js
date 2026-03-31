@@ -7,6 +7,7 @@
 // 3. Bidirectional convergence loop corrects over/under-estimation
 
 import { ref, computed, nextTick } from 'vue'
+import { log } from '../../utils/logger'
 
 /**
  * Composable for legend measurement and auto-sizing
@@ -209,7 +210,7 @@ export function useLegendMeasurement({
       measuredItemCount.value = null
       measuredSnugHeight.value = null
     }
-    console.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
+    log.legend.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
     pendingMeasurementRAF = requestAnimationFrame(() => {
       pendingMeasurementRAF = requestAnimationFrame(() => {
         pendingMeasurementRAF = null
@@ -310,12 +311,9 @@ export function useLegendMeasurement({
     const unusedSpace = measureVisualGap(el)
     const isOverflowing = overflow > 2 || scrollbarVisible
 
-    // What are we adjusting? Groups (cross-group) or items (normal).
-    const isCG = measuredGroupSlots.value !== null
-    const getVal = () => isCG ? measuredGroupSlots.value : measuredItemCount.value
-    const setVal = (v) => { if (isCG) measuredGroupSlots.value = v; else measuredItemCount.value = v }
-    const maxVal = isCG ? renderUpperBound.value : totalItems
-    const label = isCG ? 'groups' : 'items'
+    const getVal = () => measuredItemCount.value
+    const setVal = (v) => { measuredItemCount.value = v }
+    const maxVal = totalItems
 
     // Safety bail
     if (correctionSteps > 8) {
@@ -323,7 +321,7 @@ export function useLegendMeasurement({
       else if (isOverflowing && getVal() > 1) setVal(getVal() - 1)
       binarySearchActive = false
       binarySearchDone = true
-      console.log(`[Legend] BAIL after ${correctionSteps} steps → ${getVal()} ${label}`)
+      log.legend.info(`[Legend] BAIL after ${correctionSteps} steps → ${getVal()} items`)
       correctionSteps = 0
       updateSnugHeightFromDOM()
       return
@@ -332,7 +330,7 @@ export function useLegendMeasurement({
     // ── Initialize or continue binary search ──────────────────────
     if (!binarySearchActive) {
       if (binarySearchDone) {
-        logSettled(el, unusedSpace, overflow)
+        logSettled(el, unusedSpace)
         return
       }
       if (isOverflowing) {
@@ -346,7 +344,7 @@ export function useLegendMeasurement({
         binaryLo = getVal() + 1
         binaryHi = Math.min(maxVal, getVal() + Math.max(2, Math.ceil(unusedSpace / 20)))
       } else {
-        logSettled(el, unusedSpace, overflow)
+        logSettled(el, unusedSpace)
         return
       }
     } else {
@@ -370,7 +368,8 @@ export function useLegendMeasurement({
         scheduleOverflowCorrection()
         return
       }
-      logSettled(el, unusedSpace, overflow)
+
+      logSettled(el, unusedSpace)
       return
     }
 
@@ -379,12 +378,11 @@ export function useLegendMeasurement({
     scheduleOverflowCorrection()
   }
 
-  function logSettled(el, unusedSpace, overflow) {
+  function logSettled(el, unusedSpace) {
     const totalItems = sortedAllItems.value.length
     const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
-    const slotsInfo = measuredGroupSlots.value !== null ? ` groups=${measuredGroupSlots.value}` : ''
-    console.log(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items${slotsInfo} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
-    console.log(`[Perf] legendMeasurement: settled in ${correctionSteps} steps`)
+    log.legend.info(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
+    log.legend.info(`[Perf] legendMeasurement: settled in ${correctionSteps} steps`)
     correctionSteps = 0
     updateSnugHeightFromDOM()
   }
@@ -442,7 +440,7 @@ export function useLegendMeasurement({
     // Debug: detect cross-group DOM mismatch (items in multiple groups)
     const groupEls = isGroupedView ? itemsEl.querySelectorAll('.legend-group') : []
     if (groupEls.length > 0 && measurableItems.length !== totalSorted) {
-      console.debug(`[Legend] DOM: ${measurableItems.length} items in ${groupEls.length} groups (${totalSorted} unique) grouped=${isGroupedView}`)
+      log.legend.debug(`[Legend] DOM: ${measurableItems.length} items in ${groupEls.length} groups (${totalSorted} unique) grouped=${isGroupedView}`)
     }
 
     function computeSnugHeight(lastItemEl, includeMoreIndicator) {
@@ -473,27 +471,27 @@ export function useLegendMeasurement({
       measurableItems.length > totalSorted
     )
 
-    if (!isCrossGroup &&
-        measurableItems.length >= totalSorted &&
+    if (measurableItems.length >= totalSorted &&
         lastItemBottom <= allFitBoundary) {
       if (measuredItemCount.value !== totalSorted) {
         measuredItemCount.value = totalSorted
       }
+      if (isCrossGroup) measuredGroupSlots.value = null
       measuredSnugHeight.value = computeSnugHeight(lastItem, false)
-      console.debug(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+      log.legend.debug(`[Legend] ALL_FIT ${totalSorted} items${isCrossGroup ? ' (cross-group)' : ''} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
       scheduleOverflowCorrection()
       return
     }
 
-    // Small item counts (≤ 5) — try fitting all without "+N more"
-    if (!isCrossGroup && totalSorted <= 5 && measurableItems.length >= totalSorted) {
+    if (totalSorted <= 5 && measurableItems.length >= totalSorted) {
       const lastOfAll = measurableItems[measurableItems.length - 1]
       if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
         if (measuredItemCount.value !== totalSorted) {
           measuredItemCount.value = totalSorted
         }
+        if (isCrossGroup) measuredGroupSlots.value = null
         measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
-        console.debug(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+        log.legend.debug(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
         scheduleOverflowCorrection()
         return
       }
@@ -512,35 +510,10 @@ export function useLegendMeasurement({
     }
     domFitCount = Math.max(1, domFitCount)
 
-    // Multi-group DOM→unique item count translation
+    // DOM→unique item count translation for grouped views where DOM items > unique items
     let count = domFitCount
     let countNoMore = domFitCountNoMore
-    if (isCrossGroup) {
-      // Cross-group mode needs two measurement passes:
-      // Pass 1: Ensure all unique items are rendered so each group shows its
-      //   full item set. Without this, groups render with partial items from
-      //   the initial renderUpperBound limit, giving inaccurate heights.
-      // Pass 2: All items rendered → accurately count fitting groups.
-      if (measuredItemCount.value !== totalSorted) {
-        measuredItemCount.value = totalSorted
-        console.debug(`[Legend] CROSS-GROUP pass 1: rendering all ${totalSorted} unique items | ${logContext()}`)
-        scheduleMeasurement(false, 'crossGroupPass2')
-        return
-      }
-      // Pass 2: all unique items rendered — count groups that physically fit
-      let fittingGroups = 0
-      for (const groupEl of groupEls) {
-        if (groupEl.getBoundingClientRect().bottom <= maxBottomWithMore) fittingGroups++
-        else break
-      }
-      measuredGroupSlots.value = Math.max(1, fittingGroups)
-      measuredSnugHeight.value = fittingGroups > 0
-        ? computeSnugHeight(groupEls[Math.min(fittingGroups, groupEls.length) - 1], true)
-        : computeSnugHeight(measurableItems[0], true)
-      console.debug(`[Legend] CROSS-GROUP pass 2: ${fittingGroups}/${groupEls.length} groups fit (${totalSorted} unique) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
-      scheduleOverflowCorrection()
-      return
-    } else if (measurableItems.length > totalSorted) {
+    if (measurableItems.length > totalSorted) {
       if (domFitCount < measurableItems.length) {
         count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
       }
@@ -552,10 +525,10 @@ export function useLegendMeasurement({
     // The "+N more" indicator itself takes ~40px which often fits 1-2 items.
     // Use translated counts (not raw DOM counts) so cross-group mode is handled.
     const hiddenWithoutMore = totalSorted - countNoMore
-    if (!isCrossGroup && hiddenWithoutMore <= 2 && countNoMore >= totalSorted) {
+    if (hiddenWithoutMore <= 2 && countNoMore >= totalSorted) {
       count = totalSorted
       measuredSnugHeight.value = computeSnugHeight(measurableItems[measurableItems.length - 1], false)
-      console.debug(`[Legend] TIGHT_FIT ${count}/${totalSorted} items (no +more needed) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
+      log.legend.debug(`[Legend] TIGHT_FIT ${count}/${totalSorted} items (no +more needed) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
       if (count !== measuredItemCount.value) {
         measuredItemCount.value = count
       }
@@ -566,7 +539,7 @@ export function useLegendMeasurement({
     measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
 
     const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
-    console.debug(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
+    log.legend.debug(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
     if (count !== measuredItemCount.value) {
       measuredItemCount.value = count
     }
@@ -604,7 +577,7 @@ export function useLegendMeasurement({
 
   function resetToAutoSize() {
     if (!isAutoWidth.value || !isAutoHeight.value) {
-      console.debug(`[Legend] resetToAutoSize (was ${currentWidth.value}x${currentHeight.value})`)
+      log.legend.debug(`[Legend] resetToAutoSize (was ${currentWidth.value}x${currentHeight.value})`)
       currentWidth.value = null
       currentHeight.value = null
       legendStore.updateSize('auto', 'auto')

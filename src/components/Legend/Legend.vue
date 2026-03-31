@@ -8,6 +8,7 @@ import { computePopupPosition } from '../../composables/usePopupPosition'
 import { useLegendItemData } from './useLegendItemData'
 import { useLegendMeasurement } from './useLegendMeasurement'
 import { useLegendPosition } from './useLegendPosition'
+import { log } from '../../utils/logger'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
@@ -111,7 +112,7 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
   getLimits: () => ({ minW: 200, maxW: maxResizeWidth.value, minH: 120, maxH: maxLegendHeight.value }),
   onEnd: ({ x, y, width, height }) => {
-    console.debug(`[Legend] resize end: ${width}x${height} at (${x},${y})`)
+    log.legend.debug(`[Legend] resize end: ${width}x${height} at (${x},${y})`)
     posX.value = x
     posY.value = y
     currentWidth.value = width
@@ -211,12 +212,12 @@ watch(isResizing, (resizing) => {
 
 // Manual mode watchers
 watch(() => legendStore.maxItemsMode, (newMode) => {
-  console.log(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
+  log.legend.info(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
   if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
 })
 
 watch(() => legendStore.maxItemsManual, (newCount) => {
-  if (legendStore.isManualMode) console.log(`[Legend] manual items → ${newCount}`)
+  if (legendStore.isManualMode) log.legend.debug(`[Legend] manual items → ${newCount}`)
 })
 
 // Container resize triggers re-measurement

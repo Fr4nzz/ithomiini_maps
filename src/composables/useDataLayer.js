@@ -17,6 +17,7 @@ import {
 } from '../utils/mapHelpers'
 import { generateRangePolygons, generateHexBins, invalidateRangeCache } from '../utils/rangePolygons'
 import { DYNAMIC_COLORS } from '../utils/constants'
+import { log } from '../utils/logger'
 
 export function useDataLayer(map, options = {}) {
   const store = useDataStore()
@@ -149,7 +150,7 @@ export function useDataLayer(map, options = {}) {
         paint: { 'line-color': lineColor, 'line-width': 2 }
       }, hasClustersLayer ? 'clusters' : undefined)
     } catch (err) {
-      console.error('[ClusterExtent] Error adding layers:', err)
+      log.map.error('[ClusterExtent] Error adding layers:', err)
     }
   }
 
@@ -168,7 +169,7 @@ export function useDataLayer(map, options = {}) {
       map.value.setPaintProperty('cluster-extent-dynamic-outline', 'line-color', lineColor)
       return true
     } catch (err) {
-      console.error('[ClusterExtent] Error updating colors:', err)
+      log.map.error('[ClusterExtent] Error updating colors:', err)
       return false
     }
   }
@@ -207,13 +208,13 @@ export function useDataLayer(map, options = {}) {
   }
 
   const addDataLayer = (layerOptions = {}) => {
-    const t0 = performance.now()
     const { skipZoom = false } = layerOptions
 
     if (!map.value) return
 
     const geojson = store.displayGeoJSON
     if (!geojson) return
+    log.perf.start('addDataLayer')
 
     // Filter out hidden legend items from map data
     let mapData = geojson
@@ -251,7 +252,7 @@ export function useDataLayer(map, options = {}) {
         'range-source'
       ].forEach(id => removeLayerAndSource(map.value, null, id))
 
-      const t1 = performance.now()
+      log.perf.start('addSource (full rebuild)')
       map.value.addSource('points-source', {
         type: 'geojson',
         data: mapData,
@@ -260,14 +261,14 @@ export function useDataLayer(map, options = {}) {
         clusterRadius: clusterRadiusPixels,
         clusterMinPoints: 2
       })
-      console.log(`[Perf] addSource (full rebuild): ${(performance.now() - t1).toFixed(1)}ms`)
+      log.perf.end('addSource (full rebuild)')
       _lastClusterState = shouldCluster
       _lastClusterRadius = clusterRadiusPixels
     } else {
       // Fast path: only update data, keep layers
-      const t1 = performance.now()
+      log.perf.start('setData (fast update)')
       existingSource.setData(mapData)
-      console.log(`[Perf] setData (fast update): ${(performance.now() - t1).toFixed(1)}ms`)
+      log.perf.end('setData (fast update)')
 
       // Still need to rebuild layers for styling changes
       ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
@@ -317,6 +318,7 @@ export function useDataLayer(map, options = {}) {
       if (!skipZoom) {
         fitBoundsToData(geojson)
       }
+      log.perf.end('addDataLayer', `${mapData.features.length} features, shapes=${legendStore.shapeSettings.enabled}`)
       return
     }
 
@@ -517,6 +519,7 @@ export function useDataLayer(map, options = {}) {
       if (!skipZoom) {
         fitBoundsToData(geojson)
       }
+      log.perf.end('addDataLayer', `${mapData.features.length} features, shapes=${legendStore.shapeSettings.enabled}`)
       return
     }
 
@@ -858,7 +861,7 @@ export function useDataLayer(map, options = {}) {
     if (!skipZoom) {
       fitBoundsToData(geojson)
     }
-    console.log(`[Perf] addDataLayer: ${(performance.now() - t0).toFixed(1)}ms, ${mapData.features.length} features, shapes=${legendStore.shapeSettings.enabled}`)
+    log.perf.end('addDataLayer', `${mapData.features.length} features, shapes=${legendStore.shapeSettings.enabled}`)
   }
 
   const fitBoundsToData = (geojson) => {

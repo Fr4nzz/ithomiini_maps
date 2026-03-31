@@ -4,6 +4,8 @@ import { useDataStore } from '../stores/data'
 import { parseDate } from '../utils/dateHelpers'
 import { getStatusColor } from '../utils/constants'
 import { getTableThumbnailUrl } from '../utils/imageProxy'
+import { getCorrectionInfo, getGoatUrl } from '../utils/goatHelpers'
+import { useTableSort } from '../composables/useTableSort'
 
 const store = useDataStore()
 const openImageGallery = inject('openImageGallery')
@@ -11,10 +13,6 @@ const openImageGallery = inject('openImageGallery')
 // Pagination
 const pageSize = ref(50)
 const currentPage = ref(1)
-
-// Sorting
-const sortColumn = ref('scientific_name')
-const sortDirection = ref('asc')
 
 // Column visibility
 const visibleColumns = ref({
@@ -54,50 +52,6 @@ const columns = [
   { key: 'lng', label: 'Longitude', width: '90px' },
 ]
 
-// Curation correction type colors
-const CORRECTION_COLORS = {
-  'Synonym': '#f59e0b',       // Amber - species name changed to accepted synonym
-  'Spelling': '#f97316',      // Orange - spelling correction
-  'Subspecies': '#a855f7',    // Purple - subspecies typo corrected
-  'Reclassified': '#06b6d4',  // Cyan - subspecies reclassified
-}
-
-/**
- * Get correction info for a record.
- * Returns { type, color, originalName, originalSubspecies } or null if not corrected.
- */
-const getCorrectionInfo = (row) => {
-  const hasNameChange = !!row.scientific_name_original
-  const hasSubspeciesChange = !!row.subspecies_original
-
-  if (!hasNameChange && !hasSubspeciesChange) return null
-
-  // Determine correction type from curation_status and which fields changed
-  let type = 'Corrected'
-  if (hasNameChange && row.curation_status === 'synonym_resolved') {
-    type = 'Synonym'
-  } else if (hasNameChange && row.curation_status === 'corrected_literature') {
-    type = 'Spelling'
-  } else if (hasNameChange) {
-    type = 'Spelling'
-  }
-
-  if (hasSubspeciesChange && !hasNameChange) {
-    type = 'Subspecies'
-  }
-
-  // Check for subspecies reclassification (subspecies_as_species)
-  if (hasNameChange && row.curation_status === 'verified' && hasSubspeciesChange) {
-    type = 'Reclassified'
-  }
-
-  return {
-    type,
-    color: CORRECTION_COLORS[type] || '#f59e0b',
-    originalName: row.scientific_name_original || null,
-    originalSubspecies: row.subspecies_original || null,
-  }
-}
 
 // Get raw data from filtered GeoJSON
 const rawData = computed(() => {
@@ -167,60 +121,55 @@ const columnFilteredData = computed(() => {
   })
 })
 
-// Sorted data
-const sortedData = computed(() => {
-  const data = [...columnFilteredData.value]
+const {
+  sortKey,
+  sortDirection,
+  sortedData,
+  toggleSort: toggleTableSort
+} = useTableSort(columnFilteredData, {
+  defaultSortKey: 'scientific_name',
+  defaultDirection: 'asc',
+  unsortableColumns: ['photo'],
+  compareRows: (a, b, column, direction) => {
+    let valA = a[column] || ''
+    let valB = b[column] || ''
 
-  data.sort((a, b) => {
-    let valA = a[sortColumn.value] || ''
-    let valB = b[sortColumn.value] || ''
-
-    // Handle numeric columns
-    if (sortColumn.value === 'lat' || sortColumn.value === 'lng') {
+    if (column === 'lat' || column === 'lng') {
       valA = parseFloat(valA) || 0
       valB = parseFloat(valB) || 0
-    }
-    // Handle curated column (derived from correction info)
-    else if (sortColumn.value === 'curated') {
+    } else if (column === 'curated') {
       const infoA = getCorrectionInfo(a)
       const infoB = getCorrectionInfo(b)
       valA = infoA ? infoA.type : ''
       valB = infoB ? infoB.type : ''
-    }
-    // Handle date column
-    else if (sortColumn.value === 'observation_date') {
+    } else if (column === 'observation_date') {
       const dateA = parseDate(valA)
       const dateB = parseDate(valB)
-      // Put null dates at the end
       if (!dateA && !dateB) return 0
       if (!dateA) return 1
       if (!dateB) return -1
       valA = dateA.getTime()
       valB = dateB.getTime()
-    }
-    else if (sortColumn.value === 'goat_chromosome') {
+    } else if (column === 'goat_chromosome') {
       const chrA = store.getChromosomeNumber(a.scientific_name)
       const chrB = store.getChromosomeNumber(b.scientific_name)
       valA = chrA ? chrA.value : -1
       valB = chrB ? chrB.value : -1
-    }
-    else if (sortColumn.value === 'goat_genome') {
-      // Sort: direct (2) > estimated (1) > none (0)
+    } else if (column === 'goat_genome') {
       valA = store.hasDirectGoatData(a.scientific_name) ? 2 : store.hasGoatData(a.scientific_name) ? 1 : 0
       valB = store.hasDirectGoatData(b.scientific_name) ? 2 : store.hasGoatData(b.scientific_name) ? 1 : 0
-    }
-    else {
+    } else {
       valA = String(valA).toLowerCase()
       valB = String(valB).toLowerCase()
     }
 
-    if (valA < valB) return sortDirection.value === 'asc' ? -1 : 1
-    if (valA > valB) return sortDirection.value === 'asc' ? 1 : -1
+    if (valA < valB) return direction === 'asc' ? -1 : 1
+    if (valA > valB) return direction === 'asc' ? 1 : -1
     return 0
-  })
-
-  return data
+  }
 })
+
+const sortColumn = sortKey
 
 // Paginated data
 const paginatedData = computed(() => {
@@ -268,14 +217,7 @@ watch(rawData, () => {
 
 // Sort handler
 const toggleSort = (column) => {
-  if (column === 'photo') return // Don't sort by photo
-
-  if (sortColumn.value === column) {
-    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
-  } else {
-    sortColumn.value = column
-    sortDirection.value = 'asc'
-  }
+  if (!toggleTableSort(column)) return
   currentPage.value = 1
 }
 
@@ -553,11 +495,7 @@ const getChrTooltip = (scientificName) => {
   return `Estimated from ${chr.aggregation_rank || 'relatives'}`
 }
 
-const getGoatUrl = (scientificName) => {
-  const goat = store.getGoatForSpecies(scientificName)
-  if (!goat?.taxon_id) return null
-  return `https://goat.genomehubs.org/record?recordId=${goat.taxon_id}&result=taxon&taxonomy=ncbi`
-}
+const getSpeciesGoatUrl = (scientificName) => getGoatUrl(scientificName, store.getGoatForSpecies)
 
 const getGenomeSummary = (scientificName) => {
   const goat = store.getGoatForSpecies(scientificName)
@@ -867,7 +805,7 @@ const getGenomeSummary = (scientificName) => {
             </td>
             <td v-if="visibleColumns.goat_genome" class="cell-genome">
               <template v-if="getGenomeSummary(row.scientific_name)">
-                <a v-if="getGoatUrl(row.scientific_name)" :href="getGoatUrl(row.scientific_name)" target="_blank" rel="noopener noreferrer"
+                <a v-if="getSpeciesGoatUrl(row.scientific_name)" :href="getSpeciesGoatUrl(row.scientific_name)" target="_blank" rel="noopener noreferrer"
                   class="genome-link" :class="{ direct: getGenomeSummary(row.scientific_name).hasDirect }"
                   :title="getGenomeSummary(row.scientific_name).detail">
                   {{ getGenomeSummary(row.scientific_name).label }}

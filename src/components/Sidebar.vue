@@ -7,8 +7,10 @@ import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 import TimeSlider from './TimeSlider.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
+import DatabaseUpdateSection from './DatabaseUpdateSection.vue'
 import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
 import { ASPECT_RATIOS } from '../utils/constants'
+import config from '../config'
 
 const props = defineProps({
   currentView: {
@@ -143,70 +145,6 @@ const toggleGoatSource = (source) => {
 // Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
 const showAdvancedTaxonomy = ref(false)
 
-// Database Update section
-const showUpdateDatabase = ref(false)
-const updateSanger = ref(true)  // Default checked
-const updateGbif = ref(false)
-const updatePassword = ref('')
-const updateStatus = ref('') // '', 'loading', 'success', 'error'
-const updateMessage = ref('')
-
-// ============================================
-// DATABASE UPDATE CONFIGURATION
-// Update these values when deploying to a different repository
-// ============================================
-const WORKER_URL = 'https://ithomiini-maps-db-updater.franz-chandi.workers.dev/'
-const GITHUB_OWNER = 'Fr4nzz'
-const GITHUB_REPO = 'ithomiini_maps'
-// ============================================
-
-const triggerDatabaseUpdate = async () => {
-  // Verify password
-  if (updatePassword.value !== 'Hyalyris') {
-    updateStatus.value = 'error'
-    updateMessage.value = 'Incorrect password'
-    return
-  }
-
-  // Must select at least one source
-  if (!updateSanger.value && !updateGbif.value) {
-    updateStatus.value = 'error'
-    updateMessage.value = 'Please select at least one data source'
-    return
-  }
-
-  updateStatus.value = 'loading'
-  updateMessage.value = 'Contacting server...'
-
-  try {
-    // Call the Cloudflare Worker to trigger GitHub Action
-    const response = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        password: updatePassword.value,
-        update_sanger: updateSanger.value,
-        update_gbif: updateGbif.value,
-        owner: GITHUB_OWNER,
-        repo: GITHUB_REPO
-      })
-    })
-
-    if (response.ok) {
-      updateStatus.value = 'success'
-      const estimatedTime = updateGbif.value ? '15-20 minutes' : '2-3 minutes'
-      updateMessage.value = `Update started on ${GITHUB_OWNER}/${GITHUB_REPO}! The database will refresh in approximately ${estimatedTime}. Check back later.`
-    } else {
-      const error = await response.text()
-      updateStatus.value = 'error'
-      updateMessage.value = `Update failed: ${error}`
-    }
-  } catch (err) {
-    updateStatus.value = 'error'
-    updateMessage.value = `Network error: ${err.message}. Please try again.`
-  }
-}
-
 // Aspect ratio options - derived from shared constants
 const aspectRatioLabels = {
   '16:9': '16:9 (Widescreen)',
@@ -267,11 +205,11 @@ const updateExportHeight = (value) => {
   <aside class="sidebar">
     <!-- Header -->
     <header class="sidebar-header">
-      <a href="https://github.com/Fr4nzz/ithomiini_maps/" target="_blank" rel="noopener noreferrer" class="logo">
-        <img src="../assets/Map_icon.svg" alt="Ithomiini Maps" class="logo-icon" />
+      <a :href="config.repoUrl" target="_blank" rel="noopener noreferrer" class="logo">
+        <img :src="config.logoPath" :alt="`${config.title} Maps`" class="logo-icon" />
         <div class="logo-text">
-          <span class="title">Ithomiini</span>
-          <span class="subtitle">Distribution Maps</span>
+          <span class="title">{{ config.title }}</span>
+          <span class="subtitle">{{ config.subtitle }}</span>
         </div>
       </a>
     </header>
@@ -323,7 +261,7 @@ const updateExportHeight = (value) => {
 
       <!-- Quick Actions Row -->
       <div class="quick-actions">
-        <button class="action-btn" @click="emit('open-gallery')" :disabled="imageCount === 0">
+        <button v-if="config.features.imageGallery" class="action-btn" @click="emit('open-gallery')" :disabled="imageCount === 0">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
             <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -332,7 +270,7 @@ const updateExportHeight = (value) => {
           <span>Gallery</span>
           <span class="badge" v-if="imageCount > 0">{{ imageCount }}</span>
         </button>
-        <button class="action-btn" @click="emit('open-mimicry')">
+        <button v-if="config.features.mimicrySelector" class="action-btn" @click="emit('open-mimicry')">
           <img src="../assets/Mimicry_bttn.svg" alt="Mimicry" class="mimicry-icon" />
           <span>Mimicry</span>
           <span class="badge" v-if="store.filters.mimicry.length > 0">{{ store.filters.mimicry.length }}</span>
@@ -721,7 +659,7 @@ const updateExportHeight = (value) => {
         </p>
       </div>
 
-      <div class="filter-section collapsible">
+      <div v-if="config.features.goatIntegration" class="filter-section collapsible">
         <button
           class="collapse-toggle"
           @click="store.showGoatFilter = !store.showGoatFilter"
@@ -896,80 +834,7 @@ const updateExportHeight = (value) => {
 
     </div>
 
-    <!-- Update Database Section -->
-    <div class="update-database-section">
-      <button
-        class="collapse-toggle update-toggle"
-        @click="showUpdateDatabase = !showUpdateDatabase"
-        :class="{ expanded: showUpdateDatabase }"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/>
-        </svg>
-        Update Database
-        <svg class="chevron" :class="{ rotated: showUpdateDatabase }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </button>
-
-      <Transition name="slide">
-        <div v-if="showUpdateDatabase" class="update-content">
-          <p class="filter-hint">
-            Refresh data from external sources. GBIF updates take ~15 minutes.
-          </p>
-
-          <!-- Source checkboxes -->
-          <div class="update-sources">
-            <label class="update-checkbox">
-              <input type="checkbox" v-model="updateSanger" />
-              <span>Sanger Institute</span>
-            </label>
-            <label class="update-checkbox">
-              <input type="checkbox" v-model="updateGbif" />
-              <span>GBIF (includes iNaturalist)</span>
-            </label>
-          </div>
-
-          <!-- Password input -->
-          <div class="update-password">
-            <input
-              type="password"
-              v-model="updatePassword"
-              placeholder="Enter password"
-              :disabled="updateStatus === 'loading'"
-              @keyup.enter="triggerDatabaseUpdate"
-            />
-          </div>
-
-          <!-- Update button -->
-          <button
-            class="update-btn"
-            @click="triggerDatabaseUpdate"
-            :disabled="updateStatus === 'loading'"
-          >
-            <svg v-if="updateStatus !== 'loading'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 12a9 9 0 0 1-9 9"/>
-              <path d="M21 3v6h-6"/>
-              <path d="M3 12a9 9 0 0 1 9-9"/>
-              <path d="M3 21v-6h6"/>
-            </svg>
-            <svg v-else class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10" stroke-dasharray="62" stroke-dashoffset="20"/>
-            </svg>
-            {{ updateStatus === 'loading' ? 'Updating...' : 'Start Update' }}
-          </button>
-
-          <!-- Status message -->
-          <div
-            v-if="updateMessage"
-            class="update-message"
-            :class="{ success: updateStatus === 'success', error: updateStatus === 'error' }"
-          >
-            {{ updateMessage }}
-          </div>
-        </div>
-      </Transition>
-    </div>
+    <DatabaseUpdateSection v-if="config.features.databaseUpdate" />
 
     <!-- Footer Actions -->
     <footer class="sidebar-footer">

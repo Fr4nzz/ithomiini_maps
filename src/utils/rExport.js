@@ -5,6 +5,7 @@ import { applyAbbreviationFormat } from './abbreviations'
 import { generateRScript } from './rExport/rScriptGenerator'
 import { generateReadme, generateMapHTML } from './rExport/htmlReadmeGenerators'
 import { generateRangePolygons } from './rangePolygons'
+import { log } from './logger'
 
 // Build info (injected by Vite)
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
@@ -236,7 +237,7 @@ export async function exportForR(map) {
     // Capture basemap canvas directly (no cropping needed)
     basemapDataUrl = map.getCanvas().toDataURL('image/png')
   } catch (e) {
-    console.warn('[Export] Could not capture basemap:', e)
+    log.export.warn('[Export] Could not capture basemap:', e)
   } finally {
     // ALWAYS restore layer visibility, even if capture failed
     dataLayers.forEach(layerId => {

@@ -1,4 +1,5 @@
 import { concave, convex, buffer, area, bbox, hexGrid, booleanPointInPolygon, featureCollection, point } from '@turf/turf'
+import { log } from './logger'
 
 const GROUP_KEYS = {
   species: 'scientific_name',
@@ -96,7 +97,7 @@ export function generateHexBins(geojson, settings) {
     return _cache.result
   }
 
-  const t0 = performance.now()
+  log.perf.start('generateHexBins')
 
   const dataBbox = bbox(geojson)
   const pad = hexSize / 111 * 1.5
@@ -160,10 +161,7 @@ export function generateHexBins(geojson, settings) {
 
   _cache = { key, result }
 
-  console.log(
-    `[Perf] generateHexBins: ${(performance.now() - t0).toFixed(1)}ms, ` +
-    `${grid.features.length} cells → ${nonEmptyHexes.length} non-empty, max=${maxCount}`
-  )
+  log.perf.end('generateHexBins', `${grid.features.length} cells → ${nonEmptyHexes.length} non-empty, max=${maxCount}`)
 
   return result
 }
@@ -180,7 +178,7 @@ export function generateRangePolygons(geojson, settings, colorMap = {}) {
     return _cache.result
   }
 
-  const t0 = performance.now()
+  log.perf.start('generateRangePolygons')
   const groups = groupFeatures(geojson.features, groupBy)
   const polygonFeatures = []
 
@@ -210,10 +208,7 @@ export function generateRangePolygons(geojson, settings, colorMap = {}) {
 
   _cache = { key, result }
 
-  console.log(
-    `[Perf] generateRangePolygons: ${(performance.now() - t0).toFixed(1)}ms, ` +
-    `${groups.size} groups → ${polygonFeatures.length} polygons`
-  )
+  log.perf.end('generateRangePolygons', `${groups.size} groups → ${polygonFeatures.length} polygons`)
 
   return result
 }

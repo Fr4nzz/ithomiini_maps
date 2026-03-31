@@ -516,22 +516,11 @@ watch(
 
 // Watch for styling/color/shape changes that require map layer rebuild
 watch(
-  [
-    () => store.colorBy,
-    () => store.mapStyle,
-    () => legendStore.customColors,
-    () => legendStore.speciesStyling,
-    () => legendStore.speciesBorderColors,
-    () => legendStore.shapeSettings,
-    () => legendStore.groupShapes,
-    () => legendStore.hiddenItems,
-    () => legendStore.shownLabels
-  ],
+  [() => store.styleVersion, () => legendStore.styleVersion],
   () => {
     if (!isMapReady()) return
     debouncedAddDataLayer({ skipZoom: true })
-  },
-  { deep: true }
+  }
 )
 
 // Watch for focusPoint changes

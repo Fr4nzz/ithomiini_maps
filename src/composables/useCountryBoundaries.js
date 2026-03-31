@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { removeLayerAndSource } from '../utils/mapHelpers'
 import { MAP_STYLES } from '../utils/mapStyles'
+import { log } from '../utils/logger'
 
 const BOUNDARIES_URL = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
 
@@ -33,7 +34,7 @@ export function useCountryBoundaries(map, currentStyle) {
       boundariesData = await response.json()
       return boundariesData
     } catch (error) {
-      console.error('Failed to load country boundaries:', error)
+      log.map.error('Failed to load country boundaries:', error)
       return null
     }
   }
@@ -101,7 +102,7 @@ export function useCountryBoundaries(map, currentStyle) {
         }
       }, beforeLayer)
     } catch (err) {
-      console.error('Error adding boundary layers:', err)
+      log.map.error('Error adding boundary layers:', err)
     }
   }
 

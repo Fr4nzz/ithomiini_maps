@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { RotateCcw } from 'lucide-vue-next'
 import { COLOR_PICKER_PALETTE } from '../../utils/colors'
 import { computePopupPosition } from '../../composables/usePopupPosition'
@@ -298,21 +299,16 @@ function resetColor(e) {
   closePicker()
 }
 
-// Close picker when clicking outside
-function handleClickOutside(e) {
-  if (pickerRef.value && !pickerRef.value.contains(e.target) &&
-      dotRef.value && !dotRef.value.contains(e.target)) {
-    closePicker()
-  }
-}
+onClickOutside(pickerRef, (e) => {
+  if (dotRef.value?.contains(e.target)) return
+  closePicker()
+}, { event: 'mousedown' })
 
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
   syncHsvFromHex(props.color)
 })
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
   // Clean up any lingering drag listeners
   document.removeEventListener('mousemove', handleSVMove)
   document.removeEventListener('mouseup', handleSVUp)

@@ -12,6 +12,7 @@ import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
 import { toPng } from 'html-to-image'
 import { checkAllTiers, extractGoogleDriveFileId } from './utils/imageProxy'
+import { log } from './utils/logger'
 
 const store = useDataStore()
 
@@ -45,7 +46,7 @@ const directExportForR = async () => {
   try {
     await exportForR(mapRef.value)
   } catch (e) {
-    console.error('[Export] R export failed:', e)
+    log.export.error('[Export] R export failed:', e)
     alert('Export failed: ' + e.message)
   }
 }
@@ -186,7 +187,7 @@ const directExportMap = async () => {
     link.click()
 
   } catch (e) {
-    console.error('Image export failed:', e)
+    log.export.error('Image export failed:', e)
     alert('Export failed: ' + e.message)
   } finally {
     // Always restore pixel ratio even if export fails
