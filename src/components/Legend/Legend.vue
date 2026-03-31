@@ -227,6 +227,15 @@ watch(prevContainerBounds, (newBounds, oldBounds) => {
   }
 }, { deep: true })
 
+// Re-measure when leaving edit UI: labels switch from LegendEditableLabel
+// (always nowrap/ellipsis) back to plain <span> (wrap-enabled when wrapLabels is on),
+// which can make items taller and cause overflow.
+watch(showEditUI, (editing) => {
+  if (!editing && legendStore.wrapLabels) {
+    scheduleMeasurement(false, 'editUILeave')
+  }
+})
+
 // Sync shown labels to store
 watch(legendItems, (items) => {
   if (isResizing.value) return
