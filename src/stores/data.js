@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, shallowRef, triggerRef, markRaw, reactive, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { getStorage, setStorage } from '../utils/storageHelpers'
 import { normalizeCountryName } from '../utils/clusterStats'
@@ -7,14 +7,16 @@ import { usePhotoLookup } from './dataPhotoLookup'
 import { useScatterVisualization } from './dataPointGrouping'
 import { useColorMapping } from './dataColorPalette'
 import { useGoatData } from './goatData'
+import { log } from '../utils/logger'
 
 export const useDataStore = defineStore('data', () => {
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const allFeatures = ref([])
-  const imageSupplement = ref([])     // Non-Sanger records used only for photo lookups
+  // shallowRef prevents Vue from deep-proxying 155k+ records (saves ~200MB RAM)
+  const allFeatures = shallowRef([])
+  const imageSupplement = shallowRef([])     // Non-Sanger records used only for photo lookups
   const loadedSources = reactive(new Set()) // Which sources have been fully loaded
   const sourceLoading = reactive(new Set()) // Which sources are currently loading
   const loading = ref(true)
@@ -97,6 +99,7 @@ export const useDataStore = defineStore('data', () => {
     fillOpacity: 0.9,
     borderOpacity: 0.85
   }))
+  const styleVersion = ref(0)
 
   const legendSettings = ref({
     position: 'bottom-left',
@@ -206,12 +209,16 @@ export const useDataStore = defineStore('data', () => {
       for (const item of defaultData) {
         if (item.country) item.country = normalizeCountryName(item.country)
         if (item.source !== defaultSource) item.source = defaultSource
+        markRaw(item)
       }
 
       allFeatures.value = defaultData
+      triggerRef(allFeatures)
+      for (const item of imgData) markRaw(item)
       imageSupplement.value = imgData
+      triggerRef(imageSupplement)
       loadedSources.add(defaultSource)
-      console.log(`✓ Loaded ${defaultData.length} ${defaultSource} records + ${imgData.length} image supplement`)
+      log.data.info(`✓ Loaded ${defaultData.length} ${defaultSource} records + ${imgData.length} image supplement`)
 
       rebuildPhotoLookups()
       loadGbifCitation()
@@ -219,7 +226,7 @@ export const useDataStore = defineStore('data', () => {
       restoreFiltersFromURL()
       await loadSourcesForFilters()
     } catch (e) {
-      console.error('❌ Failed to load data:', e)
+      log.data.error('❌ Failed to load data:', e)
       allFeatures.value = []
     } finally {
       loading.value = false
@@ -251,31 +258,32 @@ export const useDataStore = defineStore('data', () => {
       for (const item of data) {
         if (item.country) item.country = normalizeCountryName(item.country)
         if (item.source !== sourceName) item.source = sourceName
+        markRaw(item)
       }
 
       loadedSources.add(sourceName)
 
       if (batch) {
-        // Accumulate without triggering reactivity
         pendingBatchFeatures.push(...data)
-        console.log(`Loaded ${data.length} ${sourceName} records (batch pending: ${pendingBatchFeatures.length})`)
+        log.data.info(`Loaded ${data.length} ${sourceName} records (batch pending: ${pendingBatchFeatures.length})`)
       } else {
-        allFeatures.value = [...allFeatures.value, ...data]
-        console.log(`Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
+        allFeatures.value.push(...data)
+        triggerRef(allFeatures)
+        log.data.info(`Loaded ${data.length} ${sourceName} records (total: ${allFeatures.value.length})`)
       }
 
       addPhotosFromData(data)
     } catch (e) {
-      console.error(`Failed to load ${sourceName}:`, e)
+      log.data.error(`Failed to load ${sourceName}:`, e)
     } finally {
       sourceLoading.delete(sourceName)
       if (batch) {
         activeBatchLoads--
         if (activeBatchLoads === 0 && pendingBatchFeatures.length > 0) {
-          // All batch loads done — flush once
-          const t0 = performance.now()
-          allFeatures.value = [...allFeatures.value, ...pendingBatchFeatures]
-          console.log(`[Perf] Batch flush: ${pendingBatchFeatures.length} records in ${(performance.now() - t0).toFixed(1)}ms (total: ${allFeatures.value.length})`)
+          log.perf.start('batchFlush')
+          allFeatures.value.push(...pendingBatchFeatures)
+          triggerRef(allFeatures)
+          log.perf.end('batchFlush', `${pendingBatchFeatures.length} records (total: ${allFeatures.value.length})`)
           pendingBatchFeatures = []
         }
       }
@@ -494,9 +502,23 @@ export const useDataStore = defineStore('data', () => {
   // FINAL FILTERED DATA
   // ═══════════════════════════════════════════════════════════════════════════
 
+  const _featureCache = new Map()
+  const getFeatureWrapper = (item) => {
+    let cached = _featureCache.get(item.id)
+    if (!cached) {
+      cached = {
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [item.lng, item.lat] },
+        properties: item
+      }
+      _featureCache.set(item.id, cached)
+    }
+    return cached
+  }
+
   const filteredGeoJSON = computed(() => {
     if (!allFeatures.value.length) return null
-    const t0 = performance.now()
+    log.perf.start('filteredGeoJSON')
 
     let searchTerms = null
     if (filters.value.camidSearch) {
@@ -591,13 +613,9 @@ export const useDataStore = defineStore('data', () => {
 
     const result = {
       type: 'FeatureCollection',
-      features: filtered.map(item => ({
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: [item.lng, item.lat] },
-        properties: item
-      }))
+      features: filtered.map(getFeatureWrapper)
     }
-    console.log(`[Perf] filteredGeoJSON: ${(performance.now() - t0).toFixed(1)}ms, ${allFeatures.value.length} → ${filtered.length} features`)
+    log.perf.end('filteredGeoJSON', `${allFeatures.value.length} → ${filtered.length} features`)
     return result
   })
 
@@ -695,6 +713,7 @@ export const useDataStore = defineStore('data', () => {
   watch(rangeSettings, (val) => setStorage('app-range-settings', val), { deep: true })
   watch(colorBy, (val) => setStorage('map-color-by', val))
   watch(mapStyle, (val) => setStorage('map-style', val), { deep: true })
+  watch([colorBy, mapStyle], () => { styleVersion.value++ }, { deep: true })
   watch(mapView, (val) => setStorage('map-view', val), { deep: true })
   watch(exportSettings, (val) => {
     const toStore = { ...val }
@@ -734,6 +753,7 @@ export const useDataStore = defineStore('data', () => {
     // Map styling state
     colorBy,
     mapStyle,
+    styleVersion,
     legendSettings,
     exportSettings,
     mapView,

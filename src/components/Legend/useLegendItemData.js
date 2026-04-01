@@ -434,34 +434,21 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
 
     groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
 
-    // ── Cap 1: unique items ──
-    // Count UNIQUE items across groups (not display instances). The
-    // maxVisible limit refers to unique color items, not per-group copies.
+    // ── Cap: limit total rendered items (including cross-group duplicates) ──
+    // This ensures effectiveMaxItems maps 1:1 to DOM items, preventing the
+    // "cliff" where 1 extra unique label creates many cross-group entries.
     const maxVisible = getEffectiveMaxItems()
-    const uniqueLabels = new Set()
-    for (const g of groups) {
-      for (const item of g.items) {
-        if (item.visible !== false) uniqueLabels.add(item.label)
-      }
-    }
-    if (uniqueLabels.size > maxVisible) {
-      const keepSet = new Set([...uniqueLabels].slice(0, maxVisible))
-      groups = groups.map(g => {
-        const filtered = g.items.filter(item =>
-          item.visible === false || keepSet.has(item.label)
-        )
-        if (filtered.length === 0) return null
-        return { ...g, items: filtered }
-      }).filter(Boolean)
-    }
-
-    // ── Cap 2: cross-group group limit ──
-    // When items appear in multiple groups (e.g. colorBy=status grouped by
-    // species), limit groups to the measured count that physically fits.
-    const maxGroups = getMaxDisplayGroups?.()
-    if (maxGroups != null && groups.length > maxGroups) {
-      groups = groups.slice(0, maxGroups)
-    }
+    let totalRendered = 0
+    groups = groups.map(g => {
+      if (totalRendered >= maxVisible) return null
+      const remaining = maxVisible - totalRendered
+      const visible = g.items.filter(item => item.visible !== false)
+      const hidden = g.items.filter(item => item.visible === false)
+      const kept = visible.slice(0, remaining)
+      totalRendered += kept.length
+      if (kept.length === 0 && hidden.length === 0) return null
+      return { ...g, items: [...kept, ...hidden] }
+    }).filter(Boolean)
 
     return { type: 'grouped', groups }
   })

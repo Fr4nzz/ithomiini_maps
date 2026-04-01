@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useDataStore } from './data'
 import { applyAbbreviationFormat } from '../utils/abbreviations'
 import { getStorage, setStorage } from '../utils/storageHelpers'
@@ -101,6 +101,7 @@ export const useLegendStore = defineStore('legend', () => {
   // Per-group shapes (custom assignments)
   // Format: { 'Mechanitis polymnia': 'triangle', ... }
   const groupShapes = ref(getStorage('legend-group-shapes', {}))
+  const styleVersion = ref(0)
 
   // ═══════════════════════════════════════════════════════════════════════════
   // DISPLAY NAME FORMAT SETTINGS
@@ -603,6 +604,12 @@ export const useLegendStore = defineStore('legend', () => {
     return groupShapes.value[groupKey] || 'circle'
   }
 
+  watch(
+    [customColors, speciesStyling, speciesBorderColors, shapeSettings, groupShapes, hiddenItems, shownLabels],
+    () => { styleVersion.value++ },
+    { deep: true }
+  )
+
   return {
     // State
     position,
@@ -614,6 +621,7 @@ export const useLegendStore = defineStore('legend', () => {
     shownLabels,
     customLabels,
     customColors,
+    styleVersion,
     hiddenItems,
 
     // Grouping state

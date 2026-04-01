@@ -2,6 +2,7 @@
 // Extracted from data.js for maintainability (~200 lines)
 
 import { ref } from 'vue'
+import { log } from '../utils/logger'
 
 /**
  * Composable for photo lookup management
@@ -19,9 +20,8 @@ export function usePhotoLookup(allFeatures, imageSupplement) {
    * Used only on initial load; subsequent sources use addPhotosFromData().
    */
   const rebuildPhotoLookups = () => {
-    const combined = [...allFeatures.value, ...imageSupplement.value]
-    buildPhotoLookup(combined)
-    buildMimicryPhotoLookup(combined)
+    buildPhotoLookup(allFeatures.value, imageSupplement.value)
+    buildMimicryPhotoLookup(allFeatures.value, imageSupplement.value)
   }
 
   /**
@@ -67,68 +67,71 @@ export function usePhotoLookup(allFeatures, imageSupplement) {
       }
     }
     mimicryPhotoLookup.value = mLookup
-    console.log(`Incremental photo update: +${added} entries`)
+    log.photo.info(`Incremental photo update: +${added} entries`)
   }
 
   /**
    * Build photo lookup table for finding photos by species/subspecies
    */
-  const buildPhotoLookup = (data) => {
+  const buildPhotoLookup = (...dataSources) => {
     const lookup = {}
 
-    for (const item of data) {
-      if (!item.image_url) continue
+    for (const data of dataSources) {
+      for (const item of data) {
+        if (!item.image_url) continue
 
-      const subspeciesKey = `${item.scientific_name || ''} ${item.subspecies || ''}`.toLowerCase().trim()
-      const speciesKey = (item.scientific_name || '').toLowerCase().trim()
+        const subspeciesKey = `${item.scientific_name || ''} ${item.subspecies || ''}`.toLowerCase().trim()
+        const speciesKey = (item.scientific_name || '').toLowerCase().trim()
 
-      if (subspeciesKey && !lookup[subspeciesKey]) {
-        lookup[subspeciesKey] = {
-          url: item.image_url,
-          id: item.id,
-          exact: false
+        if (subspeciesKey && !lookup[subspeciesKey]) {
+          lookup[subspeciesKey] = {
+            url: item.image_url,
+            id: item.id,
+            exact: false
+          }
         }
-      }
-      if (speciesKey && !lookup[speciesKey]) {
-        lookup[speciesKey] = {
-          url: item.image_url,
-          id: item.id,
-          exact: false
+        if (speciesKey && !lookup[speciesKey]) {
+          lookup[speciesKey] = {
+            url: item.image_url,
+            id: item.id,
+            exact: false
+          }
         }
       }
     }
 
     photoLookup.value = lookup
-    console.log(`Built photo lookup with ${Object.keys(lookup).length} entries`)
+    log.photo.info(`Built photo lookup with ${Object.keys(lookup).length} entries`)
   }
 
   /**
    * Build mimicry ring photo lookup for the visual selector
    */
-  const buildMimicryPhotoLookup = (data) => {
+  const buildMimicryPhotoLookup = (...dataSources) => {
     const lookup = {}
 
-    for (const item of data) {
-      const ring = item.mimicry_ring
-      if (!ring || ring === 'Unknown' || !item.image_url) continue
+    for (const data of dataSources) {
+      for (const item of data) {
+        const ring = item.mimicry_ring
+        if (!ring || ring === 'Unknown' || !item.image_url) continue
 
-      if (!lookup[ring]) {
-        lookup[ring] = {
-          representatives: [],
-          currentIndex: 0
+        if (!lookup[ring]) {
+          lookup[ring] = {
+            representatives: [],
+            currentIndex: 0
+          }
         }
-      }
 
-      lookup[ring].representatives.push({
-        scientific_name: item.scientific_name,
-        subspecies: item.subspecies,
-        image_url: item.image_url,
-        source: item.source,
-        id: item.id
-      })
+        lookup[ring].representatives.push({
+          scientific_name: item.scientific_name,
+          subspecies: item.subspecies,
+          image_url: item.image_url,
+          source: item.source,
+          id: item.id
+        })
+      }
     }
 
-    // Sort and dedupe representatives
     for (const ring of Object.keys(lookup)) {
       const reps = lookup[ring].representatives
 
@@ -150,7 +153,7 @@ export function usePhotoLookup(allFeatures, imageSupplement) {
     }
 
     mimicryPhotoLookup.value = lookup
-    console.log(`Built mimicry photo lookup for ${Object.keys(lookup).length} rings`)
+    log.photo.info(`Built mimicry photo lookup for ${Object.keys(lookup).length} rings`)
   }
 
   /**
@@ -163,7 +166,7 @@ export function usePhotoLookup(allFeatures, imageSupplement) {
 
       if (response.ok) {
         gbifCitation.value = await response.json()
-        console.log('✓ Loaded GBIF citation data')
+        log.photo.info('✓ Loaded GBIF citation data')
       }
     } catch (e) {
       gbifCitation.value = null
