@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-15 20:37:46 UTC",
+    "generated_at": "2026-03-25 03:31:35 UTC",
     "gbif_api": "https://api.gbif.org/v1",
     "backbone": "GBIF Backbone Taxonomy",
     "higher_constraints": {
@@ -11,7 +11,7 @@
       "family": "Nymphalidae"
     },
     "cache_stats": {
-      "api_built_at": "2026-03-15 20:16:23 UTC",
+      "api_built_at": "2026-03-25 03:24:19 UTC",
       "source": "GBIF Backbone Taxonomy via species/search API",
       "genera_fetched": 173,
       "total_taxa": 14032,
@@ -22,10 +22,10 @@
     "api_fallback_calls": 484
   },
   "quality_assessment": {
-    "total_records": 36192,
+    "total_records": 36195,
     "unique_genera": 184,
     "unique_species": 705,
-    "unique_subspecies": 1353,
+    "unique_subspecies": 1352,
     "unique_scientific_names": 705
   },
   "quality_issues": {
@@ -80,7 +80,7 @@
       "ssp. nigricans": 1
     },
     "free_text_subspecies": {},
-    "missing_subspecies": 5690,
+    "missing_subspecies": 5682,
     "not_found_taxonomy": 94,
     "malformed_names": [
       "Riodinidae",
@@ -142,26 +142,27 @@
       "abitagua/lutzi": 2,
       "deceptus/phasianita": 2,
       "zelia/pulcheria": 1,
-      "insolita/contigua": 1
+      "insolita/contigua": 1,
+      "thielei / cephallenia": 1
     }
   },
   "curation_summary": {
-    "total_curated": 2178,
+    "total_curated": 2174,
     "statuses": {
       "verified_nominotypical": 150,
-      "subspecies_unresolved": 604,
+      "subspecies_unresolved": 601,
       "undescribed": 361,
-      "verified": 692,
+      "verified": 690,
       "verified_literature": 203,
       "higher_rank_only": 37,
       "synonym_resolved": 65,
       "not_found": 1,
-      "non_standard_subspecies": 63,
+      "non_standard_subspecies": 64,
       "subspecies_synonym": 2
     },
     "flags": {
       "NOMINOTYPICAL": 322,
-      "SUBSPECIES_NOT_IN_BACKBONE": 631,
+      "SUBSPECIES_NOT_IN_BACKBONE": 628,
       "UNDESCRIBED_SUBSPECIES": 415,
       "SANGER_TAXONOMY_VERIFIED": 203,
       "SUBSPECIES_FUZZY": 15,
@@ -173,17 +174,17 @@
       "FUZZY_MATCH_REJECTED": 1,
       "FREE_TEXT_SUBSPECIES": 45,
       "FORM_NAME": 14,
-      "SLASH_ALTERNATIVE": 8,
+      "SLASH_ALTERNATIVE": 9,
       "SUBSPECIES_SYNONYM": 3,
       "QUESTION_MARK_SUBSPECIES": 6
     },
     "subspecies_categories": {
-      "standard": 1301,
+      "standard": 1299,
       "undescribed": 415,
-      "absent": 389,
+      "absent": 386,
       "free_text": 45,
       "form_name": 14,
-      "slash_alt": 8,
+      "slash_alt": 9,
       "question_mark": 6
     }
   },
@@ -129593,160 +129594,6 @@
     {
       "input": {
         "genus": "Heliconius",
-        "species_epithet": "erato",
-        "subspecies": null,
-        "scientific_name": "Heliconius erato",
-        "ssp_category": "absent",
-        "ssp_cleaned": null,
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Heliconius erato",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "ACCEPTED",
-        "gbifKey": 1900872,
-        "canonicalName": "Heliconius erato",
-        "scientificName": "Heliconius erato (Linnaeus, 1758)",
-        "rank": "SPECIES",
-        "synonym": false
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 1900872,
-        "canonicalName": "Heliconius erato",
-        "scientificName": "Heliconius erato (Linnaeus, 1758)",
-        "status": "ACCEPTED",
-        "rank": "SPECIES"
-      },
-      "recognized_subspecies": [
-        {
-          "name": "Heliconius erato andremona",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato extrema",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato helena",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato leda",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato oberthuri",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato roseoflava",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato udalrica",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato albida",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato constricta",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato fuliginosas",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato hemicycla",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato magnificus",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato protea",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato telloides",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato amazona",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato erythrea",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato fumata",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato latiflava",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato nigrobasalis",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato reductimacula",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato tellus",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato erato",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato hydara",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato emma",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato lativitta",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato notabilis",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato chestertonii",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato favorinus",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius erato demophoon",
-          "status": "ACCEPTED"
-        }
-      ],
-      "curated_name": "Heliconius erato",
-      "curation_basis": "GBIF",
-      "literature_action": null,
-      "status": "verified",
-      "flags": [],
-      "notes": []
-    },
-    {
-      "input": {
-        "genus": "Heliconius",
         "species_epithet": "lalitae",
         "subspecies": null,
         "scientific_name": "Heliconius lalitae",
@@ -129785,10 +129632,10 @@
       "input": {
         "genus": "Heliconius",
         "species_epithet": "hecale",
-        "subspecies": "vetestus",
+        "subspecies": "vetustus",
         "scientific_name": "Heliconius hecale",
         "ssp_category": "standard",
-        "ssp_cleaned": "vetestus",
+        "ssp_cleaned": "vetustus",
         "is_nominotypical": false
       },
       "original_scientific_name": "Heliconius hecale",
@@ -129802,7 +129649,16 @@
         "rank": "SPECIES",
         "synonym": false
       },
-      "subspecies_match": null,
+      "subspecies_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 9592116,
+        "canonicalName": "Heliconius hecale vetustus",
+        "scientificName": "Heliconius hecale vetustus Butler, 1873",
+        "rank": "SUBSPECIES",
+        "synonym": false
+      },
       "accepted_name": {
         "key": 1900199,
         "canonicalName": "Heliconius hecale",
@@ -129864,115 +129720,23 @@
           "status": "ACCEPTED"
         }
       ],
-      "curated_name": "Heliconius hecale vetestus",
+      "curated_name": "Heliconius hecale vetustus",
       "curation_basis": "GBIF",
       "literature_action": null,
-      "status": "subspecies_unresolved",
-      "flags": [
-        "SUBSPECIES_NOT_IN_BACKBONE"
-      ],
+      "status": "verified",
+      "flags": [],
       "notes": [
-        "Subspecies 'vetestus' not in GBIF backbone (parent species cached, children list checked)."
+        "Subspecies 'vetustus' found in GBIF backbone (cache)."
       ]
     },
     {
       "input": {
         "genus": "Heliconius",
-        "species_epithet": "hecale",
-        "subspecies": null,
-        "scientific_name": "Heliconius hecale",
-        "ssp_category": "absent",
-        "ssp_cleaned": null,
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Heliconius hecale",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "ACCEPTED",
-        "gbifKey": 1900199,
-        "canonicalName": "Heliconius hecale",
-        "scientificName": "Heliconius hecale (Fabricius, 1775)",
-        "rank": "SPECIES",
-        "synonym": false
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 1900199,
-        "canonicalName": "Heliconius hecale",
-        "scientificName": "Heliconius hecale (Fabricius, 1775)",
-        "status": "ACCEPTED",
-        "rank": "SPECIES"
-      },
-      "recognized_subspecies": [
-        {
-          "name": "Heliconius hecale novatus",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale fulvescens",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale shanki",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale latus",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale clearei",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale rosalesi",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale ithaca",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale hecale",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale fraternitas",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale vetustus",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale zuleika",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale melicerta",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Heliconius hecale felix",
-          "status": "ACCEPTED"
-        }
-      ],
-      "curated_name": "Heliconius hecale",
-      "curation_basis": "GBIF",
-      "literature_action": null,
-      "status": "verified",
-      "flags": [],
-      "notes": []
-    },
-    {
-      "input": {
-        "genus": "Heliconius",
         "species_epithet": "ethilla",
-        "subspecies": null,
+        "subspecies": "thielei / cephallenia",
         "scientific_name": "Heliconius ethilla",
-        "ssp_category": "absent",
-        "ssp_cleaned": null,
+        "ssp_category": "slash_alt",
+        "ssp_cleaned": "thielei / cephallenia",
         "is_nominotypical": false
       },
       "original_scientific_name": "Heliconius ethilla",
@@ -129986,7 +129750,16 @@
         "rank": "SPECIES",
         "synonym": false
       },
-      "subspecies_match": null,
+      "subspecies_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 6223292,
+        "canonicalName": "Heliconius ethilla cephallenia",
+        "scientificName": "Heliconius ethilla cephallenia Felder, 1865",
+        "rank": "SUBSPECIES",
+        "synonym": false
+      },
       "accepted_name": {
         "key": 1900632,
         "canonicalName": "Heliconius ethilla",
@@ -130051,9 +129824,15 @@
       "curated_name": "Heliconius ethilla",
       "curation_basis": "GBIF",
       "literature_action": null,
-      "status": "verified",
-      "flags": [],
-      "notes": []
+      "status": "non_standard_subspecies",
+      "flags": [
+        "SLASH_ALTERNATIVE"
+      ],
+      "notes": [
+        "Slash-delimited alternatives: ['thielei', 'cephallenia']",
+        "Alternative 'thielei': Subspecies 'thielei' found in GBIF backbone (cache).",
+        "Alternative 'cephallenia': Subspecies 'cephallenia' found in GBIF backbone (cache)."
+      ]
     },
     {
       "input": {
@@ -130165,158 +129944,6 @@
       "notes": [
         "Uncertainty marker in subspecies: 'pannifera??'",
         "Subspecies 'pannifera' not in GBIF backbone (parent species cached, children list checked)."
-      ]
-    },
-    {
-      "input": {
-        "genus": "Hypothyris",
-        "species_epithet": "ninonia",
-        "subspecies": "gele stippen",
-        "scientific_name": "Hypothyris ninonia",
-        "ssp_category": "standard",
-        "ssp_cleaned": "gele stippen",
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Hypothyris ninonia",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "ACCEPTED",
-        "gbifKey": 5133786,
-        "canonicalName": "Hypothyris ninonia",
-        "scientificName": "Hypothyris ninonia (H\u00fcbner, 1806)",
-        "rank": "SPECIES",
-        "synonym": false
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 5133786,
-        "canonicalName": "Hypothyris ninonia",
-        "scientificName": "Hypothyris ninonia (H\u00fcbner, 1806)",
-        "status": "ACCEPTED",
-        "rank": "SPECIES"
-      },
-      "recognized_subspecies": [
-        {
-          "name": "Hypothyris ninonia ninonia",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris ninonia latefasciata",
-          "status": "ACCEPTED"
-        }
-      ],
-      "curated_name": "Hypothyris ninonia gele stippen",
-      "curation_basis": "GBIF",
-      "literature_action": null,
-      "status": "subspecies_unresolved",
-      "flags": [
-        "SUBSPECIES_NOT_IN_BACKBONE"
-      ],
-      "notes": [
-        "Subspecies 'gele stippen' not in GBIF backbone (parent species cached, children list checked)."
-      ]
-    },
-    {
-      "input": {
-        "genus": "Hypothyris",
-        "species_epithet": "euclea",
-        "subspecies": "witte stippen",
-        "scientific_name": "Hypothyris euclea",
-        "ssp_category": "standard",
-        "ssp_cleaned": "witte stippen",
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Hypothyris euclea",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "ACCEPTED",
-        "gbifKey": 5133736,
-        "canonicalName": "Hypothyris euclea",
-        "scientificName": "Hypothyris euclea (Godart, 1819)",
-        "rank": "SPECIES",
-        "synonym": false
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 5133736,
-        "canonicalName": "Hypothyris euclea",
-        "scientificName": "Hypothyris euclea (Godart, 1819)",
-        "status": "ACCEPTED",
-        "rank": "SPECIES"
-      },
-      "recognized_subspecies": [
-        {
-          "name": "Hypothyris euclea intermedia",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea valora",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea barii",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea forbesi",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea interrupta",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea nina",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea philetaera",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea caldasensis",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea leucania",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea hemimelas",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea laphria",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea pachiteae",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea callanga",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea peruviana",
-          "status": "ACCEPTED"
-        },
-        {
-          "name": "Hypothyris euclea euclea",
-          "status": "ACCEPTED"
-        }
-      ],
-      "curated_name": "Hypothyris euclea witte stippen",
-      "curation_basis": "GBIF",
-      "literature_action": null,
-      "status": "subspecies_unresolved",
-      "flags": [
-        "SUBSPECIES_NOT_IN_BACKBONE"
-      ],
-      "notes": [
-        "Subspecies 'witte stippen' not in GBIF backbone (parent species cached, children list checked)."
       ]
     },
     {

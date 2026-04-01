@@ -72,7 +72,7 @@ export async function exportForR(map) {
       exportDate: new Date().toISOString(),
       recordCount: geo.features.length,
       colorBy: colorBy,
-      source: 'https://fr4nzz.github.io/ithomiini_maps/'
+      source: 'https://rapidspeciation.github.io/ithomiini_maps/'
     },
     features: featuresWithColors
   }
