@@ -7,7 +7,7 @@ export default {
   title: 'Ithomiini',
   subtitle: 'Distribution Maps',
   logoPath: new URL('./assets/Map_icon.svg', import.meta.url).href,
-  repoUrl: 'https://github.com/Fr4nzz/ithomiini_maps/',
+  repoUrl: 'https://github.com/rapidspeciation/ithomiini_maps/',
 
   // Data configuration
   dataDir: '/data/',
@@ -15,7 +15,7 @@ export default {
 
   // Database update (set via environment variables for security)
   workerUrl: import.meta.env.VITE_WORKER_URL || '',
-  githubOwner: import.meta.env.VITE_GITHUB_OWNER || 'Fr4nzz',
+  githubOwner: import.meta.env.VITE_GITHUB_OWNER || 'rapidspeciation',
   githubRepo: import.meta.env.VITE_GITHUB_REPO || 'ithomiini_maps',
 
   // Feature flags — disable features you don't need
