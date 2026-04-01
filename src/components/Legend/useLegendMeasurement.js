@@ -137,6 +137,7 @@ export function useLegendMeasurement({
   const measuredItemCount = ref(null)
   const measuredSnugHeight = ref(null)
   const prevMeasuredCount = ref(null)
+  const correctionSettled = ref(false)
   // In cross-group mode, the number of DOM items that physically fit.
   // Used by Cap 2 in groupedLegendData to limit groups more accurately
   // than the height-based renderUpperBound estimate.
@@ -155,6 +156,7 @@ export function useLegendMeasurement({
     correctionSteps = 0
     binarySearchActive = false
     binarySearchDone = false
+    correctionSettled.value = false
     correctionGeneration++
   }
 
@@ -273,15 +275,16 @@ export function useLegendMeasurement({
     const itemsEl = el.querySelector('.legend-items')
     if (!itemsEl) return
 
-    const lastContent = moreEl || itemsEl.lastElementChild
-    if (!lastContent) return
+    const lastItem = itemsEl.lastElementChild
+    if (!lastItem) return
 
     const legendTop = legendEl.getBoundingClientRect().top
-    const lastBottom = lastContent.getBoundingClientRect().bottom
+    const lastItemBottom = lastItem.getBoundingClientRect().bottom
+    const moreReserve = moreEl ? 40 : 0
     const padding = 12
-    const newSnug = Math.max(120, Math.ceil(lastBottom - legendTop + padding))
+    const newSnug = Math.max(120, Math.ceil(lastItemBottom - legendTop + moreReserve + padding))
 
-    if (measuredSnugHeight.value && Math.abs(newSnug - measuredSnugHeight.value) > 4) {
+    if (!measuredSnugHeight.value || Math.abs(newSnug - measuredSnugHeight.value) > 4) {
       measuredSnugHeight.value = newSnug
     }
   }
@@ -384,6 +387,7 @@ export function useLegendMeasurement({
     log.legend.info(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
     log.legend.info(`[Perf] legendMeasurement: settled in ${correctionSteps} steps`)
     correctionSteps = 0
+    correctionSettled.value = true
     updateSnugHeightFromDOM()
   }
 
@@ -510,14 +514,20 @@ export function useLegendMeasurement({
     }
     domFitCount = Math.max(1, domFitCount)
 
-    // DOM→unique item count translation for grouped views where DOM items > unique items
+    // DOM→unique: count distinct labels in fitting DOM items (not ratio)
     let count = domFitCount
     let countNoMore = domFitCountNoMore
-    if (measurableItems.length > totalSorted) {
-      if (domFitCount < measurableItems.length) {
-        count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
+    if (isGroupedView && measurableItems.length > totalSorted) {
+      const uniqueFit = new Set()
+      const uniqueFitNoMore = new Set()
+      for (let i = 0; i < measurableItems.length; i++) {
+        const label = measurableItems[i].querySelector('.legend-label')?.textContent?.trim()
+        if (!label) continue
+        if (i < domFitCount) uniqueFit.add(label)
+        if (i < domFitCountNoMore) uniqueFitNoMore.add(label)
       }
-      countNoMore = Math.max(1, Math.floor(domFitCountNoMore * totalSorted / measurableItems.length))
+      count = Math.max(1, uniqueFit.size)
+      countNoMore = Math.max(1, uniqueFitNoMore.size)
     }
 
     // If skipping "+N more" would only leave 1-2 items hidden, AND those items
@@ -552,8 +562,7 @@ export function useLegendMeasurement({
     if (measuredItemCount.value === null) {
       return targetLegendHeight.value
     }
-    const allShown = measuredItemCount.value >= sortedAllItems.value.length
-    if (!allShown) return targetLegendHeight.value
+    if (!correctionSettled.value) return targetLegendHeight.value
     return measuredSnugHeight.value || targetLegendHeight.value
   })
 
