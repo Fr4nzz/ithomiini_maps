@@ -552,6 +552,8 @@ export function useLegendMeasurement({
     if (measuredItemCount.value === null) {
       return targetLegendHeight.value
     }
+    const allShown = measuredItemCount.value >= sortedAllItems.value.length
+    if (!allShown) return targetLegendHeight.value
     return measuredSnugHeight.value || targetLegendHeight.value
   })
 
