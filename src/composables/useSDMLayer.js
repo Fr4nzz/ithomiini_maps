@@ -187,9 +187,11 @@ export function useSDMLayer(map) {
       return
     }
 
+    const basePath = import.meta.env.BASE_URL || '/'
+
     if (sdmStore.showRichness) {
       await loadAndRenderGeoTIFF(
-        '/data/sdm/species_richness.tif',
+        `${basePath}data/sdm/species_richness.tif`,
         (val) => richnessToColor(val, sdmStore.metadata?.n_species || 100)
       )
     } else if (sdmStore.selectedSpecies) {
@@ -197,7 +199,7 @@ export function useSDMLayer(map) {
       if (species) {
         const safeName = species.name.replace(/ /g, '_').toLowerCase()
         await loadAndRenderGeoTIFF(
-          `/data/sdm/species/${safeName}_ensemble.tif`,
+          `${basePath}data/sdm/species/${safeName}_ensemble.tif`,
           suitabilityToColor
         )
       }

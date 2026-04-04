@@ -38,7 +38,8 @@ export const useSDMStore = defineStore('sdm', () => {
     error.value = null
 
     try {
-      const response = await fetch('/data/sdm/sdm_metadata.json')
+      const basePath = import.meta.env.BASE_URL || '/'
+      const response = await fetch(`${basePath}data/sdm/sdm_metadata.json`)
       if (!response.ok) {
         // SDM data not available yet
         metadata.value = null

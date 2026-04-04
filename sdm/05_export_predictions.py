@@ -214,8 +214,18 @@ def generate_web_metadata():
     }
 
     metadata_path = OUTPUT_DIR / "sdm_metadata.json"
+    # Replace NaN with null for valid JSON
+    import math
+    def sanitize(obj):
+        if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+            return None
+        if isinstance(obj, dict):
+            return {k: sanitize(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [sanitize(v) for v in obj]
+        return obj
     with open(metadata_path, 'w') as f:
-        json.dump(metadata, f, indent=2)
+        json.dump(sanitize(metadata), f, indent=2)
     print(f"  Saved: {metadata_path}")
 
     return metadata
