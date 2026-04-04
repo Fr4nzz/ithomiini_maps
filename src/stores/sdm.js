@@ -1,6 +1,8 @@
 /**
  * SDM (Species Distribution Model) store
- * Manages SDM prediction layers on the map
+ * Manages SDM prediction layers on the map.
+ * Reacts to the species filter in the data store — shows SDM automatically
+ * when 1-2 species are selected.
  */
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
@@ -9,61 +11,49 @@ export const useSDMStore = defineStore('sdm', () => {
   // State
   const metadata = ref(null)
   const loading = ref(false)
-  const error = ref(null)
   const enabled = ref(false)
-  const selectedSpecies = ref(null)
-  const showRichness = ref(false)
   const opacity = ref(0.6)
 
   // Computed
-  const speciesList = computed(() => {
-    if (!metadata.value) return []
-    return metadata.value.species
-      .map(s => ({
-        name: s.species,
-        file: s.file,
-        records: s.n_records,
-        auc: s.auc,
-      }))
-      .sort((a, b) => b.records - a.records)
+  const speciesLookup = computed(() => {
+    if (!metadata.value) return new Map()
+    const map = new Map()
+    for (const s of metadata.value.species) {
+      map.set(s.species, s)
+    }
+    return map
   })
 
   const hasData = computed(() => metadata.value !== null && metadata.value.n_species > 0)
+
+  const nSpecies = computed(() => metadata.value?.n_species || 0)
 
   // Actions
   async function loadMetadata() {
     if (metadata.value) return
 
     loading.value = true
-    error.value = null
-
     try {
       const basePath = import.meta.env.BASE_URL || '/'
       const response = await fetch(`${basePath}data/sdm/sdm_metadata.json`)
       if (!response.ok) {
-        // SDM data not available yet
         metadata.value = null
         return
       }
       metadata.value = await response.json()
-    } catch (e) {
-      // Silently fail — SDM is optional
+    } catch {
       metadata.value = null
     } finally {
       loading.value = false
     }
   }
 
-  function selectSpecies(speciesName) {
-    selectedSpecies.value = speciesName
-    showRichness.value = false
+  function hasSDMForSpecies(speciesName) {
+    return speciesLookup.value.has(speciesName)
   }
 
-  function toggleRichness() {
-    showRichness.value = !showRichness.value
-    if (showRichness.value) {
-      selectedSpecies.value = null
-    }
+  function getSDMInfo(speciesName) {
+    return speciesLookup.value.get(speciesName) || null
   }
 
   function setOpacity(val) {
@@ -80,16 +70,14 @@ export const useSDMStore = defineStore('sdm', () => {
   return {
     metadata,
     loading,
-    error,
     enabled,
-    selectedSpecies,
-    showRichness,
     opacity,
-    speciesList,
+    speciesLookup,
     hasData,
+    nSpecies,
     loadMetadata,
-    selectSpecies,
-    toggleRichness,
+    hasSDMForSpecies,
+    getSDMInfo,
     setOpacity,
     toggle,
   }
