@@ -2,25 +2,30 @@
 """
 Step 4: Run Species Distribution Models.
 Fits MaxEnt, Random Forest, and GBM for each viable species,
-evaluates with spatial cross-validation, and creates ensemble predictions.
+evaluates with spatial cross-validation (AUC, TSS, Boyce index),
+applies VIF-based variable selection and bias-weighted background,
+generates MESS extrapolation maps, and creates ensemble predictions.
 """
 
 import json
 import yaml
+import fnmatch
 import numpy as np
 import pandas as pd
 import geopandas as gpd
 from pathlib import Path
-from tqdm import tqdm
 import warnings
 import sys
 import argparse
 
 from utils.spatial import (
+    create_bias_raster,
     generate_background_points,
     extract_values_at_points,
     create_prediction_grid,
     save_prediction_raster,
+    filter_by_vif,
+    compute_mess,
 )
 from utils.evaluation import (
     evaluate_model,
@@ -43,15 +48,32 @@ FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def get_env_rasters():
-    """Get list of environmental raster paths."""
+    """Get list of environmental raster paths, excluding host plant layers."""
     cropped_dir = ENV_DIR / "cropped"
-    rasters = sorted(cropped_dir.glob("*.tif"))
+    exclude = config['env_data'].get('exclude_patterns', [])
+
+    rasters = []
+    for r in sorted(cropped_dir.glob("*.tif")):
+        excluded = any(fnmatch.fnmatch(r.name, pat) for pat in exclude)
+        if not excluded:
+            rasters.append(r)
+
     if not rasters:
         print("ERROR: No environmental rasters found. Run step 02 first.")
         sys.exit(1)
+
     print(f"  Using {len(rasters)} environmental layers:")
     for r in rasters:
         print(f"    - {r.name}")
+
+    if exclude:
+        excluded_files = [r for r in sorted(cropped_dir.glob("*.tif"))
+                         if any(fnmatch.fnmatch(r.name, pat) for pat in exclude)]
+        if excluded_files:
+            print(f"  Excluded {len(excluded_files)} layers (host plants etc.):")
+            for r in excluded_files:
+                print(f"    - {r.name}")
+
     return rasters
 
 
@@ -74,17 +96,15 @@ def load_all_occurrences():
     return coords
 
 
-def prepare_training_data(species_gdf, env_rasters, all_coords):
+def prepare_training_data(species_gdf, env_rasters, all_coords,
+                          bias_weights=None, bias_grid_coords=None):
     """
-    Prepare training data: extract environmental values at presence
-    and background points.
+    Prepare training data with bias-weighted background and VIF filtering.
     """
     modelling = config['modelling']
 
-    # Presence points
     pres_coords = np.array([(g.x, g.y) for g in species_gdf.geometry])
 
-    # Define accessible area (species extent + buffer)
     buffer = modelling['accessible_area_buffer']
     extent = {
         'west': max(pres_coords[:, 0].min() - buffer, config['study_area']['west']),
@@ -93,22 +113,20 @@ def prepare_training_data(species_gdf, env_rasters, all_coords):
         'north': min(pres_coords[:, 1].max() + buffer, config['study_area']['north']),
     }
 
-    # Generate background points
-    bg_strategy = modelling['background_strategy']
-    target_coords = all_coords if bg_strategy == 'target_group' else None
-
+    # Generate background points (bias-weighted if available)
     bg_gdf = generate_background_points(
         n_points=modelling['n_background'],
         extent=extent,
         occurrence_coords=pres_coords,
-        target_group_coords=target_coords,
+        target_group_coords=all_coords,
+        bias_weights=bias_weights,
+        bias_grid_coords=bias_grid_coords,
     )
 
     # Extract environmental values
     pres_env = extract_values_at_points(env_rasters, species_gdf)
     bg_env = extract_values_at_points(env_rasters, bg_gdf)
 
-    # Combine
     pres_env['presence'] = 1
     bg_env['presence'] = 0
 
@@ -116,15 +134,12 @@ def prepare_training_data(species_gdf, env_rasters, all_coords):
 
     # Add coordinates for spatial CV
     pres_xy = pd.DataFrame(pres_coords, columns=['lon', 'lat'])
-    bg_xy = pd.DataFrame(
-        [(g.x, g.y) for g in bg_gdf.geometry],
-        columns=['lon', 'lat']
-    )
-    coords = pd.concat([pres_xy, bg_xy], ignore_index=True)
-    data['lon'] = coords['lon']
-    data['lat'] = coords['lat']
+    bg_xy = pd.DataFrame([(g.x, g.y) for g in bg_gdf.geometry], columns=['lon', 'lat'])
+    coords_df = pd.concat([pres_xy, bg_xy], ignore_index=True)
+    data['lon'] = coords_df['lon'].values
+    data['lat'] = coords_df['lat'].values
 
-    # Drop rows with NaN environmental values
+    # Drop rows with NaN
     env_cols = [c for c in data.columns if c not in ['presence', 'lon', 'lat']]
     initial_len = len(data)
     data = data.dropna(subset=env_cols)
@@ -132,6 +147,16 @@ def prepare_training_data(species_gdf, env_rasters, all_coords):
         dropped = initial_len - len(data)
         pres_remaining = data['presence'].sum()
         print(f"    Dropped {dropped} rows with NaN env values ({int(pres_remaining)} presences remain)")
+
+    # VIF-based variable selection
+    vif_threshold = modelling.get('vif_threshold', 0)
+    if vif_threshold > 0 and len(env_cols) > 2:
+        X_env = data[env_cols].values
+        _, selected_cols, removed_cols = filter_by_vif(X_env, env_cols, threshold=vif_threshold)
+        if removed_cols:
+            print(f"    VIF removed {len(removed_cols)} correlated variables: {removed_cols}")
+            env_cols = selected_cols
+        print(f"    Using {len(env_cols)} variables after VIF filtering")
 
     return data, env_cols, extent
 
@@ -147,7 +172,6 @@ def fit_maxent(X_train, y_train, X_test=None):
             n_threshold_features=10,
         )
         model.fit(X_train, y_train)
-
         if X_test is not None:
             return model, model.predict(X_test)
         return model, None
@@ -160,21 +184,16 @@ def fit_random_forest(X_train, y_train, X_test=None):
     """Fit Random Forest model."""
     from sklearn.ensemble import RandomForestClassifier
 
-    # Weight classes to handle imbalance
     n_pres = y_train.sum()
     n_bg = len(y_train) - n_pres
     weight_ratio = n_bg / n_pres if n_pres > 0 else 1
 
     model = RandomForestClassifier(
-        n_estimators=500,
-        max_depth=None,
-        min_samples_leaf=5,
+        n_estimators=500, max_depth=None, min_samples_leaf=5,
         class_weight={0: 1, 1: weight_ratio},
-        random_state=42,
-        n_jobs=-1,
+        random_state=42, n_jobs=-1,
     )
     model.fit(X_train, y_train)
-
     if X_test is not None:
         return model, model.predict_proba(X_test)[:, 1]
     return model, None
@@ -189,19 +208,11 @@ def fit_gbm(X_train, y_train, X_test=None):
     scale_pos = n_bg / n_pres if n_pres > 0 else 1
 
     model = xgb.XGBClassifier(
-        n_estimators=300,
-        max_depth=6,
-        learning_rate=0.1,
-        scale_pos_weight=scale_pos,
-        subsample=0.8,
-        colsample_bytree=0.8,
-        random_state=42,
-        use_label_encoder=False,
-        eval_metric='logloss',
-        n_jobs=-1,
+        n_estimators=300, max_depth=6, learning_rate=0.1,
+        scale_pos_weight=scale_pos, subsample=0.8, colsample_bytree=0.8,
+        random_state=42, eval_metric='logloss', n_jobs=-1,
     )
     model.fit(X_train, y_train)
-
     if X_test is not None:
         return model, model.predict_proba(X_test)[:, 1]
     return model, None
@@ -215,10 +226,7 @@ ALGORITHM_MAP = {
 
 
 def cross_validate_model(data, env_cols, algorithm_name):
-    """
-    Run spatial block cross-validation for a single algorithm.
-    Returns average metrics across folds.
-    """
+    """Run spatial block cross-validation for a single algorithm."""
     coords = data[['lon', 'lat']].values
     X = data[env_cols].values
     y = data['presence'].values
@@ -229,11 +237,10 @@ def cross_validate_model(data, env_cols, algorithm_name):
     fold_metrics = []
     fit_fn = ALGORITHM_MAP[algorithm_name]
 
-    for fold_idx, (train_idx, test_idx) in enumerate(folds):
+    for train_idx, test_idx in folds:
         X_train, X_test = X[train_idx], X[test_idx]
         y_train, y_test = y[train_idx], y[test_idx]
 
-        # Skip if no presences in test set
         if y_test.sum() == 0 or y_train.sum() == 0:
             continue
 
@@ -245,18 +252,14 @@ def cross_validate_model(data, env_cols, algorithm_name):
         fold_metrics.append(metrics)
 
     if not fold_metrics:
-        return {'auc': np.nan, 'tss': np.nan, 'threshold': 0.5}
+        return {'auc': np.nan, 'tss': np.nan, 'boyce': np.nan, 'threshold': 0.5}
 
-    avg_metrics = {
-        k: np.nanmean([m[k] for m in fold_metrics])
-        for k in fold_metrics[0].keys()
-    }
-    return avg_metrics
+    return {k: np.nanmean([m[k] for m in fold_metrics]) for k in fold_metrics[0].keys()}
 
 
 def generate_predictions(data, env_cols, env_rasters, species_name, extent):
     """
-    Fit all algorithms on full data and generate ensemble prediction rasters.
+    Fit all algorithms, generate ensemble prediction and MESS map.
     """
     X = data[env_cols].values
     y = data['presence'].values
@@ -265,14 +268,15 @@ def generate_predictions(data, env_cols, env_rasters, species_name, extent):
     ensemble_method = config['modelling']['ensemble_method']
     resolution = config['modelling']['prediction_resolution']
 
-    # Create prediction grid
     print(f"    Creating prediction grid (resolution={resolution}°)...")
     grid_gdf, grid_shape, transform, lons, lats = create_prediction_grid(extent, resolution)
 
-    # Extract environmental values at grid points
-    grid_env = extract_values_at_points(env_rasters, grid_gdf)
+    # Extract env values at grid — only for selected (VIF-filtered) columns
+    all_raster_paths = [r for r in env_rasters]
+    grid_env_all = extract_values_at_points(all_raster_paths, grid_gdf)
+    # Keep only VIF-selected columns
+    grid_env = grid_env_all[env_cols] if all(c in grid_env_all.columns for c in env_cols) else grid_env_all
 
-    # Handle NaN in grid (e.g., ocean cells)
     valid_mask = grid_env.notna().all(axis=1)
     X_grid = grid_env.values
     X_grid_valid = X_grid[valid_mask]
@@ -285,20 +289,17 @@ def generate_predictions(data, env_cols, env_rasters, species_name, extent):
         print(f"    Fitting {algo_name}...")
         fit_fn = ALGORITHM_MAP.get(algo_name)
         if fit_fn is None:
-            print(f"    WARNING: Unknown algorithm {algo_name}, skipping")
             continue
 
-        # Cross-validation
         cv_metrics = cross_validate_model(data, env_cols, algo_name)
         cv_results[algo_name] = cv_metrics
-        print(f"      CV AUC={cv_metrics['auc']:.3f}, TSS={cv_metrics['tss']:.3f}")
+        boyce_str = f", Boyce={cv_metrics.get('boyce', np.nan):.3f}" if 'boyce' in cv_metrics else ""
+        print(f"      CV AUC={cv_metrics['auc']:.3f}, TSS={cv_metrics['tss']:.3f}{boyce_str}")
 
-        # Fit on full data
         model, _ = fit_fn(X, y)
         if model is None:
             continue
 
-        # Predict on grid
         try:
             if algo_name == 'maxent':
                 pred_valid = model.predict(X_grid_valid)
@@ -308,7 +309,6 @@ def generate_predictions(data, env_cols, env_rasters, species_name, extent):
             print(f"      Prediction failed: {e}")
             continue
 
-        # Fill full grid
         pred_full = np.full(len(X_grid), np.nan)
         pred_full[valid_mask] = pred_valid
         predictions[algo_name] = pred_full
@@ -317,14 +317,14 @@ def generate_predictions(data, env_cols, env_rasters, species_name, extent):
         print(f"    WARNING: No successful models for {species_name}")
         return None
 
-    # Create ensemble
+    # Ensemble
     pred_arrays = np.array(list(predictions.values()))
 
     if ensemble_method == 'weighted_mean':
         weights = []
         for algo_name in predictions.keys():
             auc = cv_results.get(algo_name, {}).get('auc', 0.5)
-            weights.append(max(0, auc - 0.5))  # Weight by AUC above random
+            weights.append(max(0, auc - 0.5))
         weights = np.array(weights)
         if weights.sum() > 0:
             weights = weights / weights.sum()
@@ -333,23 +333,29 @@ def generate_predictions(data, env_cols, env_rasters, species_name, extent):
         ensemble = np.average(pred_arrays, axis=0, weights=weights)
     elif ensemble_method == 'median':
         ensemble = np.nanmedian(pred_arrays, axis=0)
-    else:  # mean
+    else:
         ensemble = np.nanmean(pred_arrays, axis=0)
 
-    # Replace NaN with nodata
     ensemble = np.where(np.isnan(ensemble), -9999.0, ensemble)
 
-    # Save ensemble prediction
     safe_name = species_name.replace(' ', '_').lower()
     output_path = PRED_DIR / f"{safe_name}_ensemble.tif"
     save_prediction_raster(ensemble, grid_shape, transform, output_path)
     print(f"    Saved: {output_path.name}")
 
-    # Save individual algorithm predictions
+    # Save per-algorithm predictions
     for algo_name, pred in predictions.items():
         pred = np.where(np.isnan(pred), -9999.0, pred)
-        algo_path = PRED_DIR / f"{safe_name}_{algo_name}.tif"
-        save_prediction_raster(pred, grid_shape, transform, algo_path)
+        save_prediction_raster(pred, grid_shape, transform,
+                               PRED_DIR / f"{safe_name}_{algo_name}.tif")
+
+    # MESS map
+    if config['modelling'].get('generate_mess', False):
+        training_env = data[data['presence'] == 1][env_cols].values
+        mess_values = compute_mess(training_env, X_grid)
+        mess_values = np.where(np.isnan(mess_values), -9999.0, mess_values)
+        save_prediction_raster(mess_values, grid_shape, transform,
+                               PRED_DIR / f"{safe_name}_mess.tif")
 
     return {
         'species': species_name,
@@ -358,6 +364,7 @@ def generate_predictions(data, env_cols, env_rasters, species_name, extent):
         'n_presences': int(y.sum()),
         'n_background': int(len(y) - y.sum()),
         'n_env_variables': len(env_cols),
+        'env_variables': env_cols,
         'prediction_file': str(output_path),
     }
 
@@ -372,11 +379,11 @@ def main():
     print("STEP 4: RUN SPECIES DISTRIBUTION MODELS")
     print("=" * 70)
 
-    # Load environmental rasters
+    # Load environmental rasters (excluding host plant layers)
     print("\n1. Loading environmental layers...")
     env_rasters = get_env_rasters()
 
-    # Load target-group background coordinates
+    # Load target-group background
     print("\n2. Loading target-group background data...")
     all_coords = load_all_occurrences()
     if all_coords is None:
@@ -384,7 +391,20 @@ def main():
     else:
         print(f"  {len(all_coords)} total Ithomiini coordinates for background sampling")
 
-    # Determine which species to model
+    # Create bias raster if enabled
+    bias_weights = None
+    bias_grid_coords = None
+    if config['modelling'].get('use_bias_raster', False) and all_coords is not None:
+        print("\n3. Creating bias raster (KDE of all occurrences)...")
+        bandwidth = config['modelling'].get('bias_bandwidth', 1.0)
+        bias_weights, bias_grid_coords, _ = create_bias_raster(
+            all_coords, config['study_area'], resolution=0.1, bandwidth=bandwidth
+        )
+        print(f"  Bias raster created (bandwidth={bandwidth}°, {len(bias_weights)} cells)")
+    else:
+        print("\n3. Bias raster: disabled")
+
+    # Species list
     if args.species:
         species_list = args.species
     elif args.poc:
@@ -394,12 +414,14 @@ def main():
         with open(viable_path) as f:
             species_list = json.load(f)
 
-    print(f"\n3. Modelling {len(species_list)} species...")
+    print(f"\n4. Modelling {len(species_list)} species...")
     print(f"   Algorithms: {config['modelling']['algorithms']}")
-    print(f"   CV strategy: {config['modelling']['cv_strategy']} ({config['modelling']['cv_folds']} folds)")
+    print(f"   CV: {config['modelling']['cv_strategy']} ({config['modelling']['cv_folds']} folds)")
     print(f"   Ensemble: {config['modelling']['ensemble_method']}")
+    print(f"   VIF threshold: {config['modelling'].get('vif_threshold', 'disabled')}")
+    print(f"   Bias raster: {'yes' if bias_weights is not None else 'no'}")
+    print(f"   MESS maps: {config['modelling'].get('generate_mess', False)}")
 
-    # Run SDM for each species
     all_results = []
 
     for i, species_name in enumerate(species_list):
@@ -412,9 +434,11 @@ def main():
 
         print(f"  {len(species_gdf)} occurrence records")
 
-        # Prepare training data
         print(f"  Preparing training data...")
-        data, env_cols, extent = prepare_training_data(species_gdf, env_rasters, all_coords)
+        data, env_cols, extent = prepare_training_data(
+            species_gdf, env_rasters, all_coords,
+            bias_weights=bias_weights, bias_grid_coords=bias_grid_coords,
+        )
         n_pres = data['presence'].sum()
         print(f"  Training data: {int(n_pres)} presences, {int(len(data) - n_pres)} background")
 
@@ -422,7 +446,6 @@ def main():
             print(f"  Skipping: too few presences after env extraction ({int(n_pres)})")
             continue
 
-        # Generate predictions
         result = generate_predictions(data, env_cols, env_rasters, species_name, extent)
         if result:
             all_results.append(result)
@@ -434,15 +457,15 @@ def main():
             json.dump(all_results, f, indent=2, default=str)
         print(f"\n\nSaved results summary: {summary_path}")
 
-        # Print summary table
-        print(f"\n{'Species':<35} {'N':>6} {'MaxEnt AUC':>10} {'RF AUC':>10} {'GBM AUC':>10}")
-        print("─" * 75)
+        print(f"\n{'Species':<35} {'N':>5} {'AUC':>7} {'TSS':>7} {'Boyce':>7} {'Vars':>5}")
+        print("─" * 70)
         for r in all_results:
             n = r['n_presences']
-            me_auc = r['cv_results'].get('maxent', {}).get('auc', np.nan)
-            rf_auc = r['cv_results'].get('random_forest', {}).get('auc', np.nan)
-            gbm_auc = r['cv_results'].get('gbm', {}).get('auc', np.nan)
-            print(f"  {r['species']:<33} {n:>6} {me_auc:>10.3f} {rf_auc:>10.3f} {gbm_auc:>10.3f}")
+            best_auc = max((cv.get('auc', 0) for cv in r['cv_results'].values()), default=0)
+            best_tss = max((cv.get('tss', 0) for cv in r['cv_results'].values()), default=0)
+            best_boyce = max((cv.get('boyce', 0) for cv in r['cv_results'].values() if cv.get('boyce') is not None), default=0)
+            n_vars = r['n_env_variables']
+            print(f"  {r['species']:<33} {n:>5} {best_auc:>7.3f} {best_tss:>7.3f} {best_boyce:>7.3f} {n_vars:>5}")
 
     print(f"\n\nStep 4 complete! Modelled {len(all_results)}/{len(species_list)} species.")
 

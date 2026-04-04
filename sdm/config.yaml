@@ -21,20 +21,9 @@ study_area:
 # Environmental variables
 env_data:
   # CHELSA v2.1 bioclimatic variables (1981-2010 baseline)
-  # https://chelsa-climate.org/bioclim/
   chelsa:
     base_url: "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/"
     resolution: "30arcsec"  # ~1km
-    # Selected bioclimatic variables (reduced from 19 to avoid multicollinearity)
-    # BIO1  = Annual Mean Temperature
-    # BIO2  = Mean Diurnal Range
-    # BIO4  = Temperature Seasonality
-    # BIO5  = Max Temperature of Warmest Month
-    # BIO6  = Min Temperature of Coldest Month
-    # BIO12 = Annual Precipitation
-    # BIO13 = Precipitation of Wettest Month
-    # BIO14 = Precipitation of Driest Month
-    # BIO15 = Precipitation Seasonality
     variables:
       - CHELSA_bio1_1981-2010_V.2.1.tif
       - CHELSA_bio2_1981-2010_V.2.1.tif
@@ -46,61 +35,58 @@ env_data:
       - CHELSA_bio14_1981-2010_V.2.1.tif
       - CHELSA_bio15_1981-2010_V.2.1.tif
 
-  # Elevation (Copernicus DEM resampled to ~1km)
   elevation:
-    source: "srtm"  # Will use SRTM 90m aggregated to ~1km
+    source: "srtm"
     url: "https://srtm.csi.cgiar.org/wp-content/uploads/files/srtm_5x5/TIFF/"
 
-  # EarthEnv cloud cover (mean annual cloud frequency at 1km)
   cloud_cover:
     url: "https://data.earthenv.org/cloud/MODCF_meanannual.tif"
 
+  # File patterns to EXCLUDE from env layers (e.g. host plant rasters)
+  # These are in the cropped/ dir but should not be used as predictors
+  exclude_patterns:
+    - "host_*"
+
 # SDM modelling parameters
 modelling:
-  # Minimum records per species to attempt SDM
   min_records: 20
-
-  # Spatial thinning distance (km) — reduces sampling bias
   thinning_distance_km: 5
-
-  # Number of pseudo-absences (background points)
   n_background: 10000
-
-  # Background sampling strategy: "target_group" or "random"
   background_strategy: "target_group"
-
-  # Buffer around occurrences for defining accessible area (degrees)
   accessible_area_buffer: 5.0
+
+  # Bias correction
+  use_bias_raster: true  # Weight background by KDE of all Ithomiini records
+  bias_bandwidth: 1.0    # KDE bandwidth in degrees (~111km)
+
+  # Variable selection
+  vif_threshold: 10.0    # Remove variables with VIF > this (0 = no filtering)
 
   # Cross-validation
   cv_folds: 5
-  cv_strategy: "spatial"  # "spatial" (blockCV-style) or "random"
+  cv_strategy: "spatial"
 
-  # Algorithms to include in ensemble
+  # Algorithms
   algorithms:
-    - maxent          # MaxEnt via elapid
-    - random_forest   # scikit-learn RandomForest
-    - gbm             # XGBoost gradient boosted machines
+    - maxent
+    - random_forest
+    - gbm
 
-  # Ensemble method: "weighted_mean" (by AUC) or "mean" or "median"
   ensemble_method: "weighted_mean"
+  prediction_resolution: 0.1
 
-  # Resolution for prediction grid (degrees)
-  prediction_resolution: 0.1  # ~11km at equator — good balance of detail vs speed
-
-  # Evaluation metrics to compute
+  # Evaluation metrics
   metrics:
     - auc
     - tss
+    - boyce   # Continuous Boyce index (presence-only metric)
+
+  # MESS maps (Multivariate Environmental Similarity Surfaces)
+  generate_mess: true
 
 # Species selection
 species:
-  # "all" = model all species with >= min_records
-  # "top_N" = model top N species by record count
-  # list of names = model specific species
   selection: "all"
-
-  # For proof-of-concept, start with these well-recorded species
   proof_of_concept:
     - "Mechanitis polymnia"
     - "Mechanitis messenoides"
@@ -110,11 +96,7 @@ species:
 
 # Output
 output:
-  # Generate PMTiles for web visualization
   pmtiles: true
-  # Generate GeoTIFF per species
   geotiff: true
-  # Generate species richness map
   richness_map: true
-  # Threshold for binary presence/absence maps
   threshold: 0.5
