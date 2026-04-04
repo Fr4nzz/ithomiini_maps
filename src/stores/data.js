@@ -504,14 +504,16 @@ export const useDataStore = defineStore('data', () => {
 
   const _featureCache = new Map()
   const getFeatureWrapper = (item) => {
-    let cached = _featureCache.get(item.id)
+    // Use item reference as cache key to avoid collisions when multiple
+    // records share the same id (e.g. "Unknown")
+    let cached = _featureCache.get(item)
     if (!cached) {
       cached = {
         type: 'Feature',
         geometry: { type: 'Point', coordinates: [item.lng, item.lat] },
         properties: item
       }
-      _featureCache.set(item.id, cached)
+      _featureCache.set(item, cached)
     }
     return cached
   }
