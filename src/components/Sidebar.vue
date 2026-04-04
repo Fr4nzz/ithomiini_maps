@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
 import { usePersistenceStore } from '../stores/persistence'
 import { useLegendStore } from '../stores/legend'
+import { useSDMStore } from '../stores/sdm'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 import TimeSlider from './TimeSlider.vue'
@@ -24,6 +25,7 @@ const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-m
 const store = useDataStore()
 const persistenceStore = usePersistenceStore()
 const legendStore = useLegendStore()
+const sdmStore = useSDMStore()
 
 // Toggle persistence
 function togglePersistence() {
@@ -802,6 +804,65 @@ const updateExportHeight = (value) => {
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
+      </div>
+
+      <!-- SDM Prediction Layers -->
+      <div v-if="currentView === 'map' && sdmStore.hasData" class="filter-section collapsible">
+        <label class="section-label" @click="sdmStore.toggle()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M3 3v18h18"/>
+            <path d="M7 16l4-8 4 4 4-8"/>
+          </svg>
+          Species Distribution Models
+          <span class="collapse-indicator">{{ sdmStore.enabled ? '▾' : '▸' }}</span>
+        </label>
+
+        <div v-if="sdmStore.enabled" style="margin-top: 8px;">
+          <!-- Richness toggle -->
+          <label class="toggle-row">
+            <input type="checkbox" :checked="sdmStore.showRichness" @change="sdmStore.toggleRichness()" />
+            <span>Species Richness Map</span>
+          </label>
+
+          <!-- Species selector -->
+          <div v-if="!sdmStore.showRichness" style="margin-top: 8px;">
+            <select
+              class="sdm-species-select"
+              :value="sdmStore.selectedSpecies || ''"
+              @change="sdmStore.selectSpecies($event.target.value || null)"
+            >
+              <option value="">Select species...</option>
+              <option
+                v-for="sp in sdmStore.speciesList"
+                :key="sp.name"
+                :value="sp.name"
+              >
+                {{ sp.name }} ({{ sp.records }} records, AUC {{ sp.auc }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Opacity slider -->
+          <div class="setting-row" style="margin-top: 8px;">
+            <label>Opacity</label>
+            <div class="slider-group">
+              <input
+                type="range"
+                min="0.1"
+                max="1"
+                step="0.1"
+                :value="sdmStore.opacity"
+                @input="sdmStore.setOpacity(parseFloat($event.target.value))"
+              />
+              <span class="slider-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
+            </div>
+          </div>
+
+          <p class="filter-hint">
+            {{ sdmStore.metadata?.n_species }} species modelled.
+            Ensemble of MaxEnt + RF + XGBoost.
+          </p>
+        </div>
       </div>
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->

@@ -19,6 +19,7 @@ import {
   useCountryBoundaries,
   useBoundingBoxSelection
 } from '../composables/useMapEngine'
+import { useSDMLayer } from '../composables/useSDMLayer'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
 import { Sun, Moon, Palette } from 'lucide-vue-next'
@@ -115,6 +116,7 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   }
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
+const { updateLayer: updateSDMLayer } = useSDMLayer(map)
 const {
   isDrawing: isBboxDrawing,
   enableDrawing: enableBboxDrawing,
