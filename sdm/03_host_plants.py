@@ -73,7 +73,7 @@ def download_gbif_occurrences(genus, family, max_records=50000):
     offset = 0
     limit = 300  # GBIF max per request
 
-    while offset < max_records:
+    while offset < min(max_records, 10000):  # Cap at 10K to avoid long waits
         params = {
             'taxonKey': taxon_key,
             'hasCoordinate': 'true',
@@ -111,7 +111,7 @@ def download_gbif_occurrences(genus, family, max_records=50000):
         if data.get('endOfRecords', False):
             break
 
-        time.sleep(0.5)  # Be nice to GBIF API
+        time.sleep(0.3)  # Be nice to GBIF API
 
     df = pd.DataFrame(all_records)
     print(f"    Downloaded {len(df)} records for {genus}")
