@@ -1282,16 +1282,7 @@
   }
 }
 
-/* SDM inline controls */
-.sdm-toggle-row {
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-color, rgba(255,255,255,0.08));
-}
-.sdm-inline-controls {
-  margin-top: 6px;
-  padding-left: 24px;
-}
+/* SDM controls */
 .sdm-opacity-row {
   display: flex;
   align-items: center;
@@ -1311,4 +1302,48 @@
   color: var(--accent-color, #4ade80);
   min-width: 30px;
   text-align: right;
+}
+
+/* SDM gradient legend */
+.sdm-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sdm-legend-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sdm-legend-species {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--text-primary, #e0e0e0);
+}
+.sdm-gradient-bar {
+  height: 10px;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+.sdm-gradient-bar.warm {
+  background: linear-gradient(to right, transparent, #ffcc00, #ff8800, #cc2200);
+}
+.sdm-gradient-bar.cool {
+  background: linear-gradient(to right, transparent, #00b4ff, #4040ff, #9030cc);
+}
+.sdm-gradient-label-low,
+.sdm-gradient-label-high {
+  font-size: 9px;
+  color: rgba(255,255,255,0.7);
+  text-shadow: 0 0 3px rgba(0,0,0,0.8);
+}
+.sdm-legend-caption {
+  font-size: 10px;
+  color: var(--text-secondary, #888);
+  text-align: center;
 }

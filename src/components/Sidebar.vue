@@ -506,32 +506,6 @@ const updateExportHeight = (value) => {
           :multiple="true"
         />
 
-        <!-- SDM toggle (shows when species filter has 1-2 species and SDM data exists) -->
-        <div v-if="currentView === 'map' && sdmStore.hasData && store.filters.species.length >= 1 && store.filters.species.length <= 2" class="sdm-toggle-row">
-          <label class="toggle-row">
-            <input type="checkbox" v-model="sdmStore.enabled" />
-            <span>Show predicted distribution</span>
-          </label>
-          <div v-if="sdmStore.enabled" class="sdm-inline-controls">
-            <div class="sdm-opacity-row">
-              <span class="sdm-opacity-label">Opacity</span>
-              <input
-                type="range"
-                min="0.1"
-                max="1"
-                step="0.1"
-                :value="sdmStore.opacity"
-                @input="sdmStore.setOpacity(parseFloat($event.target.value))"
-              />
-              <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
-            </div>
-            <p class="filter-hint" style="margin-top: 4px;">
-              {{ sdmStore.nSpecies }} species modelled
-              <template v-if="store.filters.species.length === 2"> · Warm/cool colors for overlap</template>
-            </p>
-          </div>
-        </div>
-
         <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->
         <button
           class="subsection-toggle"
@@ -830,6 +804,59 @@ const updateExportHeight = (value) => {
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
+      </div>
+
+      <!-- SDM Predicted Distributions -->
+      <div v-if="currentView === 'map' && sdmStore.hasData" class="filter-section collapsible">
+        <label class="section-label" @click="sdmStore.toggle()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M3 3v18h18"/>
+            <path d="M7 16l4-8 4 4 4-8"/>
+          </svg>
+          Predicted Distribution
+          <span class="collapse-indicator">{{ sdmStore.enabled ? '▾' : '▸' }}</span>
+        </label>
+
+        <div v-if="sdmStore.enabled" style="margin-top: 8px;">
+          <FilterSelect
+            label="SDM Species"
+            v-model="sdmStore.selectedSpecies"
+            :options="sdmStore.availableSpecies"
+            placeholder="Select up to 2 species..."
+            :multiple="true"
+          />
+
+          <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--error-color, #f87171);">
+            Max 2 species for overlay comparison
+          </p>
+
+          <!-- SDM gradient legend -->
+          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-legend">
+            <div class="sdm-legend-item" v-for="(sp, idx) in sdmStore.selectedSpecies.slice(0, 2)" :key="sp">
+              <span class="sdm-legend-species">{{ sp }}</span>
+              <div class="sdm-gradient-bar" :class="idx === 0 ? 'warm' : 'cool'">
+                <span class="sdm-gradient-label-low">Low</span>
+                <span class="sdm-gradient-label-high">High</span>
+              </div>
+            </div>
+            <span class="sdm-legend-caption">Habitat suitability</span>
+          </div>
+
+          <!-- Opacity slider -->
+          <div class="sdm-opacity-row" style="margin-top: 8px;">
+            <span class="sdm-opacity-label">Opacity</span>
+            <input
+              type="range" min="0.1" max="1" step="0.1"
+              :value="sdmStore.opacity"
+              @input="sdmStore.setOpacity(parseFloat($event.target.value))"
+            />
+            <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
+          </div>
+
+          <p class="filter-hint">
+            {{ sdmStore.nSpecies }} species modelled · MaxEnt + RF + XGBoost ensemble
+          </p>
+        </div>
       </div>
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->

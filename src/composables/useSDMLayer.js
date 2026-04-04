@@ -1,23 +1,19 @@
 /**
  * Composable for rendering SDM prediction rasters on the MapLibre map.
- * Reacts to the species filter in the data store.
+ * Uses sdmStore.selectedSpecies (independent from occurrence filter).
  *
- * - 1 species selected → single-color heatmap (warm ramp)
- * - 2 species selected → dual-color overlay (red + blue, overlap = purple)
- * - 0 or 3+ species → no SDM layer
+ * - 1 species → single warm heatmap
+ * - 2 species → dual overlay (warm + cool) for range comparison
  */
 import { watch, computed } from 'vue'
 import { useSDMStore } from '../stores/sdm'
-import { useDataStore } from '../stores/data'
 import { removeLayerAndSource } from '../utils/mapHelpers'
 import { log } from '../utils/logger'
 
 const SDM_LAYER_PREFIX = 'sdm-layer'
 const SDM_SOURCE_PREFIX = 'sdm-source'
 
-// Two distinct color ramps for dual-species overlay
 const COLOR_RAMPS = {
-  // Species 1: warm (yellow → orange → red)
   warm: (value, alpha) => {
     if (value <= 0 || isNaN(value)) return [0, 0, 0, 0]
     const v = Math.min(1, Math.max(0, value))
@@ -33,7 +29,6 @@ const COLOR_RAMPS = {
       return [Math.round(255 - 40 * t), Math.round(70 - 40 * t), 0, a]
     }
   },
-  // Species 2: cool (cyan → blue → purple)
   cool: (value, alpha) => {
     if (value <= 0 || isNaN(value)) return [0, 0, 0, 0]
     const v = Math.min(1, Math.max(0, value))
@@ -53,33 +48,24 @@ const COLOR_RAMPS = {
 
 export function useSDMLayer(map) {
   const sdmStore = useSDMStore()
-  const dataStore = useDataStore()
 
-  // Which species have their SDM visible
-  const sdmSpecies = computed(() => {
+  const activeSpecies = computed(() => {
     if (!sdmStore.enabled || !sdmStore.hasData) return []
-    const filtered = dataStore.filters.species
-    if (filtered.length === 0 || filtered.length > 2) return []
-    return filtered.filter(sp => sdmStore.hasSDMForSpecies(sp))
+    return sdmStore.selectedSpecies.filter(sp => sdmStore.hasSDMForSpecies(sp)).slice(0, 2)
   })
 
   function removeAllLayers() {
     if (!map.value) return
     for (let i = 0; i < 2; i++) {
-      try {
-        removeLayerAndSource(map.value, `${SDM_LAYER_PREFIX}-${i}`, `${SDM_SOURCE_PREFIX}-${i}`)
-      } catch { /* may not exist */ }
+      try { removeLayerAndSource(map.value, `${SDM_LAYER_PREFIX}-${i}`, `${SDM_SOURCE_PREFIX}-${i}`) }
+      catch { /* */ }
     }
   }
 
   async function loadAndRenderGeoTIFF(speciesName, index, colorRamp) {
     const layerId = `${SDM_LAYER_PREFIX}-${index}`
     const sourceId = `${SDM_SOURCE_PREFIX}-${index}`
-
-    try {
-      removeLayerAndSource(map.value, layerId, sourceId)
-    } catch { /* */ }
-
+    try { removeLayerAndSource(map.value, layerId, sourceId) } catch { /* */ }
     if (!map.value) return
 
     try {
@@ -89,17 +75,13 @@ export function useSDMLayer(map) {
       const url = `${basePath}data/sdm/species/${safeName}_ensemble.tif`
 
       const response = await fetch(url)
-      if (!response.ok) {
-        log.map.warn(`SDM: Could not load ${url}`)
-        return
-      }
+      if (!response.ok) { log.map.warn(`SDM: Could not load ${url}`); return }
 
       const arrayBuffer = await response.arrayBuffer()
       const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer)
       const image = await tiff.getImage()
       const data = await image.readRasters()
       const values = data[0]
-
       const width = image.getWidth()
       const height = image.getHeight()
       const bbox = image.getBoundingBox()
@@ -111,8 +93,7 @@ export function useSDMLayer(map) {
       const imageData = ctx.createImageData(width, height)
 
       for (let i = 0; i < values.length; i++) {
-        const val = values[i]
-        const [r, g, b, a] = colorRamp(val, sdmStore.opacity)
+        const [r, g, b, a] = colorRamp(values[i], sdmStore.opacity)
         const idx = i * 4
         imageData.data[idx] = r
         imageData.data[idx + 1] = g
@@ -124,20 +105,13 @@ export function useSDMLayer(map) {
       const dataUrl = canvas.toDataURL('image/png')
 
       map.value.addSource(sourceId, {
-        type: 'image',
-        url: dataUrl,
-        coordinates: [
-          [bbox[0], bbox[3]], [bbox[2], bbox[3]],
-          [bbox[2], bbox[1]], [bbox[0], bbox[1]],
-        ]
+        type: 'image', url: dataUrl,
+        coordinates: [[bbox[0], bbox[3]], [bbox[2], bbox[3]], [bbox[2], bbox[1]], [bbox[0], bbox[1]]]
       })
 
       const beforeLayer = map.value.getLayer('points-layer') ? 'points-layer' : undefined
-
       map.value.addLayer({
-        id: layerId,
-        type: 'raster',
-        source: sourceId,
+        id: layerId, type: 'raster', source: sourceId,
         paint: { 'raster-opacity': 1, 'raster-fade-duration': 300 }
       }, beforeLayer)
 
@@ -149,8 +123,7 @@ export function useSDMLayer(map) {
 
   async function updateLayer() {
     removeAllLayers()
-
-    const species = sdmSpecies.value
+    const species = activeSpecies.value
     if (species.length === 0) return
 
     if (species.length === 1) {
@@ -163,18 +136,10 @@ export function useSDMLayer(map) {
     }
   }
 
-  // Watch species filter changes
-  watch(sdmSpecies, updateLayer, { deep: true })
-  watch(() => sdmStore.enabled, (enabled) => {
-    if (enabled) updateLayer()
-    else removeAllLayers()
-  })
-  watch(() => sdmStore.opacity, () => {
-    // Re-render with new opacity (need to recreate canvas)
-    if (sdmSpecies.value.length > 0) updateLayer()
-  })
+  watch(activeSpecies, updateLayer, { deep: true })
+  watch(() => sdmStore.enabled, (en) => { if (en) updateLayer(); else removeAllLayers() })
+  watch(() => sdmStore.opacity, () => { if (activeSpecies.value.length > 0) updateLayer() })
 
-  // Load metadata on init
   sdmStore.loadMetadata()
 
   return { removeAllLayers, updateLayer }
