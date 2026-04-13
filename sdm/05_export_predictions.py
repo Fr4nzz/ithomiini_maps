@@ -20,8 +20,8 @@ CONFIG_PATH = Path(__file__).parent / "config.yaml"
 with open(CONFIG_PATH) as f:
     config = yaml.safe_load(f)
 
-PRED_DIR = Path(__file__).parent / config['paths']['predictions']
-FIG_DIR = Path(__file__).parent / config['paths']['figures']
+PRED_DIR = Path(__file__).parent / config["paths"]["predictions"]
+FIG_DIR = Path(__file__).parent / config["paths"]["figures"]
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 OUTPUT_DIR = Path(__file__).parent.parent / "public" / "data" / "sdm"
@@ -35,21 +35,23 @@ def generate_richness_map():
     """
     print("\n── Generating Species Richness Map ──")
 
-    threshold = config['output']['threshold']
+    threshold = config["output"]["threshold"]
     ensemble_files = sorted(PRED_DIR.glob("*_ensemble.tif"))
 
     if not ensemble_files:
         print("  No ensemble predictions found. Run step 04 first.")
         return None
 
-    print(f"  Stacking {len(ensemble_files)} species predictions (threshold={threshold})...")
+    print(
+        f"  Stacking {len(ensemble_files)} species predictions (threshold={threshold})..."
+    )
 
     # Create a common grid covering the full study area
-    study = config['study_area']
-    resolution = config['modelling']['prediction_resolution']
+    study = config["study_area"]
+    resolution = config["modelling"]["prediction_resolution"]
 
-    lons = np.arange(study['west'], study['east'], resolution)
-    lats = np.arange(study['south'], study['north'], resolution)
+    lons = np.arange(study["west"], study["east"], resolution)
+    lats = np.arange(study["south"], study["north"], resolution)
     n_cols, n_rows = len(lons), len(lats)
     nodata = -9999.0
 
@@ -58,10 +60,9 @@ def generate_richness_map():
     n_valid = np.zeros((n_rows, n_cols), dtype=np.int32)
 
     from rasterio.transform import from_bounds
+
     common_transform = from_bounds(
-        study['west'], study['south'],
-        study['east'], study['north'],
-        n_cols, n_rows
+        study["west"], study["south"], study["east"], study["north"], n_cols, n_rows
     )
 
     for f in ensemble_files:
@@ -70,14 +71,22 @@ def generate_richness_map():
             bounds = src.bounds
 
             # Map this raster's pixels into the common grid
-            col_start = max(0, int((bounds.left - study['west']) / resolution))
+            col_start = max(0, int((bounds.left - study["west"]) / resolution))
             col_end = min(n_cols, col_start + src.width)
-            row_start = max(0, int((study['north'] - bounds.top) / resolution))
+            row_start = max(0, int((study["north"] - bounds.top) / resolution))
             row_end = min(n_rows, row_start + src.height)
 
             # Slice the data to match the common grid window
-            src_row_start = max(0, int((study['north'] - bounds.top) / resolution) - row_start) if row_start == 0 else 0
-            src_col_start = max(0, int((bounds.left - study['west']) / resolution) - col_start) if col_start == 0 else 0
+            src_row_start = (
+                max(0, int((study["north"] - bounds.top) / resolution) - row_start)
+                if row_start == 0
+                else 0
+            )
+            src_col_start = (
+                max(0, int((bounds.left - study["west"]) / resolution) - col_start)
+                if col_start == 0
+                else 0
+            )
 
             h = min(row_end - row_start, data.shape[0] - src_row_start)
             w = min(col_end - col_start, data.shape[1] - src_col_start)
@@ -85,11 +94,18 @@ def generate_richness_map():
             if h <= 0 or w <= 0:
                 continue
 
-            window = data[src_row_start:src_row_start+h, src_col_start:src_col_start+w]
+            window = data[
+                src_row_start : src_row_start + h, src_col_start : src_col_start + w
+            ]
             valid = (window != nodata) & (window >= 0) & (window <= 1)
 
-            target_slice = (slice(row_start, row_start+h), slice(col_start, col_start+w))
-            richness[target_slice][valid] += (window[valid] >= threshold).astype(np.float32)
+            target_slice = (
+                slice(row_start, row_start + h),
+                slice(col_start, col_start + w),
+            )
+            richness[target_slice][valid] += (window[valid] >= threshold).astype(
+                np.float32
+            )
             mean_suitability[target_slice][valid] += window[valid]
             n_valid[target_slice][valid] += 1
 
@@ -101,17 +117,17 @@ def generate_richness_map():
     # Save richness
     richness_path = PRED_DIR / "species_richness.tif"
     profile = {
-        'driver': 'GTiff',
-        'height': n_rows,
-        'width': n_cols,
-        'count': 1,
-        'dtype': 'float32',
-        'crs': 'EPSG:4326',
-        'transform': common_transform,
-        'nodata': nodata,
-        'compress': 'deflate',
+        "driver": "GTiff",
+        "height": n_rows,
+        "width": n_cols,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:4326",
+        "transform": common_transform,
+        "nodata": nodata,
+        "compress": "deflate",
     }
-    with rasterio.open(richness_path, 'w', **profile) as dst:
+    with rasterio.open(richness_path, "w", **profile) as dst:
         richness_float = richness.astype(np.float32)
         richness_float[~mask] = nodata
         dst.write(richness_float, 1)
@@ -119,7 +135,7 @@ def generate_richness_map():
 
     # Save mean suitability
     suitability_path = PRED_DIR / "mean_suitability.tif"
-    with rasterio.open(suitability_path, 'w', **profile) as dst:
+    with rasterio.open(suitability_path, "w", **profile) as dst:
         dst.write(mean_suitability, 1)
     print(f"  Saved: {suitability_path.name}")
 
@@ -137,12 +153,17 @@ def generate_contours(raster_path, output_path, levels=None):
     try:
         # Use gdal_contour to generate contour lines
         for level in levels:
-            contour_path = output_path.parent / f"{output_path.stem}_{int(level*100)}.geojson"
+            contour_path = (
+                output_path.parent / f"{output_path.stem}_{int(level * 100)}.geojson"
+            )
             cmd = [
-                'gdal_contour',
-                '-a', 'probability',
-                '-fl', str(level),
-                '-f', 'GeoJSON',
+                "gdal_contour",
+                "-a",
+                "probability",
+                "-fl",
+                str(level),
+                "-f",
+                "GeoJSON",
                 str(raster_path),
                 str(contour_path),
             ]
@@ -175,47 +196,56 @@ def generate_web_metadata():
     # Build metadata for web app
     species_layers = []
     for r in results:
-        species_name = r['species']
-        safe_name = species_name.replace(' ', '_').lower()
+        species_name = r["species"]
+        safe_name = species_name.replace(" ", "_").lower()
 
         # Get best AUC across algorithms
-        best_auc = max(
-            (cv.get('auc', 0) for cv in r['cv_results'].values()),
-            default=0
+        best_auc = max((cv.get("auc", 0) for cv in r["cv_results"].values()), default=0)
+
+        best_boyce = r.get("best_boyce", 0)
+        if isinstance(best_boyce, float) and (best_boyce != best_boyce):
+            best_boyce = 0
+
+        species_layers.append(
+            {
+                "species": species_name,
+                "file": f"{safe_name}_ensemble.tif",
+                "n_records": r["n_presences"],
+                "auc": round(best_auc, 3),
+                "boyce": round(best_boyce, 3) if best_boyce else 0,
+                "tier": r.get("tier", "unknown"),
+                "confidence": r.get("confidence", "unknown"),
+                "algorithms_used": r.get(
+                    "algorithms_used", list(r["cv_results"].keys())
+                ),
+                "ensemble_method": r["ensemble_method"],
+            }
         )
 
-        species_layers.append({
-            'species': species_name,
-            'file': f"{safe_name}_ensemble.tif",
-            'n_records': r['n_presences'],
-            'auc': round(best_auc, 3),
-            'ensemble_method': r['ensemble_method'],
-            'algorithms': list(r['cv_results'].keys()),
-        })
-
     metadata = {
-        'type': 'sdm_predictions',
-        'n_species': len(species_layers),
-        'threshold': config['output']['threshold'],
-        'env_variables': [
-            'CHELSA bioclimatic (BIO1,2,4,5,6,12,13,14,15)',
-            'Elevation (WorldClim 30s)',
-            'Cloud cover (EarthEnv)',
-            'Host plant density (GBIF Solanaceae)',
+        "type": "sdm_predictions",
+        "n_species": len(species_layers),
+        "threshold": config["output"]["threshold"],
+        "env_variables": [
+            "CHELSA bioclimatic (BIO1,2,4,5,6,12,13,14,15)",
+            "Elevation (WorldClim 30s)",
+            "Cloud cover (EarthEnv)",
+            "Host plant density (GBIF Solanaceae)",
         ],
-        'modelling': {
-            'algorithms': config['modelling']['algorithms'],
-            'cv_strategy': config['modelling']['cv_strategy'],
-            'cv_folds': config['modelling']['cv_folds'],
-            'background_strategy': config['modelling']['background_strategy'],
-            'thinning_distance_km': config['modelling']['thinning_distance_km'],
+        "modelling": {
+            "algorithms": config["modelling"]["algorithms"],
+            "cv_strategy": config["modelling"]["cv_strategy"],
+            "cv_folds": config["modelling"]["cv_folds"],
+            "background_strategy": config["modelling"]["background_strategy"],
+            "thinning_distance_km": config["modelling"]["thinning_distance_km"],
         },
-        'species': species_layers,
+        "species": species_layers,
     }
 
     metadata_path = OUTPUT_DIR / "sdm_metadata.json"
     # Replace NaN with null for valid JSON
     import math
+
     def sanitize(obj):
         if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
             return None
@@ -224,7 +254,8 @@ def generate_web_metadata():
         if isinstance(obj, list):
             return [sanitize(v) for v in obj]
         return obj
-    with open(metadata_path, 'w') as f:
+
+    with open(metadata_path, "w") as f:
         json.dump(sanitize(metadata), f, indent=2)
     print(f"  Saved: {metadata_path}")
 
@@ -236,11 +267,12 @@ def copy_key_outputs():
     print("\n── Copying Outputs to public/data/sdm/ ──")
 
     # Copy richness and suitability maps
-    for name in ['species_richness.tif', 'mean_suitability.tif']:
+    for name in ["species_richness.tif", "mean_suitability.tif"]:
         src = PRED_DIR / name
         if src.exists():
             dst = OUTPUT_DIR / name
             import shutil
+
             shutil.copy2(src, dst)
             print(f"  Copied: {name}")
 
@@ -251,6 +283,7 @@ def copy_key_outputs():
 
     for f in ensemble_files:
         import shutil
+
         shutil.copy2(f, species_dir / f.name)
 
     print(f"  Copied {len(ensemble_files)} species prediction rasters")
@@ -282,7 +315,9 @@ def main():
         print(f"    Suitability map: {richness_result[1].name}")
 
     print("\nStep 5 complete!")
-    print("\nNext: Add SDM layer toggle to the Vue web app (src/components/SDMLayer.vue)")
+    print(
+        "\nNext: Add SDM layer toggle to the Vue web app (src/components/SDMLayer.vue)"
+    )
 
 
 if __name__ == "__main__":

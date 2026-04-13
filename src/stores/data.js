@@ -209,6 +209,9 @@ export const useDataStore = defineStore('data', () => {
       for (const item of defaultData) {
         if (item.country) item.country = normalizeCountryName(item.country)
         if (item.source !== defaultSource) item.source = defaultSource
+        if (!item.subspecies || item.subspecies === 'Unknown' || item.subspecies === 'NA') {
+          item.subspecies = item.scientific_name || 'Unknown'
+        }
         markRaw(item)
       }
 
@@ -258,6 +261,9 @@ export const useDataStore = defineStore('data', () => {
       for (const item of data) {
         if (item.country) item.country = normalizeCountryName(item.country)
         if (item.source !== sourceName) item.source = sourceName
+        if (!item.subspecies || item.subspecies === 'Unknown' || item.subspecies === 'NA') {
+          item.subspecies = item.scientific_name || 'Unknown'
+        }
         markRaw(item)
       }
 

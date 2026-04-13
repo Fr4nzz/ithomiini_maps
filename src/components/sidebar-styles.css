@@ -1347,3 +1347,23 @@
   color: var(--text-secondary, #888);
   text-align: center;
 }
+.sdm-confidence-badge {
+  display: inline-block;
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.sdm-confidence-badge.high { background: rgba(34,197,94,0.2); color: #4ade80; }
+.sdm-confidence-badge.medium { background: rgba(250,204,21,0.2); color: #facc15; }
+.sdm-confidence-badge.low { background: rgba(251,146,60,0.2); color: #fb923c; }
+.sdm-confidence-badge.exploratory { background: rgba(248,113,113,0.2); color: #f87171; }
+.sdm-species-meta {
+  display: block;
+  font-size: 9px;
+  color: var(--text-secondary, #888);
+  margin-top: 2px;
+}

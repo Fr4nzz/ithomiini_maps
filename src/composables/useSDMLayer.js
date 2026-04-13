@@ -13,14 +13,19 @@ import { log } from '../utils/logger'
 const SDM_LAYER_PREFIX = 'sdm-layer'
 const SDM_SOURCE_PREFIX = 'sdm-source'
 
+// Nodata in the GeoTIFFs is -9999. Values 0..1 are suitability.
+// Minimum visible threshold: values below this are transparent.
+const SUITABILITY_MIN = 0.05
+
 const COLOR_RAMPS = {
   warm: (value, alpha) => {
-    if (value <= 0 || isNaN(value)) return [0, 0, 0, 0]
+    if (value < SUITABILITY_MIN || value <= -9990 || isNaN(value)) return [0, 0, 0, 0]
     const v = Math.min(1, Math.max(0, value))
     const a = Math.round(alpha * 255)
+    // Low: pale yellow (visible!) → Mid: orange → High: deep red
     if (v < 0.3) {
-      const t = v / 0.3
-      return [Math.round(255 * t), Math.round(200 * t), 0, Math.round(a * t)]
+      const t = (v - SUITABILITY_MIN) / (0.3 - SUITABILITY_MIN)
+      return [255, Math.round(230 - 30 * t), Math.round(100 - 100 * t), Math.round(a * (0.3 + 0.7 * t))]
     } else if (v < 0.6) {
       const t = (v - 0.3) / 0.3
       return [255, Math.round(200 - 130 * t), 0, a]
@@ -30,12 +35,13 @@ const COLOR_RAMPS = {
     }
   },
   cool: (value, alpha) => {
-    if (value <= 0 || isNaN(value)) return [0, 0, 0, 0]
+    if (value < SUITABILITY_MIN || value <= -9990 || isNaN(value)) return [0, 0, 0, 0]
     const v = Math.min(1, Math.max(0, value))
     const a = Math.round(alpha * 255)
+    // Low: pale cyan (visible!) → Mid: blue → High: deep purple
     if (v < 0.3) {
-      const t = v / 0.3
-      return [0, Math.round(180 * t), Math.round(255 * t), Math.round(a * t)]
+      const t = (v - SUITABILITY_MIN) / (0.3 - SUITABILITY_MIN)
+      return [Math.round(100 - 100 * t), Math.round(220 - 40 * t), 255, Math.round(a * (0.3 + 0.7 * t))]
     } else if (v < 0.6) {
       const t = (v - 0.3) / 0.3
       return [Math.round(80 * t), Math.round(180 - 100 * t), 255, a]

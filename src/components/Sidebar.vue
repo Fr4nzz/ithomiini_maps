@@ -808,16 +808,21 @@ const updateExportHeight = (value) => {
 
       <!-- SDM Predicted Distributions -->
       <div v-if="currentView === 'map' && sdmStore.hasData" class="filter-section collapsible">
-        <label class="section-label" @click="sdmStore.toggle()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-            <path d="M3 3v18h18"/>
-            <path d="M7 16l4-8 4 4 4-8"/>
+        <button
+          class="collapse-toggle"
+          @click="sdmStore.toggle()"
+          :class="{ expanded: sdmStore.enabled }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
           </svg>
           Predicted Distribution
-          <span class="collapse-indicator">{{ sdmStore.enabled ? '▾' : '▸' }}</span>
-        </label>
+          <span v-if="sdmStore.selectedSpecies.length > 0" class="active-badge">
+            {{ sdmStore.selectedSpecies.length }} selected
+          </span>
+        </button>
 
-        <div v-if="sdmStore.enabled" style="margin-top: 8px;">
+        <div v-show="sdmStore.enabled" class="collapse-content">
           <FilterSelect
             label="SDM Species"
             v-model="sdmStore.selectedSpecies"
@@ -830,20 +835,24 @@ const updateExportHeight = (value) => {
             Max 2 species for overlay comparison
           </p>
 
-          <!-- SDM gradient legend -->
           <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-legend">
             <div class="sdm-legend-item" v-for="(sp, idx) in sdmStore.selectedSpecies.slice(0, 2)" :key="sp">
               <span class="sdm-legend-species">{{ sp }}</span>
+              <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-confidence-badge" :class="sdmStore.getSDMInfo(sp).confidence">
+                {{ sdmStore.getSDMInfo(sp).confidence }}
+              </span>
               <div class="sdm-gradient-bar" :class="idx === 0 ? 'warm' : 'cool'">
                 <span class="sdm-gradient-label-low">Low</span>
                 <span class="sdm-gradient-label-high">High</span>
               </div>
+              <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-species-meta">
+                {{ sdmStore.getSDMInfo(sp).n_records }} records · AUC {{ sdmStore.getSDMInfo(sp).auc }}
+              </span>
             </div>
             <span class="sdm-legend-caption">Habitat suitability</span>
           </div>
 
-          <!-- Opacity slider -->
-          <div class="sdm-opacity-row" style="margin-top: 8px;">
+          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-opacity-row">
             <span class="sdm-opacity-label">Opacity</span>
             <input
               type="range" min="0.1" max="1" step="0.1"
@@ -854,7 +863,7 @@ const updateExportHeight = (value) => {
           </div>
 
           <p class="filter-hint">
-            {{ sdmStore.nSpecies }} species modelled · MaxEnt + RF + XGBoost ensemble
+            {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
           </p>
         </div>
       </div>
