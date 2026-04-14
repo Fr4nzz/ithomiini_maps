@@ -1,12 +1,21 @@
 <script setup>
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, provide, defineAsyncComponent } from 'vue'
 import { useDataStore } from './stores/data'
+import { useMobileLayout } from './composables/useMobileLayout'
 import Sidebar from './components/Sidebar.vue'
 import MapEngine from './components/MapEngine.vue'
 import DataTable from './components/DataTable.vue'
 import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
+import CommandPaletteDialog from './components/sidebar/CommandPaletteDialog.vue'
+
+const MobileTopBar = defineAsyncComponent(() => import('./components/mobile/MobileTopBar.vue'))
+const MobileActionBar = defineAsyncComponent(() => import('./components/mobile/MobileActionBar.vue'))
+const MobileFilterSheet = defineAsyncComponent(() => import('./components/mobile/MobileFilterSheet.vue'))
+const PointDetailSheet = defineAsyncComponent(() => import('./components/mobile/PointDetailSheet.vue'))
+const MobileLegend = defineAsyncComponent(() => import('./components/mobile/MobileLegend.vue'))
+const HamburgerMenu = defineAsyncComponent(() => import('./components/mobile/HamburgerMenu.vue'))
 import { ASPECT_RATIOS } from './utils/constants'
 import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
@@ -15,6 +24,9 @@ import { checkAllTiers, extractGoogleDriveFileId } from './utils/imageProxy'
 import { log } from './utils/logger'
 
 const store = useDataStore()
+const mobileLayout = useMobileLayout()
+provide('mobileLayout', mobileLayout)
+const { isMobile } = mobileLayout
 
 // View state
 const currentView = ref('map') // 'map' or 'table'
@@ -350,6 +362,32 @@ onMounted(async () => {
         />
       </Transition>
     </Teleport>
+
+    <!-- Command Palette Dialog (Ctrl+K / Cmd+K) -->
+    <CommandPaletteDialog />
+
+    <!-- Mobile Components (only render on mobile viewports) -->
+    <template v-if="isMobile">
+      <MobileTopBar
+        @open-menu="mobileLayout.openSheet('menu')"
+        @open-search="mobileLayout.openSheet('filter')"
+      />
+      <MobileActionBar
+        @open-filter="mobileLayout.openSheet('filter')"
+        @open-legend="mobileLayout.openSheet('legend')"
+        @open-more="mobileLayout.openSheet('menu')"
+      />
+      <MobileFilterSheet />
+      <PointDetailSheet />
+      <MobileLegend />
+      <HamburgerMenu
+        :current-view="currentView"
+        @change-view="setView"
+        @open-gallery="openImageGallery"
+        @open-mimicry="openMimicrySelector"
+        @open-export="openExport"
+      />
+    </template>
   </div>
 </template>
 

@@ -486,6 +486,9 @@ const updateExportHeight = (value) => {
             <path d="M12 3v18m-6-6 6 6 6-6"/>
           </svg>
           Taxonomy
+          <kbd class="shortcut-hint" title="Search across all taxa, countries, and mimicry rings">
+            {{ navigator?.platform?.includes('Mac') ? '⌘' : 'Ctrl' }}+K
+          </kbd>
         </label>
 
         <!-- Species Multi-select with Fuzzy Search -->
