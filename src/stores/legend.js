@@ -37,13 +37,6 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // BEHAVIOR SETTINGS
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  const stickyEdges = ref(getStorage('legend-sticky', true))
-  const snapThreshold = ref(20) // pixels
-
-  // ═══════════════════════════════════════════════════════════════════════════
   // CUSTOMIZATIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -139,8 +132,8 @@ export const useLegendStore = defineStore('legend', () => {
   // Whether to show individual counts per legend item
   const showCounts = ref(getStorage('legend-show-counts', true))
 
-  // Max legend items mode: 'auto' (measure-to-fit) or 'manual' (user-specified count)
-  const maxItemsMode = ref(getStorage('legend-max-items-mode', 'auto'))
+  // Max legend items mode: compatibility only; auto-fit was removed
+  const maxItemsMode = ref(getStorage('legend-max-items-mode', 'manual'))
 
   // Manual max items count (used only when maxItemsMode === 'manual')
   const maxItemsManual = ref(getStorage('legend-max-items-manual', 20))
@@ -162,7 +155,7 @@ export const useLegendStore = defineStore('legend', () => {
   const NON_TAXONOMY_GROUP_BY = new Set(['status', 'mimicry', 'source'])
   const isNonTaxonomyGroupBy = computed(() => NON_TAXONOMY_GROUP_BY.has(effectiveGroupBy.value))
 
-  // Whether the user has overridden auto-fit with a manual item count
+  // Whether the user has overridden the item count with a manual value
   const isManualMode = computed(() => maxItemsMode.value === 'manual')
 
   // The actual groupBy value to use (validates against current colorBy)
@@ -254,10 +247,9 @@ export const useLegendStore = defineStore('legend', () => {
            prefixFormat.value !== 'fullSpecies' ||
            // Sorting/wrap changed from defaults
            sortBy.value !== 'alphabetical' ||
-           sortOrder.value !== 'asc' ||
-           wrapLabels.value !== true ||
-           showCounts.value !== true ||
-           maxItemsMode.value !== 'auto'
+            sortOrder.value !== 'asc' ||
+            wrapLabels.value !== true ||
+            showCounts.value !== true
   })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -270,24 +262,9 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage(key, value)
   }
 
-  function updatePosition(x, y) {
-    position.value = { x, y }
-    setStorage('legend-position', position.value)
-  }
-
-  function updateSize(width, height) {
-    size.value = { width, height }
-    setStorage('legend-size', size.value)
-  }
-
   function setTextScale(scale) {
     textScale.value = scale
     setStorage('legend-text-scale', scale)
-  }
-
-  function setStickyEdges(enabled) {
-    stickyEdges.value = enabled
-    setStorage('legend-sticky', enabled)
   }
 
   function setCustomLabel(originalLabel, customLabel) {
@@ -355,8 +332,8 @@ export const useLegendStore = defineStore('legend', () => {
     resetRef(wrapLabels, 'legend-wrap-labels', true)
     resetRef(showCounts, 'legend-show-counts', true)
 
-    // Max items mode
-    resetRef(maxItemsMode, 'legend-max-items-mode', 'auto')
+    // Max items mode (compatibility only; auto-fit removed)
+    resetRef(maxItemsMode, 'legend-max-items-mode', 'manual')
     resetRef(maxItemsManual, 'legend-max-items-manual', 20)
   }
 
@@ -556,13 +533,13 @@ export const useLegendStore = defineStore('legend', () => {
   // MAX ITEMS MODE ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  function setMaxItemsMode(mode) {
-    maxItemsMode.value = mode
-    setStorage('legend-max-items-mode', mode)
+  function setMaxItemsMode() {
+    maxItemsMode.value = 'manual'
+    setStorage('legend-max-items-mode', 'manual')
   }
 
   function toggleMaxItemsMode() {
-    setMaxItemsMode(maxItemsMode.value === 'auto' ? 'manual' : 'auto')
+    setMaxItemsMode('manual')
   }
 
   function setMaxItemsManual(count) {
@@ -616,8 +593,6 @@ export const useLegendStore = defineStore('legend', () => {
     size,
     showLegend,
     textScale,
-    stickyEdges,
-    snapThreshold,
     shownLabels,
     customLabels,
     customColors,
@@ -664,10 +639,7 @@ export const useLegendStore = defineStore('legend', () => {
     isNonTaxonomyGroupBy,
 
     // Actions
-    updatePosition,
-    updateSize,
     setTextScale,
-    setStickyEdges,
     setShownLabels,
     setCustomLabel,
     setCustomColor,
