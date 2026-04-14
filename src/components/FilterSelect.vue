@@ -1,10 +1,9 @@
 <script setup>
-/**
- * FilterSelect Component
- * Multi-select dropdown with fuzzy search using vue-multiselect
- * Matches the behavior of Wings Gallery filters
- */
 import VueMultiselect from 'vue-multiselect'
+import { useDataStore } from '@/stores/data'
+import { computed } from 'vue'
+
+const store = useDataStore()
 
 const props = defineProps({
   label: String,
@@ -22,12 +21,20 @@ const updateValue = (val) => {
   emit('update:modelValue', val)
 }
 
-// Custom label for options - handles both string and object options
 const customLabel = (option) => {
   if (typeof option === 'object') {
     return option.label || option.name || option.value
   }
   return option
+}
+
+const colorMap = computed(() => {
+  try { return store.activeColorMap || {} } catch { return {} }
+})
+
+const getOptionColor = (option) => {
+  const label = customLabel(option)
+  return colorMap.value[label] || null
 }
 </script>
 
@@ -55,6 +62,16 @@ const customLabel = (option) => {
       :options-limit="500"
       class="filter-multiselect"
     >
+      <template #option="{ option }">
+        <span class="option-with-dot">
+          <span
+            v-if="getOptionColor(option)"
+            class="color-dot"
+            :style="{ background: getOptionColor(option) }"
+          />
+          <span>{{ customLabel(option) }}</span>
+        </span>
+      </template>
       <template #noResult>
         <span class="no-result">No matching results</span>
       </template>
@@ -205,7 +222,19 @@ const customLabel = (option) => {
   background: rgba(0, 0, 0, 0.2);
 }
 
-/* No results styling */
+.option-with-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
 .no-result,
 .no-options {
   display: block;
