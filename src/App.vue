@@ -7,6 +7,7 @@ import DataTable from './components/DataTable.vue'
 import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
+import { useMobileLayout } from './composables/useMobileLayout'
 import { ASPECT_RATIOS } from './utils/constants'
 import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
@@ -15,6 +16,8 @@ import { checkAllTiers, extractGoogleDriveFileId } from './utils/imageProxy'
 import { log } from './utils/logger'
 
 const store = useDataStore()
+const mobileLayout = useMobileLayout()
+const { isTablet, isDesktop } = mobileLayout
 
 // View state
 const currentView = ref('map') // 'map' or 'table'
@@ -204,6 +207,7 @@ const onMapReady = (map) => {
 }
 
 // Provide modal openers to children
+provide('mobileLayout', mobileLayout)
 provide('openMimicrySelector', openMimicrySelector)
 provide('openImageGallery', openImageGallery)
 
@@ -226,7 +230,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="app-container">
+  <div v-if="isDesktop || isTablet" class="app-container">
     <!-- Sidebar with filters -->
     <Sidebar
       @open-export="openExport"
@@ -237,12 +241,12 @@ onMounted(async () => {
       :current-view="currentView"
       @set-view="setView"
     />
-    
+
     <!-- Main content area -->
     <main class="main-content">
       <!-- View Toggle (visible on mobile) -->
       <div class="view-toggle-bar">
-        <button 
+        <button
           :class="{ active: currentView === 'map' }"
           @click="setView('map')"
         >
@@ -253,7 +257,7 @@ onMounted(async () => {
           </svg>
           Map
         </button>
-        <button 
+        <button
           :class="{ active: currentView === 'table' }"
           @click="setView('table')"
         >
@@ -265,7 +269,7 @@ onMounted(async () => {
           </svg>
           Table
         </button>
-        <button 
+        <button
           class="btn-gallery-mobile"
           @click="openImageGallery"
           title="Open Gallery"
@@ -276,7 +280,7 @@ onMounted(async () => {
             <polyline points="21 15 16 10 5 21"/>
           </svg>
         </button>
-        <button 
+        <button
           class="btn-export-mobile"
           @click="openExport"
           title="Export Data"
@@ -307,50 +311,70 @@ onMounted(async () => {
       />
 
       <!-- Table View -->
-      <DataTable 
+      <DataTable
         v-else-if="currentView === 'table'"
         class="view-container"
       />
     </main>
-
-    <!-- MODALS -->
-    
-    <!-- Export Panel Modal -->
-    <Teleport to="body">
-      <Transition name="modal">
-        <div 
-          v-if="showExportPanel" 
-          class="modal-overlay"
-          @click.self="closeExport"
-        >
-          <ExportPanel :map="mapRef" :initial-tab="exportPanelInitialTab" @close="closeExport" />
-        </div>
-      </Transition>
-    </Teleport>
-
-    <!-- Mimicry Selector Modal -->
-    <Teleport to="body">
-      <Transition name="modal">
-        <div
-          v-if="showMimicrySelector"
-          class="modal-overlay"
-          @click.self="closeMimicrySelector"
-        >
-          <MimicrySelector @close="closeMimicrySelector" />
-        </div>
-      </Transition>
-    </Teleport>
-
-    <!-- Image Gallery (Full screen) -->
-    <Teleport to="body">
-      <Transition name="fade">
-        <ImageGallery 
-          v-if="showImageGallery" 
-          @close="closeImageGallery" 
-        />
-      </Transition>
-    </Teleport>
   </div>
+
+  <div v-else class="mobile-layout">
+    <MapEngine
+      v-if="!store.loading"
+      class="mobile-map"
+      @map-ready="onMapReady"
+      @open-gallery="openImageGallery"
+    />
+
+    <div v-if="store.loading" class="loading-overlay">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <p class="loading-text">Loading distribution data...</p>
+        <p class="loading-subtext">Preparing records</p>
+      </div>
+    </div>
+
+    <!-- Placeholder: MobileTopBar will go here -->
+    <!-- Placeholder: MobileActionBar will go here -->
+    <!-- Placeholder: BottomSheet will go here -->
+    <!-- Placeholder: HamburgerMenu will go here -->
+  </div>
+
+  <!-- Export Panel Modal -->
+  <Teleport to="body">
+    <Transition name="modal">
+      <div
+        v-if="showExportPanel"
+        class="modal-overlay"
+        @click.self="closeExport"
+      >
+        <ExportPanel :map="mapRef" :initial-tab="exportPanelInitialTab" @close="closeExport" />
+      </div>
+    </Transition>
+  </Teleport>
+
+  <!-- Mimicry Selector Modal -->
+  <Teleport to="body">
+    <Transition name="modal">
+      <div
+        v-if="showMimicrySelector"
+        class="modal-overlay"
+        @click.self="closeMimicrySelector"
+      >
+        <MimicrySelector @close="closeMimicrySelector" />
+      </div>
+    </Transition>
+  </Teleport>
+
+  <!-- Image Gallery (Full screen) -->
+  <Teleport to="body">
+    <Transition name="fade">
+      <ImageGallery
+        v-if="showImageGallery"
+        @close="closeImageGallery"
+      />
+    </Transition>
+  </Teleport>
 </template>
 
 <style>
@@ -371,6 +395,21 @@ html, body, #app {
   display: flex;
   height: 100vh;
   width: 100vw;
+}
+
+.mobile-layout {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .main-content {
@@ -529,6 +568,10 @@ html, body, #app {
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column;
+  }
+
+  .mobile-layout {
+    height: 100dvh;
   }
   
   .view-toggle-bar {
