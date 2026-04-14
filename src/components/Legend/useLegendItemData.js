@@ -4,6 +4,7 @@
 import { computed } from 'vue'
 import { generateSpeciesBorderColors } from '../../utils/colors'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
+import { DYNAMIC_COLORS, SOURCE_COLORS, STATUS_COLORS } from '../../utils/constants'
 
 // Map groupBy setting to GeoJSON property name
 const groupByPropertyMap = {
@@ -18,6 +19,50 @@ const groupByPropertyMap = {
   'source': 'source'
 }
 
+const DEFAULT_SOURCE_FILTER = ['Sanger Institute']
+
+function isLegendValueValid(value) {
+  return value && value !== 'Unknown' && value !== 'NA' && value !== 'null'
+}
+
+function generateColorPalette(values) {
+  const palette = {}
+  values.forEach((value, index) => {
+    palette[value] = DYNAMIC_COLORS[index % DYNAMIC_COLORS.length]
+  })
+  return palette
+}
+
+function buildLegendPalette(mode, labels) {
+  if (mode === 'status') {
+    const palette = {}
+    for (const label of labels) {
+      if (STATUS_COLORS[label]) palette[label] = STATUS_COLORS[label]
+    }
+    return Object.keys(palette).length > 0 ? palette : { ...STATUS_COLORS }
+  }
+
+  if (mode === 'source') {
+    const palette = {}
+    for (const label of labels) {
+      if (SOURCE_COLORS[label]) palette[label] = SOURCE_COLORS[label]
+    }
+    return Object.keys(palette).length > 0 ? palette : { ...SOURCE_COLORS }
+  }
+
+  return generateColorPalette(labels)
+}
+
+function hasArrayFilter(values) {
+  return Array.isArray(values) && values.length > 0
+}
+
+function hasDefaultOnlySource(sourceValues) {
+  return Array.isArray(sourceValues) &&
+    sourceValues.length === DEFAULT_SOURCE_FILTER.length &&
+    sourceValues.every((value, index) => value === DEFAULT_SOURCE_FILTER[index])
+}
+
 /**
  * Composable for legend item data computation
  * @param {Object} dataStore - Data store instance
@@ -26,14 +71,77 @@ const groupByPropertyMap = {
  */
 export function useLegendItemData(dataStore, legendStore, isExportMode) {
 
-  // Color map from data store (includes custom overrides - used for display)
-  const colorMap = computed(() => dataStore.activeColorMap)
+  const legendFilterMode = computed(() => {
+    const filters = dataStore.filters
+    if (!filters) return dataStore.colorBy
+
+    const speciesActive = hasArrayFilter(filters.species)
+    const mimicryActive = hasArrayFilter(filters.mimicry)
+    const countryActive = filters.country && filters.country !== 'All'
+
+    const hasMeaningfulFilters =
+      filters.family !== 'All' ||
+      filters.tribe !== 'All' ||
+      filters.genus !== 'All' ||
+      speciesActive ||
+      hasArrayFilter(filters.subspecies) ||
+      mimicryActive ||
+      hasArrayFilter(filters.status) ||
+      !hasDefaultOnlySource(filters.source) ||
+      filters.sex !== 'all' ||
+      countryActive ||
+      !!filters.camidSearch ||
+      !!filters.dateStart ||
+      !!filters.dateEnd ||
+      filters.goatCoverage !== 'all' ||
+      hasArrayFilter(filters.goatDataSource) ||
+      filters.goatChromosomeMin != null ||
+      filters.goatChromosomeMax != null ||
+      !!dataStore.boundingBox
+
+    if (!hasMeaningfulFilters) return 'genus'
+    if (speciesActive) return 'species'
+    if (mimicryActive) return 'mimicry'
+    if (countryActive) return 'genus'
+    return dataStore.colorBy
+  })
+
+  const legendAttribute = computed(() => groupByPropertyMap[legendFilterMode.value] || dataStore.colorByAttribute)
+  const legendGeoJSON = computed(() => dataStore.filteredGeoJSON || dataStore.displayGeoJSON)
+
+  // Color map from legend source data (includes custom overrides - used for display)
+  const colorMap = computed(() => {
+    const geo = legendGeoJSON.value
+    const attr = legendAttribute.value
+    const labels = geo?.features
+      ? [...new Set(
+          geo.features
+            .map(feature => feature.properties[attr])
+            .filter(isLegendValueValid)
+        )].sort()
+      : []
+
+    const palette = buildLegendPalette(legendFilterMode.value, labels)
+
+    for (const [label, customColor] of Object.entries(legendStore.customColors)) {
+      if (palette[label] && customColor) palette[label] = customColor
+    }
+
+    return palette
+  })
+
   // Base color map (without custom overrides - used for defaultColor/reset)
-  const baseColors = computed(() => dataStore.baseColorMap)
+  const baseColors = computed(() => {
+    return buildLegendPalette(legendFilterMode.value, Object.keys(colorMap.value))
+  })
+
+  const canUseGrouping = computed(() => legendFilterMode.value === dataStore.colorBy)
 
   // Build item→group mapping from displayed data
   const itemGroupMap = computed(() => {
-    const geo = dataStore.displayGeoJSON
+    if (!canUseGrouping.value) return {}
+
+    const geo = legendGeoJSON.value
     if (!geo?.features) return {}
 
     const groupBy = legendStore.effectiveGroupBy
@@ -47,8 +155,7 @@ export function useLegendItemData(dataStore, legendStore, isExportMode) {
       const groupVal = feature.properties[groupProperty]
       const itemVal = feature.properties[itemProperty]
 
-      if (!groupVal || !itemVal) continue
-      if (itemVal === 'Unknown' || itemVal === 'NA') continue
+      if (!groupVal || !isLegendValueValid(itemVal)) continue
 
       if (!map[groupVal]) {
         map[groupVal] = new Set()
@@ -73,8 +180,8 @@ export function useLegendItemData(dataStore, legendStore, isExportMode) {
 
   // Map subspecies label → species name
   const subspeciesSpeciesMap = computed(() => {
-    const geo = dataStore.displayGeoJSON
-    if (!geo?.features || dataStore.colorBy !== 'subspecies') return {}
+    const geo = legendGeoJSON.value
+    if (!geo?.features || legendFilterMode.value !== 'subspecies') return {}
     const map = {}
     for (const f of geo.features) {
       const subsp = f.properties.subspecies
@@ -143,14 +250,14 @@ export function useLegendItemData(dataStore, legendStore, isExportMode) {
   // ═══════════════════════════════════════════════════════════════════════════
 
   const legendCounts = computed(() => {
-    const geo = dataStore.displayGeoJSON
+    const geo = legendGeoJSON.value
     if (!geo?.features) return {}
-    const attr = dataStore.colorByAttribute
+    const attr = legendAttribute.value
     const hidden = new Set(legendStore.hiddenItems)
     const counts = {}
     for (const feature of geo.features) {
       const val = feature.properties[attr]
-      if (val && val !== 'Unknown' && val !== 'NA' && !hidden.has(val)) {
+      if (isLegendValueValid(val) && !hidden.has(val)) {
         counts[val] = (counts[val] || 0) + 1
       }
     }
@@ -158,10 +265,10 @@ export function useLegendItemData(dataStore, legendStore, isExportMode) {
   })
 
   const legendGroupCounts = computed(() => {
-    const geo = dataStore.displayGeoJSON
+    const geo = legendGeoJSON.value
     if (!geo?.features) return {}
-    if (!legendStore.isGrouped) return {}
-    const attr = dataStore.colorByAttribute
+    if (!legendStore.isGrouped || !canUseGrouping.value) return {}
+    const attr = legendAttribute.value
     const groupBy = legendStore.effectiveGroupBy
     const groupProperty = groupByPropertyMap[groupBy]
     if (!groupProperty) return {}
@@ -170,7 +277,7 @@ export function useLegendItemData(dataStore, legendStore, isExportMode) {
     for (const feature of geo.features) {
       const val = feature.properties[attr]
       const groupVal = feature.properties[groupProperty]
-      if (val && val !== 'Unknown' && val !== 'NA' && !hidden.has(val) && groupVal) {
+      if (isLegendValueValid(val) && !hidden.has(val) && groupVal) {
         const key = `${groupVal}\0${val}`
         counts[key] = (counts[key] || 0) + 1
       }
@@ -345,7 +452,7 @@ export function useLegendItemData(dataStore, legendStore, isExportMode) {
     const sortOrderVal = legendStore.sortOrder
     const counts = legendCounts.value
 
-    if (!legendStore.isGrouped) {
+    if (!legendStore.isGrouped || !canUseGrouping.value) {
       return { type: 'flat', items: legendItems.value.slice() }
     }
 

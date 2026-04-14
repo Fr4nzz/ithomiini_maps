@@ -14,6 +14,7 @@ import {
 } from 'reka-ui'
 import { Check, ChevronDown, X } from 'lucide-vue-next'
 import { cn } from '@/lib/utils'
+import { useDataStore } from '@/stores/data'
 
 const props = defineProps({
   label: String,
@@ -29,6 +30,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const dataStore = useDataStore()
 
 const open = ref(false)
 const searchTerm = ref('')
@@ -78,6 +81,22 @@ const filteredOptions = computed(() => {
   if (!props.searchable || !searchTerm.value.trim()) return props.options
   return props.options.filter(option => contains(getOptionLabel(option), searchTerm.value))
 })
+
+const optionColorMap = computed(() => dataStore.activeColorMap || {})
+
+const shouldShowColorDots = computed(() => {
+  const colors = optionColorMap.value
+  if (!colors || Object.keys(colors).length === 0) return false
+
+  return props.options
+    .filter(option => !isAllOption(option))
+    .some(option => !!colors[getOptionLabel(option)])
+})
+
+const getOptionColor = (option) => {
+  if (!shouldShowColorDots.value) return null
+  return optionColorMap.value[getOptionLabel(option)] || null
+}
 
 const hasSelection = computed(() => selectedItems.value.length > 0)
 
@@ -273,7 +292,14 @@ const getOptionKey = (option, index) => {
                   )"
                   @select="handleOptionSelect(option, $event)"
                 >
-                  <span class="min-w-0 flex-1 truncate">{{ getOptionLabel(option) }}</span>
+                  <span class="flex min-w-0 flex-1 items-center gap-2">
+                    <span
+                      v-if="getOptionColor(option)"
+                      class="h-2 w-2 shrink-0 rounded-full"
+                      :style="{ backgroundColor: getOptionColor(option) }"
+                    />
+                    <span class="min-w-0 truncate">{{ getOptionLabel(option) }}</span>
+                  </span>
                   <ComboboxItemIndicator class="flex items-center justify-center text-accent">
                     <Check class="h-4 w-4" />
                   </ComboboxItemIndicator>
