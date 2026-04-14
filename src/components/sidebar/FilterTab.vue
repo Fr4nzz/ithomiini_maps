@@ -4,6 +4,8 @@ import { useDataStore } from '../../stores/data'
 import FilterSelect from '../FilterSelect.vue'
 import DateFilter from '../DateFilter.vue'
 import TimeSlider from '../TimeSlider.vue'
+import CommandPalette from './CommandPalette.vue'
+import TaxonomyTree from './TaxonomyTree.vue'
 import { useCamidAutocomplete } from '../../composables/useCamidAutocomplete'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
 import config from '../../config'
@@ -29,6 +31,7 @@ const accordionSections = ref(['time-range'])
 const goatChromosomeMinInput = ref(store.filters.goatChromosomeMin ?? '')
 const goatChromosomeMaxInput = ref(store.filters.goatChromosomeMax ?? '')
 const showExactDates = ref(false)
+const taxonomyViewMode = ref('cascade')
 
 const totalRecords = computed(() => store.allFeatures.length)
 const filteredRecords = computed(() => store.filteredGeoJSON?.features?.length ?? 0)
@@ -144,6 +147,8 @@ watch(() => store.filters.goatChromosomeMax, (value) => {
       <button class="bbox-clear" @click="store.boundingBox = null">Clear</button>
     </div>
 
+    <CommandPalette />
+
     <div class="filter-section">
       <label class="section-label">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -191,55 +196,82 @@ watch(() => store.filters.goatChromosomeMax, (value) => {
         Taxonomy
       </label>
 
-      <FilterSelect
-        label="Species"
-        v-model="store.filters.species"
-        :options="store.uniqueSpecies"
-        placeholder="Search species..."
-        :multiple="true"
-      />
+      <div class="taxonomy-view-toggle" role="tablist" aria-label="Taxonomy filter view">
+        <button
+          type="button"
+          class="taxonomy-view-button"
+          :class="{ active: taxonomyViewMode === 'cascade' }"
+          :aria-selected="taxonomyViewMode === 'cascade'"
+          @click="taxonomyViewMode = 'cascade'"
+        >
+          Cascade dropdowns
+        </button>
+        <button
+          type="button"
+          class="taxonomy-view-button"
+          :class="{ active: taxonomyViewMode === 'tree' }"
+          :aria-selected="taxonomyViewMode === 'tree'"
+          @click="taxonomyViewMode = 'tree'"
+        >
+          Tree view
+        </button>
+      </div>
 
-      <FilterSelect
-        label="Subspecies"
-        v-model="store.filters.subspecies"
-        :options="store.uniqueSubspecies"
-        placeholder="Search subspecies..."
-        :multiple="true"
-      />
+      <div v-if="taxonomyViewMode === 'tree'" class="taxonomy-tree-panel">
+        <TaxonomyTree />
+      </div>
 
-      <Accordion type="single" collapsible class="nested-accordion">
-        <AccordionItem value="advanced-taxonomy" class="sidebar-accordion-item">
-          <AccordionTrigger class="sidebar-accordion-trigger compact-trigger">
-            <span class="accordion-trigger-copy">Family / Tribe / Genus</span>
-            <span v-if="taxonomyAdvancedCount" class="active-badge">{{ taxonomyAdvancedCount }}</span>
-          </AccordionTrigger>
-          <AccordionContent class="sidebar-accordion-content nested-accordion-content">
-            <FilterSelect
-              label="Family"
-              v-model="store.filters.family"
-              :options="['All', ...store.uniqueFamilies]"
-              placeholder="All Families"
-              :multiple="false"
-              :show-count="false"
-            />
-            <FilterSelect
-              label="Tribe"
-              v-model="store.filters.tribe"
-              :options="['All', ...store.uniqueTribes]"
-              placeholder="All Tribes"
-              :multiple="false"
-              :show-count="false"
-            />
-            <FilterSelect
-              label="Genus"
-              v-model="store.filters.genus"
-              :options="['All', ...store.uniqueGenera]"
-              placeholder="All Genera"
-              :multiple="false"
-            />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <template v-else>
+        <FilterSelect
+          label="Species"
+          v-model="store.filters.species"
+          :options="store.uniqueSpecies"
+          placeholder="Search species..."
+          :multiple="true"
+        />
+
+        <FilterSelect
+          label="Subspecies"
+          v-model="store.filters.subspecies"
+          :options="store.uniqueSubspecies"
+          placeholder="Search subspecies..."
+          :multiple="true"
+        />
+
+        <Accordion type="single" collapsible class="nested-accordion">
+          <AccordionItem value="advanced-taxonomy" class="sidebar-accordion-item">
+            <AccordionTrigger class="sidebar-accordion-trigger compact-trigger">
+              <span class="accordion-trigger-copy">Family / Tribe / Genus</span>
+              <span v-if="taxonomyAdvancedCount" class="active-badge">{{ taxonomyAdvancedCount }}</span>
+            </AccordionTrigger>
+            <AccordionContent class="sidebar-accordion-content nested-accordion-content">
+              <FilterSelect
+                label="Family"
+                v-model="store.filters.family"
+                :options="['All', ...store.uniqueFamilies]"
+                placeholder="All Families"
+                :multiple="false"
+                :show-count="false"
+              />
+              <FilterSelect
+                label="Tribe"
+                v-model="store.filters.tribe"
+                :options="['All', ...store.uniqueTribes]"
+                placeholder="All Tribes"
+                :multiple="false"
+                :show-count="false"
+              />
+              <FilterSelect
+                label="Genus"
+                v-model="store.filters.genus"
+                :options="['All', ...store.uniqueGenera]"
+                placeholder="All Genera"
+                :multiple="false"
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </template>
     </div>
 
     <div v-if="config.features.mimicrySelector" class="filter-section">
@@ -476,6 +508,41 @@ watch(() => store.filters.goatChromosomeMax, (value) => {
 
 .nested-accordion {
   margin-top: 12px;
+}
+
+.taxonomy-view-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.taxonomy-view-button {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.taxonomy-view-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.taxonomy-view-button.active {
+  border-color: rgba(74, 222, 128, 0.45);
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--color-accent, #4ade80);
+  box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.15);
+}
+
+.taxonomy-tree-panel {
+  margin-top: 2px;
 }
 
 .sidebar-accordion-item {
