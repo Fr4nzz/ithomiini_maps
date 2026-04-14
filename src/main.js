@@ -5,6 +5,9 @@ import './index.css'
 import './style.css'
 import { log } from './utils/logger'
 
+// Import vue-multiselect CSS
+import 'vue-multiselect/dist/vue-multiselect.css'
+
 const app = createApp(App)
 const pinia = createPinia()
 

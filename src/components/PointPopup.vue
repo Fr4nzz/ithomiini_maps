@@ -34,7 +34,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['close', 'open-gallery', 'toggle-dock'])
+const emit = defineEmits(['close', 'open-gallery'])
 
 const store = useDataStore()
 
@@ -48,7 +48,7 @@ const speciesList = computed(() => {
   return store.getSpeciesWithPhotos(props.points)
 })
 
-const pointList = computed(() => props.points)
+const points = computed(() => props.points)
 
 const {
   selectedSpecies,
@@ -59,7 +59,7 @@ const {
   selectSpecies,
   selectSubspecies,
   locationName
-} = usePopupSelection(pointList, groupedBySpecies, speciesList, {
+} = usePopupSelection(points, groupedBySpecies, speciesList, {
   initialSpecies: computed(() => props.initialSpecies),
   initialSubspecies: computed(() => props.initialSubspecies)
 })
@@ -166,20 +166,13 @@ const bioprojectUrl = computed(() => {
 
 <template>
   <div class="point-popup">
-    <div class="popup-actions">
-      <button class="popup-action-btn" @click="emit('toggle-dock')" title="Dock to right panel">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <path d="M9 3v18"/>
-        </svg>
-      </button>
-      <button class="popup-action-btn" @click="emit('close')" title="Close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
+    <!-- Close button -->
+    <button class="popup-close" @click="emit('close')" title="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
 
     <div class="popup-layout">
       <!-- Left Column: Photo & Individual Details -->
@@ -505,25 +498,19 @@ const bioprojectUrl = computed(() => {
   background: var(--color-bg-primary, #1a1a2e);
   color: var(--color-text-primary, #e0e0e0);
   border-radius: 10px;
-  padding: 12px;
-  min-width: 380px;
-  max-width: 480px;
+  padding: 16px;
+  min-width: 420px;
+  max-width: 500px;
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.5));
   border: 1px solid var(--color-border, #3d3d5c);
 }
 
-.popup-actions {
+.popup-close {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  display: flex;
-  gap: 2px;
-  z-index: 10;
-}
-
-.popup-action-btn {
-  width: 26px;
-  height: 26px;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -532,37 +519,38 @@ const bioprojectUrl = computed(() => {
   color: var(--color-text-muted, #888);
   cursor: pointer;
   border-radius: 4px;
-  transition: all 0.15s;
+  transition: all 0.2s;
+  z-index: 10;
 }
 
-.popup-action-btn:hover {
+.popup-close:hover {
   background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
   color: var(--color-text-primary, #fff);
 }
 
-.popup-action-btn svg {
-  width: 14px;
-  height: 14px;
+.popup-close svg {
+  width: 16px;
+  height: 16px;
 }
 
 .popup-layout {
   display: flex;
-  gap: 10px;
+  gap: 16px;
 }
 
 /* Left Column: Photo & Individual Details */
 .popup-left-section {
   flex-shrink: 0;
-  width: 150px;
+  width: 170px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .photo-container {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 170px;
+  height: 170px;
   background: var(--color-bg-secondary, #252540);
   border-radius: 8px;
   overflow: hidden;
@@ -603,7 +591,7 @@ const bioprojectUrl = computed(() => {
   right: 6px;
   background: rgba(0, 0, 0, 0.7);
   color: var(--color-text-muted, #888);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   padding: 3px 6px;
   border-radius: 3px;
   text-align: center;
@@ -652,7 +640,7 @@ const bioprojectUrl = computed(() => {
 .count-badge {
   background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
   color: var(--color-accent, #4ade80);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
@@ -661,7 +649,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .section-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #888);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -675,7 +663,7 @@ const bioprojectUrl = computed(() => {
 
 .individual-select {
   width: 100%;
-  padding: 6px 8px;
+  padding: 8px 10px;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
@@ -697,7 +685,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .single-individual-id {
-  padding: 6px 8px;
+  padding: 8px 10px;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
@@ -752,7 +740,7 @@ const bioprojectUrl = computed(() => {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .taxonomy-section {
@@ -762,7 +750,7 @@ const bioprojectUrl = computed(() => {
 
 .taxonomy-select {
   width: 100%;
-  padding: 6px 8px;
+  padding: 8px 10px;
   background: var(--color-bg-secondary, #252540);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
@@ -793,11 +781,11 @@ const bioprojectUrl = computed(() => {
   background: var(--color-accent-subtle, rgba(74, 222, 128, 0.05));
   border: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
   border-radius: 6px;
-  padding: 8px;
+  padding: 10px;
 }
 
 .summary-title {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-accent, #4ade80);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -810,7 +798,7 @@ const bioprojectUrl = computed(() => {
 
 .coords {
   font-family: monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .location-stats {
@@ -834,7 +822,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #888);
 }
 
@@ -898,7 +886,7 @@ const bioprojectUrl = computed(() => {
 
 /* GoaT Genomic Data Section */
 .goat-section {
-  margin-top: 8px;
+  margin-top: 12px;
   background: rgba(59, 130, 246, 0.06);
   border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 8px;
@@ -920,7 +908,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .goat-title {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -932,7 +920,7 @@ const bioprojectUrl = computed(() => {
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 500;
   color: #60a5fa;
   text-decoration: none;
@@ -966,7 +954,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .goat-label {
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   color: var(--color-text-muted, #888);
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -984,7 +972,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .est-badge {
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   font-weight: 400;
   color: #f59e0b;
   cursor: help;

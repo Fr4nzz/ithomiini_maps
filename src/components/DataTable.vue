@@ -1210,7 +1210,7 @@ const getGenomeSummary = (scientificName) => {
 .filter-count {
   background: #60a5fa;
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 700;
   padding: 1px 6px;
   border-radius: 10px;
@@ -1346,7 +1346,7 @@ const getGenomeSummary = (scientificName) => {
 
 .column-filter-input::placeholder {
   color: var(--color-text-muted, #666);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .column-filter-select {
@@ -1400,7 +1400,7 @@ const getGenomeSummary = (scientificName) => {
 
 .filter-select-narrow {
   padding-right: 18px !important;
-  font-size: 0.75rem !important;
+  font-size: 0.7rem !important;
 }
 
 .filter-indicator {
@@ -1509,7 +1509,7 @@ const getGenomeSummary = (scientificName) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
   color: #f59e0b;
   font-weight: bold;
 }
@@ -1576,7 +1576,7 @@ const getGenomeSummary = (scientificName) => {
 
 .original-value {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #888);
   font-style: normal;
   margin-top: 2px;
@@ -1603,7 +1603,7 @@ const getGenomeSummary = (scientificName) => {
 }
 
 .chr-est {
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   color: var(--color-text-muted, #888);
   font-style: italic;
   margin-left: 2px;

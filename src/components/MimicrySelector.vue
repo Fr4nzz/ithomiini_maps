@@ -691,7 +691,7 @@ const clearSelection = () => {
 }
 
 .section-count {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   padding: 2px 6px;
   background: var(--color-bg-tertiary, #2d2d4a);
   border-radius: 10px;

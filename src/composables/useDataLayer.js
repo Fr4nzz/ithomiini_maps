@@ -24,15 +24,6 @@ export function useDataLayer(map, options = {}) {
   const legendStore = useLegendStore()
   const { onShowPopup } = options
 
-  const emitMobileDetailEvent = (payload) => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return
-    if (!window.matchMedia('(max-width: 768px)').matches) return
-
-    window.dispatchEvent(new CustomEvent('mobile-point-detail', {
-      detail: payload,
-    }))
-  }
-
   let clusterHandlersRegistered = false
   let pointsHandlersRegistered = false
   let lastHoveredPointId = null
@@ -387,11 +378,10 @@ export function useDataLayer(map, options = {}) {
                 'interpolate', ['linear'], ['zoom'],
                 3, 1, 6, 2, 10, 3, 14, 5
               ],
-              'circle-color': Object.keys(pointColorMap).length > 0
-                ? ['match', ['get', pointAttr],
-                    ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
-                    '#6b7280']
-                : '#6b7280',
+              'circle-color': ['match', ['get', pointAttr],
+                ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
+                '#6b7280'
+              ],
               'circle-opacity': 0.4,
               'circle-stroke-width': 0,
               'circle-stroke-opacity': 0
@@ -485,11 +475,10 @@ export function useDataLayer(map, options = {}) {
                 'interpolate', ['linear'], ['zoom'],
                 3, 1.5, 6, 2.5, 10, 4, 14, 6
               ],
-              'circle-color': Object.keys(pointColorMap).length > 0
-                ? ['match', ['get', pointAttr],
-                    ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
-                    '#6b7280']
-                : '#6b7280',
+              'circle-color': ['match', ['get', pointAttr],
+                ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
+                '#6b7280'
+              ],
               'circle-opacity': 0.5,
               'circle-stroke-width': 0.5,
               'circle-stroke-color': '#ffffff',
@@ -579,17 +568,11 @@ export function useDataLayer(map, options = {}) {
     // Build color expression: items in the legend get their color,
     // overflow items (in color map but not shown in legend) get grey
     const shownLabels = legendStore.shownLabels
-    const colorEntries = Object.entries(colorMap)
-    let colorExpression
-    if (colorEntries.length === 0) {
-      colorExpression = '#6b7280'
-    } else {
-      colorExpression = ['match', ['get', colorAttr]]
-      colorEntries.forEach(([value, color]) => {
-        colorExpression.push(value, shownLabels.size > 0 && !shownLabels.has(value) ? '#6b7280' : color)
-      })
-      colorExpression.push('#6b7280')
-    }
+    const colorExpression = ['match', ['get', colorAttr]]
+    Object.entries(colorMap).forEach(([value, color]) => {
+      colorExpression.push(value, shownLabels.size > 0 && !shownLabels.has(value) ? '#6b7280' : color)
+    })
+    colorExpression.push('#6b7280')
 
     // Sort key: colored (legend) points render above grey (overflow) points
     const shownLabelsArray = Array.from(shownLabels)
@@ -795,17 +778,14 @@ export function useDataLayer(map, options = {}) {
           const clusterStats = computeClusterStats(clusterFeatures, clusterLat, clusterLng)
           updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0, clusterFeatures)
 
-          const popupPayload = {
+          onShowPopup({
             type: 'cluster',
             coordinates: { lat: clusterLat, lng: clusterLng },
             lngLat: coords,
             points: clusterPoints,
             isCluster: true,
             clusterStats
-          }
-
-          emitMobileDetailEvent(popupPayload)
-          onShowPopup(popupPayload)
+          })
         }
       })
 
@@ -837,17 +817,14 @@ export function useDataLayer(map, options = {}) {
       const pointsAtLocation = store.getPointsAtCoordinates(lat, lng)
 
       if (onShowPopup) {
-        const popupPayload = {
+        onShowPopup({
           type: 'point',
           coordinates: { lat, lng },
           lngLat: coords,
           points: pointsAtLocation.length > 0 ? pointsAtLocation : [props],
           initialSpecies: isScattered ? scatteredSpecies : null,
           initialSubspecies: isScattered ? scatteredSubspecies : null
-        }
-
-        emitMobileDetailEvent(popupPayload)
-        onShowPopup(popupPayload)
+        })
       }
     })
 

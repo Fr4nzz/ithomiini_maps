@@ -775,7 +775,7 @@ const activeTab = ref(props.initialTab || 'export')
 }
 
 .gbif-stats .stat-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #666);
 }
 

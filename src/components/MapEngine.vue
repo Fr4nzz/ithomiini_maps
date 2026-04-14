@@ -19,7 +19,6 @@ import {
   useCountryBoundaries,
   useBoundingBoxSelection
 } from '../composables/useMapEngine'
-import { useSDMLayer } from '../composables/useSDMLayer'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
 import { Sun, Moon, Palette } from 'lucide-vue-next'
@@ -32,7 +31,6 @@ const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
 const map = ref(null)
-const mobileLegendHighlight = ref('')
 let popup = null
 
 // Wrapper size (the available space) for accurate export preview calculations
@@ -42,7 +40,6 @@ let mapContainerResizeObserver = null
 
 // Enhanced popup state for multi-point locations
 const showEnhancedPopup = ref(false)
-const popupDocked = ref(false)
 const enhancedPopupData = ref({
   coordinates: { lat: 0, lng: 0 },
   points: [],
@@ -84,19 +81,6 @@ const handleShowPopup = (data) => {
   nextTick(() => {
     showEnhancedPopup.value = true
 
-    if (popupDocked.value) {
-      // In docked mode, pan map to show the point (offset for panel width)
-      const panelWidth = 400
-      const mapWidth = map.value.getContainer().clientWidth
-      const offsetX = -panelWidth / 2
-      map.value.easeTo({
-        center: data.lngLat,
-        offset: [offsetX, 0],
-        duration: 300,
-      })
-      return
-    }
-
     nextTick(() => {
       if (pointPopupContainer.value) {
         popup = new maplibregl.Popup({
@@ -111,65 +95,12 @@ const handleShowPopup = (data) => {
 
         popup.on('close', () => {
           showEnhancedPopup.value = false
+          // Clear cluster extent circle when popup is closed by clicking outside
           if (clearClusterExtentCircle) clearClusterExtentCircle()
         })
       }
     })
   })
-}
-
-const closeEnhancedPopup = () => {
-  showEnhancedPopup.value = false
-  if (popup) popup.remove()
-  if (clearClusterExtentCircle) clearClusterExtentCircle()
-}
-
-const toggleDock = () => {
-  popupDocked.value = !popupDocked.value
-
-  if (popupDocked.value) {
-    if (popup) {
-      popup.remove()
-      popup = null
-    }
-    showEnhancedPopup.value = true
-
-    nextTick(() => {
-      if (map.value && enhancedPopupData.value.coordinates) {
-        const panelWidth = 340
-        map.value.easeTo({
-          center: [enhancedPopupData.value.coordinates.lng, enhancedPopupData.value.coordinates.lat],
-          offset: [-panelWidth / 2, 0],
-          duration: 300,
-        })
-      }
-    })
-  } else {
-    const data = enhancedPopupData.value
-    showEnhancedPopup.value = false
-
-    nextTick(() => {
-      showEnhancedPopup.value = true
-      nextTick(() => {
-        if (pointPopupContainer.value && map.value) {
-          popup = new maplibregl.Popup({
-            closeButton: false,
-            closeOnClick: true,
-            maxWidth: '500px',
-            className: 'custom-popup enhanced-popup'
-          })
-            .setLngLat([data.coordinates.lng, data.coordinates.lat])
-            .setDOMContent(pointPopupContainer.value)
-            .addTo(map.value)
-
-          popup.on('close', () => {
-            showEnhancedPopup.value = false
-            if (clearClusterExtentCircle) clearClusterExtentCircle()
-          })
-        }
-      })
-    })
-  }
 }
 
 const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup })
@@ -184,7 +115,6 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   }
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
-const { updateLayer: updateSDMLayer, cursorValue: sdmCursorValue, cursorPos: sdmCursorPos } = useSDMLayer(map)
 const {
   isDrawing: isBboxDrawing,
   enableDrawing: enableBboxDrawing,
@@ -267,25 +197,6 @@ const currentStyleName = computed(() => {
   return MAP_STYLES[currentStyle.value]?.name || 'Dark'
 })
 
-const applyMobileLegendHighlight = () => {
-  if (!map.value?.getLayer('points-highlight')) return
-
-  const filter = mobileLegendHighlight.value
-    ? (store.clusteringEnabled
-        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', store.colorByAttribute], mobileLegendHighlight.value]]
-        : ['==', ['get', store.colorByAttribute], mobileLegendHighlight.value])
-    : (store.clusteringEnabled
-        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-        : ['==', ['get', 'id'], ''])
-
-  map.value.setFilter('points-highlight', filter)
-}
-
-const handleMobileLegendHighlight = (event) => {
-  mobileLegendHighlight.value = event.detail?.label || ''
-  applyMobileLegendHighlight()
-}
-
 // Close dropdown when clicking outside
 const handleMapLayerClickOutside = (event) => {
   if (mapLayerDropdownRef.value && !mapLayerDropdownRef.value.contains(event.target)) {
@@ -349,7 +260,6 @@ onMounted(() => {
   initMap()
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('click', handleMapLayerClickOutside)
-  window.addEventListener('mobile-legend-highlight', handleMobileLegendHighlight)
 
   // Set up ResizeObserver on WRAPPER for calculating export preview dimensions
   if (mapWrapper.value) {
@@ -397,7 +307,6 @@ onUnmounted(() => {
   }
   document.removeEventListener('click', handleClickOutside)
   document.removeEventListener('click', handleMapLayerClickOutside)
-  window.removeEventListener('mobile-legend-highlight', handleMobileLegendHighlight)
   cleanupSearch()
 })
 
@@ -462,6 +371,14 @@ const initMap = () => {
 // Track previous data length to detect actual data changes
 let previousDataLength = 0
 let previousScatterState = false
+
+// Close enhanced popup
+const closeEnhancedPopup = () => {
+  if (popup) popup.remove()
+  showEnhancedPopup.value = false
+  // Clear the cluster extent circle when popup closes
+  clearClusterExtentCircle()
+}
 
 // Handle open gallery from popup
 const handleOpenGallery = () => {
@@ -606,15 +523,6 @@ watch(
   }
 )
 
-watch(
-  [() => store.displayGeoJSON, () => store.clusteringEnabled, () => store.colorByAttribute],
-  () => {
-    if (!mobileLegendHighlight.value) return
-    setTimeout(() => applyMobileLegendHighlight(), 90)
-  },
-  { flush: 'post' }
-)
-
 // Watch for focusPoint changes
 watch(
   () => store.focusPoint,
@@ -668,7 +576,7 @@ watch(
 </script>
 
 <template>
-  <div ref="mapWrapper" class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled, 'panel-docked': popupDocked && showEnhancedPopup }">
+  <div ref="mapWrapper" class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled }">
     <div
       ref="mapContainer"
       class="map"
@@ -692,11 +600,11 @@ watch(
       <span class="export-dimensions">{{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.width || store.exportSettings.customWidth }} × {{ ASPECT_RATIOS[store.exportSettings.aspectRatio]?.height || store.exportSettings.customHeight }}</span>
     </div>
 
-    <!-- Popup: rendered via MapLibre popup (undocked) or right panel (docked) -->
-    <div v-show="!popupDocked">
+    <!-- Enhanced Popup Container (rendered via MapLibre popup) -->
+    <div v-show="false">
       <div ref="pointPopupContainer">
         <PointPopup
-          v-if="showEnhancedPopup && !popupDocked"
+          v-if="showEnhancedPopup"
           :coordinates="enhancedPopupData.coordinates"
           :points="enhancedPopupData.points"
           :initial-species="enhancedPopupData.initialSpecies"
@@ -705,47 +613,9 @@ watch(
           :cluster-stats="enhancedPopupData.clusterStats"
           @close="closeEnhancedPopup"
           @open-gallery="handleOpenGallery"
-          @toggle-dock="toggleDock"
         />
       </div>
     </div>
-
-    <!-- Docked detail panel (right sidebar) -->
-    <Transition name="panel-slide">
-      <div v-if="popupDocked && showEnhancedPopup" class="detail-panel-dock">
-        <div class="detail-panel-header">
-          <span>Detail Panel</span>
-          <div class="detail-panel-actions">
-            <button @click="toggleDock" class="detail-panel-btn" title="Undock to popup">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M9 3v18"/>
-              </svg>
-            </button>
-            <button @click="closeEnhancedPopup" class="detail-panel-btn" title="Close">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="detail-panel-body">
-          <PointPopup
-            :coordinates="enhancedPopupData.coordinates"
-            :points="enhancedPopupData.points"
-            :initial-species="enhancedPopupData.initialSpecies"
-            :initial-subspecies="enhancedPopupData.initialSubspecies"
-            :is-cluster="enhancedPopupData.isCluster"
-            :cluster-stats="enhancedPopupData.clusterStats"
-            @close="closeEnhancedPopup"
-            @open-gallery="handleOpenGallery"
-            @toggle-dock="toggleDock"
-          />
-        </div>
-      </div>
-    </Transition>
-
-
 
     <!-- Location Search -->
     <div ref="searchInputRef" class="location-search">
@@ -824,15 +694,6 @@ watch(
         </svg>
         <span>Clear Area</span>
       </button>
-    </div>
-
-    <!-- SDM cursor value tooltip -->
-    <div
-      v-if="sdmCursorValue"
-      class="sdm-cursor-tooltip"
-      :style="{ left: (sdmCursorPos.x + 15) + 'px', top: (sdmCursorPos.y - 10) + 'px' }"
-    >
-      <span class="sdm-cursor-value">{{ (sdmCursorValue[0].value * 100).toFixed(0) }}%</span>
     </div>
 
     <!-- Map Layer Controls -->

@@ -56,3 +56,6 @@ public/data/gbif_taxon_keys.json
 public/data/full_dataset.json
 public/data/sanger_taxonomy.csv
 public/data/map_points.json
+.playwright-cli/
+.playwright/
+test-results/

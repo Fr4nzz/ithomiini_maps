@@ -284,7 +284,7 @@ function statusClass(tier) {
 .count-badge {
   background: rgba(74, 222, 128, 0.2);
   color: #4ade80;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
@@ -293,7 +293,7 @@ function statusClass(tier) {
 }
 
 .section-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -444,7 +444,7 @@ function statusClass(tier) {
 
 .coords {
   font-family: monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .search-summary {
@@ -455,7 +455,7 @@ function statusClass(tier) {
 }
 
 .summary-title {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #4ade80;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -557,7 +557,7 @@ function statusClass(tier) {
 }
 
 .proxy-option-desc {
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   color: #888;
   display: block;
   margin-top: 1px;

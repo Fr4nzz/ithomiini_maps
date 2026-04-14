@@ -204,7 +204,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .coverage-stat {
@@ -251,7 +251,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
   color: var(--color-text-secondary, #aaa);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -281,7 +281,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 
 .date-input-group label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--color-text-muted, #666);
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -345,7 +345,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   border: 1px solid rgba(74, 222, 128, 0.3);
   border-radius: 4px;
   color: var(--color-accent, #4ade80);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -359,7 +359,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #666);
   line-height: 1.4;
   margin: 0;

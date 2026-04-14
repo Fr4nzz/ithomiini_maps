@@ -331,7 +331,7 @@
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--species-color, #888);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   font-style: italic;
   cursor: pointer;
@@ -365,7 +365,7 @@
   padding: 1px 5px;
   background: var(--species-color, #666);
   color: #000;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   font-weight: 700;
   font-style: normal;
   border-radius: 3px;
@@ -447,7 +447,7 @@
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   color: var(--subsp-color, #777);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-style: italic;
   cursor: pointer;
   white-space: nowrap;
@@ -565,7 +565,7 @@
   }
 
   .species-header {
-  font-size: 0.75rem;
+    font-size: 0.6rem;
     padding: 3px 6px;
   }
 

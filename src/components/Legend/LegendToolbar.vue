@@ -12,6 +12,7 @@ import {
   Type,
   MapPin,
   WrapText,
+  ListOrdered,
   ArrowLeftRight
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
@@ -27,7 +28,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close', 'toggle-sticky'])
+const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close'])
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
@@ -183,7 +184,7 @@ function handleReset() {
 
 // Toggle sticky edges
 function toggleSticky() {
-  emit('toggle-sticky')
+  legendStore.setStickyEdges(!legendStore.stickyEdges)
 }
 
 // Update text scale
@@ -204,6 +205,12 @@ function updateMapBorderWidth(e) {
 // Update map fill opacity
 function updateMapFillOpacity(e) {
   dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
+}
+
+// Update manual max-items count
+function handleManualCountInput(e) {
+  const val = parseInt(e.target.value)
+  if (!isNaN(val) && val >= 1) legendStore.setMaxItemsManual(val)
 }
 
 onClickOutside(settingsPanelRef, (e) => {
@@ -385,6 +392,35 @@ onClickOutside(settingsPanelRef, (e) => {
           </div>
         </div>
 
+        <!-- Max Legend Items -->
+        <div class="settings-row">
+          <label class="settings-label"><ListOrdered :size="14" /> Max Items</label>
+          <div class="settings-control">
+            <button
+              class="wrap-toggle-button"
+              :class="{ active: legendStore.isManualMode }"
+              @click="legendStore.toggleMaxItemsMode()"
+            >
+              {{ legendStore.isManualMode ? 'MANUAL' : 'AUTO' }}
+            </button>
+            <span class="value-display">{{ legendStore.isManualMode ? '' : 'fit to size' }}</span>
+          </div>
+        </div>
+        <div v-if="legendStore.isManualMode" class="settings-row manual-count-row">
+          <div class="settings-control">
+            <input
+              type="number"
+              class="manual-count-input"
+              :value="legendStore.maxItemsManual"
+              min="1"
+              max="500"
+              @input="handleManualCountInput"
+              @keydown.enter="$event.target.blur()"
+            />
+            <span class="value-display">items</span>
+          </div>
+        </div>
+
         <!-- Divider -->
         <div class="settings-divider"></div>
 
@@ -552,7 +588,7 @@ onClickOutside(settingsPanelRef, (e) => {
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -741,7 +777,7 @@ onClickOutside(settingsPanelRef, (e) => {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;

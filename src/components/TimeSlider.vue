@@ -250,7 +250,7 @@ const isFilterActive = computed(() => {
   align-items: center;
   gap: 6px;
   padding: 4px 0;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--color-text-muted, #666);
   font-variant-numeric: tabular-nums;
@@ -354,7 +354,7 @@ const isFilterActive = computed(() => {
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
   color: var(--color-text-secondary, #aaa);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.15s;
 }

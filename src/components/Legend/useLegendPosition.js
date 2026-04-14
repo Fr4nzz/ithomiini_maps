@@ -124,6 +124,7 @@ export function useLegendPosition({
   function endDrag() {
     if (isDragging.value) {
       isDragging.value = false
+      legendStore.updatePosition(posX.value, posY.value)
     }
 
     document.removeEventListener('mousemove', onDrag)
@@ -172,6 +173,7 @@ export function useLegendPosition({
     if (legendHeight > maxAllowedHeight && maxAllowedHeight >= minHeight) {
       currentHeight.value = maxAllowedHeight
       legendHeight = maxAllowedHeight
+      legendStore.updateSize(currentWidth.value, maxAllowedHeight)
     }
 
     let newX = posX.value
@@ -206,6 +208,7 @@ export function useLegendPosition({
 
     posX.value = newX
     posY.value = newY
+    legendStore.updatePosition(newX, newY)
   }
 
   // ── Attribution repositioning ─────────────────────────────────────────
@@ -224,6 +227,7 @@ export function useLegendPosition({
 
     if (stickyEdge.value.bottom) {
       posY.value = bounds.height - legendHeight - bottomMargin
+      legendStore.updatePosition(posX.value, posY.value)
     }
   }
 
@@ -244,6 +248,7 @@ export function useLegendPosition({
 
     if (Math.abs(posY.value - targetY) > 2) {
       posY.value = targetY
+      legendStore.updatePosition(posX.value, posY.value)
     }
   }
 

@@ -223,7 +223,7 @@ function resetRangeSettings() {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -276,7 +276,7 @@ function resetRangeSettings() {
 }
 
 .filter-hint {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #666);
   font-style: italic;
   margin-top: 6px;
@@ -337,7 +337,7 @@ function resetRangeSettings() {
   margin-left: auto;
   padding: 2px 8px;
   border-radius: 4px;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -385,7 +385,7 @@ function resetRangeSettings() {
 }
 
 .count-mode-hint {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #666);
   font-style: italic;
   margin-top: 4px;
@@ -394,7 +394,7 @@ function resetRangeSettings() {
 
 .unit-label {
   font-weight: 400;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--color-text-muted, #666);
 }
 
@@ -498,7 +498,7 @@ function resetRangeSettings() {
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
   color: var(--color-text-secondary, #aaa);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.15s;
 }

@@ -260,7 +260,7 @@ const onNextSubspecies = (event) => {
 }
 
 .ring-photo-placeholder span {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 /* Taxonomy Navigation */
@@ -285,14 +285,14 @@ const onNextSubspecies = (event) => {
   flex: 1;
   min-width: 0;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   line-height: 1.3;
   color: var(--color-text-secondary, #aaa);
 }
 
 .nav-prefix {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   color: var(--color-text-muted, #666);
 }
 
@@ -354,7 +354,7 @@ const onNextSubspecies = (event) => {
   right: 4px;
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -384,7 +384,7 @@ const onNextSubspecies = (event) => {
 }
 
 .ring-count {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted, #666);
 }
 
