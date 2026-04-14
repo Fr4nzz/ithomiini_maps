@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { getStorage, setStorage } from '../utils/storageHelpers'
 import { useScatterVisualization } from './dataPointGrouping'
@@ -7,6 +7,7 @@ import { useFilterStore } from './filterStore'
 
 export const useViewStore = defineStore('view', () => {
   const filterStore = useFilterStore()
+  const { filteredGeoJSON: filteredGeoJSONRef } = storeToRefs(filterStore)
 
   const showThumbnail = ref(true)
   const clusteringEnabled = ref(getStorage('app-clustering-enabled', false))
@@ -84,7 +85,7 @@ export const useViewStore = defineStore('view', () => {
     scatteredPositions,
     displayGeoJSON,
     scatterVisualizationData,
-  } = useScatterVisualization(filterStore.filteredGeoJSON, scatterOverlappingPoints, clusteringEnabled)
+  } = useScatterVisualization(filteredGeoJSONRef, scatterOverlappingPoints, clusteringEnabled)
 
   const colorByAttribute = computed(() => {
     const mapping = {

@@ -106,8 +106,6 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
     posY.value = y
     currentWidth.value = width
     currentHeight.value = height
-    legendStore.updateSize(width, height)
-    legendStore.updatePosition(x, y)
     detectStickyEdges()
   }
 })
@@ -400,7 +398,6 @@ onMounted(() => {
         posX.value = margin
         posY.value = bounds.height - legendHeight - margin - bottomAttributionMargin.value
         stickyEdge.value = { left: true, right: false, top: false, bottom: true }
-        legendStore.updatePosition(posX.value, posY.value)
       } else {
         detectStickyEdges()
       }

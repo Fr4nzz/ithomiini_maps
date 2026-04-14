@@ -27,7 +27,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close'])
+const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close', 'toggle-sticky'])
 
 const legendStore = useLegendStore()
 const dataStore = useDataStore()
@@ -183,7 +183,7 @@ function handleReset() {
 
 // Toggle sticky edges
 function toggleSticky() {
-  legendStore.setStickyEdges(!legendStore.stickyEdges)
+  emit('toggle-sticky')
 }
 
 // Update text scale
