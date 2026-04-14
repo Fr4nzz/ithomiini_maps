@@ -334,7 +334,7 @@ const copyText = async (value, key) => {
 
 .summary-label,
 .action-desc {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted, #666);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -391,7 +391,7 @@ const copyText = async (value, key) => {
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.15);
   color: var(--color-accent, #4ade80);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 

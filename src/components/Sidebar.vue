@@ -42,18 +42,23 @@ const filterTabLabel = computed(() => {
 </script>
 
 <template>
-  <aside class="sidebar">
-    <header class="sidebar-header">
-      <a :href="config.repoUrl" target="_blank" rel="noopener noreferrer" class="logo">
-        <img :src="config.logoPath" :alt="`${config.title} Maps`" class="logo-icon">
-        <div class="logo-text">
-          <span class="title">{{ config.title }}</span>
-          <span class="subtitle">{{ config.subtitle }}</span>
+  <aside class="flex h-screen min-w-[340px] w-[340px] flex-col overflow-hidden border-r border-[var(--color-border)] bg-[var(--color-bg-secondary)] print:hidden max-md:h-auto max-md:max-h-[50vh] max-md:min-w-full max-md:w-full">
+    <header class="border-b border-[var(--color-border)] bg-[var(--color-bg-primary)] p-5">
+      <a
+        :href="config.repoUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-3 no-underline transition-opacity duration-200 hover:opacity-85"
+      >
+        <img :src="config.logoPath" :alt="`${config.title} Maps`" class="h-10 w-10">
+        <div class="flex flex-col">
+          <span class="text-[1.25rem] font-semibold tracking-[-0.5px] text-[var(--color-text-primary)]">{{ config.title }}</span>
+          <span class="text-xs uppercase tracking-[1px] text-[var(--color-text-muted)]">{{ config.subtitle }}</span>
         </div>
       </a>
     </header>
 
-    <div class="sidebar-content sidebar-tabs-shell">
+    <div class="flex-1 overflow-y-auto p-4 pt-3.5">
       <QuickActions
         :current-view="currentView"
         @change-tab="activeTab = $event"
@@ -62,22 +67,22 @@ const filterTabLabel = computed(() => {
         @set-view="emit('set-view', $event)"
       />
 
-      <Tabs v-model="activeTab" class="sidebar-tabs-root">
-        <TabsList class="sidebar-tabs-list">
-          <TabsTrigger value="filter" class="sidebar-tabs-trigger">{{ filterTabLabel }}</TabsTrigger>
-          <TabsTrigger value="style" class="sidebar-tabs-trigger">Style</TabsTrigger>
-          <TabsTrigger value="export" class="sidebar-tabs-trigger">Export</TabsTrigger>
+      <Tabs v-model="activeTab" class="flex flex-col gap-2.5">
+        <TabsList class="grid w-full grid-cols-3 gap-1.5 border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-1">
+          <TabsTrigger value="filter" class="text-[var(--color-text-secondary)]">{{ filterTabLabel }}</TabsTrigger>
+          <TabsTrigger value="style" class="text-[var(--color-text-secondary)]">Style</TabsTrigger>
+          <TabsTrigger value="export" class="text-[var(--color-text-secondary)]">Export</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="filter" class="sidebar-tabs-content">
+        <TabsContent value="filter">
           <FilterTab @open-mimicry="emit('open-mimicry')" />
         </TabsContent>
 
-        <TabsContent value="style" class="sidebar-tabs-content">
+        <TabsContent value="style">
           <StyleTab :current-view="currentView" />
         </TabsContent>
 
-        <TabsContent value="export" class="sidebar-tabs-content">
+        <TabsContent value="export">
           <ExportTab
             :current-view="currentView"
             @open-map-export="emit('open-map-export')"
@@ -87,46 +92,21 @@ const filterTabLabel = computed(() => {
       </Tabs>
     </div>
 
-    <footer class="sidebar-footer sidebar-footer-minimal">
-      <div class="footer-row">
-        <button class="btn-reset" @click="store.resetAllFilters">Reset</button>
-        <button class="btn-export" @click="activeTab = 'export'">Export Tab</button>
+    <footer class="border-t border-[var(--color-border)] bg-[var(--color-bg-primary)] px-4 pb-4 pt-3">
+      <div class="flex gap-2">
+        <button
+          class="flex-1 rounded-md border border-[var(--color-border)] bg-transparent px-2 py-2.5 text-xs font-medium text-[var(--color-text-secondary)] transition-colors duration-200 hover:bg-[var(--color-bg-tertiary)] hover:text-[var(--color-text-primary)]"
+          @click="store.resetAllFilters"
+        >
+          Reset
+        </button>
+        <button
+          class="flex-1 rounded-md bg-[var(--color-accent)] px-2 py-2.5 text-xs font-medium text-[var(--color-bg-primary)] transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
+          @click="activeTab = 'export'"
+        >
+          Export Tab
+        </button>
       </div>
     </footer>
   </aside>
 </template>
-
-<style src="./sidebar-styles.css"></style>
-<style scoped>
-.sidebar-tabs-shell {
-  padding-top: 14px;
-}
-
-.sidebar-tabs-root {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.sidebar-tabs-list {
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
-  padding: 4px;
-}
-
-.sidebar-tabs-trigger {
-  color: var(--color-text-secondary, #aaa);
-}
-
-.sidebar-tabs-content {
-  margin-top: 0;
-}
-
-.sidebar-footer-minimal {
-  padding-top: 12px;
-}
-</style>

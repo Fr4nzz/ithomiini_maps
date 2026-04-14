@@ -332,7 +332,7 @@ watch(dialogOpen, async (isOpen) => {
 .command-palette-eyebrow {
   margin: 0 0 4px;
   color: var(--color-accent, #4ade80);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -354,7 +354,7 @@ watch(dialogOpen, async (isOpen) => {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.03);
   color: var(--color-text-secondary, #aaa);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -457,7 +457,7 @@ watch(dialogOpen, async (isOpen) => {
 
 .command-group :deep([cmdk-group-heading]) {
   color: var(--color-text-muted, #666);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -483,7 +483,7 @@ watch(dialogOpen, async (isOpen) => {
 
 .command-item-meta {
   color: var(--color-text-muted, #666);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 .command-item-count {
@@ -492,7 +492,7 @@ watch(dialogOpen, async (isOpen) => {
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.12);
   color: var(--color-accent, #4ade80);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 

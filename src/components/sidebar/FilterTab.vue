@@ -480,7 +480,7 @@ watch(() => store.filters.goatChromosomeMax, (value) => {
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.18);
   color: var(--color-accent, #4ade80);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -490,7 +490,7 @@ watch(() => store.filters.goatChromosomeMax, (value) => {
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.16);
   color: var(--color-accent, #4ade80);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 

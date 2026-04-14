@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useDataStore } from '../../stores/data'
-import { Image, Layers3, Map, ScanSearch, Table2 } from 'lucide-vue-next'
+import { Image, Layers3, Map as MapIcon, ScanSearch, Table2 } from 'lucide-vue-next'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import TooltipProvider from '../ui/tooltip/TooltipProvider.vue'
 import config from '../../config'
@@ -27,7 +27,7 @@ const quickActions = computed(() => [
   {
     key: 'map',
     label: 'Map view',
-    icon: Map,
+    icon: MapIcon,
     active: props.currentView === 'map',
     hidden: false,
     disabled: false,
@@ -154,7 +154,7 @@ const quickActions = computed(() => [
   border-radius: 999px;
   background: var(--color-accent, #4ade80);
   color: var(--color-bg-primary, #1a1a2e);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
 }

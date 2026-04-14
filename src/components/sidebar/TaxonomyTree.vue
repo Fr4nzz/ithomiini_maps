@@ -482,7 +482,7 @@ const clearSelection = () => {
 
 .taxonomy-trigger-summary {
   max-width: 100%;
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   color: var(--color-text-secondary, #aaa);
   white-space: nowrap;
   overflow: hidden;
@@ -499,7 +499,7 @@ const clearSelection = () => {
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.16);
   color: var(--color-accent, #4ade80);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -584,7 +584,7 @@ const clearSelection = () => {
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.1);
   color: var(--color-accent, #4ade80);
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -594,7 +594,7 @@ const clearSelection = () => {
   gap: 8px;
   padding: 0 14px 10px;
   color: var(--color-text-secondary, #aaa);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -695,7 +695,7 @@ const clearSelection = () => {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.05);
   color: var(--color-text-secondary, #aaa);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   text-align: center;
 }
 
