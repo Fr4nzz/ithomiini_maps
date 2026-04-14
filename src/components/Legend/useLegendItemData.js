@@ -22,13 +22,9 @@ const groupByPropertyMap = {
  * Composable for legend item data computation
  * @param {Object} dataStore - Data store instance
  * @param {Object} legendStore - Legend store instance
- * @param {Function} getEffectiveMaxItems - Getter for max items (lazy, avoids circular dep with measurement)
  * @param {import('vue').ComputedRef} isExportMode - Whether export mode is active
  */
-/**
- * @param {Function} getMaxDisplayGroups - Max groups to display (from cross-group measurement), or null if unlimited
- */
-export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode, getMaxDisplayGroups) {
+export function useLegendItemData(dataStore, legendStore, isExportMode) {
 
   // Color map from data store (includes custom overrides - used for display)
   const colorMap = computed(() => dataStore.activeColorMap)
@@ -227,69 +223,8 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
     return items
   })
 
-  // Fair distribution of legend slots across groups
-  function fairGroupedSlice(allItems, maxItems) {
-    const groups = new Map()
-    for (const item of allItems) {
-      const group = getGroupForItem(item.label)
-      if (group) {
-        if (!groups.has(group)) groups.set(group, [])
-        groups.get(group).push(item)
-      }
-    }
-
-    const groupNames = [...groups.keys()]
-    const numGroups = groupNames.length
-    if (numGroups === 0) return allItems.slice(0, maxItems)
-
-    const basePerGroup = Math.floor(maxItems / numGroups)
-    let remainder = maxItems - basePerGroup * numGroups
-
-    const allocations = new Map()
-    const bySize = [...groupNames].sort((a, b) => groups.get(b).length - groups.get(a).length)
-
-    for (const name of bySize) {
-      const extra = remainder > 0 ? 1 : 0
-      if (remainder > 0) remainder--
-      allocations.set(name, Math.min(basePerGroup + extra, groups.get(name).length))
-    }
-
-    let totalAlloc = 0
-    for (const v of allocations.values()) totalAlloc += v
-    let surplus = maxItems - totalAlloc
-
-    while (surplus > 0) {
-      let distributed = false
-      for (const name of bySize) {
-        if (surplus <= 0) break
-        if (allocations.get(name) < groups.get(name).length) {
-          allocations.set(name, allocations.get(name) + 1)
-          surplus--
-          distributed = true
-        }
-      }
-      if (!distributed) break
-    }
-
-    const result = []
-    for (const name of groupNames) {
-      const quota = allocations.get(name) || 0
-      result.push(...groups.get(name).slice(0, quota))
-    }
-
-    return result
-  }
-
   const legendItems = computed(() => {
-    const maxItems = getEffectiveMaxItems()
-    let items
-
-    // Simple top-to-bottom slice: items are already sorted by group/name,
-    // so this fills groups sequentially, minimizing group header overhead.
-    // fairGroupedSlice was previously used for aesthetic distribution but
-    // caused the measurement algorithm to under-count items because spreading
-    // items across many groups creates more group headers than sequential fill.
-    items = sortedAllItems.value.slice(0, maxItems)
+    let items = sortedAllItems.value.slice()
 
     if (!isExportMode.value) {
       const baseMap = baseColors.value
@@ -434,26 +369,10 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
 
     groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
 
-    // ── Cap: limit total rendered items (including cross-group duplicates) ──
-    // This ensures effectiveMaxItems maps 1:1 to DOM items, preventing the
-    // "cliff" where 1 extra unique label creates many cross-group entries.
-    const maxVisible = getEffectiveMaxItems()
-    let totalRendered = 0
-    groups = groups.map(g => {
-      if (totalRendered >= maxVisible) return null
-      const remaining = maxVisible - totalRendered
-      const visible = g.items.filter(item => item.visible !== false)
-      const hidden = g.items.filter(item => item.visible === false)
-      const kept = visible.slice(0, remaining)
-      totalRendered += kept.length
-      if (kept.length === 0 && hidden.length === 0) return null
-      return { ...g, items: [...kept, ...hidden] }
-    }).filter(Boolean)
-
     return { type: 'grouped', groups }
   })
 
-  // Count unique visible labels actually shown after all caps (Cap 1 + Cap 2)
+  // Count unique visible labels actually shown in the legend
   function countShownLabels() {
     const gld = groupedLegendData.value
     const shown = new Set()

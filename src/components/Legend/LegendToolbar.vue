@@ -12,7 +12,6 @@ import {
   Type,
   MapPin,
   WrapText,
-  ListOrdered,
   ArrowLeftRight
 } from 'lucide-vue-next'
 import { useLegendStore } from '../../stores/legend'
@@ -207,12 +206,6 @@ function updateMapFillOpacity(e) {
   dataStore.mapStyle.fillOpacity = parseFloat(e.target.value)
 }
 
-// Update manual max-items count
-function handleManualCountInput(e) {
-  const val = parseInt(e.target.value)
-  if (!isNaN(val) && val >= 1) legendStore.setMaxItemsManual(val)
-}
-
 onClickOutside(settingsPanelRef, (e) => {
   if (!showSettings.value) return
   if (settingsButtonRef.value?.contains(e.target)) return
@@ -389,35 +382,6 @@ onClickOutside(settingsPanelRef, (e) => {
                 :value="opt.value"
               >{{ opt.label }}</option>
             </select>
-          </div>
-        </div>
-
-        <!-- Max Legend Items -->
-        <div class="settings-row">
-          <label class="settings-label"><ListOrdered :size="14" /> Max Items</label>
-          <div class="settings-control">
-            <button
-              class="wrap-toggle-button"
-              :class="{ active: legendStore.isManualMode }"
-              @click="legendStore.toggleMaxItemsMode()"
-            >
-              {{ legendStore.isManualMode ? 'MANUAL' : 'AUTO' }}
-            </button>
-            <span class="value-display">{{ legendStore.isManualMode ? '' : 'fit to size' }}</span>
-          </div>
-        </div>
-        <div v-if="legendStore.isManualMode" class="settings-row manual-count-row">
-          <div class="settings-control">
-            <input
-              type="number"
-              class="manual-count-input"
-              :value="legendStore.maxItemsManual"
-              min="1"
-              max="500"
-              @input="handleManualCountInput"
-              @keydown.enter="$event.target.blur()"
-            />
-            <span class="value-display">items</span>
           </div>
         </div>
 

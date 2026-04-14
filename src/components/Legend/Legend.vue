@@ -6,9 +6,7 @@ import { useElementResize } from '../../composables/useElementResize'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import { computePopupPosition } from '../../composables/usePopupPosition'
 import { useLegendItemData } from './useLegendItemData'
-import { useLegendMeasurement } from './useLegendMeasurement'
 import { useLegendPosition } from './useLegendPosition'
-import { log } from '../../utils/logger'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
@@ -38,11 +36,9 @@ const stylePopupState = ref({
   position: { x: 0, y: 0 }
 })
 
-// Current size - 'auto' means auto-fit to content
-const isAutoWidth = computed(() => legendStore.size.width === 'auto')
-const isAutoHeight = computed(() => legendStore.size.height === 'auto')
-const currentWidth = ref(isAutoWidth.value ? null : legendStore.size.width)
-const currentHeight = ref(isAutoHeight.value ? null : legendStore.size.height)
+// Current size - null means content-sized until manually resized
+const currentWidth = ref(legendStore.size.width === 'auto' ? null : legendStore.size.width)
+const currentHeight = ref(legendStore.size.height === 'auto' ? null : legendStore.size.height)
 
 // Previous container bounds (for detecting changes)
 const prevContainerBounds = ref({ width: 0, height: 0 })
@@ -96,23 +92,16 @@ const {
   props
 })
 
-// ═══════════════════════════════════════════════════════════════════════════
-// MEASUREMENT (extracted composable)
-// ═══════════════════════════════════════════════════════════════════════════
+const maxLegendHeight = computed(() => Math.floor(containerBounds.value.height * 0.80))
+const effectiveWidth = computed(() => currentWidth.value || 200)
+const effectiveHeight = computed(() => currentHeight.value)
+const maxResizeWidth = computed(() => Math.min(Math.round(containerBounds.value.width * 0.45), 600))
 
-// We need a temporary placeholder for sortedAllItems/legendCounts since
-// measurement composable and item data composable have a dependency chain:
-// measurement → effectiveMaxItems → useLegendItemData → sortedAllItems → measurement
-// Solution: pass refs that get populated after useLegendItemData is called.
-const sortedAllItemsRef = ref([])
-const legendCountsRef = ref({})
-
-// Multi-directional resize (must come before measurement for isResizing)
+// Multi-directional resize
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
   getLimits: () => ({ minW: 200, maxW: maxResizeWidth.value, minH: 120, maxH: maxLegendHeight.value }),
   onEnd: ({ x, y, width, height }) => {
-    log.legend.debug(`[Legend] resize end: ${width}x${height} at (${x},${y})`)
     posX.value = x
     posY.value = y
     currentWidth.value = width
@@ -123,20 +112,6 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   }
 })
 
-const {
-  measuredItemCount, measuredSnugHeight, prevMeasuredCount,
-  maxLegendHeight, renderUpperBound, measuredGroupSlots, effectiveMaxItems, effectiveWidth, effectiveHeight,
-  maxResizeWidth, scheduleMeasurement, scheduleContainerResizeMeasurement,
-  resetToAutoSize, cleanup: cleanupMeasurement
-} = useLegendMeasurement({
-  legendRef, contentRef, containerBounds,
-  isAutoWidth, isAutoHeight, currentWidth, currentHeight,
-  isResizing, resizeOverride,
-  sortedAllItems: sortedAllItemsRef,
-  legendCounts: legendCountsRef,
-  legendStore, dataStore
-})
-
 // Should show toolbar/edit UI?
 const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
 
@@ -145,94 +120,24 @@ const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !is
 // ═══════════════════════════════════════════════════════════════════════════
 
 const {
-  colorMap, baseColors, itemGroupMap, itemToGroupsMap, subspeciesSpeciesMap,
-  groupList, groupBorderColors, getGroupBorderColor, hasCustomizedStyle, anyGroupHasCustomStyle,
-  getGroupForItem, getGroupsForItem, formatLabel,
-  legendCounts, legendGroupCounts, getGroupItemCount,
-  sortedAllItems, legendItems, groupedLegendData,
+  colorMap,
+  groupList,
+  anyGroupHasCustomStyle,
+  legendCounts,
+  getGroupItemCount,
+  legendItems,
+  groupedLegendData,
   moreCount, morePointCount
-} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode, () => measuredGroupSlots.value)
+} = useLegendItemData(dataStore, legendStore, isExportMode)
 
-// Bridge: keep measurement composable's refs in sync with item data
-watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })
-watch(legendCounts, (counts) => { legendCountsRef.value = counts }, { immediate: true })
-
-// ═══════════════════════════════════════════════════════════════════════════
-// WATCHERS (measurement triggers)
-// ═══════════════════════════════════════════════════════════════════════════
-
-// Initial measurement on mount
-watch(contentRef, (el, oldEl) => {
-  if (el && !oldEl) scheduleMeasurement(false, 'mount')
-})
-
-// Re-measure when layout-affecting settings change
-watch([
-  () => legendStore.wrapLabels,
-  () => legendStore.textScale,
-  () => legendStore.showCounts,
-  () => legendStore.isGrouped,
-  () => legendStore.groupingSettings,
-], (newVals, oldVals) => {
-  const settingNames = ['wrapLabels', 'textScale', 'showCounts', 'isGrouped', 'groupingSettings']
-  const changed = settingNames.filter((_, i) => JSON.stringify(newVals[i]) !== JSON.stringify(oldVals[i]))
-  resetToAutoSize()
-  measuredItemCount.value = null
-  prevMeasuredCount.value = null
-  measuredSnugHeight.value = null
-  scheduleMeasurement(false, `setting:${changed.join(',')}`)
-}, { deep: true })
-
-// Re-measure when data changes (debounced to batch rapid source loads)
-let dataMeasureTimer = null
-watch(sortedAllItems, (newItems, oldItems) => {
-  const delta = newItems.length - (oldItems?.length || 0)
-  resetToAutoSize()
-  measuredItemCount.value = null
-  prevMeasuredCount.value = null
-  measuredSnugHeight.value = null
-  if (dataMeasureTimer) clearTimeout(dataMeasureTimer)
-  dataMeasureTimer = setTimeout(() => {
-    dataMeasureTimer = null
-    scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
-  }, 200)
-})
-
-// Re-measure after resize ends
+// Sync shown labels to store after resize ends
 watch(isResizing, (resizing) => {
   if (!resizing) {
-    scheduleMeasurement(true, 'resizeEnd', true)
     const labels = new Set()
     for (const item of legendItems.value) {
       if (item.visible !== false) labels.add(item.label)
     }
     legendStore.setShownLabels(labels)
-  }
-})
-
-// Manual mode watchers
-watch(() => legendStore.maxItemsMode, (newMode) => {
-  log.legend.info(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
-  if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
-})
-
-watch(() => legendStore.maxItemsManual, (newCount) => {
-  if (legendStore.isManualMode) log.legend.debug(`[Legend] manual items → ${newCount}`)
-})
-
-// Container resize triggers re-measurement
-watch(prevContainerBounds, (newBounds, oldBounds) => {
-  if (oldBounds.width > 0 && measuredItemCount.value !== null) {
-    scheduleContainerResizeMeasurement()
-  }
-}, { deep: true })
-
-// Re-measure when leaving edit UI: labels switch from LegendEditableLabel
-// (always nowrap/ellipsis) back to plain <span> (wrap-enabled when wrapLabels is on),
-// which can make items taller and cause overflow.
-watch(showEditUI, (editing) => {
-  if (!editing && legendStore.wrapLabels) {
-    scheduleMeasurement(false, 'editUILeave')
   }
 })
 
@@ -254,16 +159,10 @@ watch(() => legendStore.position, (newPos) => {
   }
 }, { deep: true })
 
-watch(() => legendStore.size, (newSize, oldSize) => {
+watch(() => legendStore.size, (newSize) => {
   if (!isResizing.value) {
     currentWidth.value = newSize.width === 'auto' ? null : newSize.width
     currentHeight.value = newSize.height === 'auto' ? null : newSize.height
-    // Re-measure when size changes externally (e.g. settings panel, tests)
-    const widthChanged = newSize.width !== oldSize?.width
-    const heightChanged = newSize.height !== oldSize?.height
-    if (widthChanged || heightChanged) {
-      scheduleMeasurement(true, 'sizeChange', true)
-    }
   }
 }, { deep: true })
 
@@ -519,7 +418,6 @@ onUnmounted(() => {
   if (containerResizeObserver) { containerResizeObserver.disconnect(); containerResizeObserver = null }
   if (resizeTimeout) clearTimeout(resizeTimeout)
   cleanupPosition()
-  cleanupMeasurement()
 })
 </script>
 
