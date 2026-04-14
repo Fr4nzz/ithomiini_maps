@@ -8,6 +8,7 @@ export function useMobileLayout() {
 
   const activeSheet = ref('none')
   const sheetSnapPoint = ref(0.15)
+  const detailPointData = ref(null)
 
   const showActionBar = computed(() => {
     if (!isMobile.value) return false
@@ -16,18 +17,26 @@ export function useMobileLayout() {
 
   function openSheet(name) {
     activeSheet.value = name
+    if (name !== 'detail') {
+      detailPointData.value = null
+    }
     sheetSnapPoint.value = 0.5
   }
 
   function closeSheet() {
     activeSheet.value = 'none'
+    detailPointData.value = null
     sheetSnapPoint.value = 0.15
   }
 
   function openDetailSheet(pointData) {
-    void pointData
+    detailPointData.value = pointData
     activeSheet.value = 'detail'
     sheetSnapPoint.value = 0.15
+  }
+
+  function clearDetailSheet() {
+    detailPointData.value = null
   }
 
   return {
@@ -36,9 +45,11 @@ export function useMobileLayout() {
     isDesktop,
     activeSheet,
     sheetSnapPoint,
+    detailPointData,
     showActionBar,
     openSheet,
     closeSheet,
+    clearDetailSheet,
     openDetailSheet,
   }
 }

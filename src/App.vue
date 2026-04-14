@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, onUnmounted, provide } from 'vue'
 import { useDataStore } from './stores/data'
 import Sidebar from './components/Sidebar.vue'
 import MapEngine from './components/MapEngine.vue'
@@ -7,6 +7,14 @@ import DataTable from './components/DataTable.vue'
 import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
+import DatabaseUpdateSection from './components/DatabaseUpdateSection.vue'
+import PointDetailSheet from './components/mobile/PointDetailSheet.vue'
+import MobileFilterSheet from './components/mobile/MobileFilterSheet.vue'
+import HamburgerMenu from './components/mobile/HamburgerMenu.vue'
+import MobileLegend from './components/mobile/MobileLegend.vue'
+import MobileTopBar from './components/mobile/MobileTopBar.vue'
+import MobileActionBar from './components/mobile/MobileActionBar.vue'
+import StyleTab from './components/sidebar/StyleTab.vue'
 import { useMobileLayout } from './composables/useMobileLayout'
 import { ASPECT_RATIOS } from './utils/constants'
 import { loadImage } from './utils/canvasHelpers'
@@ -17,7 +25,7 @@ import { log } from './utils/logger'
 
 const store = useDataStore()
 const mobileLayout = useMobileLayout()
-const { isTablet, isDesktop } = mobileLayout
+const { isTablet, isDesktop, activeSheet, closeSheet } = mobileLayout
 
 // View state
 const currentView = ref('map') // 'map' or 'table'
@@ -26,7 +34,10 @@ const currentView = ref('map') // 'map' or 'table'
 const showExportPanel = ref(false)
 const showMimicrySelector = ref(false)
 const showImageGallery = ref(false)
+const showStylePanel = ref(false)
+const showUpdatePanel = ref(false)
 const exportPanelInitialTab = ref('export') // 'export' for data, 'citation' for citation
+const stylePanelTitle = ref('Map Style')
 
 // Map reference for export
 const mapRef = ref(null)
@@ -39,6 +50,10 @@ const setView = (view) => {
 // Modal controls
 const openExport = () => {
   exportPanelInitialTab.value = 'export'
+  showExportPanel.value = true
+}
+const openCitation = () => {
+  exportPanelInitialTab.value = 'citation'
   showExportPanel.value = true
 }
 const directExportForR = async () => {
@@ -60,6 +75,68 @@ const closeMimicrySelector = () => { showMimicrySelector.value = false }
 
 const openImageGallery = () => { showImageGallery.value = true }
 const closeImageGallery = () => { showImageGallery.value = false }
+
+const openStylePanel = () => {
+  stylePanelTitle.value = 'Map Style'
+  if (currentView.value !== 'map') {
+    currentView.value = 'map'
+  }
+  showStylePanel.value = true
+}
+const openSettingsPanel = () => {
+  stylePanelTitle.value = 'Settings'
+  showStylePanel.value = true
+}
+const closeStylePanel = () => { showStylePanel.value = false }
+
+const openUpdatePanel = () => { showUpdatePanel.value = true }
+const closeUpdatePanel = () => { showUpdatePanel.value = false }
+
+const openMobileMenu = () => { mobileLayout.openSheet('menu') }
+const openMobileSearch = () => { mobileLayout.openSheet('menu') }
+const openMobileFilter = () => { mobileLayout.openSheet('filter') }
+const openMobileLegend = () => { mobileLayout.openSheet('legend') }
+const openMobileMore = () => { mobileLayout.openSheet('menu') }
+
+const handleMobileViewChange = (view) => {
+  setView(view)
+  closeSheet()
+}
+
+const handleMobileGallery = () => {
+  closeSheet()
+  openImageGallery()
+}
+
+const handleMobileMimicry = () => {
+  closeSheet()
+  openMimicrySelector()
+}
+
+const handleMobileExport = () => {
+  closeSheet()
+  openExport()
+}
+
+const handleMobileStyle = () => {
+  closeSheet()
+  openStylePanel()
+}
+
+const handleMobileSettings = () => {
+  closeSheet()
+  openSettingsPanel()
+}
+
+const handleMobileUpdate = () => {
+  closeSheet()
+  openUpdatePanel()
+}
+
+const handleMobileAbout = () => {
+  closeSheet()
+  openCitation()
+}
 
 // Direct export function - captures the map container which is already sized to aspect ratio
 // Uses MapLibre's setPixelRatio() for true high-resolution rendering
@@ -211,7 +288,12 @@ provide('mobileLayout', mobileLayout)
 provide('openMimicrySelector', openMimicrySelector)
 provide('openImageGallery', openImageGallery)
 
+const handleMobilePointDetail = (event) => {
+  mobileLayout.openDetailSheet(event.detail)
+}
+
 onMounted(async () => {
+  window.addEventListener('mobile-point-detail', handleMobilePointDetail)
   await store.loadMapData()
 
   // Probe all 3 image tiers using the first available Drive file ID
@@ -226,6 +308,10 @@ onMounted(async () => {
   if (params.get('view') === 'table') {
     currentView.value = 'table'
   }
+})
+
+onUnmounted(() => {
+  window.removeEventListener('mobile-point-detail', handleMobilePointDetail)
 })
 </script>
 
@@ -319,11 +405,21 @@ onMounted(async () => {
   </div>
 
   <div v-else class="mobile-layout">
+    <MobileTopBar
+      @open-menu="openMobileMenu"
+      @open-search="openMobileSearch"
+    />
+
     <MapEngine
-      v-if="!store.loading"
+      v-if="!store.loading && currentView === 'map'"
       class="mobile-map"
       @map-ready="onMapReady"
       @open-gallery="openImageGallery"
+    />
+
+    <DataTable
+      v-else-if="!store.loading && currentView === 'table'"
+      class="mobile-table-view"
     />
 
     <div v-if="store.loading" class="loading-overlay">
@@ -334,10 +430,38 @@ onMounted(async () => {
       </div>
     </div>
 
-    <!-- Placeholder: MobileTopBar will go here -->
-    <!-- Placeholder: MobileActionBar will go here -->
-    <!-- Placeholder: BottomSheet will go here -->
-    <!-- Placeholder: HamburgerMenu will go here -->
+    <MobileActionBar
+      v-if="!store.loading"
+      @open-filter="openMobileFilter"
+      @open-legend="openMobileLegend"
+      @open-more="openMobileMore"
+    />
+
+    <MobileLegend v-if="!store.loading && currentView === 'map'" />
+
+    <MobileFilterSheet
+      v-if="!store.loading"
+      @open-mimicry="openMimicrySelector"
+      @snap-change="mobileLayout.sheetSnapPoint = $event"
+    />
+
+    <PointDetailSheet v-if="!store.loading && currentView === 'map'" />
+
+    <Transition name="mobile-menu">
+      <HamburgerMenu
+        v-if="activeSheet === 'menu'"
+        :current-view="currentView"
+        @close="closeSheet"
+        @change-view="handleMobileViewChange"
+        @open-gallery="handleMobileGallery"
+        @open-mimicry="handleMobileMimicry"
+        @open-export="handleMobileExport"
+        @open-style="handleMobileStyle"
+        @open-settings="handleMobileSettings"
+        @open-update-database="handleMobileUpdate"
+        @open-about="handleMobileAbout"
+      />
+    </Transition>
   </div>
 
   <!-- Export Panel Modal -->
@@ -375,6 +499,58 @@ onMounted(async () => {
       />
     </Transition>
   </Teleport>
+
+  <Teleport to="body">
+    <Transition name="modal">
+      <div
+        v-if="showStylePanel"
+        class="modal-overlay"
+        @click.self="closeStylePanel"
+      >
+        <div class="mobile-settings-modal">
+          <div class="mobile-settings-modal__header">
+            <div>
+              <p class="mobile-settings-modal__eyebrow">Mobile controls</p>
+              <h3>{{ stylePanelTitle }}</h3>
+            </div>
+            <button class="btn-close" @click="closeStylePanel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+
+          <StyleTab :current-view="currentView" />
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
+
+  <Teleport to="body">
+    <Transition name="modal">
+      <div
+        v-if="showUpdatePanel"
+        class="modal-overlay"
+        @click.self="closeUpdatePanel"
+      >
+        <div class="mobile-settings-modal mobile-settings-modal--compact">
+          <div class="mobile-settings-modal__header">
+            <div>
+              <p class="mobile-settings-modal__eyebrow">Maintenance</p>
+              <h3>Update Database</h3>
+            </div>
+            <button class="btn-close" @click="closeUpdatePanel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+
+          <DatabaseUpdateSection />
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style>
@@ -402,6 +578,12 @@ html, body, #app {
   height: 100vh;
   position: relative;
   overflow: hidden;
+  background: var(--color-bg-primary, #1a1a2e);
+}
+
+.mobile-layout .maplibregl-popup,
+.mobile-layout .maplibregl-popup-tip {
+  display: none !important;
 }
 
 .mobile-map {
@@ -410,6 +592,14 @@ html, body, #app {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.mobile-table-view {
+  position: absolute;
+  inset: calc(44px + env(safe-area-inset-top)) 0 0;
+  width: 100%;
+  height: calc(100% - (44px + env(safe-area-inset-top)));
+  background: var(--color-bg-primary, #1a1a2e);
 }
 
 .main-content {
@@ -562,6 +752,81 @@ html, body, #app {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition: opacity 0.3s ease-out;
+}
+
+.mobile-menu-enter-active .hamburger-menu__panel,
+.mobile-menu-leave-active .hamburger-menu__panel {
+  transition: transform 0.3s ease-out;
+}
+
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+  opacity: 0;
+}
+
+.mobile-menu-enter-from .hamburger-menu__panel,
+.mobile-menu-leave-to .hamburger-menu__panel {
+  transform: translateX(-100%);
+}
+
+.mobile-settings-modal {
+  width: min(100%, 560px);
+  max-height: min(86vh, 920px);
+  overflow: auto;
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 20px;
+  background: linear-gradient(180deg, var(--color-bg-secondary, #252540) 0%, var(--color-bg-primary, #1a1a2e) 100%);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+}
+
+.mobile-settings-modal--compact {
+  max-width: 520px;
+}
+
+.mobile-settings-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 20px 8px;
+}
+
+.mobile-settings-modal__header h3 {
+  margin: 0;
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.mobile-settings-modal__eyebrow {
+  margin: 0 0 4px;
+  color: var(--color-accent, #4ade80);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.btn-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-primary, #e0e0e0);
+  cursor: pointer;
+}
+
+.btn-close svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Responsive Layout */
