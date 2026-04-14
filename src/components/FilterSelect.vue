@@ -1,10 +1,19 @@
 <script setup>
-/**
- * FilterSelect Component
- * Multi-select dropdown with fuzzy search using vue-multiselect
- * Matches the behavior of Wings Gallery filters
- */
-import VueMultiselect from 'vue-multiselect'
+import { computed, ref } from 'vue'
+import {
+  ComboboxAnchor,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxItemIndicator,
+  ComboboxPortal,
+  ComboboxRoot,
+  ComboboxTrigger,
+  ComboboxViewport,
+  useFilter,
+} from 'reka-ui'
+import { Check, ChevronDown, X } from 'lucide-vue-next'
+import { cn } from '@/lib/utils'
 
 const props = defineProps({
   label: String,
@@ -12,216 +21,268 @@ const props = defineProps({
   options: { type: Array, default: () => [] },
   placeholder: { type: String, default: 'Select...' },
   multiple: { type: Boolean, default: false },
+  searchable: { type: Boolean, default: true },
+  customLabel: { type: Function, default: null },
+  trackBy: { type: String, default: undefined },
   disabled: { type: Boolean, default: false },
-  showCount: { type: Boolean, default: true }
+  showCount: { type: Boolean, default: true },
 })
 
 const emit = defineEmits(['update:modelValue'])
 
-const updateValue = (val) => {
-  emit('update:modelValue', val)
+const open = ref(false)
+const searchTerm = ref('')
+const inputRef = ref()
+
+const { contains } = useFilter({ sensitivity: 'base' })
+
+const getOptionLabel = (option) => {
+  if (props.customLabel) {
+    const customValue = props.customLabel(option)
+    if (customValue != null) return String(customValue)
+  }
+
+  if (option && typeof option === 'object') {
+    return option.label || option.name || option.value || ''
+  }
+
+  return option == null ? '' : String(option)
 }
 
-// Custom label for options - handles both string and object options
-const customLabel = (option) => {
-  if (typeof option === 'object') {
-    return option.label || option.name || option.value
+const getComparableValue = (option) => {
+  if (!props.trackBy || option == null || typeof option !== 'object') return option
+  return option[props.trackBy]
+}
+
+const isSameOption = (left, right) => {
+  if (left == null || right == null) return left === right
+  return getComparableValue(left) === getComparableValue(right)
+}
+
+const normalizedValue = computed(() => {
+  if (props.multiple) return Array.isArray(props.modelValue) ? props.modelValue : []
+  return props.modelValue ?? null
+})
+
+const selectionModel = computed({
+  get: () => normalizedValue.value,
+  set: (value) => emit('update:modelValue', value),
+})
+
+const selectedItems = computed(() => {
+  if (!props.multiple) return normalizedValue.value ? [normalizedValue.value] : []
+  return normalizedValue.value
+})
+
+const filteredOptions = computed(() => {
+  if (!props.searchable || !searchTerm.value.trim()) return props.options
+  return props.options.filter(option => contains(getOptionLabel(option), searchTerm.value))
+})
+
+const hasSelection = computed(() => selectedItems.value.length > 0)
+
+const canClear = computed(() => {
+  if (!hasSelection.value) return false
+  if (props.multiple) return true
+  return !isAllOption(normalizedValue.value)
+})
+
+const singleDisplayValue = (value) => {
+  if (props.multiple || value == null) return ''
+  return getOptionLabel(value)
+}
+
+const focusInput = () => {
+  if (!props.disabled) inputRef.value?.focus()
+}
+
+const openDropdown = () => {
+  if (!props.disabled) open.value = true
+}
+
+const removeItem = (itemToRemove) => {
+  if (!props.multiple || props.disabled) return
+
+  emit(
+    'update:modelValue',
+    selectedItems.value.filter(item => !isSameOption(item, itemToRemove)),
+  )
+}
+
+const toggleMultiOption = (option) => {
+  if (!props.multiple || props.disabled) return
+
+  const exists = selectedItems.value.some(item => isSameOption(item, option))
+  const nextValue = exists
+    ? selectedItems.value.filter(item => !isSameOption(item, option))
+    : [...selectedItems.value, option]
+
+  emit('update:modelValue', nextValue)
+  open.value = true
+  focusInput()
+}
+
+const isAllOption = (option) => {
+  const label = getOptionLabel(option).trim().toLowerCase()
+  return label === 'all'
+}
+
+const clearSelection = () => {
+  if (props.disabled) return
+
+  searchTerm.value = ''
+
+  if (props.multiple) {
+    emit('update:modelValue', [])
+    open.value = true
+    focusInput()
+    return
   }
-  return option
+
+  const resetValue = props.options.find(isAllOption) ?? null
+  emit('update:modelValue', resetValue)
+}
+
+const handleOptionSelect = (option, event) => {
+  if (!props.multiple) return
+  event.preventDefault()
+  toggleMultiOption(option)
+}
+
+const getOptionKey = (option, index) => {
+  const comparable = getComparableValue(option)
+  if (comparable != null && comparable !== '') return `${typeof comparable}-${comparable}`
+
+  const label = getOptionLabel(option)
+  if (label) return `${label}-${index}`
+
+  return `option-${index}`
 }
 </script>
 
 <template>
-  <div class="filter-wrapper">
-    <label v-if="label" class="filter-label">
+  <div class="mb-3">
+    <label v-if="label" class="mb-1.5 flex items-center gap-1 text-[0.75rem] font-medium text-muted-foreground">
       {{ label }}
-      <span v-if="showCount && options.length > 0" class="option-count">
+      <span v-if="showCount && options.length > 0" class="font-normal text-[hsl(var(--muted-foreground)/0.8)]">
         ({{ options.length }})
       </span>
     </label>
-    <VueMultiselect
-      :model-value="modelValue"
-      @update:model-value="updateValue"
-      :options="options"
-      :placeholder="placeholder"
+
+    <ComboboxRoot
+      v-model="selectionModel"
+      v-model:open="open"
       :multiple="multiple"
-      :close-on-select="!multiple"
-      :searchable="true"
-      :show-labels="false"
-      :custom-label="customLabel"
-      :allow-empty="true"
       :disabled="disabled"
-      :max-height="300"
-      :options-limit="500"
-      class="filter-multiselect"
+      :by="trackBy"
+      :ignore-filter="true"
+      :open-on-focus="searchable"
+      open-on-click
+      class="w-full"
     >
-      <template #noResult>
-        <span class="no-result">No matching results</span>
-      </template>
-      <template #noOptions>
-        <span class="no-options">No options available</span>
-      </template>
-    </VueMultiselect>
+      <ComboboxAnchor
+        :class="cn(
+          'flex min-h-9 w-full items-center gap-2 rounded-md border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors',
+          'focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/30',
+          disabled && 'cursor-not-allowed opacity-50',
+        )"
+        @click="openDropdown"
+      >
+        <div
+          class="flex min-w-0 flex-1 flex-wrap items-center gap-1.5"
+          @mousedown="!disabled && searchable ? focusInput() : null"
+        >
+          <template v-if="multiple && hasSelection">
+            <span
+              v-for="(item, index) in selectedItems"
+              :key="getOptionKey(item, index)"
+              class="inline-flex max-w-full items-center gap-1 rounded-md bg-accent/15 px-2 py-1 text-xs font-medium text-accent"
+            >
+              <span class="truncate">{{ getOptionLabel(item) }}</span>
+              <button
+                type="button"
+                class="rounded-sm text-accent/80 transition hover:text-accent focus:outline-none"
+                :disabled="disabled"
+                @click.stop="removeItem(item)"
+              >
+                <X class="h-3.5 w-3.5" />
+              </button>
+            </span>
+          </template>
+
+          <ComboboxInput
+            ref="inputRef"
+            v-model="searchTerm"
+            :display-value="singleDisplayValue"
+            :placeholder="multiple && hasSelection && searchable ? '' : placeholder"
+            :disabled="disabled"
+            :readonly="!searchable"
+            :class="cn(
+              'min-w-[5rem] flex-1 bg-transparent text-sm text-card-foreground outline-none placeholder:text-muted-foreground',
+              multiple && hasSelection ? 'h-6 py-0' : 'h-5',
+              !searchable && 'cursor-pointer',
+            )"
+            @focus="openDropdown"
+          />
+        </div>
+
+        <button
+          v-if="canClear"
+          type="button"
+          class="rounded-sm p-0.5 text-muted-foreground transition hover:bg-muted hover:text-card-foreground focus:outline-none"
+          :disabled="disabled"
+          @click.stop="clearSelection"
+        >
+          <X class="h-4 w-4" />
+        </button>
+
+        <ComboboxTrigger
+          class="rounded-sm p-0.5 text-muted-foreground transition hover:bg-muted hover:text-card-foreground focus:outline-none"
+          :disabled="disabled"
+        >
+          <ChevronDown :class="cn('h-4 w-4 transition-transform', open && 'rotate-180')" />
+        </ComboboxTrigger>
+      </ComboboxAnchor>
+
+      <ComboboxPortal>
+        <ComboboxContent
+          position="popper"
+          :side-offset="6"
+          class="z-[70] w-[var(--reka-combobox-trigger-width)] overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-xl"
+        >
+          <ComboboxViewport class="max-h-[280px] p-1">
+            <template v-if="options.length === 0">
+              <div class="px-3 py-2 text-sm italic text-muted-foreground">
+                No options available
+              </div>
+            </template>
+            <template v-else>
+              <div v-if="filteredOptions.length === 0" class="px-3 py-2 text-sm italic text-muted-foreground">
+                No matching results
+              </div>
+
+              <template v-else>
+                <ComboboxItem
+                  v-for="(option, index) in filteredOptions"
+                  :key="getOptionKey(option, index)"
+                  :value="option"
+                  :class="cn(
+                    'relative flex w-full cursor-pointer items-center gap-3 rounded-sm px-3 py-2 text-sm outline-none transition-colors',
+                    'data-[highlighted]:bg-muted data-[highlighted]:text-popover-foreground',
+                    'data-[state=checked]:bg-accent/15 data-[state=checked]:text-accent',
+                  )"
+                  @select="handleOptionSelect(option, $event)"
+                >
+                  <span class="min-w-0 flex-1 truncate">{{ getOptionLabel(option) }}</span>
+                  <ComboboxItemIndicator class="flex items-center justify-center text-accent">
+                    <Check class="h-4 w-4" />
+                  </ComboboxItemIndicator>
+                </ComboboxItem>
+              </template>
+            </template>
+          </ComboboxViewport>
+        </ComboboxContent>
+      </ComboboxPortal>
+    </ComboboxRoot>
   </div>
 </template>
-
-<style>
-/* Import vue-multiselect CSS - this needs to be global */
-@import 'vue-multiselect/dist/vue-multiselect.css';
-</style>
-
-<style scoped>
-.filter-wrapper {
-  margin-bottom: 12px;
-}
-
-.filter-label {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--color-text-muted, #888);
-  margin-bottom: 6px;
-}
-
-.option-count {
-  color: var(--color-text-muted, #666);
-  font-weight: 400;
-}
-
-/* Vue-multiselect customization for dark theme */
-:deep(.multiselect__tags) {
-  min-height: 38px;
-  padding: 6px 40px 6px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
-  font-size: 0.85rem;
-}
-
-:deep(.multiselect__tags:hover) {
-  border-color: #4d4d6d;
-}
-
-:deep(.multiselect--active .multiselect__tags) {
-  border-color: var(--color-accent, #4ade80);
-}
-
-:deep(.multiselect__placeholder) {
-  color: var(--color-text-muted, #666);
-  padding: 0;
-  margin: 0;
-  font-size: 0.85rem;
-}
-
-:deep(.multiselect__single) {
-  background: transparent;
-  color: var(--color-text-primary, #e0e0e0);
-  padding: 0;
-  margin: 0;
-  font-size: 0.85rem;
-}
-
-:deep(.multiselect__input) {
-  background: transparent;
-  color: var(--color-text-primary, #e0e0e0);
-  padding: 0;
-  margin: 0;
-  font-size: 0.85rem;
-}
-
-:deep(.multiselect__input::placeholder) {
-  color: var(--color-text-muted, #666);
-}
-
-:deep(.multiselect__select) {
-  height: 36px;
-  padding: 4px 8px;
-}
-
-:deep(.multiselect__select:before) {
-  border-color: var(--color-text-muted, #666) transparent transparent;
-}
-
-/* Dropdown content */
-:deep(.multiselect__content-wrapper) {
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 6px;
-  max-height: 280px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
-:deep(.multiselect__content) {
-  max-height: none;
-}
-
-:deep(.multiselect__option) {
-  padding: 10px 12px;
-  min-height: auto;
-  font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
-  background: transparent;
-}
-
-:deep(.multiselect__option--highlight) {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
-}
-
-:deep(.multiselect__option--selected) {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
-  font-weight: 500;
-}
-
-:deep(.multiselect__option--selected.multiselect__option--highlight) {
-  background: rgba(74, 222, 128, 0.25);
-}
-
-/* Multi-select tags */
-:deep(.multiselect__tag) {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  border-radius: 4px;
-  padding: 4px 26px 4px 8px;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-:deep(.multiselect__tag-icon) {
-  line-height: 20px;
-}
-
-:deep(.multiselect__tag-icon:after) {
-  color: var(--color-bg-primary, #1a1a2e);
-}
-
-:deep(.multiselect__tag-icon:hover) {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-/* No results styling */
-.no-result,
-.no-options {
-  display: block;
-  padding: 10px 12px;
-  color: var(--color-text-muted, #666);
-  font-size: 0.85rem;
-  font-style: italic;
-}
-
-/* Disabled state */
-:deep(.multiselect--disabled .multiselect__tags) {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-:deep(.multiselect--disabled .multiselect__select) {
-  background: none;
-}
-</style>
