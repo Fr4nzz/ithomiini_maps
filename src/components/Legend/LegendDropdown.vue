@@ -183,7 +183,7 @@ defineExpose({ open, close, toggleOpen })
 }
 
 .legend-dropdown-panel .dropdown-group-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;

@@ -4,7 +4,7 @@ import {
   Bug,
   Image,
   Info,
-  Map,
+  Map as MapIcon,
   Paintbrush,
   RefreshCw,
   Settings,
@@ -37,7 +37,7 @@ const closeButtonRef = ref(null)
 let previousFocusedElement = null
 
 const navItems = [
-  { key: 'map', label: 'Map View', icon: Map, action: () => emit('change-view', 'map') },
+  { key: 'map', label: 'Map View', icon: MapIcon, action: () => emit('change-view', 'map') },
   { key: 'table', label: 'Table View', icon: Table2, action: () => emit('change-view', 'table') },
   { key: 'gallery', label: 'Gallery', icon: Image, action: () => emit('open-gallery') },
   { key: 'mimicry', label: 'Mimicry Rings', icon: Bug, action: () => emit('open-mimicry') },
@@ -198,7 +198,7 @@ onBeforeUnmount(() => {
 
 .hamburger-menu__eyebrow {
   margin: 0 0 6px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -297,7 +297,7 @@ onBeforeUnmount(() => {
   border-radius: 999px;
   background: color-mix(in srgb, var(--color-accent, #4ade80) 20%, transparent);
   color: var(--color-accent, #4ade80);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;

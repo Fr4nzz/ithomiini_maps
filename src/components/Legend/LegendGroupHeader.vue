@@ -416,7 +416,7 @@ function handlePrefixApplyToAll(format) {
 }
 
 .abbreviation {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-text-muted, #888);
   font-style: italic;
@@ -493,7 +493,7 @@ function handlePrefixApplyToAll(format) {
 }
 
 .subspecies-count {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-text-muted, #888);
   flex-shrink: 0;
 }

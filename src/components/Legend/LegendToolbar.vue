@@ -552,7 +552,7 @@ onClickOutside(settingsPanelRef, (e) => {
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -741,7 +741,7 @@ onClickOutside(settingsPanelRef, (e) => {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;

@@ -128,7 +128,7 @@ const triggerDatabaseUpdate = async () => {
 
 <style scoped>
 .filter-hint {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted, #666);
   font-style: italic;
   margin-top: 8px;

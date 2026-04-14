@@ -122,7 +122,7 @@ const pills = [
   border-radius: 999px;
   background: var(--color-accent, #4ade80);
   color: var(--color-bg-primary, #1a1a2e);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
 }

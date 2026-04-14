@@ -583,7 +583,7 @@ onUnmounted(() => {
   border: none;
   border-radius: 4px;
   color: var(--color-text-muted, #666);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -739,7 +739,7 @@ onUnmounted(() => {
   border-radius: 4px;
   color: var(--color-text-primary, #e0e0e0);
   font-family: var(--font-family-mono, monospace);
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
@@ -757,7 +757,7 @@ onUnmounted(() => {
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 4px;
   color: var(--color-text-secondary, #aaa);
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
   flex-shrink: 0;

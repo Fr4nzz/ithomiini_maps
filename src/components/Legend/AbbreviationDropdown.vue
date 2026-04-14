@@ -205,7 +205,7 @@ onClickOutside(dropdownRef, () => {
 }
 
 .header-title {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -251,7 +251,7 @@ onClickOutside(dropdownRef, () => {
 }
 
 .option-description {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--color-text-muted, #666);
   white-space: nowrap;
 }
@@ -262,7 +262,7 @@ onClickOutside(dropdownRef, () => {
 }
 
 .apply-all-button {
-  font-size: 9px;
+  font-size: 12px;
   padding: 2px 6px;
   background: var(--color-bg-tertiary, #2d2d4a);
   border: 1px solid var(--color-border, #3d3d5c);

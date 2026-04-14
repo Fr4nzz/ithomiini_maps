@@ -48,7 +48,7 @@ const speciesList = computed(() => {
   return store.getSpeciesWithPhotos(props.points)
 })
 
-const points = computed(() => props.points)
+const pointList = computed(() => props.points)
 
 const {
   selectedSpecies,
@@ -59,7 +59,7 @@ const {
   selectSpecies,
   selectSubspecies,
   locationName
-} = usePopupSelection(points, groupedBySpecies, speciesList, {
+} = usePopupSelection(pointList, groupedBySpecies, speciesList, {
   initialSpecies: computed(() => props.initialSpecies),
   initialSubspecies: computed(() => props.initialSubspecies)
 })
@@ -603,7 +603,7 @@ const bioprojectUrl = computed(() => {
   right: 6px;
   background: rgba(0, 0, 0, 0.7);
   color: var(--color-text-muted, #888);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   padding: 3px 6px;
   border-radius: 3px;
   text-align: center;
@@ -652,7 +652,7 @@ const bioprojectUrl = computed(() => {
 .count-badge {
   background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
   color: var(--color-accent, #4ade80);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
@@ -661,7 +661,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .section-label {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted, #888);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -797,7 +797,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .summary-title {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--color-accent, #4ade80);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -810,7 +810,7 @@ const bioprojectUrl = computed(() => {
 
 .coords {
   font-family: monospace;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 .location-stats {
@@ -834,7 +834,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .stat-label {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted, #888);
 }
 
@@ -920,7 +920,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .goat-title {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -932,7 +932,7 @@ const bioprojectUrl = computed(() => {
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: #60a5fa;
   text-decoration: none;
@@ -966,7 +966,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .goat-label {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted, #888);
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -984,7 +984,7 @@ const bioprojectUrl = computed(() => {
 }
 
 .est-badge {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: #f59e0b;
   cursor: help;

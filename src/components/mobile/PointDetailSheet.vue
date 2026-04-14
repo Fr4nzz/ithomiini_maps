@@ -413,7 +413,7 @@ const goatSourceLabel = (field) => field?.source === 'ancestor'
 
 .sheet-kicker {
   color: rgba(196, 220, 255, 0.68);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 
 .sheet-close {
@@ -449,7 +449,7 @@ const goatSourceLabel = (field) => field?.source === 'ancestor'
   background: rgba(74, 222, 128, 0.14);
   color: #a3f3c0;
   padding: 6px 10px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -609,12 +609,12 @@ const goatSourceLabel = (field) => field?.source === 'ancestor'
 .nav-copy span {
   display: block;
   margin-bottom: 3px;
-  font-size: 0.74rem;
+  font-size: 0.75rem;
 }
 
 .card-title,
 .card-title-row a {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 
 .card-title,
@@ -661,7 +661,7 @@ const goatSourceLabel = (field) => field?.source === 'ancestor'
 .goat-note {
   margin-top: 10px;
   color: rgba(208, 223, 245, 0.62);
-  font-size: 0.74rem;
+  font-size: 0.75rem;
 }
 
 .action-row {

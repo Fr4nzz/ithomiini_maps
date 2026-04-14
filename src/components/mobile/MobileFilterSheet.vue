@@ -265,7 +265,7 @@ watch(activeSnapPoint, (value) => {
 
 .mobile-filter-sheet__eyebrow {
   margin: 0 0 4px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;

@@ -224,7 +224,7 @@ watch(items, (nextItems) => {
 }
 
 .mobile-legend__mini-label {
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
@@ -262,7 +262,7 @@ watch(items, (nextItems) => {
 
 .mobile-legend__eyebrow {
   margin: 0 0 4px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
