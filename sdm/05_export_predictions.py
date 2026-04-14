@@ -206,6 +206,24 @@ def generate_web_metadata():
         if isinstance(best_boyce, float) and (best_boyce != best_boyce):
             best_boyce = 0
 
+        response_curves = r.get("response_curves", {}).get("variables", [])
+
+        env_summary = []
+        for v in response_curves:
+            env_summary.append(
+                {
+                    "variable": v["variable"],
+                    "label": v["label"],
+                    "unit": v["unit"],
+                    "optimal_range": v["optimal_range"],
+                    "importance": v["importance"],
+                    "confidence": v["confidence"],
+                    "gradient": v["gradient"],
+                    "response_mean": v["response_mean"],
+                    "response_std": v["response_std"],
+                }
+            )
+
         species_layers.append(
             {
                 "species": species_name,
@@ -219,6 +237,7 @@ def generate_web_metadata():
                     "algorithms_used", list(r["cv_results"].keys())
                 ),
                 "ensemble_method": r["ensemble_method"],
+                "env_summary": env_summary,
             }
         )
 

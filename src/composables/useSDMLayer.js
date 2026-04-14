@@ -5,7 +5,7 @@
  * - 1 species → single warm heatmap
  * - 2 species → dual overlay (warm + cool) for range comparison
  */
-import { watch, computed } from 'vue'
+import { watch, computed, ref } from 'vue'
 import { useSDMStore } from '../stores/sdm'
 import { removeLayerAndSource } from '../utils/mapHelpers'
 import { log } from '../utils/logger'
@@ -54,6 +54,9 @@ const COLOR_RAMPS = {
 
 export function useSDMLayer(map) {
   const sdmStore = useSDMStore()
+  const cursorValue = ref(null)
+  const cursorPos = ref({ x: 0, y: 0 })
+  const loadedRasters = new Map()
 
   const activeSpecies = computed(() => {
     if (!sdmStore.enabled || !sdmStore.hasData) return []
@@ -90,7 +93,14 @@ export function useSDMLayer(map) {
       const values = data[0]
       const width = image.getWidth()
       const height = image.getHeight()
-      const bbox = image.getBoundingBox()
+      const origin = image.getOrigin()
+      const resolution = image.getResolution()
+      const bbox = [
+        origin[0],
+        origin[1] + resolution[1] * height,
+        origin[0] + resolution[0] * width,
+        origin[1],
+      ]
 
       const canvas = document.createElement('canvas')
       canvas.width = width
@@ -109,6 +119,8 @@ export function useSDMLayer(map) {
 
       ctx.putImageData(imageData, 0, 0)
       const dataUrl = canvas.toDataURL('image/png')
+
+      loadedRasters.set(speciesName, { values, width, height, bbox })
 
       map.value.addSource(sourceId, {
         type: 'image', url: dataUrl,
@@ -142,11 +154,55 @@ export function useSDMLayer(map) {
     }
   }
 
-  watch(activeSpecies, updateLayer, { deep: true })
-  watch(() => sdmStore.enabled, (en) => { if (en) updateLayer(); else removeAllLayers() })
+  function getSuitabilityAt(lng, lat) {
+    const species = activeSpecies.value
+    if (species.length === 0) return null
+
+    const results = []
+    for (const sp of species) {
+      const raster = loadedRasters.get(sp)
+      if (!raster) continue
+
+      const { values, width, height, bbox } = raster
+      const col = Math.floor((lng - bbox[0]) / (bbox[2] - bbox[0]) * width)
+      const row = Math.floor((bbox[3] - lat) / (bbox[3] - bbox[1]) * height)
+
+      if (col < 0 || col >= width || row < 0 || row >= height) continue
+
+      const val = values[row * width + col]
+      if (val <= -9990 || isNaN(val) || val < SUITABILITY_MIN) continue
+      results.push({ species: sp, value: val })
+    }
+
+    return results.length > 0 ? results : null
+  }
+
+  function onMouseMove(e) {
+    if (activeSpecies.value.length === 0) { cursorValue.value = null; return }
+    cursorValue.value = getSuitabilityAt(e.lngLat.lng, e.lngLat.lat)
+    cursorPos.value = { x: e.point.x, y: e.point.y }
+  }
+
+  watch(activeSpecies, (species) => {
+    updateLayer()
+    if (map.value) {
+      map.value.off('mousemove', onMouseMove)
+      if (species.length > 0) map.value.on('mousemove', onMouseMove)
+    }
+  }, { deep: true })
+
+  watch(() => sdmStore.enabled, (en) => {
+    if (en) { updateLayer() }
+    else {
+      removeAllLayers()
+      loadedRasters.clear()
+      cursorValue.value = null
+      if (map.value) map.value.off('mousemove', onMouseMove)
+    }
+  })
   watch(() => sdmStore.opacity, () => { if (activeSpecies.value.length > 0) updateLayer() })
 
   sdmStore.loadMetadata()
 
-  return { removeAllLayers, updateLayer }
+  return { removeAllLayers, updateLayer, cursorValue, cursorPos }
 }

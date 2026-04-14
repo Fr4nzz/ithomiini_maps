@@ -183,7 +183,7 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   }
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
-const { updateLayer: updateSDMLayer } = useSDMLayer(map)
+const { updateLayer: updateSDMLayer, cursorValue: sdmCursorValue, cursorPos: sdmCursorPos } = useSDMLayer(map)
 const {
   isDrawing: isBboxDrawing,
   enableDrawing: enableBboxDrawing,
@@ -793,6 +793,15 @@ watch(
         </svg>
         <span>Clear Area</span>
       </button>
+    </div>
+
+    <!-- SDM cursor value tooltip -->
+    <div
+      v-if="sdmCursorValue"
+      class="sdm-cursor-tooltip"
+      :style="{ left: (sdmCursorPos.x + 15) + 'px', top: (sdmCursorPos.y - 10) + 'px' }"
+    >
+      <span class="sdm-cursor-value">{{ (sdmCursorValue[0].value * 100).toFixed(0) }}%</span>
     </div>
 
     <!-- Map Layer Controls -->

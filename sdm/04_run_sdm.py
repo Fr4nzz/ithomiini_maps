@@ -286,7 +286,8 @@ def fit_random_forest(X_train, y_train, X_test=None, tier_config=None):
 
     model = RandomForestClassifier(
         n_estimators=500,
-        max_depth=8,
+        max_depth=15,
+        max_features="sqrt",
         min_samples_leaf=max(5, n_pres // 20),
         class_weight={0: 1, 1: weight_ratio},
         random_state=42,
@@ -306,14 +307,17 @@ def fit_gbm(X_train, y_train, X_test=None, tier_config=None):
     n_bg = len(y_train) - n_pres
     scale_pos = n_bg / n_pres if n_pres > 0 else 1
 
+    n_trees = 500 if n_pres < 200 else 1500
+    lr = 0.05 if n_pres < 200 else 0.01
+
     model = xgb.XGBClassifier(
-        n_estimators=2000,
+        n_estimators=n_trees,
         max_depth=3,
-        learning_rate=0.01,
+        learning_rate=lr,
         scale_pos_weight=scale_pos,
         subsample=0.75,
         colsample_bytree=0.75,
-        early_stopping_rounds=50,
+        early_stopping_rounds=30,
         random_state=42,
         eval_metric="logloss",
         n_jobs=-1,
@@ -497,6 +501,121 @@ def apply_land_mask(grid_gdf, predictions):
     return masked
 
 
+ENV_LABELS = {
+    "CHELSA_bio1": ("Mean Temp.", "°C", 0.1, -273.15),
+    "CHELSA_bio2": ("Diurnal Range", "°C", 0.1, 0),
+    "CHELSA_bio4": ("Temp. Seasonality", "", 1, 0),
+    "CHELSA_bio5": ("Max Temp.", "°C", 0.1, -273.15),
+    "CHELSA_bio6": ("Min Temp.", "°C", 0.1, -273.15),
+    "CHELSA_bio12": ("Annual Precip.", "mm", 0.1, 0),
+    "CHELSA_bio13": ("Wettest Month", "mm", 0.1, 0),
+    "CHELSA_bio14": ("Driest Month", "mm", 0.1, 0),
+    "CHELSA_bio15": ("Precip. Seasonality", "", 1, 0),
+    "elevation": ("Elevation", "m", 1, 0),
+    "cloud_cover": ("Cloud Cover", "", 0.01, 0),
+}
+
+
+def get_env_label(col_name):
+    best_match = None
+    best_len = 0
+    for key, val in ENV_LABELS.items():
+        if key in col_name and len(key) > best_len:
+            best_match = val
+            best_len = len(key)
+    if best_match:
+        return best_match
+    return col_name.split("_")[0], "", 1, 0
+
+
+def generate_response_curves(data, env_cols, fitted_predictions, X, y, tier_config):
+    pres_data = data[data["presence"] == 1]
+    n_steps = 50
+
+    variables = []
+    for col_idx, col in enumerate(env_cols):
+        label, unit, scale, offset = get_env_label(col)
+        col_values = X[:, col_idx]
+        pres_values = X[y == 1, col_idx]
+
+        vmin, vmax = np.nanpercentile(col_values, [2, 98])
+        gradient = np.linspace(vmin, vmax, n_steps)
+
+        X_partial = np.tile(X[y == 1].mean(axis=0), (n_steps, 1))
+        X_partial[:, col_idx] = gradient
+
+        algo_responses = {}
+        for algo_name, pred_array in fitted_predictions.items():
+            fit_fn = ALGORITHM_MAP.get(algo_name)
+            if fit_fn is None:
+                continue
+            model, _ = fit_fn(X, y, tier_config=tier_config)
+            if model is None:
+                continue
+            try:
+                if algo_name == "maxent":
+                    response = model.predict(X_partial)
+                else:
+                    response = model.predict_proba(X_partial)[:, 1]
+                algo_responses[algo_name] = response.tolist()
+            except Exception:
+                continue
+
+        if not algo_responses:
+            continue
+
+        response_arrays = np.array(list(algo_responses.values()))
+        mean_response = response_arrays.mean(axis=0)
+        std_response = (
+            response_arrays.std(axis=0)
+            if len(response_arrays) > 1
+            else np.zeros(n_steps)
+        )
+
+        display_gradient = (gradient * scale + offset).tolist()
+        display_pres = (pres_values * scale + offset).tolist()
+
+        optimal_mask = mean_response >= mean_response.max() * 0.8
+        if optimal_mask.any():
+            opt_vals = gradient[optimal_mask] * scale + offset
+            optimal_min = float(opt_vals.min())
+            optimal_max = float(opt_vals.max())
+        else:
+            optimal_min = optimal_max = float(
+                gradient[mean_response.argmax()] * scale + offset
+            )
+
+        peak_idx = int(mean_response.argmax())
+        peak_confidence = 1.0 - float(
+            std_response[peak_idx] / max(mean_response[peak_idx], 0.01)
+        )
+        peak_confidence = max(0, min(1, peak_confidence))
+
+        importance = float(mean_response.max() - mean_response.min())
+
+        variables.append(
+            {
+                "variable": col,
+                "label": label,
+                "unit": unit,
+                "gradient": display_gradient,
+                "response_mean": mean_response.tolist(),
+                "response_std": std_response.tolist(),
+                "presence_values": display_pres,
+                "optimal_range": [round(optimal_min, 1), round(optimal_max, 1)],
+                "importance": round(importance, 4),
+                "confidence": round(peak_confidence, 3),
+            }
+        )
+
+    variables.sort(key=lambda v: -v["importance"])
+
+    return {
+        "variables": variables,
+        "n_steps": n_steps,
+    }
+
+
 def generate_predictions(
     data, env_cols, env_rasters, species_name, tier_name, tier_config
 ):
@@ -646,6 +765,15 @@ def generate_predictions(
     if best_auc < 0.5 or (np.isnan(best_auc) and best_boyce <= 0):
         confidence = "exploratory"
 
+    response_data = generate_response_curves(
+        data, env_cols, predictions, X, y, tier_config
+    )
+
+    safe_name = species_name.replace(" ", "_").lower()
+    response_path = PRED_DIR / f"{safe_name}_response.json"
+    with open(response_path, "w") as f:
+        json.dump(response_data, f)
+
     return {
         "species": species_name,
         "cv_results": cv_results,
@@ -661,6 +789,7 @@ def generate_predictions(
         "best_auc": best_auc,
         "best_boyce": best_boyce,
         "prediction_file": str(output_path),
+        "response_curves": response_data,
     }
 
 
@@ -736,9 +865,31 @@ def main():
 
     all_results = []
     skipped = {"insufficient": 0, "no_tier": 0, "no_env": 0}
+    species_times = []
+    import time as _time
+
+    run_start = _time.time()
 
     for i, species_name in enumerate(species_list):
-        print(f"\n── [{i + 1}/{len(species_list)}] {species_name} ──")
+        sp_start = _time.time()
+
+        if species_times:
+            avg_time = sum(species_times) / len(species_times)
+            remaining = (len(species_list) - i) * avg_time
+            mins, secs = divmod(int(remaining), 60)
+            hrs, mins = divmod(mins, 60)
+            eta_str = f"{hrs}h{mins:02d}m" if hrs else f"{mins}m{secs:02d}s"
+            elapsed = _time.time() - run_start
+            el_mins, el_secs = divmod(int(elapsed), 60)
+            el_hrs, el_mins = divmod(el_mins, 60)
+            elapsed_str = (
+                f"{el_hrs}h{el_mins:02d}m" if el_hrs else f"{el_mins}m{el_secs:02d}s"
+            )
+            print(
+                f"\n── [{i + 1}/{len(species_list)}] {species_name}  [elapsed {elapsed_str} | ETA {eta_str} | avg {avg_time:.0f}s/sp] ──"
+            )
+        else:
+            print(f"\n── [{i + 1}/{len(species_list)}] {species_name} ──")
 
         species_gdf = load_species_data(species_name)
         if species_gdf is None:
@@ -784,6 +935,10 @@ def main():
         )
         if result:
             all_results.append(result)
+
+        sp_elapsed = _time.time() - sp_start
+        species_times.append(sp_elapsed)
+        print(f"  ⏱ {sp_elapsed:.0f}s")
 
     if all_results:
         summary_path = PRED_DIR / "sdm_results_summary.json"

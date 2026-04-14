@@ -845,9 +845,60 @@ const updateExportHeight = (value) => {
                 <span class="sdm-gradient-label-low">Low</span>
                 <span class="sdm-gradient-label-high">High</span>
               </div>
-              <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-species-meta">
-                {{ sdmStore.getSDMInfo(sp).n_records }} records · AUC {{ sdmStore.getSDMInfo(sp).auc }}
-              </span>
+              <div v-if="sdmStore.getSDMInfo(sp)" class="sdm-model-info">
+                <div class="sdm-info-grid">
+                  <span class="sdm-info-label">Records</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).n_records }}</span>
+                  <span class="sdm-info-label">AUC</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).auc }}</span>
+                  <span class="sdm-info-label">Boyce</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).boyce || '—' }}</span>
+                  <span class="sdm-info-label">Tier</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).tier }}</span>
+                  <span class="sdm-info-label">Algorithms</span>
+                  <span class="sdm-info-value">{{ (sdmStore.getSDMInfo(sp).algorithms_used || []).join(', ') || '—' }}</span>
+                </div>
+              </div>
+              <div v-if="sdmStore.getSDMInfo(sp)?.env_summary?.length" class="sdm-env-section">
+                <div
+                  v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
+                  :key="env.variable"
+                  class="sdm-env-card"
+                >
+                  <div class="sdm-env-header">
+                    <span class="sdm-env-name">{{ env.label }}</span>
+                    <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
+                  </div>
+                  <div class="sdm-chart-wrap">
+                    <span class="sdm-y-label">Suitability</span>
+                    <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+                      <polyline
+                        :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
+                        fill="none"
+                        stroke="var(--color-accent, #4ade80)"
+                        stroke-width="1.5"
+                      />
+                      <polygon
+                        :points="[
+                          ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
+                          ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
+                        ].join(' ')"
+                        fill="var(--color-accent, #4ade80)"
+                        fill-opacity="0.15"
+                      />
+                    </svg>
+                  </div>
+                  <div class="sdm-x-axis">
+                    <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
+                    <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
+                    <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
+                  </div>
+                  <div class="sdm-env-footer">
+                    <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
+                    <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
+                  </div>
+                </div>
+              </div>
             </div>
             <span class="sdm-legend-caption">Habitat suitability</span>
           </div>

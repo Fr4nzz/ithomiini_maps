@@ -43,6 +43,7 @@ def spatial_thin(points_gdf, distance_km):
 # BIAS RASTER
 # ══════════════════════════════════════════════════════════════════════════════
 
+
 def create_bias_raster(all_coords, extent, resolution=0.1, bandwidth=1.0):
     """
     Create a kernel density estimate (KDE) bias raster from all occurrence records.
@@ -61,17 +62,15 @@ def create_bias_raster(all_coords, extent, resolution=0.1, bandwidth=1.0):
     from scipy.ndimage import gaussian_filter
 
     # Create grid
-    lons = np.arange(extent['west'], extent['east'], resolution)
-    lats = np.arange(extent['south'], extent['north'], resolution)
-    grid_coords = np.column_stack(
-        [g.ravel() for g in np.meshgrid(lons, lats)]
-    )
+    lons = np.arange(extent["west"], extent["east"], resolution)
+    lats = np.arange(extent["south"], extent["north"], resolution)
+    grid_coords = np.column_stack([g.ravel() for g in np.meshgrid(lons, lats)])
 
     # Fast approach: bin counts + Gaussian smoothing (much faster than sklearn KDE)
     grid = np.zeros((len(lats), len(lons)), dtype=np.float64)
     for lon, lat in all_coords:
-        col = int((lon - extent['west']) / resolution)
-        row = int((lat - extent['south']) / resolution)
+        col = int((lon - extent["west"]) / resolution)
+        row = int((lat - extent["south"]) / resolution)
         if 0 <= row < len(lats) and 0 <= col < len(lons):
             grid[row, col] += 1
 
@@ -88,9 +87,15 @@ def create_bias_raster(all_coords, extent, resolution=0.1, bandwidth=1.0):
     return density, grid_coords, (len(lats), len(lons))
 
 
-def generate_background_points(n_points, extent, occurrence_coords=None,
-                               target_group_coords=None, bias_weights=None,
-                               bias_grid_coords=None, min_distance_km=1.0):
+def generate_background_points(
+    n_points,
+    extent,
+    occurrence_coords=None,
+    target_group_coords=None,
+    bias_weights=None,
+    bias_grid_coords=None,
+    min_distance_km=1.0,
+):
     """
     Generate pseudo-absence / background points.
     If bias_weights provided, sample proportional to bias surface.
@@ -108,20 +113,24 @@ def generate_background_points(n_points, extent, occurrence_coords=None,
         candidates += jitter
     elif target_group_coords is not None and len(target_group_coords) > 0:
         # Target-group background with jitter
-        indices = np.random.choice(len(target_group_coords), size=n_points * 3, replace=True)
+        indices = np.random.choice(
+            len(target_group_coords), size=n_points * 3, replace=True
+        )
         candidates = target_group_coords[indices].copy()
         candidates[:, 0] += np.random.normal(0, 0.05, len(candidates))
         candidates[:, 1] += np.random.normal(0, 0.05, len(candidates))
     else:
         # Random background
-        lons = np.random.uniform(extent['west'], extent['east'], n_points * 3)
-        lats = np.random.uniform(extent['south'], extent['north'], n_points * 3)
+        lons = np.random.uniform(extent["west"], extent["east"], n_points * 3)
+        lats = np.random.uniform(extent["south"], extent["north"], n_points * 3)
         candidates = np.column_stack([lons, lats])
 
     # Clip to extent
     mask = (
-        (candidates[:, 0] >= extent['west']) & (candidates[:, 0] <= extent['east']) &
-        (candidates[:, 1] >= extent['south']) & (candidates[:, 1] <= extent['north'])
+        (candidates[:, 0] >= extent["west"])
+        & (candidates[:, 0] <= extent["east"])
+        & (candidates[:, 1] >= extent["south"])
+        & (candidates[:, 1] <= extent["north"])
     )
     candidates = candidates[mask]
 
@@ -142,6 +151,7 @@ def generate_background_points(n_points, extent, occurrence_coords=None,
 # ══════════════════════════════════════════════════════════════════════════════
 # VIF (Variance Inflation Factor)
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 def compute_vif(X, columns):
     """
@@ -173,7 +183,7 @@ def compute_vif(X, columns):
         vif = 1 / (1 - r_squared) if r_squared < 1 else np.inf
         vifs.append(vif)
 
-    return pd.DataFrame({'variable': columns, 'vif': vifs})
+    return pd.DataFrame({"variable": columns, "vif": vifs})
 
 
 def filter_by_vif(X, columns, threshold=10.0):
@@ -202,13 +212,13 @@ def filter_by_vif(X, columns, threshold=10.0):
             break
 
         vif_df = compute_vif(X_valid, cols)
-        max_vif = vif_df['vif'].max()
+        max_vif = vif_df["vif"].max()
 
         if max_vif <= threshold:
             break
 
         # Remove variable with highest VIF
-        worst = vif_df.loc[vif_df['vif'].idxmax(), 'variable']
+        worst = vif_df.loc[vif_df["vif"].idxmax(), "variable"]
         cols.remove(worst)
         removed.append(worst)
 
@@ -219,6 +229,7 @@ def filter_by_vif(X, columns, threshold=10.0):
 # ══════════════════════════════════════════════════════════════════════════════
 # MESS (Multivariate Environmental Similarity Surface)
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 def compute_mess(training_env, prediction_env):
     """
@@ -285,6 +296,7 @@ def compute_mess(training_env, prediction_env):
 # RASTER I/O
 # ══════════════════════════════════════════════════════════════════════════════
 
+
 def extract_values_at_points(raster_paths, points_gdf):
     """Extract raster values at point locations using efficient rasterio sampling."""
     coords = [(p.x, p.y) for p in points_gdf.geometry]
@@ -310,24 +322,26 @@ def extract_values_at_points(raster_paths, points_gdf):
 
 def create_prediction_grid(extent, resolution):
     """Create a regular grid of points for prediction."""
-    lons = np.arange(extent['west'], extent['east'], resolution)
-    lats = np.arange(extent['south'], extent['north'], resolution)
+    lons = np.arange(extent["west"], extent["east"], resolution)
+    lats = np.arange(extent["south"], extent["north"], resolution)
     lon_grid, lat_grid = np.meshgrid(lons, lats)
 
     points = [Point(lon, lat) for lon, lat in zip(lon_grid.ravel(), lat_grid.ravel())]
     gdf = gpd.GeoDataFrame(geometry=points, crs="EPSG:4326")
 
     grid_shape = (len(lats), len(lons))
+    actual_east = lons[-1] + resolution
+    actual_north = lats[-1] + resolution
     transform = from_bounds(
-        extent['west'], extent['south'],
-        extent['east'], extent['north'],
-        len(lons), len(lats)
+        extent["west"], extent["south"], actual_east, actual_north, len(lons), len(lats)
     )
 
     return gdf, grid_shape, transform, lons, lats
 
 
-def save_prediction_raster(predictions, grid_shape, transform, output_path, crs="EPSG:4326"):
+def save_prediction_raster(
+    predictions, grid_shape, transform, output_path, crs="EPSG:4326"
+):
     """Save prediction array as a GeoTIFF."""
     prediction_grid = predictions.reshape(grid_shape)
     prediction_grid = np.flipud(prediction_grid)
@@ -335,16 +349,17 @@ def save_prediction_raster(predictions, grid_shape, transform, output_path, crs=
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 
     with rasterio.open(
-        output_path, 'w',
-        driver='GTiff',
+        output_path,
+        "w",
+        driver="GTiff",
         height=grid_shape[0],
         width=grid_shape[1],
         count=1,
-        dtype='float32',
+        dtype="float32",
         crs=crs,
         transform=transform,
         nodata=-9999.0,
-        compress='deflate'
+        compress="deflate",
     ) as dst:
         dst.write(prediction_grid.astype(np.float32), 1)
 
@@ -353,19 +368,21 @@ def crop_raster_to_extent(input_path, output_path, extent):
     """Crop a raster to the study area extent."""
     from rasterio.mask import mask as rasterio_mask
 
-    bbox = box(extent['west'], extent['south'], extent['east'], extent['north'])
+    bbox = box(extent["west"], extent["south"], extent["east"], extent["north"])
     bbox_gdf = gpd.GeoDataFrame(geometry=[bbox], crs="EPSG:4326")
 
     with rasterio.open(input_path) as src:
         out_image, out_transform = rasterio_mask(src, bbox_gdf.geometry, crop=True)
         out_meta = src.meta.copy()
-        out_meta.update({
-            "driver": "GTiff",
-            "height": out_image.shape[1],
-            "width": out_image.shape[2],
-            "transform": out_transform,
-            "compress": "deflate"
-        })
+        out_meta.update(
+            {
+                "driver": "GTiff",
+                "height": out_image.shape[1],
+                "width": out_image.shape[2],
+                "transform": out_transform,
+                "compress": "deflate",
+            }
+        )
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with rasterio.open(output_path, "w", **out_meta) as dest:
