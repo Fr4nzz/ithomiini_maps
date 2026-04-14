@@ -24,6 +24,15 @@ export function useDataLayer(map, options = {}) {
   const legendStore = useLegendStore()
   const { onShowPopup } = options
 
+  const emitMobileDetailEvent = (payload) => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return
+    if (!window.matchMedia('(max-width: 768px)').matches) return
+
+    window.dispatchEvent(new CustomEvent('mobile-point-detail', {
+      detail: payload,
+    }))
+  }
+
   let clusterHandlersRegistered = false
   let pointsHandlersRegistered = false
   let lastHoveredPointId = null
@@ -786,14 +795,17 @@ export function useDataLayer(map, options = {}) {
           const clusterStats = computeClusterStats(clusterFeatures, clusterLat, clusterLng)
           updateClusterExtentCircle(clusterLat, clusterLng, clusterStats?.radiusKm || 0, clusterFeatures)
 
-          onShowPopup({
+          const popupPayload = {
             type: 'cluster',
             coordinates: { lat: clusterLat, lng: clusterLng },
             lngLat: coords,
             points: clusterPoints,
             isCluster: true,
             clusterStats
-          })
+          }
+
+          emitMobileDetailEvent(popupPayload)
+          onShowPopup(popupPayload)
         }
       })
 
@@ -825,14 +837,17 @@ export function useDataLayer(map, options = {}) {
       const pointsAtLocation = store.getPointsAtCoordinates(lat, lng)
 
       if (onShowPopup) {
-        onShowPopup({
+        const popupPayload = {
           type: 'point',
           coordinates: { lat, lng },
           lngLat: coords,
           points: pointsAtLocation.length > 0 ? pointsAtLocation : [props],
           initialSpecies: isScattered ? scatteredSpecies : null,
           initialSubspecies: isScattered ? scatteredSubspecies : null
-        })
+        }
+
+        emitMobileDetailEvent(popupPayload)
+        onShowPopup(popupPayload)
       }
     })
 

@@ -32,6 +32,7 @@ const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
 const map = ref(null)
+const mobileLegendHighlight = ref('')
 let popup = null
 
 // Wrapper size (the available space) for accurate export preview calculations
@@ -266,6 +267,25 @@ const currentStyleName = computed(() => {
   return MAP_STYLES[currentStyle.value]?.name || 'Dark'
 })
 
+const applyMobileLegendHighlight = () => {
+  if (!map.value?.getLayer('points-highlight')) return
+
+  const filter = mobileLegendHighlight.value
+    ? (store.clusteringEnabled
+        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', store.colorByAttribute], mobileLegendHighlight.value]]
+        : ['==', ['get', store.colorByAttribute], mobileLegendHighlight.value])
+    : (store.clusteringEnabled
+        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
+        : ['==', ['get', 'id'], ''])
+
+  map.value.setFilter('points-highlight', filter)
+}
+
+const handleMobileLegendHighlight = (event) => {
+  mobileLegendHighlight.value = event.detail?.label || ''
+  applyMobileLegendHighlight()
+}
+
 // Close dropdown when clicking outside
 const handleMapLayerClickOutside = (event) => {
   if (mapLayerDropdownRef.value && !mapLayerDropdownRef.value.contains(event.target)) {
@@ -329,6 +349,7 @@ onMounted(() => {
   initMap()
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('click', handleMapLayerClickOutside)
+  window.addEventListener('mobile-legend-highlight', handleMobileLegendHighlight)
 
   // Set up ResizeObserver on WRAPPER for calculating export preview dimensions
   if (mapWrapper.value) {
@@ -376,6 +397,7 @@ onUnmounted(() => {
   }
   document.removeEventListener('click', handleClickOutside)
   document.removeEventListener('click', handleMapLayerClickOutside)
+  window.removeEventListener('mobile-legend-highlight', handleMobileLegendHighlight)
   cleanupSearch()
 })
 
@@ -582,6 +604,15 @@ watch(
     if (!isMapReady()) return
     debouncedAddDataLayer({ skipZoom: true })
   }
+)
+
+watch(
+  [() => store.displayGeoJSON, () => store.clusteringEnabled, () => store.colorByAttribute],
+  () => {
+    if (!mobileLegendHighlight.value) return
+    setTimeout(() => applyMobileLegendHighlight(), 90)
+  },
+  { flush: 'post' }
 )
 
 // Watch for focusPoint changes
