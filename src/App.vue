@@ -1,12 +1,8 @@
 <script setup>
-import { ref, onMounted, onUnmounted, provide } from 'vue'
+import { ref, onMounted, onUnmounted, provide, defineAsyncComponent } from 'vue'
 import { useDataStore } from './stores/data'
 import Sidebar from './components/Sidebar.vue'
 import MapEngine from './components/MapEngine.vue'
-import DataTable from './components/DataTable.vue'
-import ExportPanel from './components/ExportPanel.vue'
-import MimicrySelector from './components/MimicrySelector.vue'
-import ImageGallery from './components/ImageGallery.vue'
 import DatabaseUpdateSection from './components/DatabaseUpdateSection.vue'
 import PointDetailSheet from './components/mobile/PointDetailSheet.vue'
 import MobileFilterSheet from './components/mobile/MobileFilterSheet.vue'
@@ -22,6 +18,11 @@ import { exportForR } from './utils/rExport'
 import { toPng } from 'html-to-image'
 import { checkAllTiers, extractGoogleDriveFileId } from './utils/imageProxy'
 import { log } from './utils/logger'
+
+const DataTable = defineAsyncComponent(() => import('./components/DataTable.vue'))
+const ExportPanel = defineAsyncComponent(() => import('./components/ExportPanel.vue'))
+const MimicrySelector = defineAsyncComponent(() => import('./components/MimicrySelector.vue'))
+const ImageGallery = defineAsyncComponent(() => import('./components/ImageGallery.vue'))
 
 const store = useDataStore()
 const mobileLayout = useMobileLayout()
@@ -804,7 +805,7 @@ html, body, #app {
 .mobile-settings-modal__eyebrow {
   margin: 0 0 4px;
   color: var(--color-accent, #4ade80);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
