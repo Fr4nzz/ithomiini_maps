@@ -72,7 +72,7 @@ const pills = [
   position: fixed;
   left: 50%;
   bottom: calc(16px + env(safe-area-inset-bottom));
-  z-index: 10;
+  z-index: 100;
   display: flex;
   gap: 8px;
   justify-content: center;

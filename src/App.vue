@@ -582,5 +582,18 @@ html, body, #app {
   .main-content {
     height: 100vh;
   }
+
+  /* Hide desktop map controls that overlap with mobile UI */
+  .maplibregl-ctrl-top-left,
+  .map-style-controls,
+  .search-box-wrapper,
+  .location-search {
+    display: none !important;
+  }
+
+  /* Hide desktop legend on mobile */
+  .legend {
+    display: none !important;
+  }
 }
 </style>
