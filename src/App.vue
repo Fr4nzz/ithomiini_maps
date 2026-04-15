@@ -570,9 +570,17 @@ html, body, #app {
   .app-container {
     flex-direction: column;
   }
-  
+
+  .app-container > .sidebar {
+    display: none;
+  }
+
   .view-toggle-bar {
-    display: flex;
+    display: none;
+  }
+
+  .main-content {
+    height: 100vh;
   }
 }
 </style>
