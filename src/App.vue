@@ -377,15 +377,17 @@ onMounted(async () => {
         @open-legend="mobileLayout.openSheet('legend')"
         @open-more="mobileLayout.openSheet('menu')"
       />
-      <MobileFilterSheet />
-      <PointDetailSheet />
-      <MobileLegend />
+      <MobileFilterSheet v-if="mobileLayout.activeSheet.value === 'filter'" />
+      <PointDetailSheet v-if="mobileLayout.activeSheet.value === 'detail'" />
+      <MobileLegend v-if="mobileLayout.activeSheet.value === 'legend'" />
       <HamburgerMenu
+        v-if="mobileLayout.activeSheet.value === 'menu'"
         :current-view="currentView"
-        @change-view="setView"
-        @open-gallery="openImageGallery"
-        @open-mimicry="openMimicrySelector"
-        @open-export="openExport"
+        @close="mobileLayout.closeSheet()"
+        @change-view="(v) => { setView(v); mobileLayout.closeSheet() }"
+        @open-gallery="() => { openImageGallery(); mobileLayout.closeSheet() }"
+        @open-mimicry="() => { openMimicrySelector(); mobileLayout.closeSheet() }"
+        @open-export="() => { openExport(); mobileLayout.closeSheet() }"
       />
     </template>
   </div>
