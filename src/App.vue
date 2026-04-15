@@ -377,7 +377,12 @@ onMounted(async () => {
         @open-legend="mobileLayout.openSheet('legend')"
         @open-more="mobileLayout.openSheet('menu')"
       />
-      <MobileFilterSheet v-if="mobileLayout.activeSheet.value === 'filter'" />
+      <MobileFilterSheet
+        v-if="mobileLayout.activeSheet.value === 'filter'"
+        @open-export="() => { openExport(); mobileLayout.closeSheet() }"
+        @open-mimicry="() => { openMimicrySelector(); mobileLayout.closeSheet() }"
+        @open-gallery="() => { openImageGallery(); mobileLayout.closeSheet() }"
+      />
       <PointDetailSheet v-if="mobileLayout.activeSheet.value === 'detail'" />
       <MobileLegend v-if="mobileLayout.activeSheet.value === 'legend'" />
       <HamburgerMenu
@@ -583,15 +588,18 @@ html, body, #app {
     height: 100vh;
   }
 
-  /* Hide desktop map controls that overlap with mobile UI */
-  .maplibregl-ctrl-top-left,
-  .map-style-controls,
+  /* Push map controls below the mobile top bar */
+  .maplibregl-ctrl-top-left {
+    top: 52px !important;
+  }
+
+  /* Hide desktop search box on mobile (use mobile search instead) */
   .search-box-wrapper,
   .location-search {
     display: none !important;
   }
 
-  /* Hide desktop legend on mobile */
+  /* Hide desktop legend on mobile (use MobileLegend instead) */
   .legend {
     display: none !important;
   }

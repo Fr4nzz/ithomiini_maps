@@ -18,10 +18,14 @@ const legendStore = useLegendStore()
 const selectedLabel = ref('')
 const isExportMode = computed(() => false)
 
+const getEffectiveMaxItems = () => 999
+const getMaxDisplayGroups = () => null
 const { legendItems, legendCounts, getGroupForItem, formatLabel } = useLegendItemData(
   store,
   legendStore,
-  isExportMode
+  getEffectiveMaxItems,
+  isExportMode,
+  getMaxDisplayGroups
 )
 
 const items = computed(() => legendItems.value
