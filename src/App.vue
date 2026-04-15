@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, provide, defineAsyncComponent } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { useDataStore } from './stores/data'
 import { useMobileLayout } from './composables/useMobileLayout'
 import Sidebar from './components/Sidebar.vue'
@@ -9,13 +9,6 @@ import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
 import CommandPaletteDialog from './components/sidebar/CommandPaletteDialog.vue'
-
-const MobileTopBar = defineAsyncComponent(() => import('./components/mobile/MobileTopBar.vue'))
-const MobileActionBar = defineAsyncComponent(() => import('./components/mobile/MobileActionBar.vue'))
-const MobileFilterSheet = defineAsyncComponent(() => import('./components/mobile/MobileFilterSheet.vue'))
-const PointDetailSheet = defineAsyncComponent(() => import('./components/mobile/PointDetailSheet.vue'))
-const MobileLegend = defineAsyncComponent(() => import('./components/mobile/MobileLegend.vue'))
-const HamburgerMenu = defineAsyncComponent(() => import('./components/mobile/HamburgerMenu.vue'))
 import { ASPECT_RATIOS } from './utils/constants'
 import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
@@ -27,6 +20,9 @@ const store = useDataStore()
 const mobileLayout = useMobileLayout()
 provide('mobileLayout', mobileLayout)
 const { isMobile } = mobileLayout
+
+const showMobileSidebar = ref(false)
+const commandPaletteRef = ref(null)
 
 // View state
 const currentView = ref('map') // 'map' or 'table'
@@ -364,36 +360,56 @@ onMounted(async () => {
     </Teleport>
 
     <!-- Command Palette Dialog (Ctrl+K / Cmd+K) -->
-    <CommandPaletteDialog />
+    <CommandPaletteDialog ref="commandPaletteRef" />
 
-    <!-- Mobile Components (only render on mobile viewports) -->
+    <!-- Mobile: floating menu button + quick action pills -->
     <template v-if="isMobile">
-      <MobileTopBar
-        @open-menu="mobileLayout.openSheet('menu')"
-        @open-search="mobileLayout.openSheet('filter')"
-      />
-      <MobileActionBar
-        @open-filter="mobileLayout.openSheet('filter')"
-        @open-legend="mobileLayout.openSheet('legend')"
-        @open-more="mobileLayout.openSheet('menu')"
-      />
-      <MobileFilterSheet
-        v-if="mobileLayout.activeSheet.value === 'filter'"
-        @open-export="() => { openExport(); mobileLayout.closeSheet() }"
-        @open-mimicry="() => { openMimicrySelector(); mobileLayout.closeSheet() }"
-        @open-gallery="() => { openImageGallery(); mobileLayout.closeSheet() }"
-      />
-      <PointDetailSheet v-if="mobileLayout.activeSheet.value === 'detail'" />
-      <MobileLegend v-if="mobileLayout.activeSheet.value === 'legend'" />
-      <HamburgerMenu
-        v-if="mobileLayout.activeSheet.value === 'menu'"
-        :current-view="currentView"
-        @close="mobileLayout.closeSheet()"
-        @change-view="(v) => { setView(v); mobileLayout.closeSheet() }"
-        @open-gallery="() => { openImageGallery(); mobileLayout.closeSheet() }"
-        @open-mimicry="() => { openMimicrySelector(); mobileLayout.closeSheet() }"
-        @open-export="() => { openExport(); mobileLayout.closeSheet() }"
-      />
+      <button
+        class="mobile-menu-btn"
+        :class="{ 'mobile-menu-btn--open': showMobileSidebar }"
+        @click="showMobileSidebar = !showMobileSidebar"
+      >
+        <svg v-if="!showMobileSidebar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>{{ showMobileSidebar ? 'Close' : 'Menu' }}</span>
+      </button>
+
+      <!-- Mobile sidebar overlay (reuses desktop Sidebar) -->
+      <Transition name="mobile-sidebar">
+        <div v-if="showMobileSidebar" class="mobile-sidebar-overlay" @click.self="showMobileSidebar = false">
+          <aside class="mobile-sidebar-panel">
+            <Sidebar
+              :current-view="currentView"
+              @set-view="(v) => { setView(v); showMobileSidebar = false }"
+              @open-export="() => { openExport(); showMobileSidebar = false }"
+              @open-mimicry="() => { openMimicrySelector(); showMobileSidebar = false }"
+              @open-gallery="() => { openImageGallery(); showMobileSidebar = false }"
+              @open-map-export="() => { directExportMap(); showMobileSidebar = false }"
+              @export-for-r="() => { directExportForR(); showMobileSidebar = false }"
+            />
+          </aside>
+        </div>
+      </Transition>
+
+      <!-- Mobile bottom quick actions -->
+      <div class="mobile-quick-bar" :class="{ 'mobile-quick-bar--hidden': showMobileSidebar }">
+        <button class="mobile-pill" @click="commandPaletteRef?.open()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Search</span>
+        </button>
+        <button class="mobile-pill" @click="openImageGallery">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Gallery</span>
+        </button>
+        <button class="mobile-pill" @click="openMimicrySelector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 8v8m-4-4h8"/></svg>
+          <span>Mimicry</span>
+        </button>
+        <button class="mobile-pill" @click="openExport">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Export Map</span>
+        </button>
+      </div>
     </template>
   </div>
 </template>
@@ -576,7 +592,7 @@ html, body, #app {
     flex-direction: column;
   }
 
-  .app-container > .sidebar {
+  .app-container > aside.sidebar {
     display: none;
   }
 
@@ -587,21 +603,140 @@ html, body, #app {
   .main-content {
     height: 100vh;
   }
+}
 
-  /* Push map controls below the mobile top bar */
-  .maplibregl-ctrl-top-left {
-    top: 52px !important;
-  }
+/* Mobile menu button */
+.mobile-menu-btn {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(26, 26, 46, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #e0e0e0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-  /* Hide desktop search box on mobile (use mobile search instead) */
-  .search-box-wrapper,
-  .location-search {
-    display: none !important;
-  }
+.mobile-menu-btn svg {
+  width: 18px;
+  height: 18px;
+}
 
-  /* Hide desktop legend on mobile (use MobileLegend instead) */
-  .legend {
-    display: none !important;
-  }
+.mobile-menu-btn:active {
+  transform: scale(0.96);
+}
+
+.mobile-menu-btn--open {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+/* Mobile sidebar overlay */
+.mobile-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.mobile-sidebar-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(85vw, 400px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--color-bg-secondary, #252540);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-sidebar-panel > .sidebar {
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  font-size: 1.05rem;
+}
+
+.mobile-sidebar-enter-active,
+.mobile-sidebar-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.mobile-sidebar-enter-active .mobile-sidebar-panel,
+.mobile-sidebar-leave-active .mobile-sidebar-panel {
+  transition: transform 0.25s ease;
+}
+
+.mobile-sidebar-enter-from,
+.mobile-sidebar-leave-to {
+  opacity: 0;
+}
+
+.mobile-sidebar-enter-from .mobile-sidebar-panel,
+.mobile-sidebar-leave-to .mobile-sidebar-panel {
+  transform: translateX(-100%);
+}
+
+/* Mobile bottom quick action pills */
+.mobile-quick-bar {
+  position: fixed;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  gap: 6px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.mobile-quick-bar--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(12px);
+}
+
+.mobile-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #e0e0e0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s;
+}
+
+.mobile-pill:active {
+  transform: scale(0.96);
+}
+
+.mobile-pill svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 </style>
