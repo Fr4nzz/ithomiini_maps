@@ -393,22 +393,33 @@ onMounted(async () => {
 
       <!-- Mobile bottom quick actions -->
       <div class="mobile-quick-bar" :class="{ 'mobile-quick-bar--hidden': showMobileSidebar }">
-        <button class="mobile-pill" @click="commandPaletteRef?.open()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <span>Search</span>
-        </button>
-        <button class="mobile-pill" @click="openImageGallery">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>Gallery</span>
-        </button>
-        <button class="mobile-pill" @click="openMimicrySelector">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 8v8m-4-4h8"/></svg>
-          <span>Mimicry</span>
-        </button>
-        <button class="mobile-pill" @click="directExportMap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Export Map</span>
-        </button>
+        <template v-if="!store.exportSettings.enabled">
+          <button class="mobile-pill" @click="commandPaletteRef?.open()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <span>Search</span>
+          </button>
+          <button class="mobile-pill" @click="openImageGallery">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Gallery</span>
+          </button>
+          <button class="mobile-pill" @click="openMimicrySelector">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 8v8m-4-4h8"/></svg>
+            <span>Mimicry</span>
+          </button>
+          <button class="mobile-pill" @click="store.exportSettings.enabled = true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Export Map</span>
+          </button>
+        </template>
+        <template v-else>
+          <button class="mobile-pill mobile-pill--close" @click="store.exportSettings.enabled = false" aria-label="Close export preview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <button class="mobile-pill mobile-pill--primary" @click="directExportMap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Download</span>
+          </button>
+        </template>
       </div>
     </template>
   </div>
@@ -766,5 +777,15 @@ html, body, #app {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
+}
+
+.mobile-pill--primary {
+  background: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+  border-color: var(--color-accent, #4ade80);
+}
+
+.mobile-pill--close {
+  padding: 8px 10px;
 }
 </style>
