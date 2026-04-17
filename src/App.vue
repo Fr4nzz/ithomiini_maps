@@ -405,7 +405,7 @@ onMounted(async () => {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 8v8m-4-4h8"/></svg>
           <span>Mimicry</span>
         </button>
-        <button class="mobile-pill" @click="openExport">
+        <button class="mobile-pill" @click="directExportMap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Export Map</span>
         </button>
@@ -602,6 +602,24 @@ html, body, #app {
 
   .main-content {
     height: 100vh;
+  }
+
+  /* Push map top-left controls down below menu button */
+  .map-layer-controls {
+    margin-top: 44px !important;
+  }
+
+  /* Shrink search location bar on mobile */
+  .search-box-wrapper,
+  .location-search {
+    max-width: calc(100% - 24px) !important;
+    margin-top: 4px !important;
+  }
+
+  /* Push scale bar above the bottom pills */
+  .maplibregl-ctrl-bottom-left,
+  .maplibregl-ctrl-bottom-right {
+    bottom: 56px !important;
   }
 }
 
