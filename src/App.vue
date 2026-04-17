@@ -184,15 +184,18 @@ const directExportMap = async () => {
     // Draw the captured container scaled to output size
     ctx.drawImage(containerImage, 0, 0, canvas.width, canvas.height)
 
-    // Download the image
+    // Download the image via Blob URL (avoids Chrome data-URL size warning and is faster)
     const format = store.exportSettings.format || 'png'
     const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png'
     const quality = format === 'jpg' ? 0.95 : 1.0
-    const dataUrl = canvas.toDataURL(mimeType, quality)
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, mimeType, quality))
+    if (!blob) throw new Error('Failed to encode image')
+    const blobUrl = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.${format}`
-    link.href = dataUrl
+    link.href = blobUrl
     link.click()
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000)
 
   } catch (e) {
     log.export.error('Image export failed:', e)
