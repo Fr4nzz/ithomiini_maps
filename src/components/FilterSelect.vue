@@ -1,9 +1,11 @@
 <script setup>
 import VueMultiselect from 'vue-multiselect'
 import { useDataStore } from '@/stores/data'
+import { useLegendStore } from '@/stores/legend'
 import { computed } from 'vue'
 
 const store = useDataStore()
+const legendStore = useLegendStore()
 
 const props = defineProps({
   label: String,
@@ -34,6 +36,7 @@ const colorMap = computed(() => {
 
 const getOptionColor = (option) => {
   const label = customLabel(option)
+  if (!legendStore.shownLabels.has(label)) return null
   return colorMap.value[label] || null
 }
 </script>
