@@ -604,22 +604,32 @@ html, body, #app {
     height: 100vh;
   }
 
-  /* Push map top-left controls down below menu button */
+  /* Position map top-left controls to the right of the Menu button */
   .map-layer-controls {
-    margin-top: 44px !important;
+    left: 112px !important;
+    top: 10px !important;
+    margin-top: 0 !important;
   }
 
-  /* Shrink search location bar on mobile */
-  .search-box-wrapper,
+  /* Search location bar below menu row, constrained width */
   .location-search {
-    max-width: calc(100% - 24px) !important;
-    margin-top: 4px !important;
+    top: 56px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: calc(100vw - 20px) !important;
   }
 
-  /* Push scale bar above the bottom pills */
+  /* Push scale bar & attribution above the bottom pills */
   .maplibregl-ctrl-bottom-left,
   .maplibregl-ctrl-bottom-right {
     bottom: 56px !important;
+  }
+
+  /* Compact attribution so it doesn't clip */
+  .maplibregl-ctrl-attrib {
+    max-width: calc(100vw - 140px) !important;
+    font-size: 10px !important;
   }
 }
 
