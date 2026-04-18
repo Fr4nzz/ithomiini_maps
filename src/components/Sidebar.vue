@@ -492,7 +492,7 @@ const updateExportHeight = (value) => {
             title="Search across all taxa, countries, and mimicry rings"
             @click="$emit('open-global-search')"
           >
-            Global search
+            <span class="shortcut-hint-label">Global search</span>
             <kbd>⌘/Ctrl+K</kbd>
           </button>
         </label>
