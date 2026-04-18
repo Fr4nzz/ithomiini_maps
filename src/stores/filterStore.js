@@ -178,8 +178,16 @@ export const useFilterStore = defineStore('filters', () => {
     filters.value.subspecies = []
   })
 
-  watch(() => filters.value.species, () => {
-    filters.value.subspecies = []
+  watch(() => filters.value.species, (newSpecies) => {
+    if (filters.value.subspecies.length === 0) return
+    if (newSpecies.length === 0) return
+    const validSubspecies = new Set()
+    for (const feature of datasetStore.allFeatures) {
+      if (newSpecies.includes(feature.scientific_name) && isValidValue(feature.subspecies)) {
+        validSubspecies.add(feature.subspecies)
+      }
+    }
+    filters.value.subspecies = filters.value.subspecies.filter(s => validSubspecies.has(s))
   }, { deep: true })
 
   watch(() => filters.value.source, async (selectedSources) => {

@@ -1,7 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { nextTick } from 'vue'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { nextTick, shallowRef } from 'vue'
 import { createPinia, setActivePinia } from 'pinia'
 import { useFilterStore } from '../filterStore'
+import { useDatasetStore } from '../datasetStore'
 
 async function clearConflictingTaxonomy(filters, lineage) {
   const { family, tribe, genus } = lineage
@@ -67,5 +68,56 @@ describe('palette-style taxonomy selection', () => {
     store.filters.species = [...store.filters.species, 'Oleria amalda']
     expect(store.filters.genus).toBe('All')
     expect(store.filters.species).toContain('Oleria amalda')
+  })
+})
+
+describe('species/subspecies cascade behavior', () => {
+  const fakeFeatures = [
+    { scientific_name: 'Mechanitis polymnia', subspecies: 'casabranca' },
+    { scientific_name: 'Mechanitis polymnia', subspecies: 'chimborazona' },
+    { scientific_name: 'Mechanitis polymnia', subspecies: 'proceriformis' },
+    { scientific_name: 'Mechanitis messenoides', subspecies: 'deceptus' },
+    { scientific_name: 'Mechanitis messenoides', subspecies: 'intermedia' },
+    { scientific_name: 'Oleria amalda', subspecies: 'nevadensis' },
+  ]
+
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    const dataset = useDatasetStore()
+    dataset.allFeatures = fakeFeatures
+  })
+
+  it('adding a new species keeps existing subspecies from another species', async () => {
+    const store = useFilterStore()
+    store.filters.species = ['Mechanitis polymnia']
+    store.filters.subspecies = ['casabranca', 'chimborazona']
+    await nextTick()
+    store.filters.species = [...store.filters.species, 'Mechanitis messenoides']
+    await nextTick()
+    store.filters.subspecies = [...store.filters.subspecies, 'deceptus']
+    expect(store.filters.subspecies).toContain('casabranca')
+    expect(store.filters.subspecies).toContain('chimborazona')
+    expect(store.filters.subspecies).toContain('deceptus')
+  })
+
+  it('removing the last species keeps subspecies filters intact', async () => {
+    const store = useFilterStore()
+    store.filters.species = ['Mechanitis messenoides']
+    store.filters.subspecies = ['deceptus']
+    await nextTick()
+    store.filters.species = []
+    await nextTick()
+    expect(store.filters.subspecies).toEqual(['deceptus'])
+  })
+
+  it('removing one species prunes only its orphaned subspecies', async () => {
+    const store = useFilterStore()
+    store.filters.species = ['Mechanitis polymnia', 'Mechanitis messenoides']
+    store.filters.subspecies = ['casabranca', 'deceptus']
+    await nextTick()
+    store.filters.species = store.filters.species.filter(s => s !== 'Mechanitis messenoides')
+    await nextTick()
+    expect(store.filters.subspecies).toContain('casabranca')
+    expect(store.filters.subspecies).not.toContain('deceptus')
   })
 })
