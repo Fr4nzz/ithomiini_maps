@@ -318,9 +318,12 @@ export function useLegendMeasurement({
       if (!legendEl || !lastItemEl) return null
       const legendTop = legendEl.getBoundingClientRect().top
       const lastBottom = lastItemEl.getBoundingClientRect().bottom
+      // Safety buffer for rounding + border widths; avoids 1-pixel overflow
+      // that shows the fallback scrollbar even when items should fit.
+      const borderSafety = 4
       const extra = includeMoreIndicator
-        ? moreIndicatorReserve + contentPaddingBottom
-        : contentPaddingBottom
+        ? moreIndicatorReserve + contentPaddingBottom + borderSafety
+        : contentPaddingBottom + borderSafety
       return Math.max(LEGEND_LAYOUT.MIN_SNUG_HEIGHT, Math.ceil(lastBottom - legendTop + extra))
     }
 
@@ -351,23 +354,14 @@ export function useLegendMeasurement({
       logSettled(contentEl, unusedSpace)
     }
 
-    // Check if ALL items fit.
+    // Source of truth for overflow: browser's own scroll vs visible height.
+    // Using coordinate math with hardcoded padding can disagree by a pixel.
+    const overflowsContainer = contentEl.scrollHeight > contentEl.clientHeight
     const lastItem = measurableItems[measurableItems.length - 1]
-    const lastItemBottom = lastItem.getBoundingClientRect().bottom
-    const allFitBoundary = contentBottom - contentPaddingBottom
 
-    if (measurableItems.length >= totalSorted &&
-        lastItemBottom <= allFitBoundary) {
+    if (measurableItems.length >= totalSorted && !overflowsContainer) {
       applyMeasuredResult(totalSorted, computeSnugHeight(lastItem, false), 'ALL_FIT')
       return
-    }
-
-    if (totalSorted <= 5 && measurableItems.length >= totalSorted) {
-      const lastOfAll = measurableItems[measurableItems.length - 1]
-      if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
-        applyMeasuredResult(totalSorted, computeSnugHeight(lastOfAll, false), 'SMALL_FIT')
-        return
-      }
     }
 
     // Not all fit — find cutoff. First try without "+N more" reserve to see
