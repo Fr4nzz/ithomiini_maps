@@ -2,6 +2,7 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { useMagicKeys, onClickOutside } from '@vueuse/core'
 import { useDataStore } from '@/stores/data'
+import { isValidValue } from '@/utils/validation'
 import config from '@/config'
 
 const store = useDataStore()
@@ -18,12 +19,6 @@ const LEVEL_BONUS = {
   species: 100, subspecies: 95, genus: 80, tribe: 70, family: 60, country: 50, mimicry: 40,
 }
 const GROUP_ORDER = ['taxonomy', 'geography', 'mimicry']
-
-const isValidValue = (value) => {
-  if (!value || typeof value !== 'string') return false
-  const cleaned = value.trim().toLowerCase()
-  return cleaned && !['unknown', 'na', 'nan', 'null', 'none'].includes(cleaned)
-}
 
 const buildOptionMap = (features, field, kind, typeLabel, lineageBuilder = () => ({})) => {
   const options = new Map()
@@ -194,20 +189,18 @@ const flatResults = computed(() => {
 
 watch(flatResults, () => { activeIndex.value = 0 })
 
-function highlight(text, hit) {
-  if (!hit || hit.matchIndex < 0 || !hit.matchField) return text
-  const lower = text.toLowerCase()
-  const idx = lower.indexOf(hit.matchField.slice(hit.matchIndex, hit.matchIndex + hit.matchLength))
-  if (idx < 0) {
-    const qi = lower.indexOf(query.value.trim().toLowerCase())
-    if (qi < 0) return text
-    return `${escapeHtml(text.slice(0, qi))}<strong>${escapeHtml(text.slice(qi, qi + query.value.trim().length))}</strong>${escapeHtml(text.slice(qi + query.value.trim().length))}`
-  }
-  return `${escapeHtml(text.slice(0, idx))}<strong>${escapeHtml(text.slice(idx, idx + hit.matchLength))}</strong>${escapeHtml(text.slice(idx + hit.matchLength))}`
-}
+const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }
+const escapeHtml = (s) => s.replace(/[&<>"']/g, c => HTML_ESCAPES[c])
 
-function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
+function highlight(text, hit) {
+  const q = query.value.trim().toLowerCase()
+  if (!q) return escapeHtml(text)
+  const idx = text.toLowerCase().indexOf(q)
+  if (idx < 0) return escapeHtml(text)
+  const len = hit?.matchLength ?? q.length
+  return escapeHtml(text.slice(0, idx))
+    + '<strong>' + escapeHtml(text.slice(idx, idx + len)) + '</strong>'
+    + escapeHtml(text.slice(idx + len))
 }
 
 async function selectItem(item) {

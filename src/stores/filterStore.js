@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { parseDate } from '../utils/dateHelpers'
 import { getStorage, setStorage } from '../utils/storageHelpers'
+import { isValidValue } from '../utils/validation'
 import { useDatasetStore } from './datasetStore'
 import { log } from '../utils/logger'
 
@@ -94,18 +95,6 @@ export const useFilterStore = defineStore('filters', () => {
     }
 
     return data
-  }
-
-  const isValidValue = (val) => {
-    if (!val) return false
-    if (typeof val !== 'string') return false
-    const cleaned = val.trim().toLowerCase()
-    return cleaned &&
-      cleaned !== 'unknown' &&
-      cleaned !== 'na' &&
-      cleaned !== 'nan' &&
-      cleaned !== 'null' &&
-      cleaned !== 'none'
   }
 
   const uniqueValuesOf = (data, field) =>
