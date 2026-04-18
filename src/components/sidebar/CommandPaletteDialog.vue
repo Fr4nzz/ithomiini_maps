@@ -304,24 +304,70 @@ const subspeciesToSpecies = computed(() => {
 })
 
 const activeFilters = computed(() => {
-  const chips = []
+  const taxonomy = []
+  const other = []
   const f = store.filters
-  if (f.family !== 'All') chips.push({ key: `family:${f.family}`, label: f.family, type: 'Family', remove: () => { store.filters.family = 'All' } })
-  if (f.tribe !== 'All') chips.push({ key: `tribe:${f.tribe}`, label: f.tribe, type: 'Tribe', remove: () => { store.filters.tribe = 'All' } })
-  if (f.genus !== 'All') chips.push({ key: `genus:${f.genus}`, label: f.genus, type: 'Genus', remove: () => { store.filters.genus = 'All' } })
-  for (const s of f.species) chips.push({ key: `species:${s}`, label: s, type: 'Species', remove: () => { store.filters.species = store.filters.species.filter(v => v !== s) } })
-  for (const s of f.subspecies) {
-    const parentSp = subspeciesToSpecies.value.get(s)
-    const label = parentSp && !f.species.includes(parentSp) ? `${parentSp} ${s}` : s
-    chips.push({ key: `subsp:${s}`, label, type: 'Subspecies', remove: () => { store.filters.subspecies = store.filters.subspecies.filter(v => v !== s) } })
+
+  if (f.family !== 'All') taxonomy.push({ key: `family:${f.family}`, label: f.family, type: 'Family', level: 0, remove: () => { store.filters.family = 'All' } })
+  if (f.tribe !== 'All') taxonomy.push({ key: `tribe:${f.tribe}`, label: f.tribe, type: 'Tribe', level: 1, remove: () => { store.filters.tribe = 'All' } })
+  if (f.genus !== 'All') taxonomy.push({ key: `genus:${f.genus}`, label: f.genus, type: 'Genus', level: 2, remove: () => { store.filters.genus = 'All' } })
+
+  for (const species of f.species) {
+    taxonomy.push({
+      key: `species:${species}`, label: species, type: 'Species', level: 3,
+      remove: () => { store.filters.species = store.filters.species.filter(v => v !== species) },
+    })
+    for (const sub of f.subspecies) {
+      const parent = subspeciesToSpecies.value.get(sub)
+      if (parent === species) {
+        taxonomy.push({
+          key: `subsp:${sub}:${species}`, label: sub, type: 'Subspecies', level: 4,
+          remove: () => { store.filters.subspecies = store.filters.subspecies.filter(v => v !== sub) },
+        })
+      }
+    }
   }
-  for (const m of f.mimicry) chips.push({ key: `mim:${m}`, label: m, type: 'Mimicry', remove: () => { store.filters.mimicry = store.filters.mimicry.filter(v => v !== m) } })
-  if (f.country !== 'All') chips.push({ key: `country:${f.country}`, label: f.country, type: 'Country', remove: () => { store.filters.country = 'All' } })
-  for (const s of f.status) chips.push({ key: `status:${s}`, label: s, type: 'Status', remove: () => { store.filters.status = store.filters.status.filter(v => v !== s) } })
-  if (f.sex !== 'all') chips.push({ key: `sex:${f.sex}`, label: f.sex, type: 'Sex', remove: () => { store.filters.sex = 'all' } })
-  if (f.camidSearch) chips.push({ key: 'camid', label: 'CAMIDs', type: 'Search', remove: () => { store.filters.camidSearch = '' } })
-  if (f.dateStart || f.dateEnd) chips.push({ key: 'date', label: 'Date range', type: 'Time', remove: () => { store.filters.dateStart = null; store.filters.dateEnd = null } })
-  return chips
+
+  for (const sub of f.subspecies) {
+    const parent = subspeciesToSpecies.value.get(sub)
+    if (!parent || !f.species.includes(parent)) {
+      taxonomy.push({
+        key: `subsp:${sub}:orphan`,
+        label: parent ? `${parent} ${sub}` : sub,
+        type: 'Subspecies', level: 3,
+        remove: () => { store.filters.subspecies = store.filters.subspecies.filter(v => v !== sub) },
+      })
+    }
+  }
+
+  for (const m of f.mimicry) other.push({ key: `mim:${m}`, label: m, type: 'Mimicry', remove: () => { store.filters.mimicry = store.filters.mimicry.filter(v => v !== m) } })
+  if (f.country !== 'All') other.push({ key: `country:${f.country}`, label: f.country, type: 'Country', remove: () => { store.filters.country = 'All' } })
+  for (const s of f.status) other.push({ key: `status:${s}`, label: s, type: 'Status', remove: () => { store.filters.status = store.filters.status.filter(v => v !== s) } })
+  if (f.sex !== 'all') other.push({ key: `sex:${f.sex}`, label: f.sex, type: 'Sex', remove: () => { store.filters.sex = 'all' } })
+  if (f.camidSearch) other.push({ key: 'camid', label: 'CAMIDs', type: 'Search', remove: () => { store.filters.camidSearch = '' } })
+  if (f.dateStart || f.dateEnd) other.push({ key: 'date', label: 'Date range', type: 'Time', remove: () => { store.filters.dateStart = null; store.filters.dateEnd = null } })
+
+  return { taxonomy, other, total: taxonomy.length + other.length }
+})
+
+const hoveredCascadeKey = ref(null)
+
+const cascadeTargetKeys = computed(() => {
+  if (!hoveredCascadeKey.value) return new Set()
+  const chips = activeFilters.value.taxonomy
+  const idx = chips.findIndex(c => c.key === hoveredCascadeKey.value)
+  if (idx < 0) return new Set()
+  const parent = chips[idx]
+  const descendants = new Set([parent.key])
+  if (parent.type === 'Family' || parent.type === 'Tribe' || parent.type === 'Genus') {
+    for (const c of chips) if (c !== parent) descendants.add(c.key)
+  } else if (parent.type === 'Species') {
+    for (let i = idx + 1; i < chips.length; i++) {
+      if (chips[i].level > parent.level) descendants.add(chips[i].key)
+      else break
+    }
+  }
+  return descendants
 })
 
 function handleKeydown(e) {
@@ -477,11 +523,31 @@ defineExpose({ open: () => { dialogOpen.value = true } })
             </div>
           </div>
 
-          <aside class="cmd-sidebar" v-if="activeFilters.length > 0">
-            <div class="cmd-sidebar-title">Active filters ({{ activeFilters.length }})</div>
-            <div class="cmd-chips">
+          <aside class="cmd-sidebar" v-if="activeFilters.total > 0">
+            <div class="cmd-sidebar-title">Active filters ({{ activeFilters.total }})</div>
+
+            <div v-if="activeFilters.taxonomy.length > 0" class="cmd-tree">
               <button
-                v-for="chip in activeFilters"
+                v-for="chip in activeFilters.taxonomy"
+                :key="chip.key"
+                class="cmd-chip cmd-chip--tree"
+                :class="{ 'cmd-chip--cascade': cascadeTargetKeys.has(chip.key) && hoveredCascadeKey !== chip.key }"
+                :style="{ paddingLeft: `${6 + chip.level * 14}px` }"
+                :title="`Remove ${chip.type}: ${chip.label}`"
+                @click="chip.remove()"
+                @mouseenter="hoveredCascadeKey = chip.key"
+                @mouseleave="hoveredCascadeKey = null"
+              >
+                <span v-if="chip.level > 0" class="cmd-chip-branch" aria-hidden="true">└</span>
+                <span class="cmd-chip-type">{{ chip.type }}</span>
+                <span class="cmd-chip-label">{{ chip.label }}</span>
+                <svg class="cmd-chip-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+
+            <div v-if="activeFilters.other.length > 0" class="cmd-chips">
+              <button
+                v-for="chip in activeFilters.other"
                 :key="chip.key"
                 class="cmd-chip"
                 :title="`Remove ${chip.type}: ${chip.label}`"
@@ -691,6 +757,15 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   margin-bottom: 10px;
 }
 
+.cmd-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .cmd-chips {
   display: flex;
   flex-direction: column;
@@ -711,6 +786,24 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   transition: all 0.15s;
   text-align: left;
   width: 100%;
+}
+
+.cmd-chip--tree {
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.cmd-chip--cascade {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.06);
+  color: rgba(239, 68, 68, 0.9);
+}
+
+.cmd-chip-branch {
+  color: var(--color-text-muted, #666);
+  font-family: monospace;
+  flex-shrink: 0;
 }
 
 .cmd-chip:hover {
