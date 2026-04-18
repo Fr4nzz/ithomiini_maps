@@ -203,6 +203,24 @@ function highlight(text, hit) {
     + escapeHtml(text.slice(idx + len))
 }
 
+async function clearConflictingTaxonomy(lineage) {
+  const { family, tribe, genus } = lineage
+  if (family && store.filters.family !== 'All' && store.filters.family !== family) {
+    store.filters.family = 'All'
+    await nextTick()
+    return
+  }
+  if (tribe && store.filters.tribe !== 'All' && store.filters.tribe !== tribe) {
+    store.filters.tribe = 'All'
+    await nextTick()
+    return
+  }
+  if (genus && store.filters.genus !== 'All' && store.filters.genus !== genus) {
+    store.filters.genus = 'All'
+    await nextTick()
+  }
+}
+
 async function selectItem(item) {
   switch (item.kind) {
     case 'family':
@@ -220,11 +238,13 @@ async function selectItem(item) {
       store.filters.genus = item.value
       break
     case 'species':
+      await clearConflictingTaxonomy(item.lineage)
       if (!store.filters.species.includes(item.value)) {
         store.filters.species = [...store.filters.species, item.value]
       }
       break
     case 'subspecies':
+      await clearConflictingTaxonomy(item.lineage)
       if (item.speciesName && !store.filters.species.includes(item.speciesName)) {
         store.filters.species = [...store.filters.species, item.speciesName]
       }
