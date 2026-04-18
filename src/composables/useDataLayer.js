@@ -259,7 +259,8 @@ export function useDataLayer(map, options = {}) {
         cluster: shouldCluster,
         clusterMaxZoom: 14,
         clusterRadius: clusterRadiusPixels,
-        clusterMinPoints: 2
+        clusterMinPoints: 2,
+        generateId: true
       })
       log.perf.end('addSource (full rebuild)')
       _lastClusterState = shouldCluster
@@ -709,8 +710,8 @@ export function useDataLayer(map, options = {}) {
       type: 'circle',
       source: 'points-source',
       filter: shouldCluster
-        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-        : ['==', ['get', 'id'], ''],
+        ? ['all', ['!', ['has', 'point_count']], ['==', ['id'], -1]]
+        : ['==', ['id'], -1],
       paint: {
         'circle-radius': highlightSizeExpression,
         'circle-color': 'transparent',
@@ -844,13 +845,13 @@ export function useDataLayer(map, options = {}) {
         map.value.getCanvas().style.cursor = 'pointer'
 
         if (e.features && e.features.length > 0) {
-          const id = e.features[0].properties.id
-          if (id === lastHoveredPointId) return  // skip redundant setFilter
-          lastHoveredPointId = id
+          const featureId = e.features[0].id
+          if (featureId === lastHoveredPointId) return
+          lastHoveredPointId = featureId
           const isClustering = store.clusteringEnabled
           const filter = isClustering
-            ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
-            : ['==', ['get', 'id'], id]
+            ? ['all', ['!', ['has', 'point_count']], ['==', ['id'], featureId]]
+            : ['==', ['id'], featureId]
           map.value.setFilter('points-highlight', filter)
         }
       })
@@ -860,8 +861,8 @@ export function useDataLayer(map, options = {}) {
         lastHoveredPointId = null
         const isClustering = store.clusteringEnabled
         const filter = isClustering
-          ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-          : ['==', ['get', 'id'], '']
+          ? ['all', ['!', ['has', 'point_count']], ['==', ['id'], -1]]
+          : ['==', ['id'], -1]
         map.value.setFilter('points-highlight', filter)
       })
     }
