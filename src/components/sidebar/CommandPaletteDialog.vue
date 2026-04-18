@@ -41,6 +41,11 @@ const buildOptionMap = (features, field, kind, typeLabel, lineageBuilder = () =>
   return Array.from(options.values())
 }
 
+const subspeciesEpithet = (sub) => {
+  const tokens = sub.trim().split(/\s+/).filter(t => !/^[A-Z]\.?$/.test(t))
+  return (tokens[tokens.length - 1] || sub).toLowerCase()
+}
+
 const buildSubspeciesMap = (features) => {
   const options = new Map()
   for (const feature of features) {
@@ -59,7 +64,7 @@ const buildSubspeciesMap = (features) => {
       typeLabel: 'Subspecies',
       count: 1,
       lineage: { family: feature.family, tribe: feature.tribe, genus: feature.genus, scientificName: species },
-      ownTokens: [sub.toLowerCase()],
+      ownTokens: [subspeciesEpithet(sub)],
     })
   }
   return Array.from(options.values())
