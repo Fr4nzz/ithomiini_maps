@@ -20,20 +20,22 @@ const LEVEL_BONUS = {
 }
 const GROUP_ORDER = ['taxonomy', 'geography', 'mimicry']
 
-const buildOptionMap = (features, field, kind, typeLabel, lineageBuilder = () => ({})) => {
+const buildOptionMap = (features, field, kind, typeLabel, lineageBuilder = () => ({}), ownTokenBuilder) => {
   const options = new Map()
   for (const feature of features) {
     const value = feature[field]
     if (!isValidValue(value)) continue
     const existing = options.get(value)
     if (existing) { existing.count += 1; continue }
+    const lineage = lineageBuilder(feature)
     options.set(value, {
       id: `${kind}:${value}`,
       value,
       kind,
       typeLabel,
       count: 1,
-      lineage: lineageBuilder(feature),
+      lineage,
+      ownTokens: (ownTokenBuilder ? ownTokenBuilder(feature, lineage) : [value]).map(s => s.toLowerCase()),
     })
   }
   return Array.from(options.values())
@@ -57,21 +59,37 @@ const buildSubspeciesMap = (features) => {
       typeLabel: 'Subspecies',
       count: 1,
       lineage: { family: feature.family, tribe: feature.tribe, genus: feature.genus, scientificName: species },
+      ownTokens: [sub.toLowerCase()],
     })
   }
   return Array.from(options.values())
 }
 
+const speciesEpithet = (scientificName, genus) => {
+  if (!scientificName) return null
+  if (genus && scientificName.toLowerCase().startsWith(genus.toLowerCase() + ' ')) {
+    return scientificName.slice(genus.length + 1)
+  }
+  const parts = scientificName.split(/\s+/)
+  return parts.length > 1 ? parts.slice(1).join(' ') : scientificName
+}
+
 const allItems = computed(() => {
   const features = store.allFeatures || []
   const items = [
-    ...buildOptionMap(features, 'scientific_name', 'species', 'Species', f => ({
-      family: f.family, tribe: f.tribe, genus: f.genus, scientificName: f.scientific_name,
-    })),
+    ...buildOptionMap(features, 'scientific_name', 'species', 'Species',
+      f => ({ family: f.family, tribe: f.tribe, genus: f.genus, scientificName: f.scientific_name }),
+      f => {
+        const epithet = speciesEpithet(f.scientific_name, f.genus)
+        return epithet ? [epithet] : [f.scientific_name]
+      }),
     ...buildSubspeciesMap(features),
-    ...buildOptionMap(features, 'genus', 'genus', 'Genus', f => ({ family: f.family, tribe: f.tribe, genus: f.genus })),
-    ...buildOptionMap(features, 'tribe', 'tribe', 'Tribe', f => ({ family: f.family, tribe: f.tribe })),
-    ...buildOptionMap(features, 'family', 'family', 'Family', f => ({ family: f.family })),
+    ...buildOptionMap(features, 'genus', 'genus', 'Genus',
+      f => ({ family: f.family, tribe: f.tribe, genus: f.genus })),
+    ...buildOptionMap(features, 'tribe', 'tribe', 'Tribe',
+      f => ({ family: f.family, tribe: f.tribe })),
+    ...buildOptionMap(features, 'family', 'family', 'Family',
+      f => ({ family: f.family })),
     ...buildOptionMap(features, 'country', 'country', 'Country'),
     ...(config.features.mimicrySelector
       ? buildOptionMap(features, 'mimicry_ring', 'mimicry', 'Mimicry ring')
@@ -101,28 +119,37 @@ const WORD_BREAK = /[\s\-_/]/
 const isWordStart = (hay, idx) => idx === 0 || WORD_BREAK.test(hay[idx - 1])
 
 function scoreItem(item, queryLower) {
-  const haystacks = item.kind === 'subspecies'
-    ? [item.value.toLowerCase(), item.displayValue.toLowerCase()]
-    : [item.value.toLowerCase()]
+  const ownTokens = item.ownTokens || [item.value.toLowerCase()]
+  const displayHay = (item.displayValue || item.value).toLowerCase()
 
   let bestScore = -Infinity
   let matchField = null
   let matchIndex = -1
 
-  for (const hay of haystacks) {
-    const idx = hay.indexOf(queryLower)
+  for (const token of ownTokens) {
+    const idx = token.indexOf(queryLower)
     if (idx === -1) continue
-    let score = isWordStart(hay, idx) ? 1000 : 200
-    score += LEVEL_BONUS[item.kind] || 0
-    score += Math.log10(item.count + 1) * 5
+    const score = (isWordStart(token, idx) ? 1200 : 200)
+      + (LEVEL_BONUS[item.kind] || 0)
+      + Math.log10(item.count + 1) * 5
     if (score > bestScore) {
       bestScore = score
-      matchField = hay
+      matchField = token
       matchIndex = idx
     }
   }
 
-  if (bestScore === -Infinity) return null
+  if (bestScore === -Infinity) {
+    const idx = displayHay.indexOf(queryLower)
+    if (idx === -1) return null
+    const score = (isWordStart(displayHay, idx) ? 900 : 150)
+      + (LEVEL_BONUS[item.kind] || 0)
+      + Math.log10(item.count + 1) * 5
+    bestScore = score
+    matchField = displayHay
+    matchIndex = idx
+  }
+
   return { item, score: bestScore, matchField, matchIndex, matchLength: queryLower.length }
 }
 
