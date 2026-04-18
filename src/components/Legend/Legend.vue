@@ -125,7 +125,7 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
 
 const {
   measuredItemCount, measuredSnugHeight, prevMeasuredCount,
-  maxLegendHeight, renderUpperBound, measuredGroupSlots, effectiveMaxItems, effectiveWidth, effectiveHeight,
+  maxLegendHeight, effectiveMaxItems, effectiveWidth, effectiveHeight,
   maxResizeWidth, scheduleMeasurement, scheduleContainerResizeMeasurement,
   resetToAutoSize, cleanup: cleanupMeasurement
 } = useLegendMeasurement({
@@ -151,7 +151,7 @@ const {
   legendCounts, legendGroupCounts, getGroupItemCount,
   sortedAllItems, legendItems, groupedLegendData,
   moreCount, morePointCount
-} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode, () => measuredGroupSlots.value)
+} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode)
 
 // Bridge: keep measurement composable's refs in sync with item data
 watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })
@@ -533,7 +533,6 @@ onUnmounted(() => {
       'is-dragging': isDragging,
       'is-resizing': isResizing,
       'is-export': isExportMode,
-      'show-edit-ui': showEditUI
     }"
     :style="positionStyle"
     @mouseenter="handleMouseEnter"
@@ -544,7 +543,6 @@ onUnmounted(() => {
     <!-- Toolbar (hidden by default, shown on hover) -->
     <LegendToolbar
       v-show="showEditUI"
-      :is-export-mode="isExportMode"
       @settings-open="hasOpenPopup = true"
       @settings-close="hasOpenPopup = false"
       @dropdown-open="hasOpenPopup = true"
@@ -572,7 +570,7 @@ onUnmounted(() => {
           <!-- Sort dropdown -->
           <div class="sort-dropdown-wrapper">
             <button
-              class="title-control-button sort-trigger"
+              class="title-control-button"
               :class="{ active: sortDropdownOpen }"
               title="Sort options"
               @click.stop="toggleSortDropdown"

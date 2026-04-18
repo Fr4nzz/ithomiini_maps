@@ -228,8 +228,7 @@ function toggleVisibility() {
   align-items: flex-start;
 }
 
-.legend-item.is-wrap .legend-shape,
-.legend-item.is-wrap :deep(.color-picker-trigger) {
+.legend-item.is-wrap .legend-shape {
   margin-top: 3px;
 }
 

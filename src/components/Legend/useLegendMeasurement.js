@@ -139,11 +139,6 @@ export function useLegendMeasurement({
   const measuredSnugHeight = ref(null)
   const prevMeasuredCount = ref(null)
   const correctionSettled = ref(false)
-  // In cross-group mode, the number of DOM items that physically fit.
-  // Used by Cap 2 in groupedLegendData to limit groups more accurately
-  // than the height-based renderUpperBound estimate.
-  const measuredGroupSlots = ref(null)
-
   let containerResizeRemeasureTimeout = null
   let pendingMeasurementRAF = null
 
@@ -202,11 +197,6 @@ export function useLegendMeasurement({
     // previous cycle blocks scheduleOverflowCorrection() in the new cycle.
     overflowCorrectionPending = false
     resetCorrectionState()
-
-    // Always clear cross-group slot limit — it's recomputed fresh by
-    // measureAndTrimItems. Stale values cause Cap 2 to over-limit groups
-    // when switching between cross-group and non-cross-group settings.
-    measuredGroupSlots.value = null
 
     if (resetState) {
       prevMeasuredCount.value = fullReset ? null : measuredItemCount.value
@@ -481,7 +471,6 @@ export function useLegendMeasurement({
       if (measuredItemCount.value !== totalSorted) {
         measuredItemCount.value = totalSorted
       }
-      if (isCrossGroup) measuredGroupSlots.value = null
       measuredSnugHeight.value = computeSnugHeight(lastItem, false)
       log.legend.debug(`[Legend] ALL_FIT ${totalSorted} items${isCrossGroup ? ' (cross-group)' : ''} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
       scheduleOverflowCorrection()
@@ -494,7 +483,6 @@ export function useLegendMeasurement({
         if (measuredItemCount.value !== totalSorted) {
           measuredItemCount.value = totalSorted
         }
-        if (isCrossGroup) measuredGroupSlots.value = null
         measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
         log.legend.debug(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
         scheduleOverflowCorrection()
@@ -607,7 +595,6 @@ export function useLegendMeasurement({
     maxLegendHeight,
     targetLegendHeight,
     renderUpperBound,
-    measuredGroupSlots,
     effectiveMaxItems,
     autoHeight,
     effectiveWidth,
@@ -615,7 +602,6 @@ export function useLegendMeasurement({
     maxResizeWidth,
 
     // Functions
-    measureTextWidth,
     scheduleMeasurement,
     scheduleContainerResizeMeasurement,
     resetToAutoSize,

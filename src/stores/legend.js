@@ -66,9 +66,7 @@ export const useLegendStore = defineStore('legend', () => {
   const groupingSettings = ref(getStorage('legend-grouping', {
     enabled: true,                     // Enable grouping
     groupBy: 'species',                // 'none' | 'species' | 'genus' | 'tribe' | 'subfamily' | 'family'
-    abbreviationStyle: 'first-letter', // 'first-letter' | 'first-three'
     showHeaders: true,                 // Headers visible (default shown)
-    prefixEnabled: 'auto',             // true | false | 'auto' (smart default)
   }))
 
   // Species-level styling options
@@ -245,8 +243,6 @@ export const useLegendStore = defineStore('legend', () => {
            Object.keys(speciesDisplayNames.value).length > 0 ||
            // Grouping settings changed from defaults
            groupingSettings.value.showHeaders !== true ||
-           groupingSettings.value.prefixEnabled !== 'auto' ||
-           groupingSettings.value.abbreviationStyle !== 'first-letter' ||
            // Species styling enabled
            speciesStyling.value.borderColor !== false ||
            // Display name/prefix formats changed from defaults
@@ -336,7 +332,7 @@ export const useLegendStore = defineStore('legend', () => {
     resetRef(groupShapes, 'legend-group-shapes', {})
 
     // Grouping settings (preserve enabled/groupBy, reset display options)
-    Object.assign(groupingSettings.value, { showHeaders: true, prefixEnabled: 'auto', abbreviationStyle: 'first-letter' })
+    Object.assign(groupingSettings.value, { showHeaders: true })
     setStorage('legend-grouping', groupingSettings.value)
 
     // Species styling flags
@@ -521,11 +517,6 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-sort-order', value)
   }
 
-  function toggleSortOrder() {
-    const newOrder = sortOrder.value === 'asc' ? 'desc' : 'asc'
-    setSortOrder(newOrder)
-  }
-
   // ═══════════════════════════════════════════════════════════════════════════
   // WRAP LABEL ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -574,16 +565,6 @@ export const useLegendStore = defineStore('legend', () => {
   // ═══════════════════════════════════════════════════════════════════════════
   // SHAPE ACTIONS
   // ═══════════════════════════════════════════════════════════════════════════
-
-  function setShapesEnabled(enabled) {
-    shapeSettings.value.enabled = enabled
-    setStorage('legend-shape-settings', shapeSettings.value)
-  }
-
-  function setShapeAssignBy(assignBy) {
-    shapeSettings.value.assignBy = assignBy
-    setStorage('legend-shape-settings', shapeSettings.value)
-  }
 
   function setGroupShape(groupKey, shape) {
     if (shape && shape !== 'circle') {

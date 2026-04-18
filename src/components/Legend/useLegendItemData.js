@@ -25,10 +25,7 @@ const groupByPropertyMap = {
  * @param {Function} getEffectiveMaxItems - Getter for max items (lazy, avoids circular dep with measurement)
  * @param {import('vue').ComputedRef} isExportMode - Whether export mode is active
  */
-/**
- * @param {Function} getMaxDisplayGroups - Max groups to display (from cross-group measurement), or null if unlimited
- */
-export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode, getMaxDisplayGroups) {
+export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode) {
 
   // Color map from data store (includes custom overrides - used for display)
   const colorMap = computed(() => dataStore.activeColorMap)
@@ -226,59 +223,6 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
 
     return items
   })
-
-  // Fair distribution of legend slots across groups
-  function fairGroupedSlice(allItems, maxItems) {
-    const groups = new Map()
-    for (const item of allItems) {
-      const group = getGroupForItem(item.label)
-      if (group) {
-        if (!groups.has(group)) groups.set(group, [])
-        groups.get(group).push(item)
-      }
-    }
-
-    const groupNames = [...groups.keys()]
-    const numGroups = groupNames.length
-    if (numGroups === 0) return allItems.slice(0, maxItems)
-
-    const basePerGroup = Math.floor(maxItems / numGroups)
-    let remainder = maxItems - basePerGroup * numGroups
-
-    const allocations = new Map()
-    const bySize = [...groupNames].sort((a, b) => groups.get(b).length - groups.get(a).length)
-
-    for (const name of bySize) {
-      const extra = remainder > 0 ? 1 : 0
-      if (remainder > 0) remainder--
-      allocations.set(name, Math.min(basePerGroup + extra, groups.get(name).length))
-    }
-
-    let totalAlloc = 0
-    for (const v of allocations.values()) totalAlloc += v
-    let surplus = maxItems - totalAlloc
-
-    while (surplus > 0) {
-      let distributed = false
-      for (const name of bySize) {
-        if (surplus <= 0) break
-        if (allocations.get(name) < groups.get(name).length) {
-          allocations.set(name, allocations.get(name) + 1)
-          surplus--
-          distributed = true
-        }
-      }
-      if (!distributed) break
-    }
-
-    const result = []
-    for (const name of groupNames) {
-      const quota = allocations.get(name) || 0
-      result.push(...groups.get(name).slice(0, quota))
-    }
-
-    return result
-  }
 
   const legendItems = computed(() => {
     const maxItems = getEffectiveMaxItems()
