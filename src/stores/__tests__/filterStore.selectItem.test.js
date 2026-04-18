@@ -73,35 +73,45 @@ describe('additive multi-value taxonomy filters', () => {
   })
 })
 
-describe('taxonomy filters combine with OR across levels', () => {
+describe('taxonomy combinators (AND default, OR when toggled)', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     seedFeatures(fixture)
   })
 
-  it('genus=[Melinaea] + species=[Mechanitis polymnia] returns union, not intersection', () => {
+  it('default AND: genus=[Melinaea] + species=[Mechanitis polymnia] returns empty', () => {
     const store = useFilterStore()
     store.filters.source = []
     store.filters.genus = ['Melinaea']
     store.filters.species = ['Mechanitis polymnia']
     const featureIds = store.filteredGeoJSON.features.map(f => f.properties.scientific_name)
+    expect(featureIds).toEqual([])
+  })
+
+  it('species combinator OR: genus=[Melinaea] OR species=[Mechanitis polymnia] returns union', () => {
+    const store = useFilterStore()
+    store.filters.source = []
+    store.filters.genus = ['Melinaea']
+    store.filters.species = ['Mechanitis polymnia']
+    store.filters.taxonomyCombinators = { tribe: 'AND', genus: 'AND', species: 'OR', subspecies: 'AND' }
+    const featureIds = store.filteredGeoJSON.features.map(f => f.properties.scientific_name)
     expect(featureIds).toContain('Melinaea mothone')
     expect(featureIds).toContain('Mechanitis polymnia')
   })
 
-  it('non-taxonomy filters still AND with taxonomy union', () => {
+  it('species=[M. messenoides] + subspecies=[intermedia] narrows correctly (AND default)', () => {
     setActivePinia(createPinia())
     seedFeatures([
-      { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Mechanitis', scientific_name: 'Mechanitis polymnia', subspecies: 'polymnia', country: 'Ecuador', source: 'Sanger Institute', lat: 0, lng: 0 },
-      { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Mechanitis', scientific_name: 'Mechanitis polymnia', subspecies: 'polymnia', country: 'Peru', source: 'Sanger Institute', lat: 0, lng: 0 },
-      { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Melinaea', scientific_name: 'Melinaea mothone', subspecies: 'mothone', country: 'Ecuador', source: 'Sanger Institute', lat: 0, lng: 0 },
+      { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Mechanitis', scientific_name: 'Mechanitis messenoides', subspecies: 'intermedia', source: 'Sanger Institute', lat: 0, lng: 0 },
+      { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Mechanitis', scientific_name: 'Mechanitis messenoides', subspecies: 'deceptus', source: 'Sanger Institute', lat: 0, lng: 0 },
+      { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Hypothyris', scientific_name: 'Hypothyris euclea', subspecies: 'intermedia', source: 'Sanger Institute', lat: 0, lng: 0 },
     ])
     const store = useFilterStore()
-    store.filters.genus = ['Melinaea']
-    store.filters.species = ['Mechanitis polymnia']
-    store.filters.country = ['Ecuador']
-    const countries = store.filteredGeoJSON.features.map(f => f.properties.country)
-    expect(countries.every(c => c === 'Ecuador')).toBe(true)
-    expect(countries.length).toBe(2)
+    store.filters.species = ['Mechanitis messenoides']
+    store.filters.subspecies = ['intermedia']
+    const features = store.filteredGeoJSON.features
+    expect(features.length).toBe(1)
+    expect(features[0].properties.scientific_name).toBe('Mechanitis messenoides')
+    expect(features[0].properties.subspecies).toBe('intermedia')
   })
 })

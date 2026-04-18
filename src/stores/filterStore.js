@@ -34,6 +34,12 @@ export const useFilterStore = defineStore('filters', () => {
     goatDataSource: [],
     goatChromosomeMin: null,
     goatChromosomeMax: null,
+    taxonomyCombinators: {
+      tribe: 'AND',
+      genus: 'AND',
+      species: 'AND',
+      subspecies: 'AND',
+    },
   })
 
   const filters = ref(defaultFilters())
@@ -76,6 +82,16 @@ export const useFilterStore = defineStore('filters', () => {
     if (params.get('goat_src')) { filters.value.goatDataSource = params.get('goat_src').split(','); showGoatFilter.value = true }
     if (params.get('chr_min')) { filters.value.goatChromosomeMin = Number(params.get('chr_min')); showGoatFilter.value = true }
     if (params.get('chr_max')) { filters.value.goatChromosomeMax = Number(params.get('chr_max')); showGoatFilter.value = true }
+    const combo = params.get('tax_combo')
+    if (combo) {
+      const [tr, gn, sp, ssp] = combo.split('')
+      filters.value.taxonomyCombinators = {
+        tribe: tr === 'O' ? 'OR' : 'AND',
+        genus: gn === 'O' ? 'OR' : 'AND',
+        species: sp === 'O' ? 'OR' : 'AND',
+        subspecies: ssp === 'O' ? 'OR' : 'AND',
+      }
+    }
   }
 
   const resetAllFilters = () => {
@@ -235,15 +251,20 @@ export const useFilterStore = defineStore('filters', () => {
         if (!searchTerms.some(term => itemId.includes(term))) return false
       }
 
-      const anyTaxonomyActive = familySet || tribeSet || genusSet || speciesSet || subspeciesSet
-      if (anyTaxonomyActive) {
-        const matchesTaxonomy =
-          (familySet && familySet.has(item.family)) ||
-          (tribeSet && tribeSet.has(item.tribe)) ||
-          (genusSet && genusSet.has(item.genus)) ||
-          (speciesSet && speciesSet.has(item.scientific_name)) ||
-          (subspeciesSet && subspeciesSet.has(item.subspecies))
-        if (!matchesTaxonomy) return false
+      const taxLevels = [
+        { set: familySet, value: item.family, combinator: 'AND' },
+        { set: tribeSet, value: item.tribe, combinator: f.taxonomyCombinators?.tribe || 'AND' },
+        { set: genusSet, value: item.genus, combinator: f.taxonomyCombinators?.genus || 'AND' },
+        { set: speciesSet, value: item.scientific_name, combinator: f.taxonomyCombinators?.species || 'AND' },
+        { set: subspeciesSet, value: item.subspecies, combinator: f.taxonomyCombinators?.subspecies || 'AND' },
+      ].filter(L => L.set)
+      if (taxLevels.length > 0) {
+        let taxResult = taxLevels[0].set.has(taxLevels[0].value)
+        for (let i = 1; i < taxLevels.length; i++) {
+          const match = taxLevels[i].set.has(taxLevels[i].value)
+          taxResult = taxLevels[i].combinator === 'OR' ? (taxResult || match) : (taxResult && match)
+        }
+        if (!taxResult) return false
       }
       if (mimicrySet && !mimicrySet.has(item.mimicry_ring)) return false
       if (statusSet && !statusSet.has(item.sequencing_status)) return false
@@ -328,6 +349,11 @@ export const useFilterStore = defineStore('filters', () => {
     if (f.goatDataSource.length > 0) params.set('goat_src', f.goatDataSource.join(','))
     if (f.goatChromosomeMin != null) params.set('chr_min', f.goatChromosomeMin)
     if (f.goatChromosomeMax != null) params.set('chr_max', f.goatChromosomeMax)
+    const c = f.taxonomyCombinators
+    if (c && (c.tribe === 'OR' || c.genus === 'OR' || c.species === 'OR' || c.subspecies === 'OR')) {
+      const code = [c.tribe, c.genus, c.species, c.subspecies].map(v => v === 'OR' ? 'O' : 'A').join('')
+      params.set('tax_combo', code)
+    }
   }
 
   watch(showAdvancedFilters, value => setStorage('app-show-advanced-filters', value))

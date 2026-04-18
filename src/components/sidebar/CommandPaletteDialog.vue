@@ -291,24 +291,48 @@ const removeFromArray = (key, value) => () => {
   store.filters[key] = store.filters[key].filter(v => v !== value)
 }
 
+const toggleCombinator = (level) => {
+  const combinators = store.filters.taxonomyCombinators || { tribe: 'AND', genus: 'AND', species: 'AND', subspecies: 'AND' }
+  store.filters.taxonomyCombinators = {
+    ...combinators,
+    [level]: combinators[level] === 'AND' ? 'OR' : 'AND',
+  }
+}
+
 const activeFilters = computed(() => {
   const taxonomy = []
   const other = []
   const f = store.filters
 
-  for (const v of f.family) taxonomy.push({ key: `family:${v}`, label: v, type: 'Family', remove: removeFromArray('family', v) })
-  for (const v of f.tribe) taxonomy.push({ key: `tribe:${v}`, label: v, type: 'Tribe', remove: removeFromArray('tribe', v) })
-  for (const v of f.genus) taxonomy.push({ key: `genus:${v}`, label: v, type: 'Genus', remove: removeFromArray('genus', v) })
-  for (const v of f.species) taxonomy.push({ key: `species:${v}`, label: v, type: 'Species', remove: removeFromArray('species', v) })
-  for (const sub of f.subspecies) {
+  const pushLevelGroup = (levelName, type, entries) => {
+    if (entries.length === 0) return
+    if (taxonomy.length > 0) {
+      const combinator = f.taxonomyCombinators?.[levelName] || 'AND'
+      taxonomy.push({ type: 'combinator', level: levelName, value: combinator })
+    }
+    taxonomy.push({ type: 'group', label: type, chips: entries })
+  }
+
+  pushLevelGroup('family', 'Family', f.family.map(v => ({
+    key: `family:${v}`, label: v, remove: removeFromArray('family', v),
+  })))
+  pushLevelGroup('tribe', 'Tribe', f.tribe.map(v => ({
+    key: `tribe:${v}`, label: v, remove: removeFromArray('tribe', v),
+  })))
+  pushLevelGroup('genus', 'Genus', f.genus.map(v => ({
+    key: `genus:${v}`, label: v, remove: removeFromArray('genus', v),
+  })))
+  pushLevelGroup('species', 'Species', f.species.map(v => ({
+    key: `species:${v}`, label: v, remove: removeFromArray('species', v),
+  })))
+  pushLevelGroup('subspecies', 'Subspecies', f.subspecies.map(sub => {
     const parent = resolveSubspeciesParent(sub, f.species)
-    taxonomy.push({
+    return {
       key: `subsp:${sub}`,
       label: parent ? `${parent} ${sub}` : sub,
-      type: 'Subspecies',
       remove: removeFromArray('subspecies', sub),
-    })
-  }
+    }
+  }))
 
   for (const v of f.mimicry) other.push({ key: `mim:${v}`, label: v, type: 'Mimicry', remove: removeFromArray('mimicry', v) })
   for (const v of f.country) other.push({ key: `country:${v}`, label: v, type: 'Country', remove: removeFromArray('country', v) })
@@ -477,18 +501,31 @@ defineExpose({ open: () => { dialogOpen.value = true } })
             <div class="cmd-sidebar-title">Active filters ({{ activeFilters.total }})</div>
 
             <div v-if="activeFilters.taxonomy.length > 0" class="cmd-tree">
-              <div class="cmd-group-heading cmd-group-heading--any">Taxonomy <span class="cmd-combinator">· any match</span></div>
-              <button
-                v-for="chip in activeFilters.taxonomy"
-                :key="chip.key"
-                class="cmd-chip cmd-chip--tree"
-                :title="`Remove ${chip.type}: ${chip.label}`"
-                @click="chip.remove()"
-              >
-                <span class="cmd-chip-type">{{ chip.type }}</span>
-                <span class="cmd-chip-label">{{ chip.label }}</span>
-                <svg class="cmd-chip-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </button>
+              <div class="cmd-group-heading cmd-group-heading--any">Taxonomy <span class="cmd-combinator">· click AND/OR to toggle</span></div>
+              <template v-for="(node, idx) in activeFilters.taxonomy" :key="idx">
+                <button
+                  v-if="node.type === 'combinator'"
+                  class="cmd-combinator-btn"
+                  :class="`cmd-combinator-btn--${node.value.toLowerCase()}`"
+                  :title="`Toggle ${node.value} (click to change)`"
+                  @click="toggleCombinator(node.level)"
+                >
+                  {{ node.value }}
+                </button>
+                <div v-else-if="node.type === 'group'" class="cmd-level-group">
+                  <div class="cmd-level-label">{{ node.label }}</div>
+                  <button
+                    v-for="chip in node.chips"
+                    :key="chip.key"
+                    class="cmd-chip cmd-chip--tree"
+                    :title="`Remove ${node.label}: ${chip.label}`"
+                    @click="chip.remove()"
+                  >
+                    <span class="cmd-chip-label">{{ chip.label }}</span>
+                    <svg class="cmd-chip-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+              </template>
             </div>
 
             <div v-if="activeFilters.other.length > 0" class="cmd-chips">
@@ -751,6 +788,46 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   padding: 5px 8px;
   border-radius: 4px;
   font-size: 0.75rem;
+}
+
+.cmd-level-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cmd-level-label {
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted, #666);
+  padding: 0 4px;
+}
+
+.cmd-combinator-btn {
+  align-self: center;
+  margin: 2px 0;
+  padding: 2px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cmd-combinator-btn--or {
+  border-color: rgba(74, 222, 128, 0.4);
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--color-accent, #4ade80);
+}
+
+.cmd-combinator-btn:hover {
+  transform: scale(1.08);
 }
 
 .cmd-chip:hover {
