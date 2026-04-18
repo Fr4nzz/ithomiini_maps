@@ -102,19 +102,40 @@ export function useSDMLayer(map) {
         origin[1],
       ]
 
+      // Reproject from equirectangular (EPSG:4326) to Web Mercator (EPSG:3857)
+      // so the raster aligns with MapLibre's basemap. Without this, the canvas is
+      // drawn as if each row is equal-height in lat — but Mercator stretches rows
+      // more toward the poles. This causes a latitude-dependent shift.
+      const mercY = (lat) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI / 180) / 2))
+      const latToRow = (lat, topMerc, bottomMerc, h) =>
+        ((topMerc - mercY(lat)) / (topMerc - bottomMerc)) * h
+
+      const topMerc = mercY(bbox[3])
+      const bottomMerc = mercY(bbox[1])
+      const outHeight = height
       const canvas = document.createElement('canvas')
       canvas.width = width
-      canvas.height = height
+      canvas.height = outHeight
       const ctx = canvas.getContext('2d')
-      const imageData = ctx.createImageData(width, height)
+      const imageData = ctx.createImageData(width, outHeight)
 
-      for (let i = 0; i < values.length; i++) {
-        const [r, g, b, a] = colorRamp(values[i], sdmStore.opacity)
-        const idx = i * 4
-        imageData.data[idx] = r
-        imageData.data[idx + 1] = g
-        imageData.data[idx + 2] = b
-        imageData.data[idx + 3] = a
+      const latStep = (bbox[3] - bbox[1]) / height
+      for (let outY = 0; outY < outHeight; outY++) {
+        // Convert output canvas row (Mercator Y) back to latitude, then to source row
+        const frac = outY / outHeight
+        const mercVal = topMerc - frac * (topMerc - bottomMerc)
+        const lat = (Math.atan(Math.sinh(mercVal)) * 180) / Math.PI
+        const srcY = Math.min(height - 1, Math.max(0, Math.floor((bbox[3] - lat) / latStep)))
+
+        for (let x = 0; x < width; x++) {
+          const srcIdx = srcY * width + x
+          const [r, g, b, a] = colorRamp(values[srcIdx], sdmStore.opacity)
+          const dstIdx = (outY * width + x) * 4
+          imageData.data[dstIdx] = r
+          imageData.data[dstIdx + 1] = g
+          imageData.data[dstIdx + 2] = b
+          imageData.data[dstIdx + 3] = a
+        }
       }
 
       ctx.putImageData(imageData, 0, 0)
