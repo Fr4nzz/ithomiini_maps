@@ -245,6 +245,7 @@ onMounted(async () => {
       @open-gallery="openImageGallery"
       @open-map-export="directExportMap"
       @export-for-r="directExportForR"
+      @open-global-search="commandPaletteRef?.open()"
       :current-view="currentView"
       @set-view="setView"
     />
@@ -389,6 +390,7 @@ onMounted(async () => {
               @open-gallery="() => { openImageGallery(); showMobileSidebar = false }"
               @open-map-export="() => { directExportMap(); showMobileSidebar = false }"
               @export-for-r="() => { directExportForR(); showMobileSidebar = false }"
+              @open-global-search="() => { showMobileSidebar = false; commandPaletteRef?.open() }"
             />
           </aside>
         </div>

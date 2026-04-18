@@ -142,25 +142,30 @@ const ranked = computed(() => {
   }
   hits.sort((a, b) => b.score - a.score)
 
-  const suggestions = []
-  if (hits.length === 0) {
-    const distances = []
-    for (const item of allItems.value) {
-      const hay = item.kind === 'subspecies' ? item.displayValue : item.value
-      const dist = levenshtein(q, hay.toLowerCase().slice(0, q.length + 2))
-      if (dist > 0 && dist <= 2) distances.push({ item, dist })
-    }
-    distances.sort((a, b) => a.dist - b.dist || b.item.count - a.item.count)
-    const seen = new Set()
-    for (const { item } of distances) {
-      if (seen.has(item.id)) continue
-      seen.add(item.id)
-      suggestions.push({ item, score: 0, matchField: null, matchIndex: -1, matchLength: 0 })
-      if (suggestions.length >= MAX_SUGGESTIONS) break
-    }
-  }
-
   const limited = hits.slice(0, MAX_RESULTS)
+
+  const hitIds = new Set(hits.map(h => h.item.id))
+  const distances = []
+  for (const item of allItems.value) {
+    if (hitIds.has(item.id)) continue
+    const hay = (item.kind === 'subspecies' ? item.displayValue : item.value).toLowerCase()
+    const tokens = hay.split(/[\s\-_/]+/).filter(Boolean)
+    let best = Infinity
+    for (const tok of tokens) {
+      const d = levenshtein(q, tok.slice(0, Math.max(q.length, tok.length)))
+      if (d < best) best = d
+    }
+    if (best > 0 && best <= 2) distances.push({ item, dist: best })
+  }
+  distances.sort((a, b) => a.dist - b.dist || b.item.count - a.item.count)
+  const suggestions = []
+  const seen = new Set()
+  for (const { item } of distances) {
+    if (seen.has(item.id)) continue
+    seen.add(item.id)
+    suggestions.push({ item, score: 0, matchField: null, matchIndex: -1, matchLength: 0 })
+    if (suggestions.length >= MAX_SUGGESTIONS) break
+  }
   const byGroup = { taxonomy: [], geography: [], mimicry: [] }
   for (const hit of limited) {
     if (hit.item.kind === 'country') byGroup.geography.push(hit)
@@ -205,38 +210,28 @@ function escapeHtml(s) {
   return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
 }
 
-const setTaxonomyContext = (lineage = {}, { skipCascade = false } = {}) => {
-  if (skipCascade) return
-  if (lineage.family && store.filters.family !== lineage.family) store.filters.family = lineage.family
-  if (lineage.tribe && store.filters.tribe !== lineage.tribe) store.filters.tribe = lineage.tribe
-  if (lineage.genus && store.filters.genus !== lineage.genus) store.filters.genus = lineage.genus
-}
-
 async function selectItem(item) {
   switch (item.kind) {
     case 'family':
       store.filters.family = item.value
       break
     case 'tribe':
-      setTaxonomyContext({ family: item.lineage.family })
+      if (item.lineage.family) store.filters.family = item.lineage.family
       await nextTick()
       store.filters.tribe = item.value
       break
     case 'genus':
-      setTaxonomyContext(item.lineage)
+      if (item.lineage.family) store.filters.family = item.lineage.family
+      if (item.lineage.tribe) store.filters.tribe = item.lineage.tribe
       await nextTick()
       store.filters.genus = item.value
       break
     case 'species':
-      setTaxonomyContext(item.lineage)
-      await nextTick()
       if (!store.filters.species.includes(item.value)) {
         store.filters.species = [...store.filters.species, item.value]
       }
       break
     case 'subspecies':
-      setTaxonomyContext(item.lineage)
-      await nextTick()
       if (item.speciesName && !store.filters.species.includes(item.speciesName)) {
         store.filters.species = [...store.filters.species, item.speciesName]
       }

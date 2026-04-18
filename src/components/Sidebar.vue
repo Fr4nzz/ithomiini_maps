@@ -20,7 +20,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'export-for-r', 'set-view'])
+const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'export-for-r', 'set-view', 'open-global-search'])
 
 const store = useDataStore()
 const persistenceStore = usePersistenceStore()
@@ -486,7 +486,15 @@ const updateExportHeight = (value) => {
             <path d="M12 3v18m-6-6 6 6 6-6"/>
           </svg>
           Taxonomy
-          <kbd class="shortcut-hint" title="Search across all taxa, countries, and mimicry rings">⌘/Ctrl+K</kbd>
+          <button
+            type="button"
+            class="shortcut-hint"
+            title="Search across all taxa, countries, and mimicry rings"
+            @click="$emit('open-global-search')"
+          >
+            Global search
+            <kbd>⌘/Ctrl+K</kbd>
+          </button>
         </label>
 
         <!-- Species Multi-select with Fuzzy Search -->
