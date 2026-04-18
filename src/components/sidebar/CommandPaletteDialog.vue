@@ -131,12 +131,14 @@ function scoreItem(item, queryLower) {
   let matchField = null
   let matchIndex = -1
 
+  const COUNT_WEIGHT = 15
+
   for (const token of ownTokens) {
     const idx = token.indexOf(queryLower)
     if (idx === -1) continue
     const score = (isWordStart(token, idx) ? 1200 : 200)
       + (LEVEL_BONUS[item.kind] || 0)
-      + Math.log10(item.count + 1) * 5
+      + Math.log10(item.count + 1) * COUNT_WEIGHT
     if (score > bestScore) {
       bestScore = score
       matchField = token
@@ -149,7 +151,7 @@ function scoreItem(item, queryLower) {
     if (idx === -1) return null
     const score = (isWordStart(displayHay, idx) ? 900 : 150)
       + (LEVEL_BONUS[item.kind] || 0)
-      + Math.log10(item.count + 1) * 5
+      + Math.log10(item.count + 1) * COUNT_WEIGHT
     bestScore = score
     matchField = displayHay
     matchIndex = idx
