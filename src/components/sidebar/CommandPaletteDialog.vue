@@ -235,37 +235,35 @@ function highlight(text, hit) {
     + escapeHtml(text.slice(idx + len))
 }
 
+function addToArrayFilter(key, value) {
+  if (!store.filters[key].includes(value)) {
+    store.filters[key] = [...store.filters[key], value]
+  }
+}
+
 function selectItem(item) {
   switch (item.kind) {
     case 'family':
-      store.filters.family = item.value
+      addToArrayFilter('family', item.value)
       break
     case 'tribe':
-      store.filters.tribe = item.value
+      addToArrayFilter('tribe', item.value)
       break
     case 'genus':
-      store.filters.genus = item.value
+      addToArrayFilter('genus', item.value)
       break
     case 'species':
-      if (!store.filters.species.includes(item.value)) {
-        store.filters.species = [...store.filters.species, item.value]
-      }
+      addToArrayFilter('species', item.value)
       break
     case 'subspecies':
-      if (item.speciesName && !store.filters.species.includes(item.speciesName)) {
-        store.filters.species = [...store.filters.species, item.speciesName]
-      }
-      if (!store.filters.subspecies.includes(item.value)) {
-        store.filters.subspecies = [...store.filters.subspecies, item.value]
-      }
+      if (item.speciesName) addToArrayFilter('species', item.speciesName)
+      addToArrayFilter('subspecies', item.value)
       break
     case 'country':
-      store.filters.country = item.value
+      addToArrayFilter('country', item.value)
       break
     case 'mimicry':
-      if (!store.filters.mimicry.includes(item.value)) {
-        store.filters.mimicry = [...store.filters.mimicry, item.value]
-      }
+      addToArrayFilter('mimicry', item.value)
       break
   }
   query.value = ''
@@ -280,26 +278,30 @@ const subspeciesToSpecies = computed(() => {
   return map
 })
 
+const removeFromArray = (key, value) => () => {
+  store.filters[key] = store.filters[key].filter(v => v !== value)
+}
+
 const activeFilters = computed(() => {
   const taxonomy = []
   const other = []
   const f = store.filters
 
-  if (f.family !== 'All') taxonomy.push({ key: `family:${f.family}`, label: f.family, type: 'Family', level: 0, remove: () => { store.filters.family = 'All' } })
-  if (f.tribe !== 'All') taxonomy.push({ key: `tribe:${f.tribe}`, label: f.tribe, type: 'Tribe', level: 1, remove: () => { store.filters.tribe = 'All' } })
-  if (f.genus !== 'All') taxonomy.push({ key: `genus:${f.genus}`, label: f.genus, type: 'Genus', level: 2, remove: () => { store.filters.genus = 'All' } })
+  for (const v of f.family) taxonomy.push({ key: `family:${v}`, label: v, type: 'Family', level: 0, remove: removeFromArray('family', v) })
+  for (const v of f.tribe) taxonomy.push({ key: `tribe:${v}`, label: v, type: 'Tribe', level: 1, remove: removeFromArray('tribe', v) })
+  for (const v of f.genus) taxonomy.push({ key: `genus:${v}`, label: v, type: 'Genus', level: 2, remove: removeFromArray('genus', v) })
 
   for (const species of f.species) {
     taxonomy.push({
       key: `species:${species}`, label: species, type: 'Species', level: 3,
-      remove: () => { store.filters.species = store.filters.species.filter(v => v !== species) },
+      remove: removeFromArray('species', species),
     })
     for (const sub of f.subspecies) {
       const parent = subspeciesToSpecies.value.get(sub)
       if (parent === species) {
         taxonomy.push({
           key: `subsp:${sub}:${species}`, label: sub, type: 'Subspecies', level: 4,
-          remove: () => { store.filters.subspecies = store.filters.subspecies.filter(v => v !== sub) },
+          remove: removeFromArray('subspecies', sub),
         })
       }
     }
@@ -312,14 +314,14 @@ const activeFilters = computed(() => {
         key: `subsp:${sub}:orphan`,
         label: parent ? `${parent} ${sub}` : sub,
         type: 'Subspecies', level: 3,
-        remove: () => { store.filters.subspecies = store.filters.subspecies.filter(v => v !== sub) },
+        remove: removeFromArray('subspecies', sub),
       })
     }
   }
 
-  for (const m of f.mimicry) other.push({ key: `mim:${m}`, label: m, type: 'Mimicry', remove: () => { store.filters.mimicry = store.filters.mimicry.filter(v => v !== m) } })
-  if (f.country !== 'All') other.push({ key: `country:${f.country}`, label: f.country, type: 'Country', remove: () => { store.filters.country = 'All' } })
-  for (const s of f.status) other.push({ key: `status:${s}`, label: s, type: 'Status', remove: () => { store.filters.status = store.filters.status.filter(v => v !== s) } })
+  for (const v of f.mimicry) other.push({ key: `mim:${v}`, label: v, type: 'Mimicry', remove: removeFromArray('mimicry', v) })
+  for (const v of f.country) other.push({ key: `country:${v}`, label: v, type: 'Country', remove: removeFromArray('country', v) })
+  for (const v of f.status) other.push({ key: `status:${v}`, label: v, type: 'Status', remove: removeFromArray('status', v) })
   if (f.sex !== 'all') other.push({ key: `sex:${f.sex}`, label: f.sex, type: 'Sex', remove: () => { store.filters.sex = 'all' } })
   if (f.camidSearch) other.push({ key: 'camid', label: 'CAMIDs', type: 'Search', remove: () => { store.filters.camidSearch = '' } })
   if (f.dateStart || f.dateEnd) other.push({ key: 'date', label: 'Date range', type: 'Time', remove: () => { store.filters.dateStart = null; store.filters.dateEnd = null } })

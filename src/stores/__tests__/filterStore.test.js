@@ -35,16 +35,16 @@ describe('useFilterStore', () => {
 
     expect(datasetStore.loadedSources.size).toBe(0)
     expect(filterStore.filters).toMatchObject({
-      family: 'All',
-      tribe: 'All',
-      genus: 'All',
+      family: [],
+      tribe: [],
+      genus: [],
       species: [],
       subspecies: [],
       mimicry: [],
       status: [],
       source: ['Sanger Institute'],
       sex: 'all',
-      country: 'All',
+      country: [],
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
@@ -58,16 +58,16 @@ describe('useFilterStore', () => {
   it('resetAllFilters resets everything', () => {
     const filterStore = useFilterStore()
 
-    filterStore.filters.family = 'Nymphalidae'
-    filterStore.filters.tribe = 'Ithomiini'
-    filterStore.filters.genus = 'Mechanitis'
+    filterStore.filters.family = ['Nymphalidae']
+    filterStore.filters.tribe = ['Ithomiini']
+    filterStore.filters.genus = ['Mechanitis']
     filterStore.filters.species = ['Mechanitis menophilus']
     filterStore.filters.subspecies = ['nevadensis']
     filterStore.filters.mimicry = ['Tiger']
     filterStore.filters.status = ['Sequenced']
     filterStore.filters.source = ['GBIF (UNAM)']
     filterStore.filters.sex = 'female'
-    filterStore.filters.country = 'Ecuador'
+    filterStore.filters.country = ['Ecuador']
     filterStore.filters.camidSearch = 'CAM001'
     filterStore.filters.dateStart = '2023-01-01'
     filterStore.filters.dateEnd = '2023-12-31'
@@ -80,16 +80,16 @@ describe('useFilterStore', () => {
     filterStore.resetAllFilters()
 
     expect(filterStore.filters).toMatchObject({
-      family: 'All',
-      tribe: 'All',
-      genus: 'All',
+      family: [],
+      tribe: [],
+      genus: [],
       species: [],
       subspecies: [],
       mimicry: [],
       status: [],
       source: ['Sanger Institute'],
       sex: 'all',
-      country: 'All',
+      country: [],
       camidSearch: '',
       dateStart: null,
       dateEnd: null,
@@ -104,16 +104,16 @@ describe('useFilterStore', () => {
   it('keeps dependent filters intact when family changes (additive filter model)', async () => {
     const filterStore = useFilterStore()
 
-    filterStore.filters.tribe = 'Ithomiini'
-    filterStore.filters.genus = 'Mechanitis'
+    filterStore.filters.tribe = ['Ithomiini']
+    filterStore.filters.genus = ['Mechanitis']
     filterStore.filters.species = ['Mechanitis menophilus']
     filterStore.filters.subspecies = ['nevadensis']
 
-    filterStore.filters.family = 'Nymphalidae'
+    filterStore.filters.family = ['Nymphalidae']
     await nextTick()
 
-    expect(filterStore.filters.tribe).toBe('Ithomiini')
-    expect(filterStore.filters.genus).toBe('Mechanitis')
+    expect(filterStore.filters.tribe).toEqual(['Ithomiini'])
+    expect(filterStore.filters.genus).toEqual(['Mechanitis'])
     expect(filterStore.filters.species).toEqual(['Mechanitis menophilus'])
     expect(filterStore.filters.subspecies).toEqual(['nevadensis'])
   })
@@ -166,14 +166,14 @@ describe('useFilterStore', () => {
       }),
     ]
 
-    filterStore.filters.family = 'Nymphalidae'
-    filterStore.filters.tribe = 'Ithomiini'
-    filterStore.filters.genus = 'Mechanitis'
+    filterStore.filters.family = ['Nymphalidae']
+    filterStore.filters.tribe = ['Ithomiini']
+    filterStore.filters.genus = ['Mechanitis']
     filterStore.filters.species = ['Mechanitis menophilus']
     filterStore.filters.subspecies = ['nevadensis']
     filterStore.filters.mimicry = ['Tiger']
     filterStore.filters.status = ['Sequenced']
-    filterStore.filters.country = 'Ecuador'
+    filterStore.filters.country = ['Ecuador']
     filterStore.filters.sex = 'male'
     filterStore.filters.camidSearch = 'cam001'
 

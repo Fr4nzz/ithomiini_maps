@@ -17,16 +17,16 @@ export const useFilterStore = defineStore('filters', () => {
   const boundingBox = ref(null)
 
   const defaultFilters = () => ({
-    family: 'All',
-    tribe: 'All',
-    genus: 'All',
+    family: [],
+    tribe: [],
+    genus: [],
     species: [],
     subspecies: [],
     mimicry: [],
     status: [],
     source: ['Sanger Institute'],
     sex: 'all',
-    country: 'All',
+    country: [],
     camidSearch: '',
     dateStart: null,
     dateEnd: null,
@@ -47,18 +47,27 @@ export const useFilterStore = defineStore('filters', () => {
     }
   }
 
+  const parseListParam = (value) => {
+    if (!value) return null
+    return value === 'All' ? [] : value.split(',').filter(Boolean)
+  }
+
   const restoreFiltersFromURL = () => {
     const params = new URLSearchParams(window.location.search)
 
-    if (params.get('family')) { filters.value.family = params.get('family'); showAdvancedFilters.value = true }
-    if (params.get('tribe')) { filters.value.tribe = params.get('tribe'); showAdvancedFilters.value = true }
-    if (params.get('genus')) { filters.value.genus = params.get('genus'); showAdvancedFilters.value = true }
+    const family = parseListParam(params.get('family'))
+    if (family) { filters.value.family = family; showAdvancedFilters.value = true }
+    const tribe = parseListParam(params.get('tribe'))
+    if (tribe) { filters.value.tribe = tribe; showAdvancedFilters.value = true }
+    const genus = parseListParam(params.get('genus'))
+    if (genus) { filters.value.genus = genus; showAdvancedFilters.value = true }
     if (params.get('sp')) filters.value.species = params.get('sp').split(',')
     if (params.get('ssp')) filters.value.subspecies = params.get('ssp').split(',')
     if (params.get('mim')) { filters.value.mimicry = params.get('mim').split(','); showMimicryFilter.value = true }
     if (params.get('status')) filters.value.status = params.get('status').split(',')
     if (params.get('source')) filters.value.source = params.get('source').split(',')
-    if (params.get('country')) filters.value.country = params.get('country')
+    const country = parseListParam(params.get('country'))
+    if (country) filters.value.country = country
     if (params.get('sex')) filters.value.sex = params.get('sex')
     if (params.get('cam')) filters.value.camidSearch = params.get('cam')
     if (params.get('from')) filters.value.dateStart = params.get('from')
@@ -81,14 +90,14 @@ export const useFilterStore = defineStore('filters', () => {
       data = data.filter(item => filters.value.source.includes(item.source))
     }
 
-    if (upToLevel >= 1 && filters.value.family !== 'All') {
-      data = data.filter(item => item.family === filters.value.family)
+    if (upToLevel >= 1 && filters.value.family.length > 0) {
+      data = data.filter(item => filters.value.family.includes(item.family))
     }
-    if (upToLevel >= 2 && filters.value.tribe !== 'All') {
-      data = data.filter(item => item.tribe === filters.value.tribe)
+    if (upToLevel >= 2 && filters.value.tribe.length > 0) {
+      data = data.filter(item => filters.value.tribe.includes(item.tribe))
     }
-    if (upToLevel >= 3 && filters.value.genus !== 'All') {
-      data = data.filter(item => item.genus === filters.value.genus)
+    if (upToLevel >= 3 && filters.value.genus.length > 0) {
+      data = data.filter(item => filters.value.genus.includes(item.genus))
     }
     if (upToLevel >= 4 && filters.value.species.length > 0) {
       data = data.filter(item => filters.value.species.includes(item.scientific_name))
@@ -110,9 +119,9 @@ export const useFilterStore = defineStore('filters', () => {
   const availableMimicryRings = computed(() => {
     let data = datasetStore.allFeatures
 
-    if (filters.value.family !== 'All') data = data.filter(item => item.family === filters.value.family)
-    if (filters.value.tribe !== 'All') data = data.filter(item => item.tribe === filters.value.tribe)
-    if (filters.value.genus !== 'All') data = data.filter(item => item.genus === filters.value.genus)
+    if (filters.value.family.length > 0) data = data.filter(item => filters.value.family.includes(item.family))
+    if (filters.value.tribe.length > 0) data = data.filter(item => filters.value.tribe.includes(item.tribe))
+    if (filters.value.genus.length > 0) data = data.filter(item => filters.value.genus.includes(item.genus))
     if (filters.value.species.length > 0) data = data.filter(item => filters.value.species.includes(item.scientific_name))
     if (filters.value.subspecies.length > 0) data = data.filter(item => filters.value.subspecies.includes(item.subspecies))
 
@@ -200,11 +209,15 @@ export const useFilterStore = defineStore('filters', () => {
       if (searchTerms.length === 0) searchTerms = null
     }
 
+    const familySet = filters.value.family.length > 0 ? new Set(filters.value.family) : null
+    const tribeSet = filters.value.tribe.length > 0 ? new Set(filters.value.tribe) : null
+    const genusSet = filters.value.genus.length > 0 ? new Set(filters.value.genus) : null
     const speciesSet = filters.value.species.length > 0 ? new Set(filters.value.species) : null
     const subspeciesSet = filters.value.subspecies.length > 0 ? new Set(filters.value.subspecies) : null
     const mimicrySet = filters.value.mimicry.length > 0 ? new Set(filters.value.mimicry) : null
     const statusSet = filters.value.status.length > 0 ? new Set(filters.value.status) : null
     const sourceSet = filters.value.source.length > 0 ? new Set(filters.value.source) : null
+    const countrySet = filters.value.country.length > 0 ? new Set(filters.value.country) : null
 
     const f = filters.value
     const bb = boundingBox.value
@@ -222,15 +235,15 @@ export const useFilterStore = defineStore('filters', () => {
         if (!searchTerms.some(term => itemId.includes(term))) return false
       }
 
-      if (f.family !== 'All' && item.family !== f.family) return false
-      if (f.tribe !== 'All' && item.tribe !== f.tribe) return false
-      if (f.genus !== 'All' && item.genus !== f.genus) return false
+      if (familySet && !familySet.has(item.family)) return false
+      if (tribeSet && !tribeSet.has(item.tribe)) return false
+      if (genusSet && !genusSet.has(item.genus)) return false
       if (speciesSet && !speciesSet.has(item.scientific_name)) return false
       if (subspeciesSet && !subspeciesSet.has(item.subspecies)) return false
       if (mimicrySet && !mimicrySet.has(item.mimicry_ring)) return false
       if (statusSet && !statusSet.has(item.sequencing_status)) return false
       if (sourceSet && !sourceSet.has(item.source)) return false
-      if (f.country !== 'All' && item.country !== f.country) return false
+      if (countrySet && !countrySet.has(item.country)) return false
       if (f.sex !== 'all') {
         if (f.sex === 'male' && item.sex !== 'male') return false
         if (f.sex === 'female' && item.sex !== 'female') return false
@@ -291,9 +304,9 @@ export const useFilterStore = defineStore('filters', () => {
   const appendFilterURLParams = (params) => {
     const f = filters.value
 
-    if (f.family !== 'All') params.set('family', f.family)
-    if (f.tribe !== 'All') params.set('tribe', f.tribe)
-    if (f.genus !== 'All') params.set('genus', f.genus)
+    if (f.family.length > 0) params.set('family', f.family.join(','))
+    if (f.tribe.length > 0) params.set('tribe', f.tribe.join(','))
+    if (f.genus.length > 0) params.set('genus', f.genus.join(','))
     if (f.species.length > 0) params.set('sp', f.species.join(','))
     if (f.subspecies.length > 0) params.set('ssp', f.subspecies.join(','))
     if (f.mimicry.length > 0) params.set('mim', f.mimicry.join(','))
@@ -301,7 +314,7 @@ export const useFilterStore = defineStore('filters', () => {
     if (f.source.length > 0 && !(f.source.length === 1 && f.source[0] === 'Sanger Institute')) {
       params.set('source', f.source.join(','))
     }
-    if (f.country !== 'All') params.set('country', f.country)
+    if (f.country.length > 0) params.set('country', f.country.join(','))
     if (f.sex !== 'all') params.set('sex', f.sex)
     if (f.camidSearch) params.set('cam', f.camidSearch)
     if (f.dateStart) params.set('from', f.dateStart)

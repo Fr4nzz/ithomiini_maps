@@ -525,34 +525,34 @@ const updateExportHeight = (value) => {
             <path d="m9 18 6-6-6-6"/>
           </svg>
           Family / Tribe / Genus
-          <span v-if="store.filters.family !== 'All' || store.filters.tribe !== 'All' || store.filters.genus !== 'All'" class="active-indicator"></span>
+          <span v-if="store.filters.family.length || store.filters.tribe.length || store.filters.genus.length" class="active-indicator"></span>
         </button>
 
         <div v-show="showAdvancedTaxonomy" class="subsection-content">
           <FilterSelect
             label="Family"
             v-model="store.filters.family"
-            :options="['All', ...store.uniqueFamilies]"
+            :options="store.uniqueFamilies"
             placeholder="All Families"
-            :multiple="false"
+            :multiple="true"
             :show-count="false"
           />
 
           <FilterSelect
             label="Tribe"
             v-model="store.filters.tribe"
-            :options="['All', ...store.uniqueTribes]"
+            :options="store.uniqueTribes"
             placeholder="All Tribes"
-            :multiple="false"
+            :multiple="true"
             :show-count="false"
           />
 
           <FilterSelect
             label="Genus"
             v-model="store.filters.genus"
-            :options="['All', ...store.uniqueGenera]"
+            :options="store.uniqueGenera"
             placeholder="All Genera"
-            :multiple="false"
+            :multiple="true"
           />
         </div>
       </div>
@@ -782,9 +782,9 @@ const updateExportHeight = (value) => {
         </label>
         <FilterSelect
           v-model="store.filters.country"
-          :options="['All', ...store.uniqueCountries]"
+          :options="store.uniqueCountries"
           placeholder="All Countries"
-          :multiple="false"
+          :multiple="true"
           :show-count="false"
         />
       </div>

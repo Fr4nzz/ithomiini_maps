@@ -15,7 +15,7 @@ const fixture = [
   { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Melinaea', scientific_name: 'Melinaea mothone', subspecies: 'mothone' },
 ]
 
-describe('additive taxonomy filters (no auto-cascade)', () => {
+describe('additive multi-value taxonomy filters', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     seedFeatures(fixture)
@@ -23,27 +23,28 @@ describe('additive taxonomy filters (no auto-cascade)', () => {
 
   it('setting family does not touch existing descendants', async () => {
     const store = useFilterStore()
-    store.filters.tribe = 'Ithomiini'
-    store.filters.genus = 'Mechanitis'
+    store.filters.tribe = ['Ithomiini']
+    store.filters.genus = ['Mechanitis']
     store.filters.species = ['Mechanitis polymnia']
     store.filters.subspecies = ['deceptus']
     await nextTick()
-    store.filters.family = 'Pieridae'
+    store.filters.family = ['Pieridae']
     await nextTick()
-    expect(store.filters.tribe).toBe('Ithomiini')
-    expect(store.filters.genus).toBe('Mechanitis')
+    expect(store.filters.tribe).toEqual(['Ithomiini'])
+    expect(store.filters.genus).toEqual(['Mechanitis'])
     expect(store.filters.species).toEqual(['Mechanitis polymnia'])
     expect(store.filters.subspecies).toEqual(['deceptus'])
   })
 
-  it('setting an unrelated genus does not remove species or subspecies', async () => {
+  it('adding a second genus accumulates instead of replacing', async () => {
     const store = useFilterStore()
+    store.filters.genus = ['Mechanitis']
     store.filters.species = ['Mechanitis polymnia']
     store.filters.subspecies = ['deceptus']
     await nextTick()
-    store.filters.genus = 'Melinaea'
+    store.filters.genus = [...store.filters.genus, 'Melinaea']
     await nextTick()
-    expect(store.filters.genus).toBe('Melinaea')
+    expect(store.filters.genus).toEqual(['Mechanitis', 'Melinaea'])
     expect(store.filters.species).toEqual(['Mechanitis polymnia'])
     expect(store.filters.subspecies).toEqual(['deceptus'])
   })
@@ -58,14 +59,15 @@ describe('additive taxonomy filters (no auto-cascade)', () => {
     expect(store.filters.subspecies).toEqual(['deceptus'])
   })
 
-  it('clearing a genus via X does not touch species or subspecies', async () => {
+  it('removing one of multiple genera keeps species and subspecies', async () => {
     const store = useFilterStore()
-    store.filters.genus = 'Mechanitis'
+    store.filters.genus = ['Mechanitis', 'Melinaea']
     store.filters.species = ['Mechanitis polymnia']
     store.filters.subspecies = ['polymnia']
     await nextTick()
-    store.filters.genus = 'All'
+    store.filters.genus = store.filters.genus.filter(g => g !== 'Melinaea')
     await nextTick()
+    expect(store.filters.genus).toEqual(['Mechanitis'])
     expect(store.filters.species).toEqual(['Mechanitis polymnia'])
     expect(store.filters.subspecies).toEqual(['polymnia'])
   })

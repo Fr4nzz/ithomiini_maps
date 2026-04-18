@@ -181,7 +181,7 @@ const unavailableRings = computed(() => {
 
 // Check if there's an active taxonomy filter
 const hasTaxonomyFilter = computed(() => {
-  return store.filters.genus !== 'All' ||
+  return store.filters.genus.length > 0 ||
          store.filters.species.length > 0 ||
          store.filters.subspecies.length > 0
 })
