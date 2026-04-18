@@ -310,12 +310,23 @@ watch(() => keys['Ctrl+K']?.value || keys['Meta+K']?.value, (pressed) => {
   dialogOpen.value = !dialogOpen.value
 })
 
+function handleGlobalKeydown(e) {
+  if (!dialogOpen.value) return
+  if (e.key === 'Escape') {
+    e.preventDefault()
+    e.stopPropagation()
+    dialogOpen.value = false
+  }
+}
+
 watch(dialogOpen, async (open) => {
   if (!open) {
     query.value = ''
     activeIndex.value = 0
+    window.removeEventListener('keydown', handleGlobalKeydown, true)
     return
   }
+  window.addEventListener('keydown', handleGlobalKeydown, true)
   await nextTick()
   inputRef.value?.focus()
 })
