@@ -368,6 +368,54 @@
   opacity: 0.7;
 }
 
+.shortcut-hint {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px 3px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.72rem;
+  font-weight: 500;
+  font-family: inherit;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.shortcut-hint-label {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.shortcut-hint kbd {
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-muted, #888);
+  font-size: 0.62rem;
+  font-family: inherit;
+}
+
+.shortcut-hint:hover {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.3);
+  color: var(--color-accent, #4ade80);
+}
+
+.shortcut-hint:hover kbd {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.3);
+  color: var(--color-accent, #4ade80);
+}
+
 /* Thumbnail Toggle */
 .thumbnail-toggle {
   display: flex;

@@ -60,7 +60,9 @@ public/data/map_points.json
 # Agent artifacts
 .playwright-cli/
 .playwright-mcp/
+.playwright/
 .sisyphus/
 *.png
 test/*.mjs
 test/screenshots/
+test-results/
