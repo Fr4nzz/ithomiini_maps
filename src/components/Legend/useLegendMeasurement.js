@@ -54,23 +54,24 @@ export function useLegendMeasurement({
   }
 
   // ── Auto-width ────────────────────────────────────────────────────────
-  // Uses ALL sorted items' labels (not just displayed ones) so autoWidth is
-  // stable across measurement changes.
+  // Sizes to the widest displayed label + count, not all items. Previously
+  // used all sorted items (including those hidden behind "+N more"), which
+  // produced unnecessary slack when the visible items were shorter.
   const autoWidth = computed(() => {
-    const items = sortedAllItems.value
-    if (!items.length) return 200
+    const allItems = sortedAllItems.value
+    if (!allItems.length) return 200
 
     const maxContainerWidth = containerBounds.value.width * 0.30
     const fontSizePx = Math.round(14 * legendStore.textScale)
     const isGrouped = legendStore.isGrouped
+    const visibleCount = measuredItemCount.value ?? allItems.length
+    const items = allItems.slice(0, Math.max(1, visibleCount))
 
     let maxTextWidth = 0
     for (const item of items) {
       const label = item.displayLabel || item.label
       const width = measureTextWidth(label, fontSizePx)
-      if (width > maxTextWidth) {
-        maxTextWidth = width
-      }
+      if (width > maxTextWidth) maxTextWidth = width
     }
 
     const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
