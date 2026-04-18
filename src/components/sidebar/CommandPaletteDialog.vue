@@ -97,6 +97,9 @@ function levenshtein(a, b) {
   return row[b.length]
 }
 
+const WORD_BREAK = /[\s\-_/]/
+const isWordStart = (hay, idx) => idx === 0 || WORD_BREAK.test(hay[idx - 1])
+
 function scoreItem(item, queryLower) {
   const haystacks = item.kind === 'subspecies'
     ? [item.value.toLowerCase(), item.displayValue.toLowerCase()]
@@ -109,10 +112,7 @@ function scoreItem(item, queryLower) {
   for (const hay of haystacks) {
     const idx = hay.indexOf(queryLower)
     if (idx === -1) continue
-    let score = 0
-    if (idx === 0) score += 1000
-    else if (hay[idx - 1] === ' ' || hay[idx - 1] === '-' || hay[idx - 1] === '/' || hay[idx - 1] === '_') score += 600
-    else score += 200
+    let score = isWordStart(hay, idx) ? 1000 : 200
     score += LEVEL_BONUS[item.kind] || 0
     score += Math.log10(item.count + 1) * 5
     if (score > bestScore) {
