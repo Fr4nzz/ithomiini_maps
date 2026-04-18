@@ -22,8 +22,23 @@ async function clearConflictingTaxonomy(filters, lineage) {
   }
 }
 
+const seedFeatures = (features) => {
+  const dataset = useDatasetStore()
+  dataset.allFeatures = features
+}
+
+const taxonomyFixture = [
+  { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Mechanitis', scientific_name: 'Mechanitis polymnia', subspecies: 'polymnia' },
+  { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Mechanitis', scientific_name: 'Mechanitis messenoides', subspecies: 'deceptus' },
+  { family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Oleria', scientific_name: 'Oleria amalda', subspecies: 'nevadensis' },
+  { family: 'Pieridae', tribe: 'Anthocharidini', genus: 'Anthocharis', scientific_name: 'Anthocharis cardamines', subspecies: 'cardamines' },
+]
+
 describe('palette-style taxonomy selection', () => {
-  beforeEach(() => setActivePinia(createPinia()))
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    seedFeatures(taxonomyFixture)
+  })
 
   it('keeps existing taxonomy filter when lineage matches', async () => {
     const store = useFilterStore()
@@ -54,7 +69,6 @@ describe('palette-style taxonomy selection', () => {
       family: 'Nymphalidae', tribe: 'Ithomiini', genus: 'Oleria',
     })
     expect(store.filters.genus).toBe('All')
-    expect(store.filters.species).toEqual([])
   })
 
   it('resolves blocking bug: palette species selection with conflicting genus filter', async () => {
@@ -68,6 +82,26 @@ describe('palette-style taxonomy selection', () => {
     store.filters.species = [...store.filters.species, 'Oleria amalda']
     expect(store.filters.genus).toBe('All')
     expect(store.filters.species).toContain('Oleria amalda')
+  })
+
+  it('selecting matching genus preserves species of that genus', async () => {
+    const store = useFilterStore()
+    store.filters.species = ['Mechanitis polymnia', 'Mechanitis messenoides']
+    store.filters.subspecies = ['deceptus']
+    await nextTick()
+    store.filters.genus = 'Mechanitis'
+    await nextTick()
+    expect(store.filters.species).toEqual(['Mechanitis polymnia', 'Mechanitis messenoides'])
+    expect(store.filters.subspecies).toEqual(['deceptus'])
+  })
+
+  it('selecting conflicting genus prunes only non-matching species', async () => {
+    const store = useFilterStore()
+    store.filters.species = ['Mechanitis polymnia', 'Oleria amalda']
+    await nextTick()
+    store.filters.genus = 'Mechanitis'
+    await nextTick()
+    expect(store.filters.species).toEqual(['Mechanitis polymnia'])
   })
 })
 

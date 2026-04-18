@@ -737,7 +737,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 .cmd-item--suggest { opacity: 0.85; }
 
 .cmd-sidebar {
-  width: 240px;
+  width: 300px;
   flex-shrink: 0;
   max-height: 70vh;
   padding: 14px;
@@ -773,10 +773,11 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-chip {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 6px;
-  padding: 6px 8px;
+  gap: 6px 8px;
+  padding: 6px 10px;
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.03);
@@ -820,11 +821,9 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-chip-label {
-  flex: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
+  line-height: 1.3;
 }
 
 .cmd-chip-x {
