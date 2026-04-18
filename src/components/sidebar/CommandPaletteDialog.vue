@@ -259,14 +259,11 @@ async function selectItem(item) {
       store.filters.family = item.value
       break
     case 'tribe':
-      if (item.lineage.family) store.filters.family = item.lineage.family
-      await nextTick()
+      await clearConflictingTaxonomy(item.lineage)
       store.filters.tribe = item.value
       break
     case 'genus':
-      if (item.lineage.family) store.filters.family = item.lineage.family
-      if (item.lineage.tribe) store.filters.tribe = item.lineage.tribe
-      await nextTick()
+      await clearConflictingTaxonomy(item.lineage)
       store.filters.genus = item.value
       break
     case 'species':
