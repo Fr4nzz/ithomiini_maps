@@ -8,6 +8,7 @@
 
 import { ref, computed, nextTick } from 'vue'
 import { log } from '../../utils/logger'
+import { LEGEND_LAYOUT } from './legendLayout'
 
 /**
  * Composable for legend measurement and auto-sizing
@@ -59,9 +60,9 @@ export function useLegendMeasurement({
   // produced unnecessary slack when the visible items were shorter.
   const autoWidth = computed(() => {
     const allItems = sortedAllItems.value
-    if (!allItems.length) return 200
+    if (!allItems.length) return LEGEND_LAYOUT.MIN_WIDTH
 
-    const maxContainerWidth = containerBounds.value.width * 0.30
+    const maxContainerWidth = containerBounds.value.width * LEGEND_LAYOUT.AUTO_WIDTH_MAX_CONTAINER_RATIO
     const fontSizePx = Math.round(14 * legendStore.textScale)
     const isGrouped = legendStore.isGrouped
     const visibleCount = measuredItemCount.value ?? allItems.length
@@ -93,24 +94,23 @@ export function useLegendMeasurement({
     }
 
     const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth + safetyMargin
-    return Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
+    return Math.min(Math.max(Math.ceil(idealWidth), LEGEND_LAYOUT.MIN_WIDTH), maxContainerWidth, LEGEND_LAYOUT.MAX_WIDTH)
   })
 
   // ── Height computations ───────────────────────────────────────────────
 
   const maxLegendHeight = computed(() => {
-    return Math.floor(containerBounds.value.height * 0.80)
+    return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.MAX_HEIGHT_RATIO)
   })
 
   const targetLegendHeight = computed(() => {
-    return Math.floor(containerBounds.value.height * 0.75)
+    return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.TARGET_HEIGHT_RATIO)
   })
 
-  // ── Render upper bound ────────────────────────────────────────────────
   // Generous over-estimate of how many items COULD fit. Actual count is
   // determined by post-render DOM measurement.
   const renderUpperBound = computed(() => {
-    const minItemHeight = 22
+    const minItemHeight = LEGEND_LAYOUT.MIN_ITEM_HEIGHT_PX
     const gap = 2
     const titleHeight = 32
     const padding = 24
@@ -321,7 +321,7 @@ export function useLegendMeasurement({
       const extra = includeMoreIndicator
         ? moreIndicatorReserve + contentPaddingBottom
         : contentPaddingBottom
-      return Math.max(120, Math.ceil(lastBottom - legendTop + extra))
+      return Math.max(LEGEND_LAYOUT.MIN_SNUG_HEIGHT, Math.ceil(lastBottom - legendTop + extra))
     }
 
     function applyMeasuredResult(count, snugHeight, reason) {
@@ -423,7 +423,7 @@ export function useLegendMeasurement({
   })
 
   const effectiveWidth = computed(() => {
-    return isAutoWidth.value ? autoWidth.value : (currentWidth.value || 200)
+    return isAutoWidth.value ? autoWidth.value : (currentWidth.value || LEGEND_LAYOUT.MIN_WIDTH)
   })
 
   const effectiveHeight = computed(() => {
@@ -431,7 +431,7 @@ export function useLegendMeasurement({
   })
 
   const maxResizeWidth = computed(() => {
-    return Math.min(Math.round(containerBounds.value.width * 0.45), 600)
+    return Math.min(Math.round(containerBounds.value.width * LEGEND_LAYOUT.MAX_RESIZE_WIDTH_RATIO), LEGEND_LAYOUT.MAX_WIDTH)
   })
 
   // ── Cleanup ───────────────────────────────────────────────────────────
