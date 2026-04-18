@@ -154,6 +154,7 @@ const {
 } = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode)
 
 // Bridge: keep measurement composable's refs in sync with item data
+// (Wave 3 will eliminate these by splitting useLegendItemData into base+display phases)
 watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })
 watch(legendCounts, (counts) => { legendCountsRef.value = counts }, { immediate: true })
 
@@ -161,12 +162,27 @@ watch(legendCounts, (counts) => { legendCountsRef.value = counts }, { immediate:
 // WATCHERS (measurement triggers)
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Initial measurement on mount
+let dataMeasureTimer = null
+const invalidateMeasurement = (reason, { debounced = false } = {}) => {
+  resetToAutoSize()
+  measuredItemCount.value = null
+  prevMeasuredCount.value = null
+  measuredSnugHeight.value = null
+  if (dataMeasureTimer) clearTimeout(dataMeasureTimer)
+  if (debounced) {
+    dataMeasureTimer = setTimeout(() => {
+      dataMeasureTimer = null
+      scheduleMeasurement(false, reason)
+    }, 200)
+  } else {
+    scheduleMeasurement(false, reason)
+  }
+}
+
 watch(contentRef, (el, oldEl) => {
   if (el && !oldEl) scheduleMeasurement(false, 'mount')
 })
 
-// Re-measure when layout-affecting settings change
 watch([
   () => legendStore.wrapLabels,
   () => legendStore.textScale,
@@ -176,69 +192,38 @@ watch([
 ], (newVals, oldVals) => {
   const settingNames = ['wrapLabels', 'textScale', 'showCounts', 'isGrouped', 'groupingSettings']
   const changed = settingNames.filter((_, i) => JSON.stringify(newVals[i]) !== JSON.stringify(oldVals[i]))
-  resetToAutoSize()
-  measuredItemCount.value = null
-  prevMeasuredCount.value = null
-  measuredSnugHeight.value = null
-  scheduleMeasurement(false, `setting:${changed.join(',')}`)
+  invalidateMeasurement(`setting:${changed.join(',')}`)
 }, { deep: true })
 
-// Re-measure when data changes (debounced to batch rapid source loads)
-let dataMeasureTimer = null
 watch(sortedAllItems, (newItems, oldItems) => {
   const delta = newItems.length - (oldItems?.length || 0)
-  resetToAutoSize()
-  measuredItemCount.value = null
-  prevMeasuredCount.value = null
-  measuredSnugHeight.value = null
-  if (dataMeasureTimer) clearTimeout(dataMeasureTimer)
-  dataMeasureTimer = setTimeout(() => {
-    dataMeasureTimer = null
-    scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
-  }, 200)
+  invalidateMeasurement(`data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`, { debounced: true })
 })
 
-// Re-measure after resize ends
 watch(isResizing, (resizing) => {
-  if (!resizing) {
-    scheduleMeasurement(true, 'resizeEnd', true)
-    const labels = new Set()
-    for (const item of legendItems.value) {
-      if (item.visible !== false) labels.add(item.label)
-    }
-    legendStore.setShownLabels(labels)
-  }
+  if (!resizing) scheduleMeasurement(true, 'resizeEnd', true)
 })
 
-// Manual mode watchers
 watch(() => legendStore.maxItemsMode, (newMode) => {
   log.legend.info(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
   if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
 })
 
-watch(() => legendStore.maxItemsManual, (newCount) => {
-  if (legendStore.isManualMode) log.legend.debug(`[Legend] manual items → ${newCount}`)
-})
-
-// Container resize triggers re-measurement
 watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
     scheduleContainerResizeMeasurement()
   }
 }, { deep: true })
 
-// Re-measure when leaving edit UI: labels switch from LegendEditableLabel
-// (always nowrap/ellipsis) back to plain <span> (wrap-enabled when wrapLabels is on),
-// which can make items taller and cause overflow.
+// Labels switch from LegendEditableLabel (nowrap/ellipsis) back to plain <span>
+// (wrap-enabled when wrapLabels is on), which can make items taller and cause overflow.
 watch(showEditUI, (editing) => {
   if (!editing && legendStore.wrapLabels) {
     scheduleMeasurement(false, 'editUILeave')
   }
 })
 
-// Sync shown labels to store
 watch(legendItems, (items) => {
-  if (isResizing.value) return
   const labels = new Set()
   for (const item of items) {
     if (item.visible !== false) labels.add(item.label)
