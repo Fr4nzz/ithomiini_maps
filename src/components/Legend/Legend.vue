@@ -5,7 +5,7 @@ import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import { computePopupPosition } from '../../composables/usePopupPosition'
-import { useLegendItemData } from './useLegendItemData'
+import { useLegendBaseData, useLegendDisplayData } from './useLegendItemData'
 import { useLegendMeasurement } from './useLegendMeasurement'
 import { useLegendPosition } from './useLegendPosition'
 import { log } from '../../utils/logger'
@@ -100,13 +100,6 @@ const {
 // MEASUREMENT (extracted composable)
 // ═══════════════════════════════════════════════════════════════════════════
 
-// We need a temporary placeholder for sortedAllItems/legendCounts since
-// measurement composable and item data composable have a dependency chain:
-// measurement → effectiveMaxItems → useLegendItemData → sortedAllItems → measurement
-// Solution: pass refs that get populated after useLegendItemData is called.
-const sortedAllItemsRef = ref([])
-const legendCountsRef = ref({})
-
 // Multi-directional resize (must come before measurement for isResizing)
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
@@ -123,6 +116,15 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   }
 })
 
+const base = useLegendBaseData(dataStore, legendStore, isExportMode)
+const {
+  colorMap, baseColors, itemGroupMap, itemToGroupsMap, subspeciesSpeciesMap,
+  groupBorderColors, getGroupBorderColor, hasCustomizedStyle, anyGroupHasCustomStyle,
+  getGroupForItem, getGroupsForItem, formatLabel,
+  legendCounts, legendGroupCounts, getGroupItemCount,
+  sortedAllItems
+} = base
+
 const {
   measuredItemCount, measuredSnugHeight, prevMeasuredCount,
   maxLegendHeight, effectiveMaxItems, effectiveWidth, effectiveHeight,
@@ -132,31 +134,18 @@ const {
   legendRef, contentRef, containerBounds,
   isAutoWidth, isAutoHeight, currentWidth, currentHeight,
   isResizing, resizeOverride,
-  sortedAllItems: sortedAllItemsRef,
-  legendCounts: legendCountsRef,
+  sortedAllItems,
+  legendCounts,
   legendStore, dataStore
 })
 
+const display = useLegendDisplayData(base, dataStore, legendStore, () => effectiveMaxItems.value, isExportMode)
+const { legendItems, groupedLegendData, moreCount, morePointCount } = display
+
+const groupList = computed(() => Object.keys(itemGroupMap.value).sort())
+
 // Should show toolbar/edit UI?
 const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
-
-// ═══════════════════════════════════════════════════════════════════════════
-// ITEM DATA (extracted composable)
-// ═══════════════════════════════════════════════════════════════════════════
-
-const {
-  colorMap, baseColors, itemGroupMap, itemToGroupsMap, subspeciesSpeciesMap,
-  groupList, groupBorderColors, getGroupBorderColor, hasCustomizedStyle, anyGroupHasCustomStyle,
-  getGroupForItem, getGroupsForItem, formatLabel,
-  legendCounts, legendGroupCounts, getGroupItemCount,
-  sortedAllItems, legendItems, groupedLegendData,
-  moreCount, morePointCount
-} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode)
-
-// Bridge: keep measurement composable's refs in sync with item data
-// (Wave 3 will eliminate these by splitting useLegendItemData into base+display phases)
-watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })
-watch(legendCounts, (counts) => { legendCountsRef.value = counts }, { immediate: true })
 
 // ═══════════════════════════════════════════════════════════════════════════
 // WATCHERS (measurement triggers)

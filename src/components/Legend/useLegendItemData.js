@@ -18,17 +18,10 @@ const groupByPropertyMap = {
   'source': 'source'
 }
 
-/**
- * Composable for legend item data computation
- * @param {Object} dataStore - Data store instance
- * @param {Object} legendStore - Legend store instance
- * @param {Function} getEffectiveMaxItems - Getter for max items (lazy, avoids circular dep with measurement)
- * @param {import('vue').ComputedRef} isExportMode - Whether export mode is active
- */
-export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, isExportMode) {
-
+export function useLegendBaseData(dataStore, legendStore, isExportMode) {
   // Color map from data store (includes custom overrides - used for display)
   const colorMap = computed(() => dataStore.activeColorMap)
+  const activeColorMap = colorMap
   // Base color map (without custom overrides - used for defaultColor/reset)
   const baseColors = computed(() => dataStore.baseColorMap)
 
@@ -184,7 +177,7 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // SORTED ITEMS & LEGEND ITEMS
+  // SORTED ITEMS
   // ═══════════════════════════════════════════════════════════════════════════
 
   const sortedAllItems = computed(() => {
@@ -224,16 +217,154 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
     return items
   })
 
+  return {
+    legendCounts,
+    legendGroupCounts,
+    sortedAllItems,
+    itemGroupMap,
+    itemToGroupsMap,
+    subspeciesSpeciesMap,
+    baseColors,
+    colorMap,
+    activeColorMap,
+    groupBorderColors,
+    getGroupBorderColor,
+    hasCustomizedStyle,
+    anyGroupHasCustomStyle,
+    getGroupForItem,
+    getGroupsForItem,
+    formatLabel,
+    getGroupItemCount
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SORT HELPERS & GROUPED DATA
+// ═══════════════════════════════════════════════════════════════════════════
+
+function sortItemsByText(items, order) {
+  return items.slice().sort((a, b) => {
+    const textA = (a.displayLabel || a.label).toLowerCase()
+    const textB = (b.displayLabel || b.label).toLowerCase()
+    return order === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
+  })
+}
+
+function sortItemsByAbundance(items, order, counts) {
+  return items.slice().sort((a, b) => {
+    const countA = counts[a.label] || 0
+    const countB = counts[b.label] || 0
+    return order === 'asc' ? countA - countB : countB - countA
+  })
+}
+
+function sortGroups(groups, sortBy, sortOrder, counts) {
+  if (sortBy === 'abundance') {
+    groups.sort((a, b) => {
+      const totalA = a.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
+      const totalB = b.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
+      return sortOrder === 'asc' ? totalA - totalB : totalB - totalA
+    })
+  } else {
+    groups.sort((a, b) => {
+      const textA = a.name.toLowerCase()
+      const textB = b.name.toLowerCase()
+      return sortOrder === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
+    })
+  }
+  return groups
+}
+
+function contractSpeciesName(speciesName) {
+  if (!speciesName) return ''
+  const parts = speciesName.split(' ')
+  if (parts.length >= 2) {
+    return `${parts[0][0]}. ${parts.slice(1).join(' ')}`
+  }
+  return speciesName
+}
+
+function groupItemsByGroup(items, getGroupsForItem) {
+  const byGroup = {}
+  for (const item of items) {
+    const groups = getGroupsForItem(item.label)
+    for (const group of groups) {
+      if (!byGroup[group]) byGroup[group] = []
+      byGroup[group].push(item)
+    }
+  }
+  return byGroup
+}
+
+function buildGroupData({
+  groupName,
+  items,
+  sortByVal,
+  sortOrderVal,
+  counts,
+  multiGroupLabels,
+  legendStore,
+  formatLabel,
+  getGroupBorderColor
+}) {
+  let customLabel = legendStore.getSpeciesDisplayName(groupName)
+  if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
+    customLabel = applyAbbreviationFormat(groupName, legendStore.displayNameFormat)
+  }
+
+  const headersHidden = !legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy
+  const needsDisambiguation = headersHidden && multiGroupLabels
+
+  let mappedItems = items.map(item => {
+    const shouldDisambiguate = needsDisambiguation && multiGroupLabels.has(item.label)
+    // When disambiguating, skip the abbreviation prefix from formatLabel
+    // to avoid double species info (prefix + suffix).
+    let displayLabel = shouldDisambiguate
+      ? item.label
+      : formatLabel(item.label, groupName)
+    if (shouldDisambiguate) {
+      displayLabel += ` (${contractSpeciesName(groupName)})`
+    }
+    return { ...item, displayLabel }
+  })
+
+  mappedItems = sortByVal === 'abundance'
+    ? sortItemsByAbundance(mappedItems, sortOrderVal, counts)
+    : sortItemsByText(mappedItems, sortOrderVal)
+
+  return {
+    name: groupName,
+    borderColor: getGroupBorderColor(groupName),
+    shape: legendStore.getGroupShape(groupName),
+    abbreviation: legendStore.getSpeciesAbbreviation(groupName),
+    abbreviationVisible: legendStore.isAbbreviationVisible(groupName),
+    customLabel: customLabel || '',
+    items: mappedItems
+  }
+}
+
+/**
+ * Composable for legend item display computation
+ * @param {ReturnType<typeof useLegendBaseData>} base - Base legend data
+ * @param {Object} dataStore - Data store instance
+ * @param {Object} legendStore - Legend store instance
+ * @param {Function} getEffectiveMaxItems - Getter for max items (lazy, avoids circular dep with measurement)
+ * @param {import('vue').ComputedRef} isExportMode - Whether export mode is active
+ */
+export function useLegendDisplayData(base, dataStore, legendStore, getEffectiveMaxItems, isExportMode) {
+  const {
+    baseColors,
+    colorMap,
+    formatLabel,
+    getGroupBorderColor,
+    getGroupsForItem,
+    legendCounts,
+    sortedAllItems
+  } = base
+
   const legendItems = computed(() => {
     const maxItems = getEffectiveMaxItems()
-    let items
-
-    // Simple top-to-bottom slice: items are already sorted by group/name,
-    // so this fills groups sequentially, minimizing group header overhead.
-    // fairGroupedSlice was previously used for aesthetic distribution but
-    // caused the measurement algorithm to under-count items because spreading
-    // items across many groups creates more group headers than sequential fill.
-    items = sortedAllItems.value.slice(0, maxItems)
+    const items = sortedAllItems.value.slice(0, maxItems)
 
     if (!isExportMode.value) {
       const baseMap = baseColors.value
@@ -254,101 +385,6 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
     return items
   })
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SORT HELPERS & GROUPED DATA
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  function sortItemsByText(items, order) {
-    return items.slice().sort((a, b) => {
-      const textA = (a.displayLabel || a.label).toLowerCase()
-      const textB = (b.displayLabel || b.label).toLowerCase()
-      return order === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
-    })
-  }
-
-  function sortItemsByAbundance(items, order, counts) {
-    return items.slice().sort((a, b) => {
-      const countA = counts[a.label] || 0
-      const countB = counts[b.label] || 0
-      return order === 'asc' ? countA - countB : countB - countA
-    })
-  }
-
-  function groupItemsByGroup(items) {
-    const byGroup = {}
-    for (const item of items) {
-      const groups = getGroupsForItem(item.label)
-      for (const group of groups) {
-        if (!byGroup[group]) byGroup[group] = []
-        byGroup[group].push(item)
-      }
-    }
-    return byGroup
-  }
-
-  function sortGroups(groups, sortBy, sortOrder, counts) {
-    if (sortBy === 'abundance') {
-      groups.sort((a, b) => {
-        const totalA = a.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
-        const totalB = b.items.reduce((sum, item) => sum + (counts[item.label] || 0), 0)
-        return sortOrder === 'asc' ? totalA - totalB : totalB - totalA
-      })
-    } else {
-      groups.sort((a, b) => {
-        const textA = a.name.toLowerCase()
-        const textB = b.name.toLowerCase()
-        return sortOrder === 'asc' ? textA.localeCompare(textB) : textB.localeCompare(textA)
-      })
-    }
-    return groups
-  }
-
-  function contractSpeciesName(speciesName) {
-    if (!speciesName) return ''
-    const parts = speciesName.split(' ')
-    if (parts.length >= 2) {
-      return `${parts[0][0]}. ${parts.slice(1).join(' ')}`
-    }
-    return speciesName
-  }
-
-  function buildGroupData(groupName, items, sortByVal, sortOrderVal, counts, multiGroupLabels) {
-    let customLabel = legendStore.getSpeciesDisplayName(groupName)
-    if (!customLabel && legendStore.displayNameFormat !== 'firstLetterGenus') {
-      customLabel = applyAbbreviationFormat(groupName, legendStore.displayNameFormat)
-    }
-
-    const headersHidden = !legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy
-    const needsDisambiguation = headersHidden && multiGroupLabels
-
-    let mappedItems = items.map(item => {
-      const shouldDisambiguate = needsDisambiguation && multiGroupLabels.has(item.label)
-      // When disambiguating, skip the abbreviation prefix from formatLabel
-      // to avoid double species info (prefix + suffix).
-      let displayLabel = shouldDisambiguate
-        ? item.label
-        : formatLabel(item.label, groupName)
-      if (shouldDisambiguate) {
-        displayLabel += ` (${contractSpeciesName(groupName)})`
-      }
-      return { ...item, displayLabel }
-    })
-
-    mappedItems = sortByVal === 'abundance'
-      ? sortItemsByAbundance(mappedItems, sortOrderVal, counts)
-      : sortItemsByText(mappedItems, sortOrderVal)
-
-    return {
-      name: groupName,
-      borderColor: getGroupBorderColor(groupName),
-      shape: legendStore.getGroupShape(groupName),
-      abbreviation: legendStore.getSpeciesAbbreviation(groupName),
-      abbreviationVisible: legendStore.isAbbreviationVisible(groupName),
-      customLabel: customLabel || '',
-      items: mappedItems
-    }
-  }
-
   const groupedLegendData = computed(() => {
     const sortByVal = legendStore.sortBy
     const sortOrderVal = legendStore.sortOrder
@@ -358,29 +394,36 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
       return { type: 'flat', items: legendItems.value.slice() }
     }
 
-    const itemsByGroup = groupItemsByGroup(legendItems.value)
+    const itemsByGroup = groupItemsByGroup(legendItems.value, getGroupsForItem)
 
     const labelGroupCount = new Map()
-    for (const [groupName, items] of Object.entries(itemsByGroup)) {
+    for (const items of Object.values(itemsByGroup)) {
       for (const item of items) {
         labelGroupCount.set(item.label, (labelGroupCount.get(item.label) || 0) + 1)
       }
     }
+
     const multiGroupLabels = new Set()
     for (const [label, count] of labelGroupCount) {
       if (count > 1) multiGroupLabels.add(label)
     }
 
     let groups = Object.keys(itemsByGroup).map(groupName =>
-      buildGroupData(groupName, itemsByGroup[groupName], sortByVal, sortOrderVal, counts,
-        multiGroupLabels.size > 0 ? multiGroupLabels : null)
+      buildGroupData({
+        groupName,
+        items: itemsByGroup[groupName],
+        sortByVal,
+        sortOrderVal,
+        counts,
+        multiGroupLabels: multiGroupLabels.size > 0 ? multiGroupLabels : null,
+        legendStore,
+        formatLabel,
+        getGroupBorderColor
+      })
     )
 
     groups = sortGroups(groups, sortByVal, sortOrderVal, counts)
 
-    // ── Cap: limit total rendered items (including cross-group duplicates) ──
-    // This ensures effectiveMaxItems maps 1:1 to DOM items, preventing the
-    // "cliff" where 1 extra unique label creates many cross-group entries.
     const maxVisible = getEffectiveMaxItems()
     let totalRendered = 0
     groups = groups.map(g => {
@@ -397,7 +440,6 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
     return { type: 'grouped', groups }
   })
 
-  // Count unique visible labels actually shown after all caps (Cap 1 + Cap 2)
   function countShownLabels() {
     const gld = groupedLegendData.value
     const shown = new Set()
@@ -435,23 +477,6 @@ export function useLegendItemData(dataStore, legendStore, getEffectiveMaxItems, 
   })
 
   return {
-    colorMap,
-    baseColors,
-    itemGroupMap,
-    itemToGroupsMap,
-    subspeciesSpeciesMap,
-    groupList,
-    groupBorderColors,
-    getGroupBorderColor,
-    hasCustomizedStyle,
-    anyGroupHasCustomStyle,
-    getGroupForItem,
-    getGroupsForItem,
-    formatLabel,
-    legendCounts,
-    legendGroupCounts,
-    getGroupItemCount,
-    sortedAllItems,
     legendItems,
     groupedLegendData,
     moreCount,
