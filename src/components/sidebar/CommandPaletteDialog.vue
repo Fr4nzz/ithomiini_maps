@@ -79,21 +79,6 @@ const speciesEpithet = (scientificName, genus) => {
   return parts.length > 1 ? parts.slice(1).join(' ') : scientificName
 }
 
-const ambiguousSubspecies = computed(() => {
-  const bySubsp = new Map()
-  for (const feature of store.allFeatures || []) {
-    if (!isValidValue(feature.subspecies) || !isValidValue(feature.scientific_name)) continue
-    const epithet = subspeciesEpithet(feature.subspecies)
-    if (!bySubsp.has(epithet)) bySubsp.set(epithet, new Set())
-    bySubsp.get(epithet).add(feature.scientific_name)
-  }
-  const ambiguous = new Set()
-  for (const [epithet, species] of bySubsp) {
-    if (species.size > 1) ambiguous.add(epithet)
-  }
-  return ambiguous
-})
-
 const allItems = computed(() => {
   const features = store.allFeatures || []
   const items = [
@@ -287,19 +272,16 @@ async function selectItem(item) {
         store.filters.species = [...store.filters.species, item.value]
       }
       break
-    case 'subspecies': {
+    case 'subspecies':
       await clearConflictingTaxonomy(item.lineage)
-      const epithet = subspeciesEpithet(item.value)
-      const needsSpeciesDisambiguation = ambiguousSubspecies.value.has(epithet)
-      if (needsSpeciesDisambiguation && item.speciesName && !store.filters.species.includes(item.speciesName)) {
+      if (item.speciesName && !store.filters.species.includes(item.speciesName)) {
         store.filters.species = [...store.filters.species, item.speciesName]
-        await nextTick()
       }
+      await nextTick()
       if (!store.filters.subspecies.includes(item.value)) {
         store.filters.subspecies = [...store.filters.subspecies, item.value]
       }
       break
-    }
     case 'country':
       store.filters.country = item.value
       break
@@ -312,6 +294,15 @@ async function selectItem(item) {
   query.value = ''
 }
 
+const subspeciesToSpecies = computed(() => {
+  const map = new Map()
+  for (const feature of store.allFeatures || []) {
+    if (!isValidValue(feature.subspecies) || !isValidValue(feature.scientific_name)) continue
+    if (!map.has(feature.subspecies)) map.set(feature.subspecies, feature.scientific_name)
+  }
+  return map
+})
+
 const activeFilters = computed(() => {
   const chips = []
   const f = store.filters
@@ -319,7 +310,11 @@ const activeFilters = computed(() => {
   if (f.tribe !== 'All') chips.push({ key: `tribe:${f.tribe}`, label: f.tribe, type: 'Tribe', remove: () => { store.filters.tribe = 'All' } })
   if (f.genus !== 'All') chips.push({ key: `genus:${f.genus}`, label: f.genus, type: 'Genus', remove: () => { store.filters.genus = 'All' } })
   for (const s of f.species) chips.push({ key: `species:${s}`, label: s, type: 'Species', remove: () => { store.filters.species = store.filters.species.filter(v => v !== s) } })
-  for (const s of f.subspecies) chips.push({ key: `subsp:${s}`, label: s, type: 'Subspecies', remove: () => { store.filters.subspecies = store.filters.subspecies.filter(v => v !== s) } })
+  for (const s of f.subspecies) {
+    const parentSp = subspeciesToSpecies.value.get(s)
+    const label = parentSp && !f.species.includes(parentSp) ? `${parentSp} ${s}` : s
+    chips.push({ key: `subsp:${s}`, label, type: 'Subspecies', remove: () => { store.filters.subspecies = store.filters.subspecies.filter(v => v !== s) } })
+  }
   for (const m of f.mimicry) chips.push({ key: `mim:${m}`, label: m, type: 'Mimicry', remove: () => { store.filters.mimicry = store.filters.mimicry.filter(v => v !== m) } })
   if (f.country !== 'All') chips.push({ key: `country:${f.country}`, label: f.country, type: 'Country', remove: () => { store.filters.country = 'All' } })
   for (const s of f.status) chips.push({ key: `status:${s}`, label: s, type: 'Status', remove: () => { store.filters.status = store.filters.status.filter(v => v !== s) } })
