@@ -101,7 +101,7 @@ describe('useFilterStore', () => {
     expect(filterStore.boundingBox).toBeNull()
   })
 
-  it('clears dependent filters when family changes', async () => {
+  it('keeps dependent filters intact when family changes (additive filter model)', async () => {
     const filterStore = useFilterStore()
 
     filterStore.filters.tribe = 'Ithomiini'
@@ -112,10 +112,10 @@ describe('useFilterStore', () => {
     filterStore.filters.family = 'Nymphalidae'
     await nextTick()
 
-    expect(filterStore.filters.tribe).toBe('All')
-    expect(filterStore.filters.genus).toBe('All')
-    expect(filterStore.filters.species).toEqual([])
-    expect(filterStore.filters.subspecies).toEqual([])
+    expect(filterStore.filters.tribe).toBe('Ithomiini')
+    expect(filterStore.filters.genus).toBe('Mechanitis')
+    expect(filterStore.filters.species).toEqual(['Mechanitis menophilus'])
+    expect(filterStore.filters.subspecies).toEqual(['nevadensis'])
   })
 
   it('computes unique species and subspecies from mock data', () => {

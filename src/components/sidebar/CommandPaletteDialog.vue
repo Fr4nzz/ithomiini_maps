@@ -235,49 +235,26 @@ function highlight(text, hit) {
     + escapeHtml(text.slice(idx + len))
 }
 
-async function clearConflictingTaxonomy(lineage) {
-  const { family, tribe, genus } = lineage
-  if (family && store.filters.family !== 'All' && store.filters.family !== family) {
-    store.filters.family = 'All'
-    await nextTick()
-    return
-  }
-  if (tribe && store.filters.tribe !== 'All' && store.filters.tribe !== tribe) {
-    store.filters.tribe = 'All'
-    await nextTick()
-    return
-  }
-  if (genus && store.filters.genus !== 'All' && store.filters.genus !== genus) {
-    store.filters.genus = 'All'
-    await nextTick()
-  }
-}
-
-async function selectItem(item) {
+function selectItem(item) {
   switch (item.kind) {
     case 'family':
       store.filters.family = item.value
       break
     case 'tribe':
-      await clearConflictingTaxonomy(item.lineage)
       store.filters.tribe = item.value
       break
     case 'genus':
-      await clearConflictingTaxonomy(item.lineage)
       store.filters.genus = item.value
       break
     case 'species':
-      await clearConflictingTaxonomy(item.lineage)
       if (!store.filters.species.includes(item.value)) {
         store.filters.species = [...store.filters.species, item.value]
       }
       break
     case 'subspecies':
-      await clearConflictingTaxonomy(item.lineage)
       if (item.speciesName && !store.filters.species.includes(item.speciesName)) {
         store.filters.species = [...store.filters.species, item.speciesName]
       }
-      await nextTick()
       if (!store.filters.subspecies.includes(item.value)) {
         store.filters.subspecies = [...store.filters.subspecies, item.value]
       }
@@ -348,26 +325,6 @@ const activeFilters = computed(() => {
   if (f.dateStart || f.dateEnd) other.push({ key: 'date', label: 'Date range', type: 'Time', remove: () => { store.filters.dateStart = null; store.filters.dateEnd = null } })
 
   return { taxonomy, other, total: taxonomy.length + other.length }
-})
-
-const hoveredCascadeKey = ref(null)
-
-const cascadeTargetKeys = computed(() => {
-  if (!hoveredCascadeKey.value) return new Set()
-  const chips = activeFilters.value.taxonomy
-  const idx = chips.findIndex(c => c.key === hoveredCascadeKey.value)
-  if (idx < 0) return new Set()
-  const parent = chips[idx]
-  const descendants = new Set([parent.key])
-  if (parent.type === 'Family' || parent.type === 'Tribe' || parent.type === 'Genus') {
-    for (const c of chips) if (c !== parent) descendants.add(c.key)
-  } else if (parent.type === 'Species') {
-    for (let i = idx + 1; i < chips.length; i++) {
-      if (chips[i].level > parent.level) descendants.add(chips[i].key)
-      else break
-    }
-  }
-  return descendants
 })
 
 function handleKeydown(e) {
@@ -531,12 +488,9 @@ defineExpose({ open: () => { dialogOpen.value = true } })
                 v-for="chip in activeFilters.taxonomy"
                 :key="chip.key"
                 class="cmd-chip cmd-chip--tree"
-                :class="{ 'cmd-chip--cascade': cascadeTargetKeys.has(chip.key) && hoveredCascadeKey !== chip.key }"
                 :style="{ paddingLeft: `${6 + chip.level * 14}px` }"
                 :title="`Remove ${chip.type}: ${chip.label}`"
                 @click="chip.remove()"
-                @mouseenter="hoveredCascadeKey = chip.key"
-                @mouseleave="hoveredCascadeKey = null"
               >
                 <span v-if="chip.level > 0" class="cmd-chip-branch" aria-hidden="true">└</span>
                 <span class="cmd-chip-type">{{ chip.type }}</span>
@@ -793,12 +747,6 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   padding: 5px 8px;
   border-radius: 4px;
   font-size: 0.75rem;
-}
-
-.cmd-chip--cascade {
-  border-color: rgba(239, 68, 68, 0.4);
-  background: rgba(239, 68, 68, 0.06);
-  color: rgba(239, 68, 68, 0.9);
 }
 
 .cmd-chip-branch {

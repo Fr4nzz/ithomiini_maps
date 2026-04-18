@@ -160,57 +160,8 @@ export const useFilterStore = defineStore('filters', () => {
     return result
   })
 
-  const pruneBelow = (scope) => {
-    const hasAnyLower = filters.value.tribe !== 'All'
-      || filters.value.genus !== 'All'
-      || filters.value.species.length > 0
-      || filters.value.subspecies.length > 0
-    if (!hasAnyLower) return
-
-    if (scope.family === 'All' && scope.tribe === 'All' && scope.genus === 'All') return
-
-    const validTribes = new Set()
-    const validGenera = new Set()
-    const validSpecies = new Set()
-    const validSubspecies = new Set()
-    for (const feature of datasetStore.allFeatures) {
-      if (scope.family !== 'All' && feature.family !== scope.family) continue
-      if (scope.tribe !== 'All' && feature.tribe !== scope.tribe) continue
-      if (scope.genus !== 'All' && feature.genus !== scope.genus) continue
-      if (isValidValue(feature.tribe)) validTribes.add(feature.tribe)
-      if (isValidValue(feature.genus)) validGenera.add(feature.genus)
-      if (isValidValue(feature.scientific_name)) validSpecies.add(feature.scientific_name)
-      if (isValidValue(feature.subspecies)) validSubspecies.add(feature.subspecies)
-    }
-    if (filters.value.tribe !== 'All' && !validTribes.has(filters.value.tribe)) filters.value.tribe = 'All'
-    if (filters.value.genus !== 'All' && !validGenera.has(filters.value.genus)) filters.value.genus = 'All'
-    filters.value.species = filters.value.species.filter(s => validSpecies.has(s))
-    filters.value.subspecies = filters.value.subspecies.filter(s => validSubspecies.has(s))
-  }
-
-  watch(() => filters.value.family, (newFamily) => {
-    pruneBelow({ family: newFamily, tribe: filters.value.tribe, genus: filters.value.genus })
-  })
-
-  watch(() => filters.value.tribe, (newTribe) => {
-    pruneBelow({ family: filters.value.family, tribe: newTribe, genus: filters.value.genus })
-  })
-
-  watch(() => filters.value.genus, (newGenus) => {
-    pruneBelow({ family: filters.value.family, tribe: filters.value.tribe, genus: newGenus })
-  })
-
-  watch(() => filters.value.species, (newSpecies) => {
-    if (filters.value.subspecies.length === 0) return
-    if (newSpecies.length === 0) return
-    const validSubspecies = new Set()
-    for (const feature of datasetStore.allFeatures) {
-      if (newSpecies.includes(feature.scientific_name) && isValidValue(feature.subspecies)) {
-        validSubspecies.add(feature.subspecies)
-      }
-    }
-    filters.value.subspecies = filters.value.subspecies.filter(s => validSubspecies.has(s))
-  }, { deep: true })
+  // Taxonomy filters are purely additive — users manage their own filter state
+  // via the active-filters UI; no auto-cascade on change to avoid surprising removals.
 
   watch(() => filters.value.source, async (selectedSources) => {
     const needed = selectedSources.filter(source => !datasetStore.loadedSources.has(source))
