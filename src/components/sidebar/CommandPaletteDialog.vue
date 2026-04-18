@@ -287,36 +287,18 @@ const activeFilters = computed(() => {
   const other = []
   const f = store.filters
 
-  for (const v of f.family) taxonomy.push({ key: `family:${v}`, label: v, type: 'Family', level: 0, remove: removeFromArray('family', v) })
-  for (const v of f.tribe) taxonomy.push({ key: `tribe:${v}`, label: v, type: 'Tribe', level: 1, remove: removeFromArray('tribe', v) })
-  for (const v of f.genus) taxonomy.push({ key: `genus:${v}`, label: v, type: 'Genus', level: 2, remove: removeFromArray('genus', v) })
-
-  for (const species of f.species) {
-    taxonomy.push({
-      key: `species:${species}`, label: species, type: 'Species', level: 3,
-      remove: removeFromArray('species', species),
-    })
-    for (const sub of f.subspecies) {
-      const parent = subspeciesToSpecies.value.get(sub)
-      if (parent === species) {
-        taxonomy.push({
-          key: `subsp:${sub}:${species}`, label: sub, type: 'Subspecies', level: 4,
-          remove: removeFromArray('subspecies', sub),
-        })
-      }
-    }
-  }
-
+  for (const v of f.family) taxonomy.push({ key: `family:${v}`, label: v, type: 'Family', remove: removeFromArray('family', v) })
+  for (const v of f.tribe) taxonomy.push({ key: `tribe:${v}`, label: v, type: 'Tribe', remove: removeFromArray('tribe', v) })
+  for (const v of f.genus) taxonomy.push({ key: `genus:${v}`, label: v, type: 'Genus', remove: removeFromArray('genus', v) })
+  for (const v of f.species) taxonomy.push({ key: `species:${v}`, label: v, type: 'Species', remove: removeFromArray('species', v) })
   for (const sub of f.subspecies) {
     const parent = subspeciesToSpecies.value.get(sub)
-    if (!parent || !f.species.includes(parent)) {
-      taxonomy.push({
-        key: `subsp:${sub}:orphan`,
-        label: parent ? `${parent} ${sub}` : sub,
-        type: 'Subspecies', level: 3,
-        remove: removeFromArray('subspecies', sub),
-      })
-    }
+    taxonomy.push({
+      key: `subsp:${sub}`,
+      label: parent ? `${parent} ${sub}` : sub,
+      type: 'Subspecies',
+      remove: removeFromArray('subspecies', sub),
+    })
   }
 
   for (const v of f.mimicry) other.push({ key: `mim:${v}`, label: v, type: 'Mimicry', remove: removeFromArray('mimicry', v) })
@@ -486,15 +468,14 @@ defineExpose({ open: () => { dialogOpen.value = true } })
             <div class="cmd-sidebar-title">Active filters ({{ activeFilters.total }})</div>
 
             <div v-if="activeFilters.taxonomy.length > 0" class="cmd-tree">
+              <div class="cmd-group-heading cmd-group-heading--any">Taxonomy <span class="cmd-combinator">· any match</span></div>
               <button
                 v-for="chip in activeFilters.taxonomy"
                 :key="chip.key"
                 class="cmd-chip cmd-chip--tree"
-                :style="{ paddingLeft: `${6 + chip.level * 14}px` }"
                 :title="`Remove ${chip.type}: ${chip.label}`"
                 @click="chip.remove()"
               >
-                <span v-if="chip.level > 0" class="cmd-chip-branch" aria-hidden="true">└</span>
                 <span class="cmd-chip-type">{{ chip.type }}</span>
                 <span class="cmd-chip-label">{{ chip.label }}</span>
                 <svg class="cmd-chip-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -628,6 +609,18 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   color: var(--color-accent, #4ade80);
 }
 
+.cmd-group-heading--any {
+  padding: 0 0 6px;
+}
+
+.cmd-combinator {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-text-muted, #666);
+  font-size: 0.72rem;
+}
+
 .cmd-item {
   display: flex;
   align-items: center;
@@ -749,12 +742,6 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   padding: 5px 8px;
   border-radius: 4px;
   font-size: 0.75rem;
-}
-
-.cmd-chip-branch {
-  color: var(--color-text-muted, #666);
-  font-family: monospace;
-  flex-shrink: 0;
 }
 
 .cmd-chip:hover {

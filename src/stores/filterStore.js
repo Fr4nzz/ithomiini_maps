@@ -235,11 +235,16 @@ export const useFilterStore = defineStore('filters', () => {
         if (!searchTerms.some(term => itemId.includes(term))) return false
       }
 
-      if (familySet && !familySet.has(item.family)) return false
-      if (tribeSet && !tribeSet.has(item.tribe)) return false
-      if (genusSet && !genusSet.has(item.genus)) return false
-      if (speciesSet && !speciesSet.has(item.scientific_name)) return false
-      if (subspeciesSet && !subspeciesSet.has(item.subspecies)) return false
+      const anyTaxonomyActive = familySet || tribeSet || genusSet || speciesSet || subspeciesSet
+      if (anyTaxonomyActive) {
+        const matchesTaxonomy =
+          (familySet && familySet.has(item.family)) ||
+          (tribeSet && tribeSet.has(item.tribe)) ||
+          (genusSet && genusSet.has(item.genus)) ||
+          (speciesSet && speciesSet.has(item.scientific_name)) ||
+          (subspeciesSet && subspeciesSet.has(item.subspecies))
+        if (!matchesTaxonomy) return false
+      }
       if (mimicrySet && !mimicrySet.has(item.mimicry_ring)) return false
       if (statusSet && !statusSet.has(item.sequencing_status)) return false
       if (sourceSet && !sourceSet.has(item.source)) return false
