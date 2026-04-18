@@ -394,11 +394,6 @@
   letter-spacing: 0;
 }
 
-.taxonomy-tree-slot {
-  display: block;
-  margin-bottom: 12px;
-}
-
 .shortcut-hint kbd {
   padding: 1px 5px;
   border-radius: 3px;

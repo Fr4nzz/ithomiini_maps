@@ -9,7 +9,6 @@ import DateFilter from './DateFilter.vue'
 import TimeSlider from './TimeSlider.vue'
 import SidebarMapSettings from './SidebarMapSettings.vue'
 import DatabaseUpdateSection from './DatabaseUpdateSection.vue'
-import TaxonomyTree from './sidebar/TaxonomyTree.vue'
 import { useCamidAutocomplete } from '../composables/useCamidAutocomplete'
 import { ASPECT_RATIOS } from '../utils/constants'
 import config from '../config'
@@ -497,9 +496,6 @@ const updateExportHeight = (value) => {
             <kbd>⌘/Ctrl+K</kbd>
           </button>
         </label>
-
-        <!-- Taxonomy Tree (alternative hierarchical picker) -->
-        <TaxonomyTree class="taxonomy-tree-slot" />
 
         <!-- Species Multi-select with Fuzzy Search -->
         <FilterSelect
