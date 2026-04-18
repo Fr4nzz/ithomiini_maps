@@ -269,14 +269,23 @@ function selectItem(item) {
   query.value = ''
 }
 
-const subspeciesToSpecies = computed(() => {
+const subspeciesParents = computed(() => {
   const map = new Map()
   for (const feature of store.allFeatures || []) {
     if (!isValidValue(feature.subspecies) || !isValidValue(feature.scientific_name)) continue
-    if (!map.has(feature.subspecies)) map.set(feature.subspecies, feature.scientific_name)
+    if (!map.has(feature.subspecies)) map.set(feature.subspecies, new Set())
+    map.get(feature.subspecies).add(feature.scientific_name)
   }
   return map
 })
+
+const resolveSubspeciesParent = (sub, activeSpecies) => {
+  const parents = subspeciesParents.value.get(sub)
+  if (!parents || parents.size === 0) return null
+  const matched = activeSpecies.find(sp => parents.has(sp))
+  if (matched) return matched
+  return parents.values().next().value
+}
 
 const removeFromArray = (key, value) => () => {
   store.filters[key] = store.filters[key].filter(v => v !== value)
@@ -292,7 +301,7 @@ const activeFilters = computed(() => {
   for (const v of f.genus) taxonomy.push({ key: `genus:${v}`, label: v, type: 'Genus', remove: removeFromArray('genus', v) })
   for (const v of f.species) taxonomy.push({ key: `species:${v}`, label: v, type: 'Species', remove: removeFromArray('species', v) })
   for (const sub of f.subspecies) {
-    const parent = subspeciesToSpecies.value.get(sub)
+    const parent = resolveSubspeciesParent(sub, f.species)
     taxonomy.push({
       key: `subsp:${sub}`,
       label: parent ? `${parent} ${sub}` : sub,
