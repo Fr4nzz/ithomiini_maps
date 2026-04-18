@@ -56,3 +56,11 @@ public/data/gbif_taxon_keys.json
 public/data/full_dataset.json
 public/data/sanger_taxonomy.csv
 public/data/map_points.json
+
+# Agent artifacts
+.playwright-cli/
+.playwright-mcp/
+.sisyphus/
+*.png
+test/*.mjs
+test/screenshots/
