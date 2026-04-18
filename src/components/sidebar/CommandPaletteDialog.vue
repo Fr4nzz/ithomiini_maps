@@ -269,15 +269,60 @@ function selectItem(item) {
   query.value = ''
 }
 
-const subspeciesParents = computed(() => {
-  const map = new Map()
-  for (const feature of store.allFeatures || []) {
-    if (!isValidValue(feature.subspecies) || !isValidValue(feature.scientific_name)) continue
-    if (!map.has(feature.subspecies)) map.set(feature.subspecies, new Set())
-    map.get(feature.subspecies).add(feature.scientific_name)
+const taxonomyLineage = computed(() => {
+  const speciesGenus = new Map()
+  const speciesTribe = new Map()
+  const speciesFamily = new Map()
+  const genusTribe = new Map()
+  const genusFamily = new Map()
+  const tribeFamily = new Map()
+  const subspeciesToSpecies = new Map()
+
+  for (const f of store.allFeatures || []) {
+    const sp = f.scientific_name, gn = f.genus, tr = f.tribe, fa = f.family, ssp = f.subspecies
+    if (sp && gn) speciesGenus.set(sp, gn)
+    if (sp && tr) speciesTribe.set(sp, tr)
+    if (sp && fa) speciesFamily.set(sp, fa)
+    if (gn && tr) genusTribe.set(gn, tr)
+    if (gn && fa) genusFamily.set(gn, fa)
+    if (tr && fa) tribeFamily.set(tr, fa)
+    if (ssp && sp) {
+      if (!subspeciesToSpecies.has(ssp)) subspeciesToSpecies.set(ssp, new Set())
+      subspeciesToSpecies.get(ssp).add(sp)
+    }
   }
-  return map
+  return { speciesGenus, speciesTribe, speciesFamily, genusTribe, genusFamily, tribeFamily, subspeciesToSpecies }
 })
+
+const subspeciesParents = computed(() => taxonomyLineage.value.subspeciesToSpecies)
+
+const ancestorsOf = (value, valueLevel, targetLevel) => {
+  const L = taxonomyLineage.value
+  if (valueLevel === targetLevel) return new Set([value])
+  if (valueLevel === 'subspecies') {
+    const parents = L.subspeciesToSpecies.get(value) || new Set()
+    if (targetLevel === 'species') return parents
+    const result = new Set()
+    for (const sp of parents) {
+      const up = ancestorsOf(sp, 'species', targetLevel)
+      up.forEach(x => result.add(x))
+    }
+    return result
+  }
+  if (valueLevel === 'species') {
+    if (targetLevel === 'genus') return new Set([L.speciesGenus.get(value)].filter(Boolean))
+    if (targetLevel === 'tribe') return new Set([L.speciesTribe.get(value)].filter(Boolean))
+    if (targetLevel === 'family') return new Set([L.speciesFamily.get(value)].filter(Boolean))
+  }
+  if (valueLevel === 'genus') {
+    if (targetLevel === 'tribe') return new Set([L.genusTribe.get(value)].filter(Boolean))
+    if (targetLevel === 'family') return new Set([L.genusFamily.get(value)].filter(Boolean))
+  }
+  if (valueLevel === 'tribe') {
+    if (targetLevel === 'family') return new Set([L.tribeFamily.get(value)].filter(Boolean))
+  }
+  return new Set()
+}
 
 const resolveSubspeciesParent = (sub, activeSpecies) => {
   const parents = subspeciesParents.value.get(sub)
@@ -297,6 +342,48 @@ const toggleCombinator = (level) => {
     ...combinators,
     [level]: combinators[level] === 'AND' ? 'OR' : 'AND',
   }
+}
+
+const LEVEL_PARENTS = {
+  tribe: ['family'],
+  genus: ['family', 'tribe'],
+  species: ['family', 'tribe', 'genus'],
+  subspecies: ['family', 'tribe', 'genus', 'species'],
+}
+
+const recordCount = computed(() => store.filteredGeoJSON?.features?.length ?? 0)
+
+const zeroResultSuggestion = computed(() => {
+  if (recordCount.value > 0) return null
+  const f = store.filters
+  const combos = f.taxonomyCombinators || { tribe: 'AND', genus: 'AND', species: 'AND', subspecies: 'AND' }
+  const activeLevels = ['family', 'tribe', 'genus', 'species', 'subspecies'].filter(L => f[L].length > 0)
+  if (activeLevels.length < 2) return null
+
+  for (const L of ['subspecies', 'species', 'genus', 'tribe']) {
+    if (f[L].length === 0) continue
+    if (combos[L] === 'OR') continue
+
+    let allDisjoint = true
+    for (const parentL of LEVEL_PARENTS[L]) {
+      if (f[parentL].length === 0) continue
+      const parentSet = new Set(f[parentL])
+      const anyShared = f[L].some(v => {
+        const up = ancestorsOf(v, L, parentL)
+        for (const a of up) if (parentSet.has(a)) return true
+        return false
+      })
+      if (anyShared) { allDisjoint = false; break }
+    }
+    if (allDisjoint) {
+      return { level: L, humanLabel: { tribe: 'Tribe', genus: 'Genus', species: 'Species', subspecies: 'Subspecies' }[L] }
+    }
+  }
+  return null
+})
+
+const applySuggestion = () => {
+  if (zeroResultSuggestion.value) toggleCombinator(zeroResultSuggestion.value.level)
 }
 
 const activeFilters = computed(() => {
@@ -499,6 +586,16 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
           <aside class="cmd-sidebar" v-if="activeFilters.total > 0">
             <div class="cmd-sidebar-title">Active filters ({{ activeFilters.total }})</div>
+
+            <div v-if="zeroResultSuggestion" class="cmd-zero-banner">
+              <div class="cmd-zero-title">No records match</div>
+              <div class="cmd-zero-detail">
+                Your <strong>{{ zeroResultSuggestion.humanLabel }}</strong> filter doesn't overlap with the filters above it.
+              </div>
+              <button class="cmd-zero-fix" @click="applySuggestion">
+                Flip {{ zeroResultSuggestion.humanLabel }} to OR
+              </button>
+            </div>
 
             <div v-if="activeFilters.taxonomy.length > 0" class="cmd-tree">
               <div class="cmd-group-heading cmd-group-heading--any">Taxonomy <span class="cmd-combinator">· click AND/OR to toggle</span></div>
@@ -788,6 +885,50 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   padding: 5px 8px;
   border-radius: 4px;
   font-size: 0.75rem;
+}
+
+.cmd-zero-banner {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cmd-zero-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.cmd-zero-detail {
+  font-size: 0.74rem;
+  color: var(--color-text-secondary, #aaa);
+  line-height: 1.4;
+}
+
+.cmd-zero-detail strong {
+  color: var(--color-text-primary, #e0e0e0);
+}
+
+.cmd-zero-fix {
+  margin-top: 2px;
+  padding: 6px 10px;
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  border-radius: 6px;
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-accent, #4ade80);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cmd-zero-fix:hover {
+  background: rgba(74, 222, 128, 0.25);
 }
 
 .cmd-level-group {
