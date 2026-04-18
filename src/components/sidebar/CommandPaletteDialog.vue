@@ -79,6 +79,21 @@ const speciesEpithet = (scientificName, genus) => {
   return parts.length > 1 ? parts.slice(1).join(' ') : scientificName
 }
 
+const ambiguousSubspecies = computed(() => {
+  const bySubsp = new Map()
+  for (const feature of store.allFeatures || []) {
+    if (!isValidValue(feature.subspecies) || !isValidValue(feature.scientific_name)) continue
+    const epithet = subspeciesEpithet(feature.subspecies)
+    if (!bySubsp.has(epithet)) bySubsp.set(epithet, new Set())
+    bySubsp.get(epithet).add(feature.scientific_name)
+  }
+  const ambiguous = new Set()
+  for (const [epithet, species] of bySubsp) {
+    if (species.size > 1) ambiguous.add(epithet)
+  }
+  return ambiguous
+})
+
 const allItems = computed(() => {
   const features = store.allFeatures || []
   const items = [
@@ -272,16 +287,19 @@ async function selectItem(item) {
         store.filters.species = [...store.filters.species, item.value]
       }
       break
-    case 'subspecies':
+    case 'subspecies': {
       await clearConflictingTaxonomy(item.lineage)
-      if (item.speciesName && !store.filters.species.includes(item.speciesName)) {
+      const epithet = subspeciesEpithet(item.value)
+      const needsSpeciesDisambiguation = ambiguousSubspecies.value.has(epithet)
+      if (needsSpeciesDisambiguation && item.speciesName && !store.filters.species.includes(item.speciesName)) {
         store.filters.species = [...store.filters.species, item.speciesName]
+        await nextTick()
       }
-      await nextTick()
       if (!store.filters.subspecies.includes(item.value)) {
         store.filters.subspecies = [...store.filters.subspecies, item.value]
       }
       break
+    }
     case 'country':
       store.filters.country = item.value
       break
