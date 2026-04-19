@@ -78,8 +78,7 @@ const copyShareUrl = () => {
 
 const showCopiedToast = ref(false)
 
-// Show date filter section
-const showDateFilter = ref(false)
+// Local UI refs
 const goatChromosomeMinInput = ref('')
 const goatChromosomeMaxInput = ref('')
 const showExactDates = ref(false)
@@ -191,7 +190,19 @@ const OTHER_FILTERS = [
   { key: 'status', label: 'Sequencing Status' },
   { key: 'country', label: 'Country' },
   { key: 'sex', label: 'Sex' },
+  { key: 'timerange', label: 'Time Range' },
+  { key: 'goat', label: 'GoaT' },
+  { key: 'sdm', label: 'SDM' },
 ]
+
+// Tiles whose availability depends on runtime state (view, feature flags, data loaded)
+const availableOtherFilters = computed(() =>
+  OTHER_FILTERS.filter(f => {
+    if (f.key === 'sdm') return props.currentView === 'map' && sdmStore.hasData
+    if (f.key === 'goat') return config.features.goatIntegration
+    return true
+  })
+)
 
 const enabledOtherFilters = ref(new Set(['camid']))
 const toggleOtherFilter = (key) => {
@@ -199,6 +210,12 @@ const toggleOtherFilter = (key) => {
   if (next.has(key)) next.delete(key)
   else next.add(key)
   enabledOtherFilters.value = next
+
+  // SDM tile drives sdmStore.enabled (which controls the map overlay + metadata load)
+  if (key === 'sdm') {
+    const want = next.has('sdm')
+    if (want !== sdmStore.enabled) sdmStore.toggle()
+  }
 }
 
 // Counts of active selections per level (shown on tiles)
@@ -212,6 +229,16 @@ const otherFilterActiveCount = (key) => {
   if (key === 'status') return store.filters.status.length
   if (key === 'country') return store.filters.country.length
   if (key === 'sex') return store.filters.sex !== 'all' ? 1 : 0
+  if (key === 'timerange') {
+    return (store.filters.dateStart ? 1 : 0) + (store.filters.dateEnd ? 1 : 0)
+  }
+  if (key === 'goat') {
+    return (store.filters.goatCoverage !== 'all' ? 1 : 0)
+      + store.filters.goatDataSource.length
+      + (store.filters.goatChromosomeMin != null ? 1 : 0)
+      + (store.filters.goatChromosomeMax != null ? 1 : 0)
+  }
+  if (key === 'sdm') return sdmStore.selectedSpecies.length
   return 0
 }
 
@@ -561,12 +588,12 @@ const updateExportHeight = (value) => {
           </template>
         </div>
 
-        <!-- Other filter tile row -->
+        <!-- Others filter tile row -->
         <div class="filter-tile-group">
-          <span class="filter-tile-group-label">Other</span>
+          <span class="filter-tile-group-label">Others</span>
           <div class="filter-tile-row">
             <button
-              v-for="other in OTHER_FILTERS"
+              v-for="other in availableOtherFilters"
               :key="other.key"
               type="button"
               class="filter-tile"
@@ -649,43 +676,221 @@ const updateExportHeight = (value) => {
               <option value="female">♀ Female only</option>
             </select>
           </div>
-        </div>
-      </div>
 
-      <!-- Date Filter with Time Slider -->
-      <div class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="showDateFilter = !showDateFilter"
-          :class="{ expanded: showDateFilter }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Time Range
-          <span v-if="store.filters.dateStart || store.filters.dateEnd" class="active-badge">
-            Active
-          </span>
-        </button>
-
-        <div v-show="showDateFilter" class="collapse-content no-padding">
-          <TimeSlider />
-
-          <!-- Expandable exact date inputs -->
-          <div class="exact-dates-section">
-            <button
-              class="subsection-toggle"
-              @click="showExactDates = !showExactDates"
-              :class="{ expanded: showExactDates }"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="m9 18 6-6-6-6"/>
-              </svg>
-              Exact Dates
-            </button>
-            <div v-show="showExactDates" class="subsection-content">
-              <DateFilter />
+          <!-- Time Range (tile-driven) -->
+          <div v-if="enabledOtherFilters.has('timerange')" class="filter-stack-item">
+            <label class="filter-stack-label">Time Range</label>
+            <TimeSlider />
+            <div class="exact-dates-section">
+              <button
+                class="subsection-toggle"
+                @click="showExactDates = !showExactDates"
+                :class="{ expanded: showExactDates }"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+                Exact Dates
+              </button>
+              <div v-show="showExactDates" class="subsection-content">
+                <DateFilter />
+              </div>
             </div>
+          </div>
+
+          <!-- Genomic Data (GoaT) (tile-driven) -->
+          <div
+            v-if="enabledOtherFilters.has('goat') && config.features.goatIntegration"
+            class="filter-stack-item"
+          >
+            <label class="filter-stack-label">
+              Genomic Data (GoaT)
+              <span v-if="store.goatLoading" class="active-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; margin-left: 6px;">
+                Loading...
+              </span>
+            </label>
+
+            <div class="goat-filter-group">
+              <label class="goat-filter-label">GoaT Coverage</label>
+              <div class="goat-toggle-group">
+                <button
+                  :class="{ active: store.filters.goatCoverage === 'all' }"
+                  @click="store.filters.goatCoverage = 'all'"
+                >All</button>
+                <button
+                  :class="{ active: store.filters.goatCoverage === 'in_goat' }"
+                  @click="store.filters.goatCoverage = 'in_goat'"
+                >In GoaT</button>
+                <button
+                  :class="{ active: store.filters.goatCoverage === 'not_in_goat' }"
+                  @click="store.filters.goatCoverage = 'not_in_goat'"
+                >Not in GoaT</button>
+              </div>
+            </div>
+
+            <div class="goat-filter-group">
+              <label class="goat-filter-label">Genome Data Source</label>
+              <div class="goat-checkboxes">
+                <label class="source-checkbox">
+                  <input
+                    type="checkbox"
+                    :checked="store.filters.goatDataSource.includes('direct')"
+                    @change="toggleGoatSource('direct')"
+                  />
+                  <span>Direct (measured)</span>
+                </label>
+                <label class="source-checkbox">
+                  <input
+                    type="checkbox"
+                    :checked="store.filters.goatDataSource.includes('estimated')"
+                    @change="toggleGoatSource('estimated')"
+                  />
+                  <span>Estimated (phylogenetic)</span>
+                </label>
+                <label class="source-checkbox">
+                  <input
+                    type="checkbox"
+                    :checked="store.filters.goatDataSource.includes('none')"
+                    @change="toggleGoatSource('none')"
+                  />
+                  <span>No GoaT data</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="goat-filter-group">
+              <label class="goat-filter-label">Chromosome Number (2n)</label>
+              <div class="chr-range-inputs">
+                <input
+                  type="number"
+                  class="chr-input"
+                  placeholder="Min"
+                  v-model="goatChromosomeMinInput"
+                  @change="store.filters.goatChromosomeMin = goatChromosomeMinInput ? Number(goatChromosomeMinInput) : null"
+                  :min="store.chromosomeRange.min"
+                  :max="store.chromosomeRange.max"
+                />
+                <span class="chr-separator">–</span>
+                <input
+                  type="number"
+                  class="chr-input"
+                  placeholder="Max"
+                  v-model="goatChromosomeMaxInput"
+                  @change="store.filters.goatChromosomeMax = goatChromosomeMaxInput ? Number(goatChromosomeMaxInput) : null"
+                  :min="store.chromosomeRange.min"
+                  :max="store.chromosomeRange.max"
+                />
+              </div>
+            </div>
+
+            <p v-if="store.goatLoaded && store.goatMeta" class="filter-hint">
+              {{ store.goatMeta.totalSpecies.toLocaleString() }} species from GoaT
+            </p>
+            <p v-else-if="!store.goatLoaded && !store.goatLoading" class="filter-hint">
+              GoaT data not available
+            </p>
+          </div>
+
+          <!-- Species Distribution Modelling (tile-driven) -->
+          <div
+            v-if="enabledOtherFilters.has('sdm') && currentView === 'map' && sdmStore.hasData"
+            class="filter-stack-item"
+          >
+            <label class="filter-stack-label">Species Distribution Modelling</label>
+
+            <FilterSelect
+              label="SDM Species"
+              v-model="sdmStore.selectedSpecies"
+              :options="sdmStore.availableSpecies"
+              placeholder="Select up to 2 species..."
+              :multiple="true"
+            />
+
+            <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--error-color, #f87171);">
+              Max 2 species for overlay comparison
+            </p>
+
+            <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-legend">
+              <div class="sdm-legend-item" v-for="(sp, idx) in sdmStore.selectedSpecies.slice(0, 2)" :key="sp">
+                <span class="sdm-legend-species">{{ sp }}</span>
+                <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-confidence-badge" :class="sdmStore.getSDMInfo(sp).confidence">
+                  {{ sdmStore.getSDMInfo(sp).confidence }}
+                </span>
+                <div class="sdm-gradient-bar" :class="idx === 0 ? 'warm' : 'cool'">
+                  <span class="sdm-gradient-label-low">Low</span>
+                  <span class="sdm-gradient-label-high">High</span>
+                </div>
+                <div v-if="sdmStore.getSDMInfo(sp)" class="sdm-model-info">
+                  <div class="sdm-info-grid">
+                    <span class="sdm-info-label">Records</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).n_records }}</span>
+                    <span class="sdm-info-label">AUC</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).auc }}</span>
+                    <span class="sdm-info-label">Boyce</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).boyce || '—' }}</span>
+                    <span class="sdm-info-label">Tier</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).tier }}</span>
+                    <span class="sdm-info-label">Algorithms</span>
+                    <span class="sdm-info-value">{{ (sdmStore.getSDMInfo(sp).algorithms_used || []).join(', ') || '—' }}</span>
+                  </div>
+                </div>
+                <div v-if="sdmStore.getSDMInfo(sp)?.env_summary?.length" class="sdm-env-section">
+                  <div
+                    v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
+                    :key="env.variable"
+                    class="sdm-env-card"
+                  >
+                    <div class="sdm-env-header">
+                      <span class="sdm-env-name">{{ env.label }}</span>
+                      <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
+                    </div>
+                    <div class="sdm-chart-wrap">
+                      <span class="sdm-y-label">Suitability</span>
+                      <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+                        <polyline
+                          :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
+                          fill="none"
+                          stroke="var(--color-accent, #4ade80)"
+                          stroke-width="1.5"
+                        />
+                        <polygon
+                          :points="[
+                            ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
+                            ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
+                          ].join(' ')"
+                          fill="var(--color-accent, #4ade80)"
+                          fill-opacity="0.15"
+                        />
+                      </svg>
+                    </div>
+                    <div class="sdm-x-axis">
+                      <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
+                      <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
+                      <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
+                    </div>
+                    <div class="sdm-env-footer">
+                      <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
+                      <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="sdm-legend-caption">Habitat suitability</span>
+            </div>
+
+            <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-opacity-row">
+              <span class="sdm-opacity-label">Opacity</span>
+              <input
+                type="range" min="0.1" max="1" step="0.1"
+                :value="sdmStore.opacity"
+                @input="sdmStore.setOpacity(parseFloat($event.target.value))"
+              />
+              <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
+            </div>
+
+            <p class="filter-hint">
+              {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
+            </p>
           </div>
         </div>
       </div>
@@ -738,220 +943,6 @@ const updateExportHeight = (value) => {
         <p class="filter-hint" v-if="store.filters.source.length === 0" style="margin-top: 6px;">
           No sources selected — showing all data
         </p>
-      </div>
-
-      <div v-if="config.features.goatIntegration" class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="store.showGoatFilter = !store.showGoatFilter"
-          :class="{ expanded: store.showGoatFilter }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Genomic Data (GoaT)
-          <span v-if="store.filters.goatCoverage !== 'all' || store.filters.goatDataSource.length > 0 || store.filters.goatChromosomeMin != null || store.filters.goatChromosomeMax != null" class="active-badge">
-            Active
-          </span>
-          <span v-if="store.goatLoading" class="active-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
-            Loading...
-          </span>
-        </button>
-
-        <div v-show="store.showGoatFilter" class="collapse-content">
-          <div class="goat-filter-group">
-            <label class="goat-filter-label">GoaT Coverage</label>
-            <div class="goat-toggle-group">
-              <button
-                :class="{ active: store.filters.goatCoverage === 'all' }"
-                @click="store.filters.goatCoverage = 'all'"
-              >All</button>
-              <button
-                :class="{ active: store.filters.goatCoverage === 'in_goat' }"
-                @click="store.filters.goatCoverage = 'in_goat'"
-              >In GoaT</button>
-              <button
-                :class="{ active: store.filters.goatCoverage === 'not_in_goat' }"
-                @click="store.filters.goatCoverage = 'not_in_goat'"
-              >Not in GoaT</button>
-            </div>
-          </div>
-
-          <div class="goat-filter-group">
-            <label class="goat-filter-label">Genome Data Source</label>
-            <div class="goat-checkboxes">
-              <label class="source-checkbox">
-                <input
-                  type="checkbox"
-                  :checked="store.filters.goatDataSource.includes('direct')"
-                  @change="toggleGoatSource('direct')"
-                />
-                <span>Direct (measured)</span>
-              </label>
-              <label class="source-checkbox">
-                <input
-                  type="checkbox"
-                  :checked="store.filters.goatDataSource.includes('estimated')"
-                  @change="toggleGoatSource('estimated')"
-                />
-                <span>Estimated (phylogenetic)</span>
-              </label>
-              <label class="source-checkbox">
-                <input
-                  type="checkbox"
-                  :checked="store.filters.goatDataSource.includes('none')"
-                  @change="toggleGoatSource('none')"
-                />
-                <span>No GoaT data</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="goat-filter-group">
-            <label class="goat-filter-label">Chromosome Number (2n)</label>
-            <div class="chr-range-inputs">
-              <input
-                type="number"
-                class="chr-input"
-                placeholder="Min"
-                v-model="goatChromosomeMinInput"
-                @change="store.filters.goatChromosomeMin = goatChromosomeMinInput ? Number(goatChromosomeMinInput) : null"
-                :min="store.chromosomeRange.min"
-                :max="store.chromosomeRange.max"
-              />
-              <span class="chr-separator">–</span>
-              <input
-                type="number"
-                class="chr-input"
-                placeholder="Max"
-                v-model="goatChromosomeMaxInput"
-                @change="store.filters.goatChromosomeMax = goatChromosomeMaxInput ? Number(goatChromosomeMaxInput) : null"
-                :min="store.chromosomeRange.min"
-                :max="store.chromosomeRange.max"
-              />
-            </div>
-          </div>
-
-          <p v-if="store.goatLoaded && store.goatMeta" class="filter-hint">
-            {{ store.goatMeta.totalSpecies.toLocaleString() }} species from GoaT
-          </p>
-          <p v-else-if="!store.goatLoaded && !store.goatLoading" class="filter-hint">
-            GoaT data not available
-          </p>
-        </div>
-      </div>
-
-      <!-- SDM Predicted Distributions -->
-      <div v-if="currentView === 'map' && sdmStore.hasData" class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="sdmStore.toggle()"
-          :class="{ expanded: sdmStore.enabled }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Predicted Distribution
-          <span v-if="sdmStore.selectedSpecies.length > 0" class="active-badge">
-            {{ sdmStore.selectedSpecies.length }} selected
-          </span>
-        </button>
-
-        <div v-show="sdmStore.enabled" class="collapse-content">
-          <FilterSelect
-            label="SDM Species"
-            v-model="sdmStore.selectedSpecies"
-            :options="sdmStore.availableSpecies"
-            placeholder="Select up to 2 species..."
-            :multiple="true"
-          />
-
-          <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--error-color, #f87171);">
-            Max 2 species for overlay comparison
-          </p>
-
-          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-legend">
-            <div class="sdm-legend-item" v-for="(sp, idx) in sdmStore.selectedSpecies.slice(0, 2)" :key="sp">
-              <span class="sdm-legend-species">{{ sp }}</span>
-              <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-confidence-badge" :class="sdmStore.getSDMInfo(sp).confidence">
-                {{ sdmStore.getSDMInfo(sp).confidence }}
-              </span>
-              <div class="sdm-gradient-bar" :class="idx === 0 ? 'warm' : 'cool'">
-                <span class="sdm-gradient-label-low">Low</span>
-                <span class="sdm-gradient-label-high">High</span>
-              </div>
-              <div v-if="sdmStore.getSDMInfo(sp)" class="sdm-model-info">
-                <div class="sdm-info-grid">
-                  <span class="sdm-info-label">Records</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).n_records }}</span>
-                  <span class="sdm-info-label">AUC</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).auc }}</span>
-                  <span class="sdm-info-label">Boyce</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).boyce || '—' }}</span>
-                  <span class="sdm-info-label">Tier</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).tier }}</span>
-                  <span class="sdm-info-label">Algorithms</span>
-                  <span class="sdm-info-value">{{ (sdmStore.getSDMInfo(sp).algorithms_used || []).join(', ') || '—' }}</span>
-                </div>
-              </div>
-              <div v-if="sdmStore.getSDMInfo(sp)?.env_summary?.length" class="sdm-env-section">
-                <div
-                  v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
-                  :key="env.variable"
-                  class="sdm-env-card"
-                >
-                  <div class="sdm-env-header">
-                    <span class="sdm-env-name">{{ env.label }}</span>
-                    <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
-                  </div>
-                  <div class="sdm-chart-wrap">
-                    <span class="sdm-y-label">Suitability</span>
-                    <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
-                      <polyline
-                        :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
-                        fill="none"
-                        stroke="var(--color-accent, #4ade80)"
-                        stroke-width="1.5"
-                      />
-                      <polygon
-                        :points="[
-                          ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
-                          ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
-                        ].join(' ')"
-                        fill="var(--color-accent, #4ade80)"
-                        fill-opacity="0.15"
-                      />
-                    </svg>
-                  </div>
-                  <div class="sdm-x-axis">
-                    <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
-                    <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
-                    <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
-                  </div>
-                  <div class="sdm-env-footer">
-                    <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
-                    <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="sdm-legend-caption">Habitat suitability</span>
-          </div>
-
-          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-opacity-row">
-            <span class="sdm-opacity-label">Opacity</span>
-            <input
-              type="range" min="0.1" max="1" step="0.1"
-              :value="sdmStore.opacity"
-              @input="sdmStore.setOpacity(parseFloat($event.target.value))"
-            />
-            <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
-          </div>
-
-          <p class="filter-hint">
-            {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
-          </p>
-        </div>
       </div>
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->
