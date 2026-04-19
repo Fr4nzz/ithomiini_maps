@@ -553,26 +553,32 @@
   flex-wrap: wrap;
   gap: 4px;
 }
-.source-tile.loading {
-  opacity: 0.7;
+.source-tile {
   position: relative;
   overflow: hidden;
 }
-.source-tile.loading::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(74, 222, 128, 0.15),
-    transparent
-  );
-  animation: source-tile-pulse 1.1s infinite;
+.source-tile-content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
-@keyframes source-tile-pulse {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(100%); }
+.source-tile-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  transform-origin: left center;
+  background: rgba(74, 222, 128, 0.22);
+  transform: scaleX(0);
+  transition: transform 0.15s ease-out;
+  pointer-events: none;
+  z-index: 0;
+}
+.source-tile.active .source-tile-progress {
+  background: rgba(74, 222, 128, 0.3);
 }
 
 /* Stack of active filter controls rendered below tile groups */

@@ -129,6 +129,7 @@ const sourceRecordCount = (source) => {
 
 const sourceIsLoading = (source) => store.sourceLoading?.has?.(source) ?? false
 const sourceIsActive = (source) => store.filters.source.includes(source)
+const sourceProgressValue = (source) => store.sourceProgress?.[source] ?? null
 
 const toggleSource = (source) => {
   const current = store.filters.source
@@ -719,12 +720,19 @@ const updateExportHeight = (value) => {
             @click="toggleSource(source)"
             :title="sourceTooltip(source)"
           >
-            {{ SOURCE_SHORT_LABELS[source] || source }}
-            <span v-if="sourceRecordCount(source) > 0" class="filter-tile-count">
-              {{ sourceRecordCount(source) >= 1000
-                  ? (sourceRecordCount(source) / 1000).toFixed(1) + 'k'
-                  : sourceRecordCount(source) }}
+            <span class="source-tile-content">
+              {{ SOURCE_SHORT_LABELS[source] || source }}
+              <span v-if="sourceRecordCount(source) > 0" class="filter-tile-count">
+                {{ sourceRecordCount(source) >= 1000
+                    ? (sourceRecordCount(source) / 1000).toFixed(1) + 'k'
+                    : sourceRecordCount(source) }}
+              </span>
             </span>
+            <span
+              v-if="sourceProgressValue(source) !== null"
+              class="source-tile-progress"
+              :style="{ transform: `scaleX(${sourceProgressValue(source)})` }"
+            />
           </button>
         </div>
         <p class="filter-hint" v-if="store.filters.source.length === 0" style="margin-top: 6px;">
