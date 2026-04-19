@@ -38,6 +38,17 @@ __pycache__/
 *_curated.csv
 *_curated.tsv
 
+# SDM pipeline
+sdm/.venv/
+sdm/data/env_variables/
+sdm/data/predictions/
+sdm/data/occurrences/
+sdm/data/host_plants/gbif_*.csv
+sdm/data/figures/
+public/data/sdm/species/
+public/data/sdm/species_richness.tif
+public/data/sdm/mean_suitability.tif
+
 # Pipeline intermediate/cache files (persisted via GitHub Actions cache)
 public/data/gbif_occurrences.json
 public/data/gbif_taxonomy_cache.json
@@ -45,3 +56,13 @@ public/data/gbif_taxon_keys.json
 public/data/full_dataset.json
 public/data/sanger_taxonomy.csv
 public/data/map_points.json
+
+# Agent artifacts
+.playwright-cli/
+.playwright-mcp/
+.playwright/
+.sisyphus/
+*.png
+test/*.mjs
+test/screenshots/
+test-results/

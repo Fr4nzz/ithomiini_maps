@@ -24,7 +24,7 @@ export const STATUS_COLORS = {
 export const SOURCE_COLORS = {
   'Sanger Institute': '#0072B2',
   'Dore et al.': '#E69F00',
-  'Dore et al. (2025)': '#E69F00',
+  'Dore et al. (2022)': '#E69F00',
   'iNaturalist': '#009E73',
   'GBIF': '#999999',
   'GBIF (UNAM)': '#CC79A7',

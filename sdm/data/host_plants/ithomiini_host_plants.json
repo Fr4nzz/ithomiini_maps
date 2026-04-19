@@ -1,0 +1,316 @@
+{
+  "_metadata": {
+    "description": "Ithomiini butterfly host plant associations compiled from published literature",
+    "sources": [
+      "Willmott & Freitas (2006) - Higher-level phylogeny of the Ithomiinae, Cladistics 22:1-74",
+      "Drummond & Brown (1987) - Host plants of Neotropical Ithomiinae (first comprehensive catalog)",
+      "Brown & Freitas (1994) - Juvenile stages of Ithomiinae (Lepidoptera: Nymphalidae)",
+      "Beccaloni et al. (2008) - Catalogue of hostplants of Neotropical butterflies",
+      "Silva-Brandão et al. (2005, 2012, 2017) - Solanaceae-Ithomiini coevolution studies",
+      "Hay-Roe & Nation (2007) - Spectrum of cyanogenesis in Ithomiinae",
+      "NHM HOSTS database (https://www.nhm.ac.uk/our-science/data/hostplants/)"
+    ],
+    "notes": [
+      "Most Ithomiini feed on Solanaceae; basal lineages (Tithoreini) feed on Apocynaceae",
+      "Where species-level data is lacking, genus-level host associations are used",
+      "confidence: 'high' = published species-level record, 'medium' = genus-level inference, 'low' = family-level inference"
+    ]
+  },
+  "genus_associations": {
+    "Tithorea": {
+      "host_families": ["Apocynaceae"],
+      "host_genera": ["Prestonia", "Fischeria"],
+      "confidence": "high",
+      "notes": "Basal Tithoreini; exclusively Apocynaceae"
+    },
+    "Elzunia": {
+      "host_families": ["Apocynaceae"],
+      "host_genera": ["Prestonia"],
+      "confidence": "high",
+      "notes": "Tithoreini; Apocynaceae feeders"
+    },
+    "Aeria": {
+      "host_families": ["Apocynaceae"],
+      "host_genera": ["Prestonia"],
+      "confidence": "high",
+      "notes": "Tithoreini; Apocynaceae"
+    },
+    "Melinaea": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum", "Juanulloa"],
+      "confidence": "high",
+      "notes": "Melinaeini; primarily Solanaceae"
+    },
+    "Mechanitis": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "high",
+      "notes": "Mechanitini; Solanum sect. Geminata is primary host. Best-studied genus for host plants"
+    },
+    "Forbestra": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Mechanitini; assumed Solanaceae based on tribal affiliation"
+    },
+    "Methona": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Brunfelsia"],
+      "confidence": "high",
+      "notes": "Methonini; specialist on Brunfelsia (Solanaceae)"
+    },
+    "Thyridia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Brunfelsia"],
+      "confidence": "high",
+      "notes": "Methonini; Brunfelsia feeders like Methona"
+    },
+    "Sais": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Cestrum"],
+      "confidence": "high",
+      "notes": "Napeogenini; feeds on Cestrum"
+    },
+    "Napeogenes": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Cestrum", "Sessea"],
+      "confidence": "high",
+      "notes": "Napeogenini; primarily Cestrum"
+    },
+    "Hypothyris": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum", "Lycianthes"],
+      "confidence": "high",
+      "notes": "Oleriini; Solanum and Lycianthes"
+    },
+    "Oleria": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "high",
+      "notes": "Oleriini; predominantly Solanum"
+    },
+    "Megoleria": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Oleriini; inferred from Oleria affinity"
+    },
+    "Hyposcada": {
+      "host_families": ["Solanaceae", "Apocynaceae"],
+      "host_genera": ["Solanum", "Prestonia"],
+      "confidence": "high",
+      "notes": "Some species use Solanaceae, others Apocynaceae — transitional genus"
+    },
+    "Ithomia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "high",
+      "notes": "Ithomiini s.s.; Solanum (especially subgenus Geminata)"
+    },
+    "Placidina": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Close to Ithomia; inferred Solanaceae"
+    },
+    "Dircenna": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum", "Brugmansia"],
+      "confidence": "high",
+      "notes": "Dircennini; Solanum and Brugmansia"
+    },
+    "Episcada": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum", "Brugmansia"],
+      "confidence": "high",
+      "notes": "Dircennini; Solanum and Brugmansia"
+    },
+    "Ceratinia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Cestrum"],
+      "confidence": "high",
+      "notes": "Primarily Cestrum feeders"
+    },
+    "Pteronymia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum", "Cestrum"],
+      "confidence": "high",
+      "notes": "Large genus; various Solanaceae hosts"
+    },
+    "Godyris": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Cestrum", "Solanum"],
+      "confidence": "high",
+      "notes": "Godyridini; Cestrum and Solanum"
+    },
+    "Hyalyris": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Godyridini; inferred Solanaceae"
+    },
+    "Greta": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Cestrum"],
+      "confidence": "high",
+      "notes": "Godyridini; specialist on Cestrum"
+    },
+    "Pseudoscada": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from tribal affiliation"
+    },
+    "Heterosais": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from close relatives"
+    },
+    "Hypoleria": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from tribal affiliation"
+    },
+    "Hypomenitis": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from tribal affiliation"
+    },
+    "Callithomia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum", "Lycianthes"],
+      "confidence": "medium",
+      "notes": "Inferred from close relatives in Oleriini"
+    },
+    "Scada": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Markea", "Juanulloa"],
+      "confidence": "high",
+      "notes": "Feeds on epiphytic Solanaceae (Markea, Juanulloa)"
+    },
+    "Olyras": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from tribal affiliation"
+    },
+    "Pagyris": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from tribal affiliation"
+    },
+    "Patricia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from tribal affiliation"
+    },
+    "Athesis": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "low",
+      "notes": "Family-level inference only"
+    },
+    "Veladyris": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare genus; no published host records; Solanaceae assumed"
+    },
+    "Velamysta": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare genus; no published host records; Solanaceae assumed"
+    },
+    "Brevioleria": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Close to Oleria; inferred Solanaceae"
+    },
+    "Hyalenna": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare genus; Solanaceae assumed from tribal position"
+    },
+    "Epityches": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare genus; Solanaceae assumed"
+    },
+    "Athyrtis": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Solanaceae assumed from phylogenetic position"
+    },
+    "Mcclungia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from close relatives"
+    },
+    "Haenschia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare; Solanaceae assumed"
+    },
+    "Ollantaya": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare Andean genus; Solanaceae assumed"
+    },
+    "Pachacutia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare genus; Solanaceae assumed"
+    },
+    "Paititia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare genus; Solanaceae assumed"
+    },
+    "Aremfoxia": {
+      "host_families": ["Solanaceae"],
+      "host_genera": [],
+      "confidence": "low",
+      "notes": "Rare genus; Solanaceae assumed"
+    },
+    "Ithomiola": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Brunfelsia"],
+      "confidence": "medium",
+      "notes": "May use Brunfelsia like related genera"
+    },
+    "Eutresis": {
+      "host_families": ["Solanaceae"],
+      "host_genera": ["Solanum"],
+      "confidence": "medium",
+      "notes": "Inferred from tribal position"
+    }
+  },
+  "host_plant_gbif_search": {
+    "description": "Key Solanaceae genera to search on GBIF for host plant distribution layers",
+    "target_genera": [
+      {"genus": "Solanum", "family": "Solanaceae", "priority": "critical", "notes": "Primary host for majority of Ithomiini"},
+      {"genus": "Cestrum", "family": "Solanaceae", "priority": "high", "notes": "Host for Greta, Ceratinia, Napeogenes, etc."},
+      {"genus": "Brunfelsia", "family": "Solanaceae", "priority": "high", "notes": "Host for Methona, Thyridia"},
+      {"genus": "Brugmansia", "family": "Solanaceae", "priority": "medium", "notes": "Host for Dircenna, Episcada"},
+      {"genus": "Lycianthes", "family": "Solanaceae", "priority": "medium", "notes": "Host for some Hypothyris"},
+      {"genus": "Markea", "family": "Solanaceae", "priority": "medium", "notes": "Epiphytic; host for Scada"},
+      {"genus": "Juanulloa", "family": "Solanaceae", "priority": "medium", "notes": "Epiphytic; host for Scada, Melinaea"},
+      {"genus": "Prestonia", "family": "Apocynaceae", "priority": "high", "notes": "Host for Tithorea, Elzunia, Aeria"}
+    ]
+  }
+}
