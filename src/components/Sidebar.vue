@@ -148,8 +148,54 @@ const toggleGoatSource = (source) => {
   }
 }
 
-// Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
-const showAdvancedTaxonomy = ref(false)
+// ── Filter tile system ─────────────────────────────────────────────────────
+// Taxonomy levels ordered from broad to narrow.
+// Enabled levels are rendered below as active filters; hidden ones retain
+// their selections so users can re-enable without losing filter state.
+const TAXONOMY_LEVELS = [
+  { key: 'family', label: 'Family', storeKey: 'family', optionsKey: 'uniqueFamilies', placeholder: 'All Families' },
+  { key: 'tribe', label: 'Tribe', storeKey: 'tribe', optionsKey: 'uniqueTribes', placeholder: 'All Tribes' },
+  { key: 'genus', label: 'Genus', storeKey: 'genus', optionsKey: 'uniqueGenera', placeholder: 'All Genera' },
+  { key: 'species', label: 'Species', storeKey: 'species', optionsKey: 'uniqueSpecies', placeholder: 'Search species...' },
+  { key: 'subspecies', label: 'Subsp.', storeKey: 'subspecies', optionsKey: 'uniqueSubspecies', placeholder: 'Search subspecies...' },
+]
+
+const enabledTaxonomyLevels = ref(new Set(['species', 'subspecies']))
+const toggleTaxonomyLevel = (key) => {
+  const next = new Set(enabledTaxonomyLevels.value)
+  if (next.has(key)) next.delete(key)
+  else next.add(key)
+  enabledTaxonomyLevels.value = next
+}
+
+const OTHER_FILTERS = [
+  { key: 'camid', label: 'CAMID' },
+  { key: 'status', label: 'Sequencing Status' },
+  { key: 'country', label: 'Country' },
+  { key: 'sex', label: 'Sex' },
+]
+
+const enabledOtherFilters = ref(new Set(['camid']))
+const toggleOtherFilter = (key) => {
+  const next = new Set(enabledOtherFilters.value)
+  if (next.has(key)) next.delete(key)
+  else next.add(key)
+  enabledOtherFilters.value = next
+}
+
+// Counts of active selections per level (shown on tiles)
+const taxonomyActiveCount = (key) => {
+  const val = store.filters[key]
+  return Array.isArray(val) ? val.length : 0
+}
+
+const otherFilterActiveCount = (key) => {
+  if (key === 'camid') return (camidInput.value || '').split(/[,\s]+/).filter(Boolean).length
+  if (key === 'status') return store.filters.status.length
+  if (key === 'country') return store.filters.country.length
+  if (key === 'sex') return store.filters.sex !== 'all' ? 1 : 0
+  return 0
+}
 
 // Aspect ratio options - derived from shared constants
 const aspectRatioLabels = {
@@ -218,6 +264,19 @@ const updateExportHeight = (value) => {
           <span class="subtitle">{{ config.subtitle }}</span>
         </div>
       </a>
+      <button
+        type="button"
+        class="smart-search-tile"
+        title="Search across all taxa, countries, mimicry rings, and more"
+        @click="$emit('open-global-search')"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <span class="smart-search-label">Smart Search</span>
+        <kbd>⌘K</kbd>
+      </button>
     </header>
 
     <!-- Scrollable Content -->
@@ -439,125 +498,139 @@ const updateExportHeight = (value) => {
         </button>
       </div>
 
-      <!-- CAMID Search with Autocomplete (Multi-value) -->
+      <!-- FILTERS: unified taxonomy + other filters with tile selectors -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
+            <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>
           </svg>
-          Search CAMIDs
+          Filters
         </label>
-        <p class="filter-hint" style="margin-top: 0; margin-bottom: 6px;">
-          Enter or paste multiple IDs (comma/space/newline separated)
-        </p>
-        <div class="camid-autocomplete">
-          <textarea
-            ref="camidTextarea"
-            class="camid-textarea"
-            placeholder="e.g. CAM012345, CAM012346..."
-            :value="camidInput"
-            @input="handleCamidInput"
-            @keydown="handleCamidKeydown"
-            @click="handleCamidClick"
-            @focus="handleCamidClick"
-            @blur="handleCamidBlur"
-            autocomplete="off"
-            spellcheck="false"
-            rows="1"
-          ></textarea>
-          <div
-            v-if="showCamidDropdown && camidSuggestions.length > 0"
-            class="camid-dropdown"
-          >
+
+        <!-- Taxonomy tile row -->
+        <div class="filter-tile-group">
+          <span class="filter-tile-group-label">Taxonomy</span>
+          <div class="filter-tile-row">
             <button
-              v-for="(suggestion, index) in camidSuggestions"
-              :key="suggestion"
-              class="camid-suggestion"
-              :class="{ selected: index === selectedSuggestionIndex }"
-              @mousedown.prevent="selectCamid(suggestion)"
+              v-for="level in TAXONOMY_LEVELS"
+              :key="level.key"
+              type="button"
+              class="filter-tile"
+              :class="{ active: enabledTaxonomyLevels.has(level.key) }"
+              @click="toggleTaxonomyLevel(level.key)"
+              :title="`Toggle ${level.label} filter`"
             >
-              {{ suggestion }}
+              {{ level.label }}
+              <span v-if="taxonomyActiveCount(level.storeKey) > 0" class="filter-tile-count">
+                {{ taxonomyActiveCount(level.storeKey) }}
+              </span>
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- Taxonomy Section (Species/Subspecies visible, Family/Tribe/Genus expandable) -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3v18m-6-6 6 6 6-6"/>
-          </svg>
-          Taxonomy
-          <button
-            type="button"
-            class="shortcut-hint"
-            title="Search across all taxa, countries, and mimicry rings"
-            @click="$emit('open-global-search')"
-          >
-            <span class="shortcut-hint-label">Global search</span>
-            <kbd>⌘/Ctrl+K</kbd>
-          </button>
-        </label>
+        <!-- Active taxonomy filters rendered in broad-to-narrow order -->
+        <div class="active-filters-stack">
+          <template v-for="level in TAXONOMY_LEVELS" :key="level.key">
+            <FilterSelect
+              v-if="enabledTaxonomyLevels.has(level.key)"
+              :label="level.label"
+              v-model="store.filters[level.storeKey]"
+              :options="store[level.optionsKey]"
+              :placeholder="level.placeholder"
+              :multiple="true"
+              :show-count="level.key === 'species' || level.key === 'subspecies' || level.key === 'genus'"
+            />
+          </template>
+        </div>
 
-        <!-- Species Multi-select with Fuzzy Search -->
-        <FilterSelect
-          label="Species"
-          v-model="store.filters.species"
-          :options="store.uniqueSpecies"
-          placeholder="Search species..."
-          :multiple="true"
-        />
+        <!-- Other filter tile row -->
+        <div class="filter-tile-group">
+          <span class="filter-tile-group-label">Other</span>
+          <div class="filter-tile-row">
+            <button
+              v-for="other in OTHER_FILTERS"
+              :key="other.key"
+              type="button"
+              class="filter-tile"
+              :class="{ active: enabledOtherFilters.has(other.key) }"
+              @click="toggleOtherFilter(other.key)"
+              :title="`Toggle ${other.label} filter`"
+            >
+              {{ other.label }}
+              <span v-if="otherFilterActiveCount(other.key) > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount(other.key) }}
+              </span>
+            </button>
+          </div>
+        </div>
 
-        <!-- Subspecies Multi-select -->
-        <FilterSelect
-          label="Subspecies"
-          v-model="store.filters.subspecies"
-          :options="store.uniqueSubspecies"
-          placeholder="Search subspecies..."
-          :multiple="true"
-        />
+        <!-- Active other filters -->
+        <div class="active-filters-stack">
+          <!-- CAMID -->
+          <div v-if="enabledOtherFilters.has('camid')" class="filter-stack-item">
+            <p class="filter-stack-hint">Enter or paste IDs (comma/space/newline separated)</p>
+            <div class="camid-autocomplete">
+              <textarea
+                ref="camidTextarea"
+                class="camid-textarea"
+                placeholder="e.g. CAM012345, CAM012346..."
+                :value="camidInput"
+                @input="handleCamidInput"
+                @keydown="handleCamidKeydown"
+                @click="handleCamidClick"
+                @focus="handleCamidClick"
+                @blur="handleCamidBlur"
+                autocomplete="off"
+                spellcheck="false"
+                rows="1"
+              ></textarea>
+              <div
+                v-if="showCamidDropdown && camidSuggestions.length > 0"
+                class="camid-dropdown"
+              >
+                <button
+                  v-for="(suggestion, index) in camidSuggestions"
+                  :key="suggestion"
+                  class="camid-suggestion"
+                  :class="{ selected: index === selectedSuggestionIndex }"
+                  @mousedown.prevent="selectCamid(suggestion)"
+                >
+                  {{ suggestion }}
+                </button>
+              </div>
+            </div>
+          </div>
 
-        <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->
-        <button
-          class="subsection-toggle"
-          @click="showAdvancedTaxonomy = !showAdvancedTaxonomy"
-          :class="{ expanded: showAdvancedTaxonomy }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Family / Tribe / Genus
-          <span v-if="store.filters.family.length || store.filters.tribe.length || store.filters.genus.length" class="active-indicator"></span>
-        </button>
-
-        <div v-show="showAdvancedTaxonomy" class="subsection-content">
+          <!-- Sequencing Status -->
           <FilterSelect
-            label="Family"
-            v-model="store.filters.family"
-            :options="store.uniqueFamilies"
-            placeholder="All Families"
+            v-if="enabledOtherFilters.has('status')"
+            label="Sequencing Status"
+            v-model="store.filters.status"
+            :options="store.uniqueStatuses"
+            placeholder="All Statuses"
+            :multiple="true"
+          />
+
+          <!-- Country -->
+          <FilterSelect
+            v-if="enabledOtherFilters.has('country')"
+            label="Country"
+            v-model="store.filters.country"
+            :options="store.uniqueCountries"
+            placeholder="All Countries"
             :multiple="true"
             :show-count="false"
           />
 
-          <FilterSelect
-            label="Tribe"
-            v-model="store.filters.tribe"
-            :options="store.uniqueTribes"
-            placeholder="All Tribes"
-            :multiple="true"
-            :show-count="false"
-          />
-
-          <FilterSelect
-            label="Genus"
-            v-model="store.filters.genus"
-            :options="store.uniqueGenera"
-            placeholder="All Genera"
-            :multiple="true"
-          />
+          <!-- Sex -->
+          <div v-if="enabledOtherFilters.has('sex')" class="filter-stack-item">
+            <label class="filter-stack-label">Sex</label>
+            <select class="sex-select" v-model="store.filters.sex">
+              <option value="all">All (♂ + ♀)</option>
+              <option value="male">♂ Male only</option>
+              <option value="female">♀ Female only</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -597,26 +670,6 @@ const updateExportHeight = (value) => {
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Sequencing Status (Dropdown with All default) -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
-          Sequencing Status
-        </label>
-
-        <FilterSelect
-          v-model="store.filters.status"
-          :options="store.uniqueStatuses"
-          placeholder="All Statuses"
-          :multiple="true"
-        />
-        <p class="filter-hint" v-if="store.filters.status.length > 0">
-          {{ store.filters.status.length }} status{{ store.filters.status.length > 1 ? 'es' : '' }} selected
-        </p>
       </div>
 
       <!-- Data Source (Checkbox panel with Apply/Cancel) -->
@@ -775,47 +828,11 @@ const updateExportHeight = (value) => {
         </div>
       </div>
 
-      <!-- Country Filter -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
-          Country
-        </label>
-        <FilterSelect
-          v-model="store.filters.country"
-          :options="store.uniqueCountries"
-          placeholder="All Countries"
-          :multiple="true"
-          :show-count="false"
-        />
-      </div>
-
-      <!-- Sex Filter -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="9" r="5"/>
-            <path d="M9 14v7M6 18h6"/>
-            <circle cx="17" cy="15" r="5"/>
-            <path d="M21 11l-2.5 2.5M21 11h-4M21 11v4"/>
-          </svg>
-          Sex
-        </label>
-        <select class="sex-select" v-model="store.filters.sex">
-          <option value="all">All (♂ + ♀)</option>
-          <option value="male">♂ Male only</option>
-          <option value="female">♀ Female only</option>
-        </select>
-      </div>
-
       <!-- UI Preferences -->
       <div class="filter-section">
         <label class="thumbnail-toggle">
           <input type="checkbox" v-model="store.showThumbnail" />
-          <span>Show thumbnails</span>
+          <span>Show thumbnails in popups</span>
         </label>
       </div>
 

@@ -11,9 +11,12 @@
 
 /* Header */
 .sidebar-header {
-  padding: 20px;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--color-border, #3d3d5c);
   background: var(--color-bg-primary, #1a1a2e);
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .logo {
@@ -22,6 +25,8 @@
   gap: 12px;
   text-decoration: none;
   transition: opacity 0.2s;
+  flex: 1;
+  min-width: 0;
 }
 
 .logo:hover {
@@ -414,6 +419,135 @@
   background: rgba(74, 222, 128, 0.15);
   border-color: rgba(74, 222, 128, 0.3);
   color: var(--color-accent, #4ade80);
+}
+
+/* Smart Search Tile (header) */
+.smart-search-tile {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  color: var(--color-accent, #4ade80);
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.smart-search-tile svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.smart-search-label {
+  white-space: nowrap;
+}
+.smart-search-tile kbd {
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  color: var(--color-accent, #4ade80);
+  font-size: 0.62rem;
+  font-family: inherit;
+}
+.smart-search-tile:hover {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.5);
+}
+.smart-search-tile:hover kbd {
+  background: rgba(74, 222, 128, 0.2);
+}
+
+/* Filter tile groups */
+.filter-tile-group {
+  margin-bottom: 10px;
+}
+.filter-tile-group-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-muted, #888);
+  margin-bottom: 6px;
+}
+.filter-tile-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.filter-tile {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-tile:hover {
+  background: #353558;
+  color: var(--color-text-primary, #fff);
+}
+.filter-tile.active {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.4);
+  color: var(--color-accent, #4ade80);
+}
+.filter-tile-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: rgba(74, 222, 128, 0.2);
+  color: var(--color-accent, #4ade80);
+  font-size: 0.62rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.filter-tile:not(.active) .filter-tile-count {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-secondary, #aaa);
+}
+
+/* Stack of active filter controls rendered below tile groups */
+.active-filters-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 8px 0 14px;
+}
+.active-filters-stack:empty {
+  display: none;
+}
+.filter-stack-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.filter-stack-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #aaa);
+}
+.filter-stack-hint {
+  margin: 0 0 4px 0;
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #888);
+  font-style: italic;
 }
 
 /* Thumbnail Toggle */
