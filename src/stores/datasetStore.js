@@ -18,7 +18,7 @@ export const useDatasetStore = defineStore('dataset', () => {
     'Sanger Institute': { file: 'map_points_sanger.json', default: true },
     'GBIF (UNAM)': { file: 'map_points_gbif_unam.json', default: false },
     'GBIF (Other Institutions)': { file: 'map_points_gbif_other.json', default: false },
-    'Dore et al. (2025)': { file: 'map_points_dore.json', default: false },
+    'Dore et al. (2022)': { file: 'map_points_dore.json', default: false },
     'iNaturalist': { file: 'map_points_inaturalist.json', default: false },
   }
 

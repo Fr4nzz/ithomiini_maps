@@ -1,11 +1,24 @@
 <script setup>
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, inject, nextTick, ref, watch } from 'vue'
 import { useMagicKeys, onClickOutside } from '@vueuse/core'
 import { useDataStore } from '@/stores/data'
+import { useLegendStore } from '@/stores/legend'
+import { useThemeStore } from '@/stores/theme'
+import { getThemeOptions } from '@/themes/presets'
+const THEME_PRESETS = getThemeOptions()
 import { isValidValue } from '@/utils/validation'
 import config from '@/config'
 
 const store = useDataStore()
+const legendStore = useLegendStore()
+const themeStore = useThemeStore()
+
+const openGalleryFn = inject('openImageGallery', null)
+const openMimicryFn = inject('openMimicrySelector', null)
+const openExportFn = inject('openExport', null)
+const directExportMapFn = inject('directExportMap', null)
+const setViewFn = inject('setView', null)
+
 const dialogOpen = ref(false)
 const inputRef = ref(null)
 const rootRef = ref(null)
@@ -17,8 +30,17 @@ const MAX_RESULTS = 50
 const MAX_SUGGESTIONS = 3
 const LEVEL_BONUS = {
   species: 100, subspecies: 95, genus: 80, tribe: 70, family: 60, country: 50, mimicry: 40,
+  action: 80, setting: 75, filter: 70,
 }
-const GROUP_ORDER = ['taxonomy', 'geography', 'mimicry']
+const GROUP_ORDER = ['actions', 'settings', 'filters', 'taxonomy', 'geography', 'mimicry']
+const GROUP_HEADINGS = {
+  actions: 'Actions',
+  settings: 'Settings',
+  filters: 'Filters',
+  taxonomy: 'Taxonomy',
+  geography: 'Geography',
+  mimicry: 'Mimicry',
+}
 
 const buildOptionMap = (features, field, kind, typeLabel, lineageBuilder = () => ({}), ownTokenBuilder) => {
   const options = new Map()
@@ -103,6 +125,161 @@ const allItems = computed(() => {
   return items
 })
 
+const VIZ_MODES = [
+  { value: 'points', label: 'Points' },
+  { value: 'clusters', label: 'Clusters' },
+  { value: 'heatmap', label: 'Heatmap' },
+  { value: 'ranges', label: 'Ranges' },
+]
+
+const uniqueStatuses = computed(() => {
+  const set = new Set()
+  for (const f of store.allFeatures || []) {
+    if (isValidValue(f.sequencing_status)) set.add(f.sequencing_status)
+  }
+  return [...set].sort()
+})
+
+const commandItems = computed(() => {
+  const cmds = []
+  const make = (id, kind, label, { group = 'settings', typeLabel = '', searchText = '', active = false, shortcut = '', run }) => ({
+    id, kind, value: label, group, typeLabel, label,
+    ownTokens: [label.toLowerCase(), ...(searchText ? [searchText.toLowerCase()] : [])],
+    active, shortcut, run,
+    count: 1,
+  })
+
+  // Actions (navigation, modals)
+  cmds.push(make('action:gallery', 'action', 'Open Gallery', {
+    group: 'actions', typeLabel: 'Action',
+    searchText: 'photos images gallery',
+    run: () => openGalleryFn?.(),
+  }))
+  if (config.features.mimicrySelector) {
+    cmds.push(make('action:mimicry', 'action', 'Open Mimicry Selector', {
+      group: 'actions', typeLabel: 'Action',
+      searchText: 'mimicry rings selector',
+      run: () => openMimicryFn?.(),
+    }))
+  }
+  cmds.push(make('action:export-panel', 'action', 'Open Export & Share Panel', {
+    group: 'actions', typeLabel: 'Action',
+    searchText: 'export share citation download',
+    run: () => openExportFn?.(),
+  }))
+  cmds.push(make('action:download-map', 'action', 'Download Map Image', {
+    group: 'actions', typeLabel: 'Action',
+    searchText: 'export map png jpg image download',
+    run: () => directExportMapFn?.(),
+  }))
+  cmds.push(make('action:view-map', 'action', 'Switch to Map View', {
+    group: 'actions', typeLabel: 'Action',
+    searchText: 'map view show map',
+    active: store.currentView === 'map',
+    run: () => setViewFn?.('map'),
+  }))
+  cmds.push(make('action:view-table', 'action', 'Switch to Table View', {
+    group: 'actions', typeLabel: 'Action',
+    searchText: 'table data view',
+    active: store.currentView === 'table',
+    run: () => setViewFn?.('table'),
+  }))
+  if (config.features.databaseUpdate) {
+    cmds.push(make('action:db-update', 'action', 'Update Database', {
+      group: 'actions', typeLabel: 'Action',
+      searchText: 'update database refresh sync',
+      run: () => {
+        store.showDatabaseUpdatePanel = true
+        const panel = document.querySelector('.database-update-section')
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      },
+    }))
+  }
+
+  // Settings (toggles + setters)
+  cmds.push(make('setting:legend', 'setting', legendStore.showLegend ? 'Hide Legend' : 'Show Legend', {
+    group: 'settings', typeLabel: 'Toggle',
+    searchText: 'legend hide show',
+    active: legendStore.showLegend,
+    run: () => { legendStore.showLegend = !legendStore.showLegend },
+  }))
+  cmds.push(make('setting:export-preview', 'setting', store.exportSettings.enabled ? 'Disable Export Preview' : 'Enable Export Preview', {
+    group: 'settings', typeLabel: 'Toggle',
+    searchText: 'preview export frame aspect ratio',
+    active: store.exportSettings.enabled,
+    run: () => { store.exportSettings.enabled = !store.exportSettings.enabled },
+  }))
+  cmds.push(make('setting:mode', 'setting', themeStore.currentMode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode', {
+    group: 'settings', typeLabel: 'Theme',
+    searchText: 'dark light mode theme appearance',
+    active: false,
+    run: () => themeStore.toggleMode(),
+  }))
+  for (const mode of VIZ_MODES) {
+    cmds.push(make(`setting:viz:${mode.value}`, 'setting', `Visualization: ${mode.label}`, {
+      group: 'settings', typeLabel: 'Visualization',
+      searchText: `visualization ${mode.value} ${mode.label.toLowerCase()}`,
+      active: store.visualizationMode === mode.value,
+      run: () => { store.visualizationMode = mode.value },
+    }))
+  }
+  for (const theme of THEME_PRESETS) {
+    cmds.push(make(`setting:theme:${theme.value}`, 'setting', `Theme: ${theme.label}`, {
+      group: 'settings', typeLabel: 'Theme',
+      searchText: `theme ${theme.value} ${theme.label.toLowerCase()}`,
+      active: themeStore.currentTheme === theme.value,
+      run: () => themeStore.setTheme(theme.value),
+    }))
+  }
+
+  // Filters (toggles for array membership)
+  const availableSources = [...Object.keys(store.sourceConfig || {})]
+  for (const src of availableSources) {
+    const isActive = store.filters.source.includes(src)
+    cmds.push(make(`filter:source:${src}`, 'filter', `${isActive ? 'Disable' : 'Enable'} source: ${src}`, {
+      group: 'filters', typeLabel: 'Source',
+      searchText: `source ${src.toLowerCase()} data`,
+      active: isActive,
+      run: () => {
+        store.filters.source = isActive
+          ? store.filters.source.filter(s => s !== src)
+          : [...store.filters.source, src]
+      },
+    }))
+  }
+  for (const status of uniqueStatuses.value) {
+    const isActive = store.filters.status.includes(status)
+    cmds.push(make(`filter:status:${status}`, 'filter', `${isActive ? 'Remove' : 'Add'} status: ${status}`, {
+      group: 'filters', typeLabel: 'Status',
+      searchText: `status ${status.toLowerCase()} sequencing`,
+      active: isActive,
+      run: () => {
+        store.filters.status = isActive
+          ? store.filters.status.filter(s => s !== status)
+          : [...store.filters.status, status]
+      },
+    }))
+  }
+  const SEX_OPTIONS = [
+    { value: 'all', label: 'All sexes' },
+    { value: 'male', label: 'Males only' },
+    { value: 'female', label: 'Females only' },
+  ]
+  for (const opt of SEX_OPTIONS) {
+    cmds.push(make(`filter:sex:${opt.value}`, 'filter', `Sex: ${opt.label}`, {
+      group: 'filters', typeLabel: 'Sex',
+      searchText: `sex ${opt.value} ${opt.label.toLowerCase()}`,
+      active: store.filters.sex === opt.value,
+      run: () => { store.filters.sex = opt.value },
+    }))
+  }
+
+  return cmds
+})
+
+// Commands that stay open after action (toggles); actions that close after run (navigation).
+const CLOSE_AFTER_RUN = new Set(['action:gallery', 'action:mimicry', 'action:export-panel', 'action:download-map', 'action:view-map', 'action:view-table', 'action:db-update'])
+
 function levenshtein(a, b) {
   if (a === b) return 0
   if (!a.length) return b.length
@@ -160,13 +337,32 @@ function scoreItem(item, queryLower) {
   return { item, score: bestScore, matchField, matchIndex, matchLength: queryLower.length }
 }
 
+const defaultCommands = computed(() => {
+  const preferredOrder = [
+    'action:gallery', 'action:mimicry', 'action:view-table', 'action:view-map',
+    'action:download-map', 'action:export-panel', 'action:db-update',
+    'setting:legend', 'setting:export-preview', 'setting:mode',
+  ]
+  const byId = new Map(commandItems.value.map(c => [c.id, c]))
+  const list = []
+  for (const id of preferredOrder) {
+    const cmd = byId.get(id)
+    if (cmd) list.push({ item: cmd, score: 0, matchField: null, matchIndex: -1, matchLength: 0 })
+  }
+  return list
+})
+
 const ranked = computed(() => {
   const q = query.value.trim().toLowerCase()
-  if (!q) return { groups: [], suggestions: [] }
+  if (!q) return { groups: [], suggestions: [], isDefault: true, defaultItems: defaultCommands.value }
 
   const hits = []
   for (const item of allItems.value) {
     const scored = scoreItem(item, q)
+    if (scored) hits.push(scored)
+  }
+  for (const cmd of commandItems.value) {
+    const scored = scoreItem(cmd, q)
     if (scored) hits.push(scored)
   }
   hits.sort((a, b) => b.score - a.score)
@@ -195,25 +391,33 @@ const ranked = computed(() => {
     suggestions.push({ item, score: 0, matchField: null, matchIndex: -1, matchLength: 0 })
     if (suggestions.length >= MAX_SUGGESTIONS) break
   }
-  const byGroup = { taxonomy: [], geography: [], mimicry: [] }
+
+  const byGroup = { actions: [], settings: [], filters: [], taxonomy: [], geography: [], mimicry: [] }
   for (const hit of limited) {
-    if (hit.item.kind === 'country') byGroup.geography.push(hit)
-    else if (hit.item.kind === 'mimicry') byGroup.mimicry.push(hit)
-    else byGroup.taxonomy.push(hit)
+    const g = hit.item.group
+    if (g === 'actions' || g === 'settings' || g === 'filters') {
+      byGroup[g].push(hit)
+    } else if (hit.item.kind === 'country') {
+      byGroup.geography.push(hit)
+    } else if (hit.item.kind === 'mimicry') {
+      byGroup.mimicry.push(hit)
+    } else {
+      byGroup.taxonomy.push(hit)
+    }
   }
   const groups = GROUP_ORDER
-    .map(key => ({
-      key,
-      heading: key === 'taxonomy' ? 'Taxonomy' : key === 'geography' ? 'Geography' : 'Mimicry',
-      items: byGroup[key],
-    }))
+    .map(key => ({ key, heading: GROUP_HEADINGS[key], items: byGroup[key] }))
     .filter(g => g.items.length > 0)
 
-  return { groups, suggestions }
+  return { groups, suggestions, isDefault: false, defaultItems: [] }
 })
 
 const flatResults = computed(() => {
   const list = []
+  if (ranked.value.isDefault) {
+    for (const hit of ranked.value.defaultItems) list.push(hit)
+    return list
+  }
   for (const group of ranked.value.groups) {
     for (const hit of group.items) list.push(hit)
   }
@@ -266,6 +470,15 @@ function selectItem(item) {
       break
     case 'mimicry':
       addToArrayFilter('mimicry', item.value)
+      break
+    case 'action':
+    case 'setting':
+    case 'filter':
+      item.run?.()
+      if (CLOSE_AFTER_RUN.has(item.id)) {
+        dialogOpen.value = false
+        return
+      }
       break
   }
   query.value = ''

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
 import { usePersistenceStore } from '../stores/persistence'
 import { useLegendStore } from '../stores/legend'
@@ -98,6 +98,10 @@ const sourceFilterDirty = computed(() => {
   const b = [...store.filters.source].sort()
   return JSON.stringify(a) !== JSON.stringify(b)
 })
+
+watch(() => store.filters.source, (newSource) => {
+  stagedSources.value = [...newSource]
+}, { deep: true })
 
 // GBIF parent checkbox state
 const gbifAllSelected = computed(() => GBIF_CHILDREN.every(c => stagedSources.value.includes(c)))

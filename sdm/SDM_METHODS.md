@@ -16,15 +16,15 @@ This document details the species distribution modelling (SDM) pipeline develope
 | GBIF (UNAM) | 21,586 | 35 | Universidad Nacional Autónoma de México |
 | **Total** | **76,937** | **459** | |
 
-### Excluded: Dore et al. (2025)
+### Excluded: Dore et al. (2022)
 
-The Dore et al. (2025) dataset (28,927 records, 387 species) was excluded from the SDM pipeline despite being the largest single dataset. This dataset reports occurrences as centroids of 0.25° grid cells (~28 km), not actual collection localities. Including grid centroids would:
+The Dore et al. (2022) dataset (28,927 records, 387 species) was excluded from the SDM pipeline despite being the largest single dataset. This dataset reports occurrences as centroids of 0.25° grid cells (~28 km), not actual collection localities. Including grid centroids would:
 
 1. Introduce false spatial precision — a point at a grid centroid does not represent where the butterfly was actually collected within that ~28 km cell.
 2. Conflict with the ~1 km resolution of the CHELSA environmental layers — the environmental values at a grid centroid may not represent conditions at the true collection site.
 3. Bias models toward grid-centre coordinates rather than ecologically meaningful locations.
 
-Dore et al. (2025) remains available in the web application for occurrence visualization and is a valuable reference for species diversity mapping, but its coarse spatial resolution makes it unsuitable for fine-scale SDM.
+Dore et al. (2022) remains available in the web application for occurrence visualization and is a valuable reference for species diversity mapping, but its coarse spatial resolution makes it unsuitable for fine-scale SDM.
 
 ### Data Cleaning
 

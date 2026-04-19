@@ -251,7 +251,7 @@ def load_local_data():
         df['mimicry_ring_female'] = df['F.mimicry'].apply(normalize_mimicry)
         
         # Metadata
-        df['source'] = "Dore et al. (2025)"
+        df['source'] = "Dore et al. (2022)"
         df['sequencing_status'] = "Published"
         df['image_url'] = None
         df['country'] = df['Country']

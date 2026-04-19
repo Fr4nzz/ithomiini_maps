@@ -378,7 +378,7 @@ const clearSelection = () => {
     <!-- Footer -->
     <div class="selector-footer">
       <p class="footer-note">
-        Mimicry ring data from Dore et al. (2025) • Photos prioritize Sanger Institute
+        Mimicry ring data from Dore et al. (2022) • Photos prioritize Sanger Institute
       </p>
       <div class="footer-actions">
         <button class="btn-clear" @click="clearSelection" :disabled="selectedRings.length === 0">

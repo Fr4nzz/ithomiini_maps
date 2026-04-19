@@ -217,6 +217,9 @@ const onMapReady = (map) => {
 // Provide modal openers to children
 provide('openMimicrySelector', openMimicrySelector)
 provide('openImageGallery', openImageGallery)
+provide('openExport', openExport)
+provide('directExportMap', directExportMap)
+provide('setView', setView)
 
 onMounted(async () => {
   await store.loadMapData()
