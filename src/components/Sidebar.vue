@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useDataStore } from '../stores/data'
 import { usePersistenceStore } from '../stores/persistence'
 import { useLegendStore } from '../stores/legend'
+import { useSDMStore } from '../stores/sdm'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 import TimeSlider from './TimeSlider.vue'
@@ -19,11 +20,12 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'export-for-r', 'set-view'])
+const emit = defineEmits(['open-export', 'open-mimicry', 'open-gallery', 'open-map-export', 'export-for-r', 'set-view', 'open-global-search'])
 
 const store = useDataStore()
 const persistenceStore = usePersistenceStore()
 const legendStore = useLegendStore()
+const sdmStore = useSDMStore()
 
 // Toggle persistence
 function togglePersistence() {
@@ -96,6 +98,10 @@ const sourceFilterDirty = computed(() => {
   const b = [...store.filters.source].sort()
   return JSON.stringify(a) !== JSON.stringify(b)
 })
+
+watch(() => store.filters.source, (newSource) => {
+  stagedSources.value = [...newSource]
+}, { deep: true })
 
 // GBIF parent checkbox state
 const gbifAllSelected = computed(() => GBIF_CHILDREN.every(c => stagedSources.value.includes(c)))
@@ -484,6 +490,15 @@ const updateExportHeight = (value) => {
             <path d="M12 3v18m-6-6 6 6 6-6"/>
           </svg>
           Taxonomy
+          <button
+            type="button"
+            class="shortcut-hint"
+            title="Search across all taxa, countries, and mimicry rings"
+            @click="$emit('open-global-search')"
+          >
+            <span class="shortcut-hint-label">Global search</span>
+            <kbd>⌘/Ctrl+K</kbd>
+          </button>
         </label>
 
         <!-- Species Multi-select with Fuzzy Search -->
@@ -514,34 +529,34 @@ const updateExportHeight = (value) => {
             <path d="m9 18 6-6-6-6"/>
           </svg>
           Family / Tribe / Genus
-          <span v-if="store.filters.family !== 'All' || store.filters.tribe !== 'All' || store.filters.genus !== 'All'" class="active-indicator"></span>
+          <span v-if="store.filters.family.length || store.filters.tribe.length || store.filters.genus.length" class="active-indicator"></span>
         </button>
 
         <div v-show="showAdvancedTaxonomy" class="subsection-content">
           <FilterSelect
             label="Family"
             v-model="store.filters.family"
-            :options="['All', ...store.uniqueFamilies]"
+            :options="store.uniqueFamilies"
             placeholder="All Families"
-            :multiple="false"
+            :multiple="true"
             :show-count="false"
           />
 
           <FilterSelect
             label="Tribe"
             v-model="store.filters.tribe"
-            :options="['All', ...store.uniqueTribes]"
+            :options="store.uniqueTribes"
             placeholder="All Tribes"
-            :multiple="false"
+            :multiple="true"
             :show-count="false"
           />
 
           <FilterSelect
             label="Genus"
             v-model="store.filters.genus"
-            :options="['All', ...store.uniqueGenera]"
+            :options="store.uniqueGenera"
             placeholder="All Genera"
-            :multiple="false"
+            :multiple="true"
           />
         </div>
       </div>
@@ -771,9 +786,9 @@ const updateExportHeight = (value) => {
         </label>
         <FilterSelect
           v-model="store.filters.country"
-          :options="['All', ...store.uniqueCountries]"
+          :options="store.uniqueCountries"
           placeholder="All Countries"
-          :multiple="false"
+          :multiple="true"
           :show-count="false"
         />
       </div>
@@ -802,6 +817,119 @@ const updateExportHeight = (value) => {
           <input type="checkbox" v-model="store.showThumbnail" />
           <span>Show thumbnails</span>
         </label>
+      </div>
+
+      <!-- SDM Predicted Distributions -->
+      <div v-if="currentView === 'map' && sdmStore.hasData" class="filter-section collapsible">
+        <button
+          class="collapse-toggle"
+          @click="sdmStore.toggle()"
+          :class="{ expanded: sdmStore.enabled }"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          Predicted Distribution
+          <span v-if="sdmStore.selectedSpecies.length > 0" class="active-badge">
+            {{ sdmStore.selectedSpecies.length }} selected
+          </span>
+        </button>
+
+        <div v-show="sdmStore.enabled" class="collapse-content">
+          <FilterSelect
+            label="SDM Species"
+            v-model="sdmStore.selectedSpecies"
+            :options="sdmStore.availableSpecies"
+            placeholder="Select up to 2 species..."
+            :multiple="true"
+          />
+
+          <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--error-color, #f87171);">
+            Max 2 species for overlay comparison
+          </p>
+
+          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-legend">
+            <div class="sdm-legend-item" v-for="(sp, idx) in sdmStore.selectedSpecies.slice(0, 2)" :key="sp">
+              <span class="sdm-legend-species">{{ sp }}</span>
+              <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-confidence-badge" :class="sdmStore.getSDMInfo(sp).confidence">
+                {{ sdmStore.getSDMInfo(sp).confidence }}
+              </span>
+              <div class="sdm-gradient-bar" :class="idx === 0 ? 'warm' : 'cool'">
+                <span class="sdm-gradient-label-low">Low</span>
+                <span class="sdm-gradient-label-high">High</span>
+              </div>
+              <div v-if="sdmStore.getSDMInfo(sp)" class="sdm-model-info">
+                <div class="sdm-info-grid">
+                  <span class="sdm-info-label">Records</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).n_records }}</span>
+                  <span class="sdm-info-label">AUC</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).auc }}</span>
+                  <span class="sdm-info-label">Boyce</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).boyce || '—' }}</span>
+                  <span class="sdm-info-label">Tier</span>
+                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).tier }}</span>
+                  <span class="sdm-info-label">Algorithms</span>
+                  <span class="sdm-info-value">{{ (sdmStore.getSDMInfo(sp).algorithms_used || []).join(', ') || '—' }}</span>
+                </div>
+              </div>
+              <div v-if="sdmStore.getSDMInfo(sp)?.env_summary?.length" class="sdm-env-section">
+                <div
+                  v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
+                  :key="env.variable"
+                  class="sdm-env-card"
+                >
+                  <div class="sdm-env-header">
+                    <span class="sdm-env-name">{{ env.label }}</span>
+                    <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
+                  </div>
+                  <div class="sdm-chart-wrap">
+                    <span class="sdm-y-label">Suitability</span>
+                    <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+                      <polyline
+                        :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
+                        fill="none"
+                        stroke="var(--color-accent, #4ade80)"
+                        stroke-width="1.5"
+                      />
+                      <polygon
+                        :points="[
+                          ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
+                          ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
+                        ].join(' ')"
+                        fill="var(--color-accent, #4ade80)"
+                        fill-opacity="0.15"
+                      />
+                    </svg>
+                  </div>
+                  <div class="sdm-x-axis">
+                    <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
+                    <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
+                    <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
+                  </div>
+                  <div class="sdm-env-footer">
+                    <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
+                    <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="sdm-legend-caption">Habitat suitability</span>
+          </div>
+
+          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-opacity-row">
+            <span class="sdm-opacity-label">Opacity</span>
+            <input
+              type="range" min="0.1" max="1" step="0.1"
+              :value="sdmStore.opacity"
+              @input="sdmStore.setOpacity(parseFloat($event.target.value))"
+            />
+            <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
+          </div>
+
+          <p class="filter-hint">
+            {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
+          </p>
+        </div>
       </div>
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->

@@ -55,7 +55,6 @@ export function useColorMapping(colorBy, displayGeoJSON, colorByAttribute) {
 
   // Base color map without custom overrides
   const baseColorMap = computed(() => {
-    const legendStore = useLegendStore()
     const mode = colorBy.value
     const attr = colorByAttribute.value
     const geo = displayGeoJSON.value

@@ -21,13 +21,6 @@ import { computePopupPosition } from '../../composables/usePopupPosition'
 import LegendDropdown from './LegendDropdown.vue'
 import LegendColorPicker from './LegendColorPicker.vue'
 
-const props = defineProps({
-  isExportMode: {
-    type: Boolean,
-    default: false
-  }
-})
-
 const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close'])
 
 const legendStore = useLegendStore()

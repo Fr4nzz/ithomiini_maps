@@ -259,7 +259,8 @@ export function useDataLayer(map, options = {}) {
         cluster: shouldCluster,
         clusterMaxZoom: 14,
         clusterRadius: clusterRadiusPixels,
-        clusterMinPoints: 2
+        clusterMinPoints: 2,
+        generateId: true
       })
       log.perf.end('addSource (full rebuild)')
       _lastClusterState = shouldCluster
@@ -378,10 +379,11 @@ export function useDataLayer(map, options = {}) {
                 'interpolate', ['linear'], ['zoom'],
                 3, 1, 6, 2, 10, 3, 14, 5
               ],
-              'circle-color': ['match', ['get', pointAttr],
-                ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
-                '#6b7280'
-              ],
+              'circle-color': Object.keys(pointColorMap).length > 0
+                ? ['match', ['get', pointAttr],
+                    ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
+                    '#6b7280']
+                : '#6b7280',
               'circle-opacity': 0.4,
               'circle-stroke-width': 0,
               'circle-stroke-opacity': 0
@@ -475,10 +477,11 @@ export function useDataLayer(map, options = {}) {
                 'interpolate', ['linear'], ['zoom'],
                 3, 1.5, 6, 2.5, 10, 4, 14, 6
               ],
-              'circle-color': ['match', ['get', pointAttr],
-                ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
-                '#6b7280'
-              ],
+              'circle-color': Object.keys(pointColorMap).length > 0
+                ? ['match', ['get', pointAttr],
+                    ...Object.entries(pointColorMap).flatMap(([v, c]) => [v, c]),
+                    '#6b7280']
+                : '#6b7280',
               'circle-opacity': 0.5,
               'circle-stroke-width': 0.5,
               'circle-stroke-color': '#ffffff',
@@ -568,11 +571,17 @@ export function useDataLayer(map, options = {}) {
     // Build color expression: items in the legend get their color,
     // overflow items (in color map but not shown in legend) get grey
     const shownLabels = legendStore.shownLabels
-    const colorExpression = ['match', ['get', colorAttr]]
-    Object.entries(colorMap).forEach(([value, color]) => {
-      colorExpression.push(value, shownLabels.size > 0 && !shownLabels.has(value) ? '#6b7280' : color)
-    })
-    colorExpression.push('#6b7280')
+    const colorEntries = Object.entries(colorMap)
+    let colorExpression
+    if (colorEntries.length === 0) {
+      colorExpression = '#6b7280'
+    } else {
+      colorExpression = ['match', ['get', colorAttr]]
+      colorEntries.forEach(([value, color]) => {
+        colorExpression.push(value, shownLabels.size > 0 && !shownLabels.has(value) ? '#6b7280' : color)
+      })
+      colorExpression.push('#6b7280')
+    }
 
     // Sort key: colored (legend) points render above grey (overflow) points
     const shownLabelsArray = Array.from(shownLabels)
@@ -701,8 +710,8 @@ export function useDataLayer(map, options = {}) {
       type: 'circle',
       source: 'points-source',
       filter: shouldCluster
-        ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-        : ['==', ['get', 'id'], ''],
+        ? ['all', ['!', ['has', 'point_count']], ['==', ['id'], -1]]
+        : ['==', ['id'], -1],
       paint: {
         'circle-radius': highlightSizeExpression,
         'circle-color': 'transparent',
@@ -836,13 +845,13 @@ export function useDataLayer(map, options = {}) {
         map.value.getCanvas().style.cursor = 'pointer'
 
         if (e.features && e.features.length > 0) {
-          const id = e.features[0].properties.id
-          if (id === lastHoveredPointId) return  // skip redundant setFilter
-          lastHoveredPointId = id
+          const featureId = e.features[0].id
+          if (featureId === lastHoveredPointId) return
+          lastHoveredPointId = featureId
           const isClustering = store.clusteringEnabled
           const filter = isClustering
-            ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], id]]
-            : ['==', ['get', 'id'], id]
+            ? ['all', ['!', ['has', 'point_count']], ['==', ['id'], featureId]]
+            : ['==', ['id'], featureId]
           map.value.setFilter('points-highlight', filter)
         }
       })
@@ -852,8 +861,8 @@ export function useDataLayer(map, options = {}) {
         lastHoveredPointId = null
         const isClustering = store.clusteringEnabled
         const filter = isClustering
-          ? ['all', ['!', ['has', 'point_count']], ['==', ['get', 'id'], '']]
-          : ['==', ['get', 'id'], '']
+          ? ['all', ['!', ['has', 'point_count']], ['==', ['id'], -1]]
+          : ['==', ['id'], -1]
         map.value.setFilter('points-highlight', filter)
       })
     }
