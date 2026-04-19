@@ -265,38 +265,49 @@ Web App (Vue 3 + MapLibre GL JS)
 
 ## 8. Results
 
-> **TODO**: Update after full 148-species production run completes.
-
 ### Summary Statistics
 
 | Metric | Value |
 |--------|-------|
-| Species modelled | ___ / 148 |
-| Mean AUC | ___ |
-| Mean Boyce Index | ___ |
-| Species with AUC > 0.7 | ___ |
-| Species with positive Boyce | ___ |
-| Species rated "exploratory" | ___ |
+| Species modelled | **151** (147 Ithomiini + 4 Heliconiini) |
+| Mean AUC | **0.729** (median 0.731) |
+| Mean Boyce Index | **0.522** (median 0.562) |
+| Species with AUC > 0.7 | **100 (67%)** |
+| Species with positive Boyce | **134 (89%)** |
+| Species rated "high" confidence | 46 |
+| Species rated "medium" confidence | 35 |
+| Species rated "low" confidence | 69 |
+| Species rated "exploratory" | 1 |
 
 ### Performance by Tier
 
 | Tier | N species | Mean AUC | Mean Boyce | AUC range |
 |------|-----------|----------|------------|-----------|
-| Large (100+) | 46 | ___ | ___ | ___ |
-| Medium (50–99) | 37 | ___ | ___ | ___ |
-| Small (20–49) | 65 | ___ | ___ | ___ |
+| Large (100+) | 46 | 0.679 | 0.293 | 0.526–0.799 |
+| Medium (50–99) | 36 | 0.712 | 0.284 | 0.559–0.847 |
+| Small (20–49) | 69 | 0.771 | 0.796 | 0.619–0.963 |
+
+The inverse relationship between sample size and AUC (large-tier species show lower AUC than small-tier species) is the documented statistical artefact of Lobo et al. (2008) and Jiménez-Valverde (2012): widespread species occupying a large fraction of the study area have structurally lower achievable AUC, regardless of model quality. The Boyce Index provides a more informative cross-tier comparison and shows that small-tier range-restricted species achieve excellent calibration (mean Boyce 0.80).
 
 ### Most Important Environmental Variables
 
-> **TODO**: Rank variables by mean importance across all species.
+Variable importance was computed as the range of predicted suitability (max − min) across each variable's gradient, holding other variables at their mean values.
 
 | Rank | Variable | Mean importance | Top predictor for N species |
 |------|----------|----------------|---------------------------|
-| 1 | ___ | ___ | ___ |
-| 2 | ___ | ___ | ___ |
-| 3 | ___ | ___ | ___ |
+| 1 | Precipitation Seasonality | 0.451 | 34 species |
+| 2 | Temperature Seasonality | 0.425 | 33 species |
+| 3 | Max Temperature of Warmest Month | 0.419 | 34 species |
+| 4 | Elevation | 0.391 | 3 species (only 10 species retained it after VIF) |
+| 5 | Cloud Cover | 0.382 | 22 species |
+| 6 | Diurnal Range | 0.341 | 16 species |
+| 7 | Precipitation of Driest Month | 0.261 | 3 species |
+| 8 | Precipitation of Wettest Month | 0.256 | 6 species |
+| 9 | Annual Precipitation | 0.082 | 0 species (VIF-removed for most) |
 
-### Pilot Test Results (4 species)
+Seasonality metrics (both precipitation and temperature) are the strongest predictors overall, consistent with Ithomiini biogeography: many species track specific seasonal climatic regimes within wet tropical forests. Cloud cover ranks in the top tier for cloud forest specialists; elevation emerges as a top predictor only when it survives VIF filtering (it correlates strongly with temperature variables in most species' accessible areas). Annual Precipitation rarely survives VIF because it correlates with the wettest/driest month variables.
+
+### Reference Species Results
 
 | Species | Records | Tier | AUC | Boyce | Confidence |
 |---------|---------|------|-----|-------|------------|
@@ -304,8 +315,12 @@ Web App (Vue 3 + MapLibre GL JS)
 | *Mechanitis lysimnia* | 816 | large | 0.678 | 0.716 | high |
 | *Mechanitis messenoides* | 97 | medium | 0.768 | 0.342 | medium |
 | *Heterosais giulia* | 57 | medium | 0.587 | −0.009 | medium |
+| *Heliconius erato* | 23 | small | 0.717 | 0.902 | low |
+| *Heliconius numata* | 21 | small | 0.803 | 0.742 | low |
+| *Heliconius sara* | 22 | small | 0.806 | 0.853 | low |
+| *Dryas iulia* | 20 | small | 0.813 | 0.951 | low |
 
-The negative correlation between sample size and AUC is a documented statistical artefact (Lobo et al., 2008; Jiménez-Valverde, 2012): widespread species occupying a large fraction of the study area have structurally lower achievable AUC, not worse models. The Boyce Index provides a more meaningful comparison, showing that even the widespread *M. polymnia* (AUC 0.640) has excellent calibration (Boyce 0.847).
+The widespread *M. polymnia* (AUC 0.640) and the narrow-range *D. iulia* (AUC 0.813) both have excellent calibration (Boyce 0.85 and 0.95 respectively) despite very different AUC values — another illustration of why Boyce Index is more appropriate than AUC alone for comparing species with different range sizes.
 
 ## 9. Limitations
 
