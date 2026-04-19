@@ -84,59 +84,57 @@ const goatChromosomeMinInput = ref('')
 const goatChromosomeMaxInput = ref('')
 const showExactDates = ref(false)
 
-// ── Source filter with Apply/Cancel ────────────────────────────────────────
-// Sources are grouped: top-level items + GBIF parent with sub-datasets
+// ── Source tiles: immediate toggle, flattened GBIF children ───────────────
 const GBIF_CHILDREN = ['iNaturalist', 'GBIF (UNAM)', 'GBIF (Other Institutions)']
-const TOP_LEVEL_SOURCES = computed(() =>
-  store.uniqueSources.filter(s => !GBIF_CHILDREN.includes(s))
-)
 
-// Staged selection (applied only on Apply)
-const stagedSources = ref([...store.filters.source])
-const sourceFilterDirty = computed(() => {
-  const a = [...stagedSources.value].sort()
-  const b = [...store.filters.source].sort()
-  return JSON.stringify(a) !== JSON.stringify(b)
+// Compact display labels for tiles
+const SOURCE_SHORT_LABELS = {
+  'Sanger Institute': 'Sanger',
+  'Dore et al. (2022)': 'Doré 2022',
+  'iNaturalist': 'iNat',
+  'GBIF (UNAM)': 'UNAM',
+  'GBIF (Other Institutions)': 'GBIF Other',
+}
+
+const SOURCE_TILE_ORDER = computed(() => {
+  const configured = Object.keys(store.sourceConfig || {})
+  const known = configured.filter(s => SOURCE_SHORT_LABELS[s])
+  const rest = configured.filter(s => !SOURCE_SHORT_LABELS[s])
+  return [...known, ...rest]
 })
 
-watch(() => store.filters.source, (newSource) => {
-  stagedSources.value = [...newSource]
-}, { deep: true })
+const sourceRecordCount = (source) => {
+  const cfg = store.sourceConfig?.[source]
+  return cfg?.records || 0
+}
 
-// GBIF parent checkbox state
-const gbifAllSelected = computed(() => GBIF_CHILDREN.every(c => stagedSources.value.includes(c)))
-const gbifSomeSelected = computed(() => GBIF_CHILDREN.some(c => stagedSources.value.includes(c)))
-const gbifIndeterminate = computed(() => gbifSomeSelected.value && !gbifAllSelected.value)
+const sourceIsLoading = (source) => store.sourceLoading?.has?.(source) ?? false
+const sourceIsActive = (source) => store.filters.source.includes(source)
 
-const toggleStagedSource = (source) => {
-  const idx = stagedSources.value.indexOf(source)
+const toggleSource = (source) => {
+  const current = store.filters.source
+  const idx = current.indexOf(source)
   if (idx >= 0) {
-    stagedSources.value.splice(idx, 1)
+    store.filters.source = current.filter(s => s !== source)
   } else {
-    stagedSources.value.push(source)
+    store.filters.source = [...current, source]
   }
 }
 
-const toggleGbifParent = () => {
+const gbifAllSelected = computed(() =>
+  GBIF_CHILDREN.every(c => store.filters.source.includes(c))
+)
+
+const toggleAllGbif = () => {
   if (gbifAllSelected.value) {
-    // Deselect all GBIF children
-    stagedSources.value = stagedSources.value.filter(s => !GBIF_CHILDREN.includes(s))
+    store.filters.source = store.filters.source.filter(s => !GBIF_CHILDREN.includes(s))
   } else {
-    // Select all GBIF children
+    const next = [...store.filters.source]
     for (const child of GBIF_CHILDREN) {
-      if (!stagedSources.value.includes(child)) {
-        stagedSources.value.push(child)
-      }
+      if (!next.includes(child)) next.push(child)
     }
+    store.filters.source = next
   }
-}
-
-const applySourceFilter = () => {
-  store.filters.source = [...stagedSources.value]
-}
-
-const cancelSourceFilter = () => {
-  stagedSources.value = [...store.filters.source]
 }
 
 const toggleGoatSource = (source) => {
@@ -672,58 +670,46 @@ const updateExportHeight = (value) => {
         </div>
       </div>
 
-      <!-- Data Source (Checkbox panel with Apply/Cancel) -->
+      <!-- Data Source tiles (immediate toggle) -->
       <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-            <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
-          </svg>
-          Data Source
-        </label>
-        <div class="source-checkbox-panel">
-          <!-- Top-level sources (non-GBIF) -->
-          <label v-for="source in TOP_LEVEL_SOURCES" :key="source" class="source-checkbox">
-            <input
-              type="checkbox"
-              :checked="stagedSources.includes(source)"
-              @change="toggleStagedSource(source)"
-            />
-            <span>{{ source }}</span>
+        <div class="source-header">
+          <label class="section-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+            </svg>
+            Data Source
           </label>
-
-          <!-- GBIF parent group -->
-          <label class="source-checkbox gbif-parent">
-            <input
-              type="checkbox"
-              :checked="gbifAllSelected"
-              :indeterminate="gbifIndeterminate"
-              @change="toggleGbifParent"
-            />
-            <span>GBIF</span>
-          </label>
-          <!-- GBIF children (indented) -->
-          <label v-for="child in GBIF_CHILDREN" :key="child" class="source-checkbox gbif-child">
-            <input
-              type="checkbox"
-              :checked="stagedSources.includes(child)"
-              @change="toggleStagedSource(child)"
-            />
-            <span>{{ child }}</span>
-          </label>
-
-          <!-- Apply / Cancel buttons -->
-          <div class="source-filter-actions" v-if="sourceFilterDirty">
-            <button class="btn-source-cancel" @click="cancelSourceFilter">Cancel</button>
-            <button class="btn-source-apply" @click="applySourceFilter">Apply</button>
-          </div>
+          <button
+            type="button"
+            class="source-bulk-link"
+            @click="toggleAllGbif"
+            :title="gbifAllSelected ? 'Deselect all GBIF sources' : 'Select all GBIF sources'"
+          >
+            {{ gbifAllSelected ? '− All GBIF' : '+ All GBIF' }}
+          </button>
         </div>
-        <p class="filter-hint" v-if="store.sourceLoading.size > 0">
-          Loading {{ [...store.sourceLoading].join(', ') }}...
-        </p>
-        <p class="filter-hint" v-else-if="store.filters.source.length === 0">
-          No sources selected - showing all data
+        <div class="source-tile-row">
+          <button
+            v-for="source in SOURCE_TILE_ORDER"
+            :key="source"
+            type="button"
+            class="filter-tile source-tile"
+            :class="{ active: sourceIsActive(source), loading: sourceIsLoading(source) }"
+            @click="toggleSource(source)"
+            :title="source"
+          >
+            {{ SOURCE_SHORT_LABELS[source] || source }}
+            <span v-if="sourceRecordCount(source) > 0" class="filter-tile-count">
+              {{ sourceRecordCount(source) >= 1000
+                  ? (sourceRecordCount(source) / 1000).toFixed(1) + 'k'
+                  : sourceRecordCount(source) }}
+            </span>
+          </button>
+        </div>
+        <p class="filter-hint" v-if="store.filters.source.length === 0" style="margin-top: 6px;">
+          No sources selected — showing all data
         </p>
       </div>
 
