@@ -87,14 +87,33 @@ const showExactDates = ref(false)
 // ── Source tiles: immediate toggle, flattened GBIF children ───────────────
 const GBIF_CHILDREN = ['iNaturalist', 'GBIF (UNAM)', 'GBIF (Other Institutions)']
 
-// Compact display labels for tiles
-const SOURCE_SHORT_LABELS = {
-  'Sanger Institute': 'Sanger',
-  'Dore et al. (2022)': 'Doré 2022',
-  'iNaturalist': 'iNat',
-  'GBIF (UNAM)': 'UNAM',
-  'GBIF (Other Institutions)': 'GBIF Other',
+// Compact tile labels + concise hover descriptions
+const SOURCE_META = {
+  'Sanger Institute': {
+    label: 'Sanger',
+    tooltip: 'Sanger Institute — sequencing project specimens with live photos',
+  },
+  'Dore et al. (2022)': {
+    label: 'Doré 2022',
+    tooltip: 'Doré et al. 2022 — published Neotropical Ithomiini compilation',
+  },
+  'iNaturalist': {
+    label: 'iNat',
+    tooltip: 'iNaturalist (via GBIF) — citizen-science research-grade observations',
+  },
+  'GBIF (UNAM)': {
+    label: 'UNAM',
+    tooltip: 'UNAM (via GBIF) — Universidad Nacional Autónoma de México museum collection',
+  },
+  'GBIF (Other Institutions)': {
+    label: 'GBIF Other',
+    tooltip: 'GBIF (other institutions) — aggregated museum & herbarium records',
+  },
 }
+const SOURCE_SHORT_LABELS = Object.fromEntries(
+  Object.entries(SOURCE_META).map(([k, v]) => [k, v.label])
+)
+const sourceTooltip = (source) => SOURCE_META[source]?.tooltip || source
 
 const SOURCE_TILE_ORDER = computed(() => {
   const configured = Object.keys(store.sourceConfig || {})
@@ -698,7 +717,7 @@ const updateExportHeight = (value) => {
             class="filter-tile source-tile"
             :class="{ active: sourceIsActive(source), loading: sourceIsLoading(source) }"
             @click="toggleSource(source)"
-            :title="source"
+            :title="sourceTooltip(source)"
           >
             {{ SOURCE_SHORT_LABELS[source] || source }}
             <span v-if="sourceRecordCount(source) > 0" class="filter-tile-count">
@@ -812,14 +831,6 @@ const updateExportHeight = (value) => {
             GoaT data not available
           </p>
         </div>
-      </div>
-
-      <!-- UI Preferences -->
-      <div class="filter-section">
-        <label class="thumbnail-toggle">
-          <input type="checkbox" v-model="store.showThumbnail" />
-          <span>Show thumbnails in popups</span>
-        </label>
       </div>
 
       <!-- SDM Predicted Distributions -->

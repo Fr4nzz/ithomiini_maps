@@ -184,8 +184,8 @@ const bioprojectUrl = computed(() => {
     <div class="popup-layout">
       <!-- Left Column: Photo & Individual Details -->
       <div class="popup-left-section">
-        <!-- Photo (hidden when user disables thumbnails) -->
-        <div v-if="store.showThumbnail" class="photo-container">
+        <!-- Photo -->
+        <div class="photo-container">
           <img
             v-if="currentPhoto?.url"
             :src="getThumbnailUrl(currentPhoto.url)"
