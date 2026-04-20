@@ -180,6 +180,29 @@ weight_i = max(0, AUC_i − 0.5)
 
 Algorithms with AUC < 0.5 (worse than random) were excluded from the ensemble. AUC-weighted ensembles were chosen as the top-performing method across 225 species in Valavi et al. (2021).
 
+### Per-species Tuning for Weak Models
+
+Species with cross-validated Boyce Index < 0.3 are flagged as weak-performance and undergo an additional ENMeval-style grid search over MaxEnt parameters (Kass et al., 2021). Script: `sdm/06_tune_weak_species.py`.
+
+**Grid:**
+
+| Parameter | Values | Baseline default |
+|-----------|--------|------------------|
+| Regularization multiplier (RM) | 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0 | 1.5 (medium/large), 2.0 (small) |
+| Feature classes | L, LQ, LQH, LQHP | LQ (small), LQH (medium/large) |
+
+8 × 4 = 32 cells per species, fitted with 5-fold spatial block cross-validation (identical to the main pipeline).
+
+**Selection criterion:** highest CV Boyce Index; ties within 0.01 are broken in favor of fewer/simpler feature classes (linear < quadratic < hinge < product), following the parsimony principle of Warren & Seifert (2011).
+
+We deviate from the strict AICc criterion used in the ENMeval reference implementation. AICc on MaxEnt requires study-area-wide normalization of raw outputs — non-trivial additional compute — and the ENMeval 2.0 vignette (Kass et al., 2021, §2.4) explicitly supports CV metrics as an alternative selection criterion. CV Boyce also directly optimises the metric we report to end users.
+
+**Output:** `sdm/species_overrides.json` stores the winning `(maxent_rm, maxent_features)` for each tuned species. `04_run_sdm.py` consults this file on startup and applies overrides before fitting MaxEnt; species without entries fall back to tier defaults.
+
+**Expected impact:** modest Boyce improvements (Δ ≈ 0.05–0.15) for some weak species. Widespread generalists (e.g., *Mechanitis messenoides*) often remain weakly predicted regardless of tuning, reflecting genuinely diffuse environmental signal rather than pipeline defects (Adelino et al., 2020; Santini et al., 2021). Sample size < 200 and broad niche breadth both impose lower ceilings on attainable Boyce (Santini et al., 2021).
+
+**Scheduling:** the tuning script supports graceful SIGTERM shutdown (finishes the current species before exiting), `--resume` to skip completed species, and `--time-limit` to bound wall-clock time. This enables scheduled overnight runs on workstations with time-limited availability.
+
 ## 5. Model Evaluation
 
 ### Cross-Validation
@@ -329,7 +352,8 @@ The widespread *M. polymnia* (AUC 0.640) and the narrow-range *D. iulia* (AUC 0.
 3. **Spatial bias**: Despite target-group background sampling and spatial thinning, residual collector bias may remain, particularly for the Sanger data clustered around Ecuadorian field stations.
 4. **Resolution**: The 0.1° prediction resolution (~11 km) may be too coarse for narrow-range Andean cloud forest species where elevational shifts of 200 m matter.
 5. **No dispersal constraints**: Models predict climatically suitable areas without considering dispersal barriers (e.g., the Andes, major rivers, deforested corridors).
-6. **Fixed regularization**: MaxEnt regularization was set by tier rather than tuned per species. Per-species tuning via ENMeval grid search would be more rigorous but computationally prohibitive for 148 species.
+6. **Per-species tuning scope**: MaxEnt parameters are grid-searched per species only for weak-performance models (Boyce < 0.3, see §4). Well-performing species retain tier defaults. Tuning the remaining ~134 species would yield diminishing returns where baseline Boyce already exceeds 0.5.
+7. **Widespread generalists**: Species with broad niches and wide geographic ranges (e.g., *Mechanitis messenoides*, *Hypothyris euclea*) often retain low Boyce scores even after tuning. This reflects genuinely diffuse climatic signal rather than pipeline defects (Adelino et al., 2020). Predictions for such species should be interpreted as relative suitability ranking, not probability of occurrence.
 
 ## 10. Comparison with Doré et al. (2022)
 
@@ -351,6 +375,9 @@ Notable differences: this pipeline includes MaxEnt (the best-performing algorith
 
 ## References
 
+- Adelino, J.R.P., Heming, N.M., Boria, R.A., Borges, R.C., Mariano, E.F. & Gonçalves-Souza, T. (2020). Deciphering ecology from statistical artefacts: Competing influence of sample size, prevalence and habitat specialization on species distribution models. *Diversity and Distributions*, 26(3), 336–349. DOI: 10.1111/ddi.13030
+- Aiello-Lammens, M.E., Boria, R.A., Radosavljevic, A., Vilela, B. & Anderson, R.P. (2015). spThin: an R package for spatial thinning of species occurrence records for use in ecological niche models. *Ecography*, 38(5), 541–545. DOI: 10.1111/ecog.01132
+- Araújo, M.B., Anderson, R.P., Barbosa, A.M., Beale, C.M., Dormann, C.F., Early, R. *et al.* (2019). Standards for distribution models in biodiversity assessments. *Science Advances*, 5(1), eaat4858. DOI: 10.1126/sciadv.aat4858
 - Barbet-Massin, M., Jiguet, F., Albert, C.H. & Thuiller, W. (2012). Selecting pseudo-absences for species distribution models: how, where and how many? *Methods in Ecology and Evolution*, 3(2), 327–338. DOI: 10.1111/j.2041-210X.2011.00172.x
 - Barve, N., Barve, V., Jiménez-Valverde, A., Lira-Noriega, A., Maher, S.P., Peterson, A.T., Soberón, J. & Villalobos, F. (2011). The crucial role of the accessible area in ecological niche modeling and species distribution modeling. *Ecological Modelling*, 222(11), 1810–1819. DOI: 10.1016/j.ecolmodel.2011.02.011
 - Christensen, A. (2022). elapid: Species distribution modeling tools for Python. *Journal of Open Source Software*, 7(80), 4930. DOI: 10.21105/joss.04930
@@ -360,6 +387,7 @@ Notable differences: this pipeline includes MaxEnt (the best-performing algorith
 - Hirzel, A.H., Le Lay, G., Helfer, V., Randin, C. & Guisan, A. (2006). Evaluating the ability of habitat suitability models to predict species presences. *Ecological Modelling*, 199(2), 142–152. DOI: 10.1016/j.ecolmodel.2006.05.017
 - Jiménez-Valverde, A. (2012). Insights into the area under the receiver operating characteristic curve (AUC) as a discrimination measure in species distribution modelling. *Global Ecology and Biogeography*, 21(4), 498–507. DOI: 10.1111/j.1466-8238.2011.00683.x
 - Karger, D.N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R.W., Zimmermann, N.E., Linder, H.P. & Kessler, M. (2017). Climatologies at high resolution for the earth's land surface areas. *Scientific Data*, 4, 170122. DOI: 10.1038/sdata.2017.122
+- Kass, J.M., Muscarella, R., Galante, P.J., Bohl, C.L., Pinilla-Buitrago, G.E., Boria, R.A., Soley-Guardia, M. & Anderson, R.P. (2021). ENMeval 2.0: redesigned for customizable and reproducible modeling of species' niches and distributions. *Methods in Ecology and Evolution*, 12(9), 1602–1608. DOI: 10.1111/2041-210X.13628
 - Lobo, J.M., Jiménez-Valverde, A. & Real, R. (2008). AUC: a misleading measure of the performance of predictive distribution models. *Global Ecology and Biogeography*, 17(2), 145–151. DOI: 10.1111/j.1466-8238.2007.00358.x
 - Morales, N.S., Fernández, I.C. & Baca-González, V. (2017). MaxEnt's parameter configuration and small samples: are we paying attention to recommendations? A systematic review. *PeerJ*, 5, e3093. DOI: 10.7717/peerj.3093
 - Pearson, R.G., Raxworthy, C.J., Nakamura, M. & Peterson, A.T. (2007). Predicting species distributions from small numbers of occurrence records: a test case using cryptic geckos in Madagascar. *Journal of Biogeography*, 34(1), 102–117. DOI: 10.1111/j.1365-2699.2006.01594.x
@@ -367,7 +395,9 @@ Notable differences: this pipeline includes MaxEnt (the best-performing algorith
 - Phillips, S.J., Dudík, M., Elith, J., Graham, C.H., Lehmann, A., Leathwick, J. & Ferrier, S. (2009). Sample selection bias and presence-only distribution models: implications for background and pseudo-absence data. *Ecological Applications*, 19(1), 181–197. DOI: 10.1890/07-2153.1
 - Radosavljevic, A. & Anderson, R.P. (2014). Making better Maxent models of species distributions: complexity, overfitting and evaluation. *Journal of Biogeography*, 41(4), 629–643. DOI: 10.1111/jbi.12227
 - Roberts, D.R., Bahn, V., Ciuti, S., Boyce, M.S., Elith, J., Guillera-Arroita, G., Hauenstein, S., Lahoz-Monfort, J.J., Schröder, B., Thuiller, W., Warton, D.I., Wintle, B.A., Hartig, F. & Dormann, C.F. (2017). Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure. *Ecography*, 40(8), 913–929. DOI: 10.1111/ecog.02881
+- Santini, L., Benítez-López, A., Maiorano, L., Čengić, M. & Huijbregts, M.A.J. (2021). Assessing the reliability of species distribution projections in climate change research. *Diversity and Distributions*, 27(2), 207–216. DOI: 10.1111/ddi.13211
 - Valavi, R., Elith, J., Lahoz-Monfort, J.J. & Guillera-Arroita, G. (2019). blockCV: An r package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models. *Methods in Ecology and Evolution*, 10(2), 225–232. DOI: 10.1111/2041-210X.13107
 - Valavi, R., Guillera-Arroita, G., Lahoz-Monfort, J.J. & Elith, J. (2021). Predictive performance of presence-only species distribution models: a benchmark study with reproducible code. *Ecological Monographs*, 92(1), e1486. DOI: 10.1002/ecm.1486
+- Warren, D.L. & Seifert, S.N. (2011). Ecological niche modeling in Maxent: the importance of model complexity and the performance of model selection criteria. *Ecological Applications*, 21(2), 335–342. DOI: 10.1890/10-1171.1
 - Wilson, A.M. & Jetz, W. (2016). Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions. *PLoS Biology*, 14(3), e1002415. DOI: 10.1371/journal.pbio.1002415
 - Wisz, M.S., Hijmans, R.J., Li, J., Peterson, A.T., Graham, C.H., Guisan, A. & NCEAS Predicting Species Distributions Working Group (2008). Effects of sample size on the performance of species distribution models. *Diversity and Distributions*, 14(5), 763–773. DOI: 10.1111/j.1472-4642.2008.00482.x

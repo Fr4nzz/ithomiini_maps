@@ -45,6 +45,7 @@ sdm/data/predictions/
 sdm/data/occurrences/
 sdm/data/host_plants/gbif_*.csv
 sdm/data/figures/
+sdm/.tune_checkpoint.json
 public/data/sdm/species/
 public/data/sdm/species_richness.tif
 public/data/sdm/mean_suitability.tif
