@@ -55,7 +55,49 @@ with open(CONFIG_PATH) as f:
 OCC_DIR = Path(__file__).parent / config["paths"]["occurrences"]
 ENV_DIR = Path(__file__).parent / config["paths"]["env_variables"]
 PRED_DIR = Path(__file__).parent / config["paths"]["predictions"]
+OVERRIDES_PATH = Path(__file__).parent / "species_overrides.json"
 PRED_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def load_species_overrides():
+    """Per-species MaxEnt parameter overrides produced by 06_tune_weak_species.py.
+
+    Returns a {safe_species_name: {maxent_rm, maxent_features, ...}} dict, or
+    an empty dict if no overrides file exists yet.
+    """
+    if not OVERRIDES_PATH.exists():
+        return {}
+    try:
+        return json.loads(OVERRIDES_PATH.read_text()).get("species", {})
+    except (json.JSONDecodeError, OSError) as exc:
+        print(f"  ⚠ species_overrides.json unreadable ({exc}); ignoring")
+        return {}
+
+
+def apply_override(tier_config, species_name, overrides):
+    """Return a copy of tier_config with species-specific params applied.
+
+    Returns (adjusted_config, note) where note is a human-readable summary
+    of what was overridden, or None if no override applies.
+    """
+    safe = species_name.replace(" ", "_").lower()
+    ov = overrides.get(safe)
+    if not ov:
+        return tier_config, None
+
+    adjusted = dict(tier_config)
+    if "maxent_rm" in ov:
+        adjusted["maxent_rm"] = ov["maxent_rm"]
+    if "maxent_features" in ov:
+        adjusted["maxent_features"] = list(ov["maxent_features"])
+
+    parts = [
+        f"RM={adjusted['maxent_rm']}",
+        f"FC={'+'.join(adjusted['maxent_features'])}",
+    ]
+    if "tuned_boyce" in ov:
+        parts.append(f"tuned Boyce={ov['tuned_boyce']:+.3f}")
+    return adjusted, " ".join(parts)
 
 
 # ── Tier configuration (Wisz et al. 2008, Morales et al. 2017) ──────────────
@@ -805,6 +847,12 @@ def main():
     parser.add_argument(
         "--pilot", action="store_true", help="Run 8-species diagnostic pilot"
     )
+    parser.add_argument(
+        "--tuned-only",
+        action="store_true",
+        help="Re-run only species listed in sdm/species_overrides.json "
+        "(merges new results into existing summary JSON)",
+    )
     args = parser.parse_args()
 
     print("=" * 70)
@@ -850,8 +898,15 @@ def main():
         "Ithomia heraldica",  # 23 records, failed in v1
     ]
 
+    overrides = load_species_overrides()
+
     if args.species:
         species_list = args.species
+    elif args.tuned_only:
+        if not overrides:
+            print("ERROR: --tuned-only requires sdm/species_overrides.json")
+            sys.exit(1)
+        species_list = [k.replace("_", " ").capitalize() for k in overrides.keys()]
     elif args.poc:
         species_list = config["species"]["proof_of_concept"]
     elif args.pilot:
@@ -860,6 +915,9 @@ def main():
         viable_path = OCC_DIR / "viable_species.json"
         with open(viable_path) as f:
             species_list = json.load(f)
+
+    if overrides:
+        print(f"\n   species_overrides.json: {len(overrides)} species tuned")
 
     print(f"\n4. Modelling {len(species_list)} species...")
 
@@ -912,6 +970,12 @@ def main():
             f"RM={tier_config.get('maxent_rm', '—')}, CV={tier_config['cv_strategy']}"
         )
 
+        tier_config, override_note = apply_override(
+            tier_config, species_name, overrides
+        )
+        if override_note:
+            print(f"  Override: {override_note}")
+
         data, env_cols, accessible = prepare_training_data(
             species_gdf,
             env_rasters,
@@ -942,8 +1006,25 @@ def main():
 
     if all_results:
         summary_path = PRED_DIR / "sdm_results_summary.json"
+        merged = []
+        processed_names = {r["species"] for r in all_results}
+        if summary_path.exists():
+            try:
+                existing = json.loads(summary_path.read_text())
+                merged = [
+                    r for r in existing if r.get("species") not in processed_names
+                ]
+                if merged:
+                    print(
+                        f"\n  Summary merge: kept {len(merged)} pre-existing entries, "
+                        f"added/replaced {len(all_results)} from this run"
+                    )
+            except (json.JSONDecodeError, OSError) as exc:
+                print(f"  ⚠ Existing summary unreadable ({exc}); overwriting")
+                merged = []
+        merged.extend(all_results)
         with open(summary_path, "w") as f:
-            json.dump(all_results, f, indent=2, default=str)
+            json.dump(merged, f, indent=2, default=str)
 
         print(
             f"\n\n{'Species':<35} {'N':>5} {'Tier':<7} {'Algos':<15} {'AUC':>7} {'Boyce':>7} {'Conf':<12}"

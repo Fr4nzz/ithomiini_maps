@@ -78,65 +78,82 @@ const copyShareUrl = () => {
 
 const showCopiedToast = ref(false)
 
-// Show date filter section
-const showDateFilter = ref(false)
+// Local UI refs
 const goatChromosomeMinInput = ref('')
 const goatChromosomeMaxInput = ref('')
 const showExactDates = ref(false)
 
-// ── Source filter with Apply/Cancel ────────────────────────────────────────
-// Sources are grouped: top-level items + GBIF parent with sub-datasets
+// ── Source tiles: immediate toggle, flattened GBIF children ───────────────
 const GBIF_CHILDREN = ['iNaturalist', 'GBIF (UNAM)', 'GBIF (Other Institutions)']
-const TOP_LEVEL_SOURCES = computed(() =>
-  store.uniqueSources.filter(s => !GBIF_CHILDREN.includes(s))
-)
 
-// Staged selection (applied only on Apply)
-const stagedSources = ref([...store.filters.source])
-const sourceFilterDirty = computed(() => {
-  const a = [...stagedSources.value].sort()
-  const b = [...store.filters.source].sort()
-  return JSON.stringify(a) !== JSON.stringify(b)
+// Compact tile labels + concise hover descriptions
+const SOURCE_META = {
+  'Sanger Institute': {
+    label: 'Sanger',
+    tooltip: 'Sanger Institute — sequencing project specimens with live photos',
+  },
+  'Dore et al. (2022)': {
+    label: 'Doré 2022',
+    tooltip: 'Doré et al. 2022 — published Neotropical Ithomiini compilation',
+  },
+  'iNaturalist': {
+    label: 'iNat',
+    tooltip: 'iNaturalist (via GBIF) — citizen-science research-grade observations',
+  },
+  'GBIF (UNAM)': {
+    label: 'UNAM',
+    tooltip: 'UNAM (via GBIF) — Universidad Nacional Autónoma de México museum collection',
+  },
+  'GBIF (Other Institutions)': {
+    label: 'GBIF Other',
+    tooltip: 'GBIF (other institutions) — aggregated museum & herbarium records',
+  },
+}
+const SOURCE_SHORT_LABELS = Object.fromEntries(
+  Object.entries(SOURCE_META).map(([k, v]) => [k, v.label])
+)
+const sourceTooltip = (source) => SOURCE_META[source]?.tooltip || source
+
+const SOURCE_TILE_ORDER = computed(() => {
+  const configured = Object.keys(store.sourceConfig || {})
+  const known = configured.filter(s => SOURCE_SHORT_LABELS[s])
+  const rest = configured.filter(s => !SOURCE_SHORT_LABELS[s])
+  return [...known, ...rest]
 })
 
-watch(() => store.filters.source, (newSource) => {
-  stagedSources.value = [...newSource]
-}, { deep: true })
+const sourceRecordCount = (source) => {
+  const cfg = store.sourceConfig?.[source]
+  return cfg?.records || 0
+}
 
-// GBIF parent checkbox state
-const gbifAllSelected = computed(() => GBIF_CHILDREN.every(c => stagedSources.value.includes(c)))
-const gbifSomeSelected = computed(() => GBIF_CHILDREN.some(c => stagedSources.value.includes(c)))
-const gbifIndeterminate = computed(() => gbifSomeSelected.value && !gbifAllSelected.value)
+const sourceIsLoading = (source) => store.sourceLoading?.has?.(source) ?? false
+const sourceIsActive = (source) => store.filters.source.includes(source)
+const sourceProgressValue = (source) => store.sourceProgress?.[source] ?? null
 
-const toggleStagedSource = (source) => {
-  const idx = stagedSources.value.indexOf(source)
+const toggleSource = (source) => {
+  const current = store.filters.source
+  const idx = current.indexOf(source)
   if (idx >= 0) {
-    stagedSources.value.splice(idx, 1)
+    store.filters.source = current.filter(s => s !== source)
   } else {
-    stagedSources.value.push(source)
+    store.filters.source = [...current, source]
   }
 }
 
-const toggleGbifParent = () => {
+const gbifAllSelected = computed(() =>
+  GBIF_CHILDREN.every(c => store.filters.source.includes(c))
+)
+
+const toggleAllGbif = () => {
   if (gbifAllSelected.value) {
-    // Deselect all GBIF children
-    stagedSources.value = stagedSources.value.filter(s => !GBIF_CHILDREN.includes(s))
+    store.filters.source = store.filters.source.filter(s => !GBIF_CHILDREN.includes(s))
   } else {
-    // Select all GBIF children
+    const next = [...store.filters.source]
     for (const child of GBIF_CHILDREN) {
-      if (!stagedSources.value.includes(child)) {
-        stagedSources.value.push(child)
-      }
+      if (!next.includes(child)) next.push(child)
     }
+    store.filters.source = next
   }
-}
-
-const applySourceFilter = () => {
-  store.filters.source = [...stagedSources.value]
-}
-
-const cancelSourceFilter = () => {
-  stagedSources.value = [...store.filters.source]
 }
 
 const toggleGoatSource = (source) => {
@@ -148,8 +165,82 @@ const toggleGoatSource = (source) => {
   }
 }
 
-// Show advanced taxonomy (Family/Tribe/Genus) within Taxonomy section
-const showAdvancedTaxonomy = ref(false)
+// ── Filter tile system ─────────────────────────────────────────────────────
+// Taxonomy levels ordered from broad to narrow.
+// Enabled levels are rendered below as active filters; hidden ones retain
+// their selections so users can re-enable without losing filter state.
+const TAXONOMY_LEVELS = [
+  { key: 'family', label: 'Family', storeKey: 'family', optionsKey: 'uniqueFamilies', placeholder: 'All Families' },
+  { key: 'tribe', label: 'Tribe', storeKey: 'tribe', optionsKey: 'uniqueTribes', placeholder: 'All Tribes' },
+  { key: 'genus', label: 'Genus', storeKey: 'genus', optionsKey: 'uniqueGenera', placeholder: 'All Genera' },
+  { key: 'species', label: 'Species', storeKey: 'species', optionsKey: 'uniqueSpecies', placeholder: 'Search species...' },
+  { key: 'subspecies', label: 'Subsp.', storeKey: 'subspecies', optionsKey: 'uniqueSubspecies', placeholder: 'Search subspecies...' },
+]
+
+const enabledTaxonomyLevels = ref(new Set(['species', 'subspecies']))
+const toggleTaxonomyLevel = (key) => {
+  const next = new Set(enabledTaxonomyLevels.value)
+  if (next.has(key)) next.delete(key)
+  else next.add(key)
+  enabledTaxonomyLevels.value = next
+}
+
+const OTHER_FILTERS = [
+  { key: 'camid', label: 'CAMID' },
+  { key: 'status', label: 'Sequencing Status' },
+  { key: 'country', label: 'Country' },
+  { key: 'sex', label: 'Sex' },
+  { key: 'timerange', label: 'Time Range' },
+  { key: 'goat', label: 'GoaT' },
+  { key: 'sdm', label: 'SDM' },
+]
+
+// Tiles whose availability depends on runtime state (view, feature flags, data loaded)
+const availableOtherFilters = computed(() =>
+  OTHER_FILTERS.filter(f => {
+    if (f.key === 'sdm') return props.currentView === 'map' && sdmStore.hasData
+    if (f.key === 'goat') return config.features.goatIntegration
+    return true
+  })
+)
+
+const enabledOtherFilters = ref(new Set(['camid']))
+const toggleOtherFilter = (key) => {
+  const next = new Set(enabledOtherFilters.value)
+  if (next.has(key)) next.delete(key)
+  else next.add(key)
+  enabledOtherFilters.value = next
+
+  // SDM tile drives sdmStore.enabled (which controls the map overlay + metadata load)
+  if (key === 'sdm') {
+    const want = next.has('sdm')
+    if (want !== sdmStore.enabled) sdmStore.toggle()
+  }
+}
+
+// Counts of active selections per level (shown on tiles)
+const taxonomyActiveCount = (key) => {
+  const val = store.filters[key]
+  return Array.isArray(val) ? val.length : 0
+}
+
+const otherFilterActiveCount = (key) => {
+  if (key === 'camid') return (camidInput.value || '').split(/[,\s]+/).filter(Boolean).length
+  if (key === 'status') return store.filters.status.length
+  if (key === 'country') return store.filters.country.length
+  if (key === 'sex') return store.filters.sex !== 'all' ? 1 : 0
+  if (key === 'timerange') {
+    return (store.filters.dateStart ? 1 : 0) + (store.filters.dateEnd ? 1 : 0)
+  }
+  if (key === 'goat') {
+    return (store.filters.goatCoverage !== 'all' ? 1 : 0)
+      + store.filters.goatDataSource.length
+      + (store.filters.goatChromosomeMin != null ? 1 : 0)
+      + (store.filters.goatChromosomeMax != null ? 1 : 0)
+  }
+  if (key === 'sdm') return sdmStore.selectedSpecies.length
+  return 0
+}
 
 // Aspect ratio options - derived from shared constants
 const aspectRatioLabels = {
@@ -218,6 +309,19 @@ const updateExportHeight = (value) => {
           <span class="subtitle">{{ config.subtitle }}</span>
         </div>
       </a>
+      <button
+        type="button"
+        class="smart-search-tile"
+        title="Search across all taxa, countries, mimicry rings, and more"
+        @click="$emit('open-global-search')"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <span class="smart-search-label">Smart Search</span>
+        <kbd>⌘K</kbd>
+      </button>
     </header>
 
     <!-- Scrollable Content -->
@@ -439,497 +543,406 @@ const updateExportHeight = (value) => {
         </button>
       </div>
 
-      <!-- CAMID Search with Autocomplete (Multi-value) -->
+      <!-- FILTERS: unified taxonomy + other filters with tile selectors -->
       <div class="filter-section">
         <label class="section-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
+            <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>
           </svg>
-          Search CAMIDs
+          Filters
         </label>
-        <p class="filter-hint" style="margin-top: 0; margin-bottom: 6px;">
-          Enter or paste multiple IDs (comma/space/newline separated)
-        </p>
-        <div class="camid-autocomplete">
-          <textarea
-            ref="camidTextarea"
-            class="camid-textarea"
-            placeholder="e.g. CAM012345, CAM012346..."
-            :value="camidInput"
-            @input="handleCamidInput"
-            @keydown="handleCamidKeydown"
-            @click="handleCamidClick"
-            @focus="handleCamidClick"
-            @blur="handleCamidBlur"
-            autocomplete="off"
-            spellcheck="false"
-            rows="1"
-          ></textarea>
-          <div
-            v-if="showCamidDropdown && camidSuggestions.length > 0"
-            class="camid-dropdown"
-          >
+
+        <!-- Taxonomy tile row -->
+        <div class="filter-tile-group">
+          <span class="filter-tile-group-label">Taxonomy</span>
+          <div class="filter-tile-row">
             <button
-              v-for="(suggestion, index) in camidSuggestions"
-              :key="suggestion"
-              class="camid-suggestion"
-              :class="{ selected: index === selectedSuggestionIndex }"
-              @mousedown.prevent="selectCamid(suggestion)"
+              v-for="level in TAXONOMY_LEVELS"
+              :key="level.key"
+              type="button"
+              class="filter-tile"
+              :class="{ active: enabledTaxonomyLevels.has(level.key) }"
+              @click="toggleTaxonomyLevel(level.key)"
+              :title="`Toggle ${level.label} filter`"
             >
-              {{ suggestion }}
+              {{ level.label }}
+              <span v-if="taxonomyActiveCount(level.storeKey) > 0" class="filter-tile-count">
+                {{ taxonomyActiveCount(level.storeKey) }}
+              </span>
             </button>
+          </div>
+        </div>
+
+        <!-- Active taxonomy filters rendered in broad-to-narrow order -->
+        <div class="active-filters-stack">
+          <template v-for="level in TAXONOMY_LEVELS" :key="level.key">
+            <FilterSelect
+              v-if="enabledTaxonomyLevels.has(level.key)"
+              :label="level.label"
+              v-model="store.filters[level.storeKey]"
+              :options="store[level.optionsKey]"
+              :placeholder="level.placeholder"
+              :multiple="true"
+              :show-count="level.key === 'species' || level.key === 'subspecies' || level.key === 'genus'"
+            />
+          </template>
+        </div>
+
+        <!-- Others filter tile row -->
+        <div class="filter-tile-group">
+          <span class="filter-tile-group-label">Others</span>
+          <div class="filter-tile-row">
+            <button
+              v-for="other in availableOtherFilters"
+              :key="other.key"
+              type="button"
+              class="filter-tile"
+              :class="{ active: enabledOtherFilters.has(other.key) }"
+              @click="toggleOtherFilter(other.key)"
+              :title="`Toggle ${other.label} filter`"
+            >
+              {{ other.label }}
+              <span v-if="otherFilterActiveCount(other.key) > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount(other.key) }}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Active other filters -->
+        <div class="active-filters-stack">
+          <!-- CAMID -->
+          <div v-if="enabledOtherFilters.has('camid')" class="filter-stack-item">
+            <p class="filter-stack-hint">Enter or paste IDs (comma/space/newline separated)</p>
+            <div class="camid-autocomplete">
+              <textarea
+                ref="camidTextarea"
+                class="camid-textarea"
+                placeholder="e.g. CAM012345, CAM012346..."
+                :value="camidInput"
+                @input="handleCamidInput"
+                @keydown="handleCamidKeydown"
+                @click="handleCamidClick"
+                @focus="handleCamidClick"
+                @blur="handleCamidBlur"
+                autocomplete="off"
+                spellcheck="false"
+                rows="1"
+              ></textarea>
+              <div
+                v-if="showCamidDropdown && camidSuggestions.length > 0"
+                class="camid-dropdown"
+              >
+                <button
+                  v-for="(suggestion, index) in camidSuggestions"
+                  :key="suggestion"
+                  class="camid-suggestion"
+                  :class="{ selected: index === selectedSuggestionIndex }"
+                  @mousedown.prevent="selectCamid(suggestion)"
+                >
+                  {{ suggestion }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sequencing Status -->
+          <FilterSelect
+            v-if="enabledOtherFilters.has('status')"
+            label="Sequencing Status"
+            v-model="store.filters.status"
+            :options="store.uniqueStatuses"
+            placeholder="All Statuses"
+            :multiple="true"
+          />
+
+          <!-- Country -->
+          <FilterSelect
+            v-if="enabledOtherFilters.has('country')"
+            label="Country"
+            v-model="store.filters.country"
+            :options="store.uniqueCountries"
+            placeholder="All Countries"
+            :multiple="true"
+            :show-count="false"
+          />
+
+          <!-- Sex -->
+          <div v-if="enabledOtherFilters.has('sex')" class="filter-stack-item">
+            <label class="filter-stack-label">Sex</label>
+            <select class="sex-select" v-model="store.filters.sex">
+              <option value="all">All (♂ + ♀)</option>
+              <option value="male">♂ Male only</option>
+              <option value="female">♀ Female only</option>
+            </select>
+          </div>
+
+          <!-- Time Range (tile-driven) -->
+          <div v-if="enabledOtherFilters.has('timerange')" class="filter-stack-item">
+            <label class="filter-stack-label">Time Range</label>
+            <TimeSlider />
+            <div class="exact-dates-section">
+              <button
+                class="subsection-toggle"
+                @click="showExactDates = !showExactDates"
+                :class="{ expanded: showExactDates }"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+                Exact Dates
+              </button>
+              <div v-show="showExactDates" class="subsection-content">
+                <DateFilter />
+              </div>
+            </div>
+          </div>
+
+          <!-- Genomic Data (GoaT) (tile-driven) -->
+          <div
+            v-if="enabledOtherFilters.has('goat') && config.features.goatIntegration"
+            class="filter-stack-item"
+          >
+            <label class="filter-stack-label">
+              Genomic Data (GoaT)
+              <span v-if="store.goatLoading" class="active-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; margin-left: 6px;">
+                Loading...
+              </span>
+            </label>
+
+            <div class="goat-filter-group">
+              <label class="goat-filter-label">GoaT Coverage</label>
+              <div class="goat-toggle-group">
+                <button
+                  :class="{ active: store.filters.goatCoverage === 'all' }"
+                  @click="store.filters.goatCoverage = 'all'"
+                >All</button>
+                <button
+                  :class="{ active: store.filters.goatCoverage === 'in_goat' }"
+                  @click="store.filters.goatCoverage = 'in_goat'"
+                >In GoaT</button>
+                <button
+                  :class="{ active: store.filters.goatCoverage === 'not_in_goat' }"
+                  @click="store.filters.goatCoverage = 'not_in_goat'"
+                >Not in GoaT</button>
+              </div>
+            </div>
+
+            <div class="goat-filter-group">
+              <label class="goat-filter-label">Genome Data Source</label>
+              <div class="goat-checkboxes">
+                <label class="source-checkbox">
+                  <input
+                    type="checkbox"
+                    :checked="store.filters.goatDataSource.includes('direct')"
+                    @change="toggleGoatSource('direct')"
+                  />
+                  <span>Direct (measured)</span>
+                </label>
+                <label class="source-checkbox">
+                  <input
+                    type="checkbox"
+                    :checked="store.filters.goatDataSource.includes('estimated')"
+                    @change="toggleGoatSource('estimated')"
+                  />
+                  <span>Estimated (phylogenetic)</span>
+                </label>
+                <label class="source-checkbox">
+                  <input
+                    type="checkbox"
+                    :checked="store.filters.goatDataSource.includes('none')"
+                    @change="toggleGoatSource('none')"
+                  />
+                  <span>No GoaT data</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="goat-filter-group">
+              <label class="goat-filter-label">Chromosome Number (2n)</label>
+              <div class="chr-range-inputs">
+                <input
+                  type="number"
+                  class="chr-input"
+                  placeholder="Min"
+                  v-model="goatChromosomeMinInput"
+                  @change="store.filters.goatChromosomeMin = goatChromosomeMinInput ? Number(goatChromosomeMinInput) : null"
+                  :min="store.chromosomeRange.min"
+                  :max="store.chromosomeRange.max"
+                />
+                <span class="chr-separator">–</span>
+                <input
+                  type="number"
+                  class="chr-input"
+                  placeholder="Max"
+                  v-model="goatChromosomeMaxInput"
+                  @change="store.filters.goatChromosomeMax = goatChromosomeMaxInput ? Number(goatChromosomeMaxInput) : null"
+                  :min="store.chromosomeRange.min"
+                  :max="store.chromosomeRange.max"
+                />
+              </div>
+            </div>
+
+            <p v-if="store.goatLoaded && store.goatMeta" class="filter-hint">
+              {{ store.goatMeta.totalSpecies.toLocaleString() }} species from GoaT
+            </p>
+            <p v-else-if="!store.goatLoaded && !store.goatLoading" class="filter-hint">
+              GoaT data not available
+            </p>
+          </div>
+
+          <!-- Species Distribution Modelling (tile-driven) -->
+          <div
+            v-if="enabledOtherFilters.has('sdm') && currentView === 'map' && sdmStore.hasData"
+            class="filter-stack-item"
+          >
+            <label class="filter-stack-label">Species Distribution Modelling</label>
+
+            <FilterSelect
+              label="SDM Species"
+              v-model="sdmStore.selectedSpecies"
+              :options="sdmStore.availableSpecies"
+              placeholder="Select up to 2 species..."
+              :multiple="true"
+            />
+
+            <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--error-color, #f87171);">
+              Max 2 species for overlay comparison
+            </p>
+
+            <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-legend">
+              <div class="sdm-legend-item" v-for="(sp, idx) in sdmStore.selectedSpecies.slice(0, 2)" :key="sp">
+                <span class="sdm-legend-species">{{ sp }}</span>
+                <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-confidence-badge" :class="sdmStore.getSDMInfo(sp).confidence">
+                  {{ sdmStore.getSDMInfo(sp).confidence }}
+                </span>
+                <div class="sdm-gradient-bar" :class="idx === 0 ? 'warm' : 'cool'">
+                  <span class="sdm-gradient-label-low">Low</span>
+                  <span class="sdm-gradient-label-high">High</span>
+                </div>
+                <div v-if="sdmStore.getSDMInfo(sp)" class="sdm-model-info">
+                  <div class="sdm-info-grid">
+                    <span class="sdm-info-label">Records</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).n_records }}</span>
+                    <span class="sdm-info-label">AUC</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).auc }}</span>
+                    <span class="sdm-info-label">Boyce</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).boyce || '—' }}</span>
+                    <span class="sdm-info-label">Tier</span>
+                    <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).tier }}</span>
+                    <span class="sdm-info-label">Algorithms</span>
+                    <span class="sdm-info-value">{{ (sdmStore.getSDMInfo(sp).algorithms_used || []).join(', ') || '—' }}</span>
+                  </div>
+                </div>
+                <div v-if="sdmStore.getSDMInfo(sp)?.env_summary?.length" class="sdm-env-section">
+                  <div
+                    v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
+                    :key="env.variable"
+                    class="sdm-env-card"
+                  >
+                    <div class="sdm-env-header">
+                      <span class="sdm-env-name">{{ env.label }}</span>
+                      <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
+                    </div>
+                    <div class="sdm-chart-wrap">
+                      <span class="sdm-y-label">Suitability</span>
+                      <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+                        <polyline
+                          :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
+                          fill="none"
+                          stroke="var(--color-accent, #4ade80)"
+                          stroke-width="1.5"
+                        />
+                        <polygon
+                          :points="[
+                            ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
+                            ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
+                          ].join(' ')"
+                          fill="var(--color-accent, #4ade80)"
+                          fill-opacity="0.15"
+                        />
+                      </svg>
+                    </div>
+                    <div class="sdm-x-axis">
+                      <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
+                      <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
+                      <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
+                    </div>
+                    <div class="sdm-env-footer">
+                      <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
+                      <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="sdm-legend-caption">Habitat suitability</span>
+            </div>
+
+            <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-opacity-row">
+              <span class="sdm-opacity-label">Opacity</span>
+              <input
+                type="range" min="0.1" max="1" step="0.1"
+                :value="sdmStore.opacity"
+                @input="sdmStore.setOpacity(parseFloat($event.target.value))"
+              />
+              <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
+            </div>
+
+            <p class="filter-hint">
+              {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Taxonomy Section (Species/Subspecies visible, Family/Tribe/Genus expandable) -->
+      <!-- Data Source tiles (immediate toggle) -->
       <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3v18m-6-6 6 6 6-6"/>
-          </svg>
-          Taxonomy
+        <div class="source-header">
+          <label class="section-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+            </svg>
+            Data Source
+          </label>
           <button
             type="button"
-            class="shortcut-hint"
-            title="Search across all taxa, countries, and mimicry rings"
-            @click="$emit('open-global-search')"
+            class="source-bulk-link"
+            @click="toggleAllGbif"
+            :title="gbifAllSelected ? 'Deselect all GBIF sources' : 'Select all GBIF sources'"
           >
-            <span class="shortcut-hint-label">Global search</span>
-            <kbd>⌘/Ctrl+K</kbd>
+            {{ gbifAllSelected ? '− All GBIF' : '+ All GBIF' }}
           </button>
-        </label>
-
-        <!-- Species Multi-select with Fuzzy Search -->
-        <FilterSelect
-          label="Species"
-          v-model="store.filters.species"
-          :options="store.uniqueSpecies"
-          placeholder="Search species..."
-          :multiple="true"
-        />
-
-        <!-- Subspecies Multi-select -->
-        <FilterSelect
-          label="Subspecies"
-          v-model="store.filters.subspecies"
-          :options="store.uniqueSubspecies"
-          placeholder="Search subspecies..."
-          :multiple="true"
-        />
-
-        <!-- Advanced Taxonomy Toggle (Family/Tribe/Genus) -->
-        <button
-          class="subsection-toggle"
-          @click="showAdvancedTaxonomy = !showAdvancedTaxonomy"
-          :class="{ expanded: showAdvancedTaxonomy }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Family / Tribe / Genus
-          <span v-if="store.filters.family.length || store.filters.tribe.length || store.filters.genus.length" class="active-indicator"></span>
-        </button>
-
-        <div v-show="showAdvancedTaxonomy" class="subsection-content">
-          <FilterSelect
-            label="Family"
-            v-model="store.filters.family"
-            :options="store.uniqueFamilies"
-            placeholder="All Families"
-            :multiple="true"
-            :show-count="false"
-          />
-
-          <FilterSelect
-            label="Tribe"
-            v-model="store.filters.tribe"
-            :options="store.uniqueTribes"
-            placeholder="All Tribes"
-            :multiple="true"
-            :show-count="false"
-          />
-
-          <FilterSelect
-            label="Genus"
-            v-model="store.filters.genus"
-            :options="store.uniqueGenera"
-            placeholder="All Genera"
-            :multiple="true"
-          />
         </div>
-      </div>
-
-      <!-- Date Filter with Time Slider -->
-      <div class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="showDateFilter = !showDateFilter"
-          :class="{ expanded: showDateFilter }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Time Range
-          <span v-if="store.filters.dateStart || store.filters.dateEnd" class="active-badge">
-            Active
-          </span>
-        </button>
-
-        <div v-show="showDateFilter" class="collapse-content no-padding">
-          <TimeSlider />
-
-          <!-- Expandable exact date inputs -->
-          <div class="exact-dates-section">
-            <button
-              class="subsection-toggle"
-              @click="showExactDates = !showExactDates"
-              :class="{ expanded: showExactDates }"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="m9 18 6-6-6-6"/>
-              </svg>
-              Exact Dates
-            </button>
-            <div v-show="showExactDates" class="subsection-content">
-              <DateFilter />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sequencing Status (Dropdown with All default) -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
-          Sequencing Status
-        </label>
-
-        <FilterSelect
-          v-model="store.filters.status"
-          :options="store.uniqueStatuses"
-          placeholder="All Statuses"
-          :multiple="true"
-        />
-        <p class="filter-hint" v-if="store.filters.status.length > 0">
-          {{ store.filters.status.length }} status{{ store.filters.status.length > 1 ? 'es' : '' }} selected
-        </p>
-      </div>
-
-      <!-- Data Source (Checkbox panel with Apply/Cancel) -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-            <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
-          </svg>
-          Data Source
-        </label>
-        <div class="source-checkbox-panel">
-          <!-- Top-level sources (non-GBIF) -->
-          <label v-for="source in TOP_LEVEL_SOURCES" :key="source" class="source-checkbox">
-            <input
-              type="checkbox"
-              :checked="stagedSources.includes(source)"
-              @change="toggleStagedSource(source)"
-            />
-            <span>{{ source }}</span>
-          </label>
-
-          <!-- GBIF parent group -->
-          <label class="source-checkbox gbif-parent">
-            <input
-              type="checkbox"
-              :checked="gbifAllSelected"
-              :indeterminate="gbifIndeterminate"
-              @change="toggleGbifParent"
-            />
-            <span>GBIF</span>
-          </label>
-          <!-- GBIF children (indented) -->
-          <label v-for="child in GBIF_CHILDREN" :key="child" class="source-checkbox gbif-child">
-            <input
-              type="checkbox"
-              :checked="stagedSources.includes(child)"
-              @change="toggleStagedSource(child)"
-            />
-            <span>{{ child }}</span>
-          </label>
-
-          <!-- Apply / Cancel buttons -->
-          <div class="source-filter-actions" v-if="sourceFilterDirty">
-            <button class="btn-source-cancel" @click="cancelSourceFilter">Cancel</button>
-            <button class="btn-source-apply" @click="applySourceFilter">Apply</button>
-          </div>
-        </div>
-        <p class="filter-hint" v-if="store.sourceLoading.size > 0">
-          Loading {{ [...store.sourceLoading].join(', ') }}...
-        </p>
-        <p class="filter-hint" v-else-if="store.filters.source.length === 0">
-          No sources selected - showing all data
-        </p>
-      </div>
-
-      <div v-if="config.features.goatIntegration" class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="store.showGoatFilter = !store.showGoatFilter"
-          :class="{ expanded: store.showGoatFilter }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Genomic Data (GoaT)
-          <span v-if="store.filters.goatCoverage !== 'all' || store.filters.goatDataSource.length > 0 || store.filters.goatChromosomeMin != null || store.filters.goatChromosomeMax != null" class="active-badge">
-            Active
-          </span>
-          <span v-if="store.goatLoading" class="active-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
-            Loading...
-          </span>
-        </button>
-
-        <div v-show="store.showGoatFilter" class="collapse-content">
-          <div class="goat-filter-group">
-            <label class="goat-filter-label">GoaT Coverage</label>
-            <div class="goat-toggle-group">
-              <button
-                :class="{ active: store.filters.goatCoverage === 'all' }"
-                @click="store.filters.goatCoverage = 'all'"
-              >All</button>
-              <button
-                :class="{ active: store.filters.goatCoverage === 'in_goat' }"
-                @click="store.filters.goatCoverage = 'in_goat'"
-              >In GoaT</button>
-              <button
-                :class="{ active: store.filters.goatCoverage === 'not_in_goat' }"
-                @click="store.filters.goatCoverage = 'not_in_goat'"
-              >Not in GoaT</button>
-            </div>
-          </div>
-
-          <div class="goat-filter-group">
-            <label class="goat-filter-label">Genome Data Source</label>
-            <div class="goat-checkboxes">
-              <label class="source-checkbox">
-                <input
-                  type="checkbox"
-                  :checked="store.filters.goatDataSource.includes('direct')"
-                  @change="toggleGoatSource('direct')"
-                />
-                <span>Direct (measured)</span>
-              </label>
-              <label class="source-checkbox">
-                <input
-                  type="checkbox"
-                  :checked="store.filters.goatDataSource.includes('estimated')"
-                  @change="toggleGoatSource('estimated')"
-                />
-                <span>Estimated (phylogenetic)</span>
-              </label>
-              <label class="source-checkbox">
-                <input
-                  type="checkbox"
-                  :checked="store.filters.goatDataSource.includes('none')"
-                  @change="toggleGoatSource('none')"
-                />
-                <span>No GoaT data</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="goat-filter-group">
-            <label class="goat-filter-label">Chromosome Number (2n)</label>
-            <div class="chr-range-inputs">
-              <input
-                type="number"
-                class="chr-input"
-                placeholder="Min"
-                v-model="goatChromosomeMinInput"
-                @change="store.filters.goatChromosomeMin = goatChromosomeMinInput ? Number(goatChromosomeMinInput) : null"
-                :min="store.chromosomeRange.min"
-                :max="store.chromosomeRange.max"
-              />
-              <span class="chr-separator">–</span>
-              <input
-                type="number"
-                class="chr-input"
-                placeholder="Max"
-                v-model="goatChromosomeMaxInput"
-                @change="store.filters.goatChromosomeMax = goatChromosomeMaxInput ? Number(goatChromosomeMaxInput) : null"
-                :min="store.chromosomeRange.min"
-                :max="store.chromosomeRange.max"
-              />
-            </div>
-          </div>
-
-          <p v-if="store.goatLoaded && store.goatMeta" class="filter-hint">
-            {{ store.goatMeta.totalSpecies.toLocaleString() }} species from GoaT
-          </p>
-          <p v-else-if="!store.goatLoaded && !store.goatLoading" class="filter-hint">
-            GoaT data not available
-          </p>
-        </div>
-      </div>
-
-      <!-- Country Filter -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
-          Country
-        </label>
-        <FilterSelect
-          v-model="store.filters.country"
-          :options="store.uniqueCountries"
-          placeholder="All Countries"
-          :multiple="true"
-          :show-count="false"
-        />
-      </div>
-
-      <!-- Sex Filter -->
-      <div class="filter-section">
-        <label class="section-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="9" r="5"/>
-            <path d="M9 14v7M6 18h6"/>
-            <circle cx="17" cy="15" r="5"/>
-            <path d="M21 11l-2.5 2.5M21 11h-4M21 11v4"/>
-          </svg>
-          Sex
-        </label>
-        <select class="sex-select" v-model="store.filters.sex">
-          <option value="all">All (♂ + ♀)</option>
-          <option value="male">♂ Male only</option>
-          <option value="female">♀ Female only</option>
-        </select>
-      </div>
-
-      <!-- UI Preferences -->
-      <div class="filter-section">
-        <label class="thumbnail-toggle">
-          <input type="checkbox" v-model="store.showThumbnail" />
-          <span>Show thumbnails</span>
-        </label>
-      </div>
-
-      <!-- SDM Predicted Distributions -->
-      <div v-if="currentView === 'map' && sdmStore.hasData" class="filter-section collapsible">
-        <button
-          class="collapse-toggle"
-          @click="sdmStore.toggle()"
-          :class="{ expanded: sdmStore.enabled }"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-          Predicted Distribution
-          <span v-if="sdmStore.selectedSpecies.length > 0" class="active-badge">
-            {{ sdmStore.selectedSpecies.length }} selected
-          </span>
-        </button>
-
-        <div v-show="sdmStore.enabled" class="collapse-content">
-          <FilterSelect
-            label="SDM Species"
-            v-model="sdmStore.selectedSpecies"
-            :options="sdmStore.availableSpecies"
-            placeholder="Select up to 2 species..."
-            :multiple="true"
-          />
-
-          <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--error-color, #f87171);">
-            Max 2 species for overlay comparison
-          </p>
-
-          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-legend">
-            <div class="sdm-legend-item" v-for="(sp, idx) in sdmStore.selectedSpecies.slice(0, 2)" :key="sp">
-              <span class="sdm-legend-species">{{ sp }}</span>
-              <span v-if="sdmStore.getSDMInfo(sp)" class="sdm-confidence-badge" :class="sdmStore.getSDMInfo(sp).confidence">
-                {{ sdmStore.getSDMInfo(sp).confidence }}
+        <div class="source-tile-row">
+          <button
+            v-for="source in SOURCE_TILE_ORDER"
+            :key="source"
+            type="button"
+            class="filter-tile source-tile"
+            :class="{ active: sourceIsActive(source), loading: sourceIsLoading(source) }"
+            @click="toggleSource(source)"
+            :title="sourceTooltip(source)"
+          >
+            <span class="source-tile-content">
+              {{ SOURCE_SHORT_LABELS[source] || source }}
+              <span v-if="sourceRecordCount(source) > 0" class="filter-tile-count">
+                {{ sourceRecordCount(source) >= 1000
+                    ? (sourceRecordCount(source) / 1000).toFixed(1) + 'k'
+                    : sourceRecordCount(source) }}
               </span>
-              <div class="sdm-gradient-bar" :class="idx === 0 ? 'warm' : 'cool'">
-                <span class="sdm-gradient-label-low">Low</span>
-                <span class="sdm-gradient-label-high">High</span>
-              </div>
-              <div v-if="sdmStore.getSDMInfo(sp)" class="sdm-model-info">
-                <div class="sdm-info-grid">
-                  <span class="sdm-info-label">Records</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).n_records }}</span>
-                  <span class="sdm-info-label">AUC</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).auc }}</span>
-                  <span class="sdm-info-label">Boyce</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).boyce || '—' }}</span>
-                  <span class="sdm-info-label">Tier</span>
-                  <span class="sdm-info-value">{{ sdmStore.getSDMInfo(sp).tier }}</span>
-                  <span class="sdm-info-label">Algorithms</span>
-                  <span class="sdm-info-value">{{ (sdmStore.getSDMInfo(sp).algorithms_used || []).join(', ') || '—' }}</span>
-                </div>
-              </div>
-              <div v-if="sdmStore.getSDMInfo(sp)?.env_summary?.length" class="sdm-env-section">
-                <div
-                  v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
-                  :key="env.variable"
-                  class="sdm-env-card"
-                >
-                  <div class="sdm-env-header">
-                    <span class="sdm-env-name">{{ env.label }}</span>
-                    <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
-                  </div>
-                  <div class="sdm-chart-wrap">
-                    <span class="sdm-y-label">Suitability</span>
-                    <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
-                      <polyline
-                        :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
-                        fill="none"
-                        stroke="var(--color-accent, #4ade80)"
-                        stroke-width="1.5"
-                      />
-                      <polygon
-                        :points="[
-                          ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
-                          ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
-                        ].join(' ')"
-                        fill="var(--color-accent, #4ade80)"
-                        fill-opacity="0.15"
-                      />
-                    </svg>
-                  </div>
-                  <div class="sdm-x-axis">
-                    <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
-                    <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
-                    <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
-                  </div>
-                  <div class="sdm-env-footer">
-                    <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
-                    <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="sdm-legend-caption">Habitat suitability</span>
-          </div>
-
-          <div v-if="sdmStore.selectedSpecies.length > 0" class="sdm-opacity-row">
-            <span class="sdm-opacity-label">Opacity</span>
-            <input
-              type="range" min="0.1" max="1" step="0.1"
-              :value="sdmStore.opacity"
-              @input="sdmStore.setOpacity(parseFloat($event.target.value))"
+            </span>
+            <span
+              v-if="sourceProgressValue(source) !== null"
+              class="source-tile-progress"
+              :style="{ transform: `scaleX(${sourceProgressValue(source)})` }"
             />
-            <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
-          </div>
-
-          <p class="filter-hint">
-            {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
-          </p>
+          </button>
         </div>
+        <p class="filter-hint" v-if="store.filters.source.length === 0" style="margin-top: 6px;">
+          No sources selected — showing all data
+        </p>
       </div>
 
       <!-- Map-specific Settings (Scatter, Clustering, Legend, Point Style) -->

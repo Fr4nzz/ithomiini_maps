@@ -9,7 +9,6 @@ export const useViewStore = defineStore('view', () => {
   const filterStore = useFilterStore()
   const { filteredGeoJSON: filteredGeoJSONRef } = storeToRefs(filterStore)
 
-  const showThumbnail = ref(true)
   const clusteringEnabled = ref(getStorage('app-clustering-enabled', false))
   const clusterSettings = ref(getStorage('app-cluster-settings', {
     radiusPixels: 80,
@@ -168,7 +167,6 @@ export const useViewStore = defineStore('view', () => {
   }, { deep: true })
 
   return {
-    showThumbnail,
     clusteringEnabled,
     clusterSettings,
     visualizationMode,

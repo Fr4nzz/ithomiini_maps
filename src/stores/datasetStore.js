@@ -11,6 +11,7 @@ export const useDatasetStore = defineStore('dataset', () => {
   const imageSupplement = shallowRef([])
   const loadedSources = reactive(new Set())
   const sourceLoading = reactive(new Set())
+  const sourceProgress = reactive({})
   const loading = ref(true)
   const manifest = ref(null)
 
@@ -134,6 +135,7 @@ export const useDatasetStore = defineStore('dataset', () => {
     if (!fileName) return
 
     sourceLoading.add(sourceName)
+    sourceProgress[sourceName] = 0
     if (batch) activeBatchLoads++
 
     try {
@@ -141,10 +143,31 @@ export const useDatasetStore = defineStore('dataset', () => {
       const response = await fetch(`${basePath}data/${fileName}`)
       if (!response.ok) throw new Error(`${response.status}`)
 
-      const data = await response.json()
+      // Stream-read so we can surface byte-level progress to the UI.
+      // Content-Length is reliable here since we host static JSON on GitHub Pages.
+      const contentLength = Number(response.headers.get('Content-Length')) || 0
+      const reader = response.body?.getReader()
+      let text = ''
+      if (reader && contentLength > 0) {
+        const decoder = new TextDecoder()
+        let received = 0
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          received += value.length
+          text += decoder.decode(value, { stream: true })
+          sourceProgress[sourceName] = Math.min(0.99, received / contentLength)
+        }
+        text += decoder.decode()
+      } else {
+        // No Content-Length header → fall back to atomic read.
+        text = await response.text()
+      }
+      const data = JSON.parse(text)
       for (const item of data) normalizeLoadedItem(item, sourceName)
 
       loadedSources.add(sourceName)
+      sourceProgress[sourceName] = 1
 
       if (batch) {
         pendingBatchFeatures.push(...data)
@@ -160,6 +183,9 @@ export const useDatasetStore = defineStore('dataset', () => {
       log.data.error(`Failed to load ${sourceName}:`, e)
     } finally {
       sourceLoading.delete(sourceName)
+      // Keep 1.0 so the bar stays full briefly; schedule cleanup.
+      if (sourceProgress[sourceName] !== 1) delete sourceProgress[sourceName]
+      else setTimeout(() => { delete sourceProgress[sourceName] }, 400)
       if (batch) {
         activeBatchLoads--
         if (activeBatchLoads === 0 && pendingBatchFeatures.length > 0) {
@@ -179,6 +205,7 @@ export const useDatasetStore = defineStore('dataset', () => {
     imageSupplement,
     loadedSources,
     sourceLoading,
+    sourceProgress,
     manifest,
     FALLBACK_SOURCES,
     sourceConfig,

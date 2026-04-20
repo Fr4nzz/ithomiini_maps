@@ -45,9 +45,12 @@ sdm/data/predictions/
 sdm/data/occurrences/
 sdm/data/host_plants/gbif_*.csv
 sdm/data/figures/
-public/data/sdm/species/
+sdm/.tune_checkpoint.json
+# Aggregate SDM rasters (not used by web app)
 public/data/sdm/species_richness.tif
 public/data/sdm/mean_suitability.tif
+# Note: public/data/sdm/species/*_ensemble.tif ARE tracked — web app fetches
+# them at runtime (useSDMLayer.js); GitHub Pages needs them deployed (~44MB).
 
 # Pipeline intermediate/cache files (persisted via GitHub Actions cache)
 public/data/gbif_occurrences.json
