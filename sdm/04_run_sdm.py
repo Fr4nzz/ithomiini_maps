@@ -847,6 +847,12 @@ def main():
     parser.add_argument(
         "--pilot", action="store_true", help="Run 8-species diagnostic pilot"
     )
+    parser.add_argument(
+        "--tuned-only",
+        action="store_true",
+        help="Re-run only species listed in sdm/species_overrides.json "
+        "(merges new results into existing summary JSON)",
+    )
     args = parser.parse_args()
 
     print("=" * 70)
@@ -892,8 +898,15 @@ def main():
         "Ithomia heraldica",  # 23 records, failed in v1
     ]
 
+    overrides = load_species_overrides()
+
     if args.species:
         species_list = args.species
+    elif args.tuned_only:
+        if not overrides:
+            print("ERROR: --tuned-only requires sdm/species_overrides.json")
+            sys.exit(1)
+        species_list = [k.replace("_", " ").capitalize() for k in overrides.keys()]
     elif args.poc:
         species_list = config["species"]["proof_of_concept"]
     elif args.pilot:
@@ -903,7 +916,6 @@ def main():
         with open(viable_path) as f:
             species_list = json.load(f)
 
-    overrides = load_species_overrides()
     if overrides:
         print(f"\n   species_overrides.json: {len(overrides)} species tuned")
 
@@ -994,8 +1006,25 @@ def main():
 
     if all_results:
         summary_path = PRED_DIR / "sdm_results_summary.json"
+        merged = []
+        processed_names = {r["species"] for r in all_results}
+        if summary_path.exists():
+            try:
+                existing = json.loads(summary_path.read_text())
+                merged = [
+                    r for r in existing if r.get("species") not in processed_names
+                ]
+                if merged:
+                    print(
+                        f"\n  Summary merge: kept {len(merged)} pre-existing entries, "
+                        f"added/replaced {len(all_results)} from this run"
+                    )
+            except (json.JSONDecodeError, OSError) as exc:
+                print(f"  ⚠ Existing summary unreadable ({exc}); overwriting")
+                merged = []
+        merged.extend(all_results)
         with open(summary_path, "w") as f:
-            json.dump(all_results, f, indent=2, default=str)
+            json.dump(merged, f, indent=2, default=str)
 
         print(
             f"\n\n{'Species':<35} {'N':>5} {'Tier':<7} {'Algos':<15} {'AUC':>7} {'Boyce':>7} {'Conf':<12}"
