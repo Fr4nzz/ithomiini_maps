@@ -2,6 +2,7 @@
 // Extracted from data.js for maintainability (~330 lines)
 
 import { computed } from 'vue'
+import { log } from '../utils/logger'
 
 /**
  * Composable for scatter/overlap visualization logic
@@ -82,7 +83,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
    * Groups all points in filteredGeoJSON by their exact coordinates
    */
   const coordinateGroups = computed(() => {
-    const t0 = performance.now()
+    log.perf.start('coordinateGroups')
     const groups = new Map()
     const geo = filteredGeoJSON.value
     if (!geo || !geo.features) return groups
@@ -104,7 +105,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
       }
     }
 
-    console.log(`[Perf] coordinateGroups: ${(performance.now() - t0).toFixed(1)}ms, ${multiGroups.size} groups with overlaps`)
+    log.perf.end('coordinateGroups', `${multiGroups.size} groups with overlaps`)
     return multiGroups
   })
 
@@ -224,7 +225,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
    * The GeoJSON to display - handles scatter, clustering, and aggregation
    */
   const displayGeoJSON = computed(() => {
-    const t0 = performance.now()
+    log.perf.start('displayGeoJSON')
     const geo = filteredGeoJSON.value
     if (!geo) return geo
 
@@ -270,7 +271,7 @@ export function useScatterVisualization(filteredGeoJSON, scatterOverlappingPoint
     }
 
     // Clustering mode - pass all points to MapLibre
-    console.log(`[Perf] displayGeoJSON: ${(performance.now() - t0).toFixed(1)}ms, ${geo.features.length} features`)
+    log.perf.end('displayGeoJSON', `${geo.features.length} features`)
     return geo
   })
 

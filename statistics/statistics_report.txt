@@ -10,7 +10,7 @@ Source                          Records  Species Subspecies   Genera  Countries
 Sanger Institute                  7,265      494        597      173          8
 GBIF (UNAM)                      21,586       34         25       19          1
 GBIF (Other Institutions)        28,182      417        469       43         32
-Dore et al. (2025)               28,927      374        999       48         23
+Dore et al. (2022)               28,927      374        999       48         23
 iNaturalist                      19,901      252        175       41         25
 --------------------------------------------------------------------------------
 TOTAL (merged, all sources)     105,861      782       1380      182         33

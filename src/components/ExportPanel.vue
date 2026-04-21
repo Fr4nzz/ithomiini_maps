@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useDataStore } from '../stores/data'
 import { exportForR as exportForRUtil } from '../utils/rExport'
+import { log } from '../utils/logger'
 
 const store = useDataStore()
 
@@ -109,7 +110,7 @@ const exportCSV = () => {
     setTimeout(() => { exportSuccess.value = false }, 3000)
 
   } catch (e) {
-    console.error('CSV export failed:', e)
+    log.export.error('CSV export failed:', e)
     alert('Export failed: ' + e.message)
   } finally {
     isExporting.value = false
@@ -134,7 +135,7 @@ const exportGeoJSON = () => {
         version: shortHash,
         exportDate: new Date().toISOString(),
         recordCount: geo.features.length,
-        source: 'https://fr4nzz.github.io/ithomiini_maps/'
+        source: 'https://rapidspeciation.github.io/ithomiini_maps/'
       },
       features: geo.features
     }
@@ -152,7 +153,7 @@ const exportGeoJSON = () => {
     setTimeout(() => { exportSuccess.value = false }, 3000)
 
   } catch (e) {
-    console.error('GeoJSON export failed:', e)
+    log.export.error('GeoJSON export failed:', e)
     alert('Export failed: ' + e.message)
   } finally {
     isExporting.value = false
@@ -183,7 +184,7 @@ const exportForR = async () => {
       exportSuccess.value = false
     }, 2000)
   } catch (e) {
-    console.error('[Export] R export failed:', e)
+    log.export.error('[Export] R export failed:', e)
     isExporting.value = false
   }
 }

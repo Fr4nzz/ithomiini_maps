@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import { log } from '../utils/logger'
 
 /**
  * GoaT (Genomes on a Tree) data composable.
@@ -19,7 +20,7 @@ export function useGoatData() {
       const basePath = import.meta.env.BASE_URL || '/'
       const response = await fetch(`${basePath}data/goat_lepidoptera.json`)
       if (!response.ok) {
-        console.warn(`GoaT data not available (${response.status}) — filters will be disabled`)
+        log.goat.warn(`GoaT data not available (${response.status}) — filters will be disabled`)
         return
       }
 
@@ -33,9 +34,9 @@ export function useGoatData() {
         speciesWithDirectData: data.speciesWithDirectData,
       }
       goatLoaded.value = true
-      console.log(`✓ GoaT data loaded: ${Object.keys(goatSpecies.value).length} species`)
+      log.goat.info(`✓ GoaT data loaded: ${Object.keys(goatSpecies.value).length} species`)
     } catch (e) {
-      console.warn('GoaT data not available:', e.message)
+      log.goat.warn('GoaT data not available:', e.message)
     } finally {
       goatLoading.value = false
     }

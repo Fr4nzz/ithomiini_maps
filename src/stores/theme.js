@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { themes, DEFAULT_THEME, DEFAULT_MODE, getTheme } from '../themes/presets'
+import { log } from '../utils/logger'
 
 // Check if persistence is enabled
 function isPersistenceEnabled() {
@@ -58,7 +59,7 @@ export const useThemeStore = defineStore('theme', () => {
 
     const theme = getTheme(themeName)
     if (!theme) {
-      console.warn(`Theme '${themeName}' not found, using default`)
+      log.data.warn(`Theme '${themeName}' not found, using default`)
       currentTheme.value = DEFAULT_THEME
     }
 

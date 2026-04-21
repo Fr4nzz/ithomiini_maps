@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import {
   Settings,
   RotateCcw,
@@ -19,13 +20,6 @@ import { useDataStore } from '../../stores/data'
 import { computePopupPosition } from '../../composables/usePopupPosition'
 import LegendDropdown from './LegendDropdown.vue'
 import LegendColorPicker from './LegendColorPicker.vue'
-
-const props = defineProps({
-  isExportMode: {
-    type: Boolean,
-    default: false
-  }
-})
 
 const emit = defineEmits(['settings-open', 'settings-close', 'dropdown-open', 'dropdown-close'])
 
@@ -212,27 +206,11 @@ function handleManualCountInput(e) {
   if (!isNaN(val) && val >= 1) legendStore.setMaxItemsManual(val)
 }
 
-// Click outside handler
-function handleClickOutside(e) {
+onClickOutside(settingsPanelRef, (e) => {
   if (!showSettings.value) return
-
-  // Check if click is inside the settings panel or the settings button
-  const clickedInsidePanel = settingsPanelRef.value?.contains(e.target)
-  const clickedInsideButton = settingsButtonRef.value?.contains(e.target)
-
-  if (!clickedInsidePanel && !clickedInsideButton) {
-    closeSettings()
-  }
-}
-
-// Add/remove click outside listener
-onMounted(() => {
-  document.addEventListener('mousedown', handleClickOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('mousedown', handleClickOutside)
-})
+  if (settingsButtonRef.value?.contains(e.target)) return
+  closeSettings()
+}, { event: 'mousedown' })
 </script>
 
 <template>

@@ -2,8 +2,11 @@
 // Extracted from Legend.vue for maintainability (~250 lines)
 
 import { ref, computed } from 'vue'
+import { LEGEND_LAYOUT } from './legendLayout'
 
 const STICKY_MARGIN = 10
+const FALLBACK_LEGEND_HEIGHT = LEGEND_LAYOUT.FALLBACK_LEGEND_HEIGHT
+const FALLBACK_CONTAINER_HEIGHT = LEGEND_LAYOUT.FALLBACK_CONTAINER_HEIGHT
 
 /**
  * Composable for legend positioning and drag behavior
@@ -95,7 +98,7 @@ export function useLegendPosition({
       const threshold = legendStore.snapThreshold
       const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
       const legendWidth = legendRef.value?.offsetWidth || getEffectiveWidth()
-      const legendHeight = legendRef.value?.offsetHeight || 200
+      const legendHeight = legendRef.value?.offsetHeight || FALLBACK_LEGEND_HEIGHT
       const margin = STICKY_MARGIN
 
       if (newX >= 0 && newX < threshold) {
@@ -140,7 +143,7 @@ export function useLegendPosition({
     if (!bounds.width || !bounds.height) return
 
     const legendWidth = legendRef.value?.offsetWidth || getEffectiveWidth()
-    const legendHeight = legendRef.value?.offsetHeight || 200
+    const legendHeight = legendRef.value?.offsetHeight || FALLBACK_LEGEND_HEIGHT
     const threshold = 20
     const margin = STICKY_MARGIN
 
@@ -163,7 +166,7 @@ export function useLegendPosition({
 
   function applyPositionForBounds(oldBounds, newBounds) {
     const legendWidth = legendRef.value?.offsetWidth || getEffectiveWidth()
-    let legendHeight = legendRef.value?.offsetHeight || 200
+    let legendHeight = legendRef.value?.offsetHeight || FALLBACK_LEGEND_HEIGHT
     const margin = STICKY_MARGIN
     const minHeight = 100
 
@@ -218,10 +221,10 @@ export function useLegendPosition({
 
     const bounds = {
       width: props.containerRef.clientWidth || 800,
-      height: props.containerRef.clientHeight || 600
+      height: props.containerRef.clientHeight || FALLBACK_CONTAINER_HEIGHT
     }
 
-    const legendHeight = legendRef.value?.offsetHeight || 200
+    const legendHeight = legendRef.value?.offsetHeight || FALLBACK_LEGEND_HEIGHT
     const margin = STICKY_MARGIN
     const bottomMargin = margin + bottomAttributionMargin.value
 

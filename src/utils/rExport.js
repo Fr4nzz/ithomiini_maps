@@ -1,9 +1,11 @@
-import JSZip from 'jszip'
+import { zipSync, strToU8 } from 'fflate'
 import { useDataStore } from '../stores/data'
 import { useLegendStore } from '../stores/legend'
 import { applyAbbreviationFormat } from './abbreviations'
 import { generateRScript } from './rExport/rScriptGenerator'
 import { generateReadme, generateMapHTML } from './rExport/htmlReadmeGenerators'
+import { generateRangePolygons } from './rangePolygons'
+import { log } from './logger'
 
 // Build info (injected by Vite)
 const commitHash = typeof __COMMIT_HASH__ !== 'undefined' ? __COMMIT_HASH__ : 'dev'
@@ -70,7 +72,7 @@ export async function exportForR(map) {
       exportDate: new Date().toISOString(),
       recordCount: geo.features.length,
       colorBy: colorBy,
-      source: 'https://fr4nzz.github.io/ithomiini_maps/'
+      source: 'https://rapidspeciation.github.io/ithomiini_maps/'
     },
     features: featuresWithColors
   }
@@ -215,7 +217,8 @@ export async function exportForR(map) {
 
   // Capture basemap as raster (without data points)
   let basemapDataUrl = null
-  const dataLayers = ['points-layer', 'points-glow', 'clusters', 'cluster-count']
+  const dataLayers = ['points-layer', 'points-glow', 'clusters', 'cluster-count',
+    'range-fill', 'range-outline', 'range-points']
   const layerVisibility = {}
 
   try {
@@ -234,7 +237,7 @@ export async function exportForR(map) {
     // Capture basemap canvas directly (no cropping needed)
     basemapDataUrl = map.getCanvas().toDataURL('image/png')
   } catch (e) {
-    console.warn('[Export] Could not capture basemap:', e)
+    log.export.warn('[Export] Could not capture basemap:', e)
   } finally {
     // ALWAYS restore layer visibility, even if capture failed
     dataLayers.forEach(layerId => {
@@ -260,24 +263,34 @@ export async function exportForR(map) {
   // Generate HTML file for exact reproduction
   const mapHTML = generateMapHTML(exportGeoJSON, viewConfig, legendConfig, colorBy)
 
-  // Create ZIP file
-  const zip = new JSZip()
-  zip.file('data.geojson', JSON.stringify(exportGeoJSON, null, 2))
-  zip.file('view_config.json', JSON.stringify(viewConfig, null, 2))
-  zip.file('legend.json', JSON.stringify(legendConfig, null, 2))
-  zip.file('generate_map.R', rScript)
-  zip.file('map.html', mapHTML)
-  zip.file('README.txt', generateReadme(citationText, shortHash))
+  const isRangesMode = store.visualizationMode === 'ranges'
+  let rangePolygonGeoJSON = null
+  if (isRangesMode) {
+    rangePolygonGeoJSON = generateRangePolygons(geo, store.rangeSettings, colorMap)
+  }
+
+  const files = {
+    'data.geojson': strToU8(JSON.stringify(exportGeoJSON, null, 2)),
+    'view_config.json': strToU8(JSON.stringify(viewConfig, null, 2)),
+    'legend.json': strToU8(JSON.stringify(legendConfig, null, 2)),
+    'generate_map.R': strToU8(rScript),
+    'map.html': strToU8(mapHTML),
+    'README.txt': strToU8(generateReadme(citationText, shortHash))
+  }
+
+  if (rangePolygonGeoJSON) {
+    files['range_polygons.geojson'] = strToU8(JSON.stringify(rangePolygonGeoJSON, null, 2))
+  }
 
   // Add basemap if captured
   if (basemapDataUrl) {
     const basemapBase64 = basemapDataUrl.split(',')[1]
-    zip.file('basemap.png', basemapBase64, { base64: true })
+    files['basemap.png'] = Uint8Array.from(atob(basemapBase64), c => c.charCodeAt(0))
   }
 
   // Generate and download ZIP
-  const content = await zip.generateAsync({ type: 'blob' })
-  const url = URL.createObjectURL(content)
+  const zipped = zipSync(files)
+  const url = URL.createObjectURL(new Blob([zipped], { type: 'application/zip' }))
   const link = document.createElement('a')
   link.href = url
   link.download = `ithomiini_r_export_${shortHash}_${Date.now()}.zip`

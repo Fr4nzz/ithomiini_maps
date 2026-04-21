@@ -2,7 +2,7 @@
 
 Interactive mapping tool for Ithomiini butterfly research. Visualize specimen distributions, sequencing status, and mimicry patterns across South America.
 
-## 🔗 [Live Application](https://fr4nzz.github.io/ithomiini_maps/)
+## 🔗 [Live Application](https://rapidspeciation.github.io/ithomiini_maps/)
 
 ## Features
 
@@ -31,7 +31,7 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Taxonomic Cascade**: Family → Tribe → Genus → Species → Subspecies
 - **Multi-Select Filters**: Select multiple species/subspecies at once (fuzzy search)
 - **Sequencing Status**: Filter by Sequenced, Tissue Available, Preserved, Published, Observation, Museum Specimen
-- **Mimicry Rings**: 44 unique mimicry patterns from Dore et al. (2025)
+- **Mimicry Rings**: 44 unique mimicry patterns from Dore et al. (2022)
 - **Mimicry Ring Propagation**: Automatically applied to Sanger and GBIF records based on species/subspecies matching
 - **Date Range Filter**: Filter by collection/preservation date
 - **CAMID Search**: Instant lookup by specimen ID
@@ -54,9 +54,15 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Reproducibility**: Version-controlled data with Git commit hash
 
 ### 📊 Data Sources
-1. **Dore et al. (2025)**: 28,927 published occurrence records with mimicry data
+1. **Dore et al. (2022)**: 28,927 published occurrence records with mimicry data
 2. **Sanger Institute**: Live collection/sequencing data with specimen photos
 3. **GBIF**: External occurrence enrichment (includes iNaturalist data)
+
+### 🌍 Species Distribution Models
+- **148 species** modelled using MaxEnt + Random Forest + XGBoost ensemble
+- **Tiered approach**: Algorithm selection based on sample size (MaxEnt-only for rare species, full ensemble for well-sampled species)
+- **Interactive visualization**: Toggle predicted distributions on the map with suitability heatmaps, response curves, and confidence ratings
+- **Full methodology**: See [`sdm/SDM_METHODS.md`](sdm/SDM_METHODS.md) for detailed pipeline documentation
 
 ## Tech Stack
 
@@ -64,6 +70,7 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 - **Mapping**: MapLibre GL JS
 - **State Management**: Pinia
 - **Data Processing**: Python (Pandas)
+- **SDM Pipeline**: Python (elapid, scikit-learn, XGBoost, rasterio)
 - **Hosting**: GitHub Pages
 - **CI/CD**: GitHub Actions
 
@@ -77,7 +84,7 @@ Interactive mapping tool for Ithomiini butterfly research. Visualize specimen di
 
 ```bash
 # Clone the repository
-git clone https://github.com/Fr4nzz/ithomiini_maps.git
+git clone https://github.com/rapidspeciation/ithomiini_maps.git
 cd ithomiini_maps
 
 # Install JavaScript dependencies
@@ -216,7 +223,7 @@ Additional output fields:
 - **Project Lead**: Dr. Joana Meier (Wellcome Sanger Institute)
 - **Development**: Franz Chandi
 - **Data Sources**: 
-  - Dore et al. (2025) - Published occurrence data
+  - Dore et al. (2022) - Published occurrence data
   - Sanger Institute - Sequencing data
   - GBIF - Global biodiversity data
 

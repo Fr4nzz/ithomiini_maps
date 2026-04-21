@@ -5,9 +5,10 @@ import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
 import { applyAbbreviationFormat } from '../../utils/abbreviations'
 import { computePopupPosition } from '../../composables/usePopupPosition'
-import { useLegendItemData } from './useLegendItemData'
+import { useLegendBaseData, useLegendDisplayData } from './useLegendItemData'
 import { useLegendMeasurement } from './useLegendMeasurement'
 import { useLegendPosition } from './useLegendPosition'
+import { log } from '../../utils/logger'
 import { ArrowUpAZ, ArrowDownZA, ChartBarDecreasing, ChartBarIncreasing, ChevronDown, Hash } from 'lucide-vue-next'
 import LegendItem from './LegendItem.vue'
 import LegendToolbar from './LegendToolbar.vue'
@@ -99,19 +100,12 @@ const {
 // MEASUREMENT (extracted composable)
 // ═══════════════════════════════════════════════════════════════════════════
 
-// We need a temporary placeholder for sortedAllItems/legendCounts since
-// measurement composable and item data composable have a dependency chain:
-// measurement → effectiveMaxItems → useLegendItemData → sortedAllItems → measurement
-// Solution: pass refs that get populated after useLegendItemData is called.
-const sortedAllItemsRef = ref([])
-const legendCountsRef = ref({})
-
 // Multi-directional resize (must come before measurement for isResizing)
 const { isResizing, resizeOverride, startResize, startResizeTouch } = useElementResize(legendRef, {
   getPosition: () => ({ x: posX.value, y: posY.value ?? 0 }),
   getLimits: () => ({ minW: 200, maxW: maxResizeWidth.value, minH: 120, maxH: maxLegendHeight.value }),
   onEnd: ({ x, y, width, height }) => {
-    console.debug(`[Legend] resize end: ${width}x${height} at (${x},${y})`)
+    log.legend.debug(`[Legend] resize end: ${width}x${height} at (${x},${y})`)
     posX.value = x
     posY.value = y
     currentWidth.value = width
@@ -122,50 +116,62 @@ const { isResizing, resizeOverride, startResize, startResizeTouch } = useElement
   }
 })
 
+const base = useLegendBaseData(dataStore, legendStore, isExportMode)
+const {
+  colorMap, baseColors, itemGroupMap, itemToGroupsMap, subspeciesSpeciesMap,
+  groupBorderColors, getGroupBorderColor, hasCustomizedStyle, anyGroupHasCustomStyle,
+  getGroupForItem, getGroupsForItem, formatLabel,
+  legendCounts, legendGroupCounts, getGroupItemCount,
+  sortedAllItems
+} = base
+
 const {
   measuredItemCount, measuredSnugHeight, prevMeasuredCount,
-  maxLegendHeight, renderUpperBound, measuredGroupSlots, effectiveMaxItems, effectiveWidth, effectiveHeight,
+  maxLegendHeight, effectiveMaxItems, effectiveWidth, effectiveHeight,
   maxResizeWidth, scheduleMeasurement, scheduleContainerResizeMeasurement,
   resetToAutoSize, cleanup: cleanupMeasurement
 } = useLegendMeasurement({
   legendRef, contentRef, containerBounds,
   isAutoWidth, isAutoHeight, currentWidth, currentHeight,
   isResizing, resizeOverride,
-  sortedAllItems: sortedAllItemsRef,
-  legendCounts: legendCountsRef,
+  sortedAllItems,
+  legendCounts,
   legendStore, dataStore
 })
+
+const display = useLegendDisplayData(base, dataStore, legendStore, () => effectiveMaxItems.value, isExportMode)
+const { legendItems, groupedLegendData, moreCount, morePointCount } = display
+
+const groupList = computed(() => Object.keys(itemGroupMap.value).sort())
 
 // Should show toolbar/edit UI?
 const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ITEM DATA (extracted composable)
-// ═══════════════════════════════════════════════════════════════════════════
-
-const {
-  colorMap, baseColors, itemGroupMap, itemToGroupsMap, subspeciesSpeciesMap,
-  groupList, groupBorderColors, getGroupBorderColor, hasCustomizedStyle, anyGroupHasCustomStyle,
-  getGroupForItem, getGroupsForItem, formatLabel,
-  legendCounts, legendGroupCounts, getGroupItemCount,
-  sortedAllItems, legendItems, groupedLegendData,
-  moreCount, morePointCount
-} = useLegendItemData(dataStore, legendStore, () => effectiveMaxItems.value, isExportMode, () => measuredGroupSlots.value)
-
-// Bridge: keep measurement composable's refs in sync with item data
-watch(sortedAllItems, (items) => { sortedAllItemsRef.value = items }, { immediate: true })
-watch(legendCounts, (counts) => { legendCountsRef.value = counts }, { immediate: true })
-
-// ═══════════════════════════════════════════════════════════════════════════
 // WATCHERS (measurement triggers)
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Initial measurement on mount
+let dataMeasureTimer = null
+const invalidateMeasurement = (reason, { debounced = false } = {}) => {
+  resetToAutoSize()
+  measuredItemCount.value = null
+  prevMeasuredCount.value = null
+  measuredSnugHeight.value = null
+  if (dataMeasureTimer) clearTimeout(dataMeasureTimer)
+  if (debounced) {
+    dataMeasureTimer = setTimeout(() => {
+      dataMeasureTimer = null
+      scheduleMeasurement(false, reason)
+    }, 200)
+  } else {
+    scheduleMeasurement(false, reason)
+  }
+}
+
 watch(contentRef, (el, oldEl) => {
   if (el && !oldEl) scheduleMeasurement(false, 'mount')
 })
 
-// Re-measure when layout-affecting settings change
 watch([
   () => legendStore.wrapLabels,
   () => legendStore.textScale,
@@ -175,60 +181,38 @@ watch([
 ], (newVals, oldVals) => {
   const settingNames = ['wrapLabels', 'textScale', 'showCounts', 'isGrouped', 'groupingSettings']
   const changed = settingNames.filter((_, i) => JSON.stringify(newVals[i]) !== JSON.stringify(oldVals[i]))
-  resetToAutoSize()
-  measuredItemCount.value = null
-  prevMeasuredCount.value = null
-  measuredSnugHeight.value = null
-  scheduleMeasurement(false, `setting:${changed.join(',')}`)
+  invalidateMeasurement(`setting:${changed.join(',')}`)
 }, { deep: true })
 
-// Re-measure when data changes (debounced to batch rapid source loads)
-let dataMeasureTimer = null
 watch(sortedAllItems, (newItems, oldItems) => {
   const delta = newItems.length - (oldItems?.length || 0)
-  resetToAutoSize()
-  measuredItemCount.value = null
-  prevMeasuredCount.value = null
-  measuredSnugHeight.value = null
-  if (dataMeasureTimer) clearTimeout(dataMeasureTimer)
-  dataMeasureTimer = setTimeout(() => {
-    dataMeasureTimer = null
-    scheduleMeasurement(false, `data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`)
-  }, 200)
+  invalidateMeasurement(`data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`, { debounced: true })
 })
 
-// Re-measure after resize ends
 watch(isResizing, (resizing) => {
-  if (!resizing) {
-    scheduleMeasurement(true, 'resizeEnd', true)
-    const labels = new Set()
-    for (const item of legendItems.value) {
-      if (item.visible !== false) labels.add(item.label)
-    }
-    legendStore.setShownLabels(labels)
-  }
+  if (!resizing) scheduleMeasurement(true, 'resizeEnd', true)
 })
 
-// Manual mode watchers
 watch(() => legendStore.maxItemsMode, (newMode) => {
-  console.log(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
+  log.legend.info(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
   if (newMode === 'auto') scheduleMeasurement(true, 'modeChange')
 })
 
-watch(() => legendStore.maxItemsManual, (newCount) => {
-  if (legendStore.isManualMode) console.log(`[Legend] manual items → ${newCount}`)
-})
-
-// Container resize triggers re-measurement
 watch(prevContainerBounds, (newBounds, oldBounds) => {
   if (oldBounds.width > 0 && measuredItemCount.value !== null) {
     scheduleContainerResizeMeasurement()
   }
 }, { deep: true })
 
-// Sync shown labels to store
+// Labels switch from LegendEditableLabel (nowrap/ellipsis) back to plain <span>
+// (wrap-enabled when wrapLabels is on), which can make items taller and cause overflow.
+watch(showEditUI, (editing) => {
+  if (!editing && legendStore.wrapLabels) {
+    scheduleMeasurement(false, 'editUILeave')
+  }
+})
+
 watch(legendItems, (items) => {
-  if (isResizing.value) return
   const labels = new Set()
   for (const item of items) {
     if (item.visible !== false) labels.add(item.label)
@@ -523,7 +507,6 @@ onUnmounted(() => {
       'is-dragging': isDragging,
       'is-resizing': isResizing,
       'is-export': isExportMode,
-      'show-edit-ui': showEditUI
     }"
     :style="positionStyle"
     @mouseenter="handleMouseEnter"
@@ -534,7 +517,6 @@ onUnmounted(() => {
     <!-- Toolbar (hidden by default, shown on hover) -->
     <LegendToolbar
       v-show="showEditUI"
-      :is-export-mode="isExportMode"
       @settings-open="hasOpenPopup = true"
       @settings-close="hasOpenPopup = false"
       @dropdown-open="hasOpenPopup = true"
@@ -562,7 +544,7 @@ onUnmounted(() => {
           <!-- Sort dropdown -->
           <div class="sort-dropdown-wrapper">
             <button
-              class="title-control-button sort-trigger"
+              class="title-control-button"
               :class="{ active: sortDropdownOpen }"
               title="Sort options"
               @click.stop="toggleSortDropdown"

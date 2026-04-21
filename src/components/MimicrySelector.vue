@@ -181,7 +181,7 @@ const unavailableRings = computed(() => {
 
 // Check if there's an active taxonomy filter
 const hasTaxonomyFilter = computed(() => {
-  return store.filters.genus !== 'All' ||
+  return store.filters.genus.length > 0 ||
          store.filters.species.length > 0 ||
          store.filters.subspecies.length > 0
 })
@@ -378,7 +378,7 @@ const clearSelection = () => {
     <!-- Footer -->
     <div class="selector-footer">
       <p class="footer-note">
-        Mimicry ring data from Dore et al. (2025) • Photos prioritize Sanger Institute
+        Mimicry ring data from Dore et al. (2022) • Photos prioritize Sanger Institute
       </p>
       <div class="footer-actions">
         <button class="btn-clear" @click="clearSelection" :disabled="selectedRings.length === 0">

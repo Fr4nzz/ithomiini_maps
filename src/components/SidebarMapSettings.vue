@@ -15,6 +15,10 @@ function toggleLegend() {
 function resetHeatmapSettings() {
   store.heatmapSettings = { ...store.DEFAULT_HEATMAP_SETTINGS }
 }
+
+function resetRangeSettings() {
+  store.rangeSettings = { ...store.DEFAULT_RANGE_SETTINGS }
+}
 </script>
 
 <template>
@@ -41,6 +45,10 @@ function resetHeatmapSettings() {
         :class="{ active: store.visualizationMode === 'heatmap' }"
         @click="store.visualizationMode = 'heatmap'"
       >Heatmap</button>
+      <button
+        :class="{ active: store.visualizationMode === 'ranges' }"
+        @click="store.visualizationMode = 'ranges'"
+      >Ranges</button>
     </div>
 
     <!-- Points settings -->
@@ -114,6 +122,75 @@ function resetHeatmapSettings() {
         </div>
       </div>
       <button class="btn-reset-heatmap" @click="resetHeatmapSettings">
+        Reset to defaults
+      </button>
+    </div>
+
+    <!-- Ranges settings -->
+    <div v-if="store.visualizationMode === 'ranges'" class="settings-panel" style="margin-top: 12px;">
+      <div class="setting-row">
+        <label>Method</label>
+        <select v-model="store.rangeSettings.method" class="style-select">
+          <option value="hexbin">Hex Density</option>
+          <option value="hulls">Hull Polygons</option>
+        </select>
+      </div>
+
+      <!-- Hex Density controls -->
+      <div v-if="store.rangeSettings.method === 'hexbin'" class="setting-row">
+        <label>Cell size <span class="unit-label">(km)</span></label>
+        <div class="slider-group">
+          <input type="range" min="10" max="200" step="10" v-model.number="store.rangeSettings.hexSize" />
+          <span class="slider-value">{{ store.rangeSettings.hexSize }}km</span>
+        </div>
+      </div>
+
+      <!-- Hull Polygon controls -->
+      <template v-if="store.rangeSettings.method === 'hulls'">
+        <div class="setting-row">
+          <label>Group by</label>
+          <select v-model="store.rangeSettings.groupBy" class="style-select">
+            <option value="species">Species</option>
+            <option value="subspecies">Subspecies</option>
+            <option value="genus">Genus</option>
+            <option value="mimicry">Mimicry Ring</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label>Smoothing <span class="unit-label">(buffer km)</span></label>
+          <div class="slider-group">
+            <input type="range" min="0" max="100" step="5" v-model.number="store.rangeSettings.bufferKm" />
+            <span class="slider-value">{{ store.rangeSettings.bufferKm }}km</span>
+          </div>
+        </div>
+        <div class="setting-row">
+          <label>Min. points</label>
+          <div class="slider-group">
+            <input type="range" min="3" max="20" step="1" v-model.number="store.rangeSettings.minPoints" />
+            <input
+              type="number"
+              class="setting-input"
+              min="3"
+              max="100"
+              v-model.number.lazy="store.rangeSettings.minPoints"
+              @keydown.enter="$event.target.blur()"
+            />
+          </div>
+        </div>
+      </template>
+
+      <div class="setting-row">
+        <label>Fill opacity</label>
+        <div class="slider-group">
+          <input type="range" min="0" max="1" step="0.05" v-model.number="store.rangeSettings.opacity" />
+          <span class="slider-value">{{ Math.round(store.rangeSettings.opacity * 100) }}%</span>
+        </div>
+      </div>
+      <label class="toggle-row range-points-toggle">
+        <input type="checkbox" v-model="store.rangeSettings.showPoints" />
+        <span>Show points underneath</span>
+      </label>
+      <button class="btn-reset-heatmap" @click="resetRangeSettings">
         Reset to defaults
       </button>
     </div>
@@ -321,10 +398,27 @@ function resetHeatmapSettings() {
   color: var(--color-text-muted, #666);
 }
 
-.cluster-points-toggle {
+.cluster-points-toggle,
+.range-points-toggle {
   margin-top: 8px;
   background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(74, 222, 128, 0.03) 100%);
   border: 1px solid rgba(74, 222, 128, 0.15);
+}
+
+.style-select {
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 4px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.style-select:focus {
+  outline: none;
+  border-color: var(--color-accent, #4ade80);
 }
 
 /* Slider Group */

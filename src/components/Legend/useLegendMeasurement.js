@@ -3,10 +3,12 @@
 //
 // Implements the "render-then-measure" pattern:
 // 1. Render a generous upper-bound of items with overflow:hidden
-// 2. Measure actual DOM to find exact cutoff
-// 3. Bidirectional convergence loop corrects over/under-estimation
+// 2. Measure actual DOM item positions once
+// 3. Apply the exact fitting count, with at most one follow-up pass
 
 import { ref, computed, nextTick } from 'vue'
+import { log } from '../../utils/logger'
+import { LEGEND_LAYOUT } from './legendLayout'
 
 /**
  * Composable for legend measurement and auto-sizing
@@ -53,23 +55,24 @@ export function useLegendMeasurement({
   }
 
   // ── Auto-width ────────────────────────────────────────────────────────
-  // Uses ALL sorted items' labels (not just displayed ones) so autoWidth is
-  // stable across measurement changes.
+  // Sizes to the widest displayed label + count, not all items. Previously
+  // used all sorted items (including those hidden behind "+N more"), which
+  // produced unnecessary slack when the visible items were shorter.
   const autoWidth = computed(() => {
-    const items = sortedAllItems.value
-    if (!items.length) return 200
+    const allItems = sortedAllItems.value
+    if (!allItems.length) return LEGEND_LAYOUT.MIN_WIDTH
 
-    const maxContainerWidth = containerBounds.value.width * 0.30
+    const maxContainerWidth = containerBounds.value.width * LEGEND_LAYOUT.AUTO_WIDTH_MAX_CONTAINER_RATIO
     const fontSizePx = Math.round(14 * legendStore.textScale)
     const isGrouped = legendStore.isGrouped
+    const visibleCount = measuredItemCount.value ?? allItems.length
+    const items = allItems.slice(0, Math.max(1, visibleCount))
 
     let maxTextWidth = 0
     for (const item of items) {
       const label = item.displayLabel || item.label
       const width = measureTextWidth(label, fontSizePx)
-      if (width > maxTextWidth) {
-        maxTextWidth = width
-      }
+      if (width > maxTextWidth) maxTextWidth = width
     }
 
     const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
@@ -91,24 +94,23 @@ export function useLegendMeasurement({
     }
 
     const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth + safetyMargin
-    return Math.min(Math.max(Math.ceil(idealWidth), 200), maxContainerWidth, 600)
+    return Math.min(Math.max(Math.ceil(idealWidth), LEGEND_LAYOUT.MIN_WIDTH), maxContainerWidth, LEGEND_LAYOUT.MAX_WIDTH)
   })
 
   // ── Height computations ───────────────────────────────────────────────
 
   const maxLegendHeight = computed(() => {
-    return Math.floor(containerBounds.value.height * 0.80)
+    return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.MAX_HEIGHT_RATIO)
   })
 
   const targetLegendHeight = computed(() => {
-    return Math.floor(containerBounds.value.height * 0.75)
+    return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.TARGET_HEIGHT_RATIO)
   })
 
-  // ── Render upper bound ────────────────────────────────────────────────
   // Generous over-estimate of how many items COULD fit. Actual count is
   // determined by post-render DOM measurement.
   const renderUpperBound = computed(() => {
-    const minItemHeight = 22
+    const minItemHeight = LEGEND_LAYOUT.MIN_ITEM_HEIGHT_PX
     const gap = 2
     const titleHeight = 32
     const padding = 24
@@ -136,26 +138,14 @@ export function useLegendMeasurement({
   const measuredItemCount = ref(null)
   const measuredSnugHeight = ref(null)
   const prevMeasuredCount = ref(null)
-  // In cross-group mode, the number of DOM items that physically fit.
-  // Used by Cap 2 in groupedLegendData to limit groups more accurately
-  // than the height-based renderUpperBound estimate.
-  const measuredGroupSlots = ref(null)
-
+  const correctionSettled = ref(false)
   let containerResizeRemeasureTimeout = null
   let pendingMeasurementRAF = null
-
-  // ── Overflow correction state ─────────────────────────────────────────
-
-  let overflowCorrectionPending = false
-  let correctionGeneration = 0
+  let pendingFollowUpRAF = null
+  let measurementGeneration = 0
   let correctionSteps = 0
-
-  function resetCorrectionState() {
-    correctionSteps = 0
-    binarySearchActive = false
-    binarySearchDone = false
-    correctionGeneration++
-  }
+  let lastMeasuredCount = -1
+  let followUpScheduledForGeneration = -1
 
   // ── effectiveMaxItems ─────────────────────────────────────────────────
   // The actual item limit: measured value when available, upper bound otherwise
@@ -187,29 +177,28 @@ export function useLegendMeasurement({
       cancelAnimationFrame(pendingMeasurementRAF)
       pendingMeasurementRAF = null
     }
+    if (pendingFollowUpRAF !== null) {
+      cancelAnimationFrame(pendingFollowUpRAF)
+      pendingFollowUpRAF = null
+    }
     if (containerResizeRemeasureTimeout) {
       clearTimeout(containerResizeRemeasureTimeout)
       containerResizeRemeasureTimeout = null
     }
     if (legendStore.isManualMode) return
 
-    // Always invalidate pending corrections when starting a new measurement
-    // cycle. Without this, a stale overflowCorrectionPending=true from a
-    // previous cycle blocks scheduleOverflowCorrection() in the new cycle.
-    overflowCorrectionPending = false
-    resetCorrectionState()
-
-    // Always clear cross-group slot limit — it's recomputed fresh by
-    // measureAndTrimItems. Stale values cause Cap 2 to over-limit groups
-    // when switching between cross-group and non-cross-group settings.
-    measuredGroupSlots.value = null
+    correctionSteps = 0
+    correctionSettled.value = false
+    measurementGeneration++
+    lastMeasuredCount = -1
+    followUpScheduledForGeneration = -1
 
     if (resetState) {
       prevMeasuredCount.value = fullReset ? null : measuredItemCount.value
       measuredItemCount.value = null
       measuredSnugHeight.value = null
     }
-    console.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
+    log.legend.debug(`[Legend] scheduleMeasurement(reset=${resetState}${fullReset ? ',full' : ''}) from: ${source || 'unknown'}`)
     pendingMeasurementRAF = requestAnimationFrame(() => {
       pendingMeasurementRAF = requestAnimationFrame(() => {
         pendingMeasurementRAF = null
@@ -225,25 +214,7 @@ export function useLegendMeasurement({
     }, 150)
   }
 
-  // ── Overflow correction ───────────────────────────────────────────────
-
-  function scheduleOverflowCorrection() {
-    if (overflowCorrectionPending) return
-    overflowCorrectionPending = true
-    const gen = correctionGeneration
-    // Double-nextTick ensures Vue fully flushes all reactive effects
-    // (including cascading watcher effects that schedule additional updates).
-    // rAF ensures browser layout is complete before measuring.
-    nextTick(() => {
-      nextTick(() => {
-        requestAnimationFrame(() => {
-          overflowCorrectionPending = false
-          if (gen !== correctionGeneration) return
-          correctOverflow()
-        })
-      })
-    })
-  }
+  // ── Deterministic measurement ──────────────────────────────────────────
 
   function measureVisualGap(contentEl) {
     const moreEl = contentEl.querySelector('.legend-more')
@@ -263,130 +234,26 @@ export function useLegendMeasurement({
     }
   }
 
-  function updateSnugHeightFromDOM() {
-    const el = contentRef.value
-    const legendEl = legendRef.value
-    if (!el || !legendEl || !isAutoHeight.value) return
+  function scheduleFollowUpMeasurement(generation, source = 'followUp') {
+    if (followUpScheduledForGeneration === generation) return
+    followUpScheduledForGeneration = generation
 
-    const moreEl = el.querySelector('.legend-more')
-    const itemsEl = el.querySelector('.legend-items')
-    if (!itemsEl) return
-
-    const lastContent = moreEl || itemsEl.lastElementChild
-    if (!lastContent) return
-
-    const legendTop = legendEl.getBoundingClientRect().top
-    const lastBottom = lastContent.getBoundingClientRect().bottom
-    const padding = 12
-    const newSnug = Math.max(120, Math.ceil(lastBottom - legendTop + padding))
-
-    if (measuredSnugHeight.value && Math.abs(newSnug - measuredSnugHeight.value) > 4) {
-      measuredSnugHeight.value = newSnug
-    }
+    nextTick(() => {
+      pendingFollowUpRAF = requestAnimationFrame(() => {
+        pendingFollowUpRAF = null
+        if (generation !== measurementGeneration) return
+        measureAndTrimItems({ generation, allowFollowUp: false, source })
+      })
+    })
   }
 
-  // Detect actual scrollbar presence (more reliable than scrollHeight check
-  // for small overflow amounts that may be within subpixel tolerance)
-  function hasScrollbar(el) {
-    return el.scrollHeight > el.clientHeight + 1
-  }
-
-  // Binary search state for overflow correction.
-  // Always uses binary search (no linear reduce/expand phases).
-  let binarySearchActive = false
-  let binarySearchDone = false  // prevents re-initiation after convergence
-  let binaryLo = 0
-  let binaryHi = 0
-  let binaryBest = 0
-
-  function correctOverflow() {
-    const el = contentRef.value
-    if (!el || isResizing.value || legendStore.isManualMode) return
-
-    correctionSteps++
-    const overflow = el.scrollHeight - el.clientHeight
-    const scrollbarVisible = hasScrollbar(el)
-    const totalItems = sortedAllItems.value.length
-    const unusedSpace = measureVisualGap(el)
-    const isOverflowing = overflow > 2 || scrollbarVisible
-
-    // What are we adjusting? Groups (cross-group) or items (normal).
-    const isCG = measuredGroupSlots.value !== null
-    const getVal = () => isCG ? measuredGroupSlots.value : measuredItemCount.value
-    const setVal = (v) => { if (isCG) measuredGroupSlots.value = v; else measuredItemCount.value = v }
-    const maxVal = isCG ? renderUpperBound.value : totalItems
-    const label = isCG ? 'groups' : 'items'
-
-    // Safety bail
-    if (correctionSteps > 8) {
-      if (binarySearchActive && binaryBest > 0) setVal(binaryBest)
-      else if (isOverflowing && getVal() > 1) setVal(getVal() - 1)
-      binarySearchActive = false
-      binarySearchDone = true
-      console.log(`[Legend] BAIL after ${correctionSteps} steps → ${getVal()} ${label}`)
-      correctionSteps = 0
-      updateSnugHeightFromDOM()
-      return
-    }
-
-    // ── Initialize or continue binary search ──────────────────────
-    if (!binarySearchActive) {
-      if (binarySearchDone) {
-        logSettled(el, unusedSpace, overflow)
-        return
-      }
-      if (isOverflowing) {
-        binarySearchActive = true
-        binaryBest = 0
-        binaryHi = getVal() - 1
-        binaryLo = 1
-      } else if (unusedSpace > 20 && getVal() < maxVal) {
-        binarySearchActive = true
-        binaryBest = getVal()
-        binaryLo = getVal() + 1
-        binaryHi = Math.min(maxVal, getVal() + Math.max(2, Math.ceil(unusedSpace / 20)))
-      } else {
-        logSettled(el, unusedSpace, overflow)
-        return
-      }
-    } else {
-      if (isOverflowing) {
-        binaryHi = getVal() - 1
-      } else {
-        binaryBest = getVal()
-        if (unusedSpace > 20 && getVal() < maxVal) {
-          binaryLo = getVal() + 1
-        } else {
-          binaryLo = binaryHi + 1
-        }
-      }
-    }
-
-    if (binaryLo > binaryHi) {
-      binarySearchActive = false
-      binarySearchDone = true
-      if (binaryBest > 0 && binaryBest !== getVal()) {
-        setVal(binaryBest)
-        scheduleOverflowCorrection()
-        return
-      }
-      logSettled(el, unusedSpace, overflow)
-      return
-    }
-
-    const mid = Math.floor((binaryLo + binaryHi) / 2)
-    setVal(mid)
-    scheduleOverflowCorrection()
-  }
-
-  function logSettled(el, unusedSpace, overflow) {
+  function logSettled(el, unusedSpace) {
     const totalItems = sortedAllItems.value.length
     const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
-    const slotsInfo = measuredGroupSlots.value !== null ? ` groups=${measuredGroupSlots.value}` : ''
-    console.log(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items${slotsInfo} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
-    console.log(`[Perf] legendMeasurement: settled in ${correctionSteps} steps`)
-    correctionSteps = 0
-    updateSnugHeightFromDOM()
+    log.legend.info(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
+    log.legend.info(`[Perf] legendMeasurement: settled in ${correctionSteps} steps`)
+    correctionSettled.value = true
+    prevMeasuredCount.value = measuredItemCount.value
   }
 
   // ── Log context ───────────────────────────────────────────────────────
@@ -414,13 +281,14 @@ export function useLegendMeasurement({
 
   // ── Main measurement ──────────────────────────────────────────────────
 
-  function measureAndTrimItems() {
-    const t0 = performance.now()
+  function measureAndTrimItems({ generation = measurementGeneration, allowFollowUp = true, source = 'measure' } = {}) {
     const contentEl = contentRef.value
     if (!contentEl || isResizing.value) return
 
     const itemsEl = contentEl.querySelector('.legend-items')
     if (!itemsEl || !itemsEl.children.length) return
+
+    correctionSteps++
 
     const contentRect = contentEl.getBoundingClientRect()
     const contentBottom = contentRect.top + contentEl.clientHeight
@@ -442,7 +310,7 @@ export function useLegendMeasurement({
     // Debug: detect cross-group DOM mismatch (items in multiple groups)
     const groupEls = isGroupedView ? itemsEl.querySelectorAll('.legend-group') : []
     if (groupEls.length > 0 && measurableItems.length !== totalSorted) {
-      console.debug(`[Legend] DOM: ${measurableItems.length} items in ${groupEls.length} groups (${totalSorted} unique) grouped=${isGroupedView}`)
+      log.legend.debug(`[Legend] DOM: ${measurableItems.length} items in ${groupEls.length} groups (${totalSorted} unique) grouped=${isGroupedView}`)
     }
 
     function computeSnugHeight(lastItemEl, includeMoreIndicator) {
@@ -450,53 +318,50 @@ export function useLegendMeasurement({
       if (!legendEl || !lastItemEl) return null
       const legendTop = legendEl.getBoundingClientRect().top
       const lastBottom = lastItemEl.getBoundingClientRect().bottom
+      // Safety buffer for rounding + border widths; avoids 1-pixel overflow
+      // that shows the fallback scrollbar even when items should fit.
+      const borderSafety = 4
       const extra = includeMoreIndicator
-        ? moreIndicatorReserve + contentPaddingBottom
-        : contentPaddingBottom
-      return Math.max(120, Math.ceil(lastBottom - legendTop + extra))
+        ? moreIndicatorReserve + contentPaddingBottom + borderSafety
+        : contentPaddingBottom + borderSafety
+      return Math.max(LEGEND_LAYOUT.MIN_SNUG_HEIGHT, Math.ceil(lastBottom - legendTop + extra))
     }
 
-    // Check if ALL items fit.
-    // Skip this shortcut in cross-group mode (DOM items >> unique items),
-    // because setting measuredItemCount=totalSorted may cause a different
-    // number of groups to render, changing the DOM significantly.
-    const lastItem = measurableItems[measurableItems.length - 1]
-    const lastItemBottom = lastItem.getBoundingClientRect().bottom
-    const allFitBoundary = contentBottom - contentPaddingBottom
-    // Cross-group: items appear in multiple groups. Detect by comparing DOM
-    // item count against expected counts. Two complementary checks:
-    // 1) DOM items >> current render limit (catches initial render with few items)
-    // 2) DOM items > total unique items (catches pass 2 with all items rendered)
-    const currentItemLimit = effectiveMaxItems.value
-    const isCrossGroup = isGroupedView && (
-      measurableItems.length > currentItemLimit * 1.5 ||
-      measurableItems.length > totalSorted
-    )
+    function applyMeasuredResult(count, snugHeight, reason) {
+      const nextCount = Math.max(1, Math.min(totalSorted, count))
+      const countChanged = measuredItemCount.value !== nextCount
+      const sameAsLastMeasurement = lastMeasuredCount === nextCount
 
-    if (!isCrossGroup &&
-        measurableItems.length >= totalSorted &&
-        lastItemBottom <= allFitBoundary) {
-      if (measuredItemCount.value !== totalSorted) {
-        measuredItemCount.value = totalSorted
+      lastMeasuredCount = nextCount
+
+      if (countChanged) {
+        measuredItemCount.value = nextCount
       }
-      measuredSnugHeight.value = computeSnugHeight(lastItem, false)
-      console.debug(`[Legend] ALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
-      scheduleOverflowCorrection()
-      return
-    }
+      if (snugHeight !== null && snugHeight !== measuredSnugHeight.value) {
+        measuredSnugHeight.value = snugHeight
+      }
 
-    // Small item counts (≤ 5) — try fitting all without "+N more"
-    if (!isCrossGroup && totalSorted <= 5 && measurableItems.length >= totalSorted) {
-      const lastOfAll = measurableItems[measurableItems.length - 1]
-      if (lastOfAll && lastOfAll.getBoundingClientRect().bottom <= contentBottom) {
-        if (measuredItemCount.value !== totalSorted) {
-          measuredItemCount.value = totalSorted
-        }
-        measuredSnugHeight.value = computeSnugHeight(lastOfAll, false)
-        console.debug(`[Legend] SMALL_FIT ${totalSorted} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
-        scheduleOverflowCorrection()
+      const unusedSpace = measureVisualGap(contentEl)
+      const domInfo = measurableItems.length > totalSorted ? ` dom=${Math.min(measurableItems.length, nextCount)}/${measurableItems.length}` : ''
+      log.legend.debug(`[Legend] ${reason} ${nextCount}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} pass=${correctionSteps} source=${source} | ${logContext()}`)
+
+      if (countChanged && allowFollowUp && !sameAsLastMeasurement) {
+        correctionSettled.value = false
+        scheduleFollowUpMeasurement(generation)
         return
       }
+
+      logSettled(contentEl, unusedSpace)
+    }
+
+    // Source of truth for overflow: browser's own scroll vs visible height.
+    // Using coordinate math with hardcoded padding can disagree by a pixel.
+    const overflowsContainer = contentEl.scrollHeight > contentEl.clientHeight
+    const lastItem = measurableItems[measurableItems.length - 1]
+
+    if (measurableItems.length >= totalSorted && !overflowsContainer) {
+      applyMeasuredResult(totalSorted, computeSnugHeight(lastItem, false), 'ALL_FIT')
+      return
     }
 
     // Not all fit — find cutoff. First try without "+N more" reserve to see
@@ -512,39 +377,20 @@ export function useLegendMeasurement({
     }
     domFitCount = Math.max(1, domFitCount)
 
-    // Multi-group DOM→unique item count translation
+    // DOM→unique: count distinct labels in fitting DOM items (not ratio)
     let count = domFitCount
     let countNoMore = domFitCountNoMore
-    if (isCrossGroup) {
-      // Cross-group mode needs two measurement passes:
-      // Pass 1: Ensure all unique items are rendered so each group shows its
-      //   full item set. Without this, groups render with partial items from
-      //   the initial renderUpperBound limit, giving inaccurate heights.
-      // Pass 2: All items rendered → accurately count fitting groups.
-      if (measuredItemCount.value !== totalSorted) {
-        measuredItemCount.value = totalSorted
-        console.debug(`[Legend] CROSS-GROUP pass 1: rendering all ${totalSorted} unique items | ${logContext()}`)
-        scheduleMeasurement(false, 'crossGroupPass2')
-        return
+    if (isGroupedView && measurableItems.length > totalSorted) {
+      const uniqueFit = new Set()
+      const uniqueFitNoMore = new Set()
+      for (let i = 0; i < measurableItems.length; i++) {
+        const label = measurableItems[i].querySelector('.legend-label')?.textContent?.trim()
+        if (!label) continue
+        if (i < domFitCount) uniqueFit.add(label)
+        if (i < domFitCountNoMore) uniqueFitNoMore.add(label)
       }
-      // Pass 2: all unique items rendered — count groups that physically fit
-      let fittingGroups = 0
-      for (const groupEl of groupEls) {
-        if (groupEl.getBoundingClientRect().bottom <= maxBottomWithMore) fittingGroups++
-        else break
-      }
-      measuredGroupSlots.value = Math.max(1, fittingGroups)
-      measuredSnugHeight.value = fittingGroups > 0
-        ? computeSnugHeight(groupEls[Math.min(fittingGroups, groupEls.length) - 1], true)
-        : computeSnugHeight(measurableItems[0], true)
-      console.debug(`[Legend] CROSS-GROUP pass 2: ${fittingGroups}/${groupEls.length} groups fit (${totalSorted} unique) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
-      scheduleOverflowCorrection()
-      return
-    } else if (measurableItems.length > totalSorted) {
-      if (domFitCount < measurableItems.length) {
-        count = Math.max(1, Math.floor(domFitCount * totalSorted / measurableItems.length))
-      }
-      countNoMore = Math.max(1, Math.floor(domFitCountNoMore * totalSorted / measurableItems.length))
+      count = Math.max(1, uniqueFit.size)
+      countNoMore = Math.max(1, uniqueFitNoMore.size)
     }
 
     // If skipping "+N more" would only leave 1-2 items hidden, AND those items
@@ -552,25 +398,12 @@ export function useLegendMeasurement({
     // The "+N more" indicator itself takes ~40px which often fits 1-2 items.
     // Use translated counts (not raw DOM counts) so cross-group mode is handled.
     const hiddenWithoutMore = totalSorted - countNoMore
-    if (!isCrossGroup && hiddenWithoutMore <= 2 && countNoMore >= totalSorted) {
-      count = totalSorted
-      measuredSnugHeight.value = computeSnugHeight(measurableItems[measurableItems.length - 1], false)
-      console.debug(`[Legend] TIGHT_FIT ${count}/${totalSorted} items (no +more needed) | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value} | ${logContext()}`)
-      if (count !== measuredItemCount.value) {
-        measuredItemCount.value = count
-      }
-      scheduleOverflowCorrection()
+    if (hiddenWithoutMore <= 2 && countNoMore >= totalSorted) {
+      applyMeasuredResult(totalSorted, computeSnugHeight(measurableItems[measurableItems.length - 1], false), 'TIGHT_FIT')
       return
     }
 
-    measuredSnugHeight.value = computeSnugHeight(measurableItems[domFitCount - 1], true)
-
-    const domInfo = measurableItems.length > totalSorted ? ` dom=${domFitCount}/${measurableItems.length}` : ''
-    console.debug(`[Legend] OVERFLOW ${count}/${totalSorted} | ${sizeMode} ${Math.round(effectiveWidth.value)}×${contentEl.clientHeight}→snug${measuredSnugHeight.value || '?'}${domInfo} | ${logContext()}`)
-    if (count !== measuredItemCount.value) {
-      measuredItemCount.value = count
-    }
-    scheduleOverflowCorrection()
+    applyMeasuredResult(count, computeSnugHeight(measurableItems[domFitCount - 1], true), 'OVERFLOW')
   }
 
   // ── Derived computeds ─────────────────────────────────────────────────
@@ -579,11 +412,12 @@ export function useLegendMeasurement({
     if (measuredItemCount.value === null) {
       return targetLegendHeight.value
     }
+    if (!correctionSettled.value) return targetLegendHeight.value
     return measuredSnugHeight.value || targetLegendHeight.value
   })
 
   const effectiveWidth = computed(() => {
-    return isAutoWidth.value ? autoWidth.value : (currentWidth.value || 200)
+    return isAutoWidth.value ? autoWidth.value : (currentWidth.value || LEGEND_LAYOUT.MIN_WIDTH)
   })
 
   const effectiveHeight = computed(() => {
@@ -591,20 +425,21 @@ export function useLegendMeasurement({
   })
 
   const maxResizeWidth = computed(() => {
-    return Math.min(Math.round(containerBounds.value.width * 0.45), 600)
+    return Math.min(Math.round(containerBounds.value.width * LEGEND_LAYOUT.MAX_RESIZE_WIDTH_RATIO), LEGEND_LAYOUT.MAX_WIDTH)
   })
 
   // ── Cleanup ───────────────────────────────────────────────────────────
 
   function cleanup() {
     if (pendingMeasurementRAF !== null) cancelAnimationFrame(pendingMeasurementRAF)
+    if (pendingFollowUpRAF !== null) cancelAnimationFrame(pendingFollowUpRAF)
     if (containerResizeRemeasureTimeout) clearTimeout(containerResizeRemeasureTimeout)
     cleanupMeasureSpan()
   }
 
   function resetToAutoSize() {
     if (!isAutoWidth.value || !isAutoHeight.value) {
-      console.debug(`[Legend] resetToAutoSize (was ${currentWidth.value}x${currentHeight.value})`)
+      log.legend.debug(`[Legend] resetToAutoSize (was ${currentWidth.value}x${currentHeight.value})`)
       currentWidth.value = null
       currentHeight.value = null
       legendStore.updateSize('auto', 'auto')
@@ -622,7 +457,6 @@ export function useLegendMeasurement({
     maxLegendHeight,
     targetLegendHeight,
     renderUpperBound,
-    measuredGroupSlots,
     effectiveMaxItems,
     autoHeight,
     effectiveWidth,
@@ -630,7 +464,6 @@ export function useLegendMeasurement({
     maxResizeWidth,
 
     // Functions
-    measureTextWidth,
     scheduleMeasurement,
     scheduleContainerResizeMeasurement,
     resetToAutoSize,

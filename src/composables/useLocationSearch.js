@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { log } from '../utils/logger'
 
 export function useLocationSearch(map) {
   const searchQuery = ref('')
@@ -41,7 +42,7 @@ export function useLocationSearch(map) {
         showSearchResults.value = searchResults.value.length > 0
       }
     } catch (error) {
-      console.error('Geocoding error:', error)
+      log.map.error('Geocoding error:', error)
       searchResults.value = []
     } finally {
       isSearching.value = false

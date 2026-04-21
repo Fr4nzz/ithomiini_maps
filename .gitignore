@@ -43,6 +43,20 @@ __pycache__/
 # External repos cloned for manuscript fact-checking
 paper/external_repos/
 
+# SDM pipeline
+sdm/.venv/
+sdm/data/env_variables/
+sdm/data/predictions/
+sdm/data/occurrences/
+sdm/data/host_plants/gbif_*.csv
+sdm/data/figures/
+sdm/.tune_checkpoint.json
+# Aggregate SDM rasters (not used by web app)
+public/data/sdm/species_richness.tif
+public/data/sdm/mean_suitability.tif
+# Note: public/data/sdm/species/*_ensemble.tif ARE tracked — web app fetches
+# them at runtime (useSDMLayer.js); GitHub Pages needs them deployed (~44MB).
+
 # Pipeline intermediate/cache files (persisted via GitHub Actions cache)
 public/data/gbif_occurrences.json
 public/data/gbif_taxonomy_cache.json
@@ -50,3 +64,13 @@ public/data/gbif_taxon_keys.json
 public/data/full_dataset.json
 public/data/sanger_taxonomy.csv
 public/data/map_points.json
+
+# Agent artifacts
+.playwright-cli/
+.playwright-mcp/
+.playwright/
+.sisyphus/
+*.png
+test/*.mjs
+test/screenshots/
+test-results/

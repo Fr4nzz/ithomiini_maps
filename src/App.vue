@@ -1,19 +1,28 @@
 <script setup>
 import { ref, onMounted, provide } from 'vue'
 import { useDataStore } from './stores/data'
+import { useMobileLayout } from './composables/useMobileLayout'
 import Sidebar from './components/Sidebar.vue'
 import MapEngine from './components/MapEngine.vue'
 import DataTable from './components/DataTable.vue'
 import ExportPanel from './components/ExportPanel.vue'
 import MimicrySelector from './components/MimicrySelector.vue'
 import ImageGallery from './components/ImageGallery.vue'
+import CommandPaletteDialog from './components/sidebar/CommandPaletteDialog.vue'
 import { ASPECT_RATIOS } from './utils/constants'
 import { loadImage } from './utils/canvasHelpers'
 import { exportForR } from './utils/rExport'
 import { toPng } from 'html-to-image'
 import { checkAllTiers, extractGoogleDriveFileId } from './utils/imageProxy'
+import { log } from './utils/logger'
 
 const store = useDataStore()
+const mobileLayout = useMobileLayout()
+provide('mobileLayout', mobileLayout)
+const { isMobile } = mobileLayout
+
+const showMobileSidebar = ref(false)
+const commandPaletteRef = ref(null)
 
 // View state
 const currentView = ref('map') // 'map' or 'table'
@@ -45,7 +54,7 @@ const directExportForR = async () => {
   try {
     await exportForR(mapRef.value)
   } catch (e) {
-    console.error('[Export] R export failed:', e)
+    log.export.error('[Export] R export failed:', e)
     alert('Export failed: ' + e.message)
   }
 }
@@ -175,18 +184,21 @@ const directExportMap = async () => {
     // Draw the captured container scaled to output size
     ctx.drawImage(containerImage, 0, 0, canvas.width, canvas.height)
 
-    // Download the image
+    // Download the image via Blob URL (avoids Chrome data-URL size warning and is faster)
     const format = store.exportSettings.format || 'png'
     const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png'
     const quality = format === 'jpg' ? 0.95 : 1.0
-    const dataUrl = canvas.toDataURL(mimeType, quality)
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, mimeType, quality))
+    if (!blob) throw new Error('Failed to encode image')
+    const blobUrl = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.download = `ithomiini_map_${exportWidth}x${exportHeight}_${Date.now()}.${format}`
-    link.href = dataUrl
+    link.href = blobUrl
     link.click()
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000)
 
   } catch (e) {
-    console.error('Image export failed:', e)
+    log.export.error('Image export failed:', e)
     alert('Export failed: ' + e.message)
   } finally {
     // Always restore pixel ratio even if export fails
@@ -205,6 +217,9 @@ const onMapReady = (map) => {
 // Provide modal openers to children
 provide('openMimicrySelector', openMimicrySelector)
 provide('openImageGallery', openImageGallery)
+provide('openExport', openExport)
+provide('directExportMap', directExportMap)
+provide('setView', setView)
 
 onMounted(async () => {
   await store.loadMapData()
@@ -233,6 +248,7 @@ onMounted(async () => {
       @open-gallery="openImageGallery"
       @open-map-export="directExportMap"
       @export-for-r="directExportForR"
+      @open-global-search="commandPaletteRef?.open()"
       :current-view="currentView"
       @set-view="setView"
     />
@@ -349,6 +365,71 @@ onMounted(async () => {
         />
       </Transition>
     </Teleport>
+
+    <!-- Command Palette Dialog (Ctrl+K / Cmd+K) -->
+    <CommandPaletteDialog ref="commandPaletteRef" />
+
+    <!-- Mobile: floating menu button + quick action pills -->
+    <template v-if="isMobile">
+      <button
+        class="mobile-menu-btn"
+        :class="{ 'mobile-menu-btn--open': showMobileSidebar }"
+        @click="showMobileSidebar = !showMobileSidebar"
+      >
+        <svg v-if="!showMobileSidebar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>{{ showMobileSidebar ? 'Close' : 'Menu' }}</span>
+      </button>
+
+      <!-- Mobile sidebar overlay (reuses desktop Sidebar) -->
+      <Transition name="mobile-sidebar">
+        <div v-if="showMobileSidebar" class="mobile-sidebar-overlay" @click.self="showMobileSidebar = false">
+          <aside class="mobile-sidebar-panel">
+            <Sidebar
+              :current-view="currentView"
+              @set-view="(v) => { setView(v); showMobileSidebar = false }"
+              @open-export="() => { openExport(); showMobileSidebar = false }"
+              @open-mimicry="() => { openMimicrySelector(); showMobileSidebar = false }"
+              @open-gallery="() => { openImageGallery(); showMobileSidebar = false }"
+              @open-map-export="() => { directExportMap(); showMobileSidebar = false }"
+              @export-for-r="() => { directExportForR(); showMobileSidebar = false }"
+              @open-global-search="() => { showMobileSidebar = false; commandPaletteRef?.open() }"
+            />
+          </aside>
+        </div>
+      </Transition>
+
+      <!-- Mobile bottom quick actions -->
+      <div class="mobile-quick-bar" :class="{ 'mobile-quick-bar--hidden': showMobileSidebar }">
+        <template v-if="!store.exportSettings.enabled">
+          <button class="mobile-pill" @click="commandPaletteRef?.open()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <span>Search</span>
+          </button>
+          <button class="mobile-pill" @click="openImageGallery">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Gallery</span>
+          </button>
+          <button class="mobile-pill" @click="openMimicrySelector">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 8v8m-4-4h8"/></svg>
+            <span>Mimicry</span>
+          </button>
+          <button class="mobile-pill" @click="store.exportSettings.enabled = true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Export Map</span>
+          </button>
+        </template>
+        <template v-else>
+          <button class="mobile-pill mobile-pill--close" @click="store.exportSettings.enabled = false" aria-label="Close export preview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <button class="mobile-pill mobile-pill--primary" @click="directExportMap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Download</span>
+          </button>
+        </template>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -529,9 +610,190 @@ html, body, #app {
   .app-container {
     flex-direction: column;
   }
-  
-  .view-toggle-bar {
-    display: flex;
+
+  .app-container > aside.sidebar {
+    display: none;
   }
+
+  .view-toggle-bar {
+    display: none;
+  }
+
+  .main-content {
+    height: 100vh;
+  }
+
+  /* Position map top-left controls to the right of the Menu button */
+  .map-layer-controls {
+    left: 112px !important;
+    top: 10px !important;
+    margin-top: 0 !important;
+  }
+
+  /* Search location bar below menu row, constrained width */
+  .location-search {
+    top: 56px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+
+  /* Push scale bar & attribution above the bottom pills */
+  .maplibregl-ctrl-bottom-left,
+  .maplibregl-ctrl-bottom-right {
+    bottom: 56px !important;
+  }
+
+  /* Compact attribution so it doesn't clip */
+  .maplibregl-ctrl-attrib {
+    max-width: calc(100vw - 140px) !important;
+    font-size: 10px !important;
+  }
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(26, 26, 46, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #e0e0e0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mobile-menu-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.mobile-menu-btn:active {
+  transform: scale(0.96);
+}
+
+.mobile-menu-btn--open {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+/* Mobile sidebar overlay */
+.mobile-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.mobile-sidebar-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(85vw, 400px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--color-bg-secondary, #252540);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-sidebar-panel > .sidebar {
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  font-size: 1.05rem;
+}
+
+.mobile-sidebar-enter-active,
+.mobile-sidebar-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.mobile-sidebar-enter-active .mobile-sidebar-panel,
+.mobile-sidebar-leave-active .mobile-sidebar-panel {
+  transition: transform 0.25s ease;
+}
+
+.mobile-sidebar-enter-from,
+.mobile-sidebar-leave-to {
+  opacity: 0;
+}
+
+.mobile-sidebar-enter-from .mobile-sidebar-panel,
+.mobile-sidebar-leave-to .mobile-sidebar-panel {
+  transform: translateX(-100%);
+}
+
+/* Mobile bottom quick action pills */
+.mobile-quick-bar {
+  position: fixed;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  gap: 6px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.mobile-quick-bar--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(12px);
+}
+
+.mobile-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #e0e0e0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s;
+}
+
+.mobile-pill:active {
+  transform: scale(0.96);
+}
+
+.mobile-pill svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.mobile-pill--primary {
+  background: var(--color-accent, #4ade80);
+  color: var(--color-bg-primary, #1a1a2e);
+  border-color: var(--color-accent, #4ade80);
+}
+
+.mobile-pill--close {
+  padding: 8px 10px;
 }
 </style>
