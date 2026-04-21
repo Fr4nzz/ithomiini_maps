@@ -10,8 +10,7 @@ modelled poorly.
 
 Statistics reported below come from the current production run of 151
 species (`public/data/sdm/sdm_metadata.json` at commit `77f3724`) and
-the overnight tuning outputs (`sdm/species_overrides.json` at commit
-`d76c790`).
+the tuning outputs (`sdm/species_overrides.json` at commit `d76c790`).
 
 ---
 
@@ -94,9 +93,12 @@ Specimen Maps pipeline.
 > al., 2021). For each species, the configuration with the highest
 > cross-validated Boyce is saved to a per-species overrides file, which
 > the main pipeline consults on re-run and applies in place of the tier
-> defaults. The tuning step is designed to run unattended overnight,
-> checkpoints after every species so a scheduled shutdown never loses
-> more than one in-flight run, and is documented separately in
+> defaults. Fitting all models across the 151 species takes
+> approximately three hours of compute, which exceeds the time limit
+> per job on GitHub Actions, so the modelling and tuning steps are run
+> locally on a workstation and only the resulting raster and metadata
+> outputs are committed to the repository for the web application to
+> serve. Full methodology is documented separately in
 > `sdm/SDM_METHODS.md`.
 
 ### Edit 1b: extend the Web Interface paragraph
