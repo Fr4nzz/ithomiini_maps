@@ -1,4 +1,4 @@
-# Proposed Edits v3 — Species Distribution Modelling (April 2026)
+# Proposed Edits v3: Species Distribution Modelling (April 2026)
 
 These edits describe the Species Distribution Modelling (SDM) pipeline
 that has been added since v2. The SDM work directly addresses Joana's
@@ -15,7 +15,7 @@ the overnight tuning outputs (`sdm/species_overrides.json` at commit
 
 ---
 
-## 1. Methods — add a new subsection inside 2.5 "Specimen Maps"
+## 1. Methods: add a new subsection inside 2.5 "Specimen Maps"
 
 Place this new bolded subsection **after "Taxonomic Curation" and
 before "Web Interface"** in Section 2.5, so it reads as part of the
@@ -38,12 +38,38 @@ Specimen Maps pipeline.
 > resolution across the Neotropics. For each species, occurrence records
 > from all five data sources are pooled, deduplicated, and spatially
 > thinned to a minimum distance of 5 km (Aiello-Lammens et al., 2015)
-> to reduce sampling bias. The background from which the model learns
-> which environmental conditions are unsuitable is drawn within the
-> species' accessible area, defined as a buffered convex hull around its
-> records (Barve et al., 2011), and weighted by the density of
-> target-group Ithomiini occurrences to further compensate for uneven
-> sampling effort (Phillips et al., 2009).
+> to reduce sampling bias.
+>
+> Because our data are presence-only, the model cannot contrast
+> presences against confirmed absences. Instead, it contrasts the
+> environments at presence locations against the environments in a
+> reference sample of points drawn from the region the species could
+> plausibly reach, known as its accessible area (Barve et al., 2011).
+> We approximate this area as a buffered convex hull around each
+> species' records. These reference points, commonly called background
+> points, should not be interpreted as absences: the species may in
+> fact occur at a background location that has simply never been
+> sampled. Rather, they describe the range of environmental conditions
+> available within reach of the species, and the model asks whether
+> the environments at presence locations occupy a narrower or
+> distinctive subset of that broader range.
+>
+> An uneven sampling effort complicates this comparison. If researchers
+> have concentrated their collecting near field stations and roads,
+> the presence points will cluster in those areas. A uniformly drawn
+> background would then include many remote unsampled pixels that look
+> environmentally different from the presences not because the species
+> avoids them but because no one has been there to check. To correct
+> for this, we weight background sampling by the density of all
+> Ithomiini records combined, not only those of the focal species,
+> following the target-group approach of Phillips et al. (2009). Areas
+> where many Ithomiini species have been recorded are therefore more
+> represented in the background, and areas never visited by collectors
+> are underrepresented in the background in the same way they are
+> underrepresented among the presences. Presence and background now
+> share the same spatial footprint of sampling effort, and the
+> remaining contrast the model learns reflects environmental preference
+> rather than where researchers have tended to work.
 >
 > The algorithm used depends on sample size, following
 > recommendations from Wisz et al. (2008). Species with 20–49 records
@@ -98,7 +124,7 @@ Add a Species Distribution Modelling entry to reflect the new tile:
 
 ---
 
-## 2. Results — add a new subsection 3.6
+## 2. Results: add a new subsection 3.6
 
 Add this subsection **after Section 3.5 "Research Applications"** and
 before Section 4. Numbering can be adjusted if Section 3.5 stays as the
@@ -150,7 +176,7 @@ existing 3.5 can retain its closing-section feel.
 
 ---
 
-## 3. Discussion — update 4.1 and 4.4
+## 3. Discussion: update 4.1 and 4.4
 
 ### Edit 3a: Update Section 4.1 "Comparison with Existing Tools"
 
@@ -232,7 +258,7 @@ Lepidoptera…"
 
 ---
 
-## 4. Conclusions — mention SDM in Section 5
+## 4. Conclusions: mention SDM in Section 5
 
 ### Edit 4a: Extend the Ithomiini Maps sentence in Section 5
 
@@ -256,7 +282,7 @@ Lepidoptera…"
 
 ---
 
-## 5. Abstract — one-line addition
+## 5. Abstract: one-line addition
 
 ### Edit 5a: Mention SDM in the Abstract
 
@@ -372,20 +398,20 @@ and should not be duplicated.
 ## Summary of Priority
 
 1. **New "Species Distribution Modelling" subsection inside 2.5**
-   (Edit 1a) — biggest substantive addition; describes the full
+   (Edit 1a): biggest substantive addition; describes the full
    pipeline and answers reviewers who want to know the modelling
    choices. If we prefer a full top-level section rather than a
    bolded subsection, it can be promoted to 2.6 without changing the
    text.
-2. **New Results subsection 3.6** (Edit 2a) — reports outcomes with
+2. **New Results subsection 3.6** (Edit 2a): reports outcomes with
    numbers, including the tuning improvements.
-3. **Discussion updates** (Edits 3a–3c) — rewrite 4.4 SDM paragraph
+3. **Discussion updates** (Edits 3a to 3c): rewrite 4.4 SDM paragraph
    from future-tense to implemented, add limitations, remove the
    redundant replicability paragraph flagged by Joana (id="13").
-4. **Web Interface + Conclusions + Abstract** (Edits 1b, 4a, 5a) —
+4. **Web Interface + Conclusions + Abstract** (Edits 1b, 4a, 5a):
    short additions so the SDM feature is mentioned everywhere it
    logically belongs.
-5. **Reference additions** (Edit 6a) — needed by Methods and Results
+5. **Reference additions** (Edit 6a): needed by Methods and Results
    edits, ~14 new entries.
 
 All SDM statistics quoted above come from the production run committed
