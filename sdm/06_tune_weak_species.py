@@ -342,14 +342,27 @@ def main():
         action="store_true",
         help="Use a tiny 2x2 grid (4 cells) for smoke testing only",
     )
+    parser.add_argument(
+        "--reduced",
+        action="store_true",
+        help="Use a 4x3 reduced grid (12 cells) for whole-dataset uniform tuning, "
+        "as in Moreno-Arzate & Martinez-Meyer 2024 and Yang et al. 2024",
+    )
     args = parser.parse_args()
 
-    rm_grid = [1.5, 2.5] if args.quick else DEFAULT_RM_GRID
-    fc_grid = (
-        [["linear", "quadratic"], ["linear", "quadratic", "hinge"]]
-        if args.quick
-        else DEFAULT_FC_GRID
-    )
+    if args.quick:
+        rm_grid = [1.5, 2.5]
+        fc_grid = [["linear", "quadratic"], ["linear", "quadratic", "hinge"]]
+    elif args.reduced:
+        rm_grid = [1.0, 2.0, 3.0, 4.0]
+        fc_grid = [
+            ["linear", "quadratic"],
+            ["linear", "quadratic", "hinge"],
+            ["linear", "quadratic", "hinge", "product"],
+        ]
+    else:
+        rm_grid = DEFAULT_RM_GRID
+        fc_grid = DEFAULT_FC_GRID
 
     signal.signal(signal.SIGTERM, _handle_signal)
     signal.signal(signal.SIGINT, _handle_signal)
@@ -358,7 +371,11 @@ def main():
     print("STEP 6: PER-SPECIES MAXENT TUNING (ENMeval-style grid search)")
     print("=" * 70)
     print("Selection: CV Boyce (primary)  |  feature-class simplicity (tiebreak)")
-    grid_label = "QUICK (smoke test)" if args.quick else "full ENMeval"
+    grid_label = (
+        "QUICK (smoke test)" if args.quick
+        else "REDUCED (4x3, uniform sweep)" if args.reduced
+        else "full ENMeval (8x4)"
+    )
     print(
         f"Grid: {len(rm_grid)} RM × {len(fc_grid)} feature-class "
         f"= {len(rm_grid) * len(fc_grid)} cells per species  [{grid_label}]"
@@ -472,7 +489,7 @@ def main():
             "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "grid_rm": rm_grid,
             "grid_features": fc_grid,
-            "quick_grid": args.quick,
+            "grid_size": "quick" if args.quick else "reduced" if args.reduced else "full",
             "selection_criterion": "cv_boyce_with_simplicity_tiebreak",
             "boyce_tie_epsilon": BOYCE_TIE_EPSILON,
             "references": [
