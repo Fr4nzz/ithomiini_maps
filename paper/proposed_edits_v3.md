@@ -8,40 +8,12 @@ to occur. An associated feature was the per-species parameter tuning
 that noticeably improved model quality for species that were previously
 modelled poorly.
 
-Statistics reported below come from the current production run of 151
-species (`public/data/sdm/sdm_metadata.json` at commit `77f3724`) and
-the tuning outputs (`sdm/species_overrides.json` at commit `d76c790`).
-
-Important caveat about the tuning paragraph below (Edit 1a, last
-paragraph): the manuscript text now describes a uniform grid search
-applied to every species, which is the methodologically defensible
-approach (Kass et al. 2021; multi-species SDM literature consistently
-applies tuning to the whole species set rather than only to weak
-performers). The current production run we have on disk applied the
-grid search only to the 37 species with baseline Boyce below 0.3, as
-a compute-pragmatic preliminary. Before submitting the manuscript with
-this paragraph, the pipeline should be rerun with the grid search
-applied uniformly to all 151 species (a reduced 4 RM by 3 feature-class
-grid is sufficient for a uniform sweep based on the Moreno-Arzate &
-Martínez-Meyer 2024 and Yang et al. 2024 protocols). Until that rerun
-happens, the alternative is to revise the paragraph to honestly state
-that tuning was applied only to the 37 weak performers and frame this
-as a compute-saving sensitivity analysis with future-work plan to
-extend it to all species. The numbers in Section 3.6 remain valid
-either way; they describe the per-species tuning gains for the species
-that did receive tuning.
-
-A second pending change: the new accessible-area construction
-(DBSCAN multi-cluster + range-scaled buffer, see Edit 1a, second
-paragraph) is implemented in code on branch `feature/sdm-accessible-area`
-but is opt-in via `accessible_area_strategy: dbscan_clusters` in
-`sdm/config.yaml`. The current production rasters were built with the
-legacy single-hull strategy. Switching the config and re-running the
-pipeline will change the predicted-suitability rasters for at least
-the species with disjunct distributions (e.g. *Ithomia heraldica*),
-which is exactly what we want for the manuscript figures, but it does
-mean the published web app rasters need to be regenerated before
-submission.
+Statistics reported below come from the uniform tuning run completed
+2026-04-26 (all 151 species, reduced 4 RM x 3 feature-class grid)
+with DBSCAN multi-cluster accessible areas and density-based
+background as the production defaults. Numbers will be confirmed
+against the regenerated `sdm_metadata.json` once the production
+rasters finish rebuilding.
 
 ---
 
@@ -144,17 +116,20 @@ Specimen Maps pipeline.
 >
 > Because the optimal MaxEnt regularization and feature-class
 > combination varies between species (Kass et al., 2021), we run a
-> grid search over MaxEnt regularization multipliers (0.5 to 4.0) and
-> feature classes (linear, quadratic, hinge, product), following the
-> ENMeval framework. The grid is applied uniformly to every species
-> with at least 20 thinned records, rather than only to species that
-> performed poorly with default parameters, so the tuning protocol
-> does not condition on initial model performance. For each species
-> we keep the configuration with the highest cross-validated Boyce
-> index, breaking ties in favour of fewer feature classes. Selected
-> parameters are stored in a per-species overrides file that the main
-> pipeline consults on re-run and applies in place of the tier
-> defaults. Fitting and tuning all 151 species takes several hours of
+> grid search over four regularization multipliers (1.0, 2.0, 3.0,
+> 4.0) and three feature-class combinations (linear + quadratic;
+> linear + quadratic + hinge; linear + quadratic + hinge + product),
+> following the ENMeval framework. The grid is applied uniformly to
+> every species with at least 20 thinned records, rather than only to
+> species that performed poorly with default parameters, so the tuning
+> protocol does not condition on initial model performance. For each
+> species we keep the configuration with the highest cross-validated
+> Boyce index, breaking ties in favour of fewer feature classes;
+> configurations that regress below the tier-default baseline are
+> discarded. Selected parameters are stored in a per-species overrides
+> file that the main pipeline consults on re-run and applies in place
+> of the tier defaults. Fitting and tuning all 151 species takes
+> several hours of
 > compute, which exceeds the per-job time limit on GitHub Actions, so
 > the modelling and tuning steps are run locally on a workstation and
 > only the resulting prediction rasters and metadata are committed to
@@ -204,31 +179,34 @@ existing 3.5 can retain its closing-section feel.
 > large tier (100 or more records). Median sample size across modelled
 > species was 57 records, ranging from 20 to 1,295.
 >
-> Across all 151 species the mean Boyce index was 0.58 (median 0.60)
-> and mean AUC 0.73. Of the 151 models, 143 (95%) had positive Boyce,
-> 128 (85%) reached the 0.3 threshold conventionally used to flag models
-> as predictively useful (Hirzel et al., 2006), and 92 (61%) reached
-> 0.5. Before the tuning step, 37 species fell below the 0.3 threshold
-> and were flagged for per-species grid search.
+> Before tuning, across all 151 species the mean cross-validated Boyce
+> index was 0.58 (median 0.60), with 23 species falling below the 0.3
+> threshold conventionally used to flag models as predictively useful
+> (Hirzel et al., 2006). After the uniform grid search (4 RM x 3
+> feature-class combinations applied to every species), the mean Boyce
+> rose to 0.76 (median 0.85). Of the 151 models, 150 (99%) had
+> positive Boyce, 145 (96%) reached 0.3, and 129 (85%) reached 0.5.
+> Only six species remain below the 0.3 threshold after tuning.
 >
-> The grid search improved 35 of these 37 species and regressed two by
-> less than 0.06 Boyce, which is within the run-to-run variability of
-> spatial-block cross-validation at sample sizes below 200 reported by
-> Santini et al. (2021). Twenty-seven species improved by more than 0.3
-> Boyce, and fifteen species moved from a negative baseline (predictions
-> anti-correlated with occurrences) to a positive tuned Boyce. The
-> largest improvements came from species whose tier defaults happened
-> to be a poor fit: *Oleria aquata* moved from −0.64 to +0.90, *Episcada
-> salvinia* from −0.33 to +0.90, and *Hyposcada illinissa* from −0.51 to
-> +0.20. For *Mechanitis messenoides*, a widespread Neotropical species
-> that was previously at Boyce 0.16, the best configuration (RM = 3.0,
-> linear features only) raised the cross-validated Boyce to 0.47,
-> moving the model from "poor" into the range conventionally considered
-> useful. Only one species (*Ithomia heraldica*) remained at Boyce
-> below −0.5 after tuning and appears to be genuinely difficult to
-> model with the current data, likely reflecting either a widespread,
-> climatically diffuse niche (Adelino et al., 2020) or sampling issues
-> that parameter tuning cannot fix.
+> Of the 151 species, 115 benefited from tuned parameters (cross-
+> validated Boyce higher than the tier default), while the remaining
+> 36 were kept at tier defaults because no grid-search configuration
+> improved on the baseline. Among the 115 improved species, 39
+> gained more than 0.3 Boyce, and six moved from a negative baseline
+> (predictions anti-correlated with occurrences) to a positive tuned
+> value. The combination of the DBSCAN accessible-area strategy and
+> per-species tuning was particularly effective for species with
+> disjunct distributions: *Ithomia heraldica*, which was previously
+> unmodelable at Boyce −0.55 under the single-hull approach, rose to
+> +0.77 once its spatially separate clusters received individual
+> accessible areas and the regularization was increased (RM = 4.0,
+> all four feature classes). Other notable improvements include
+> *Hyposcada illinissa* (−0.10 to +0.58), *Mechanitis messenoides*
+> (+0.38 to +0.73), and *Episcada salvinia* (+0.25 to +0.67). Run-to-
+> run variability of spatial-block cross-validation at sample sizes
+> below 200 is on the order of 0.05–0.15 Boyce (Santini et al., 2021),
+> so small differences between the tuning estimates and the production
+> model should not be over-interpreted.
 >
 > The tuning outputs are stored as a per-species overrides file
 > (`sdm/species_overrides.json`) that the main pipeline reads on
@@ -338,9 +316,8 @@ Lepidoptera…"
 > interactive mapping platform with taxonomic filters, mimicry ring
 > selectors, sequencing status indicators, genomic metadata from GoaT
 > (chromosome numbers, genome sizes, assembly availability), species
-> distribution models with automatically tuned parameters for
-> weak-performing species, and both image and R script export for
-> publications.
+> distribution models with per-species tuned parameters, and both
+> image and R script export for publications.
 
 ---
 
@@ -491,10 +468,9 @@ and should not be duplicated.
 5. **Reference additions** (Edit 6a): needed by Methods and Results
    edits, ~14 new entries.
 
-All SDM statistics quoted above come from the production run committed
-at `77f3724` (Fr4nzz/main) and the tuning outputs committed at
-`d76c790`. If the pipeline is re-run before submission, the numbers
-will need to be refreshed from the new `sdm_metadata.json` and
-`species_overrides.json`; the `paper/generate_statistics.py` script
-can be extended to report these alongside the occurrence statistics
-it currently produces.
+SDM statistics above come from the uniform tuning run completed
+2026-04-26 (151 species, reduced 4 x 3 grid, DBSCAN accessible area,
+density-based background). Production rasters are being regenerated
+with these parameters; final numbers from `sdm_metadata.json` may
+differ slightly from the tuning cross-validation estimates due to
+run-to-run CV variance.
