@@ -9,7 +9,7 @@ that noticeably improved model quality for species that were previously
 modelled poorly.
 
 Statistics reported below come from the uniform tuning run completed
-2026-04-26 (all 151 species, reduced 4 RM x 3 feature-class grid)
+2026-04-26 (all 151 species, reduced 5 RM x 3 feature-class grid)
 with DBSCAN multi-cluster accessible areas and density-based
 background as the production defaults. Numbers will be confirmed
 against the regenerated `sdm_metadata.json` once the production
@@ -40,7 +40,18 @@ Specimen Maps pipeline.
 > resolution across the Neotropics. For each species, occurrence records
 > from all five data sources are pooled, deduplicated, and spatially
 > thinned to a minimum distance of 5 km (Aiello-Lammens et al., 2015)
-> to reduce sampling bias.
+> to reduce sampling bias. Before thinning, records are screened with
+> a coordinate-quality filter that removes three categories of
+> unreliable localities: (i) records whose GBIF-reported coordinate
+> uncertainty exceeds 100 km, which typically correspond to country or
+> region centroids rather than field-collected specimens; (ii) records
+> north of 35° N, well above the northernmost extent of the tribe's
+> natural range (~25° N in eastern Mexico); and (iii) records whose
+> locality string contains keywords indicating the coordinates refer
+> to a museum, zoo, or aquarium rather than a field collection site.
+> Together these filters remove approximately 1.4% of raw records and
+> ensure the models are not distorted by specimens geocoded to their
+> holding institution rather than their original collection locality.
 >
 > Because our data are presence-only, the model cannot contrast
 > presences against confirmed absences. Instead, it contrasts the
@@ -116,8 +127,8 @@ Specimen Maps pipeline.
 >
 > Because the optimal MaxEnt regularization and feature-class
 > combination varies between species (Kass et al., 2021), we run a
-> grid search over four regularization multipliers (1.0, 2.0, 3.0,
-> 4.0) and three feature-class combinations (linear + quadratic;
+> grid search over five regularization multipliers (1.0, 1.5, 2.0,
+> 3.0, 4.0) and three feature-class combinations (linear + quadratic;
 > linear + quadratic + hinge; linear + quadratic + hinge + product),
 > following the ENMeval framework. The grid is applied uniformly to
 > every species with at least 20 thinned records, rather than only to
@@ -182,7 +193,7 @@ existing 3.5 can retain its closing-section feel.
 > Before tuning, across all 151 species the mean cross-validated Boyce
 > index was 0.58 (median 0.60), with 23 species falling below the 0.3
 > threshold conventionally used to flag models as predictively useful
-> (Hirzel et al., 2006). After the uniform grid search (4 RM x 3
+> (Hirzel et al., 2006). After the uniform grid search (5 RM x 3
 > feature-class combinations applied to every species), the mean Boyce
 > rose to 0.76 (median 0.85). Of the 151 models, 150 (99%) had
 > positive Boyce, 145 (96%) reached 0.3, and 129 (85%) reached 0.5.
@@ -469,7 +480,7 @@ and should not be duplicated.
    edits, ~14 new entries.
 
 SDM statistics above come from the uniform tuning run completed
-2026-04-26 (151 species, reduced 4 x 3 grid, DBSCAN accessible area,
+2026-04-26 (151 species, reduced 5 x 3 grid, DBSCAN accessible area,
 density-based background). Production rasters are being regenerated
 with these parameters; final numbers from `sdm_metadata.json` may
 differ slightly from the tuning cross-validation estimates due to
