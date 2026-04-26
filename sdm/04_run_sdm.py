@@ -32,6 +32,14 @@ import warnings
 import sys
 import argparse
 
+from sklearn.cluster import DBSCAN
+from shapely.geometry import (
+    Polygon as ShapelyPolygon,
+    Point as ShapelyPoint,
+    LineString,
+)
+from shapely.ops import unary_union
+
 from utils.spatial import (
     create_bias_raster,
     generate_background_points,
@@ -179,9 +187,11 @@ def load_all_occurrences():
 
 def compute_accessible_area(pres_coords, buffer_deg=3.0):
     """
-    Buffered convex hull of occurrences, clipped to study area.
-    Uses convex hull + buffer instead of fixed bounding box.
-    For species with < 5 unique points, falls back to buffered centroid.
+    Legacy single-hull accessible area (Barve et al. 2011).
+
+    Buffered convex hull of occurrences, clipped to study area. Falls back to
+    a buffered centroid for fewer than 3 unique points. Kept for backward
+    compatibility; prefer compute_accessible_area_v2 with config-driven options.
     """
     unique = np.unique(pres_coords, axis=0)
     study = config["study_area"]
@@ -206,6 +216,218 @@ def compute_accessible_area(pres_coords, buffer_deg=3.0):
         "east": min(hull_pts[:, 0].max() + buffer_deg, study["east"]),
         "south": max(hull_pts[:, 1].min() - buffer_deg, study["south"]),
         "north": min(hull_pts[:, 1].max() + buffer_deg, study["north"]),
+    }
+
+
+# ── Multi-cluster accessible area (DBSCAN + per-cluster buffered hulls) ──────
+
+
+def _km_to_deg(km):
+    """Approximate degrees-per-km at mid-latitudes; 1 deg lat ≈ 111 km."""
+    return km / 111.0
+
+
+def _polygon_area_km2(poly):
+    """Approximate polygon area in km^2 from degree-units geometry.
+
+    Uses a per-polygon mid-latitude correction: km_per_deg_lon shrinks with
+    cos(latitude). Accurate enough for accessible-area sizing decisions; not
+    suitable as a publication-quality area metric.
+    """
+    if poly is None or poly.is_empty:
+        return 0.0
+    cy = poly.centroid.y
+    km_per_deg_lat = 111.0
+    km_per_deg_lon = 111.0 * np.cos(np.radians(cy))
+    return float(poly.area * km_per_deg_lat * km_per_deg_lon)
+
+
+def _buffer_for_cluster(cluster_pts, opts):
+    """Return buffer distance in degrees for a single cluster of points."""
+    strategy = opts.get("buffer_strategy", "fixed")
+    if strategy == "fixed":
+        return _km_to_deg(opts.get("buffer_fixed_km", 555.0))
+
+    coords = np.asarray(cluster_pts)
+    if len(coords) >= 3:
+        try:
+            hull = ConvexHull(coords)
+            hull_pts = coords[hull.vertices]
+        except Exception:
+            hull_pts = coords
+    else:
+        hull_pts = coords
+    if len(hull_pts) < 2:
+        return _km_to_deg(opts.get("buffer_min_km", 50.0))
+
+    diffs = hull_pts[:, None, :] - hull_pts[None, :, :]
+    diam_deg = float(np.max(np.linalg.norm(diffs, axis=2)))
+    diam_km = diam_deg * 111.0
+    chosen_km = max(
+        opts.get("buffer_min_km", 50.0),
+        min(opts.get("buffer_max_km", 500.0), opts.get("buffer_fraction", 0.25) * diam_km),
+    )
+    return _km_to_deg(chosen_km)
+
+
+def _hull_polygon(cluster_pts, buffer_deg):
+    """Build a buffered hull polygon for a cluster, with sensible fallbacks."""
+    pts = np.asarray(cluster_pts)
+    if len(pts) >= 3:
+        try:
+            hull = ConvexHull(pts)
+            return ShapelyPolygon(pts[hull.vertices]).buffer(buffer_deg)
+        except Exception:
+            pass
+    if len(pts) == 2:
+        return LineString(pts).buffer(buffer_deg)
+    return ShapelyPoint(pts[0]).buffer(buffer_deg)
+
+
+def compute_accessible_area_v2(pres_coords, opts):
+    """
+    Compute the accessible area (Barve et al. 2011) under a configurable strategy.
+
+    Two strategies are supported, controlled by opts["strategy"]:
+
+    "single_hull" (default, legacy behaviour)
+        One convex hull around all unique presence points, expanded by a
+        buffer that may be fixed or scaled to the hull diameter.
+
+    "dbscan_clusters" (new, recommended for spatially disjunct distributions)
+        Cluster presences with DBSCAN. Build a buffered hull per cluster.
+        Noise points (DBSCAN label -1) are kept as buffered points so that
+        outliers are not dropped silently. The accessible area is the
+        unary union of these buffered hulls.
+
+    Returns
+    -------
+    extent : dict
+        Bounding box of the accessible area, clipped to the study area,
+        with keys "west", "east", "south", "north". This is consumed by
+        downstream functions that expect a rectangular extent (prediction
+        grid, fallback random background sampling).
+    accessible : shapely geometry or None
+        The accessible-area polygon (Polygon or MultiPolygon) for
+        polygon-masked background sampling. None for "single_hull" strategy
+        to preserve legacy behaviour.
+    """
+    unique = np.unique(pres_coords, axis=0)
+    study = config["study_area"]
+    strategy = opts.get("strategy", "single_hull")
+
+    if strategy == "single_hull":
+        if opts.get("buffer_strategy", "fixed") == "fixed":
+            buf_deg = _km_to_deg(opts.get("buffer_fixed_km", 555.0))
+        else:
+            buf_deg = _buffer_for_cluster(unique, opts)
+        if len(unique) < 3:
+            cx, cy = unique.mean(axis=0)
+            extent = {
+                "west": max(cx - buf_deg, study["west"]),
+                "east": min(cx + buf_deg, study["east"]),
+                "south": max(cy - buf_deg, study["south"]),
+                "north": min(cy + buf_deg, study["north"]),
+            }
+            return extent, None
+        try:
+            hull = ConvexHull(unique)
+            hull_pts = unique[hull.vertices]
+        except Exception:
+            hull_pts = unique
+        extent = {
+            "west": max(hull_pts[:, 0].min() - buf_deg, study["west"]),
+            "east": min(hull_pts[:, 0].max() + buf_deg, study["east"]),
+            "south": max(hull_pts[:, 1].min() - buf_deg, study["south"]),
+            "north": min(hull_pts[:, 1].max() + buf_deg, study["north"]),
+        }
+        return extent, None
+
+    eps_deg = _km_to_deg(opts.get("dbscan_eps_km", 500.0))
+    min_samples = max(1, int(opts.get("dbscan_min_samples", 3)))
+    if len(unique) >= min_samples:
+        labels = DBSCAN(eps=eps_deg, min_samples=min_samples).fit_predict(unique)
+    else:
+        labels = np.full(len(unique), -1, dtype=int)
+
+    polygons = []
+    for label in sorted(set(labels)):
+        if label == -1:
+            for pt in unique[labels == -1]:
+                polygons.append(ShapelyPoint(pt).buffer(_buffer_for_cluster([pt], opts)))
+        else:
+            cluster_pts = unique[labels == label]
+            polygons.append(_hull_polygon(cluster_pts, _buffer_for_cluster(cluster_pts, opts)))
+
+    if not polygons:
+        return compute_accessible_area_v2(pres_coords, {**opts, "strategy": "single_hull"})
+
+    accessible = unary_union(polygons)
+    minx, miny, maxx, maxy = accessible.bounds
+    extent = {
+        "west": max(minx, study["west"]),
+        "east": min(maxx, study["east"]),
+        "south": max(miny, study["south"]),
+        "north": min(maxy, study["north"]),
+    }
+    return extent, accessible
+
+
+def compute_n_background(accessible_polygon, extent, opts):
+    """
+    Choose number of background points using a configurable strategy.
+
+    "fixed" (legacy default): returns opts["fixed_n"] regardless of area.
+
+    "density_based": scales with accessible-area size, clipped to a floor and
+    ceiling. Area is computed from the polygon when available, else from the
+    bounding box, with a per-centroid mid-latitude correction. The default
+    density 0.0005 pt/km^2 corresponds roughly to the legacy 10,000 points
+    across a Neotropics-scale extent.
+    """
+    if opts.get("strategy", "fixed") == "fixed":
+        return int(opts.get("fixed_n", 10000))
+
+    if accessible_polygon is not None:
+        area_km2 = _polygon_area_km2(accessible_polygon)
+    else:
+        cy = (extent["north"] + extent["south"]) / 2
+        km_per_deg_lon = 111.0 * np.cos(np.radians(cy))
+        area_deg2 = (extent["east"] - extent["west"]) * (extent["north"] - extent["south"])
+        area_km2 = float(area_deg2 * 111.0 * km_per_deg_lon)
+
+    density = float(opts.get("density_per_km2", 0.0005))
+    floor = int(opts.get("floor", 2000))
+    ceiling = int(opts.get("ceiling", 15000))
+    n = int(area_km2 * density)
+    return max(floor, min(ceiling, n))
+
+
+def _accessible_opts():
+    """Read accessible-area options from config with backward-compatible defaults."""
+    m = config.get("modelling", {})
+    legacy_buffer_deg = m.get("accessible_area_buffer", 3.0)
+    return {
+        "strategy": m.get("accessible_area_strategy", "single_hull"),
+        "dbscan_eps_km": m.get("dbscan_eps_km", 500.0),
+        "dbscan_min_samples": m.get("dbscan_min_samples", 3),
+        "buffer_strategy": m.get("buffer_strategy", "fixed"),
+        "buffer_fixed_km": m.get("buffer_fixed_km", legacy_buffer_deg * 111.0),
+        "buffer_fraction": m.get("buffer_fraction_of_diameter", 0.25),
+        "buffer_min_km": m.get("buffer_min_km", 50.0),
+        "buffer_max_km": m.get("buffer_max_km", 500.0),
+    }
+
+
+def _background_opts():
+    """Read background-count options from config with backward-compatible defaults."""
+    m = config.get("modelling", {})
+    return {
+        "strategy": m.get("n_background_strategy", "fixed"),
+        "fixed_n": m.get("n_background", 10000),
+        "density_per_km2": m.get("background_density_per_km2", 0.0005),
+        "floor": m.get("background_floor", 2000),
+        "ceiling": m.get("background_ceiling", 15000),
     }
 
 
@@ -235,12 +457,11 @@ def prepare_training_data(
     modelling = config["modelling"]
     pres_coords = np.array([(g.x, g.y) for g in species_gdf.geometry])
 
-    accessible = compute_accessible_area(
-        pres_coords,
-        buffer_deg=modelling.get("accessible_area_buffer", 3.0),
+    accessible, accessible_polygon = compute_accessible_area_v2(
+        pres_coords, _accessible_opts()
     )
 
-    n_bg = modelling["n_background"]
+    n_bg = compute_n_background(accessible_polygon, accessible, _background_opts())
     if (
         "gbm" not in tier_config["algorithms"]
         and "random_forest" not in tier_config["algorithms"]
@@ -250,6 +471,7 @@ def prepare_training_data(
     bg_gdf = generate_background_points(
         n_points=n_bg,
         extent=accessible,
+        accessible_polygon=accessible_polygon,
         occurrence_coords=pres_coords,
         target_group_coords=all_coords,
         bias_weights=bias_weights,
@@ -671,10 +893,7 @@ def generate_predictions(
     # Predict within accessible area only (Barve et al. 2011)
     pres_mask = data["presence"] == 1
     pres_coords = data.loc[pres_mask, ["lon", "lat"]].values
-    accessible = compute_accessible_area(
-        pres_coords,
-        buffer_deg=config["modelling"].get("accessible_area_buffer", 3.0),
-    )
+    accessible, _ = compute_accessible_area_v2(pres_coords, _accessible_opts())
     print(f"    Prediction grid: accessible area ({resolution}°)...")
     grid_gdf, grid_shape, transform, lons, lats = create_prediction_grid(
         accessible, resolution

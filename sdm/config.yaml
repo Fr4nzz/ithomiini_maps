@@ -55,6 +55,33 @@ modelling:
   background_strategy: "target_group"
   accessible_area_buffer: 5.0
 
+  # Accessible-area construction (Barve et al. 2011).
+  # "single_hull"     = legacy: one buffered convex hull around all records.
+  # "dbscan_clusters" = cluster spatially disjunct populations with DBSCAN,
+  #                     buffer each cluster's hull, union the result.
+  accessible_area_strategy: "single_hull"
+  dbscan_eps_km: 500              # DBSCAN distance threshold in km
+  dbscan_min_samples: 3           # min points to form a cluster
+
+  # Buffer width per cluster.
+  # "fixed"        = constant buffer_fixed_km (or accessible_area_buffer above).
+  # "range_scaled" = buffer_fraction_of_diameter * cluster_diameter_km,
+  #                  clipped to [buffer_min_km, buffer_max_km].
+  buffer_strategy: "fixed"
+  buffer_fixed_km: 555            # ~ 5 deg, equivalent to legacy buffer
+  buffer_fraction_of_diameter: 0.25
+  buffer_min_km: 50
+  buffer_max_km: 500
+
+  # Background sample size.
+  # "fixed"         = always n_background, regardless of accessible-area size.
+  # "density_based" = density_per_km2 * accessible_area_km2,
+  #                   clipped to [background_floor, background_ceiling].
+  n_background_strategy: "fixed"
+  background_density_per_km2: 0.0005    # ≈ 10000 pts across Neotropics
+  background_floor: 2000
+  background_ceiling: 15000
+
   # Bias correction
   use_bias_raster: true  # Weight background by KDE of all Ithomiini records
   bias_bandwidth: 1.0    # KDE bandwidth in degrees (~111km)
