@@ -12,6 +12,37 @@ Statistics reported below come from the current production run of 151
 species (`public/data/sdm/sdm_metadata.json` at commit `77f3724`) and
 the tuning outputs (`sdm/species_overrides.json` at commit `d76c790`).
 
+Important caveat about the tuning paragraph below (Edit 1a, last
+paragraph): the manuscript text now describes a uniform grid search
+applied to every species, which is the methodologically defensible
+approach (Kass et al. 2021; multi-species SDM literature consistently
+applies tuning to the whole species set rather than only to weak
+performers). The current production run we have on disk applied the
+grid search only to the 37 species with baseline Boyce below 0.3, as
+a compute-pragmatic preliminary. Before submitting the manuscript with
+this paragraph, the pipeline should be rerun with the grid search
+applied uniformly to all 151 species (a reduced 4 RM by 3 feature-class
+grid is sufficient for a uniform sweep based on the Moreno-Arzate &
+Martínez-Meyer 2024 and Yang et al. 2024 protocols). Until that rerun
+happens, the alternative is to revise the paragraph to honestly state
+that tuning was applied only to the 37 weak performers and frame this
+as a compute-saving sensitivity analysis with future-work plan to
+extend it to all species. The numbers in Section 3.6 remain valid
+either way; they describe the per-species tuning gains for the species
+that did receive tuning.
+
+A second pending change: the new accessible-area construction
+(DBSCAN multi-cluster + range-scaled buffer, see Edit 1a, second
+paragraph) is implemented in code on branch `feature/sdm-accessible-area`
+but is opt-in via `accessible_area_strategy: dbscan_clusters` in
+`sdm/config.yaml`. The current production rasters were built with the
+legacy single-hull strategy. Switching the config and re-running the
+pipeline will change the predicted-suitability rasters for at least
+the species with disjunct distributions (e.g. *Ithomia heraldica*),
+which is exactly what we want for the manuscript figures, but it does
+mean the published web app rasters need to be regenerated before
+submission.
+
 ---
 
 ## 1. Methods: add a new subsection inside 2.5 "Specimen Maps"
@@ -45,13 +76,27 @@ Specimen Maps pipeline.
 > reference sample of points drawn from the region the species could
 > plausibly reach, known as its accessible area (Barve et al., 2011).
 > We approximate this area as a buffered convex hull around each
-> species' records. These reference points, commonly called background
-> points, should not be interpreted as absences: the species may in
-> fact occur at a background location that has simply never been
-> sampled. Rather, they describe the range of environmental conditions
-> available within reach of the species, and the model asks whether
-> the environments at presence locations occupy a narrower or
-> distinctive subset of that broader range.
+> species' records, and we adapt the construction to two situations
+> that the basic single-hull approach handles poorly. First, when a
+> species' records form spatially disjunct clusters separated by
+> regions with no records, a single hull spans the gap and would
+> include large stretches of intervening habitat the species likely
+> cannot reach. We detect such cases by clustering the records with
+> DBSCAN (Ester et al., 1996) at a 500 km neighbourhood distance and,
+> when more than one cluster is found, build a buffered hull per
+> cluster and take their union as the accessible area. Second, because
+> Ithomiini species range from narrow Andean endemics to widespread
+> Neotropical generalists, a single fixed buffer is too small for some
+> and too large for others. We therefore scale the buffer to each
+> cluster's diameter (25%, with a 50 km floor and a 500 km ceiling) so
+> that the accessible area grows with range size while remaining
+> bounded for very widespread species. These reference points,
+> commonly called background points, should not be interpreted as
+> absences: the species may in fact occur at a background location
+> that has simply never been sampled. Rather, they describe the range
+> of environmental conditions available within reach of the species,
+> and the model asks whether the environments at presence locations
+> occupy a narrower or distinctive subset of that broader range.
 >
 > An uneven sampling effort complicates this comparison. If researchers
 > have concentrated their collecting near field stations and roads,
@@ -70,6 +115,17 @@ Specimen Maps pipeline.
 > remaining contrast the model learns reflects environmental preference
 > rather than where researchers have tended to work.
 >
+> The number of background points scales with the size of the
+> accessible area at a target density of 0.0005 points per km^2,
+> clipped to a floor of 2,000 and a ceiling of 15,000 points. The
+> floor keeps narrow-range species above the practical minimum that
+> avoids degenerate fits (Barbet-Massin et al., 2012), and the ceiling
+> reflects the empirical plateau in MaxEnt performance reported by
+> Phillips and Dudik (2008), beyond which additional background points
+> add little. The chosen density reproduces the legacy fixed value of
+> 10,000 points across a Neotropics-scale extent while letting smaller
+> accessible areas use proportionally fewer points.
+>
 > The algorithm used depends on sample size, following
 > recommendations from Wisz et al. (2008). Species with 20–49 records
 > are modelled with MaxEnt alone (Phillips et al., 2017) via the
@@ -86,20 +142,24 @@ Specimen Maps pipeline.
 > areas predicted as highly suitable actually contain a higher density
 > of observations.
 >
-> For species that still performed poorly after the default run (Boyce
-> below 0.3), the pipeline runs an automated grid search over MaxEnt
-> regularization multipliers (0.5 to 4.0) and feature classes (linear,
-> quadratic, hinge, product), following the ENMeval framework (Kass et
-> al., 2021). For each species, the configuration with the highest
-> cross-validated Boyce is saved to a per-species overrides file, which
-> the main pipeline consults on re-run and applies in place of the tier
-> defaults. Fitting all models across the 151 species takes
-> approximately three hours of compute, which exceeds the time limit
-> per job on GitHub Actions, so the modelling and tuning steps are run
-> locally on a workstation and only the resulting raster and metadata
-> outputs are committed to the repository for the web application to
-> serve. Full methodology is documented separately in
-> `sdm/SDM_METHODS.md`.
+> Because the optimal MaxEnt regularization and feature-class
+> combination varies between species (Kass et al., 2021), we run a
+> grid search over MaxEnt regularization multipliers (0.5 to 4.0) and
+> feature classes (linear, quadratic, hinge, product), following the
+> ENMeval framework. The grid is applied uniformly to every species
+> with at least 20 thinned records, rather than only to species that
+> performed poorly with default parameters, so the tuning protocol
+> does not condition on initial model performance. For each species
+> we keep the configuration with the highest cross-validated Boyce
+> index, breaking ties in favour of fewer feature classes. Selected
+> parameters are stored in a per-species overrides file that the main
+> pipeline consults on re-run and applies in place of the tier
+> defaults. Fitting and tuning all 151 species takes several hours of
+> compute, which exceeds the per-job time limit on GitHub Actions, so
+> the modelling and tuning steps are run locally on a workstation and
+> only the resulting prediction rasters and metadata are committed to
+> the repository for the web application to serve. Full methodology
+> is documented separately in `sdm/SDM_METHODS.md`.
 
 ### Edit 1b: extend the Web Interface paragraph
 
@@ -329,6 +389,11 @@ and should not be duplicated.
 > species occurrence records for use in ecological niche models.
 > *Ecography*, 38(5), 541–545. https://doi.org/10.1111/ecog.01132
 >
+> Barbet-Massin, M., Jiguet, F., Albert, C.H. & Thuiller, W. (2012).
+> Selecting pseudo-absences for species distribution models: how, where
+> and how many? *Methods in Ecology and Evolution*, 3(2), 327–338.
+> https://doi.org/10.1111/j.2041-210X.2011.00172.x
+>
 > Barve, N., Barve, V., Jiménez-Valverde, A., Lira-Noriega, A., Maher,
 > S.P., Peterson, A.T., Soberón, J. & Villalobos, F. (2011). The crucial
 > role of the accessible area in ecological niche modeling and species
@@ -338,6 +403,11 @@ and should not be duplicated.
 > Christensen, A. (2022). elapid: Species distribution modeling tools
 > for Python. *Journal of Open Source Software*, 7(80), 4930.
 > https://doi.org/10.21105/joss.04930
+>
+> Ester, M., Kriegel, H.-P., Sander, J. & Xu, X. (1996). A density-based
+> algorithm for discovering clusters in large spatial databases with
+> noise. In *Proceedings of the Second International Conference on
+> Knowledge Discovery and Data Mining (KDD-96)*, AAAI Press, 226–231.
 >
 > Hirzel, A.H., Le Lay, G., Helfer, V., Randin, C. & Guisan, A. (2006).
 > Evaluating the ability of habitat suitability models to predict
@@ -365,6 +435,11 @@ and should not be duplicated.
 > Phillips, S.J., Anderson, R.P., Dudík, M., Schapire, R.E. & Blair,
 > M.E. (2017). Opening the black box: an open-source release of Maxent.
 > *Ecography*, 40(7), 887–893. https://doi.org/10.1111/ecog.03049
+>
+> Phillips, S.J. & Dudík, M. (2008). Modeling of species distributions
+> with Maxent: new extensions and a comprehensive evaluation.
+> *Ecography*, 31(2), 161–175.
+> https://doi.org/10.1111/j.0906-7590.2008.5203.x
 >
 > Phillips, S.J., Dudík, M., Elith, J., Graham, C.H., Lehmann, A.,
 > Leathwick, J. & Ferrier, S. (2009). Sample selection bias and
