@@ -100,6 +100,47 @@ def clean_coordinates(df):
     return df
 
 
+def filter_coordinate_quality(df):
+    """Remove records with unreliable coordinates (museum geocoding, centroids)."""
+    import re
+    initial = len(df)
+
+    # 1. High coordinate uncertainty (>100 km) — country/region centroids
+    if "coordinate_uncertainty" in df.columns:
+        high_uncert = df["coordinate_uncertainty"].fillna(0) > 100_000
+        n_uncert = high_uncert.sum()
+    else:
+        high_uncert = pd.Series(False, index=df.index)
+        n_uncert = 0
+
+    # 2. Latitude > 35°N — well outside Ithomiini range (max ~25°N)
+    too_far_north = df["lat"] > 35
+    n_north = too_far_north.sum()
+
+    # 3. Locality keywords indicating museum/zoo/no-data coordinates
+    museum_pattern = re.compile(
+        r"no specific locality|zoo|aquariu|museum|botanical garden",
+        re.IGNORECASE,
+    )
+    if "collection_location" in df.columns:
+        bad_locality = df["collection_location"].fillna("").apply(
+            lambda x: bool(museum_pattern.search(str(x)))
+        )
+        n_locality = bad_locality.sum()
+    else:
+        bad_locality = pd.Series(False, index=df.index)
+        n_locality = 0
+
+    flagged = high_uncert | too_far_north | bad_locality
+    df = df[~flagged]
+
+    print(f"  Coordinate quality filter: {initial} → {len(df)} ({flagged.sum()} removed)")
+    print(f"    High uncertainty (>100km): {n_uncert}")
+    print(f"    Too far north (>35°N): {n_north}")
+    print(f"    Museum/zoo locality keywords: {n_locality}")
+    return df
+
+
 def build_species_name(df):
     """Ensure consistent scientific names (Genus species)."""
     df["scientific_name"] = df["genus"] + " " + df["species"]
@@ -144,10 +185,13 @@ def main():
     print("\n3. Cleaning coordinates...")
     df = clean_coordinates(df)
 
-    print("\n4. Building species names...")
+    print("\n4. Filtering coordinate quality...")
+    df = filter_coordinate_quality(df)
+
+    print("\n5. Building species names...")
     df = build_species_name(df)
 
-    print("\n5. Species summary...")
+    print("\n6. Species summary...")
     thinning_km = config["modelling"]["thinning_distance_km"]
     species_counts = generate_species_summary(df, thinning_km)
 

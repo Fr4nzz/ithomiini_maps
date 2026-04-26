@@ -285,12 +285,16 @@ def load_local_data():
             # Dore database has M.mimicry/F.mimicry (species-level), not individual sex
             df['sex'] = None
 
+        # Published dataset — no coordinate uncertainty metadata
+        df['coordinate_uncertainty'] = None
+
         # Select final columns
         result = df[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
             'sequencing_status', 'source', 'image_url', 'country',
-            'collection_location', 'observation_date', 'sex'
+            'collection_location', 'observation_date', 'sex',
+            'coordinate_uncertainty'
         ]].copy()
         
         # Drop rows without coordinates
@@ -426,12 +430,16 @@ def load_sanger_data():
             df_col['sex'] = None
             print("   No Sex column found in Sanger data")
 
+        # Sanger Google Sheets data has no coordinate uncertainty
+        df_col['coordinate_uncertainty'] = None
+
         # Select final columns
         result = df_col[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
             'sequencing_status', 'source', 'image_url', 'country',
-            'collection_location', 'observation_date', 'sex'
+            'collection_location', 'observation_date', 'sex',
+            'coordinate_uncertainty'
         ]].copy()
         
         # Drop rows without coordinates or with empty IDs
@@ -531,10 +539,11 @@ def load_gbif_bulk_download():
                         'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
                         'sequencing_status', 'source', 'image_url', 'country',
                         'collection_location', 'observation_date', 'observation_url', 'sex',
-                        'institution_code']
+                        'institution_code', 'coordinate_uncertainty']
 
         nullable_cols = {'subspecies', 'image_url', 'collection_location',
-                         'observation_date', 'observation_url', 'sex', 'institution_code'}
+                         'observation_date', 'observation_url', 'sex', 'institution_code',
+                         'coordinate_uncertainty'}
         for col in required_cols:
             if col not in df.columns:
                 df[col] = None if col in nullable_cols else 'Unknown'
@@ -545,6 +554,12 @@ def load_gbif_bulk_download():
             df['source'] = df['source'].apply(lambda x: clean_str(x) or 'GBIF')
         else:
             df['source'] = 'GBIF'
+
+        # Convert coordinate uncertainty to numeric (meters)
+        if 'coordinate_uncertainty' in df.columns:
+            df['coordinate_uncertainty'] = pd.to_numeric(df['coordinate_uncertainty'], errors='coerce')
+        else:
+            df['coordinate_uncertainty'] = None
 
         # Process GBIF collection_location (already set by gbif_download.py with fallbacks)
         # Only use locality as fallback if collection_location is not already set

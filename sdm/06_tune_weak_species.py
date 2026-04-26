@@ -345,7 +345,7 @@ def main():
     parser.add_argument(
         "--reduced",
         action="store_true",
-        help="Use a 4x3 reduced grid (12 cells) for whole-dataset uniform tuning, "
+        help="Use a 5x3 reduced grid (15 cells) for whole-dataset uniform tuning, "
         "as in Moreno-Arzate & Martinez-Meyer 2024 and Yang et al. 2024",
     )
     args = parser.parse_args()
@@ -354,7 +354,7 @@ def main():
         rm_grid = [1.5, 2.5]
         fc_grid = [["linear", "quadratic"], ["linear", "quadratic", "hinge"]]
     elif args.reduced:
-        rm_grid = [1.0, 2.0, 3.0, 4.0]
+        rm_grid = [1.0, 1.5, 2.0, 3.0, 4.0]
         fc_grid = [
             ["linear", "quadratic"],
             ["linear", "quadratic", "hinge"],

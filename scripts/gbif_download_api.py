@@ -674,6 +674,7 @@ def process_occurrence_file(occurrence_path, multimedia_lookup=None):
                 'sex': row.get('sex'),  # Darwin Core sex field
                 'dataset_name': row.get('datasetName'),
                 'institution_code': row.get('institutionCode'),
+                'coordinate_uncertainty': row.get('coordinateUncertaintyInMeters'),
             }
 
             records.append(record)
