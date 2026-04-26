@@ -474,9 +474,7 @@ def main():
 
         # Persist overrides incrementally so SIGTERM loses at most one species
         safe_name = species_name.replace(" ", "_").lower()
-        overrides.setdefault("species", {})[safe_name] = {
-            "maxent_rm": result["best_rm"],
-            "maxent_features": result["best_features"],
+        entry = {
             "baseline_boyce": baseline_boyce,
             "tuned_boyce": result["best_boyce"],
             "tuned_auc": result["best_auc"],
@@ -485,6 +483,18 @@ def main():
             "grid_size": len(result["grid_results"]),
             "tuned_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         }
+        # Only store tuned params when they improve on baseline;
+        # otherwise record the diagnostics but let tier defaults apply.
+        if baseline_boyce is None or result["best_boyce"] >= baseline_boyce - 0.01:
+            entry["maxent_rm"] = result["best_rm"]
+            entry["maxent_features"] = result["best_features"]
+        else:
+            entry["reverted_to_baseline"] = True
+            entry["revert_reason"] = (
+                f"tuned ({result['best_boyce']:+.3f}) "
+                f"< baseline ({baseline_boyce:+.3f})"
+            )
+        overrides.setdefault("species", {})[safe_name] = entry
         overrides["_meta"] = {
             "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "grid_rm": rm_grid,
