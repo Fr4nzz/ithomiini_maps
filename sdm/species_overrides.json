@@ -1,8 +1,9 @@
 {
   "_meta": {
-    "updated_at": "2026-04-26T04:38:19+00:00",
+    "updated_at": "2026-04-27T01:00:25+00:00",
     "grid_rm": [
       1.0,
+      1.5,
       2.0,
       3.0,
       4.0
@@ -31,8 +32,7 @@
       "Kass et al. 2021, Methods Ecol Evol 12:1602 (ENMeval 2.0)",
       "Hirzel et al. 2006, Ecol Modell 199:142 (continuous Boyce)",
       "Warren & Seifert 2011, Ecol Appl 21:335 (AICc model selection)"
-    ],
-    "post_processing": "Reverted 36 species to tier defaults where tuned Boyce < baseline"
+    ]
   },
   "species": {
     "ithomia_heraldica": {
@@ -2134,6 +2134,60 @@
       "tuned_at": "2026-04-26T04:38:19+00:00",
       "reverted_to_baseline": true,
       "revert_reason": "tuned (+0.936) < baseline (+0.997)"
+    },
+    "pteronymia_carlia": {
+      "baseline_boyce": 0.009564473643647015,
+      "tuned_boyce": 0.563830475672511,
+      "tuned_auc": 0.6190182126577782,
+      "tier": "medium",
+      "n_presences": 58,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T01:00:06+00:00",
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ]
+    },
+    "melinaea_mnasias": {
+      "baseline_boyce": 0.790277206784084,
+      "tuned_boyce": 0.9240164263936983,
+      "tuned_auc": 0.8013285024154589,
+      "tier": "small",
+      "n_presences": 20,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T01:00:10+00:00",
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ]
+    },
+    "oleria_didymaea": {
+      "baseline_boyce": 0.8566683972885897,
+      "tuned_boyce": 0.9387209722839688,
+      "tuned_auc": 0.7774576271186441,
+      "tier": "small",
+      "n_presences": 20,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T01:00:12+00:00",
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ]
+    },
+    "godyris_panthyale": {
+      "baseline_boyce": 0.9118583155200968,
+      "tuned_boyce": 0.8936211492096949,
+      "tuned_auc": 0.9027950310559006,
+      "tier": "small",
+      "n_presences": 20,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T01:00:25+00:00",
+      "reverted_to_baseline": true,
+      "revert_reason": "tuned (+0.894) < baseline (+0.912)"
     }
   }
 }
