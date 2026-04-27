@@ -373,7 +373,7 @@ def main():
     print("Selection: CV Boyce (primary)  |  feature-class simplicity (tiebreak)")
     grid_label = (
         "QUICK (smoke test)" if args.quick
-        else "REDUCED (4x3, uniform sweep)" if args.reduced
+        else "REDUCED (5x3, uniform sweep)" if args.reduced
         else "full ENMeval (8x4)"
     )
     print(
@@ -438,11 +438,18 @@ def main():
         if args.time_limit and elapsed > args.time_limit:
             print(f"\n⚠ Time limit ({args.time_limit}s) reached — stopping.")
             break
-
+        if i > 1:
+            avg_s = elapsed / (i - 1)
+            remaining = avg_s * (len(targets) - i + 1)
+            elapsed_m = elapsed / 60
+            eta_m = remaining / 60
+            timing = f"  [elapsed {elapsed_m:.0f}m | ETA {eta_m:.0f}m | avg {avg_s:.0f}s/sp]"
+        else:
+            timing = ""
         header = f"\n── [{i}/{len(targets)}] {species_name}"
         if baseline_boyce is not None:
             header += f"   baseline Boyce={baseline_boyce:+.3f}"
-        print(header + " ──")
+        print(header + timing + " ──")
 
         t0 = time.time()
         result = tune_one_species(
