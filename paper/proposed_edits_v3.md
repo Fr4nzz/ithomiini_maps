@@ -41,21 +41,28 @@ Specimen Maps pipeline.
 > from all five data sources are pooled, deduplicated, and spatially
 > thinned to a minimum distance of 5 km (Aiello-Lammens et al., 2015)
 > to reduce sampling bias. Before thinning, records are screened with
-> a coordinate-quality filter that removes three categories of
+> a coordinate-quality filter that removes five categories of
 > unreliable localities: (i) records whose GBIF-reported coordinate
 > uncertainty exceeds 100 km, which typically correspond to country or
 > region centroids rather than field-collected specimens; (ii) records
 > north of 35° N, well above the northernmost extent of the tribe's
-> natural range (~25° N in eastern Mexico); and (iii) records whose
+> natural range (~25° N in eastern Mexico); (iii) records whose
 > locality string contains keywords indicating the coordinates refer
-> to a museum, zoo, or aquarium rather than a field collection site.
-> Together these filters remove approximately 1.4% of raw records.
-> The same filter is applied to the web-map occurrence layer, so that
-> points displayed to researchers have passed the same quality screen
-> as those used for modelling. This ensures the models are not
-> distorted by specimens geocoded to their holding institution rather
-> than their original collection locality, and prevents such records
-> from appearing as misleading outliers on the interactive map.
+> to a museum, zoo, or aquarium rather than a field collection site;
+> (iv) records whose coordinates fall outside the Neotropical study
+> bounding box (-120°W to -30°E, -40°S to +25°N); and (v) records that
+> fall in the ocean once tested against the Natural Earth land mask,
+> which often arise from coordinate-precision rounding near the
+> coastline or from coordinates erroneously reported as 0,0 or with
+> swapped longitude and latitude. Together these filters remove
+> approximately 2.6% of raw records. The same filter set is applied
+> identically along the web-map occurrence path and the SDM training
+> path, so that points displayed to researchers have passed the same
+> quality screen as those used for modelling, and so that records
+> rejected by the model do not reappear as misleading outliers on the
+> interactive map. This filter parity is enforced by sharing a single
+> Natural Earth land mask and a single study-area bounding box between
+> the two pipelines.
 >
 > Because our data are presence-only, the model cannot contrast
 > presences against confirmed absences. Instead, it contrasts the
@@ -151,8 +158,34 @@ Specimen Maps pipeline.
 > approximately two hours on a workstation, which exceeds the per-job
 > time limit on GitHub Actions, so the pipeline is run locally and
 > only the resulting prediction rasters and metadata are committed to
-> the repository for the web application to serve. Full methodology
-> is documented separately in `sdm/SDM_METHODS.md`.
+> the repository for the web application to serve. Each fitted model
+> is also persisted to disk as a serialized object, so that subsequent
+> changes to the prediction grid (resolution, extent, masking) can be
+> evaluated without retraining.
+>
+> The final ensemble prediction is generated on a uniform Neotropical
+> grid that covers the full study extent (-120°W to -30°E, -40°S to
+> +25°N) at 0.1° resolution, identical for every species. Earlier
+> versions of the pipeline restricted each species' prediction raster
+> to its accessible area, which made narrow-range species visually
+> hard to compare against widespread congeners. Predicting on the
+> common grid is straightforward to implement because the model is
+> trained from the accessible area and applied to a separate set of
+> grid pixels; it does not change what the model has learned, only
+> the spatial domain over which we project it. To make the
+> distinction between interpolation and extrapolation explicit, each
+> species' ensemble raster is split into two co-registered layers:
+> a "core" layer that retains predictions at pixels inside the
+> species' accessible-area polygon, where the model is operating
+> within the spatial and environmental envelope of its training data,
+> and an "extension" layer that retains predictions at the remaining
+> pixels, where the projection is an extrapolation beyond that
+> envelope. The accessible-area polygon used for the split is the
+> same one that bounds the background sample. The web map loads both
+> layers by default but exposes a "Show full Neotropics" toggle that
+> hides the extension layer, so that users who want a strictly
+> conservative view can fall back to the accessible-area-only
+> projection without re-fetching any data.
 
 ### Edit 1b: extend the Web Interface paragraph
 
@@ -173,7 +206,9 @@ Add a Species Distribution Modelling entry to reflect the new tile:
 > sex filter, data source toggles for each of the five sources, and a
 > Species Distribution Modelling selector that overlays the predicted
 > suitability raster for up to two species at once with adjustable
-> opacity, alongside model diagnostics (AUC, Boyce index, sample size,
+> opacity and a "Show full Neotropics" toggle that switches between
+> the full-extent projection and the accessible-area-only view,
+> alongside model diagnostics (AUC, Boyce index, sample size,
 > confidence tier) and partial-response curves for the most influential
 > environmental variables.
 
