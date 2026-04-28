@@ -103,8 +103,10 @@ with open(CONFIG_PATH) as f:
 OCC_DIR = Path(__file__).parent / config["paths"]["occurrences"]
 ENV_DIR = Path(__file__).parent / config["paths"]["env_variables"]
 PRED_DIR = Path(__file__).parent / config["paths"]["predictions"]
+MODEL_DIR = Path(__file__).parent / "data" / "models"
 OVERRIDES_PATH = Path(__file__).parent / "species_overrides.json"
 PRED_DIR.mkdir(parents=True, exist_ok=True)
+MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
 
 # ── Tuning grids ─────────────────────────────────────────────────────────────
@@ -998,11 +1000,34 @@ def generate_predictions(
 
     pres_mask = data["presence"] == 1
     pres_coords = data.loc[pres_mask, ["lon", "lat"]].values
-    accessible, _ = compute_accessible_area_v2(pres_coords, _accessible_opts())
-    print(f"    Prediction grid: accessible area ({resolution}°)...")
-    grid_gdf, grid_shape, transform, lons, lats = create_prediction_grid(
-        accessible, resolution
+    _accessible_extent, accessible_poly = compute_accessible_area_v2(
+        pres_coords, _accessible_opts()
     )
+    # Predict on the full Neotropical study area so every species's raster
+    # has the same extent. Step 05 splits the result into a "core" raster
+    # (inside the accessible-area polygon) and an "extension" raster
+    # (outside it) so the front-end can toggle between the two views.
+    print(f"    Prediction grid: full Neotropics ({resolution}°)...")
+    study_area = config["study_area"]
+    grid_gdf, grid_shape, transform, lons, lats = create_prediction_grid(
+        study_area, resolution
+    )
+
+    # Stash safe_name and persist the accessible-area polygon as a sidecar
+    # GeoJSON so step 05 can split the ensemble raster.
+    safe_name = species_name.replace(" ", "_").lower()
+    if accessible_poly is not None:
+        try:
+            import geopandas as gpd
+            poly_gdf = gpd.GeoDataFrame(
+                {"species": [species_name]},
+                geometry=[accessible_poly],
+                crs="EPSG:4326",
+            )
+            poly_path = PRED_DIR / f"{safe_name}_accessible.geojson"
+            poly_gdf.to_file(poly_path, driver="GeoJSON")
+        except Exception as exc:
+            print(f"    Warning: failed to save accessible polygon ({exc})")
 
     all_raster_paths = list(env_rasters)
     grid_env_all = extract_values_at_points(all_raster_paths, grid_gdf)
@@ -1050,6 +1075,23 @@ def generate_predictions(
         if model is None:
             continue
 
+        # Persist trained model for future predict-only runs (avoid retraining
+        # on extent/grid/resolution changes). Use joblib for sklearn/elapid;
+        # bundle env_cols + tier_config so the loader can reconstruct context.
+        try:
+            import joblib
+            model_payload = {
+                "model": model,
+                "algorithm": algo_name,
+                "env_cols": list(env_cols),
+                "tier": tier_name,
+                "tier_config": tier_config,
+                "species": species_name,
+            }
+            joblib.dump(model_payload, MODEL_DIR / f"{safe_name}_{algo_name}.joblib")
+        except Exception as exc:
+            print(f"      Warning: failed to save {algo_name} model ({exc})")
+
         try:
             if algo_name == "maxent":
                 pred_valid = model.predict(X_grid_valid)
@@ -1089,7 +1131,6 @@ def generate_predictions(
     ensemble = apply_land_mask(grid_gdf, ensemble)
     ensemble = np.where(np.isnan(ensemble), -9999.0, ensemble)
 
-    safe_name = species_name.replace(" ", "_").lower()
     output_path = PRED_DIR / f"{safe_name}_ensemble.tif"
     save_prediction_raster(ensemble, grid_shape, transform, output_path)
     print(f"    Saved: {output_path.name}")

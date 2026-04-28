@@ -1456,6 +1456,21 @@
   text-align: right;
 }
 
+.sdm-extent-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-secondary, #888);
+  cursor: pointer;
+  user-select: none;
+}
+.sdm-extent-row input[type="checkbox"] {
+  accent-color: var(--accent-color, #4ade80);
+  cursor: pointer;
+}
+
 /* SDM gradient legend */
 .sdm-legend {
   margin-top: 10px;

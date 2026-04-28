@@ -281,31 +281,111 @@ def generate_web_metadata():
     return metadata
 
 
+def split_ensemble_rasters():
+    """
+    Split each `{species}_ensemble.tif` into two co-registered rasters:
+
+      • {species}_ensemble_core.tif       — values inside the accessible-area
+                                            polygon, NaN/-9999 outside.
+      • {species}_ensemble_extension.tif  — values outside the accessible-area
+                                            polygon, NaN/-9999 inside.
+
+    The original full-Neotropics `_ensemble.tif` is preserved as the canonical
+    artifact. The core/extension pair lets the web app load each as its own
+    layer and toggle the extension off to fall back to the accessible-area
+    view without a re-fetch.
+    """
+    print("\n── Splitting ensemble rasters (core / extension) ──")
+
+    try:
+        import geopandas as gpd
+        from rasterio.features import geometry_mask
+    except Exception as exc:
+        print(f"  Skipped (deps missing: {exc})")
+        return
+
+    ensemble_files = sorted(PRED_DIR.glob("*_ensemble.tif"))
+    nodata = -9999.0
+    n_split = 0
+    n_skipped = 0
+
+    for ens_path in ensemble_files:
+        safe_name = ens_path.stem.replace("_ensemble", "")
+        poly_path = PRED_DIR / f"{safe_name}_accessible.geojson"
+        if not poly_path.exists():
+            n_skipped += 1
+            continue
+
+        try:
+            poly_gdf = gpd.read_file(poly_path)
+            if poly_gdf.empty:
+                n_skipped += 1
+                continue
+
+            with rasterio.open(ens_path) as src:
+                data = src.read(1)
+                profile = src.profile.copy()
+                # geometry_mask returns True where geom does NOT cover the pixel.
+                outside_mask = geometry_mask(
+                    geometries=poly_gdf.geometry,
+                    out_shape=data.shape,
+                    transform=src.transform,
+                    invert=False,  # True = outside polygon
+                    all_touched=False,
+                )
+
+            valid = data != nodata
+            inside = valid & ~outside_mask
+            outside = valid & outside_mask
+
+            core = np.full_like(data, nodata, dtype=np.float32)
+            core[inside] = data[inside].astype(np.float32)
+
+            ext = np.full_like(data, nodata, dtype=np.float32)
+            ext[outside] = data[outside].astype(np.float32)
+
+            profile.update(dtype="float32", nodata=nodata, compress="deflate")
+            with rasterio.open(PRED_DIR / f"{safe_name}_ensemble_core.tif", "w", **profile) as dst:
+                dst.write(core, 1)
+            with rasterio.open(PRED_DIR / f"{safe_name}_ensemble_extension.tif", "w", **profile) as dst:
+                dst.write(ext, 1)
+            n_split += 1
+        except Exception as exc:
+            print(f"  Failed split for {safe_name}: {exc}")
+            n_skipped += 1
+
+    print(f"  Split {n_split} ensemble rasters ({n_skipped} skipped — missing/bad polygons)")
+
+
 def copy_key_outputs():
     """Copy key prediction files to public/data/sdm/ for web serving."""
     print("\n── Copying Outputs to public/data/sdm/ ──")
+
+    import shutil
 
     # Copy richness and suitability maps
     for name in ["species_richness.tif", "mean_suitability.tif"]:
         src = PRED_DIR / name
         if src.exists():
             dst = OUTPUT_DIR / name
-            import shutil
-
             shutil.copy2(src, dst)
             print(f"  Copied: {name}")
 
-    # Copy ensemble predictions for all species
-    ensemble_files = sorted(PRED_DIR.glob("*_ensemble.tif"))
     species_dir = OUTPUT_DIR / "species"
     species_dir.mkdir(exist_ok=True)
 
-    for f in ensemble_files:
-        import shutil
-
-        shutil.copy2(f, species_dir / f.name)
-
-    print(f"  Copied {len(ensemble_files)} species prediction rasters")
+    # Copy ensemble + core + extension rasters for every species. The full
+    # ensemble is kept as the canonical artifact; core/extension are the
+    # split pair the web app uses for its toggle.
+    patterns = ["*_ensemble.tif", "*_ensemble_core.tif", "*_ensemble_extension.tif"]
+    total = 0
+    for pat in patterns:
+        files = sorted(PRED_DIR.glob(pat))
+        for f in files:
+            shutil.copy2(f, species_dir / f.name)
+        print(f"  Copied {len(files)} files matching {pat}")
+        total += len(files)
+    print(f"  Total per-species rasters copied: {total}")
 
 
 def main():
@@ -315,6 +395,11 @@ def main():
 
     # Generate richness map
     richness_result = generate_richness_map()
+
+    # Split each species's full-Neotropics ensemble raster into a "core"
+    # (inside accessible area) and "extension" (outside) pair so the web
+    # app can toggle the extrapolation layer on/off.
+    split_ensemble_rasters()
 
     # Generate web metadata
     generate_web_metadata()

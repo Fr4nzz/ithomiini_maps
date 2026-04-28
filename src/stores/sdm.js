@@ -13,6 +13,11 @@ export const useSDMStore = defineStore('sdm', () => {
   const enabled = ref(false)
   const opacity = ref(0.6)
   const selectedSpecies = ref([])  // Up to 2 species for dual overlay
+  // When true (default), render the full-Neotropics prediction by loading
+  // both the accessible-area "core" raster and the extrapolation
+  // "extension" raster. When false, load only the core raster (matches
+  // the legacy accessible-area-only view).
+  const showFullExtent = ref(true)
 
   // Computed
   const speciesLookup = computed(() => {
@@ -63,9 +68,12 @@ export const useSDMStore = defineStore('sdm', () => {
     if (enabled.value && !metadata.value) loadMetadata()
   }
 
+  function setShowFullExtent(val) { showFullExtent.value = !!val }
+
   return {
-    metadata, loading, enabled, opacity, selectedSpecies,
+    metadata, loading, enabled, opacity, selectedSpecies, showFullExtent,
     speciesLookup, hasData, nSpecies, availableSpecies,
     loadMetadata, hasSDMForSpecies, getSDMInfo, setOpacity, toggle,
+    setShowFullExtent,
   }
 })

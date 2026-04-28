@@ -888,6 +888,19 @@ const updateExportHeight = (value) => {
               <span class="sdm-opacity-value">{{ Math.round(sdmStore.opacity * 100) }}%</span>
             </div>
 
+            <label
+              v-if="sdmStore.selectedSpecies.length > 0"
+              class="sdm-extent-row"
+              title="When enabled, predictions are shown across the full Neotropics, including areas outside each species' known range. Disable to show only the modelled accessible area for each species."
+            >
+              <input
+                type="checkbox"
+                :checked="sdmStore.showFullExtent"
+                @change="sdmStore.setShowFullExtent($event.target.checked)"
+              />
+              <span>Show full Neotropics</span>
+            </label>
+
             <p class="filter-hint">
               {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
             </p>

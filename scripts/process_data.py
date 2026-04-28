@@ -795,13 +795,59 @@ def main():
     else:
         bad_locality = pd.Series(False, index=df_merged.index)
 
-    flagged = high_uncert | too_far_north | bad_locality
+    # 4. Outside Neotropical bbox (study_area in sdm/config.yaml)
+    bbox_n = bbox_s = bbox_w = bbox_e = None
+    out_of_bbox = pd.Series(False, index=df_merged.index)
+    try:
+        import yaml
+        sdm_cfg_path = Path(__file__).parent.parent / 'sdm' / 'config.yaml'
+        with open(sdm_cfg_path) as f:
+            sdm_cfg = yaml.safe_load(f)
+        extent = sdm_cfg['study_area']
+        bbox_w, bbox_e = extent['west'], extent['east']
+        bbox_s, bbox_n = extent['south'], extent['north']
+        out_of_bbox = (
+            (df_merged['lng'] < bbox_w) | (df_merged['lng'] > bbox_e) |
+            (df_merged['lat'] < bbox_s) | (df_merged['lat'] > bbox_n)
+        )
+    except Exception as e:
+        print(f"   Warning: bbox filter skipped ({e})")
+
+    # 5. Ocean points (Natural Earth land mask)
+    in_ocean = pd.Series(False, index=df_merged.index)
+    land_dir = Path(__file__).parent.parent / 'sdm' / 'data' / 'env_variables' / 'ne_110m_land'
+    if land_dir.exists():
+        try:
+            import geopandas as gpd
+            from shapely.geometry import Point
+            from shapely.ops import unary_union
+            from shapely.prepared import prep
+            land = gpd.read_file(land_dir)
+            land_union = unary_union(land.geometry)
+            land_prep = prep(land_union)
+            # Only test points not yet flagged by cheaper filters
+            candidate_idx = df_merged.index[
+                ~(high_uncert | too_far_north | bad_locality | out_of_bbox)
+            ]
+            on_land = df_merged.loc[candidate_idx].apply(
+                lambda r: land_prep.contains(Point(r['lng'], r['lat'])), axis=1
+            )
+            in_ocean.loc[candidate_idx] = ~on_land
+        except Exception as e:
+            print(f"   Warning: ocean filter skipped ({e})")
+    else:
+        print(f"   Warning: ocean filter skipped (land mask not found at {land_dir})")
+
+    flagged = high_uncert | too_far_north | bad_locality | out_of_bbox | in_ocean
     df_merged = df_merged[~flagged].copy()
     removed = initial_count - len(df_merged)
     print(f"\n>> Coordinate quality filter: {initial_count:,} → {len(df_merged):,} ({removed:,} removed)")
     print(f"   High uncertainty (>100km): {high_uncert.sum():,}")
     print(f"   Too far north (>35°N): {too_far_north.sum()}")
     print(f"   Museum/zoo locality keywords: {bad_locality.sum():,}")
+    if bbox_w is not None:
+        print(f"   Outside Neotropical bbox ({bbox_w},{bbox_s}..{bbox_e},{bbox_n}): {out_of_bbox.sum():,}")
+    print(f"   Ocean points (Natural Earth land mask): {in_ocean.sum():,}")
 
     # ═══════════════════════════════════════════════════════════════════════
     # SAVE OUTPUT

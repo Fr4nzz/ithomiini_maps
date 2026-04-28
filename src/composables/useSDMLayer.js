@@ -71,6 +71,27 @@ export function useSDMLayer(map) {
     }
   }
 
+  async function fetchTiffValues(url) {
+    const response = await fetch(url)
+    if (!response.ok) return null
+    const GeoTIFF = await import('geotiff')
+    const arrayBuffer = await response.arrayBuffer()
+    const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer)
+    const image = await tiff.getImage()
+    const data = await image.readRasters()
+    const width = image.getWidth()
+    const height = image.getHeight()
+    const origin = image.getOrigin()
+    const resolution = image.getResolution()
+    const bbox = [
+      origin[0],
+      origin[1] + resolution[1] * height,
+      origin[0] + resolution[0] * width,
+      origin[1],
+    ]
+    return { values: data[0], width, height, bbox }
+  }
+
   async function loadAndRenderGeoTIFF(speciesName, index, colorRamp) {
     const layerId = `${SDM_LAYER_PREFIX}-${index}`
     const sourceId = `${SDM_SOURCE_PREFIX}-${index}`
@@ -78,29 +99,40 @@ export function useSDMLayer(map) {
     if (!map.value) return
 
     try {
-      const GeoTIFF = await import('geotiff')
       const basePath = import.meta.env.BASE_URL || '/'
       const safeName = speciesName.replace(/ /g, '_').toLowerCase()
-      const url = `${basePath}data/sdm/species/${safeName}_ensemble.tif`
+      const coreUrl = `${basePath}data/sdm/species/${safeName}_ensemble_core.tif`
+      const extUrl = `${basePath}data/sdm/species/${safeName}_ensemble_extension.tif`
+      const fallbackUrl = `${basePath}data/sdm/species/${safeName}_ensemble.tif`
 
-      const response = await fetch(url)
-      if (!response.ok) { log.map.warn(`SDM: Could not load ${url}`); return }
+      // Try core/extension split first (new pipeline). Fall back to the
+      // single full-ensemble raster if the split files aren't available
+      // (legacy data, partial deploys).
+      let coreData = await fetchTiffValues(coreUrl)
+      let extData = sdmStore.showFullExtent ? await fetchTiffValues(extUrl) : null
+      let usingSplit = !!coreData
 
-      const arrayBuffer = await response.arrayBuffer()
-      const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer)
-      const image = await tiff.getImage()
-      const data = await image.readRasters()
-      const values = data[0]
-      const width = image.getWidth()
-      const height = image.getHeight()
-      const origin = image.getOrigin()
-      const resolution = image.getResolution()
-      const bbox = [
-        origin[0],
-        origin[1] + resolution[1] * height,
-        origin[0] + resolution[0] * width,
-        origin[1],
-      ]
+      if (!usingSplit) {
+        coreData = await fetchTiffValues(fallbackUrl)
+        if (!coreData) { log.map.warn(`SDM: Could not load ${fallbackUrl}`); return }
+      }
+
+      const { width, height, bbox } = coreData
+      // Merge core + extension into a single value buffer. Core wins where
+      // it has data; extension fills the rest. Both rasters share the same
+      // grid (they're co-registered by construction in step 5).
+      const values = new Float32Array(coreData.values.length)
+      for (let i = 0; i < values.length; i++) {
+        const c = coreData.values[i]
+        if (c > -9990 && !isNaN(c)) {
+          values[i] = c
+        } else if (extData) {
+          const e = extData.values[i]
+          values[i] = (e > -9990 && !isNaN(e)) ? e : -9999
+        } else {
+          values[i] = -9999
+        }
+      }
 
       // Reproject from equirectangular (EPSG:4326) to Web Mercator (EPSG:3857)
       // so the raster aligns with MapLibre's basemap. Without this, the canvas is
@@ -222,6 +254,7 @@ export function useSDMLayer(map) {
     }
   })
   watch(() => sdmStore.opacity, () => { if (activeSpecies.value.length > 0) updateLayer() })
+  watch(() => sdmStore.showFullExtent, () => { if (activeSpecies.value.length > 0) updateLayer() })
 
   sdmStore.loadMetadata()
 
