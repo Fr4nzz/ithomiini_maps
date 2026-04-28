@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "updated_at": "2026-04-27T01:00:25+00:00",
+    "updated_at": "2026-04-27T16:04:19+00:00",
     "grid_rm": [
       1.0,
       1.5,
@@ -25,9 +25,10 @@
         "product"
       ]
     ],
-    "grid_size": "reduced",
+    "grid_label": "reduced (5\u00d73=15 cells)",
     "selection_criterion": "cv_boyce_with_simplicity_tiebreak",
     "boyce_tie_epsilon": 0.01,
+    "regression_guard_delta": 0.01,
     "references": [
       "Kass et al. 2021, Methods Ecol Evol 12:1602 (ENMeval 2.0)",
       "Hirzel et al. 2006, Ecol Modell 199:142 (continuous Boyce)",
@@ -36,77 +37,76 @@
   },
   "species": {
     "ithomia_heraldica": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
-        "quadratic",
-        "hinge",
-        "product"
+        "quadratic"
       ],
-      "baseline_boyce": -0.5477225575051661,
-      "tuned_boyce": 0.7666927890890203,
-      "tuned_auc": 0.692267415298752,
+      "tuned_boyce": 0.7943156293314872,
+      "tuned_auc": 0.7372032092057603,
+      "baseline_boyce": 0.7696969696969697,
       "tier": "large",
-      "n_presences": 105,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:06:58+00:00"
+      "n_presences": 106,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:59:38+00:00"
     },
     "melinaea_lilis": {
-      "maxent_rm": 3.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": -0.2007424137026906,
-      "tuned_boyce": 0.12310391778604535,
-      "tuned_auc": 0.5487354091106081,
+      "tuned_boyce": 0.24366173984498837,
+      "tuned_auc": 0.5423527315440486,
+      "baseline_boyce": -0.010609418180168861,
       "tier": "large",
-      "n_presences": 242,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:10+00:00"
+      "n_presences": 240,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:30:56+00:00"
     },
     "mcclungia_cymo": {
-      "baseline_boyce": -0.13278544933126554,
-      "tuned_boyce": -0.3134215471053949,
-      "tuned_auc": 0.42273979084100316,
-      "tier": "large",
-      "n_presences": 101,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:18+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (-0.313) < baseline (-0.133)"
-    },
-    "hypothyris_semifulva": {
-      "maxent_rm": 3.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge",
-        "product"
-      ],
-      "baseline_boyce": -0.11021143842015602,
-      "tuned_boyce": 0.33758032899966944,
-      "tuned_auc": 0.48391490522486064,
-      "tier": "medium",
-      "n_presences": 52,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:22+00:00"
-    },
-    "hyposcada_illinissa": {
       "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": -0.09900436758984321,
-      "tuned_boyce": 0.5754929010278728,
-      "tuned_auc": 0.7209407845695692,
+      "tuned_boyce": -0.012352475839813665,
+      "tuned_auc": 0.4228117412600171,
+      "baseline_boyce": -0.5101264826231708,
       "tier": "large",
-      "n_presences": 108,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:31+00:00"
+      "n_presences": 102,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:00:53+00:00"
+    },
+    "hypothyris_semifulva": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9848069807617047,
+      "tuned_auc": 0.8257418011452369,
+      "baseline_boyce": 0.5215116512688716,
+      "tier": "small",
+      "n_presences": 48,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:32:35+00:00"
+    },
+    "hyposcada_illinissa": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.6348112959105625,
+      "tuned_auc": 0.7276527949046873,
+      "baseline_boyce": 0.012373916979271002,
+      "tier": "large",
+      "n_presences": 99,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:01:36+00:00"
     },
     "napeogenes_tolosa": {
       "maxent_rm": 4.0,
@@ -115,27 +115,29 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": -0.034679369431519474,
-      "tuned_boyce": 0.5004615989960153,
-      "tuned_auc": 0.6773108363878461,
+      "tuned_boyce": 0.5624807587272123,
+      "tuned_auc": 0.7367162826709663,
+      "baseline_boyce": 0.07494350000987139,
       "tier": "large",
-      "n_presences": 118,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:39+00:00"
+      "n_presences": 113,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:53:11+00:00"
     },
     "pteronymia_rufocincta": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge",
+        "product"
       ],
-      "baseline_boyce": -0.025747194474019557,
-      "tuned_boyce": 0.6772241568236556,
-      "tuned_auc": 0.6120807404239275,
+      "tuned_boyce": 0.47550302596239985,
+      "tuned_auc": 0.8455843590457415,
+      "baseline_boyce": 0.4169332569847355,
       "tier": "medium",
-      "n_presences": 78,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:41+00:00"
+      "n_presences": 76,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:12:04+00:00"
     },
     "oleria_vicina": {
       "maxent_rm": 1.0,
@@ -144,24 +146,27 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.0,
-      "tuned_boyce": 0.6483078044618574,
-      "tuned_auc": 0.6716666666666666,
-      "tier": "medium",
-      "n_presences": 50,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:42+00:00"
+      "tuned_boyce": 0.9393939393939393,
+      "tuned_auc": 0.9090665774506523,
+      "baseline_boyce": 0.9151515151515152,
+      "tier": "small",
+      "n_presences": 49,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:28:22+00:00"
     },
     "aeria_olena": {
-      "baseline_boyce": 0.01186652238230819,
-      "tuned_boyce": -0.46283720798925365,
-      "tuned_auc": 0.5154852550772927,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": -0.4535847187411793,
+      "tuned_auc": 0.4319575533837644,
+      "baseline_boyce": -0.808510522560163,
       "tier": "large",
-      "n_presences": 209,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:43+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (-0.463) < baseline (+0.012)"
+      "n_presences": 208,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:39:37+00:00"
     },
     "forbestra_olivencia": {
       "maxent_rm": 4.0,
@@ -169,27 +174,29 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.03755338080994053,
-      "tuned_boyce": 0.09672762034386523,
-      "tuned_auc": 0.6444650313168767,
+      "tuned_boyce": -0.059210480956960555,
+      "tuned_auc": 0.6559846725543659,
+      "baseline_boyce": -0.42139426033042326,
       "tier": "medium",
       "n_presences": 60,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:47+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:21:34+00:00"
     },
     "pteronymia_latilla": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge",
+        "product"
       ],
-      "baseline_boyce": 0.058728733805276136,
-      "tuned_boyce": 0.6862166233066391,
-      "tuned_auc": 0.7409924763911835,
+      "tuned_boyce": 0.35031820230867156,
+      "tuned_auc": 0.6681427762275631,
+      "baseline_boyce": 0.07340854690508308,
       "tier": "medium",
       "n_presences": 77,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:07:52+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:10:47+00:00"
     },
     "hypothyris_ninonia": {
       "maxent_rm": 4.0,
@@ -197,211 +204,217 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.11666940739149831,
-      "tuned_boyce": 0.33096390610292764,
-      "tuned_auc": 0.5701417881823491,
+      "tuned_boyce": 0.454898330593816,
+      "tuned_auc": 0.6526439296287175,
+      "baseline_boyce": 0.3214408714268818,
       "tier": "large",
-      "n_presences": 248,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:08:12+00:00"
+      "n_presences": 245,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:28:30+00:00"
     },
     "heterosais_edessa": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.1397890757307434,
-      "tuned_boyce": 0.6406845680506409,
-      "tuned_auc": 0.5918674467087779,
+      "tuned_boyce": 0.6531725636683599,
+      "tuned_auc": 0.5678864706318463,
+      "baseline_boyce": 0.4031989560645314,
       "tier": "medium",
-      "n_presences": 61,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:08:16+00:00"
+      "n_presences": 60,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:17:13+00:00"
     },
     "methona_themisto": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
-        "quadratic",
-        "hinge"
+        "quadratic"
       ],
-      "baseline_boyce": 0.14610513560103552,
-      "tuned_boyce": 0.5645801404511049,
-      "tuned_auc": 0.44493669558114207,
+      "tuned_boyce": 0.34458503028633247,
+      "tuned_auc": 0.6154910985034663,
+      "baseline_boyce": 0.011663046087216244,
       "tier": "large",
-      "n_presences": 448,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:08:29+00:00"
+      "n_presences": 446,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:14:15+00:00"
     },
     "oleria_onega": {
       "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.1599855790157878,
-      "tuned_boyce": 0.3803351039664453,
-      "tuned_auc": 0.6474867726932966,
-      "tier": "medium",
-      "n_presences": 79,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:08:34+00:00"
-    },
-    "episcada_hymenaea": {
-      "maxent_rm": 4.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.18153491244287803,
-      "tuned_boyce": 0.20532947662279893,
-      "tuned_auc": 0.5424054095224775,
-      "tier": "large",
-      "n_presences": 162,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:08:39+00:00"
-    },
-    "melinaea_ethra": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.19011773102257312,
-      "tuned_boyce": 0.34528013844316874,
-      "tuned_auc": 0.685579676861658,
+      "tuned_boyce": 0.4531996541832206,
+      "tuned_auc": 0.6730179735425175,
+      "baseline_boyce": 0.17448297874356475,
       "tier": "medium",
-      "n_presences": 65,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:08:43+00:00"
+      "n_presences": 78,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:10:03+00:00"
+    },
+    "episcada_hymenaea": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.6470908449423776,
+      "tuned_auc": 0.7247469999383295,
+      "baseline_boyce": 0.35477379460119857,
+      "tier": "large",
+      "n_presences": 161,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:46:30+00:00"
+    },
+    "melinaea_ethra": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.19906713989050845,
+      "tuned_auc": 0.4123472647293444,
+      "baseline_boyce": 0.08423463127776593,
+      "tier": "medium",
+      "n_presences": 61,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:18:08+00:00"
     },
     "pteronymia_ozia": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": 0.19788552202935894,
-      "tuned_boyce": 0.7534039516920781,
-      "tuned_auc": 0.7997366077459876,
+      "tuned_boyce": 0.4051403496423008,
+      "tuned_auc": 0.8334812542267184,
+      "baseline_boyce": 0.15835344151016265,
       "tier": "medium",
-      "n_presences": 58,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:08:46+00:00"
+      "n_presences": 54,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:25:56+00:00"
     },
     "methona_confusa": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": 0.24278918880048767,
-      "tuned_boyce": 0.38541717131711234,
-      "tuned_auc": 0.6074358716931865,
+      "tuned_boyce": 0.41438927269871695,
+      "tuned_auc": 0.5594362108520234,
+      "baseline_boyce": 0.0830123228708191,
       "tier": "large",
-      "n_presences": 302,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:09:16+00:00"
+      "n_presences": 300,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:21:42+00:00"
     },
     "episcada_salvinia": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge"
       ],
-      "baseline_boyce": 0.2500187636660932,
-      "tuned_boyce": 0.6706932360114773,
-      "tuned_auc": 0.7843346233112435,
+      "tuned_boyce": 0.72805643619181,
+      "tuned_auc": 0.8601503223456882,
+      "baseline_boyce": 0.6936354117469065,
       "tier": "large",
-      "n_presences": 193,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:09:25+00:00"
+      "n_presences": 192,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:40:46+00:00"
     },
     "scada_zibia": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.27098286198342136,
-      "tuned_boyce": 0.8364317959863182,
-      "tuned_auc": 0.8349598974636947,
+      "tuned_boyce": 0.6623298984290765,
+      "tuned_auc": 0.8127947636571834,
+      "baseline_boyce": -0.09817760061766137,
       "tier": "large",
-      "n_presences": 110,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:09:33+00:00"
+      "n_presences": 114,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:53:58+00:00"
     },
     "melinaea_menophilus": {
-      "baseline_boyce": 0.2860340499815845,
-      "tuned_boyce": 0.23947638183328576,
-      "tuned_auc": 0.4186524775911501,
-      "tier": "large",
-      "n_presences": 106,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:09:38+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.239) < baseline (+0.286)"
-    },
-    "melinaea_marsaeus": {
       "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.29048310603087696,
-      "tuned_boyce": 0.4800315026141075,
-      "tuned_auc": 0.6914049225078114,
+      "tuned_boyce": 0.5119012584761116,
+      "tuned_auc": 0.3962181466730812,
+      "baseline_boyce": 0.1158618161350067,
       "tier": "medium",
-      "n_presences": 69,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:09:44+00:00"
+      "n_presences": 99,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:02:27+00:00"
     },
-    "napeogenes_inachia": {
-      "baseline_boyce": 0.30665512742417894,
-      "tuned_boyce": 0.27741482169825915,
-      "tuned_auc": 0.6509877789299732,
-      "tier": "medium",
-      "n_presences": 87,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:09:51+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.277) < baseline (+0.307)"
-    },
-    "pagyris_cymothoe": {
+    "melinaea_marsaeus": {
       "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.31063049256451836,
-      "tuned_boyce": 0.8848484848484848,
-      "tuned_auc": 0.6291579090495223,
+      "tuned_boyce": 0.36970144892012047,
+      "tuned_auc": 0.6129384893897457,
+      "baseline_boyce": 0.17705023278305712,
       "tier": "medium",
       "n_presences": 65,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:09:57+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:14:04+00:00"
     },
-    "aeria_eurimedia": {
+    "napeogenes_inachia": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.19584874617373838,
+      "tuned_auc": 0.5786743599704709,
+      "baseline_boyce": -0.005616004453180445,
+      "tier": "medium",
+      "n_presences": 84,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:08:26+00:00"
+    },
+    "pagyris_cymothoe": {
       "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.317137211390243,
-      "tuned_boyce": 0.6081397114283069,
-      "tuned_auc": 0.6309993256626882,
+      "tuned_boyce": 0.8145934285312866,
+      "tuned_auc": 0.694984267029456,
+      "baseline_boyce": 0.25611504067952956,
+      "tier": "medium",
+      "n_presences": 65,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:14:54+00:00"
+    },
+    "aeria_eurimedia": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.6794131152988554,
+      "tuned_auc": 0.6673524724123534,
+      "baseline_boyce": 0.3487863238640071,
       "tier": "large",
-      "n_presences": 277,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:10:17+00:00"
+      "n_presences": 275,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:26:33+00:00"
     },
     "sais_rosalia": {
       "maxent_rm": 3.0,
@@ -409,13 +422,13 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.3243799944100275,
-      "tuned_boyce": 0.6081030303137029,
-      "tuned_auc": 0.7448395683695527,
+      "tuned_boyce": 0.7220337653376069,
+      "tuned_auc": 0.7654969147061698,
+      "baseline_boyce": 0.39280867550658843,
       "tier": "medium",
-      "n_presences": 97,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:10:31+00:00"
+      "n_presences": 90,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:05:28+00:00"
     },
     "greta_morgane": {
       "maxent_rm": 1.0,
@@ -423,13 +436,13 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.32448226613295383,
-      "tuned_boyce": 0.7575757575757575,
-      "tuned_auc": 0.477369879056301,
+      "tuned_boyce": 0.7427237289221723,
+      "tuned_auc": 0.5189521178785934,
+      "baseline_boyce": 0.2538310913288101,
       "tier": "large",
-      "n_presences": 558,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:10:55+00:00"
+      "n_presences": 555,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:06:57+00:00"
     },
     "godyris_zavaleta": {
       "maxent_rm": 2.0,
@@ -438,13 +451,13 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.3302236448964938,
-      "tuned_boyce": 0.8423066311558307,
-      "tuned_auc": 0.6724480036636036,
+      "tuned_boyce": 0.7445752809147765,
+      "tuned_auc": 0.6865358689170947,
+      "baseline_boyce": 0.4976643030441418,
       "tier": "large",
-      "n_presences": 235,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:11:09+00:00"
+      "n_presences": 226,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:33:28+00:00"
     },
     "epityches_eupompe": {
       "maxent_rm": 2.0,
@@ -452,28 +465,28 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.34523007006216816,
-      "tuned_boyce": 0.8914268381269207,
-      "tuned_auc": 0.5858742064859568,
+      "tuned_boyce": 0.6545454545454544,
+      "tuned_auc": 0.5372482686223383,
+      "baseline_boyce": 0.5864680282375084,
       "tier": "large",
-      "n_presences": 184,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:11:13+00:00"
+      "n_presences": 185,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:43:27+00:00"
     },
     "greta_andromica": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.34655705793496516,
-      "tuned_boyce": 0.6922078196621549,
-      "tuned_auc": 0.6599492527244164,
+      "tuned_boyce": 0.594558848525627,
+      "tuned_auc": 0.8062380729841381,
+      "baseline_boyce": 0.47379355276063784,
       "tier": "large",
-      "n_presences": 230,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:11:34+00:00"
+      "n_presences": 226,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:35:09+00:00"
     },
     "greta_annette": {
       "maxent_rm": 1.0,
@@ -481,28 +494,28 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.3523132187279967,
-      "tuned_boyce": 0.8496821270887208,
-      "tuned_auc": 0.670843736092297,
+      "tuned_boyce": 0.7988715178292028,
+      "tuned_auc": 0.7610859506390709,
+      "baseline_boyce": 0.607044572790984,
       "tier": "large",
-      "n_presences": 244,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:11:39+00:00"
+      "n_presences": 239,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:32:08+00:00"
     },
     "dircenna_dero": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.3595772150576647,
-      "tuned_boyce": 0.4466568043478701,
-      "tuned_auc": 0.6835936273827512,
+      "tuned_boyce": 0.7282413195229429,
+      "tuned_auc": 0.7274657093961764,
+      "baseline_boyce": 0.5099090034942254,
       "tier": "large",
-      "n_presences": 481,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:12:17+00:00"
+      "n_presences": 467,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:12:05+00:00"
     },
     "napeogenes_peridia": {
       "maxent_rm": 2.0,
@@ -521,211 +534,227 @@
       "tuned_at": "2026-04-26T04:12:26+00:00"
     },
     "hypoleria_ocalea": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge",
+        "product"
       ],
-      "baseline_boyce": 0.3748750852693732,
-      "tuned_boyce": 0.5825185450582935,
-      "tuned_auc": 0.6530498011225114,
+      "tuned_boyce": 0.3896936522457548,
+      "tuned_auc": 0.7449057665671859,
+      "baseline_boyce": 0.22955699593278137,
       "tier": "medium",
-      "n_presences": 72,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:12:30+00:00"
+      "n_presences": 73,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:12:28+00:00"
     },
     "mechanitis_messenoides": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge"
       ],
-      "baseline_boyce": 0.37490973053389365,
-      "tuned_boyce": 0.7313383025569761,
-      "tuned_auc": 0.6255252454006687,
+      "tuned_boyce": 0.46472026215124296,
+      "tuned_auc": 0.6786163103958487,
+      "baseline_boyce": 0.3033186878668658,
       "tier": "medium",
-      "n_presences": 97,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:12:35+00:00"
+      "n_presences": 98,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:03:23+00:00"
     },
     "ithomia_salapia": {
-      "maxent_rm": 3.0,
+      "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.38733730997326327,
-      "tuned_boyce": 0.5112093402338524,
-      "tuned_auc": 0.5102544212773934,
-      "tier": "large",
-      "n_presences": 104,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:12:40+00:00"
+      "tuned_boyce": 0.840611598222782,
+      "tuned_auc": 0.7493017577616274,
+      "baseline_boyce": 0.5030303030303029,
+      "tier": "medium",
+      "n_presences": 97,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:04:06+00:00"
     },
     "oleria_zea": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.3879765157126191,
-      "tuned_boyce": 0.7249859068573494,
-      "tuned_auc": 0.6627789434734483,
+      "tuned_boyce": 0.7903101576912659,
+      "tuned_auc": 0.7414168346224456,
+      "baseline_boyce": 0.41961962599839375,
       "tier": "medium",
-      "n_presences": 50,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:12:44+00:00"
+      "n_presences": 51,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:27:38+00:00"
     },
     "ceratinia_tutia": {
-      "baseline_boyce": 0.396567510551169,
-      "tuned_boyce": 0.3028912146077157,
-      "tuned_auc": 0.6482132067126557,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.7055117394553695,
+      "tuned_auc": 0.685644014785774,
+      "baseline_boyce": 0.6913764751060203,
       "tier": "large",
-      "n_presences": 222,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:12:56+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.303) < baseline (+0.397)"
+      "n_presences": 209,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:38:25+00:00"
     },
     "dircenna_olyras": {
-      "baseline_boyce": 0.41107388982369863,
-      "tuned_boyce": 0.32619150165723904,
-      "tuned_auc": 0.6933567666822571,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge",
+        "product"
+      ],
+      "tuned_boyce": 0.4442060432814636,
+      "tuned_auc": 0.8194575629445501,
+      "baseline_boyce": 0.4059542474575348,
       "tier": "medium",
-      "n_presences": 64,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:13:01+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.326) < baseline (+0.411)"
+      "n_presences": 61,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:20:19+00:00"
     },
     "callithomia_hezia": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": 0.4123510909695201,
-      "tuned_boyce": 0.5899109197476798,
-      "tuned_auc": 0.6891518857973342,
+      "tuned_boyce": 0.3704920016326227,
+      "tuned_auc": 0.6574738315124116,
+      "baseline_boyce": 0.3230721757719623,
       "tier": "medium",
-      "n_presences": 84,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:13:04+00:00"
+      "n_presences": 81,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:09:16+00:00"
     },
     "mechanitis_mazaeus": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.4614992605658383,
+      "tuned_auc": 0.6480743667766041,
+      "baseline_boyce": 0.1743150140895098,
+      "tier": "large",
+      "n_presences": 126,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:52:05+00:00"
+    },
+    "heterosais_giulia": {
       "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.4168541886358166,
-      "tuned_boyce": 0.5540402300500814,
-      "tuned_auc": 0.6284270492255504,
-      "tier": "large",
-      "n_presences": 134,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:13:21+00:00"
-    },
-    "heterosais_giulia": {
-      "maxent_rm": 2.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.4186707266509747,
-      "tuned_boyce": 0.5546594145060723,
-      "tuned_auc": 0.5846719983210351,
+      "tuned_boyce": 0.6051086762098206,
+      "tuned_auc": 0.5958164907364827,
+      "baseline_boyce": 0.08750254067746392,
       "tier": "medium",
-      "n_presences": 57,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:13:25+00:00"
+      "n_presences": 55,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:25:20+00:00"
     },
     "melinaea_ludovica": {
-      "baseline_boyce": 0.4216541474942954,
-      "tuned_boyce": 0.3586434178091281,
-      "tuned_auc": 0.6583509282077623,
-      "tier": "large",
-      "n_presences": 171,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:13:46+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.359) < baseline (+0.422)"
-    },
-    "pseudoscada_erruca": {
-      "maxent_rm": 2.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.4282024906522531,
-      "tuned_boyce": 0.44073151916804687,
-      "tuned_auc": 0.5505663381777703,
-      "tier": "large",
-      "n_presences": 102,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:13:48+00:00"
-    },
-    "oleria_paula": {
-      "maxent_rm": 2.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.4363636363636363,
-      "tuned_boyce": 0.6121212121212121,
-      "tuned_auc": 0.5829098347785024,
-      "tier": "large",
-      "n_presences": 309,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:14:02+00:00"
-    },
-    "hyposcada_anchiala": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.4379456823453368,
-      "tuned_boyce": 0.7142890138240758,
-      "tuned_auc": 0.7697940961247223,
-      "tier": "medium",
-      "n_presences": 64,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:14:04+00:00"
+      "tuned_boyce": 0.41655135806545046,
+      "tuned_auc": 0.5643203844627084,
+      "baseline_boyce": 0.5878787878787879,
+      "tier": "large",
+      "n_presences": 169,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:44:11+00:00",
+      "reverted_to_baseline": true,
+      "revert_reason": "tuned (+0.417) < default (+0.588)"
     },
-    "athesis_clearista": {
-      "maxent_rm": 1.0,
+    "pseudoscada_erruca": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.21115259619498064,
+      "tuned_auc": 0.6041062659558201,
+      "baseline_boyce": -0.2519549111847781,
+      "tier": "large",
+      "n_presences": 104,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:55:57+00:00"
+    },
+    "oleria_paula": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.8787878787878787,
+      "tuned_auc": 0.6253756332406829,
+      "baseline_boyce": 0.3151515151515151,
+      "tier": "large",
+      "n_presences": 315,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:19:46+00:00"
+    },
+    "hyposcada_anchiala": {
+      "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.43868179413587693,
-      "tuned_boyce": 0.7319209528025626,
-      "tuned_auc": 0.8140162684363496,
+      "tuned_boyce": 0.7636363636363636,
+      "tuned_auc": 0.6966923445068597,
+      "baseline_boyce": 0.6,
       "tier": "medium",
-      "n_presences": 60,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:14:09+00:00"
+      "n_presences": 64,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:15:29+00:00"
+    },
+    "athesis_clearista": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.9103101402219829,
+      "tuned_auc": 0.7521978400970236,
+      "baseline_boyce": 0.6997857818994536,
+      "tier": "medium",
+      "n_presences": 62,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:16:43+00:00"
     },
     "ithomia_agnosia": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.4402502814234954,
-      "tuned_boyce": 0.7118982844954133,
-      "tuned_auc": 0.666380084193628,
+      "tuned_boyce": 0.7818181818181817,
+      "tuned_auc": 0.633645827849435,
+      "baseline_boyce": 0.43354406100947146,
       "tier": "large",
-      "n_presences": 222,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:14:25+00:00"
+      "n_presences": 217,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:36:54+00:00"
     },
     "pteronymia_notilla": {
       "maxent_rm": 2.0,
@@ -734,94 +763,166 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.44788647697208955,
-      "tuned_boyce": 0.9515151515151514,
-      "tuned_auc": 0.8602948976344542,
+      "tuned_boyce": 0.9422535927041001,
+      "tuned_auc": 0.8851948051948052,
+      "baseline_boyce": 0.5460533760344654,
       "tier": "small",
       "n_presences": 22,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:14:32+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:02:23+00:00"
     },
     "pseudoscada_timna": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge"
+        "hinge",
+        "product"
       ],
-      "baseline_boyce": 0.44982922306361556,
-      "tuned_boyce": 0.7658123327312308,
-      "tuned_auc": 0.7311977300745629,
+      "tuned_boyce": 0.7480774270971038,
+      "tuned_auc": 0.8026063985366136,
+      "baseline_boyce": 0.3008855700573401,
       "tier": "medium",
-      "n_presences": 92,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:14:38+00:00"
+      "n_presences": 90,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:06:35+00:00"
     },
     "mechanitis_menapis": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.4560842860856984,
-      "tuned_boyce": 0.529393676796858,
-      "tuned_auc": 0.57017121981103,
+      "tuned_boyce": 0.7858585858585858,
+      "tuned_auc": 0.6858238605452223,
+      "baseline_boyce": 0.7242424242424241,
       "tier": "large",
-      "n_presences": 342,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:15:05+00:00"
+      "n_presences": 334,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:18:25+00:00"
     },
     "ceratinia_neso": {
-      "baseline_boyce": 0.4676493005153978,
-      "tuned_boyce": 0.08778622169603767,
-      "tuned_auc": 0.609681007966182,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.3602106103011269,
+      "tuned_auc": 0.6447158261568783,
+      "baseline_boyce": -0.35317112664599143,
       "tier": "medium",
-      "n_presences": 58,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:15:02+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.088) < baseline (+0.468)"
+      "n_presences": 57,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:23:19+00:00"
     },
     "pteronymia_artena": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.6801817415051264,
+      "tuned_auc": 0.794389856323518,
+      "baseline_boyce": 0.3887198298635739,
+      "tier": "large",
+      "n_presences": 107,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:58:05+00:00"
+    },
+    "callithomia_lenea": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.4737820513810889,
-      "tuned_boyce": 0.5454545454545454,
-      "tuned_auc": 0.7853854639843125,
+      "tuned_boyce": 0.5614181138354913,
+      "tuned_auc": 0.5938007794834099,
+      "baseline_boyce": 0.5743812010147016,
       "tier": "large",
-      "n_presences": 106,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:15:14+00:00"
-    },
-    "callithomia_lenea": {
-      "baseline_boyce": 0.4782125840280438,
-      "tuned_boyce": 0.3455663053498963,
-      "tuned_auc": 0.5185018476721803,
-      "tier": "large",
-      "n_presences": 118,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:15:32+00:00",
+      "n_presences": 114,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:54:51+00:00",
       "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.346) < baseline (+0.478)"
+      "revert_reason": "tuned (+0.561) < default (+0.574)"
     },
     "thyridia_psidii": {
-      "baseline_boyce": 0.48140399472454487,
-      "tuned_boyce": 0.326561629358877,
-      "tuned_auc": 0.561588486938171,
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.1852330725383967,
+      "tuned_auc": 0.5223883123713465,
+      "baseline_boyce": 0.07396258869402692,
       "tier": "large",
-      "n_presences": 211,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:15:51+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.327) < baseline (+0.481)"
+      "n_presences": 187,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:41:50+00:00"
     },
     "methona_curvifascia": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.8424242424242423,
+      "tuned_auc": 0.7916521739130434,
+      "baseline_boyce": 0.7538028741632801,
+      "tier": "small",
+      "n_presences": 23,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:01:39+00:00"
+    },
+    "hypoleria_lavinia": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.40216579119312834,
+      "tuned_auc": 0.660340913318347,
+      "baseline_boyce": 0.36700848246061635,
+      "tier": "large",
+      "n_presences": 160,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:48:04+00:00"
+    },
+    "pteronymia_simplex": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.7305786745423576,
+      "tuned_auc": 0.7744315982738763,
+      "baseline_boyce": 0.44674247835423964,
+      "tier": "medium",
+      "n_presences": 61,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:20:59+00:00"
+    },
+    "dircenna_klugii": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge",
+        "product"
+      ],
+      "tuned_boyce": 0.8343434343434343,
+      "tuned_auc": 0.6858764790714222,
+      "baseline_boyce": 0.6688255133319914,
+      "tier": "large",
+      "n_presences": 292,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:24:36+00:00"
+    },
+    "elzunia_pavonii": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
@@ -829,66 +930,13 @@
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.48148515760015625,
-      "tuned_boyce": 0.8545454545454544,
-      "tuned_auc": 0.8404217509773724,
-      "tier": "small",
-      "n_presences": 23,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:15:54+00:00"
-    },
-    "hypoleria_lavinia": {
-      "baseline_boyce": 0.4866264147159944,
-      "tuned_boyce": 0.4206541971246114,
-      "tuned_auc": 0.5901707196281579,
-      "tier": "large",
-      "n_presences": 166,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:16:09+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.421) < baseline (+0.487)"
-    },
-    "pteronymia_simplex": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.49510930178820917,
-      "tuned_boyce": 0.6882765981092444,
-      "tuned_auc": 0.7959567843200236,
+      "tuned_boyce": 0.8245651686805551,
+      "tuned_auc": 0.8177967200005465,
+      "baseline_boyce": 0.7131343703220772,
       "tier": "medium",
-      "n_presences": 61,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:16:12+00:00"
-    },
-    "dircenna_klugii": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.5061713023177735,
-      "tuned_boyce": 0.8609938886585299,
-      "tuned_auc": 0.6268427410643704,
-      "tier": "large",
-      "n_presences": 295,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:16:21+00:00"
-    },
-    "elzunia_pavonii": {
-      "maxent_rm": 3.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.5165341769914421,
-      "tuned_boyce": 0.8426125408396146,
-      "tuned_auc": 0.8915090152452105,
-      "tier": "medium",
-      "n_presences": 61,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:16:26+00:00"
+      "n_presences": 55,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:23:53+00:00"
     },
     "hyalyris_oulita": {
       "maxent_rm": 3.0,
@@ -912,197 +960,208 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.5236716289065411,
-      "tuned_boyce": 0.9515151515151514,
-      "tuned_auc": 0.8445231595823043,
+      "tuned_boyce": 0.9878787878787878,
+      "tuned_auc": 0.8818439621293319,
+      "baseline_boyce": 0.8024353176576852,
       "tier": "small",
-      "n_presences": 49,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:17:08+00:00"
+      "n_presences": 48,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:31:16+00:00"
     },
     "hyalyris_excelsa": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.5236716289065411,
-      "tuned_boyce": 0.8896375227527807,
-      "tuned_auc": 0.6907786708149685,
+      "tuned_boyce": 0.8282832108387959,
+      "tuned_auc": 0.7264008076728925,
+      "baseline_boyce": 0.779199761307608,
       "tier": "small",
       "n_presences": 21,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:17:13+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:02:11+00:00"
     },
     "heterosais_nephele": {
-      "maxent_rm": 4.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge",
-        "product"
-      ],
-      "baseline_boyce": 0.531509589558614,
-      "tuned_boyce": 0.9515151515151514,
-      "tuned_auc": 0.8365720817643894,
-      "tier": "small",
-      "n_presences": 22,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:17:24+00:00"
-    },
-    "hypothyris_euclea": {
-      "baseline_boyce": 0.532716140771086,
-      "tuned_boyce": 0.40750149953754,
-      "tuned_auc": 0.6250009403536274,
-      "tier": "large",
-      "n_presences": 373,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:18:01+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.408) < baseline (+0.533)"
-    },
-    "oleria_aquata": {
-      "baseline_boyce": 0.5335646475933996,
-      "tuned_boyce": -0.022370002552044604,
-      "tuned_auc": 0.3928160504525323,
-      "tier": "medium",
-      "n_presences": 52,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:18:05+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (-0.022) < baseline (+0.534)"
-    },
-    "pteronymia_veia": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.5428568793179368,
-      "tuned_boyce": 0.6142145015376419,
-      "tuned_auc": 0.6125705559983998,
-      "tier": "medium",
-      "n_presences": 55,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:18:05+00:00"
-    },
-    "tithorea_harmonia": {
-      "baseline_boyce": 0.543320101818039,
-      "tuned_boyce": 0.435844191939605,
-      "tuned_auc": 0.5896765186761405,
-      "tier": "large",
-      "n_presences": 503,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:18:58+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.436) < baseline (+0.543)"
-    },
-    "dircenna_jemina": {
-      "maxent_rm": 3.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.5434343434343434,
-      "tuned_boyce": 0.5914335526177561,
-      "tuned_auc": 0.6062308843316329,
-      "tier": "large",
-      "n_presences": 108,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:19:05+00:00"
-    },
-    "hyposcada_virginiana": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.5491992117014928,
-      "tuned_boyce": 0.7292929292929292,
-      "tuned_auc": 0.6646354466438702,
-      "tier": "large",
-      "n_presences": 173,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:19:15+00:00"
-    },
-    "napeogenes_rhezia": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.5753922836133599,
-      "tuned_boyce": 0.9636363636363635,
-      "tuned_auc": 0.8809301238607151,
-      "tier": "small",
-      "n_presences": 22,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:19:21+00:00"
-    },
-    "mcclungia_salonina": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.5753922836133599,
-      "tuned_boyce": 0.9387209722839688,
-      "tuned_auc": 0.7869814592503668,
-      "tier": "small",
-      "n_presences": 21,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:19:22+00:00"
-    },
-    "oleria_amalda": {
-      "maxent_rm": 4.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge",
-        "product"
-      ],
-      "baseline_boyce": 0.5863015770075437,
-      "tuned_boyce": 0.7508135194010288,
-      "tuned_auc": 0.7894677224101161,
-      "tier": "medium",
-      "n_presences": 62,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:19:27+00:00"
-    },
-    "oleria_fumata": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.5957474328064633,
-      "tuned_boyce": 0.9361745372672995,
-      "tuned_auc": 0.9347790693888183,
+      "tuned_boyce": 0.8424242424242423,
+      "tuned_auc": 0.8430162188332122,
+      "baseline_boyce": 0.4127015636572768,
       "tier": "small",
-      "n_presences": 29,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:19:34+00:00"
+      "n_presences": 24,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:00:23+00:00"
     },
-    "mechanitis_lysimnia": {
+    "hypothyris_euclea": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.6003016339570093,
+      "tuned_auc": 0.629205616906612,
+      "baseline_boyce": 0.5429728318446366,
+      "tier": "large",
+      "n_presences": 372,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:16:11+00:00"
+    },
+    "oleria_aquata": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.8666666666666665,
+      "tuned_auc": 0.6092256188647034,
+      "baseline_boyce": 0.1580554413568168,
+      "tier": "medium",
+      "n_presences": 49,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:26:53+00:00"
+    },
+    "pteronymia_veia": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge",
+        "product"
+      ],
+      "tuned_boyce": 0.9999999999999999,
+      "tuned_auc": 0.8795901374704753,
+      "baseline_boyce": 0.8787878787878788,
+      "tier": "small",
+      "n_presences": 49,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:29:30+00:00"
+    },
+    "tithorea_harmonia": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge",
+        "product"
+      ],
+      "tuned_boyce": 0.3593123016052441,
+      "tuned_auc": 0.6581087145669561,
+      "baseline_boyce": 0.011472076309965846,
+      "tier": "large",
+      "n_presences": 494,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:09:06+00:00"
+    },
+    "dircenna_jemina": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge",
+        "product"
+      ],
+      "tuned_boyce": 0.5232323232323232,
+      "tuned_auc": 0.6310251520869444,
+      "baseline_boyce": 0.3858365863617592,
+      "tier": "large",
+      "n_presences": 107,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:56:57+00:00"
+    },
+    "hyposcada_virginiana": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.6192279775111065,
+      "tuned_auc": 0.6882233663467325,
+      "baseline_boyce": 0.19936197464405384,
+      "tier": "large",
+      "n_presences": 172,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:45:41+00:00"
+    },
+    "napeogenes_rhezia": {
       "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.5968388677576004,
-      "tuned_boyce": 0.9147962105470413,
-      "tuned_auc": 0.6471002824403123,
+      "tuned_boyce": 0.9878787878787878,
+      "tuned_auc": 0.8244858611825192,
+      "baseline_boyce": 0.8545454545454544,
+      "tier": "small",
+      "n_presences": 20,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:04:19+00:00"
+    },
+    "mcclungia_salonina": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.8896375227527807,
+      "tuned_auc": 0.7737234652897302,
+      "baseline_boyce": 0.5705951008000594,
+      "tier": "small",
+      "n_presences": 21,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:03:17+00:00"
+    },
+    "oleria_amalda": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.504495075766136,
+      "tuned_auc": 0.7824118063794974,
+      "baseline_boyce": 0.22722499116713366,
+      "tier": "medium",
+      "n_presences": 63,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:16:14+00:00"
+    },
+    "oleria_fumata": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9636363636363635,
+      "tuned_auc": 0.9622081519588445,
+      "baseline_boyce": 0.4559291577600484,
+      "tier": "small",
+      "n_presences": 28,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:54:36+00:00"
+    },
+    "mechanitis_lysimnia": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.6767226641228458,
+      "tuned_auc": 0.6974297880614185,
+      "baseline_boyce": 0.6585294275567647,
       "tier": "large",
-      "n_presences": 816,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:01+00:00"
+      "n_presences": 794,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:03:40+00:00"
     },
     "greta_dercetis": {
       "maxent_rm": 1.0,
@@ -1120,78 +1179,77 @@
       "tuned_at": "2026-04-26T04:21:05+00:00"
     },
     "patricia_dercyllidas": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge"
+        "hinge",
+        "product"
       ],
-      "baseline_boyce": 0.6110282333821074,
-      "tuned_boyce": 0.6962590877607495,
-      "tuned_auc": 0.7571216806899251,
+      "tuned_boyce": 0.7550058728920161,
+      "tuned_auc": 0.8492497753655311,
+      "baseline_boyce": 0.7037059638673089,
       "tier": "medium",
       "n_presences": 53,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:08+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:26:29+00:00"
     },
     "methona_singularis": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.8658697553131279,
+      "tuned_auc": 0.8468045112781954,
+      "baseline_boyce": 0.8303030303030302,
+      "tier": "small",
+      "n_presences": 28,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:53:23+00:00"
+    },
+    "oleria_makrena": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.7503001805790444,
+      "tuned_auc": 0.7374288424154025,
+      "baseline_boyce": 0.31975639869843775,
+      "tier": "medium",
+      "n_presences": 93,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:04:43+00:00"
+    },
+    "ithomia_drymo": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.6121212121212121,
-      "tuned_boyce": 0.9240164263936983,
-      "tuned_auc": 0.7666666666666667,
-      "tier": "small",
-      "n_presences": 30,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:09+00:00"
-    },
-    "oleria_makrena": {
-      "maxent_rm": 3.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.6183967868189487,
-      "tuned_boyce": 0.6344516457602682,
-      "tuned_auc": 0.6199529329597584,
+      "tuned_boyce": 0.7696969696969697,
+      "tuned_auc": 0.6890920669577876,
+      "baseline_boyce": 0.17575757575757575,
       "tier": "medium",
-      "n_presences": 98,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:14+00:00"
-    },
-    "ithomia_drymo": {
-      "maxent_rm": 4.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.6190523454859151,
-      "tuned_boyce": 0.8666666666666665,
-      "tuned_auc": 0.6336854005167959,
-      "tier": "medium",
-      "n_presences": 90,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:16+00:00"
+      "n_presences": 86,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:07:36+00:00"
     },
     "melinaea_idae": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.6363636363636362,
-      "tuned_boyce": 0.9544117035777014,
-      "tuned_auc": 0.8985619767755874,
+      "tuned_boyce": 0.9515151515151514,
+      "tuned_auc": 0.8891968891968892,
+      "baseline_boyce": 0.6810328622452322,
       "tier": "small",
-      "n_presences": 28,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:27+00:00"
+      "n_presences": 27,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:55:50+00:00"
     },
     "elzunia_bomplandii": {
       "maxent_rm": 2.0,
@@ -1210,6 +1268,20 @@
       "tuned_at": "2026-04-26T04:21:33+00:00"
     },
     "godyris_nero": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.721891802311646,
+      "tuned_auc": 0.6756924295545618,
+      "baseline_boyce": 0.45187645413551464,
+      "tier": "large",
+      "n_presences": 106,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:59:07+00:00"
+    },
+    "mechanitis_isthmia": {
       "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
@@ -1217,143 +1289,145 @@
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.6637393749900026,
-      "tuned_boyce": 0.7188227871311402,
-      "tuned_auc": 0.718256199219693,
-      "tier": "large",
-      "n_presences": 107,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:34+00:00"
-    },
-    "mechanitis_isthmia": {
-      "baseline_boyce": 0.6704453357716842,
-      "tuned_boyce": 0.5740245559264915,
-      "tuned_auc": 0.6318429538513877,
+      "tuned_boyce": 0.4409184672463786,
+      "tuned_auc": 0.5550537952942265,
+      "baseline_boyce": 0.2200550106307242,
       "tier": "medium",
-      "n_presences": 57,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:38+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.574) < baseline (+0.670)"
+      "n_presences": 56,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:24:24+00:00"
     },
     "ithomia_terra": {
-      "baseline_boyce": 0.6704584932069648,
-      "tuned_boyce": 0.2521912480702321,
-      "tuned_auc": 0.5112517958336659,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.6440701717056188,
+      "tuned_auc": 0.5220410003014506,
+      "baseline_boyce": 0.5649185952818874,
       "tier": "medium",
-      "n_presences": 76,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:42+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.252) < baseline (+0.670)"
+      "n_presences": 77,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:11:27+00:00"
     },
     "ithomia_iphianassa": {
-      "baseline_boyce": 0.6738250106108505,
-      "tuned_boyce": 0.5459287455617332,
-      "tuned_auc": 0.7024922135609636,
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.74810976043225,
+      "tuned_auc": 0.6995538100201136,
+      "baseline_boyce": 0.5592932475935988,
       "tier": "large",
       "n_presences": 148,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:21:51+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.546) < baseline (+0.674)"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:50:50+00:00"
     },
     "pteronymia_cotytto": {
-      "baseline_boyce": 0.6784877872573631,
-      "tuned_boyce": 0.5166371648624463,
-      "tuned_auc": 0.7035673051938207,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.8343434343434343,
+      "tuned_auc": 0.6368674866662867,
+      "baseline_boyce": 0.5998995291757901,
       "tier": "large",
-      "n_presences": 252,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:22:00+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.517) < baseline (+0.678)"
+      "n_presences": 245,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:29:56+00:00"
     },
     "brevioleria_arzalia": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
-        "quadratic",
-        "hinge",
-        "product"
+        "quadratic"
       ],
-      "baseline_boyce": 0.6810328622452322,
-      "tuned_boyce": 0.9848069807617047,
-      "tuned_auc": 0.8689745836985101,
+      "tuned_boyce": 0.9515151515151514,
+      "tuned_auc": 0.7562770562770562,
+      "baseline_boyce": 0.9515151515151514,
       "tier": "small",
-      "n_presences": 34,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:22:08+00:00"
+      "n_presences": 35,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:48:09+00:00"
     },
     "mechanitis_polymnia": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.9272727272727272,
+      "tuned_auc": 0.6326381084056331,
+      "baseline_boyce": 0.8909090909090909,
+      "tier": "large",
+      "n_presences": 1285,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T13:59:03+00:00"
+    },
+    "hypothyris_lycaste": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.6202020202020201,
+      "tuned_auc": 0.6337749871976077,
+      "baseline_boyce": 0.7252525252525251,
+      "tier": "large",
+      "n_presences": 160,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:49:45+00:00",
+      "reverted_to_baseline": true,
+      "revert_reason": "tuned (+0.620) < default (+0.725)"
+    },
+    "dircenna_marica": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.6846141805746766,
-      "tuned_boyce": 0.8324356612974048,
-      "tuned_auc": 0.5652787503004538,
-      "tier": "large",
-      "n_presences": 1295,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:23:38+00:00"
+      "tuned_boyce": 0.9272727272727272,
+      "tuned_auc": 0.8448288690476191,
+      "baseline_boyce": 0.803741486073202,
+      "tier": "small",
+      "n_presences": 21,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:02:48+00:00"
     },
-    "hypothyris_lycaste": {
+    "tithorea_tarricina": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.7020409587366971,
+      "tuned_auc": 0.5884067093204464,
+      "baseline_boyce": 0.35918219379827654,
+      "tier": "large",
+      "n_presences": 293,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:23:30+00:00"
+    },
+    "greta_diaphanus": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": 0.6975047288793399,
-      "tuned_boyce": 0.7030303030303029,
-      "tuned_auc": 0.6734536958861814,
-      "tier": "large",
-      "n_presences": 168,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:23:48+00:00"
-    },
-    "dircenna_marica": {
-      "maxent_rm": 2.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.7065951014132162,
-      "tuned_boyce": 0.9141792475183746,
-      "tuned_auc": 0.7987747035573123,
+      "tuned_boyce": 0.8669214468630109,
+      "tuned_auc": 0.9924242424242424,
+      "baseline_boyce": 0.12198750911856665,
       "tier": "small",
-      "n_presences": 20,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:23:58+00:00"
-    },
-    "tithorea_tarricina": {
-      "baseline_boyce": 0.7158033931103903,
-      "tuned_boyce": 0.4900256492481616,
-      "tuned_auc": 0.471667747042417,
-      "tier": "large",
-      "n_presences": 307,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:24:12+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.490) < baseline (+0.716)"
-    },
-    "greta_diaphanus": {
-      "maxent_rm": 4.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.7323943713270297,
-      "tuned_boyce": 0.7365429242103546,
-      "tuned_auc": 0.9309090909090909,
-      "tier": "small",
-      "n_presences": 25,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:24:13+00:00"
+      "n_presences": 24,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:00:36+00:00"
     },
     "heliconius_numata": {
       "maxent_rm": 3.0,
@@ -1371,50 +1445,6 @@
       "tuned_at": "2026-04-26T04:24:17+00:00"
     },
     "elzunia_humboldtii": {
-      "maxent_rm": 4.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.7437192320325471,
-      "tuned_boyce": 0.8134587918953196,
-      "tuned_auc": 0.755947310494004,
-      "tier": "medium",
-      "n_presences": 67,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:24:21+00:00"
-    },
-    "oleria_athalina": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.7914706236904049,
-      "tuned_boyce": 0.8787878787878788,
-      "tuned_auc": 0.8720876938354595,
-      "tier": "small",
-      "n_presences": 38,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:24:50+00:00"
-    },
-    "pteronymia_sylvo": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.7963562622208846,
-      "tuned_boyce": 0.8424242424242423,
-      "tuned_auc": 0.6511156186612577,
-      "tier": "small",
-      "n_presences": 20,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:24:53+00:00"
-    },
-    "ithomia_lichyi": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
@@ -1422,40 +1452,15 @@
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.803741486073202,
-      "tuned_boyce": 0.9483326481409007,
-      "tuned_auc": 0.9039986061503615,
-      "tier": "small",
-      "n_presences": 26,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:25:01+00:00"
-    },
-    "pteronymia_aletta": {
-      "baseline_boyce": 0.8060606060606059,
-      "tuned_boyce": 0.6363636363636362,
-      "tuned_auc": 0.5979140019837694,
+      "tuned_boyce": 0.8891702442124089,
+      "tuned_auc": 0.7357065993970755,
+      "baseline_boyce": 0.5983672002927514,
       "tier": "medium",
-      "n_presences": 67,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:25:01+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.636) < baseline (+0.806)"
+      "n_presences": 66,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:12:58+00:00"
     },
-    "pteronymia_vestilla": {
-      "maxent_rm": 2.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.8145934285312865,
-      "tuned_boyce": 0.9483326481409007,
-      "tuned_auc": 0.7728884590586718,
-      "tier": "small",
-      "n_presences": 33,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:25:21+00:00"
-    },
-    "godyris_duillia": {
+    "oleria_athalina": {
       "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
@@ -1463,57 +1468,132 @@
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.8160123484559988,
-      "tuned_boyce": 0.9515151515151514,
-      "tuned_auc": 0.8852425180598555,
+      "tuned_boyce": 0.6606060606060605,
+      "tuned_auc": 0.8815257286793811,
+      "baseline_boyce": 0.4846990641204805,
       "tier": "small",
-      "n_presences": 34,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:25:50+00:00"
+      "n_presences": 35,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:47:40+00:00"
+    },
+    "pteronymia_sylvo": {
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9726488698881034,
+      "tuned_auc": 0.8575638506876226,
+      "baseline_boyce": 0.27609440361293197,
+      "tier": "small",
+      "n_presences": 20,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:03:46+00:00"
+    },
+    "ithomia_lichyi": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.8909090909090909,
+      "tuned_auc": 0.8983954918914268,
+      "baseline_boyce": 0.6484848484848483,
+      "tier": "small",
+      "n_presences": 27,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:52:53+00:00"
+    },
+    "pteronymia_aletta": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.4974523206719304,
+      "tuned_auc": 0.6531818775965605,
+      "baseline_boyce": 0.2214616581237804,
+      "tier": "medium",
+      "n_presences": 62,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:19:43+00:00"
+    },
+    "pteronymia_vestilla": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.9726488698881034,
+      "tuned_auc": 0.7528953674121406,
+      "baseline_boyce": 0.9141792475183746,
+      "tier": "small",
+      "n_presences": 32,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:49:04+00:00"
+    },
+    "godyris_duillia": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9636363636363635,
+      "tuned_auc": 0.9156770012261342,
+      "baseline_boyce": 0.7538028741632801,
+      "tier": "small",
+      "n_presences": 30,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:50:40+00:00"
     },
     "episcada_polita": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge"
       ],
-      "baseline_boyce": 0.8328305948416885,
-      "tuned_boyce": 0.9665698144513026,
-      "tuned_auc": 0.7653171390013495,
+      "tuned_boyce": 0.9848069807617047,
+      "tuned_auc": 0.8203986254295533,
+      "baseline_boyce": 0.8936211492096949,
       "tier": "small",
       "n_presences": 25,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:26:02+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:58:52+00:00"
     },
     "napeogenes_sylphis": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge"
       ],
-      "baseline_boyce": 0.8389096502784891,
-      "tuned_boyce": 0.8753839828992931,
-      "tuned_auc": 0.735209408376335,
+      "tuned_boyce": 0.960490759014502,
+      "tuned_auc": 0.8085754309032219,
+      "baseline_boyce": 0.7781190959104827,
       "tier": "small",
       "n_presences": 39,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:26:15+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:42:52+00:00"
     },
     "ithomia_leilae": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.8424242424242423,
       "tuned_boyce": 0.9515151515151514,
-      "tuned_auc": 0.8616229923922232,
+      "tuned_auc": 0.8769205622752534,
+      "baseline_boyce": 0.9030303030303028,
       "tier": "small",
       "n_presences": 42,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:26:39+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:40:02+00:00"
     },
     "hypothyris_mansuetus": {
       "maxent_rm": 2.0,
@@ -1553,28 +1633,29 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.8545454545454544,
       "tuned_boyce": 0.9636363636363635,
-      "tuned_auc": 0.8459821428571428,
+      "tuned_auc": 0.8450261780104712,
+      "baseline_boyce": 0.5757575757575757,
       "tier": "small",
-      "n_presences": 35,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:27:09+00:00"
+      "n_presences": 29,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:52:30+00:00"
     },
     "ithomia_patilla": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge"
+        "hinge",
+        "product"
       ],
-      "baseline_boyce": 0.8545454545454545,
-      "tuned_boyce": 0.8527973831606752,
-      "tuned_auc": 0.7542209699901823,
+      "tuned_boyce": 0.8655934455159411,
+      "tuned_auc": 0.6643986202422907,
+      "baseline_boyce": 0.6857103221860856,
       "tier": "large",
-      "n_presences": 285,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:27:21+00:00"
+      "n_presences": 288,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T14:25:28+00:00"
     },
     "hypothyris_leprieurii": {
       "maxent_rm": 1.0,
@@ -1592,46 +1673,49 @@
       "tuned_at": "2026-04-26T04:27:34+00:00"
     },
     "placidina_euryanassa": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.8632258720256917,
-      "tuned_boyce": 0.9151515151515152,
-      "tuned_auc": 0.7300420168067226,
+      "tuned_boyce": 0.7939393939393938,
+      "tuned_auc": 0.7671757507823082,
+      "baseline_boyce": 0.2978737164032316,
       "tier": "small",
-      "n_presences": 28,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:27:40+00:00"
+      "n_presences": 27,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:56:23+00:00"
     },
     "napeogenes_stella": {
-      "maxent_rm": 3.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.8650957979871867,
-      "tuned_boyce": 0.9636363636363635,
-      "tuned_auc": 0.8457286301441133,
+      "tuned_boyce": 0.9665698144513026,
+      "tuned_auc": 0.8419153160888698,
+      "baseline_boyce": 0.480245379507251,
       "tier": "small",
-      "n_presences": 43,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:28:03+00:00"
+      "n_presences": 44,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:35:05+00:00"
     },
     "melinaea_mneme": {
-      "baseline_boyce": 0.8690752735776424,
-      "tuned_boyce": 0.3313367091829342,
-      "tuned_auc": 0.4622439881915458,
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.30255832767896856,
+      "tuned_auc": 0.5815404722039477,
+      "baseline_boyce": -0.4794044539109472,
       "tier": "medium",
-      "n_presences": 68,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:28:06+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.331) < baseline (+0.869)"
+      "n_presences": 66,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:13:25+00:00"
     },
     "eutresis_hypereia": {
       "maxent_rm": 1.0,
@@ -1639,27 +1723,27 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.8693049274624923,
-      "tuned_boyce": 0.9632626970495626,
-      "tuned_auc": 0.8029831595829992,
+      "tuned_boyce": 0.9019083851355777,
+      "tuned_auc": 0.7805355600345523,
+      "baseline_boyce": 0.9004397752522403,
       "tier": "small",
-      "n_presences": 29,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:28:16+00:00"
+      "n_presences": 23,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:00:53+00:00"
     },
     "godyris_dircenna": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.8753839828992931,
-      "tuned_boyce": 0.9416499059918954,
-      "tuned_auc": 0.7175915608052894,
+      "tuned_boyce": 0.9848069807617047,
+      "tuned_auc": 0.714906444906445,
+      "baseline_boyce": 0.9848069807617047,
       "tier": "small",
-      "n_presences": 28,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:28:34+00:00"
+      "n_presences": 25,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:59:45+00:00"
     },
     "hypoleria_alema": {
       "maxent_rm": 1.0,
@@ -1667,67 +1751,15 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.8773666603699838,
-      "tuned_boyce": 0.9387209722839688,
-      "tuned_auc": 0.6927637411347517,
+      "tuned_boyce": 0.9632626970495626,
+      "tuned_auc": 0.7022083058668425,
+      "baseline_boyce": 0.9509918346667656,
       "tier": "small",
       "n_presences": 36,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:28:55+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:44:36+00:00"
     },
     "ithomia_diasia": {
-      "baseline_boyce": 0.8787878787878788,
-      "tuned_boyce": 0.8517106071828138,
-      "tuned_auc": 0.5509035924913025,
-      "tier": "large",
-      "n_presences": 109,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:29:02+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.852) < baseline (+0.879)"
-    },
-    "forbestra_equicola": {
-      "baseline_boyce": 0.8816806132678187,
-      "tuned_boyce": 0.6808542089216724,
-      "tuned_auc": 0.8315053250675568,
-      "tier": "small",
-      "n_presences": 27,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:29:04+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.681) < baseline (+0.882)"
-    },
-    "melinaea_satevis": {
-      "maxent_rm": 3.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.8875420937728943,
-      "tuned_boyce": 0.9272727272727272,
-      "tuned_auc": 0.8126148361442479,
-      "tier": "small",
-      "n_presences": 33,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:29:13+00:00"
-    },
-    "pteronymia_euritea": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ],
-      "baseline_boyce": 0.8896375227527807,
-      "tuned_boyce": 0.9755335594323594,
-      "tuned_auc": 0.9191826426357479,
-      "tier": "small",
-      "n_presences": 31,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:29:18+00:00"
-    },
-    "greta_nero": {
       "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
@@ -1735,59 +1767,115 @@
         "hinge",
         "product"
       ],
-      "baseline_boyce": 0.8909090909090909,
-      "tuned_boyce": 0.9272727272727272,
-      "tuned_auc": 0.8362313362313362,
+      "tuned_boyce": 0.628083414431943,
+      "tuned_auc": 0.5141518295586902,
+      "baseline_boyce": 0.34175979346674557,
+      "tier": "large",
+      "n_presences": 105,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:00:06+00:00"
+    },
+    "forbestra_equicola": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.772040040473682,
+      "tuned_auc": 0.8422591279467562,
+      "baseline_boyce": 0.5828659631828563,
+      "tier": "small",
+      "n_presences": 23,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:01:47+00:00"
+    },
+    "melinaea_satevis": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.9757575757575757,
+      "tuned_auc": 0.7930797433547204,
+      "baseline_boyce": 0.9636363636363635,
+      "tier": "small",
+      "n_presences": 28,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:55:13+00:00"
+    },
+    "pteronymia_euritea": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.996965091635306,
+      "tuned_auc": 0.8628167641325537,
+      "baseline_boyce": 0.9878787878787878,
+      "tier": "small",
+      "n_presences": 27,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:55:32+00:00"
+    },
+    "greta_nero": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9515151515151514,
+      "tuned_auc": 0.8477265143931811,
+      "baseline_boyce": 0.8632258720256917,
       "tier": "small",
       "n_presences": 37,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:29:30+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:43:35+00:00"
     },
     "olyras_crathis": {
       "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": 0.8936211492096949,
-      "tuned_boyce": 0.9483326481409007,
-      "tuned_auc": 0.8496546661773048,
+      "tuned_boyce": 0.9387209722839688,
+      "tuned_auc": 0.8755102040816327,
+      "baseline_boyce": 0.41107388982369863,
       "tier": "small",
-      "n_presences": 34,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:30:00+00:00"
+      "n_presences": 28,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:53:57+00:00"
     },
     "callithomia_alexirrhoe": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.8941867212574329,
-      "tuned_boyce": 0.9361745372672995,
-      "tuned_auc": 0.8199281268524007,
+      "tuned_boyce": 0.9726488698881034,
+      "tuned_auc": 0.7978761061946903,
+      "baseline_boyce": 0.7441134253820597,
       "tier": "small",
-      "n_presences": 32,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:30:15+00:00"
+      "n_presences": 25,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:59:07+00:00"
     },
     "oleria_zelica": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
-        "quadratic",
-        "hinge"
+        "quadratic"
       ],
-      "baseline_boyce": 0.9019083851355777,
-      "tuned_boyce": 0.9878787878787878,
-      "tuned_auc": 0.9117370229187256,
+      "tuned_boyce": 0.9509918346667656,
+      "tuned_auc": 0.8448086887206058,
+      "baseline_boyce": 0.9509918346667656,
       "tier": "small",
-      "n_presences": 27,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:30:33+00:00"
+      "n_presences": 26,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:57:49+00:00"
     },
     "heliconius_erato": {
       "maxent_rm": 1.0,
@@ -1804,40 +1892,48 @@
       "tuned_at": "2026-04-26T04:30:36+00:00"
     },
     "hypothyris_anastasia": {
-      "baseline_boyce": 0.9030303030303028,
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
       "tuned_boyce": 0.8666666666666665,
-      "tuned_auc": 0.8220952911674562,
+      "tuned_auc": 0.8397244045392194,
+      "baseline_boyce": 0.4012176588288426,
       "tier": "small",
-      "n_presences": 37,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:31:00+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.867) < baseline (+0.903)"
+      "n_presences": 36,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:45:38+00:00"
     },
     "greta_oto": {
-      "baseline_boyce": 0.9141792475183746,
-      "tuned_boyce": 0.8650957979871867,
-      "tuned_auc": 0.7628604832424006,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9272727272727272,
+      "tuned_auc": 0.8621533030761472,
+      "baseline_boyce": 0.8024353176576852,
       "tier": "small",
-      "n_presences": 32,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:31:13+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.865) < baseline (+0.914)"
+      "n_presences": 30,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:51:11+00:00"
     },
     "scada_karschina": {
-      "maxent_rm": 4.0,
+      "maxent_rm": 1.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.9141792475183746,
-      "tuned_boyce": 0.9393939393939393,
-      "tuned_auc": 0.9332785987958402,
+      "tuned_boyce": 0.8109906863144085,
+      "tuned_auc": 0.8876404494382022,
+      "baseline_boyce": 0.766928898924811,
       "tier": "small",
-      "n_presences": 29,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:31:20+00:00"
+      "n_presences": 26,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:58:04+00:00"
     },
     "oleria_aegle": {
       "baseline_boyce": 0.9141792475183746,
@@ -1851,29 +1947,32 @@
       "revert_reason": "tuned (+0.534) < baseline (+0.914)"
     },
     "pseudoscada_pusio": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.9141792475183746,
-      "tuned_boyce": 0.9483326481409007,
-      "tuned_auc": 0.7953904991948471,
+      "tuned_boyce": 0.9878787878787878,
+      "tuned_auc": 0.8403370085292282,
+      "baseline_boyce": 0.9483326481409007,
       "tier": "small",
       "n_presences": 23,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:31:24+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:00:42+00:00"
     },
     "aeria_elara": {
-      "baseline_boyce": 0.9151515151515152,
-      "tuned_boyce": 0.7939393939393938,
-      "tuned_auc": 0.9058221754174816,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.6,
+      "tuned_auc": 0.8000638773554775,
+      "baseline_boyce": 0.6,
       "tier": "small",
-      "n_presences": 34,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:31:32+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.794) < baseline (+0.915)"
+      "n_presences": 31,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:49:45+00:00"
     },
     "oleria_gunilla": {
       "maxent_rm": 2.0,
@@ -1882,64 +1981,71 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.9240164263936983,
-      "tuned_boyce": 0.9393939393939393,
-      "tuned_auc": 0.8348499906826511,
+      "tuned_boyce": 0.9878787878787878,
+      "tuned_auc": 0.8462867012089809,
+      "baseline_boyce": 0.9272727272727272,
       "tier": "small",
-      "n_presences": 34,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:31:57+00:00"
+      "n_presences": 36,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:46:52+00:00"
     },
     "hyalyris_antea": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 1.5,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.9632626970495626,
+      "tuned_auc": 0.7267122823656933,
+      "baseline_boyce": 0.9632626970495626,
+      "tier": "small",
+      "n_presences": 29,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:52:09+00:00"
+    },
+    "oleria_padilla": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.9848069807617047,
+      "tuned_auc": 0.798932384341637,
+      "baseline_boyce": 0.9118583155200968,
+      "tier": "small",
+      "n_presences": 32,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:49:36+00:00"
+    },
+    "brevioleria_aelia": {
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.9240164263936983,
-      "tuned_boyce": 0.9757575757575757,
-      "tuned_auc": 0.8492009415262637,
-      "tier": "small",
-      "n_presences": 32,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:32:02+00:00"
-    },
-    "oleria_padilla": {
-      "maxent_rm": 1.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ],
-      "baseline_boyce": 0.9272727272727272,
-      "tuned_boyce": 0.9632626970495626,
-      "tuned_auc": 0.8333858764186632,
-      "tier": "small",
-      "n_presences": 32,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:32:13+00:00"
-    },
-    "brevioleria_aelia": {
-      "baseline_boyce": 0.9317050452262763,
-      "tuned_boyce": 0.9141792475183746,
-      "tuned_auc": 0.8032610581092801,
-      "tier": "small",
-      "n_presences": 25,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:32:22+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.914) < baseline (+0.932)"
-    },
-    "ithomia_celemia": {
-      "baseline_boyce": 0.9361745372672995,
-      "tuned_boyce": 0.8773666603699838,
-      "tuned_auc": 0.8069585299728889,
+      "tuned_boyce": 0.9483326481409007,
+      "tuned_auc": 0.8541010995842562,
+      "baseline_boyce": 0.8145934285312865,
       "tier": "small",
       "n_presences": 23,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:32:28+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.877) < baseline (+0.936)"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:01:15+00:00"
+    },
+    "ithomia_celemia": {
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9509918346667656,
+      "tuned_auc": 0.7997807818779686,
+      "baseline_boyce": 0.9191989372366619,
+      "tier": "small",
+      "n_presences": 21,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:02:33+00:00"
     },
     "ithomia_xenos": {
       "maxent_rm": 3.0,
@@ -1947,82 +2053,87 @@
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.9387209722839688,
-      "tuned_boyce": 0.9878787878787878,
-      "tuned_auc": 0.8447779605263157,
+      "tuned_boyce": 0.8787878787878788,
+      "tuned_auc": 0.85,
+      "baseline_boyce": 0.8666666666666665,
       "tier": "small",
-      "n_presences": 32,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:32:32+00:00"
+      "n_presences": 34,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:48:35+00:00"
     },
     "oleria_rubescens": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge"
       ],
-      "baseline_boyce": 0.9393939393939393,
-      "tuned_boyce": 0.9757575757575757,
-      "tuned_auc": 0.8709634551495017,
+      "tuned_boyce": 0.9726488698881034,
+      "tuned_auc": 0.8937862950058073,
+      "baseline_boyce": 0.9515151515151514,
       "tier": "small",
-      "n_presences": 43,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:32:40+00:00"
+      "n_presences": 42,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:39:17+00:00"
     },
     "pseudoscada_florula": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.9422535927041001,
-      "tuned_boyce": 0.9848069807617047,
-      "tuned_auc": 0.7497428564260806,
+      "tuned_boyce": 0.9878044218151566,
+      "tuned_auc": 0.7297425853385562,
+      "baseline_boyce": 0.9878044218151566,
       "tier": "small",
-      "n_presences": 43,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:33:11+00:00"
+      "n_presences": 40,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:41:00+00:00"
     },
     "episcada_carcinia": {
-      "baseline_boyce": 0.9422535927041001,
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
       "tuned_boyce": 0.9240164263936983,
-      "tuned_auc": 0.7119428090832634,
+      "tuned_auc": 0.63729216152019,
+      "baseline_boyce": 0.7454545454545454,
       "tier": "small",
-      "n_presences": 29,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:33:18+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.924) < baseline (+0.942)"
+      "n_presences": 25,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:00:02+00:00"
     },
     "hypothyris_fluonia": {
       "maxent_rm": 3.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": 0.9483326481409007,
-      "tuned_boyce": 0.9878787878787878,
-      "tuned_auc": 0.8011272626546072,
+      "tuned_boyce": 0.9757575757575757,
+      "tuned_auc": 0.7621075039914849,
+      "baseline_boyce": 0.9019083851355777,
       "tier": "small",
-      "n_presences": 43,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:34:03+00:00"
+      "n_presences": 40,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:42:18+00:00"
     },
     "episcada_clausina": {
-      "maxent_rm": 2.0,
+      "maxent_rm": 1.5,
       "maxent_features": [
         "linear",
-        "quadratic"
+        "quadratic",
+        "hinge"
       ],
-      "baseline_boyce": 0.9483326481409007,
-      "tuned_boyce": 0.9999999999999999,
-      "tuned_auc": 0.6821351527617519,
+      "tuned_boyce": 0.9636363636363635,
+      "tuned_auc": 0.8093655589123867,
+      "baseline_boyce": 0.8389096502784891,
       "tier": "small",
-      "n_presences": 31,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:34:06+00:00"
+      "n_presences": 25,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:58:11+00:00"
     },
     "dryas_iulia": {
       "baseline_boyce": 0.9509918346667656,
@@ -2036,31 +2147,33 @@
       "revert_reason": "tuned (+0.930) < baseline (+0.951)"
     },
     "dircenna_adina": {
-      "maxent_rm": 1.0,
+      "maxent_rm": 4.0,
       "maxent_features": [
         "linear",
         "quadratic",
-        "hinge",
-        "product"
+        "hinge"
       ],
-      "baseline_boyce": 0.9515151515151514,
-      "tuned_boyce": 0.9515151515151514,
-      "tuned_auc": 0.858786610878661,
+      "tuned_boyce": 0.9878787878787878,
+      "tuned_auc": 0.868077700863343,
+      "baseline_boyce": 0.8787878787878788,
       "tier": "small",
       "n_presences": 46,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:35:03+00:00"
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:34:08+00:00"
     },
     "ithomia_avella": {
-      "baseline_boyce": 0.9515151515151514,
-      "tuned_boyce": 0.9264501099011717,
-      "tuned_auc": 0.8266880950044164,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.8875420937728943,
+      "tuned_auc": 0.8195924471863899,
+      "baseline_boyce": 0.859772080979937,
       "tier": "small",
-      "n_presences": 23,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:35:12+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.926) < baseline (+0.952)"
+      "n_presences": 21,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:03:09+00:00"
     },
     "oleria_astrea": {
       "maxent_rm": 1.0,
@@ -2069,125 +2182,147 @@
         "quadratic",
         "hinge"
       ],
-      "baseline_boyce": 0.960490759014502,
-      "tuned_boyce": 0.9573348703109935,
-      "tuned_auc": 0.887980108617418,
+      "tuned_boyce": 0.9422535927041001,
+      "tuned_auc": 0.8937839937839938,
+      "baseline_boyce": 0.5349568784384567,
       "tier": "small",
-      "n_presences": 29,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:35:22+00:00"
+      "n_presences": 26,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:56:57+00:00"
     },
     "godyris_kedema": {
-      "baseline_boyce": 0.9636363636363635,
-      "tuned_boyce": 0.9509918346667656,
-      "tuned_auc": 0.7024164524421594,
+      "maxent_rm": 2.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9787279253249042,
+      "tuned_auc": 0.8645973909131803,
+      "baseline_boyce": 0.8754275592730113,
       "tier": "small",
-      "n_presences": 25,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:35:28+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.951) < baseline (+0.964)"
+      "n_presences": 26,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:56:41+00:00"
     },
     "pteronymia_picta": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic"
+      ],
+      "tuned_boyce": 0.9817255676437577,
+      "tuned_auc": 0.7208260489510491,
       "baseline_boyce": 0.9726488698881034,
-      "tuned_boyce": 0.8963581269790831,
-      "tuned_auc": 0.8696366132982263,
       "tier": "small",
-      "n_presences": 47,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:35:59+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.896) < baseline (+0.973)"
+      "n_presences": 44,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:37:47+00:00"
     },
     "methona_grandior": {
-      "baseline_boyce": 0.9755335594323594,
-      "tuned_boyce": 0.9272727272727272,
-      "tuned_auc": 0.8883688789772906,
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9483326481409007,
+      "tuned_auc": 0.8875718390804598,
+      "baseline_boyce": 0.8181818181818182,
       "tier": "small",
-      "n_presences": 31,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:36:07+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.927) < baseline (+0.976)"
+      "n_presences": 29,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:51:38+00:00"
     },
     "dircenna_loreta": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.996965091635306,
+      "tuned_auc": 0.8434132447187277,
+      "baseline_boyce": 0.9509918346667656,
+      "tier": "small",
+      "n_presences": 44,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:36:35+00:00"
+    },
+    "hyalyris_coeno": {
+      "maxent_rm": 3.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge",
+        "product"
+      ],
+      "tuned_boyce": 0.9878787878787878,
+      "tuned_auc": 0.8808309549431526,
+      "baseline_boyce": 0.6808542089216724,
+      "tier": "small",
+      "n_presences": 44,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:38:45+00:00"
+    },
+    "pteronymia_carlia": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.49461446557582855,
+      "tuned_auc": 0.5027515103756238,
+      "baseline_boyce": -0.19966328691143403,
+      "tier": "medium",
+      "n_presences": 58,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T15:22:40+00:00"
+    },
+    "melinaea_mnasias": {
+      "maxent_rm": 4.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9483326481409007,
+      "tuned_auc": 0.8082070707070707,
+      "baseline_boyce": 0.754658036542014,
+      "tier": "small",
+      "n_presences": 20,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:03:52+00:00"
+    },
+    "oleria_didymaea": {
+      "maxent_rm": 1.0,
+      "maxent_features": [
+        "linear",
+        "quadratic",
+        "hinge"
+      ],
+      "tuned_boyce": 0.9726488698881034,
+      "tuned_auc": 0.8004950495049504,
+      "baseline_boyce": 0.9317050452262763,
+      "tier": "small",
+      "n_presences": 20,
+      "grid_size": 15,
+      "tuned_at": "2026-04-27T16:04:09+00:00"
+    },
+    "godyris_panthyale": {
       "maxent_rm": 2.0,
       "maxent_features": [
         "linear",
         "quadratic"
       ],
-      "baseline_boyce": 0.9848069807617047,
-      "tuned_boyce": 0.9878044218151566,
-      "tuned_auc": 0.6832835773744649,
-      "tier": "small",
-      "n_presences": 47,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:37:22+00:00"
-    },
-    "hyalyris_coeno": {
-      "baseline_boyce": 0.996965091635306,
       "tuned_boyce": 0.9361745372672995,
-      "tuned_auc": 0.6637115839243498,
-      "tier": "small",
-      "n_presences": 47,
-      "grid_size": 12,
-      "tuned_at": "2026-04-26T04:38:19+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.936) < baseline (+0.997)"
-    },
-    "pteronymia_carlia": {
-      "baseline_boyce": 0.009564473643647015,
-      "tuned_boyce": 0.563830475672511,
-      "tuned_auc": 0.6190182126577782,
-      "tier": "medium",
-      "n_presences": 58,
-      "grid_size": 15,
-      "tuned_at": "2026-04-27T01:00:06+00:00",
-      "maxent_rm": 2.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ]
-    },
-    "melinaea_mnasias": {
-      "baseline_boyce": 0.790277206784084,
-      "tuned_boyce": 0.9240164263936983,
-      "tuned_auc": 0.8013285024154589,
+      "tuned_auc": 0.7440883634100808,
+      "baseline_boyce": 0.9361745372672995,
       "tier": "small",
       "n_presences": 20,
       "grid_size": 15,
-      "tuned_at": "2026-04-27T01:00:10+00:00",
-      "maxent_rm": 1.5,
-      "maxent_features": [
-        "linear",
-        "quadratic",
-        "hinge"
-      ]
-    },
-    "oleria_didymaea": {
-      "baseline_boyce": 0.8566683972885897,
-      "tuned_boyce": 0.9387209722839688,
-      "tuned_auc": 0.7774576271186441,
-      "tier": "small",
-      "n_presences": 20,
-      "grid_size": 15,
-      "tuned_at": "2026-04-27T01:00:12+00:00",
-      "maxent_rm": 4.0,
-      "maxent_features": [
-        "linear",
-        "quadratic"
-      ]
-    },
-    "godyris_panthyale": {
-      "baseline_boyce": 0.9118583155200968,
-      "tuned_boyce": 0.8936211492096949,
-      "tuned_auc": 0.9027950310559006,
-      "tier": "small",
-      "n_presences": 20,
-      "grid_size": 15,
-      "tuned_at": "2026-04-27T01:00:25+00:00",
-      "reverted_to_baseline": true,
-      "revert_reason": "tuned (+0.894) < baseline (+0.912)"
+      "tuned_at": "2026-04-27T16:03:37+00:00"
     }
   }
 }
