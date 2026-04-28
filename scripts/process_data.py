@@ -769,9 +769,44 @@ def main():
     print(mim_counts.to_string())
     
     # ═══════════════════════════════════════════════════════════════════════
+    # COORDINATE QUALITY FILTER
+    # ═══════════════════════════════════════════════════════════════════════
+
+    initial_count = len(df_merged)
+
+    # 1. High coordinate uncertainty (>100 km) — country/region centroids
+    if 'coordinate_uncertainty' in df_merged.columns:
+        high_uncert = df_merged['coordinate_uncertainty'].fillna(0) > 100_000
+    else:
+        high_uncert = pd.Series(False, index=df_merged.index)
+
+    # 2. Latitude > 35°N — well outside Ithomiini range (max ~25°N)
+    too_far_north = df_merged['lat'] > 35
+
+    # 3. Locality keywords indicating museum/zoo/no-data coordinates
+    museum_pattern = re.compile(
+        r'no specific locality|zoo|aquariu|museum|botanical garden',
+        re.IGNORECASE,
+    )
+    if 'collection_location' in df_merged.columns:
+        bad_locality = df_merged['collection_location'].fillna('').apply(
+            lambda x: bool(museum_pattern.search(str(x)))
+        )
+    else:
+        bad_locality = pd.Series(False, index=df_merged.index)
+
+    flagged = high_uncert | too_far_north | bad_locality
+    df_merged = df_merged[~flagged].copy()
+    removed = initial_count - len(df_merged)
+    print(f"\n>> Coordinate quality filter: {initial_count:,} → {len(df_merged):,} ({removed:,} removed)")
+    print(f"   High uncertainty (>100km): {high_uncert.sum():,}")
+    print(f"   Too far north (>35°N): {too_far_north.sum()}")
+    print(f"   Museum/zoo locality keywords: {bad_locality.sum():,}")
+
+    # ═══════════════════════════════════════════════════════════════════════
     # SAVE OUTPUT
     # ═══════════════════════════════════════════════════════════════════════
-    
+
     output_path = os.path.join(OUTPUT_DIR, "map_points.json")
     
     # Convert to list of dicts for JSON
