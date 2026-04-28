@@ -108,6 +108,12 @@ OVERRIDES_PATH = Path(__file__).parent / "species_overrides.json"
 PRED_DIR.mkdir(parents=True, exist_ok=True)
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
+# Cached prediction grid + env extraction (full Neotropics is identical for
+# every species, so we extract env values at the grid points exactly once
+# and reuse for all 145 species). Populated on first call to
+# get_prediction_grid_cache(); subsequent calls return the cached dict.
+_PREDICTION_GRID_CACHE = {}
+
 
 # ── Tuning grids ─────────────────────────────────────────────────────────────
 
@@ -988,6 +994,40 @@ def generate_response_curves(data, env_cols, fitted_predictions, X, y, tier_conf
     return {"variables": variables, "n_steps": n_steps}
 
 
+def get_prediction_grid_cache(env_rasters):
+    """Return the cached full-Neotropics prediction grid + env values.
+
+    The grid is identical for every species (same study area + resolution),
+    so we compute it once and reuse. The cached dict has keys:
+    grid_gdf, grid_shape, transform, lons, lats, grid_env_all.
+    """
+    if _PREDICTION_GRID_CACHE.get("ready"):
+        return _PREDICTION_GRID_CACHE
+
+    resolution = config["modelling"]["prediction_resolution"]
+    study_area = config["study_area"]
+    grid_gdf, grid_shape, transform, lons, lats = create_prediction_grid(
+        study_area, resolution
+    )
+    print(
+        f"  Pre-extracting env values at {len(grid_gdf):,} grid points "
+        f"(full Neotropics, {resolution}°) — done once, reused for all species..."
+    )
+    grid_env_all = extract_values_at_points(list(env_rasters), grid_gdf)
+    _PREDICTION_GRID_CACHE.update(
+        {
+            "grid_gdf": grid_gdf,
+            "grid_shape": grid_shape,
+            "transform": transform,
+            "lons": lons,
+            "lats": lats,
+            "grid_env_all": grid_env_all,
+            "ready": True,
+        }
+    )
+    return _PREDICTION_GRID_CACHE
+
+
 def generate_predictions(
     data, env_cols, env_rasters, species_name, tier_name, tier_config
 ):
@@ -1007,11 +1047,19 @@ def generate_predictions(
     # has the same extent. Step 05 splits the result into a "core" raster
     # (inside the accessible-area polygon) and an "extension" raster
     # (outside it) so the front-end can toggle between the two views.
-    print(f"    Prediction grid: full Neotropics ({resolution}°)...")
-    study_area = config["study_area"]
-    grid_gdf, grid_shape, transform, lons, lats = create_prediction_grid(
-        study_area, resolution
-    )
+    #
+    # The grid + env extraction is identical across species (same study
+    # area, same resolution, same env rasters), so we compute it once and
+    # cache. This avoids extracting 11 rasters at 585K grid points 145
+    # times (the dominant cost in earlier full-extent runs).
+    cache = get_prediction_grid_cache(env_rasters)
+    grid_gdf = cache["grid_gdf"]
+    grid_shape = cache["grid_shape"]
+    transform = cache["transform"]
+    lons = cache["lons"]
+    lats = cache["lats"]
+    grid_env_all = cache["grid_env_all"]
+    print(f"    Prediction grid: full Neotropics ({resolution}°, cached)...")
 
     # Stash safe_name and persist the accessible-area polygon as a sidecar
     # GeoJSON so step 05 can split the ensemble raster.
@@ -1029,8 +1077,6 @@ def generate_predictions(
         except Exception as exc:
             print(f"    Warning: failed to save accessible polygon ({exc})")
 
-    all_raster_paths = list(env_rasters)
-    grid_env_all = extract_values_at_points(all_raster_paths, grid_gdf)
     grid_env = (
         grid_env_all[env_cols]
         if all(c in grid_env_all.columns for c in env_cols)
@@ -1373,6 +1419,18 @@ def main():
             )
         else:
             print(f"\n── [{i + 1}/{len(species_list)}] {species_name} ──")
+
+        # Skip species already completed by the new full-Neotropics pipeline.
+        # We can't rely on --resume / overrides because that file carries
+        # entries from earlier (accessible-area-only) runs. Instead, treat a
+        # species as done when both its full-extent ensemble raster AND its
+        # accessible-area polygon (only produced by this pipeline) exist.
+        safe_name_check = species_name.replace(" ", "_").lower()
+        ensemble_path = PRED_DIR / f"{safe_name_check}_ensemble.tif"
+        polygon_path = PRED_DIR / f"{safe_name_check}_accessible.geojson"
+        if ensemble_path.exists() and polygon_path.exists():
+            print(f"  Skip: outputs already present ({ensemble_path.name}, {polygon_path.name})")
+            continue
 
         species_gdf = load_species_data(species_name)
         if species_gdf is None:
