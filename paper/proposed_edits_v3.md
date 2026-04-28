@@ -49,9 +49,13 @@ Specimen Maps pipeline.
 > natural range (~25° N in eastern Mexico); and (iii) records whose
 > locality string contains keywords indicating the coordinates refer
 > to a museum, zoo, or aquarium rather than a field collection site.
-> Together these filters remove approximately 1.4% of raw records and
-> ensure the models are not distorted by specimens geocoded to their
-> holding institution rather than their original collection locality.
+> Together these filters remove approximately 1.4% of raw records.
+> The same filter is applied to the web-map occurrence layer, so that
+> points displayed to researchers have passed the same quality screen
+> as those used for modelling. This ensures the models are not
+> distorted by specimens geocoded to their holding institution rather
+> than their original collection locality, and prevents such records
+> from appearing as misleading outliers on the interactive map.
 >
 > Because our data are presence-only, the model cannot contrast
 > presences against confirmed absences. Instead, it contrasts the
@@ -137,12 +141,15 @@ Specimen Maps pipeline.
 > species we keep the configuration with the highest cross-validated
 > Boyce index, breaking ties in favour of fewer feature classes;
 > configurations that regress below the tier-default baseline are
-> discarded. Selected parameters are stored in a per-species overrides
-> file that the main pipeline consults on re-run and applies in place
-> of the tier defaults. Fitting and tuning all 151 species takes
-> several hours of
-> compute, which exceeds the per-job time limit on GitHub Actions, so
-> the modelling and tuning steps are run locally on a workstation and
+> discarded. Tuning and prediction are performed in a single unified
+> pass: for each species the pipeline runs the grid search, selects
+> the best MaxEnt configuration, and immediately generates the
+> prediction raster using that configuration (alongside Random Forest
+> and gradient-boosted trees for species with 50 or more records).
+> This avoids a separate tuning step that could be mistaken for
+> post-hoc model selection. Fitting and tuning all species takes
+> approximately two hours on a workstation, which exceeds the per-job
+> time limit on GitHub Actions, so the pipeline is run locally and
 > only the resulting prediction rasters and metadata are committed to
 > the repository for the web application to serve. Full methodology
 > is documented separately in `sdm/SDM_METHODS.md`.
