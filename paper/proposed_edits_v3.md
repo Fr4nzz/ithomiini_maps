@@ -53,8 +53,12 @@ Specimen Maps pipeline.
 > Neotropical study bounding box (-120°W to -30°E, -40°S to +25°N);
 > and (v) records that fall in the ocean once tested against the
 > Natural Earth land mask, which typically reflect data-entry errors
-> in the original coordinates. Together these filters remove
-> approximately 2.6% of raw records. The same filter set is applied
+> in the original coordinates. Together these filters remove 2,716 of
+> the 105,748 raw records (2.6%): 1,367 with coordinate uncertainty
+> above 100 km, 14 above 35° N, 692 with the GBIF "no specific
+> locality" placeholder, 66 outside the Neotropical bounding box, and
+> 1,277 in the ocean (a single record can fail more than one rule, so
+> the per-category counts overlap). The same filter set is applied
 > identically along the web-map occurrence path and the SDM training
 > path, so that points displayed to researchers have passed the same
 > quality screen as those used for modelling, and so that records
