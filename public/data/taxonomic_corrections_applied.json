@@ -1,21 +1,21 @@
 {
-  "applied_at": "2026-04-29 14:07:42 UTC",
-  "total_records": 103032,
+  "applied_at": "2026-04-29 16:40:08 UTC",
+  "total_records": 104005,
   "stats": {
-    "subspecies_unresolved": 10699,
-    "undescribed": 2215,
-    "verified": 72926,
-    "verified_nominotypical": 12038,
-    "corrected": 431,
-    "verified_literature": 1763,
-    "higher_rank_only": 612,
-    "synonym_resolved": 1324,
-    "not_curated": 738,
+    "subspecies_unresolved": 10767,
+    "undescribed": 2223,
+    "verified": 73720,
+    "verified_nominotypical": 12095,
+    "corrected": 441,
+    "verified_literature": 1776,
+    "higher_rank_only": 614,
+    "synonym_resolved": 1326,
+    "not_curated": 745,
     "not_found": 2,
     "non_standard_subspecies": 250,
-    "subspecies_synonym": 34
+    "subspecies_synonym": 46
   },
-  "total_corrections": 1742,
+  "total_corrections": 1754,
   "corrections": [
     {
       "type": "subspecies_typo",
@@ -5075,6 +5075,34 @@
       "source": "reference taxonomy (BoA / nymphalidae.net)"
     },
     {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis",
+      "kept": "Episcada striposis",
+      "source": "reference taxonomy (BoA / nymphalidae.net)"
+    },
+    {
+      "type": "sanger_taxonomy_override",
+      "original": "Episcada striposis",
+      "gbif_wanted": "Episcada clausina striposis",
+      "kept": "Episcada striposis",
+      "source": "reference taxonomy (BoA / nymphalidae.net)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Melinaea ludovica",
+      "original_subspecies": "parayia",
+      "corrected_subspecies": "paraiya",
+      "source": "Reakirt 1866; Wikispecies; Lamas 2004"
+    },
+    {
       "type": "subspecies_typo",
       "species": "Melinaea ludovica",
       "original_subspecies": "parayia",
@@ -6689,7 +6717,7 @@
       "species": "Callithomia hezia",
       "original_subspecies": "berolla",
       "corrected_subspecies": "beronilla",
-      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 1 vs 41)"
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 1 vs 40)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -9087,6 +9115,26 @@
     },
     {
       "type": "synonym_resolution",
+      "original": "Mechanitis lycidice",
+      "accepted": "Mechanitis polymnia lycidice",
+      "accepted_species": "Mechanitis polymnia",
+      "accepted_subspecies": "lycidice",
+      "accepted_rank": "SUBSPECIES",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis lycidice",
+      "accepted": "Mechanitis polymnia lycidice",
+      "accepted_species": "Mechanitis polymnia",
+      "accepted_subspecies": "lycidice",
+      "accepted_rank": "SUBSPECIES",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
       "original": "Mechanitis nessaea",
       "accepted": "Mechanitis lysimnia",
       "subspecies": "",
@@ -9098,6 +9146,16 @@
       "accepted": "Hypothyris noinonia completa",
       "accepted_species": "Hypothyris noinonia",
       "accepted_subspecies": "completa",
+      "accepted_rank": "SUBSPECIES",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis lycidice",
+      "accepted": "Mechanitis polymnia lycidice",
+      "accepted_species": "Mechanitis polymnia",
+      "accepted_subspecies": "lycidice",
       "accepted_rank": "SUBSPECIES",
       "subspecies": "",
       "source": "GBIF backbone"
@@ -11111,10 +11169,10 @@
     },
     {
       "type": "synonym_resolution",
-      "original": "Callithomia zeuxippe",
-      "accepted": "Callithomia alexirrhoe zeuxippe",
-      "accepted_species": "Callithomia alexirrhoe",
-      "accepted_subspecies": "zeuxippe",
+      "original": "Mechanitis lycidice",
+      "accepted": "Mechanitis polymnia lycidice",
+      "accepted_species": "Mechanitis polymnia",
+      "accepted_subspecies": "lycidice",
       "accepted_rank": "SUBSPECIES",
       "subspecies": "",
       "source": "GBIF backbone"
@@ -11135,6 +11193,46 @@
       "accepted": "Callithomia alexirrhoe zeuxippe",
       "accepted_species": "Callithomia alexirrhoe",
       "accepted_subspecies": "zeuxippe",
+      "accepted_rank": "SUBSPECIES",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Callithomia zeuxippe",
+      "accepted": "Callithomia alexirrhoe zeuxippe",
+      "accepted_species": "Callithomia alexirrhoe",
+      "accepted_subspecies": "zeuxippe",
+      "accepted_rank": "SUBSPECIES",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis lycidice",
+      "accepted": "Mechanitis polymnia lycidice",
+      "accepted_species": "Mechanitis polymnia",
+      "accepted_subspecies": "lycidice",
+      "accepted_rank": "SUBSPECIES",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis lycidice",
+      "accepted": "Mechanitis polymnia lycidice",
+      "accepted_species": "Mechanitis polymnia",
+      "accepted_subspecies": "lycidice",
+      "accepted_rank": "SUBSPECIES",
+      "subspecies": "",
+      "source": "GBIF backbone"
+    },
+    {
+      "type": "synonym_resolution",
+      "original": "Mechanitis lycidice",
+      "accepted": "Mechanitis polymnia lycidice",
+      "accepted_species": "Mechanitis polymnia",
+      "accepted_subspecies": "lycidice",
       "accepted_rank": "SUBSPECIES",
       "subspecies": "",
       "source": "GBIF backbone"
@@ -11372,7 +11470,7 @@
       "species": "Greta andromica",
       "original_subspecies": "dromica",
       "corrected_subspecies": "andromica",
-      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 3 vs 172)"
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 3 vs 176)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -11617,7 +11715,7 @@
       "species": "Greta andromica",
       "original_subspecies": "dromica",
       "corrected_subspecies": "andromica",
-      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 3 vs 172)"
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 3 vs 176)"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12073,6 +12171,13 @@
       "gbif_wanted": "Pteronymia linzera alina",
       "kept": "Pteronymia alina",
       "source": "reference taxonomy (BoA / nymphalidae.net)"
+    },
+    {
+      "type": "subspecies_typo",
+      "species": "Mechanitis lysimnia",
+      "original_subspecies": "neseaea",
+      "corrected_subspecies": "nesaea",
+      "source": "Hubner [1820]; Butterflies of America; Wikispecies"
     },
     {
       "type": "sanger_taxonomy_override",
@@ -12191,7 +12296,7 @@
       "species": "Greta andromica",
       "original_subspecies": "dromica",
       "corrected_subspecies": "andromica",
-      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 3 vs 172)"
+      "source": "auto-detected (sim=0.88, edit_dist=2, counts: 3 vs 176)"
     },
     {
       "type": "subspecies_typo",

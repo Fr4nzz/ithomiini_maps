@@ -815,30 +815,60 @@ def main():
     except Exception as e:
         print(f"   Warning: bbox filter skipped ({e})")
 
-    # 5. Ocean points (Natural Earth land mask)
+    # 5. Ocean points (GSHHS full-resolution coastline, Wessel & Smith 1996,
+    # clipped to Neotropics) with a 5 km buffer to absorb GPS-precision
+    # rounding around tight coastlines and small islands. Falls back to the
+    # coarse Natural Earth 110m mask if the GSHHS subset is missing.
+    OCEAN_BUFFER_KM = 5.0
     in_ocean = pd.Series(False, index=df_merged.index)
-    land_dir = Path(__file__).parent.parent / 'sdm' / 'data' / 'env_variables' / 'ne_110m_land'
-    if land_dir.exists():
-        try:
-            import geopandas as gpd
-            from shapely.geometry import Point
+    ocean_mask_label = None
+    env_root = Path(__file__).parent.parent / 'sdm' / 'data' / 'env_variables'
+    candidate_idx = df_merged.index[
+        ~(high_uncert | too_far_north | bad_locality | out_of_bbox)
+    ]
+
+    gshhs_path = env_root / 'gshhs_f_neotropics' / 'gshhs_f_neotropics.shp'
+    ne_path = env_root / 'ne_110m_land'
+
+    try:
+        import geopandas as gpd
+        from shapely.geometry import Point
+        if gshhs_path.exists():
+            land = gpd.read_file(gshhs_path)
+            ocean_mask_label = f'GSHHS-full +{OCEAN_BUFFER_KM:g}km buffer'
+            # Distance test in a metric CRS (EPSG:4087, World Equidistant
+            # Cylindrical, ~1m accuracy globally). Flag a record if its
+            # nearest-polygon distance exceeds the buffer threshold.
+            land_m = land.to_crs(4087)
+            pts = gpd.GeoDataFrame(
+                df_merged.loc[candidate_idx, ['lng', 'lat']].copy(),
+                geometry=gpd.points_from_xy(
+                    df_merged.loc[candidate_idx, 'lng'],
+                    df_merged.loc[candidate_idx, 'lat'],
+                ),
+                crs='EPSG:4326',
+            ).to_crs(4087)
+            near = gpd.sjoin_nearest(
+                pts[['geometry']], land_m[['geometry']], distance_col='_d', how='left'
+            )
+            near = near[~near.index.duplicated(keep='first')]
+            far = near['_d'] > OCEAN_BUFFER_KM * 1000.0
+            in_ocean.loc[candidate_idx] = far.values
+        elif ne_path.exists():
             from shapely.ops import unary_union
             from shapely.prepared import prep
-            land = gpd.read_file(land_dir)
-            land_union = unary_union(land.geometry)
-            land_prep = prep(land_union)
-            # Only test points not yet flagged by cheaper filters
-            candidate_idx = df_merged.index[
-                ~(high_uncert | too_far_north | bad_locality | out_of_bbox)
-            ]
+            print(f"   Notice: GSHHS subset not found, falling back to coarse NE 110m mask")
+            land = gpd.read_file(ne_path)
+            land_prep = prep(unary_union(land.geometry))
+            ocean_mask_label = 'Natural Earth 110m (fallback)'
             on_land = df_merged.loc[candidate_idx].apply(
                 lambda r: land_prep.contains(Point(r['lng'], r['lat'])), axis=1
             )
             in_ocean.loc[candidate_idx] = ~on_land
-        except Exception as e:
-            print(f"   Warning: ocean filter skipped ({e})")
-    else:
-        print(f"   Warning: ocean filter skipped (land mask not found at {land_dir})")
+        else:
+            print(f"   Warning: ocean filter skipped (no land mask under {env_root})")
+    except Exception as e:
+        print(f"   Warning: ocean filter skipped ({e})")
 
     flagged = high_uncert | too_far_north | bad_locality | out_of_bbox | in_ocean
     df_merged = df_merged[~flagged].copy()
@@ -849,7 +879,7 @@ def main():
     print(f"   No-specific-locality placeholders: {bad_locality.sum():,}")
     if bbox_w is not None:
         print(f"   Outside Neotropical bbox ({bbox_w},{bbox_s}..{bbox_e},{bbox_n}): {out_of_bbox.sum():,}")
-    print(f"   Ocean points (Natural Earth land mask): {in_ocean.sum():,}")
+    print(f"   Ocean points ({ocean_mask_label or 'no mask'}): {in_ocean.sum():,}")
 
     # ═══════════════════════════════════════════════════════════════════════
     # SAVE OUTPUT

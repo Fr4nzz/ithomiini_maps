@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-04-29 14:07:38 UTC",
+    "generated_at": "2026-04-29 16:40:04 UTC",
     "gbif_api": "https://api.gbif.org/v1",
     "backbone": "GBIF Backbone Taxonomy",
     "higher_constraints": {
@@ -19,7 +19,7 @@
     "api_fallback_calls": 1113
   },
   "quality_assessment": {
-    "total_records": 103032,
+    "total_records": 104005,
     "unique_genera": 190,
     "unique_species": 892,
     "unique_subspecies": 1395,
@@ -27,7 +27,7 @@
   },
   "quality_issues": {
     "placeholder_genera": {
-      "Genus2": 458,
+      "Genus2": 465,
       "Genus1": 2,
       "Unknown": 180
     },
@@ -38,18 +38,18 @@
       "(family)": 36
     },
     "undescribed_subspecies": {
-      "n. ssp. [1]": 786,
-      "n. ssp. [3]": 239,
-      "n. ssp.": 370,
-      "n. ssp. [2]": 483,
-      "n. ssp. [4]": 182,
+      "n. ssp. [1]": 790,
+      "n. ssp. [3]": 240,
+      "n. ssp.": 371,
+      "n. ssp. [2]": 484,
+      "n. ssp. [4]": 184,
       "n. ssp. [5]": 46,
       "n. ssp. [6]": 45,
       "n. ssp. [7]": 21,
       "n. ssp. [8]": 45,
       "n. ssp. [9]": 13,
       "n. ssp. [10]": 1,
-      "ssp.": 5,
+      "ssp.": 4,
       "ssp.n.": 16,
       "ssp2": 63,
       "ssp8": 18,
@@ -77,7 +77,7 @@
       "ssp. nigricans": 1
     },
     "free_text_subspecies": {},
-    "missing_subspecies": 51229,
+    "missing_subspecies": 51762,
     "not_found_taxonomy": 94,
     "malformed_names": [
       "Riodinidae",
@@ -146,11 +146,11 @@
     }
   },
   "curation_summary": {
-    "total_curated": 2614,
+    "total_curated": 2615,
     "statuses": {
       "subspecies_unresolved": 691,
       "undescribed": 362,
-      "verified": 1033,
+      "verified": 1034,
       "verified_nominotypical": 148,
       "verified_literature": 201,
       "higher_rank_only": 38,
@@ -182,7 +182,7 @@
       "SUBSPECIES_AS_SPECIES": 2
     },
     "subspecies_categories": {
-      "standard": 1419,
+      "standard": 1420,
       "undescribed": 414,
       "absent": 705,
       "free_text": 45,
@@ -124960,6 +124960,43 @@
     },
     {
       "input": {
+        "genus": "Godyris",
+        "species_epithet": "zygia",
+        "subspecies": null,
+        "scientific_name": "Godyris zygia",
+        "ssp_category": "absent",
+        "ssp_cleaned": null,
+        "is_nominotypical": false
+      },
+      "original_scientific_name": "Godyris zygia",
+      "species_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 1918233,
+        "canonicalName": "Godyris zygia",
+        "scientificName": "Godyris zygia (Godman & Salvin, 1877)",
+        "rank": "SPECIES",
+        "synonym": false
+      },
+      "subspecies_match": null,
+      "accepted_name": {
+        "key": 1918233,
+        "canonicalName": "Godyris zygia",
+        "scientificName": "Godyris zygia (Godman & Salvin, 1877)",
+        "status": "ACCEPTED",
+        "rank": "SPECIES"
+      },
+      "recognized_subspecies": [],
+      "curated_name": "Godyris zygia",
+      "curation_basis": "GBIF",
+      "literature_action": null,
+      "status": "verified",
+      "flags": [],
+      "notes": []
+    },
+    {
+      "input": {
         "genus": "Dircenna",
         "species_epithet": "olyras",
         "subspecies": null,
@@ -125089,43 +125126,6 @@
       "notes": [
         "Subspecies 'umbrana' found in GBIF backbone (cache)."
       ]
-    },
-    {
-      "input": {
-        "genus": "Godyris",
-        "species_epithet": "zygia",
-        "subspecies": null,
-        "scientific_name": "Godyris zygia",
-        "ssp_category": "absent",
-        "ssp_cleaned": null,
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Godyris zygia",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "ACCEPTED",
-        "gbifKey": 1918233,
-        "canonicalName": "Godyris zygia",
-        "scientificName": "Godyris zygia (Godman & Salvin, 1877)",
-        "rank": "SPECIES",
-        "synonym": false
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 1918233,
-        "canonicalName": "Godyris zygia",
-        "scientificName": "Godyris zygia (Godman & Salvin, 1877)",
-        "status": "ACCEPTED",
-        "rank": "SPECIES"
-      },
-      "recognized_subspecies": [],
-      "curated_name": "Godyris zygia",
-      "curation_basis": "GBIF",
-      "literature_action": null,
-      "status": "verified",
-      "flags": [],
-      "notes": []
     },
     {
       "input": {
@@ -128945,6 +128945,43 @@
     {
       "input": {
         "genus": "Oleria",
+        "species_epithet": "modesta",
+        "subspecies": null,
+        "scientific_name": "Oleria modesta",
+        "ssp_category": "absent",
+        "ssp_cleaned": null,
+        "is_nominotypical": false
+      },
+      "original_scientific_name": "Oleria modesta",
+      "species_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 1902355,
+        "canonicalName": "Oleria modesta",
+        "scientificName": "Oleria modesta Haensch, 1903",
+        "rank": "SPECIES",
+        "synonym": false
+      },
+      "subspecies_match": null,
+      "accepted_name": {
+        "key": 1902355,
+        "canonicalName": "Oleria modesta",
+        "scientificName": "Oleria modesta Haensch, 1903",
+        "status": "ACCEPTED",
+        "rank": "SPECIES"
+      },
+      "recognized_subspecies": [],
+      "curated_name": "Oleria modesta",
+      "curation_basis": "GBIF",
+      "literature_action": null,
+      "status": "verified",
+      "flags": [],
+      "notes": []
+    },
+    {
+      "input": {
+        "genus": "Oleria",
         "species_epithet": "lubilerda",
         "subspecies": null,
         "scientific_name": "Oleria lubilerda",
@@ -131374,6 +131411,47 @@
     },
     {
       "input": {
+        "genus": "Mechanitis",
+        "species_epithet": "lycidice",
+        "subspecies": null,
+        "scientific_name": "Mechanitis lycidice",
+        "ssp_category": "absent",
+        "ssp_cleaned": null,
+        "is_nominotypical": false
+      },
+      "original_scientific_name": "Mechanitis lycidice",
+      "species_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "SYNONYM",
+        "gbifKey": 1902453,
+        "canonicalName": "Mechanitis lycidice",
+        "scientificName": "Mechanitis lycidice Bates, 1864",
+        "rank": "SPECIES",
+        "synonym": true
+      },
+      "subspecies_match": null,
+      "accepted_name": {
+        "key": 6230478,
+        "canonicalName": "Mechanitis polymnia lycidice",
+        "scientificName": "Mechanitis polymnia lycidice Bates, 1864",
+        "status": "ACCEPTED",
+        "rank": "SUBSPECIES"
+      },
+      "recognized_subspecies": [],
+      "curated_name": "Mechanitis polymnia lycidice",
+      "curation_basis": "GBIF Synonym",
+      "literature_action": null,
+      "status": "synonym_resolved",
+      "flags": [
+        "SYNONYM"
+      ],
+      "notes": [
+        "SYNONYM: 'Mechanitis lycidice' -> accepted: 'Mechanitis polymnia lycidice' (outside cache, key=6230478)"
+      ]
+    },
+    {
+      "input": {
         "genus": "Oleria",
         "species_epithet": "phenomoe",
         "subspecies": null,
@@ -131562,47 +131640,6 @@
       "status": "verified",
       "flags": [],
       "notes": []
-    },
-    {
-      "input": {
-        "genus": "Mechanitis",
-        "species_epithet": "lycidice",
-        "subspecies": null,
-        "scientific_name": "Mechanitis lycidice",
-        "ssp_category": "absent",
-        "ssp_cleaned": null,
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Mechanitis lycidice",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "SYNONYM",
-        "gbifKey": 1902453,
-        "canonicalName": "Mechanitis lycidice",
-        "scientificName": "Mechanitis lycidice Bates, 1864",
-        "rank": "SPECIES",
-        "synonym": true
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 6230478,
-        "canonicalName": "Mechanitis polymnia lycidice",
-        "scientificName": "Mechanitis polymnia lycidice Bates, 1864",
-        "status": "ACCEPTED",
-        "rank": "SUBSPECIES"
-      },
-      "recognized_subspecies": [],
-      "curated_name": "Mechanitis polymnia lycidice",
-      "curation_basis": "GBIF Synonym",
-      "literature_action": null,
-      "status": "synonym_resolved",
-      "flags": [
-        "SYNONYM"
-      ],
-      "notes": [
-        "SYNONYM: 'Mechanitis lycidice' -> accepted: 'Mechanitis polymnia lycidice' (outside cache, key=6230478)"
-      ]
     },
     {
       "input": {
@@ -134172,6 +134209,107 @@
       "input": {
         "genus": "Melinaea",
         "species_epithet": "ethra",
+        "subspecies": "ezra",
+        "scientific_name": "Melinaea ethra",
+        "ssp_category": "standard",
+        "ssp_cleaned": "ezra",
+        "is_nominotypical": false
+      },
+      "original_scientific_name": "Melinaea ethra",
+      "species_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 5128094,
+        "canonicalName": "Melinaea ethra",
+        "scientificName": "Melinaea ethra (Godart, 1819)",
+        "rank": "SPECIES",
+        "synonym": false
+      },
+      "subspecies_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 6228933,
+        "canonicalName": "Melinaea ethra ezra",
+        "scientificName": "Melinaea ethra ezra Fox, 1939",
+        "rank": "SUBSPECIES",
+        "synonym": false
+      },
+      "accepted_name": {
+        "key": 5128094,
+        "canonicalName": "Melinaea ethra",
+        "scientificName": "Melinaea ethra (Godart, 1819)",
+        "status": "ACCEPTED",
+        "rank": "SPECIES"
+      },
+      "recognized_subspecies": [
+        {
+          "name": "Melinaea ethra lilis",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra messatis",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra maelus",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra scylax",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra imitata",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra maeonis",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra flavicans",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra cydon",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra mnemopsis",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra ethra",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra ezra",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra parallelis",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Melinaea ethra kayei",
+          "status": "ACCEPTED"
+        }
+      ],
+      "curated_name": "Melinaea ethra ezra",
+      "curation_basis": "GBIF",
+      "literature_action": null,
+      "status": "verified",
+      "flags": [],
+      "notes": [
+        "Subspecies 'ezra' found in GBIF backbone (cache)."
+      ]
+    },
+    {
+      "input": {
+        "genus": "Melinaea",
+        "species_epithet": "ethra",
         "subspecies": "parallelis",
         "scientific_name": "Melinaea ethra",
         "ssp_category": "standard",
@@ -135023,43 +135161,6 @@
       },
       "recognized_subspecies": [],
       "curated_name": "Oleria ilerdinoides",
-      "curation_basis": "GBIF",
-      "literature_action": null,
-      "status": "verified",
-      "flags": [],
-      "notes": []
-    },
-    {
-      "input": {
-        "genus": "Oleria",
-        "species_epithet": "modesta",
-        "subspecies": null,
-        "scientific_name": "Oleria modesta",
-        "ssp_category": "absent",
-        "ssp_cleaned": null,
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Oleria modesta",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "ACCEPTED",
-        "gbifKey": 1902355,
-        "canonicalName": "Oleria modesta",
-        "scientificName": "Oleria modesta Haensch, 1903",
-        "rank": "SPECIES",
-        "synonym": false
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 1902355,
-        "canonicalName": "Oleria modesta",
-        "scientificName": "Oleria modesta Haensch, 1903",
-        "status": "ACCEPTED",
-        "rank": "SPECIES"
-      },
-      "recognized_subspecies": [],
-      "curated_name": "Oleria modesta",
       "curation_basis": "GBIF",
       "literature_action": null,
       "status": "verified",

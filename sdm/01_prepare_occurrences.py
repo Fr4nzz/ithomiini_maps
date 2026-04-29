@@ -76,25 +76,52 @@ def clean_coordinates(df):
         & (df["lat"] <= extent["north"])
     ]
 
-    # Remove ocean points using Natural Earth land mask
-    land_dir = Path(__file__).parent / config["paths"]["env_variables"] / "ne_110m_land"
-    if land_dir.exists():
+    # Remove ocean points using GSHHS full-resolution coastline (Wessel &
+    # Smith 1996), clipped to the Neotropics, with a 5 km buffer that
+    # absorbs GPS-precision rounding around tight coastlines and small
+    # islands. Falls back to the coarse Natural Earth 110m mask if the
+    # GSHHS subset is missing.
+    OCEAN_BUFFER_KM = 5.0
+    env_root = Path(__file__).parent / config["paths"]["env_variables"]
+    gshhs_path = env_root / "gshhs_f_neotropics" / "gshhs_f_neotropics.shp"
+    ne_path = env_root / "ne_110m_land"
+    before_ocean = len(df)
+
+    if gshhs_path.exists():
+        import geopandas as gpd
+
+        land_m = gpd.read_file(gshhs_path).to_crs(4087)
+        pts = gpd.GeoDataFrame(
+            df[["lng", "lat"]].copy(),
+            geometry=gpd.points_from_xy(df["lng"], df["lat"]),
+            crs="EPSG:4326",
+        ).to_crs(4087)
+        near = gpd.sjoin_nearest(
+            pts[["geometry"]], land_m[["geometry"]], distance_col="_d", how="left"
+        )
+        near = near[~near.index.duplicated(keep="first")]
+        on_land = (near["_d"] <= OCEAN_BUFFER_KM * 1000.0).values
+        df = df[on_land]
+        print(
+            f"  Ocean points removed: {before_ocean - len(df)} "
+            f"(GSHHS-full +{OCEAN_BUFFER_KM:g}km buffer)"
+        )
+    elif ne_path.exists():
         import geopandas as gpd
         from shapely.geometry import Point
         from shapely.ops import unary_union
         from shapely.prepared import prep
 
-        land = gpd.read_file(land_dir)
-        land_union = unary_union(land.geometry)
-        land_prep = prep(land_union)
-
-        before_ocean = len(df)
+        print("  Notice: GSHHS subset not found, falling back to coarse NE 110m mask")
+        land = gpd.read_file(ne_path)
+        land_prep = prep(unary_union(land.geometry))
         on_land = df.apply(
             lambda r: land_prep.contains(Point(r["lng"], r["lat"])), axis=1
         )
         df = df[on_land]
-        ocean_removed = before_ocean - len(df)
-        print(f"  Ocean points removed: {ocean_removed}")
+        print(f"  Ocean points removed: {before_ocean - len(df)} (NE 110m fallback)")
+    else:
+        print(f"  Warning: ocean filter skipped (no land mask under {env_root})")
 
     print(f"  Cleaned coordinates: {initial} → {len(df)} ({initial - len(df)} removed)")
     return df
