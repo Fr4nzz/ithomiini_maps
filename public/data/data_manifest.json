@@ -12,7 +12,7 @@
     },
     "GBIF (Other Institutions)": {
       "file": "map_points_gbif_other.json",
-      "records": 26539,
+      "records": 26571,
       "default": false
     },
     "Dore et al. (2022)": {
@@ -22,10 +22,10 @@
     },
     "iNaturalist": {
       "file": "map_points_inaturalist.json",
-      "records": 20173,
+      "records": 20209,
       "default": false
     }
   },
   "image_supplement": "map_points_images.json",
-  "generated_at": "2026-04-28T04:05:17Z"
+  "generated_at": "2026-04-29T14:07:42Z"
 }

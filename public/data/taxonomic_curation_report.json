@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-04-28 04:05:13 UTC",
+    "generated_at": "2026-04-29 14:07:38 UTC",
     "gbif_api": "https://api.gbif.org/v1",
     "backbone": "GBIF Backbone Taxonomy",
     "higher_constraints": {
@@ -19,7 +19,7 @@
     "api_fallback_calls": 1113
   },
   "quality_assessment": {
-    "total_records": 102964,
+    "total_records": 103032,
     "unique_genera": 190,
     "unique_species": 892,
     "unique_subspecies": 1395,
@@ -77,7 +77,7 @@
       "ssp. nigricans": 1
     },
     "free_text_subspecies": {},
-    "missing_subspecies": 51168,
+    "missing_subspecies": 51229,
     "not_found_taxonomy": 94,
     "malformed_names": [
       "Riodinidae",

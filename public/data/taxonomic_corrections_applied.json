@@ -1,10 +1,10 @@
 {
-  "applied_at": "2026-04-28 04:05:17 UTC",
-  "total_records": 102964,
+  "applied_at": "2026-04-29 14:07:42 UTC",
+  "total_records": 103032,
   "stats": {
     "subspecies_unresolved": 10699,
     "undescribed": 2215,
-    "verified": 72858,
+    "verified": 72926,
     "verified_nominotypical": 12038,
     "corrected": 431,
     "verified_literature": 1763,
