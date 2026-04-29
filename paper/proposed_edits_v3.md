@@ -52,10 +52,9 @@ Specimen Maps pipeline.
 > collection site; (iv) records whose coordinates fall outside the
 > Neotropical study bounding box (-120°W to -30°E, -40°S to +25°N);
 > and (v) records that fall in the ocean once tested against the
-> Natural Earth land mask, which often arise from coordinate-precision
-> rounding near the coastline or from coordinates erroneously reported
-> as 0,0 or with swapped longitude and latitude. Together these
-> filters remove approximately 2.6% of raw records. The same filter set is applied
+> Natural Earth land mask, which typically reflect data-entry errors
+> in the original coordinates. Together these filters remove
+> approximately 2.6% of raw records. The same filter set is applied
 > identically along the web-map occurrence path and the SDM training
 > path, so that points displayed to researchers have passed the same
 > quality screen as those used for modelling, and so that records
