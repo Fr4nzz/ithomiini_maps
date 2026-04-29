@@ -51,21 +51,24 @@ Specimen Maps pipeline.
 > locality", indicating that the published coordinates are not a real
 > collection site; (iv) records whose coordinates fall outside the
 > Neotropical study bounding box (-120°W to -30°E, -40°S to +25°N);
-> and (v) records that fall in the ocean once tested against the
-> Natural Earth land mask, which typically reflect data-entry errors
-> in the original coordinates. Together these filters remove 2,716 of
-> the 105,748 raw records (2.6%): 1,367 with coordinate uncertainty
-> above 100 km, 14 above 35° N, 692 with the GBIF "no specific
-> locality" placeholder, 66 outside the Neotropical bounding box, and
-> 1,277 in the ocean (a single record can fail more than one rule, so
-> the per-category counts overlap). The same filter set is applied
-> identically along the web-map occurrence path and the SDM training
-> path, so that points displayed to researchers have passed the same
-> quality screen as those used for modelling, and so that records
-> rejected by the model do not reappear as misleading outliers on the
-> interactive map. This filter parity is enforced by sharing a single
-> Natural Earth land mask and a single study-area bounding box between
-> the two pipelines.
+> and (v) records that fall in the ocean, identified by checking each
+> record against the full-resolution GSHHS coastline (Wessel & Smith,
+> 1996) clipped to the Neotropics with a 5 km tolerance to absorb
+> GPS-precision rounding around tight bays and small islands; these
+> typically reflect data-entry errors in the original coordinates.
+> Together these filters remove 1,743 of the 105,748 raw records
+> (1.6%): 1,367 with coordinate uncertainty above 100 km, 14 above
+> 35° N, 692 with the GBIF "no specific locality" placeholder, 66
+> outside the Neotropical bounding box, and 304 in the ocean
+> (a single record can fail more than one rule, so the per-category
+> counts overlap). The same filter set is applied identically along
+> the web-map occurrence path and the SDM training path, so that
+> points displayed to researchers have passed the same quality screen
+> as those used for modelling, and so that records rejected by the
+> model do not reappear as misleading outliers on the interactive map.
+> This filter parity is enforced by sharing a single GSHHS coastline
+> dataset and a single study-area bounding box between the two
+> pipelines.
 >
 > Because our data are presence-only, the model cannot contrast
 > presences against confirmed absences. Instead, it contrasts the
@@ -496,6 +499,11 @@ and should not be duplicated.
 > (2021). Predictive performance of presence-only species distribution
 > models: a benchmark study with reproducible code. *Ecological
 > Monographs*, 92(1), e1486. https://doi.org/10.1002/ecm.1486
+>
+> Wessel, P. & Smith, W.H.F. (1996). A global, self-consistent,
+> hierarchical, high-resolution shoreline database. *Journal of
+> Geophysical Research: Solid Earth*, 101(B4), 8741–8743.
+> https://doi.org/10.1029/96JB00104
 >
 > Wisz, M.S., Hijmans, R.J., Li, J., Peterson, A.T., Graham, C.H.,
 > Guisan, A. & NCEAS Predicting Species Distributions Working Group
