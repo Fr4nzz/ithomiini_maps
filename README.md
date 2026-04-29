@@ -2,7 +2,7 @@
 
 Interactive mapping tool for Ithomiini butterfly research. Visualize specimen distributions, sequencing status, and mimicry patterns across South America.
 
-## 🔗 [Live Application](https://rapidspeciation.github.io/ithomiini_maps/)
+## 🔗 [Live Application](https://fr4nzz.github.io/ithomiini_maps/)
 
 ## Features
 
