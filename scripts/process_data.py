@@ -783,14 +783,16 @@ def main():
     # 2. Latitude > 35°N — well outside Ithomiini range (max ~25°N)
     too_far_north = df_merged['lat'] > 35
 
-    # 3. Locality keywords indicating museum/zoo/no-data coordinates
-    museum_pattern = re.compile(
-        r'no specific locality|zoo|aquariu|museum|botanical garden',
-        re.IGNORECASE,
-    )
+    # 3. Records with explicit "no specific locality" placeholders.
+    # Earlier versions also matched zoo / aquariu / museum / botanical
+    # garden, but those substrings cause false positives — e.g. "OTS Adv.
+    # Zoo Course" (a real Costa Rica field locality) and "Departamento
+    # de Zootecnia" (a Brazilian university dept) — and only flag ~70
+    # records out of 70k. The trade-off favours the simpler rule.
+    no_locality_pattern = re.compile(r'no specific locality', re.IGNORECASE)
     if 'collection_location' in df_merged.columns:
         bad_locality = df_merged['collection_location'].fillna('').apply(
-            lambda x: bool(museum_pattern.search(str(x)))
+            lambda x: bool(no_locality_pattern.search(str(x)))
         )
     else:
         bad_locality = pd.Series(False, index=df_merged.index)
@@ -844,7 +846,7 @@ def main():
     print(f"\n>> Coordinate quality filter: {initial_count:,} → {len(df_merged):,} ({removed:,} removed)")
     print(f"   High uncertainty (>100km): {high_uncert.sum():,}")
     print(f"   Too far north (>35°N): {too_far_north.sum()}")
-    print(f"   Museum/zoo locality keywords: {bad_locality.sum():,}")
+    print(f"   No-specific-locality placeholders: {bad_locality.sum():,}")
     if bbox_w is not None:
         print(f"   Outside Neotropical bbox ({bbox_w},{bbox_s}..{bbox_e},{bbox_n}): {out_of_bbox.sum():,}")
     print(f"   Ocean points (Natural Earth land mask): {in_ocean.sum():,}")

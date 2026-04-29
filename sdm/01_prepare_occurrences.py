@@ -117,14 +117,16 @@ def filter_coordinate_quality(df):
     too_far_north = df["lat"] > 35
     n_north = too_far_north.sum()
 
-    # 3. Locality keywords indicating museum/zoo/no-data coordinates
-    museum_pattern = re.compile(
-        r"no specific locality|zoo|aquariu|museum|botanical garden",
-        re.IGNORECASE,
-    )
+    # 3. Records with explicit "no specific locality" placeholders.
+    # Earlier versions also matched zoo / aquariu / museum / botanical
+    # garden, but those substrings cause false positives — e.g. "OTS Adv.
+    # Zoo Course" (a real Costa Rica field locality) and "Departamento
+    # de Zootecnia" (a Brazilian university dept) — and only flag ~70
+    # records out of 70k. The trade-off favours the simpler rule.
+    no_locality_pattern = re.compile(r"no specific locality", re.IGNORECASE)
     if "collection_location" in df.columns:
         bad_locality = df["collection_location"].fillna("").apply(
-            lambda x: bool(museum_pattern.search(str(x)))
+            lambda x: bool(no_locality_pattern.search(str(x)))
         )
         n_locality = bad_locality.sum()
     else:
@@ -137,7 +139,7 @@ def filter_coordinate_quality(df):
     print(f"  Coordinate quality filter: {initial} → {len(df)} ({flagged.sum()} removed)")
     print(f"    High uncertainty (>100km): {n_uncert}")
     print(f"    Too far north (>35°N): {n_north}")
-    print(f"    Museum/zoo locality keywords: {n_locality}")
+    print(f"    No-specific-locality placeholders: {n_locality}")
     return df
 
 
