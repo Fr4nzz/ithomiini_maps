@@ -8,12 +8,9 @@ to occur. An associated feature was the per-species parameter tuning
 that noticeably improved model quality for species that were previously
 modelled poorly.
 
-Statistics reported below come from the uniform tuning run completed
-2026-04-26 (all 151 species, reduced 5 RM x 3 feature-class grid)
-with DBSCAN multi-cluster accessible areas and density-based
-background as the production defaults. Numbers will be confirmed
-against the regenerated `sdm_metadata.json` once the production
-rasters finish rebuilding.
+Statistics reported below should be refreshed after the SDM rerun with
+the source-specific occurrence filters. The updated occurrence-prep
+step currently identifies 146 species with at least 20 thinned records.
 
 ---
 
@@ -35,40 +32,39 @@ Specimen Maps pipeline.
 > that researchers can overlay on the occurrence map.
 >
 > Environmental predictors combine nine bioclimatic variables from
-> CHELSA v2.1 (Karger et al., 2017) with elevation (WorldClim) and
+> CHELSA v2.1 (Climatologies at High Resolution for the Earth's Land
+> Surface Areas; Karger et al., 2017) with elevation (WorldClim) and
 > monthly cloud cover (Wilson & Jetz, 2016), all at approximately 1 km
-> resolution across the Neotropics. For each species, occurrence records
-> from all five data sources are pooled, deduplicated, and spatially
-> thinned to a minimum distance of 5 km (Aiello-Lammens et al., 2015)
-> to reduce sampling bias. Before thinning, records are screened with
-> a coordinate-quality filter that removes five categories of
-> unreliable localities: (i) records whose GBIF-reported coordinate
-> uncertainty exceeds 100 km, which typically correspond to country or
-> region centroids rather than field-collected specimens; (ii) records
-> north of 35° N, well above the northernmost extent of the tribe's
-> natural range (~25° N in eastern Mexico); (iii) records whose
+> resolution across the Neotropics. For the SDM input, occurrence
+> records from iNaturalist, Global Biodiversity Information Facility
+> (GBIF) records from the Universidad Nacional Autónoma de México
+> (UNAM), GBIF records from other institutions, and the Sanger Institute
+> are pooled, deduplicated, and spatially thinned to a minimum distance
+> of 5 km (Aiello-Lammens et al., 2015) to reduce sampling bias.
+> GBIF-family records are first screened with a
+> coordinate-quality filter that removes four categories of unreliable
+> localities: (i) records whose GBIF-reported coordinate uncertainty
+> exceeds 100 km, which typically correspond to country or region
+> centroids rather than field-collected specimens; (ii) records whose
 > locality field contains the GBIF placeholder string "no specific
 > locality", indicating that the published coordinates are not a real
-> collection site; (iv) records whose coordinates fall outside the
+> collection site; (iii) records whose coordinates fall outside the
 > Neotropical study bounding box (-120°W to -30°E, -40°S to +25°N);
-> and (v) records that fall in the ocean, identified by checking each
-> record against the full-resolution GSHHS coastline (Wessel & Smith,
-> 1996) clipped to the Neotropics with a 5 km tolerance to absorb
-> GPS-precision rounding around tight bays and small islands; these
-> typically reflect data-entry errors in the original coordinates.
-> Together these filters remove 1,743 of the 105,748 raw records
-> (1.6%): 1,367 with coordinate uncertainty above 100 km, 14 above
-> 35° N, 692 with the GBIF "no specific locality" placeholder, 66
-> outside the Neotropical bounding box, and 304 in the ocean
-> (a single record can fail more than one rule, so the per-category
-> counts overlap). The same filter set is applied identically along
-> the web-map occurrence path and the SDM training path, so that
-> points displayed to researchers have passed the same quality screen
-> as those used for modelling, and so that records rejected by the
-> model do not reappear as misleading outliers on the interactive map.
-> This filter parity is enforced by sharing a single GSHHS coastline
-> dataset and a single study-area bounding box between the two
-> pipelines.
+> and (iv) records that fall in the ocean, identified with the Global
+> Self-consistent, Hierarchical, High-resolution Shoreline database
+> (GSHHS; Wessel & Smith, 1996) clipped to the Neotropics with a 5 km
+> tolerance to absorb GPS-precision rounding around tight bays and
+> small islands. In the current web-map dataset, these filters remove
+> 1,457 of 70,399 GBIF-family records: 1,367 with coordinate
+> uncertainty above 100 km, 692 with the GBIF "no specific locality"
+> placeholder, 66 outside the Neotropical bounding box, and 103 in the
+> ocean, with some records failing more than one rule. Dore et al.
+> (2022) records are grid-count data, so some cell centroids naturally
+> fall offshore; these records remain available for occurrence
+> visualization but are not used as SDM inputs. Sanger Institute records
+> are also retained rather than removed by spatial checks. The interface
+> includes a `Spatial check` table column that flags records outside the
+> study area or in the ocean, allowing users to inspect them directly.
 >
 > Because our data are presence-only, the model cannot contrast
 > presences against confirmed absences. Instead, it contrasts the
@@ -161,37 +157,24 @@ Specimen Maps pipeline.
 > and gradient-boosted trees for species with 50 or more records).
 > This avoids a separate tuning step that could be mistaken for
 > post-hoc model selection. Fitting and tuning all species takes
-> approximately two hours on a workstation, which exceeds the per-job
+> approximately two hours on a personal computer, which exceeds the per-job
 > time limit on GitHub Actions, so the pipeline is run locally and
 > only the resulting prediction rasters and metadata are committed to
-> the repository for the web application to serve. Each fitted model
-> is also persisted to disk as a serialized object, so that subsequent
-> changes to the prediction grid (resolution, extent, masking) can be
-> evaluated without retraining.
+> the repository for the web application to serve. The fitted models
+> can also be persisted as serialized objects and committed when the
+> model archive is available, allowing later prediction-grid changes
+> to be evaluated without retraining.
 >
 > The final ensemble prediction is generated on a uniform Neotropical
-> grid that covers the full study extent (-120°W to -30°E, -40°S to
-> +25°N) at 0.1° resolution, identical for every species. Earlier
-> versions of the pipeline restricted each species' prediction raster
-> to its accessible area, which made narrow-range species visually
-> hard to compare against widespread congeners. Predicting on the
-> common grid is straightforward to implement because the model is
-> trained from the accessible area and applied to a separate set of
-> grid pixels; it does not change what the model has learned, only
-> the spatial domain over which we project it. To make the
-> distinction between interpolation and extrapolation explicit, each
-> species' ensemble raster is split into two co-registered layers:
-> a "core" layer that retains predictions at pixels inside the
-> species' accessible-area polygon, where the model is operating
-> within the spatial and environmental envelope of its training data,
-> and an "extension" layer that retains predictions at the remaining
-> pixels, where the projection is an extrapolation beyond that
-> envelope. The accessible-area polygon used for the split is the
-> same one that bounds the background sample. The web map loads both
-> layers by default but exposes a "Show full Neotropics" toggle that
-> hides the extension layer, so that users who want a strictly
-> conservative view can fall back to the accessible-area-only
-> projection without re-fetching any data.
+> grid covering the full study extent (-120°W to -30°E, -40°S to +25°N)
+> at 0.1° resolution. Each species' ensemble raster is split into two
+> co-registered layers: a "core" layer inside the accessible-area
+> polygon, where the model is projecting within the spatial and
+> environmental envelope used for training, and an "extension" layer
+> outside that polygon, where the projection is extrapolative. The web
+> map loads both layers by default but includes a "Show full Neotropics"
+> toggle that hides the extension layer for users who want the
+> accessible-area-only view.
 
 ### Edit 1b: extend the Web Interface paragraph
 
@@ -231,41 +214,32 @@ existing 3.5 can retain its closing-section feel.
 
 > ## **3.6 Species Distribution Models**
 >
-> The modelling pipeline produced suitability rasters for 151 species
-> with at least 20 thinned records, covering all tiers of the
-> sample-size hierarchy: 69 species in the small tier (20–49 records,
-> MaxEnt only), 36 in the medium tier (50–99 records), and 46 in the
-> large tier (100 or more records). Median sample size across modelled
-> species was 57 records, ranging from 20 to 1,295.
+> After source-specific occurrence filtering and 5 km spatial thinning,
+> the modelling input currently contains 146 species with at least 20
+> thinned records. This number should be updated, together with the
+> sample-size tiers and model-performance summaries, after the SDM
+> pipeline is rerun with the refreshed inputs.
 >
-> Before tuning, across all 151 species the mean cross-validated Boyce
-> index was 0.58 (median 0.60), with 23 species falling below the 0.3
-> threshold conventionally used to flag models as predictively useful
-> (Hirzel et al., 2006). After the uniform grid search (5 RM x 3
-> feature-class combinations applied to every species), the mean Boyce
-> rose to 0.76 (median 0.85). Of the 151 models, 150 (99%) had
-> positive Boyce, 145 (96%) reached 0.3, and 129 (85%) reached 0.5.
-> Only six species remain below the 0.3 threshold after tuning.
+> The tuning comparison should be reported as a contrast between
+> tier-default baseline configurations and selected tuned
+> configurations, not as a separate "before" and "after" workflow.
+> Tuning is integrated into the main modelling script: for each species,
+> the pipeline runs the MaxEnt grid search, selects the configuration
+> with the highest cross-validated Boyce index, applies the regression
+> guard against the tier-default baseline, and then generates the
+> prediction raster in the same pass.
 >
-> Of the 151 species, 115 benefited from tuned parameters (cross-
-> validated Boyce higher than the tier default), while the remaining
-> 36 were kept at tier defaults because no grid-search configuration
-> improved on the baseline. Among the 115 improved species, 39
-> gained more than 0.3 Boyce, and six moved from a negative baseline
-> (predictions anti-correlated with occurrences) to a positive tuned
-> value. The combination of the DBSCAN accessible-area strategy and
-> per-species tuning was particularly effective for species with
-> disjunct distributions: *Ithomia heraldica*, which was previously
-> unmodelable at Boyce −0.55 under the single-hull approach, rose to
-> +0.77 once its spatially separate clusters received individual
-> accessible areas and the regularization was increased (RM = 4.0,
-> all four feature classes). Other notable improvements include
-> *Hyposcada illinissa* (−0.10 to +0.58), *Mechanitis messenoides*
-> (+0.38 to +0.73), and *Episcada salvinia* (+0.25 to +0.67). Run-to-
-> run variability of spatial-block cross-validation at sample sizes
-> below 200 is on the order of 0.05–0.15 Boyce (Santini et al., 2021),
-> so small differences between the tuning estimates and the production
-> model should not be over-interpreted.
+> The previous tuning run can guide the Results narrative, but its
+> counts should not be reported as final after changing the occurrence
+> filters. Once the rerun finishes, report the number of species in each
+> sample-size tier, the mean and median Boyce index for tier-default
+> baselines versus selected tuned configurations, the number of species
+> reaching Boyce thresholds of 0.3 and 0.5, and a few species-level
+> examples where tuning or DBSCAN accessible areas materially improved
+> performance. Run-to-run variability of spatial-block cross-validation
+> at sample sizes below 200 is on the order of 0.05–0.15 Boyce
+> (Santini et al., 2021), so small differences between tuning estimates
+> and production models should not be over-interpreted.
 >
 > The tuning outputs are stored as a per-species overrides file
 > (`sdm/species_overrides.json`) that the main pipeline reads on
@@ -532,9 +506,7 @@ and should not be duplicated.
 5. **Reference additions** (Edit 6a): needed by Methods and Results
    edits, ~14 new entries.
 
-SDM statistics above come from the uniform tuning run completed
-2026-04-26 (151 species, reduced 5 x 3 grid, DBSCAN accessible area,
-density-based background). Production rasters are being regenerated
-with these parameters; final numbers from `sdm_metadata.json` may
-differ slightly from the tuning cross-validation estimates due to
-run-to-run CV variance.
+SDM statistics above should be refreshed after the source-specific
+occurrence filters are propagated through the full SDM rerun. Use the
+new `sdm_metadata.json`, `sdm/species_overrides.json`, and exported
+rasters for final species counts, tier counts, and Boyce summaries.
