@@ -26,6 +26,7 @@ const visibleColumns = ref({
   mimicry_ring: true,
   sequencing_status: true,
   source: true,
+  spatial_check: true,
   curated: true,
   observation_date: true,
   country: true,
@@ -45,6 +46,7 @@ const columns = [
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
   { key: 'source', label: 'Source', width: '130px' },
+  { key: 'spatial_check', label: 'Spatial check', width: '145px' },
   { key: 'curated', label: 'Curated', width: '130px' },
   { key: 'observation_date', label: 'Date', width: '130px' },
   { key: 'country', label: 'Country', width: '100px' },
@@ -59,6 +61,8 @@ const rawData = computed(() => {
   if (!geo || !geo.features) return []
   return geo.features.map(f => f.properties)
 })
+
+const getSpatialCheck = (row) => row.spatial_check || 'OK'
 
 const columnFilteredData = computed(() => {
   const data = rawData.value
@@ -113,6 +117,10 @@ const columnFilteredData = computed(() => {
         const info = getCorrectionInfo(row)
         const type = info ? info.type.toLowerCase() : ''
         return type.includes(val)
+      }
+
+      if (col === 'spatial_check') {
+        return getSpatialCheck(row).toLowerCase() === val
       }
 
       const cellVal = String(row[col] || '').toLowerCase()
@@ -247,6 +255,7 @@ const getFilterPlaceholder = (key) => {
     mimicry_ring: 'Filter...',
     sequencing_status: 'Filter...',
     source: 'Filter...',
+    spatial_check: 'Filter...',
     curated: 'Filter...',
     observation_date: 'e.g. 2023',
     country: 'Filter...',
@@ -259,7 +268,7 @@ const getFilterPlaceholder = (key) => {
 const uniqueValues = (key) => {
   const vals = new Set()
   for (const row of rawData.value) {
-    const v = row[key]
+    const v = key === 'spatial_check' ? getSpatialCheck(row) : row[key]
     if (v && v !== 'Unknown') vals.add(v)
   }
   return [...vals].sort()
@@ -710,6 +719,15 @@ const getGenomeSummary = (scientificName) => {
               </select>
 
               <select
+                v-else-if="col.key === 'spatial_check'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option v-for="val in uniqueValues('spatial_check')" :key="val" :value="val">{{ val }}</option>
+              </select>
+
+              <select
                 v-else-if="col.key === 'country'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -841,6 +859,9 @@ const getGenomeSummary = (scientificName) => {
             </td>
             <td v-if="visibleColumns.source" class="cell-source">
               {{ row.source }}
+            </td>
+            <td v-if="visibleColumns.spatial_check" class="cell-spatial-check">
+              {{ getSpatialCheck(row) }}
             </td>
             <td v-if="visibleColumns.curated" class="cell-curated">
               <template v-if="getCorrectionInfo(row)">

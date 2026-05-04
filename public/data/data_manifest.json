@@ -2,30 +2,30 @@
   "sources": {
     "Sanger Institute": {
       "file": "map_points_sanger.json",
-      "records": 6415,
+      "records": 7512,
       "default": true
     },
     "GBIF (UNAM)": {
       "file": "map_points_gbif_unam.json",
-      "records": 21427,
+      "records": 21562,
       "default": false
     },
     "GBIF (Other Institutions)": {
       "file": "map_points_gbif_other.json",
-      "records": 26539,
+      "records": 26956,
       "default": false
     },
     "Dore et al. (2022)": {
       "file": "map_points_dore.json",
-      "records": 28410,
+      "records": 28927,
       "default": false
     },
     "iNaturalist": {
       "file": "map_points_inaturalist.json",
-      "records": 20173,
+      "records": 20424,
       "default": false
     }
   },
   "image_supplement": "map_points_images.json",
-  "generated_at": "2026-04-28T04:05:17Z"
+  "generated_at": "2026-04-30T12:23:17Z"
 }

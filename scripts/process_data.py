@@ -23,6 +23,7 @@ import os
 import json
 import sys
 from pathlib import Path
+from spatial_qc import GBIF_SOURCES, SANGER_SOURCE, compute_gbif_quality_flags, compute_spatial_qc
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
@@ -769,85 +770,38 @@ def main():
     print(mim_counts.to_string())
     
     # ═══════════════════════════════════════════════════════════════════════
-    # COORDINATE QUALITY FILTER
+    # SOURCE-SPECIFIC COORDINATE QUALITY HANDLING
     # ═══════════════════════════════════════════════════════════════════════
 
     initial_count = len(df_merged)
+    env_root = Path(__file__).parent.parent / 'sdm' / 'data' / 'env_variables'
+    quality = compute_gbif_quality_flags(df_merged)
+    spatial = compute_spatial_qc(df_merged, env_root=env_root)
 
-    # 1. High coordinate uncertainty (>100 km) — country/region centroids
-    if 'coordinate_uncertainty' in df_merged.columns:
-        high_uncert = df_merged['coordinate_uncertainty'].fillna(0) > 100_000
-    else:
-        high_uncert = pd.Series(False, index=df_merged.index)
+    high_uncert = quality['high_uncertainty']
+    bad_locality = quality['no_specific_locality']
+    out_of_bbox = spatial['outside_bbox']
+    in_ocean = spatial['in_ocean']
+    df_merged['spatial_check'] = spatial['spatial_check']
 
-    # 2. Latitude > 35°N — well outside Ithomiini range (max ~25°N)
-    too_far_north = df_merged['lat'] > 35
+    gbif_mask = df_merged['source'].isin(GBIF_SOURCES)
+    sanger_mask = df_merged['source'] == SANGER_SOURCE
+    gbif_flagged = gbif_mask & (high_uncert | bad_locality | out_of_bbox | in_ocean)
 
-    # 3. Locality keywords indicating museum/zoo/no-data coordinates
-    museum_pattern = re.compile(
-        r'no specific locality|zoo|aquariu|museum|botanical garden',
-        re.IGNORECASE,
-    )
-    if 'collection_location' in df_merged.columns:
-        bad_locality = df_merged['collection_location'].fillna('').apply(
-            lambda x: bool(museum_pattern.search(str(x)))
-        )
-    else:
-        bad_locality = pd.Series(False, index=df_merged.index)
+    print(f"\n>> Source-specific coordinate quality checks ({spatial['ocean_mask_label']})")
+    print(f"   Total records before QC: {initial_count:,}")
+    print(f"   GBIF-family records checked for removal: {gbif_mask.sum():,}")
+    print(f"     High uncertainty (>100km): {(gbif_mask & high_uncert).sum():,}")
+    print(f"     No-specific-locality placeholders: {(gbif_mask & bad_locality).sum():,}")
+    print(f"     Outside Neotropical bbox: {(gbif_mask & out_of_bbox).sum():,}")
+    print(f"     Ocean points: {(gbif_mask & in_ocean).sum():,}")
+    print(f"     Removed from GBIF-family sources: {gbif_flagged.sum():,}")
+    print(f"   Sanger records flagged, not removed: {(sanger_mask & (out_of_bbox | in_ocean)).sum():,}")
+    print(f"   Dore records preserved regardless of spatial flags")
 
-    # 4. Outside Neotropical bbox (study_area in sdm/config.yaml)
-    bbox_n = bbox_s = bbox_w = bbox_e = None
-    out_of_bbox = pd.Series(False, index=df_merged.index)
-    try:
-        import yaml
-        sdm_cfg_path = Path(__file__).parent.parent / 'sdm' / 'config.yaml'
-        with open(sdm_cfg_path) as f:
-            sdm_cfg = yaml.safe_load(f)
-        extent = sdm_cfg['study_area']
-        bbox_w, bbox_e = extent['west'], extent['east']
-        bbox_s, bbox_n = extent['south'], extent['north']
-        out_of_bbox = (
-            (df_merged['lng'] < bbox_w) | (df_merged['lng'] > bbox_e) |
-            (df_merged['lat'] < bbox_s) | (df_merged['lat'] > bbox_n)
-        )
-    except Exception as e:
-        print(f"   Warning: bbox filter skipped ({e})")
-
-    # 5. Ocean points (Natural Earth land mask)
-    in_ocean = pd.Series(False, index=df_merged.index)
-    land_dir = Path(__file__).parent.parent / 'sdm' / 'data' / 'env_variables' / 'ne_110m_land'
-    if land_dir.exists():
-        try:
-            import geopandas as gpd
-            from shapely.geometry import Point
-            from shapely.ops import unary_union
-            from shapely.prepared import prep
-            land = gpd.read_file(land_dir)
-            land_union = unary_union(land.geometry)
-            land_prep = prep(land_union)
-            # Only test points not yet flagged by cheaper filters
-            candidate_idx = df_merged.index[
-                ~(high_uncert | too_far_north | bad_locality | out_of_bbox)
-            ]
-            on_land = df_merged.loc[candidate_idx].apply(
-                lambda r: land_prep.contains(Point(r['lng'], r['lat'])), axis=1
-            )
-            in_ocean.loc[candidate_idx] = ~on_land
-        except Exception as e:
-            print(f"   Warning: ocean filter skipped ({e})")
-    else:
-        print(f"   Warning: ocean filter skipped (land mask not found at {land_dir})")
-
-    flagged = high_uncert | too_far_north | bad_locality | out_of_bbox | in_ocean
-    df_merged = df_merged[~flagged].copy()
+    df_merged = df_merged[~gbif_flagged].copy()
     removed = initial_count - len(df_merged)
-    print(f"\n>> Coordinate quality filter: {initial_count:,} → {len(df_merged):,} ({removed:,} removed)")
-    print(f"   High uncertainty (>100km): {high_uncert.sum():,}")
-    print(f"   Too far north (>35°N): {too_far_north.sum()}")
-    print(f"   Museum/zoo locality keywords: {bad_locality.sum():,}")
-    if bbox_w is not None:
-        print(f"   Outside Neotropical bbox ({bbox_w},{bbox_s}..{bbox_e},{bbox_n}): {out_of_bbox.sum():,}")
-    print(f"   Ocean points (Natural Earth land mask): {in_ocean.sum():,}")
+    print(f">> Coordinate quality result: {initial_count:,} → {len(df_merged):,} ({removed:,} removed)")
 
     # ═══════════════════════════════════════════════════════════════════════
     # SAVE OUTPUT

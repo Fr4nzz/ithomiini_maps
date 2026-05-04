@@ -10,9 +10,13 @@ import yaml
 import numpy as np
 import pandas as pd
 import geopandas as gpd
+import sys
 from pathlib import Path
 from collections import Counter
 from utils.spatial import spatial_thin
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from spatial_qc import GBIF_SOURCES, SANGER_SOURCE, compute_gbif_quality_flags, compute_spatial_qc
 
 # Load config
 CONFIG_PATH = Path(__file__).parent / "config.yaml"
@@ -54,7 +58,7 @@ def filter_ithomiini(df):
 
 
 def clean_coordinates(df):
-    """Remove records with invalid or missing coordinates."""
+    """Remove records with missing, zero, or globally invalid coordinates."""
     initial = len(df)
 
     # Remove missing
@@ -67,77 +71,39 @@ def clean_coordinates(df):
     df = df[(df["lat"] >= -90) & (df["lat"] <= 90)]
     df = df[(df["lng"] >= -180) & (df["lng"] <= 180)]
 
-    # Remove points outside Neotropical extent (rough filter)
-    extent = config["study_area"]
-    df = df[
-        (df["lng"] >= extent["west"])
-        & (df["lng"] <= extent["east"])
-        & (df["lat"] >= extent["south"])
-        & (df["lat"] <= extent["north"])
-    ]
-
-    # Remove ocean points using Natural Earth land mask
-    land_dir = Path(__file__).parent / config["paths"]["env_variables"] / "ne_110m_land"
-    if land_dir.exists():
-        import geopandas as gpd
-        from shapely.geometry import Point
-        from shapely.ops import unary_union
-        from shapely.prepared import prep
-
-        land = gpd.read_file(land_dir)
-        land_union = unary_union(land.geometry)
-        land_prep = prep(land_union)
-
-        before_ocean = len(df)
-        on_land = df.apply(
-            lambda r: land_prep.contains(Point(r["lng"], r["lat"])), axis=1
-        )
-        df = df[on_land]
-        ocean_removed = before_ocean - len(df)
-        print(f"  Ocean points removed: {ocean_removed}")
-
     print(f"  Cleaned coordinates: {initial} → {len(df)} ({initial - len(df)} removed)")
     return df
 
 
 def filter_coordinate_quality(df):
-    """Remove records with unreliable coordinates (museum geocoding, centroids)."""
-    import re
+    """Remove unreliable GBIF-family records while preserving Sanger spatial flags."""
     initial = len(df)
 
-    # 1. High coordinate uncertainty (>100 km) — country/region centroids
-    if "coordinate_uncertainty" in df.columns:
-        high_uncert = df["coordinate_uncertainty"].fillna(0) > 100_000
-        n_uncert = high_uncert.sum()
-    else:
-        high_uncert = pd.Series(False, index=df.index)
-        n_uncert = 0
+    env_root = Path(__file__).parent / config["paths"]["env_variables"]
+    quality = compute_gbif_quality_flags(df)
+    spatial = compute_spatial_qc(df, env_root=env_root, study_area=config["study_area"])
 
-    # 2. Latitude > 35°N — well outside Ithomiini range (max ~25°N)
-    too_far_north = df["lat"] > 35
-    n_north = too_far_north.sum()
+    high_uncert = quality["high_uncertainty"]
+    bad_locality = quality["no_specific_locality"]
+    out_of_bbox = spatial["outside_bbox"]
+    in_ocean = spatial["in_ocean"]
 
-    # 3. Locality keywords indicating museum/zoo/no-data coordinates
-    museum_pattern = re.compile(
-        r"no specific locality|zoo|aquariu|museum|botanical garden",
-        re.IGNORECASE,
-    )
-    if "collection_location" in df.columns:
-        bad_locality = df["collection_location"].fillna("").apply(
-            lambda x: bool(museum_pattern.search(str(x)))
-        )
-        n_locality = bad_locality.sum()
-    else:
-        bad_locality = pd.Series(False, index=df.index)
-        n_locality = 0
+    df["spatial_check"] = spatial["spatial_check"]
+    gbif_mask = df["source"].isin(GBIF_SOURCES)
+    sanger_mask = df["source"] == SANGER_SOURCE
+    flagged = gbif_mask & (high_uncert | bad_locality | out_of_bbox | in_ocean)
+    sanger_spatial_flags = sanger_mask & (out_of_bbox | in_ocean)
+    df = df[~flagged].copy()
 
-    flagged = high_uncert | too_far_north | bad_locality
-    df = df[~flagged]
-
-    print(f"  Coordinate quality filter: {initial} → {len(df)} ({flagged.sum()} removed)")
-    print(f"    High uncertainty (>100km): {n_uncert}")
-    print(f"    Too far north (>35°N): {n_north}")
-    print(f"    Museum/zoo locality keywords: {n_locality}")
+    print(f"  Source-specific coordinate quality ({spatial['ocean_mask_label']}):")
+    print(f"    GBIF-family records checked: {gbif_mask.sum()}")
+    print(f"      High uncertainty (>100km): {(gbif_mask & high_uncert).sum()}")
+    print(f"      No-specific-locality placeholders: {(gbif_mask & bad_locality).sum()}")
+    print(f"      Outside Neotropical bbox: {(gbif_mask & out_of_bbox).sum()}")
+    print(f"      Ocean points: {(gbif_mask & in_ocean).sum()}")
+    print(f"      Removed from GBIF-family sources: {flagged.sum()}")
+    print(f"    Sanger spatial flags preserved: {sanger_spatial_flags.sum()}")
+    print(f"  Coordinate quality result: {initial} → {len(df)} ({flagged.sum()} removed)")
     return df
 
 
