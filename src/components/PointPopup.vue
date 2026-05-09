@@ -228,7 +228,7 @@ const bioprojectUrl = computed(() => {
         <div class="individuals-section">
           <div class="section-header">
             <span class="count-badge">{{ individualsCount }}</span>
-            <span class="section-label">{{ isCluster ? 'Records' : 'Individuals' }}</span>
+            <span class="section-label">{{ isCluster ? 'Selected Records' : 'Individuals' }}</span>
           </div>
           <select
             v-if="individualsList.length > 1"
@@ -407,7 +407,7 @@ const bioprojectUrl = computed(() => {
             </div>
             <div class="stat">
               <span class="stat-value">{{ totalRecords }}</span>
-              <span class="stat-label">records</span>
+              <span class="stat-label">{{ isCluster ? 'cluster records' : 'records' }}</span>
             </div>
           </div>
 
