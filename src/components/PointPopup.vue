@@ -128,6 +128,10 @@ const subspeciesCount = computed(() => {
 
 // Individual count for current species+subspecies
 const individualsCount = computed(() => individualsList.value.length)
+const recordSelectorLabel = computed(() => {
+  if (!props.isCluster) return 'Individuals'
+  return selectedSubspecies.value ? 'Subspecies Records' : 'Species Records'
+})
 
 // Open gallery with current selection
 const openGallery = () => {
@@ -228,7 +232,7 @@ const bioprojectUrl = computed(() => {
         <div class="individuals-section">
           <div class="section-header">
             <span class="count-badge">{{ individualsCount }}</span>
-            <span class="section-label">{{ isCluster ? 'Selected Records' : 'Individuals' }}</span>
+            <span class="section-label">{{ recordSelectorLabel }}</span>
           </div>
           <select
             v-if="individualsList.length > 1"
