@@ -554,9 +554,9 @@ export function useDataLayer(map, options = {}) {
         source: 'points-source',
         filter: ['has', 'point_count'],
         layout: {
-          'text-field': '{point_count_abbreviated}',
+          'text-field': ['concat', ['get', 'point_count_abbreviated'], '\nrecords'],
           'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-          'text-size': 11,
+          'text-size': 10,
           'text-allow-overlap': true
         },
         paint: { 'text-color': '#1a1a2e' }

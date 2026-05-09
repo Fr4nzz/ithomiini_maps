@@ -104,6 +104,7 @@ export const computeClusterStats = (points, centerLat, centerLng) => {
 
   // Unique locations (by coordinate pairs)
   const locationSet = new Set()
+  const specimenSet = new Set()
   const countrySet = new Set()
   let maxDistance = 0
   let farthestPoint = null
@@ -131,6 +132,10 @@ export const computeClusterStats = (points, centerLat, centerLng) => {
 
     // Get properties
     const props = point.properties || point
+
+    if (props.id || props.specimen_id || props.camid) {
+      specimenSet.add(props.id || props.specimen_id || props.camid)
+    }
 
     // Unique locations
     if (lat !== undefined && lng !== undefined) {
@@ -214,7 +219,9 @@ export const computeClusterStats = (points, centerLat, centerLng) => {
     farthestPoint,
 
     // Counts
+    recordCount: points.length,
     speciesCount: speciesMap.size,
+    specimenCount: specimenSet.size,
     individualCount: points.length,
     maleCount,
     femaleCount,
@@ -228,4 +235,3 @@ export const computeClusterStats = (points, centerLat, centerLng) => {
     speciesMap
   }
 }
-

@@ -85,7 +85,7 @@ const selectIndividual = (index) => {
 
 // Total counts
 const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
-const totalIndividuals = computed(() => props.points.length)
+const totalRecords = computed(() => props.clusterStats?.recordCount ?? props.points.length)
 
 // Format radius similar to scale bar (round to nice numbers)
 const formattedRadius = computed(() => {
@@ -228,7 +228,7 @@ const bioprojectUrl = computed(() => {
         <div class="individuals-section">
           <div class="section-header">
             <span class="count-badge">{{ individualsCount }}</span>
-            <span class="section-label">Individuals</span>
+            <span class="section-label">{{ isCluster ? 'Records' : 'Individuals' }}</span>
           </div>
           <select
             v-if="individualsList.length > 1"
@@ -354,8 +354,19 @@ const bioprojectUrl = computed(() => {
 
           <!-- Cluster-specific: Location count -->
           <div v-if="isCluster && clusterStats" class="detail-row">
-            <span class="detail-label">Locations:</span>
+            <span
+              class="detail-label"
+              title="Unique coordinate sites rounded to four decimal places"
+            >Sites:</span>
             <span class="detail-value">{{ clusterStats.locationCount }}</span>
+          </div>
+
+          <div v-if="isCluster && clusterStats?.specimenCount" class="detail-row">
+            <span
+              class="detail-label"
+              title="Unique specimen identifiers where record IDs are available"
+            >Specimens:</span>
+            <span class="detail-value">{{ clusterStats.specimenCount }}</span>
           </div>
 
           <!-- Regular location: Location name -->
@@ -395,8 +406,8 @@ const bioprojectUrl = computed(() => {
               <span class="stat-label">species</span>
             </div>
             <div class="stat">
-              <span class="stat-value">{{ totalIndividuals }}</span>
-              <span class="stat-label">individuals</span>
+              <span class="stat-value">{{ totalRecords }}</span>
+              <span class="stat-label">records</span>
             </div>
           </div>
 
@@ -404,8 +415,8 @@ const bioprojectUrl = computed(() => {
           <div v-if="maleCount > 0 || femaleCount > 0" class="sex-stats">
             <span v-if="maleCount > 0" class="sex-count male">♂ {{ maleCount }}</span>
             <span v-if="femaleCount > 0" class="sex-count female">♀ {{ femaleCount }}</span>
-            <span v-if="totalIndividuals - maleCount - femaleCount > 0" class="sex-count unknown">
-              ? {{ totalIndividuals - maleCount - femaleCount }}
+            <span v-if="totalRecords - maleCount - femaleCount > 0" class="sex-count unknown">
+              ? {{ totalRecords - maleCount - femaleCount }}
             </span>
           </div>
         </div>
