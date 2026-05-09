@@ -249,7 +249,6 @@ def generate_web_metadata():
             "CHELSA bioclimatic (BIO1,2,4,5,6,12,13,14,15)",
             "Elevation (WorldClim 30s)",
             "Cloud cover (EarthEnv)",
-            "Host plant density (GBIF Solanaceae)",
         ],
         "modelling": {
             "algorithms": config["modelling"]["algorithms"],

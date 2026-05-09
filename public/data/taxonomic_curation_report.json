@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-04-30 12:23:16 UTC",
+    "generated_at": "2026-05-09 13:14:45 UTC",
     "gbif_api": "https://api.gbif.org/v1",
     "backbone": "GBIF Backbone Taxonomy",
     "higher_constraints": {
@@ -19,14 +19,14 @@
       "total_subspecies": 3942,
       "total_synonyms": 6349
     },
-    "api_fallback_calls": 522
+    "api_fallback_calls": 521
   },
   "quality_assessment": {
-    "total_records": 105381,
+    "total_records": 104297,
     "unique_genera": 190,
-    "unique_species": 892,
+    "unique_species": 893,
     "unique_subspecies": 1396,
-    "unique_scientific_names": 892
+    "unique_scientific_names": 893
   },
   "quality_issues": {
     "placeholder_genera": {
@@ -80,7 +80,7 @@
       "ssp. nigricans": 1
     },
     "free_text_subspecies": {},
-    "missing_subspecies": 51973,
+    "missing_subspecies": 51880,
     "not_found_taxonomy": 94,
     "malformed_names": [
       "Riodinidae",
@@ -149,15 +149,15 @@
     }
   },
   "curation_summary": {
-    "total_curated": 2617,
+    "total_curated": 2619,
     "statuses": {
       "verified_nominotypical": 172,
-      "subspecies_unresolved": 602,
+      "subspecies_unresolved": 603,
       "undescribed": 361,
-      "verified": 1068,
+      "verified": 1070,
       "verified_literature": 206,
       "higher_rank_only": 38,
-      "synonym_resolved": 96,
+      "synonym_resolved": 95,
       "not_found": 1,
       "non_standard_subspecies": 66,
       "subspecies_synonym": 4,
@@ -172,7 +172,7 @@
       "SUBSPECIES_FUZZY_FALSE_POSITIVE": 4,
       "SUBSPECIES_MATCHED_HIGHER": 108,
       "MATCHED_HIGHER_RANK": 38,
-      "SYNONYM": 97,
+      "SYNONYM": 96,
       "SYNONYM_EPITHET_UNCONFIRMED": 26,
       "FUZZY_MATCH_REJECTED": 1,
       "FREE_TEXT_SUBSPECIES": 45,
@@ -186,9 +186,9 @@
       "SUBSPECIES_AS_SPECIES": 2
     },
     "subspecies_categories": {
-      "standard": 1421,
+      "standard": 1422,
       "undescribed": 415,
-      "absent": 705,
+      "absent": 706,
       "free_text": 45,
       "form_name": 14,
       "slash_alt": 9,
@@ -117323,6 +117323,171 @@
     {
       "input": {
         "genus": "Heliconius",
+        "species_epithet": "erato",
+        "subspecies": "emma",
+        "scientific_name": "Heliconius erato",
+        "ssp_category": "standard",
+        "ssp_cleaned": "emma",
+        "is_nominotypical": false
+      },
+      "original_scientific_name": "Heliconius erato",
+      "species_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 1900872,
+        "canonicalName": "Heliconius erato",
+        "scientificName": "Heliconius erato (Linnaeus, 1758)",
+        "rank": "SPECIES",
+        "synonym": false
+      },
+      "subspecies_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 11502817,
+        "canonicalName": "Heliconius erato emma",
+        "scientificName": "Heliconius erato emma",
+        "rank": "SUBSPECIES",
+        "synonym": false
+      },
+      "accepted_name": {
+        "key": 1900872,
+        "canonicalName": "Heliconius erato",
+        "scientificName": "Heliconius erato (Linnaeus, 1758)",
+        "status": "ACCEPTED",
+        "rank": "SPECIES"
+      },
+      "recognized_subspecies": [
+        {
+          "name": "Heliconius erato andremona",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato extrema",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato helena",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato leda",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato oberthuri",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato roseoflava",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato udalrica",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato albida",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato constricta",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato fuliginosas",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato hemicycla",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato magnificus",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato protea",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato telloides",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato amazona",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato erythrea",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato fumata",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato latiflava",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato nigrobasalis",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato reductimacula",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato tellus",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato erato",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato hydara",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato emma",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato lativitta",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato notabilis",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato chestertonii",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato favorinus",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Heliconius erato demophoon",
+          "status": "ACCEPTED"
+        }
+      ],
+      "curated_name": "Heliconius erato emma",
+      "curation_basis": "GBIF",
+      "literature_action": null,
+      "status": "verified",
+      "flags": [],
+      "notes": [
+        "Subspecies 'emma' found in GBIF backbone (cache)."
+      ]
+    },
+    {
+      "input": {
+        "genus": "Heliconius",
         "species_epithet": "elevatus",
         "subspecies": "pseudocupidineus",
         "scientific_name": "Heliconius elevatus",
@@ -127642,49 +127807,6 @@
     },
     {
       "input": {
-        "genus": "Mechanitis",
-        "species_epithet": "messenoides",
-        "subspecies": "messnoides",
-        "scientific_name": "Mechanitis messenoides",
-        "ssp_category": "standard",
-        "ssp_cleaned": "messnoides",
-        "is_nominotypical": false
-      },
-      "original_scientific_name": "Mechanitis messenoides",
-      "species_match": {
-        "matchType": "EXACT",
-        "source": "cache",
-        "status": "SYNONYM",
-        "gbifKey": 1902434,
-        "canonicalName": "Mechanitis messenoides",
-        "scientificName": "Mechanitis messenoides C.Felder & R.Felder, 1865",
-        "rank": "SPECIES",
-        "synonym": true
-      },
-      "subspecies_match": null,
-      "accepted_name": {
-        "key": 5881218,
-        "canonicalName": "Mechanitis mazaeus messenoides",
-        "scientificName": "Mechanitis mazaeus messenoides C.Felder & R.Felder, 1865",
-        "status": "ACCEPTED",
-        "rank": "SUBSPECIES"
-      },
-      "recognized_subspecies": [],
-      "curated_name": "Mechanitis mazaeus messenoides messnoides",
-      "curation_basis": "GBIF Synonym",
-      "literature_action": null,
-      "status": "synonym_resolved",
-      "flags": [
-        "SYNONYM",
-        "SUBSPECIES_NOT_IN_BACKBONE"
-      ],
-      "notes": [
-        "SYNONYM: 'Mechanitis messenoides' -> accepted: 'Mechanitis mazaeus messenoides' (outside cache, key=5881218)",
-        "Subspecies 'messnoides' not in GBIF backbone (parent species cached, children list checked)."
-      ]
-    },
-    {
-      "input": {
         "genus": "Heliconius",
         "species_epithet": "numata",
         "subspecies": "numata",
@@ -131249,6 +131371,106 @@
       "notes": [
         "Subspecies 'cajona' not in GBIF backbone (parent species cached, children list checked)."
       ]
+    },
+    {
+      "input": {
+        "genus": "Moschoneura",
+        "species_epithet": "pinthous",
+        "subspecies": "proxima",
+        "scientific_name": "Moschoneura pinthous",
+        "ssp_category": "standard",
+        "ssp_cleaned": "proxima",
+        "is_nominotypical": false
+      },
+      "original_scientific_name": "Moschoneura pinthous",
+      "species_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 1919957,
+        "canonicalName": "Moschoneura pinthous",
+        "scientificName": "Moschoneura pinthous (Linnaeus, 1758)",
+        "rank": "SPECIES",
+        "synonym": false
+      },
+      "subspecies_match": null,
+      "accepted_name": {
+        "key": 1919957,
+        "canonicalName": "Moschoneura pinthous",
+        "scientificName": "Moschoneura pinthous (Linnaeus, 1758)",
+        "status": "ACCEPTED",
+        "rank": "SPECIES"
+      },
+      "recognized_subspecies": [
+        {
+          "name": "Moschoneura pinthous pinthous",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Moschoneura pinthous ithomia",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Moschoneura pinthous monica",
+          "status": "ACCEPTED"
+        }
+      ],
+      "curated_name": "Moschoneura pinthous proxima",
+      "curation_basis": "GBIF",
+      "literature_action": null,
+      "status": "subspecies_unresolved",
+      "flags": [
+        "SUBSPECIES_NOT_IN_BACKBONE"
+      ],
+      "notes": [
+        "Subspecies 'proxima' not in GBIF backbone (parent species cached, children list checked)."
+      ]
+    },
+    {
+      "input": {
+        "genus": "Taygetis",
+        "species_epithet": "mermeria",
+        "subspecies": null,
+        "scientific_name": "Taygetis mermeria",
+        "ssp_category": "absent",
+        "ssp_cleaned": null,
+        "is_nominotypical": false
+      },
+      "original_scientific_name": "Taygetis mermeria",
+      "species_match": {
+        "matchType": "EXACT",
+        "source": "cache",
+        "status": "ACCEPTED",
+        "gbifKey": 1908203,
+        "canonicalName": "Taygetis mermeria",
+        "scientificName": "Taygetis mermeria Cramer, 1779",
+        "rank": "SPECIES",
+        "synonym": false
+      },
+      "subspecies_match": null,
+      "accepted_name": {
+        "key": 1908203,
+        "canonicalName": "Taygetis mermeria",
+        "scientificName": "Taygetis mermeria Cramer, 1779",
+        "status": "ACCEPTED",
+        "rank": "SPECIES"
+      },
+      "recognized_subspecies": [
+        {
+          "name": "Taygetis mermeria griseomarginata",
+          "status": "ACCEPTED"
+        },
+        {
+          "name": "Taygetis mermeria mermeria",
+          "status": "ACCEPTED"
+        }
+      ],
+      "curated_name": "Taygetis mermeria",
+      "curation_basis": "GBIF",
+      "literature_action": null,
+      "status": "verified",
+      "flags": [],
+      "notes": []
     },
     {
       "input": {
