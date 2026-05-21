@@ -61,6 +61,7 @@ public/data/sanger_taxonomy.csv
 public/data/map_points.json
 
 # Agent artifacts
+.worktrees/
 .playwright-cli/
 .playwright-mcp/
 .playwright/
