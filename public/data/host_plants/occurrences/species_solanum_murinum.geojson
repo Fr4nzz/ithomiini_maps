@@ -1,0 +1,288 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum murinum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum murinum",
+      "slug": "species_solanum_murinum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Hypothyris ninonia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_murinum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum murinum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3800227,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum murinum Sendtn.",
+        "canonical_name": "Solanum murinum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:12+00:00"
+      },
+      "gbif_taxon_key": 3800227,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum murinum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3800227,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum murinum Sendtn.",
+      "canonical_name": "Solanum murinum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:12+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 5
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.073056,
+          -22.496667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997876401",
+        "species": "Solanum murinum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum murinum Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1823-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/71/50/00477150-1.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.590556,
+          -19.908889
+        ]
+      },
+      "properties": {
+        "gbifID": "2996842975",
+        "species": "Solanum murinum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum murinum Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/71/50/00477150-1.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.566667,
+          -22.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1424206267",
+        "species": "Solanum murinum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum murinum Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-03-28",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "MULTIMEDIA_URI_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/71/50/00477150-1.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          },
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/71/50/00477150.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.073169,
+          -22.496706
+        ]
+      },
+      "properties": {
+        "gbifID": "1930109230",
+        "species": "Solanum murinum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum murinum Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/179/071/v-287-00829061.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.590444,
+          -19.908972
+        ]
+      },
+      "properties": {
+        "gbifID": "1087656450",
+        "species": "Solanum murinum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum murinum Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/71/50/00477150-1.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    }
+  ]
+}

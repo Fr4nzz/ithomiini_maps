@@ -1,0 +1,1299 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Tetrastylis ovalis",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Tetrastylis",
+      "species": "Tetrastylis ovalis",
+      "slug": "species_tetrastylis_ovalis",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 3,
+      "butterfly_taxa": [
+        "Heliconius erato",
+        "Heliconius numata",
+        "Heliconius sara"
+      ],
+      "confidence_counts": {
+        "medium": 3
+      },
+      "occurrence_file": "occurrences/species_tetrastylis_ovalis.geojson",
+      "gbif_resolution": {
+        "query": "Tetrastylis ovalis",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3588191,
+        "accepted_usage_key": 3587788,
+        "scientific_name": "Tetrastylis ovalis (Vell.) Killip",
+        "canonical_name": "Tetrastylis ovalis",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T04:01:03+00:00"
+      },
+      "gbif_taxon_key": 3588191,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Tetrastylis ovalis",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3588191,
+      "accepted_usage_key": 3587788,
+      "scientific_name": "Tetrastylis ovalis (Vell.) Killip",
+      "canonical_name": "Tetrastylis ovalis",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T04:01:03+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 31
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:25+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -37.420278,
+          -11.391944
+        ]
+      },
+      "properties": {
+        "gbifID": "4032118386",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103817000/53A76652-E883-461F-B89D-53596DA145B3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103817590",
+            "title": "Gomes - 65 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.06666,
+          -19.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260248889",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103947000/02FC7CED-599B-477F-8DD9-9D2DBC33F82D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103947490",
+            "title": "Gentry - s.n. - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.519444,
+          -20.291389
+        ]
+      },
+      "properties": {
+        "gbifID": "1424238766",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-02-15",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/52/20/10/00522010.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.026667,
+          -15.187778
+        ]
+      },
+      "properties": {
+        "gbifID": "1424060818",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-01-07",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/29/81/27/00298127.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.156389,
+          -19.315556
+        ]
+      },
+      "properties": {
+        "gbifID": "2997730813",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-06-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.066667,
+          -14.7
+        ]
+      },
+      "properties": {
+        "gbifID": "2997805395",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-02-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.466667,
+          -17.95
+        ]
+      },
+      "properties": {
+        "gbifID": "2997746350",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-05-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.08,
+          -15.15
+        ]
+      },
+      "properties": {
+        "gbifID": "1929968613",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.0617,
+          -14.4231
+        ]
+      },
+      "properties": {
+        "gbifID": "1931174468",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-08-12",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.27,
+          -14.4
+        ]
+      },
+      "properties": {
+        "gbifID": "1930407902",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-02",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -37.4203,
+          -11.3919
+        ]
+      },
+      "properties": {
+        "gbifID": "1930219089",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-03",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1940/014/1738019.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.15,
+          -14.68
+        ]
+      },
+      "properties": {
+        "gbifID": "1931190407",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-08",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.075188,
+          -15.297018
+        ]
+      },
+      "properties": {
+        "gbifID": "1928755259",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-04-05",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.42,
+          -17.13
+        ]
+      },
+      "properties": {
+        "gbifID": "1931378308",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-10-20",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.325278,
+          -16.4625
+        ]
+      },
+      "properties": {
+        "gbifID": "1931182218",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-04-06",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.069167,
+          -14.781944
+        ]
+      },
+      "properties": {
+        "gbifID": "1090460345",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-09-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Comissão Executiva do Plano da Lavoura Cacaueira – Centro de Pesquisas do Cacau",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.528611,
+          -15.158056
+        ]
+      },
+      "properties": {
+        "gbifID": "1090475445",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-02-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Comissão Executiva do Plano da Lavoura Cacaueira – Centro de Pesquisas do Cacau",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.927778,
+          -8.971389
+        ]
+      },
+      "properties": {
+        "gbifID": "6160810742",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-11-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto do Meio Ambiente do Estado de Alagoas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.062472,
+          -8.227111
+        ]
+      },
+      "properties": {
+        "gbifID": "5000773749",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-02-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.083333,
+          -15.15
+        ]
+      },
+      "properties": {
+        "gbifID": "2577375554",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-03-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Santa Cruz",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.814722,
+          -19.897778
+        ]
+      },
+      "properties": {
+        "gbifID": "1123794288",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-02-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.0722,
+          -19.3911
+        ]
+      },
+      "properties": {
+        "gbifID": "1090570243",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-09-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.0711,
+          -23.4339
+        ]
+      },
+      "properties": {
+        "gbifID": "1090572047",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-04-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.083611,
+          -23.366944
+        ]
+      },
+      "properties": {
+        "gbifID": "1090577455",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-12-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.0,
+          -14.27
+        ]
+      },
+      "properties": {
+        "gbifID": "2998690118",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-01-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.2,
+          -22.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1257614661",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.285,
+          -22.9975
+        ]
+      },
+      "properties": {
+        "gbifID": "4061577394",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1861",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.166667,
+          -22.966667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257614650",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1861",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.2075,
+          -22.902778
+        ]
+      },
+      "properties": {
+        "gbifID": "1257614669",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000018370",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.25,
+          -17.733333
+        ]
+      },
+      "properties": {
+        "gbifID": "912092433",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-01-17T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/a368ad3a083497c651473a1875ec2b9c.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K000018370",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.0,
+          -14.266667
+        ]
+      },
+      "properties": {
+        "gbifID": "912092403",
+        "species": "Passiflora ovalis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Tetrastylis ovalis (Vell.) Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-01-30T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/f0b46cd7d85066517b9040ba0767efcc.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K000018371",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          },
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/251c6f47b5e037888d83c88b41290770.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K000018371",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    }
+  ]
+}

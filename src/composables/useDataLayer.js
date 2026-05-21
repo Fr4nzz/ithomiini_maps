@@ -589,7 +589,7 @@ export function useDataLayer(map, options = {}) {
       ? ['case', ['in', ['get', colorAttr], ['literal', shownLabelsArray]], 1, 0]
       : 1
 
-    const baseSize = style.pointSize
+    const baseSize = style.pointSize * 0.9
     const sizeExpression = [
       'interpolate', ['linear'], ['zoom'],
       3, baseSize * 0.375,

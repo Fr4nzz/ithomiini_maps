@@ -4,6 +4,7 @@ import { useDataStore } from '../stores/data'
 import { usePersistenceStore } from '../stores/persistence'
 import { useLegendStore } from '../stores/legend'
 import { useSDMStore } from '../stores/sdm'
+import { useHostPlantStore } from '../stores/hostPlants'
 import FilterSelect from './FilterSelect.vue'
 import DateFilter from './DateFilter.vue'
 import TimeSlider from './TimeSlider.vue'
@@ -26,6 +27,7 @@ const store = useDataStore()
 const persistenceStore = usePersistenceStore()
 const legendStore = useLegendStore()
 const sdmStore = useSDMStore()
+const hostPlantStore = useHostPlantStore()
 
 // Toggle persistence
 function togglePersistence() {
@@ -175,6 +177,7 @@ const TAXONOMY_LEVELS = [
   { key: 'genus', label: 'Genus', storeKey: 'genus', optionsKey: 'uniqueGenera', placeholder: 'All Genera' },
   { key: 'species', label: 'Species', storeKey: 'species', optionsKey: 'uniqueSpecies', placeholder: 'Search species...' },
   { key: 'subspecies', label: 'Subsp.', storeKey: 'subspecies', optionsKey: 'uniqueSubspecies', placeholder: 'Search subspecies...' },
+  { key: 'sex', label: 'Sex', storeKey: 'sex', placeholder: 'All sexes' },
 ]
 
 const enabledTaxonomyLevels = ref(new Set(['species', 'subspecies']))
@@ -189,16 +192,17 @@ const OTHER_FILTERS = [
   { key: 'camid', label: 'CAMID' },
   { key: 'status', label: 'Sequencing Status' },
   { key: 'country', label: 'Country' },
-  { key: 'sex', label: 'Sex' },
   { key: 'timerange', label: 'Time Range' },
   { key: 'goat', label: 'GoaT' },
-  { key: 'sdm', label: 'SDM' },
+  { key: 'sdm', label: 'Species Models' },
+  { key: 'hostplants', label: 'Host plants' },
 ]
 
 // Tiles whose availability depends on runtime state (view, feature flags, data loaded)
 const availableOtherFilters = computed(() =>
   OTHER_FILTERS.filter(f => {
     if (f.key === 'sdm') return props.currentView === 'map' && sdmStore.hasData
+    if (f.key === 'hostplants') return props.currentView === 'map'
     if (f.key === 'goat') return config.features.goatIntegration
     return true
   })
@@ -216,10 +220,15 @@ const toggleOtherFilter = (key) => {
     const want = next.has('sdm')
     if (want !== sdmStore.enabled) sdmStore.toggle()
   }
+  if (key === 'hostplants') {
+    const want = next.has('hostplants')
+    if (want !== hostPlantStore.enabled) hostPlantStore.toggleEnabled()
+  }
 }
 
 // Counts of active selections per level (shown on tiles)
 const taxonomyActiveCount = (key) => {
+  if (key === 'sex') return store.filters.sex !== 'all' ? 1 : 0
   const val = store.filters[key]
   return Array.isArray(val) ? val.length : 0
 }
@@ -228,7 +237,6 @@ const otherFilterActiveCount = (key) => {
   if (key === 'camid') return (camidInput.value || '').split(/[,\s]+/).filter(Boolean).length
   if (key === 'status') return store.filters.status.length
   if (key === 'country') return store.filters.country.length
-  if (key === 'sex') return store.filters.sex !== 'all' ? 1 : 0
   if (key === 'timerange') {
     return (store.filters.dateStart ? 1 : 0) + (store.filters.dateEnd ? 1 : 0)
   }
@@ -239,8 +247,67 @@ const otherFilterActiveCount = (key) => {
       + (store.filters.goatChromosomeMax != null ? 1 : 0)
   }
   if (key === 'sdm') return sdmStore.selectedSpecies.length
+  if (key === 'hostplants') return hostPlantStore.selectedTaxonSlugs.length
   return 0
 }
+
+const otherFilterLabel = (key) =>
+  OTHER_FILTERS.find(filter => filter.key === key)?.label || key
+
+const hostPlantConfidence = ref('high')
+const selectedHostButterflyOptions = ref([])
+const autoHostPlantSlugs = ref(new Set())
+const selectedButterfliesForHostPlants = computed(() =>
+  selectedHostButterflyOptions.value.map(option => option.value || option).filter(Boolean)
+)
+const hostPlantButterflyOptions = computed(() =>
+  hostPlantStore.getButterflyOptionsForHostPlants()
+)
+const hostPlantTaxaForSelection = computed(() => {
+  const selected = selectedButterfliesForHostPlants.value
+  if (selected.length === 0) return hostPlantStore.taxa.filter(taxon => taxon.occurrence_count > 0)
+  return hostPlantStore.getTaxaForButterflies(selected, hostPlantConfidence.value)
+})
+const hostPlantOptions = computed(() =>
+  hostPlantStore.getOccurrenceTaxonOptionsForButterflies([], hostPlantConfidence.value)
+)
+const selectedHostPlantOptions = computed({
+  get() {
+    return hostPlantOptions.value.filter(option => hostPlantStore.selectedTaxonSlugs.includes(option.value))
+  },
+  set(options) {
+    hostPlantStore.setSelectedTaxa((options || []).map(option => option.value))
+  }
+})
+
+const selectedHostPlantTaxa = computed(() =>
+  hostPlantStore.selectedTaxonSlugs
+    .map(slug => hostPlantStore.taxaBySlug.get(slug))
+    .filter(Boolean)
+)
+
+const hostPlantAssociationSummary = (taxon) => {
+  const associations = taxon.associations || hostPlantStore.associations.filter(a => a.host_taxon_slug === taxon.slug)
+  return {
+    confidence: [...new Set(associations.map(a => a.confidence === 'needs_check' ? 'needs check' : a.confidence).filter(Boolean))].join(', '),
+    butterflies: [...new Set(associations.map(a => a.butterfly_taxon).filter(Boolean))],
+    first: associations[0] || null,
+  }
+}
+
+watch([selectedButterfliesForHostPlants, hostPlantConfidence], () => {
+  const eligible = new Set(
+    hostPlantStore
+      .getTaxaForButterflies(selectedButterfliesForHostPlants.value, hostPlantConfidence.value)
+      .filter(taxon => taxon.occurrence_count > 0 && ['species', 'genus'].includes(taxon.rank))
+      .map(taxon => taxon.slug)
+  )
+  const manual = hostPlantStore.selectedTaxonSlugs.filter(slug => !autoHostPlantSlugs.value.has(slug))
+  hostPlantStore.setSelectedTaxa([...manual, ...eligible])
+  autoHostPlantSlugs.value = eligible
+}, { deep: true })
+
+hostPlantStore.loadMetadata().catch(() => {})
 
 // Aspect ratio options - derived from shared constants
 const aspectRatioLabels = {
@@ -576,8 +643,16 @@ const updateExportHeight = (value) => {
         <!-- Active taxonomy filters rendered in broad-to-narrow order -->
         <div class="active-filters-stack">
           <template v-for="level in TAXONOMY_LEVELS" :key="level.key">
+            <div v-if="level.key === 'sex' && enabledTaxonomyLevels.has(level.key)" class="filter-stack-item">
+              <label class="filter-stack-label">Sex</label>
+              <select class="sex-select" v-model="store.filters.sex">
+                <option value="all">All (♂ + ♀)</option>
+                <option value="male">♂ Male only</option>
+                <option value="female">♀ Female only</option>
+              </select>
+            </div>
             <FilterSelect
-              v-if="enabledTaxonomyLevels.has(level.key)"
+              v-else-if="enabledTaxonomyLevels.has(level.key)"
               :label="level.label"
               v-model="store.filters[level.storeKey]"
               :options="store[level.optionsKey]"
@@ -613,6 +688,18 @@ const updateExportHeight = (value) => {
         <div class="active-filters-stack">
           <!-- CAMID -->
           <div v-if="enabledOtherFilters.has('camid')" class="filter-stack-item">
+            <button
+              type="button"
+              class="filter-section-toggle filter-tile active"
+              title="Disable CAMID filter"
+              @click="toggleOtherFilter('camid')"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              <span>{{ otherFilterLabel('camid') }}</span>
+              <span v-if="otherFilterActiveCount('camid') > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount('camid') }}
+              </span>
+            </button>
             <p class="filter-stack-hint">Enter or paste IDs (comma/space/newline separated)</p>
             <div class="camid-autocomplete">
               <textarea
@@ -647,39 +734,66 @@ const updateExportHeight = (value) => {
           </div>
 
           <!-- Sequencing Status -->
-          <FilterSelect
-            v-if="enabledOtherFilters.has('status')"
-            label="Sequencing Status"
-            v-model="store.filters.status"
-            :options="store.uniqueStatuses"
-            placeholder="All Statuses"
-            :multiple="true"
-          />
+          <div v-if="enabledOtherFilters.has('status')" class="filter-stack-item">
+            <button
+              type="button"
+              class="filter-section-toggle filter-tile active"
+              title="Disable sequencing status filter"
+              @click="toggleOtherFilter('status')"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+              <span>{{ otherFilterLabel('status') }}</span>
+              <span v-if="otherFilterActiveCount('status') > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount('status') }}
+              </span>
+            </button>
+            <FilterSelect
+              v-model="store.filters.status"
+              :options="store.uniqueStatuses"
+              placeholder="All Statuses"
+              :multiple="true"
+            />
+          </div>
 
           <!-- Country -->
-          <FilterSelect
-            v-if="enabledOtherFilters.has('country')"
-            label="Country"
-            v-model="store.filters.country"
-            :options="store.uniqueCountries"
-            placeholder="All Countries"
-            :multiple="true"
-            :show-count="false"
-          />
+          <div v-if="enabledOtherFilters.has('country')" class="filter-stack-item">
+            <button
+              type="button"
+              class="filter-section-toggle filter-tile active"
+              title="Disable country filter"
+              @click="toggleOtherFilter('country')"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+              <span>{{ otherFilterLabel('country') }}</span>
+              <span v-if="otherFilterActiveCount('country') > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount('country') }}
+              </span>
+            </button>
+            <FilterSelect
+              v-model="store.filters.country"
+              :options="store.uniqueCountries"
+              placeholder="All Countries"
+              :multiple="true"
+              :show-count="false"
+            />
+          </div>
 
           <!-- Sex -->
-          <div v-if="enabledOtherFilters.has('sex')" class="filter-stack-item">
-            <label class="filter-stack-label">Sex</label>
-            <select class="sex-select" v-model="store.filters.sex">
-              <option value="all">All (♂ + ♀)</option>
-              <option value="male">♂ Male only</option>
-              <option value="female">♀ Female only</option>
-            </select>
-          </div>
 
           <!-- Time Range (tile-driven) -->
           <div v-if="enabledOtherFilters.has('timerange')" class="filter-stack-item">
-            <label class="filter-stack-label">Time Range</label>
+            <button
+              type="button"
+              class="filter-section-toggle filter-tile active"
+              title="Disable time range filter"
+              @click="toggleOtherFilter('timerange')"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>{{ otherFilterLabel('timerange') }}</span>
+              <span v-if="otherFilterActiveCount('timerange') > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount('timerange') }}
+              </span>
+            </button>
             <TimeSlider />
             <div class="exact-dates-section">
               <button
@@ -703,12 +817,21 @@ const updateExportHeight = (value) => {
             v-if="enabledOtherFilters.has('goat') && config.features.goatIntegration"
             class="filter-stack-item"
           >
-            <label class="filter-stack-label">
-              Genomic Data (GoaT)
+            <button
+              type="button"
+              class="filter-section-toggle filter-tile active"
+              title="Disable GoaT filter"
+              @click="toggleOtherFilter('goat')"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 2c4 4 10 4 10 10s-6 6-10 10"/><path d="M17 2c-4 4-10 4-10 10s6 6 10 10"/><path d="M8 6h8"/><path d="M8 18h8"/></svg>
+              <span>{{ otherFilterLabel('goat') }}</span>
+              <span v-if="otherFilterActiveCount('goat') > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount('goat') }}
+              </span>
               <span v-if="store.goatLoading" class="active-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; margin-left: 6px;">
                 Loading...
               </span>
-            </label>
+            </button>
 
             <div class="goat-filter-group">
               <label class="goat-filter-label">GoaT Coverage</label>
@@ -796,10 +919,21 @@ const updateExportHeight = (value) => {
             v-if="enabledOtherFilters.has('sdm') && currentView === 'map' && sdmStore.hasData"
             class="filter-stack-item"
           >
-            <label class="filter-stack-label">Species Distribution Modelling</label>
+            <button
+              type="button"
+              class="filter-section-toggle filter-tile active"
+              title="Disable species models filter"
+              @click="toggleOtherFilter('sdm')"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              <span>{{ otherFilterLabel('sdm') }}</span>
+              <span v-if="otherFilterActiveCount('sdm') > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount('sdm') }}
+              </span>
+            </button>
 
             <FilterSelect
-              label="SDM Species"
+              label="Model Species"
               v-model="sdmStore.selectedSpecies"
               :options="sdmStore.availableSpecies"
               placeholder="Select up to 2 species..."
@@ -903,6 +1037,111 @@ const updateExportHeight = (value) => {
 
             <p class="filter-hint">
               {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
+            </p>
+          </div>
+
+          <!-- Host plant overlays (tile-driven) -->
+          <div
+            v-if="enabledOtherFilters.has('hostplants') && currentView === 'map'"
+            class="filter-stack-item"
+          >
+            <button
+              type="button"
+              class="filter-section-toggle filter-tile active"
+              title="Disable host plant filter"
+              @click="toggleOtherFilter('hostplants')"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-7 8-9 5 2 8 5 8 9a7 7 0 0 1-7 7"/><path d="M12 14v8"/><path d="M8 14c1.5 1 3 1 4 0 1 1 2.5 1 4 0"/></svg>
+              <span>{{ otherFilterLabel('hostplants') }}</span>
+              <span v-if="otherFilterActiveCount('hostplants') > 0" class="filter-tile-count">
+                {{ otherFilterActiveCount('hostplants') }}
+              </span>
+            </button>
+            <div class="host-confidence-group">
+              <label class="filter-stack-label">Evidence</label>
+              <div class="host-confidence-toggle">
+                <button
+                  v-for="level in hostPlantStore.confidenceLevels"
+                  :key="level.key"
+                  type="button"
+                  :class="{ active: hostPlantConfidence === level.key }"
+                  @click="hostPlantConfidence = level.key"
+                  :title="level.description"
+                >
+                  {{ level.label }}
+                </button>
+              </div>
+              <p class="filter-stack-hint">
+                {{ hostPlantStore.confidenceLevels.find(level => level.key === hostPlantConfidence)?.description }}
+              </p>
+            </div>
+
+            <p v-if="hostPlantStore.loading" class="filter-hint">Loading host plant metadata...</p>
+            <p v-else-if="hostPlantTaxaForSelection.length === 0" class="filter-hint">
+              No occurrence-backed host plant associations at this evidence level.
+            </p>
+
+            <FilterSelect
+              v-if="hostPlantButterflyOptions.length > 0"
+              label="Butterfly species"
+              v-model="selectedHostButterflyOptions"
+              :options="hostPlantButterflyOptions"
+              placeholder="Search butterfly species..."
+              :multiple="true"
+            />
+
+            <FilterSelect
+              v-if="hostPlantOptions.length > 0"
+              label="Host plant taxa"
+              v-model="selectedHostPlantOptions"
+              :options="hostPlantOptions"
+              placeholder="Search host plants..."
+              :multiple="true"
+              :filter-options="hostPlantStore.filterOccurrenceTaxonOptions"
+            />
+
+            <p
+              v-if="selectedButterfliesForHostPlants.length > 0 && hostPlantTaxaForSelection.length > 0 && hostPlantOptions.length === 0"
+              class="filter-hint"
+            >
+              Associations found, but no GBIF occurrence layer has been generated for those host taxa yet.
+            </p>
+
+            <div v-if="selectedHostPlantTaxa.length > 0" class="sdm-opacity-row">
+              <span class="sdm-opacity-label">Opacity</span>
+              <input
+                type="range"
+                min="0.15"
+                max="1"
+                step="0.05"
+                v-model.number="hostPlantStore.opacity"
+              />
+              <span class="sdm-opacity-value">{{ Math.round(hostPlantStore.opacity * 100) }}%</span>
+            </div>
+
+            <div v-if="selectedHostPlantTaxa.length > 0" class="sdm-model-info">
+              <div class="sdm-info-grid" v-for="taxon in selectedHostPlantTaxa" :key="taxon.slug">
+                <span class="sdm-info-label">Host</span>
+                <span class="sdm-info-value">{{ taxon.canonical_name }}</span>
+                <span class="sdm-info-label">Records</span>
+                <span class="sdm-info-value">{{ taxon.occurrence_count }}</span>
+                <span class="sdm-info-label">Confidence</span>
+                <span class="sdm-info-value">{{ hostPlantAssociationSummary(taxon).confidence || '—' }}</span>
+                <span v-if="hostPlantAssociationSummary(taxon).first?.doi_or_url" class="sdm-info-label">Source</span>
+                <a
+                  v-if="hostPlantAssociationSummary(taxon).first?.doi_or_url"
+                  :href="hostPlantAssociationSummary(taxon).first.doi_or_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="host-plant-source-link"
+                >
+                  Literature
+                </a>
+              </div>
+            </div>
+
+            <p class="filter-hint">
+              {{ hostPlantStore.manifest?.metadata?.gbif_download_doi_note || 'GBIF citation metadata unavailable.' }}
             </p>
           </div>
         </div>

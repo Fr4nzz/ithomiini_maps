@@ -1,0 +1,1956 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Sessea corymbiflora",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Sessea",
+      "species": "Sessea corymbiflora",
+      "slug": "species_sessea_corymbiflora",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Episcada hymenaea",
+        "Pseudoscada erruca"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_sessea_corymbiflora.geojson",
+      "gbif_resolution": {
+        "query": "Sessea corymbiflora",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3797091,
+        "accepted_usage_key": null,
+        "scientific_name": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "canonical_name": "Sessea corymbiflora",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Sessea",
+        "resolved_at": "2026-05-21T03:59:16+00:00"
+      },
+      "gbif_taxon_key": 3797091,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Sessea corymbiflora",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3797091,
+      "accepted_usage_key": null,
+      "scientific_name": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+      "canonical_name": "Sessea corymbiflora",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Sessea",
+      "resolved_at": "2026-05-21T03:59:16+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 48
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:22+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.309833,
+          5.3513
+        ]
+      },
+      "properties": {
+        "gbifID": "1836139587",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2014-05-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.310444,
+          5.351778
+        ]
+      },
+      "properties": {
+        "gbifID": "1836149506",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2014-05-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.493738,
+          5.05634
+        ]
+      },
+      "properties": {
+        "gbifID": "1576183163",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "369.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.496617,
+          5.083048
+        ]
+      },
+      "properties": {
+        "gbifID": "1576184907",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "635.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-05-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.379444,
+          5.046111
+        ]
+      },
+      "properties": {
+        "gbifID": "1576178079",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "544.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-08-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.500129,
+          4.655121
+        ]
+      },
+      "properties": {
+        "gbifID": "1576184445",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "1961.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.932694,
+          5.571444
+        ]
+      },
+      "properties": {
+        "gbifID": "2433521860",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-07-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9325,
+          5.571389
+        ]
+      },
+      "properties": {
+        "gbifID": "2575924929",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2019-07-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Pedagógica y Tecnológica de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.916667,
+          3.983333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261855802",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-11-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.16666,
+          -4.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249443",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-04-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.883333,
+          -1.816667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031955555",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.466667,
+          -1.5
+        ]
+      },
+      "properties": {
+        "gbifID": "4031608799",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-09-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.84083,
+          -0.6
+        ]
+      },
+      "properties": {
+        "gbifID": "4031524756",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-07-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.35,
+          0.3
+        ]
+      },
+      "properties": {
+        "gbifID": "4031379051",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-11-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.0,
+          0.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261488510",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-08-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.7,
+          0.58333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262248650",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.366667,
+          0.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1262242514",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.33333,
+          0.13333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260323927",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1967-06-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.783333,
+          8.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1258004497",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-02-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.15222,
+          4.14416
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251316",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.88333,
+          0.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262254717",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-12-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.43333,
+          0.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262239716",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-06-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.533333,
+          4.616667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260319633",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.45,
+          4.61666
+        ]
+      },
+      "properties": {
+        "gbifID": "1258342544",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.5,
+          0.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1262242536",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.33333,
+          0.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1262246541",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-04-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2,
+          9.2167
+        ]
+      },
+      "properties": {
+        "gbifID": "1322557485",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-11-03",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13395262&h=2000",
+            "references": null,
+            "title": "00603319.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.72,
+          0.55
+        ]
+      },
+      "properties": {
+        "gbifID": "1852150075",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-12-10/1995-12-11",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12649932&h=2000",
+            "references": null,
+            "title": "02845733.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.333333,
+          0.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "1096646433",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1967-06-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.944861,
+          3.944449
+        ]
+      },
+      "properties": {
+        "gbifID": "4440566525",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "13465.85",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto para la Investigación y la Preservación del Patrimonio Cultural y Natural del Valle del Cauca - INCIVA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.951891,
+          3.961715
+        ]
+      },
+      "properties": {
+        "gbifID": "4440566803",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "1003.71",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-11-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto para la Investigación y la Preservación del Patrimonio Cultural y Natural del Valle del Cauca - INCIVA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5,
+          7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228538397",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-06-29",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.5,
+          3.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1228572030",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1946-04-21",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.9119,
+          7.0758
+        ]
+      },
+      "properties": {
+        "gbifID": "1228221151",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-02-21",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.073369,
+          3.901155
+        ]
+      },
+      "properties": {
+        "gbifID": "1056137416",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "1840.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/856a7f42-9629-4b41-a752-015af996793e",
+            "references": null,
+            "title": "000994934",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.333333,
+          0.216667
+        ]
+      },
+      "properties": {
+        "gbifID": "1135485833",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-09-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/5875e864-56f1-48ea-b54e-ccedb01d4324",
+            "references": null,
+            "title": "000994938",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.466667,
+          0.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1135485799",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-12-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/8a1ac823-1d16-46f3-bec2-10020bd95327",
+            "references": null,
+            "title": "000994939",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.405028,
+          5.079806
+        ]
+      },
+      "properties": {
+        "gbifID": "1707595428",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-02-19",
+        "country": null,
+        "datasetName": "Evaluación de oportunidades de conservación en Paisajes Rurales",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.599667,
+          4.386944
+        ]
+      },
+      "properties": {
+        "gbifID": "1707496278",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-04-19",
+        "country": null,
+        "datasetName": "Estudios bióticos a escala 1:25.000 del Complejo de páramos los Nevados en jurisdicción de CRQ. Convenio IAvH-F.Mellizas 14-13-014-031CE",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.39225,
+          5.101439
+        ]
+      },
+      "properties": {
+        "gbifID": "1707595381",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-02-02",
+        "country": null,
+        "datasetName": "Evaluación de oportunidades de conservación en Paisajes Rurales",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.27423,
+          0.44112
+        ]
+      },
+      "properties": {
+        "gbifID": "5006861829",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "5.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-12-18T16:16:56",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/459125776",
+            "title": null,
+            "creator": "jorgeluispaez",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "jorgeluispaez"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125803/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/459125803",
+            "title": null,
+            "creator": "jorgeluispaez",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "jorgeluispaez"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125823/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/459125823",
+            "title": null,
+            "creator": "jorgeluispaez",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "jorgeluispaez"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125842/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/459125842",
+            "title": null,
+            "creator": "jorgeluispaez",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "jorgeluispaez"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.409376,
+          0.475045
+        ]
+      },
+      "properties": {
+        "gbifID": "6133137462",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "4.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-10-02T08:12:23",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.961948,
+          4.544887
+        ]
+      },
+      "properties": {
+        "gbifID": "1898878425",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "4465.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-08-18",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.795556,
+          1.031944
+        ]
+      },
+      "properties": {
+        "gbifID": "1934690939",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-01-31",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.162778,
+          -3.126111
+        ]
+      },
+      "properties": {
+        "gbifID": "4066981840",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-11-29",
+        "country": null,
+        "datasetName": "HA-Base de datos de plantas",
+        "publisher": "Herbario Azuay",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.4333,
+          0.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "4077754452",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-13",
+        "country": null,
+        "datasetName": "UNL:HERBARIO LOJA:ESPECIMEN PRERSERVADO",
+        "publisher": "Herbario Reinado Espinosa (Herbario LOJA) de la Universidad Nacional de Loja",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.433333,
+          0.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "4077761001",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-03",
+        "country": null,
+        "datasetName": "UNL:HERBARIO LOJA:ESPECIMEN PRERSERVADO",
+        "publisher": "Herbario Reinado Espinosa (Herbario LOJA) de la Universidad Nacional de Loja",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.4333,
+          -0.3333
+        ]
+      },
+      "properties": {
+        "gbifID": "4077768596",
+        "species": "Sessea corymbiflora",
+        "genus": "Sessea",
+        "family": "Solanaceae",
+        "scientificName": "Sessea corymbiflora Goudot ex Taylor & Phillips",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-06-11",
+        "country": null,
+        "datasetName": "UNL:HERBARIO LOJA:ESPECIMEN PRERSERVADO",
+        "publisher": "Herbario Reinado Espinosa (Herbario LOJA) de la Universidad Nacional de Loja",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459125776/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/459125776",
+          "title": null,
+          "creator": "jorgeluispaez",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "jorgeluispaez"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1971 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Cyphomandra pilosa",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Cyphomandra",
+      "species": "Cyphomandra pilosa",
+      "slug": "species_cyphomandra_pilosa",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Mechanitis lysimnia",
+        "Thyridia psidii"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_cyphomandra_pilosa.geojson",
+      "gbif_resolution": {
+        "query": "Cyphomandra pilosa",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2932294,
+        "accepted_usage_key": 2932293,
+        "scientific_name": "Cyphomandra pilosa Bohs",
+        "canonical_name": "Cyphomandra pilosa",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:57:32+00:00"
+      },
+      "gbif_taxon_key": 2932294,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Cyphomandra pilosa",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2932294,
+      "accepted_usage_key": 2932293,
+      "scientific_name": "Cyphomandra pilosa Bohs",
+      "canonical_name": "Cyphomandra pilosa",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:57:32+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 48
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -1.06666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250846",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-06-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.033333,
+          -0.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262239060",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.61666,
+          -0.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031891069",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-08-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.833333,
+          -2.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262254122",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.916667,
+          -4.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "4032008292",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-08-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.616667,
+          -0.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031895062",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-09-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.86916,
+          0.08888
+        ]
+      },
+      "properties": {
+        "gbifID": "1260296886",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-02-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.8,
+          -0.88333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260297111",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-05-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0,
+          -0.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250282",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.18333,
+          -0.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031565077",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-03-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.66666,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "4031384103",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-08-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.91666,
+          -0.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031385088",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.95,
+          -1.36667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260297471",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-03-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.96666,
+          -1.63333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031559818",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-05-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.16666,
+          0.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1260296739",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1930-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.6,
+          -0.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031387057",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -0.11666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250382",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-10-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.71666,
+          -4.3
+        ]
+      },
+      "properties": {
+        "gbifID": "4032001132",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-10-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.51166,
+          -8.18416
+        ]
+      },
+      "properties": {
+        "gbifID": "1262239046",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-05-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.833333,
+          -3.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1262253739",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.93333,
+          -4.21666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260297601",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-04-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.46666,
+          -0.13333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250982",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-09-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.85,
+          -0.01666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262255110",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-05-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.45,
+          -1.5
+        ]
+      },
+      "properties": {
+        "gbifID": "4031571089",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.166667,
+          -3.0
+        ]
+      },
+      "properties": {
+        "gbifID": "4031487163",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-08-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.28333,
+          -6.26666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260298698",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.183333,
+          -0.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1262241699",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.65,
+          -2.11666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260297140",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-03-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.53333,
+          -0.48333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249681",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-09-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.7,
+          -2.15
+        ]
+      },
+      "properties": {
+        "gbifID": "1260296728",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-03-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.13333,
+          -1.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260297645",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-09-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.65,
+          -0.18333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249789",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-10-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.91666,
+          -3.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251354",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-01-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.995,
+          -9.305
+        ]
+      },
+      "properties": {
+        "gbifID": "1262239126",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -0.71666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249378",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.73333,
+          -0.91666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260297570",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-05-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.75,
+          -1.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260296655",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1971-03-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.17,
+          0.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1852085228",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1930-12",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+            "references": null,
+            "title": "02841137.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.17,
+          -3.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1852145818",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-08-16",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12645586&h=2000",
+            "references": null,
+            "title": "02841131.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.4764,
+          -17.6722
+        ]
+      },
+      "properties": {
+        "gbifID": "1317775726",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-02-13",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12643946&h=2000",
+            "references": null,
+            "title": "00641520.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.83,
+          -1.12
+        ]
+      },
+      "properties": {
+        "gbifID": "1852134598",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-01-23",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12644508&h=2000",
+            "references": null,
+            "title": "02841133.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.0167,
+          -13.55
+        ]
+      },
+      "properties": {
+        "gbifID": "1320109576",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-06-29",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12642920&h=2000",
+            "references": null,
+            "title": "00641519.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.45,
+          -17.66667
+        ]
+      },
+      "properties": {
+        "gbifID": "351868624",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-06-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museum of Evolution, Uppsala University",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.25,
+          -17.4
+        ]
+      },
+      "properties": {
+        "gbifID": "351868578",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museum of Evolution, Uppsala University",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.916,
+          -0.466
+        ]
+      },
+      "properties": {
+        "gbifID": "47754466",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.966,
+          -1.633
+        ]
+      },
+      "properties": {
+        "gbifID": "47754229",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-05-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.31666,
+          -4.91666
+        ]
+      },
+      "properties": {
+        "gbifID": "4061611660",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.870635,
+          0.359863
+        ]
+      },
+      "properties": {
+        "gbifID": "1890898859",
+        "species": "Solanum calidum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra pilosa Bohs",
+        "coordinateUncertaintyInMeters": "2441.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-12-15",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://collections.nmnh.si.edu/media/?i=12649204&h=2000",
+          "references": null,
+          "title": "02841137.tif",
+          "creator": "Conveyor Belt",
+          "publisher": "Smithsonian Institution, NMNH, Botany",
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    }
+  ]
+}

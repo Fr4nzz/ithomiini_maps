@@ -1,0 +1,4937 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Prestonia longifolia",
+      "rank": "species",
+      "family": "Apocynaceae",
+      "genus": "Prestonia",
+      "species": "Prestonia longifolia",
+      "slug": "species_prestonia_longifolia",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Tithorea tarricina"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_prestonia_longifolia.geojson",
+      "gbif_resolution": {
+        "query": "Prestonia longifolia",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 5536458,
+        "accepted_usage_key": null,
+        "scientific_name": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "canonical_name": "Prestonia longifolia",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Apocynaceae",
+        "genus": "Prestonia",
+        "resolved_at": "2026-05-21T03:59:12+00:00"
+      },
+      "gbif_taxon_key": 5536458,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Prestonia longifolia",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 5536458,
+      "accepted_usage_key": null,
+      "scientific_name": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+      "canonical_name": "Prestonia longifolia",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Apocynaceae",
+      "genus": "Prestonia",
+      "resolved_at": "2026-05-21T03:59:12+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 116
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:22+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.016667,
+          9.65
+        ]
+      },
+      "properties": {
+        "gbifID": "1261119465",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.80861,
+          10.30583
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253618",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-08-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/D30E6E9A-2919-4346-81D8-88699BA3B677.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438984",
+            "title": "Haber - 580 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.284444,
+          17.005278
+        ]
+      },
+      "properties": {
+        "gbifID": "1257728146",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-05-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/4B2C8BB5-07ED-47AD-9BA0-A67B12D62BBB.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438967",
+            "title": "Aguilar Méndez - 1043 - Mexico",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.55555,
+          17.34
+        ]
+      },
+      "properties": {
+        "gbifID": "1258303729",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-05-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/19E403C5-89B4-4393-AA1B-981761F26994.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438961",
+            "title": "Dwyer - 12528 - Belize",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.93333,
+          13.81666
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253990",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/66DF8E2E-1076-4317-BCBC-8EC9C1A9924B.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438985",
+            "title": "Sandoval - 283 - El Salvador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.1,
+          9.79
+        ]
+      },
+      "properties": {
+        "gbifID": "1261119710",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.1,
+          8.018611
+        ]
+      },
+      "properties": {
+        "gbifID": "1257586392",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/D56C5BC5-A84C-453B-BB01-599C31E84F26.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456538",
+            "title": "Forero Pinto - 552 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.458333,
+          8.65
+        ]
+      },
+      "properties": {
+        "gbifID": "1259256150",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-04-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101450000/B42207E2-4E47-4CDE-9B87-1D081DB33B60.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101450109",
+            "title": "Hammel - 2521 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.4,
+          15.481667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031935019",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-07-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/35BA69EF-4908-48EA-8552-93F45C23202F.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438979",
+            "title": "Martínez Salas - 22838 - Guatemala",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.563889,
+          9.772222
+        ]
+      },
+      "properties": {
+        "gbifID": "1261120478",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-11-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.21,
+          8.816667
+        ]
+      },
+      "properties": {
+        "gbifID": "1261120572",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-03-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101450000/D0852939-9F8C-4A9C-B39D-9596B8A3C966.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101450112",
+            "title": "Croat - 60240 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.35,
+          11.58333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261122405",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-07-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/9F24E8EC-90BA-4885-A8E8-202B2C6B6D6D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438962",
+            "title": "Sandino - 3327 - Nicaragua",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.51,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1261126153",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-02-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101595000/8872BD18-D1FA-4865-A188-E53E3C4EC518.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101595728",
+            "title": "Liesner - 2049 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.81527,
+          10.30833
+        ]
+      },
+      "properties": {
+        "gbifID": "1261124659",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-01-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/4B0BB79E-D967-470E-BAEC-272340A0E062.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438991",
+            "title": "Haber - 1225 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.51333,
+          8.70027
+        ]
+      },
+      "properties": {
+        "gbifID": "1258322874",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-09-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101595000/1F2A3F55-D965-4FE2-B22E-43FC3E35D43A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101595522",
+            "title": "Croat - 79220 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.0,
+          9.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1257526388",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_COORDINATE_MISMATCH",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/84A99C41-5295-4A2E-BBE6-4C81BFCE268C.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438964",
+            "title": "Mayfield - s.n. - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.52,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1261126598",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-09-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.691972,
+          15.670639
+        ]
+      },
+      "properties": {
+        "gbifID": "1257644143",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-10-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/988E1C91-BBF8-46D0-82B0-D222C8B0E724.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438965",
+            "title": "Cazali - 2475 - Guatemala",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.183333,
+          11.15
+        ]
+      },
+      "properties": {
+        "gbifID": "4031870681",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-02-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/48406325-C674-49BD-AB92-92DF8C48B217.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438997",
+            "title": "Rueda - 6265 - Nicaragua",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.2,
+          8.67
+        ]
+      },
+      "properties": {
+        "gbifID": "4031420150",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/110764BA-AD73-4785-AD27-0939F645D199.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438970",
+            "title": "Morales Quirós - 3565 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.231389,
+          8.691389
+        ]
+      },
+      "properties": {
+        "gbifID": "1257504463",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-04-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101518000/CF8F5551-1909-4C81-898E-4257C1EDF3F4.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101518670",
+            "title": "Fletes Almengor - 467 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.041667,
+          12.875
+        ]
+      },
+      "properties": {
+        "gbifID": "1258485563",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/82AF9E84-61D3-46F7-A984-5635445DE670.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438963",
+            "title": "Stevens - 12257 - Nicaragua",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.66666,
+          10.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261124938",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/221966D8-5C2D-4038-A5B1-C6C979EC14DD.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438996",
+            "title": "Haber - 5100 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.39305,
+          10.18583
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253363",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/E34556E4-3D81-48FC-85CF-478A968A1821.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438982",
+            "title": "Smith - A591 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.916667,
+          15.883333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258303757",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-07-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/20AE22E6-C938-4177-90A0-16AFC605B912.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438960",
+            "title": "Dwyer - 14876 - Belize",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.873611,
+          8.125556
+        ]
+      },
+      "properties": {
+        "gbifID": "1261126142",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-02-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/1BF54DA5-5A9A-4863-8D56-34ED7CDAAE54.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438995",
+            "title": "Liesner - 177A - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.84,
+          16.16861
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253066",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1933-05-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/B3FA5ED3-15DE-4388-AED1-069926C7D0AB.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438981",
+            "title": "Schipp - S-564 - Belize",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.88333,
+          10.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "1261125873",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-06-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/647B865E-471B-4645-9EBB-1B2294A6C1D6.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438983",
+            "title": "Haber - 7330 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.766667,
+          11.983333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258662103",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-04-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/AEDD99D8-F28B-4C2C-B7DA-4C4E13B72754.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438992",
+            "title": "Stevens - 19764 - Nicaragua",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.23361,
+          15.9075
+        ]
+      },
+      "properties": {
+        "gbifID": "1259252001",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1970-06-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/42E3F1C7-24E5-4DC3-A81E-A45B2DFCADA5.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438986",
+            "title": "Contreras - 9941 - Guatemala",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.15111,
+          17.14416
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253242",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1970-06-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/002AA4DE-F18A-400A-9044-D06F5DC87BC3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438987",
+            "title": "Harmon - 2500 - Guatemala",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.27055,
+          16.92972
+        ]
+      },
+      "properties": {
+        "gbifID": "1259861947",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-05-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/5A78FB44-D1E8-4AC2-A629-995D46F5AFE5.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438998",
+            "title": "Aguilar Méndez - 1174 - Mexico",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.11166,
+          8.25805
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253024",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-11-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101450000/1D5CDB13-FEAB-41F1-8DA3-9F7F1C6EFB59.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101450108",
+            "title": "Johnston - 347 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.48,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1258582312",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-02-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101595000/376F9FA2-F13F-45EE-BE40-0272E8F112C4.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101595525",
+            "title": "Angulo Angulo - 538 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.59,
+          8.64
+        ]
+      },
+      "properties": {
+        "gbifID": "4031826170",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-07-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/25B79487-DE08-44C5-983E-2692018F852D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438972",
+            "title": "Herrera Chacón - 4061 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.78333,
+          16.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1259252177",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-05-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/C8D1B6FD-DFB3-4A36-A995-D91861E1EFFC.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438978",
+            "title": "Gentle - 4613 - Belize",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.35083,
+          16.08111
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253263",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-08-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/FCBFE381-135B-468C-86B3-96E87F4B25A3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438977",
+            "title": "Contreras - 8894 - Guatemala",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.775833,
+          15.781667
+        ]
+      },
+      "properties": {
+        "gbifID": "1259255390",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-04-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/8AFACBB7-9061-4B79-A8D5-98AA145D8E37.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438988",
+            "title": "Steyermark - 39434 - Guatemala",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.172778,
+          8.550833
+        ]
+      },
+      "properties": {
+        "gbifID": "1259253378",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-05-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101450000/EBCA5032-97A9-427C-8299-C8963FF66ED3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101450110",
+            "title": "Mori - 6153 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.01,
+          10.71
+        ]
+      },
+      "properties": {
+        "gbifID": "1258582146",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-04-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/Tropicos/018/DEE5668C-BA82-4992-BB9B-77534104A88E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=71417",
+            "title": "Penneys - 480 - Costa Rica",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/2EE938A9-6500-4D75-BCC5-C25898DBAF00.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438969",
+            "title": "Penneys - 480 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/88BC7935-7C6E-4F68-9CA0-20F88DBD4E6E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438968",
+            "title": "Penneys - 480 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.003611,
+          10.431389
+        ]
+      },
+      "properties": {
+        "gbifID": "4031788906",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/Tropicos/018/D7386A16-D325-4338-A122-100265A153D0.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=71416",
+            "title": "Grayum - 2505 - Costa Rica",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/6090A54D-3E70-417D-9DCD-D1A123EDB06A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438989",
+            "title": "Grayum - 2505 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.07,
+          18.59
+        ]
+      },
+      "properties": {
+        "gbifID": "1259170911",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/A2514EC8-921D-42C3-B909-8BCADC6508B0.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438976",
+            "title": "Ibarra Manríquez - 613 - Mexico",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.839722,
+          10.3375
+        ]
+      },
+      "properties": {
+        "gbifID": "1261121405",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-09-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/BCAB3623-7667-4DB9-872F-7E52AEC49A8E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438994",
+            "title": "Haber - 2687 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.94388,
+          15.73416
+        ]
+      },
+      "properties": {
+        "gbifID": "1259256046",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1942-05-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/E3B998A8-0C17-42EE-8852-00D2ADBEB4E0.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438980",
+            "title": "Steyermark - 46371 - Guatemala",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.1,
+          16.74
+        ]
+      },
+      "properties": {
+        "gbifID": "4032004912",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/0F8C68F7-A7A1-4C01-91E8-A750A84A393F.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438974",
+            "title": "Davidse - 20474 - Mexico",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.285278,
+          16.983889
+        ]
+      },
+      "properties": {
+        "gbifID": "1257728169",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-05-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/330DA9C8-D1D6-4D4D-B459-C10771983E56.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438966",
+            "title": "Aguilar Méndez - 887 - Mexico",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.41333,
+          10.18444
+        ]
+      },
+      "properties": {
+        "gbifID": "1259254859",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-05-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/1F4EDB9F-5BA9-46F5-A90C-0B0580A74B4C.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438990",
+            "title": "Smith - P2675 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.37777,
+          9.99166
+        ]
+      },
+      "properties": {
+        "gbifID": "1260145673",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-06-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101438000/4BFEA34E-FD2D-4539-A40D-722C0940236D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101438999",
+            "title": "Mora Castro - 1207 - Costa Rica",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.216667,
+          8.683333
+        ]
+      },
+      "properties": {
+        "gbifID": "3885605224",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "500.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-08-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Biologiezentrum Linz Oberoesterreich",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://www.zobodat.at/bilder/belege/00001146.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.35,
+          11.575
+        ]
+      },
+      "properties": {
+        "gbifID": "2516128929",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-07-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1619735/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.227778,
+          14.436667
+        ]
+      },
+      "properties": {
+        "gbifID": "3306270568",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad del Valle de Guatemala",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.326667,
+          14.541944
+        ]
+      },
+      "properties": {
+        "gbifID": "3306270584",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad del Valle de Guatemala",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.142222,
+          14.632778
+        ]
+      },
+      "properties": {
+        "gbifID": "3306270583",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad del Valle de Guatemala",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.750556,
+          15.826666
+        ]
+      },
+      "properties": {
+        "gbifID": "3306270586",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad del Valle de Guatemala",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.9519,
+          10.0114
+        ]
+      },
+      "properties": {
+        "gbifID": "2612135290",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-05-31",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.1792,
+          15.7422
+        ]
+      },
+      "properties": {
+        "gbifID": "2612115215",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-04-14",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.0,
+          9.1667
+        ]
+      },
+      "properties": {
+        "gbifID": "1228181620",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-07-30",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.75,
+          17.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1228614334",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1933-03-10",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.525,
+          17.215
+        ]
+      },
+      "properties": {
+        "gbifID": "2612106942",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1933-05-26",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.6667,
+          18.25
+        ]
+      },
+      "properties": {
+        "gbifID": "2612109384",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-06-14",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.4812,
+          16.3659
+        ]
+      },
+      "properties": {
+        "gbifID": "1703340574",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/190619.jpg",
+            "references": null,
+            "title": "Prestonia longifolia (Sessé & Moc.) J. F. Morales - Mexico, Chiapas (BARCODE: 190619) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.6667,
+          9.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1703340569",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-02-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/190583.jpg",
+            "references": null,
+            "title": "Prestonia longifolia (Sessé & Moc.) J. F. Morales - Panama, Colon Prov. (BARCODE: 190583) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -104.349,
+          24.5097
+        ]
+      },
+      "properties": {
+        "gbifID": "1703340567",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-06-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/190577.jpg",
+            "references": null,
+            "title": "Prestonia longifolia (Sessé & Moc.) Woodson - Mexico (BARCODE: 190577) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.0351,
+          18.5029
+        ]
+      },
+      "properties": {
+        "gbifID": "1703340555",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-05-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/190578.jpg",
+            "references": null,
+            "title": "Prestonia longifolia (Sessé & Moc.) J. F. Morales - Mexico, Veracruz (BARCODE: 190578) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.0394,
+          10.1579
+        ]
+      },
+      "properties": {
+        "gbifID": "1703340811",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-09-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/222603.jpg",
+            "references": null,
+            "title": "Prestonia longifolia (Sessé & Moc.) J. F. Morales - Costa Rica, Guanacaste Prov. (BARCODE: 222603) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.067,
+          18.567
+        ]
+      },
+      "properties": {
+        "gbifID": "3308513152",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-05-21",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.10167,
+          16.69306
+        ]
+      },
+      "properties": {
+        "gbifID": "3308030021",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-19",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.27139,
+          16.93028
+        ]
+      },
+      "properties": {
+        "gbifID": "3308610506",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-05-06",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.64111,
+          18.48972
+        ]
+      },
+      "properties": {
+        "gbifID": "3307922272",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-07-29",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.0,
+          18.517
+        ]
+      },
+      "properties": {
+        "gbifID": "3308519269",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-03-26",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.28528,
+          16.98389
+        ]
+      },
+      "properties": {
+        "gbifID": "3308675818",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-05-19",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.080222,
+          16.982881
+        ]
+      },
+      "properties": {
+        "gbifID": "2630148276",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-08-18",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.433333,
+          8.65
+        ]
+      },
+      "properties": {
+        "gbifID": "1258470746",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-11-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.00361,
+          10.43138
+        ]
+      },
+      "properties": {
+        "gbifID": "1259835747",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-11-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.080694,
+          9.654944
+        ]
+      },
+      "properties": {
+        "gbifID": "2268969832",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-07-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101638000/2B4DEECB-6000-4418-B693-DFB757C8B46D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101638999",
+            "title": "Hammel - 27531 - Costa Rica",
+            "creator": "B. Hammel",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101638000/9376DA31-E820-4926-ACD0-C0871ED647B8.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101638998",
+            "title": "Hammel - 27531 - Costa Rica",
+            "creator": "B. Hammel",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.40258,
+          10.01203
+        ]
+      },
+      "properties": {
+        "gbifID": "4112469302",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-05-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101639000/5EB71DC5-2F2D-4893-A186-887477DAFD84.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101639003",
+            "title": "Hammel - 27972 - Costa Rica",
+            "creator": "B. Hammel",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101639000/72561AB5-25E3-498A-AA37-6147A69E98B6.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101639005",
+            "title": "Hammel - 27972 - Costa Rica",
+            "creator": "B. Hammel",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101639000/94A876F4-7EA4-48B3-B00C-4AD06053EAB8.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101639006",
+            "title": "Hammel - 27972 - Costa Rica",
+            "creator": "B. Hammel",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101639000/AD8D9534-FD08-4B39-8D97-FFE0837879A1.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101639015",
+            "title": "Hammel - 27972 - Costa Rica",
+            "creator": "B. Hammel",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101639000/DF859C96-5E62-47F5-874C-0AB0C3954FB0.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101639007",
+            "title": "Hammel - 27972 - Costa Rica",
+            "creator": "B. Hammel",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.516667,
+          8.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "1261568812",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-12-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.094167,
+          16.668056
+        ]
+      },
+      "properties": {
+        "gbifID": "4061690394",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-09-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.38,
+          9.73
+        ]
+      },
+      "properties": {
+        "gbifID": "1261557155",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.93333,
+          13.81667
+        ]
+      },
+      "properties": {
+        "gbifID": "3913393544",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-04-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://image.bgbm.org/images/internal/HerbarThumbs/B100031363_1700",
+            "references": "https://herbarium.bgbm.org/object/B100031363",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://image.bgbm.org/images/internal/HerbarThumbs/B100031363__1_1700",
+            "references": "https://herbarium.bgbm.org/object/B100031363",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.64444,
+          13.6025
+        ]
+      },
+      "properties": {
+        "gbifID": "3913396559",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-02-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://image.bgbm.org/images/internal/HerbarThumbs/B100031465_1700",
+            "references": "https://herbarium.bgbm.org/object/B100031465",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.39,
+          9.73
+        ]
+      },
+      "properties": {
+        "gbifID": "1261557018",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-11-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.430343,
+          10.978593
+        ]
+      },
+      "properties": {
+        "gbifID": "4441042423",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-08-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101907000/0C601406-DAAE-4877-A5C6-ADB18E6BF42A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101907334",
+            "title": "Zamora Villalobos - 7180 - Costa Rica",
+            "creator": "N. Zamora",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101907000/0CB245C2-E801-4CFB-83CB-7B65F0021547.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101907336",
+            "title": "Zamora Villalobos - 7180 - Costa Rica",
+            "creator": "N. Zamora",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101907000/5C075561-0107-45F9-9394-D71228A5BFBA.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101907335",
+            "title": "Zamora Villalobos - 7180 - Costa Rica",
+            "creator": "N. Zamora",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.37,
+          9.99
+        ]
+      },
+      "properties": {
+        "gbifID": "45842171",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-06-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.05,
+          9.56
+        ]
+      },
+      "properties": {
+        "gbifID": "45841386",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-04-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.38,
+          9.87
+        ]
+      },
+      "properties": {
+        "gbifID": "45841274",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.23,
+          8.69
+        ]
+      },
+      "properties": {
+        "gbifID": "45842205",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-06-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.18,
+          9.72
+        ]
+      },
+      "properties": {
+        "gbifID": "45842020",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-10-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.516667,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "5004327314",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K006231309",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.383333,
+          9.733333
+        ]
+      },
+      "properties": {
+        "gbifID": "1253612741",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-05",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.795834,
+          10.275833
+        ]
+      },
+      "properties": {
+        "gbifID": "1253645273",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-11-12",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.425512,
+          8.536614
+        ]
+      },
+      "properties": {
+        "gbifID": "1253668429",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-10-04",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.377778,
+          9.991667
+        ]
+      },
+      "properties": {
+        "gbifID": "1253722907",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-06-25",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.241016,
+          10.668094
+        ]
+      },
+      "properties": {
+        "gbifID": "1253802272",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-01-18",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.800004,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1253603963",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-07-03",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.391111,
+          9.736667
+        ]
+      },
+      "properties": {
+        "gbifID": "1253599900",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-11-20",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.276667,
+          10.794167
+        ]
+      },
+      "properties": {
+        "gbifID": "1253597692",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-04-14",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.13842,
+          9.501653
+        ]
+      },
+      "properties": {
+        "gbifID": "1253850037",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-02-20",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.525001,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1253589860",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-03-13",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.566667,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1253604245",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-05-15",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.408334,
+          11.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "1253607115",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-11-12",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.441667,
+          8.655556
+        ]
+      },
+      "properties": {
+        "gbifID": "1253647553",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-11-15",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.525,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1253597216",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-09-12",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.016667,
+          9.55
+        ]
+      },
+      "properties": {
+        "gbifID": "1253609738",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-20",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.250001,
+          8.766667
+        ]
+      },
+      "properties": {
+        "gbifID": "1253627452",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-22",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.486112,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1253593663",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-02-13",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.3825,
+          9.875
+        ]
+      },
+      "properties": {
+        "gbifID": "1253612135",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-25",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.201389,
+          8.670833
+        ]
+      },
+      "properties": {
+        "gbifID": "1253614720",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-27",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.016667,
+          10.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "1253623334",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-04-20",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.783334,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1253657629",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-06-20",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.108333,
+          9.794444
+        ]
+      },
+      "properties": {
+        "gbifID": "1253604304",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-14",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.033333,
+          10.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "1253865483",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-12-28",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.311111,
+          10.879167
+        ]
+      },
+      "properties": {
+        "gbifID": "1253592348",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-07-25",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.694444,
+          10.422222
+        ]
+      },
+      "properties": {
+        "gbifID": "1253723583",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-06-08",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.063889,
+          9.825
+        ]
+      },
+      "properties": {
+        "gbifID": "1253866342",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-04-13",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.200278,
+          2.944722
+        ]
+      },
+      "properties": {
+        "gbifID": "1898877954",
+        "species": "Prestonia longifolia",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia longifolia (Sessé & Moc.) J.F.Morales",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-09-07",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ff5af2bb52baa70cb0248fbee5e67ba2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006231309",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

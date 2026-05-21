@@ -1,0 +1,3618 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Athenaea picta",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Athenaea",
+      "species": "Athenaea picta",
+      "slug": "species_athenaea_picta",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 4,
+      "butterfly_taxa": [
+        "Epityches eupompe",
+        "Ithomia agnosia",
+        "Ithomia drymo",
+        "Ithomia lichyi"
+      ],
+      "confidence_counts": {
+        "medium": 3,
+        "low": 1
+      },
+      "occurrence_file": "occurrences/species_athenaea_picta.geojson",
+      "gbif_resolution": {
+        "query": "Athenaea picta",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 5581507,
+        "accepted_usage_key": null,
+        "scientific_name": "Athenaea picta (Mart.) Sendtn.",
+        "canonical_name": "Athenaea picta",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Athenaea",
+        "resolved_at": "2026-05-21T03:56:55+00:00"
+      },
+      "gbif_taxon_key": 5581507,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Athenaea picta",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 5581507,
+      "accepted_usage_key": null,
+      "scientific_name": "Athenaea picta (Mart.) Sendtn.",
+      "canonical_name": "Athenaea picta",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Athenaea",
+      "resolved_at": "2026-05-21T03:56:55+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 90
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:18+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.869444,
+          -15.951389
+        ]
+      },
+      "properties": {
+        "gbifID": "1089182304",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-05-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.862222,
+          -25.916944
+        ]
+      },
+      "properties": {
+        "gbifID": "4999791593",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-02-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.285833,
+          -25.335278
+        ]
+      },
+      "properties": {
+        "gbifID": "2996393297",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-11-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.567222,
+          -25.045833
+        ]
+      },
+      "properties": {
+        "gbifID": "2996417004",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-12-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.565,
+          -25.045
+        ]
+      },
+      "properties": {
+        "gbifID": "4999791417",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2021-09-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.88,
+          -23.180278
+        ]
+      },
+      "properties": {
+        "gbifID": "2997982798",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-10-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.621944,
+          -23.654444
+        ]
+      },
+      "properties": {
+        "gbifID": "2998014767",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.713611,
+          -24.340556
+        ]
+      },
+      "properties": {
+        "gbifID": "2997978811",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1914-05-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.314167,
+          -25.190278
+        ]
+      },
+      "properties": {
+        "gbifID": "2997954834",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-10-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.551111,
+          -18.179722
+        ]
+      },
+      "properties": {
+        "gbifID": "2997439909",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.282222,
+          -26.256667
+        ]
+      },
+      "properties": {
+        "gbifID": "2996148772",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-07-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.590556,
+          -27.090278
+        ]
+      },
+      "properties": {
+        "gbifID": "2996151681",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-12-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.950556,
+          -26.730278
+        ]
+      },
+      "properties": {
+        "gbifID": "2996151640",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-02-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.942222,
+          -27.334444
+        ]
+      },
+      "properties": {
+        "gbifID": "2996151643",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-07-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.590556,
+          -26.640278
+        ]
+      },
+      "properties": {
+        "gbifID": "2996108225",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-09-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.41,
+          -26.369722
+        ]
+      },
+      "properties": {
+        "gbifID": "2996151630",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-11-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.377778,
+          -22.795
+        ]
+      },
+      "properties": {
+        "gbifID": "1424417200",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-09",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/79/39/00717939.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.151389,
+          -24.269722
+        ]
+      },
+      "properties": {
+        "gbifID": "1424505656",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-10",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/56/69/00935669.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.066667,
+          -20.616667
+        ]
+      },
+      "properties": {
+        "gbifID": "1440662833",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-08-25",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/23/12/69/01231269.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.727222,
+          -23.639167
+        ]
+      },
+      "properties": {
+        "gbifID": "1840912923",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-08-25",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/38/64/91/01386491.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.740556,
+          -24.870556
+        ]
+      },
+      "properties": {
+        "gbifID": "2996856844",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-10-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.84,
+          -25.949167
+        ]
+      },
+      "properties": {
+        "gbifID": "4427254716",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-04-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.808889,
+          -25.671944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997452788",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-11-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.701944,
+          -23.702222
+        ]
+      },
+      "properties": {
+        "gbifID": "2997958836",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1947-05-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.538611,
+          -19.806111
+        ]
+      },
+      "properties": {
+        "gbifID": "1424436623",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-09",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/75/31/31/00753131.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.593611,
+          -23.144444
+        ]
+      },
+      "properties": {
+        "gbifID": "2997622687",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-12-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.071389,
+          -23.232222
+        ]
+      },
+      "properties": {
+        "gbifID": "2997839678",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63,
+          -23.54
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189444",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-07-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.585278,
+          -15.748333
+        ]
+      },
+      "properties": {
+        "gbifID": "2998628856",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-01-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.880423,
+          -23.184157
+        ]
+      },
+      "properties": {
+        "gbifID": "1929846790",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-10-08",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1618/380/01184690.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.621883,
+          -23.654505
+        ]
+      },
+      "properties": {
+        "gbifID": "1930893245",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-30",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1617/372/00687486.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.314799,
+          -25.194179
+        ]
+      },
+      "properties": {
+        "gbifID": "1931225315",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-10-06",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1618/374/01184675.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.713647,
+          -24.340602
+        ]
+      },
+      "properties": {
+        "gbifID": "1928539997",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1914-05-09",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1618/356/01184651.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.809813,
+          -25.675762
+        ]
+      },
+      "properties": {
+        "gbifID": "1930106659",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-11-08",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1618/382/01184693.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.702004,
+          -23.702324
+        ]
+      },
+      "properties": {
+        "gbifID": "1930714691",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1947-05-19",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1618/377/01184680.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.5512,
+          -18.1798
+        ]
+      },
+      "properties": {
+        "gbifID": "1931030271",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-01-29",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1618/492/01280802.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.316667,
+          -23.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "2452821095",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-09-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.993333,
+          -23.245833
+        ]
+      },
+      "properties": {
+        "gbifID": "2452885581",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-12-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.600278,
+          -18.249444
+        ]
+      },
+      "properties": {
+        "gbifID": "1213626202",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-01-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.9325,
+          -21.977222
+        ]
+      },
+      "properties": {
+        "gbifID": "1213626180",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1956-09-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.273056,
+          -25.427778
+        ]
+      },
+      "properties": {
+        "gbifID": "1213626210",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-12-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.120556,
+          -23.389722
+        ]
+      },
+      "properties": {
+        "gbifID": "2452881674",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.465739,
+          -23.756722
+        ]
+      },
+      "properties": {
+        "gbifID": "2452932027",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-10-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.740555,
+          -24.870556
+        ]
+      },
+      "properties": {
+        "gbifID": "1848244323",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-10-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu Botânico Municipal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.378889,
+          -25.077222
+        ]
+      },
+      "properties": {
+        "gbifID": "2427803696",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-10-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Paraná",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.58,
+          -23.31
+        ]
+      },
+      "properties": {
+        "gbifID": "1086896109",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-07-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.378056,
+          -22.795
+        ]
+      },
+      "properties": {
+        "gbifID": "1086913776",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.533333,
+          -19.966667
+        ]
+      },
+      "properties": {
+        "gbifID": "1086889231",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-04-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.101111,
+          -22.265
+        ]
+      },
+      "properties": {
+        "gbifID": "1840923985",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-10-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.96,
+          -23.07
+        ]
+      },
+      "properties": {
+        "gbifID": "1086885972",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-03-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.84,
+          -24.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1086891941",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.053889,
+          -23.185833
+        ]
+      },
+      "properties": {
+        "gbifID": "1840923963",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-09-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.237222,
+          -30.019139
+        ]
+      },
+      "properties": {
+        "gbifID": "1090608681",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-04-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.023333,
+          -29.912222
+        ]
+      },
+      "properties": {
+        "gbifID": "1090608689",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-04-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.590555,
+          -26.640278
+        ]
+      },
+      "properties": {
+        "gbifID": "1077411144",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-09-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Regional de Blumenau",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.590555,
+          -27.090278
+        ]
+      },
+      "properties": {
+        "gbifID": "1077397236",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-12-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Regional de Blumenau",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.56725,
+          -25.045861
+        ]
+      },
+      "properties": {
+        "gbifID": "1077472707",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-12-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Tecnológica Federal do Paraná - Campus Campo Mourão",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.565194,
+          -25.045028
+        ]
+      },
+      "properties": {
+        "gbifID": "3381196312",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2021-09-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Tecnológica Federal do Paraná - Campus Campo Mourão",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.285722,
+          -25.335167
+        ]
+      },
+      "properties": {
+        "gbifID": "1077476737",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-11-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Tecnológica Federal do Paraná - Campus Campo Mourão",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.85575,
+          -25.931194
+        ]
+      },
+      "properties": {
+        "gbifID": "1848115621",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-04-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Tecnológica Federal do Paraná - Campus Campo Mourão",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.840139,
+          -25.949056
+        ]
+      },
+      "properties": {
+        "gbifID": "1848115640",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-04-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Tecnológica Federal do Paraná - Campus Campo Mourão",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.862417,
+          -25.917139
+        ]
+      },
+      "properties": {
+        "gbifID": "2577375267",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-02-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Tecnológica Federal do Paraná - Campus Campo Mourão",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.918778,
+          -23.23
+        ]
+      },
+      "properties": {
+        "gbifID": "1265932671",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-10-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual Paulista",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.084167,
+          -26.230556
+        ]
+      },
+      "properties": {
+        "gbifID": "1096802642",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-03-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.713889,
+          -24.256389
+        ]
+      },
+      "properties": {
+        "gbifID": "1096802608",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1904-05-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.989444,
+          -25.458333
+        ]
+      },
+      "properties": {
+        "gbifID": "1096802587",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1908-12-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.585277,
+          -15.748333
+        ]
+      },
+      "properties": {
+        "gbifID": "1095261461",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-01-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Cenargen",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.0711,
+          -23.4339
+        ]
+      },
+      "properties": {
+        "gbifID": "1090534198",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-03-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.066667,
+          -24.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1090563498",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.775,
+          -26.549444
+        ]
+      },
+      "properties": {
+        "gbifID": "1135820369",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-12-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.154167,
+          -22.537222
+        ]
+      },
+      "properties": {
+        "gbifID": "3828033311",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.253611,
+          -18.232778
+        ]
+      },
+      "properties": {
+        "gbifID": "4442009777",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fundação Zoo-Botânica de Belo Horizonte/Jardim Botânico",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.838972,
+          -21.944083
+        ]
+      },
+      "properties": {
+        "gbifID": "4955418689",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-02-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Juiz de Fora",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.766667,
+          -16.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "1314837040",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-10-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu Paraense Emílio Goeldi",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "COUNTRY_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.4,
+          -17.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1314837027",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-07-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu Paraense Emílio Goeldi",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "COUNTRY_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.183333,
+          -15.183333
+        ]
+      },
+      "properties": {
+        "gbifID": "1314852945",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-08-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu Paraense Emílio Goeldi",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.30472,
+          -23.77472
+        ]
+      },
+      "properties": {
+        "gbifID": "731332905",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-05-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441452586801OjworpuyPx1nwfM5",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.337778,
+          -24.118611
+        ]
+      },
+      "properties": {
+        "gbifID": "1096802631",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-11-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.0,
+          -22.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228427874",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1951-07-17",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.0,
+          -11.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228228023",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-07-20",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.5,
+          -22.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228498365",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1961-08-15",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.0,
+          -24.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228481563",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1908-12-30",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.75,
+          -21.683333
+        ]
+      },
+      "properties": {
+        "gbifID": "2252404569",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Multidisciplinario de Biología Vegetal - IMBIV",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.481389,
+          -23.425
+        ]
+      },
+      "properties": {
+        "gbifID": "2252404155",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-02-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Multidisciplinario de Biología Vegetal - IMBIV",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.1789,
+          -25.9269
+        ]
+      },
+      "properties": {
+        "gbifID": "2270559000",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "20000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-11-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Arizona State University Biocollections",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/h_seinet/seinet/ASU/ASU0048/ASU0048907_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "Arizona State University Vascular Plant Herbarium"
+          },
+          {
+            "url": "https://media01.symbiota.org/media/h_seinet/seinet/ASU/ASU0048/ASU0048907a_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "Arizona State University Vascular Plant Herbarium"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.77,
+          -16.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "1042643726",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.48,
+          -23.425
+        ]
+      },
+      "properties": {
+        "gbifID": "1042701019",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.295193,
+          -22.953733
+        ]
+      },
+      "properties": {
+        "gbifID": "3302443494",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "2420.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2017-09-06T10:03",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/112820102/original.jpg",
+            "references": "https://www.inaturalist.org/photos/112820102",
+            "title": null,
+            "creator": "Rogerio Dias",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Rogerio Dias"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.64735,
+          -22.531489
+        ]
+      },
+      "properties": {
+        "gbifID": "1056340072",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1836-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/8674c098-972c-485f-a309-74111bf0f6e5",
+            "references": null,
+            "title": "BM000617955",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.278611,
+          -22.987222
+        ]
+      },
+      "properties": {
+        "gbifID": "5758831061",
+        "species": "Athenaea picta",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Athenaea picta (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Trinity College Dublin herbarium",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://54.72.131.62/iiif/2/TCD52005.jpg/full/full/0/default.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    }
+  ]
+}

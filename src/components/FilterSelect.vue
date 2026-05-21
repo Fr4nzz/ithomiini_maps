@@ -1,4 +1,5 @@
 <script setup>
+import { computed, ref } from 'vue'
 import VueMultiselect from 'vue-multiselect'
 import { useDataStore } from '@/stores/data'
 import { useLegendStore } from '@/stores/legend'
@@ -13,13 +14,29 @@ const props = defineProps({
   placeholder: { type: String, default: 'Select...' },
   multiple: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
-  showCount: { type: Boolean, default: true }
+  showCount: { type: Boolean, default: true },
+  filterOptions: { type: Function, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
+const searchText = ref('')
+
+const visibleOptions = computed(() => {
+  if (!props.filterOptions) return props.options
+  return props.filterOptions(props.options, searchText.value)
+})
+
+const displayedCount = computed(() => {
+  if (props.filterOptions && searchText.value.trim()) return visibleOptions.value.length
+  return props.options.length
+})
 
 const updateValue = (val) => {
   emit('update:modelValue', val)
+}
+
+const updateSearch = (search) => {
+  searchText.value = search || ''
 }
 
 const customLabel = (option) => {
@@ -41,17 +58,19 @@ const getOptionColor = (option) => {
     <label v-if="label" class="filter-label">
       {{ label }}
       <span v-if="showCount && options.length > 0" class="option-count">
-        ({{ options.length }})
+        ({{ displayedCount }})
       </span>
     </label>
     <VueMultiselect
       :model-value="modelValue"
       @update:model-value="updateValue"
-      :options="options"
+      @search-change="updateSearch"
+      :options="visibleOptions"
       :placeholder="placeholder"
       :multiple="multiple"
       :close-on-select="!multiple"
       :searchable="true"
+      :internal-search="!filterOptions"
       :show-labels="false"
       :custom-label="customLabel"
       :allow-empty="true"
@@ -67,7 +86,15 @@ const getOptionColor = (option) => {
             class="color-dot"
             :style="{ background: getOptionColor(option) }"
           />
-          <span>{{ customLabel(option) }}</span>
+          <span class="option-text">
+            <span>{{ customLabel(option) }}</span>
+            <span v-if="typeof option === 'object' && option.meta" class="option-meta">
+              {{ option.meta }}
+            </span>
+            <span v-if="typeof option === 'object' && option.matchMeta" class="option-match-meta">
+              {{ option.matchMeta }}
+            </span>
+          </span>
         </span>
       </template>
       <template #noResult>
@@ -222,8 +249,29 @@ const getOptionColor = (option) => {
 
 .option-with-dot {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
+}
+
+.option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.option-meta {
+  color: var(--color-text-muted, #666);
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.option-match-meta {
+  color: var(--color-accent, #4ade80);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.25;
 }
 
 .color-dot {

@@ -1,0 +1,3152 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum piluliferum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum piluliferum",
+      "slug": "species_solanum_piluliferum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 4,
+      "butterfly_taxa": [
+        "Hypothyris ninonia",
+        "Mechanitis lysimnia"
+      ],
+      "confidence_counts": {
+        "medium": 2,
+        "high": 2
+      },
+      "occurrence_file": "occurrences/species_solanum_piluliferum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum piluliferum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2931771,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum piluliferum Dunal",
+        "canonical_name": "Solanum piluliferum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:33+00:00"
+      },
+      "gbif_taxon_key": 2931771,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum piluliferum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2931771,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum piluliferum Dunal",
+      "canonical_name": "Solanum piluliferum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:33+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 75
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.25,
+          -22.86666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260358361",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-11-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100449000/0D506D29-5B77-4516-B5C4-ADAA1D003444.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100449482",
+            "title": "Eiten - 7885 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.25,
+          -22.87
+        ]
+      },
+      "properties": {
+        "gbifID": "1456450136",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-11-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12641294&h=2000",
+            "references": null,
+            "title": "01932092.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11909836&h=2000",
+            "references": null,
+            "title": "01932092",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.945833,
+          -21.999444
+        ]
+      },
+      "properties": {
+        "gbifID": "4162766075",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-09-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.910556,
+          -25.811111
+        ]
+      },
+      "properties": {
+        "gbifID": "2996406341",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.96,
+          -27.54
+        ]
+      },
+      "properties": {
+        "gbifID": "2996465932",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-04-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.530833,
+          -22.281944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997511901",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_MISMATCH",
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.574444,
+          -25.883056
+        ]
+      },
+      "properties": {
+        "gbifID": "2997878340",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.055278,
+          -25.305833
+        ]
+      },
+      "properties": {
+        "gbifID": "2998014924",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1963-01-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.308056,
+          -26.323333
+        ]
+      },
+      "properties": {
+        "gbifID": "2997356298",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.204167,
+          -21.002222
+        ]
+      },
+      "properties": {
+        "gbifID": "2997367304",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.175833,
+          -26.552222
+        ]
+      },
+      "properties": {
+        "gbifID": "2996148469",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-01-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.411389,
+          -26.910278
+        ]
+      },
+      "properties": {
+        "gbifID": "2996109810",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.393611,
+          -27.180278
+        ]
+      },
+      "properties": {
+        "gbifID": "2996148472",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.078889,
+          -26.905278
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146443",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-08-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.403611,
+          -26.871944
+        ]
+      },
+      "properties": {
+        "gbifID": "2996148459",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-10-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.828333,
+          -22.378333
+        ]
+      },
+      "properties": {
+        "gbifID": "1423937667",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-10-08",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/19/29/40/01192940.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.835,
+          -20.471111
+        ]
+      },
+      "properties": {
+        "gbifID": "2565880705",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-01-29",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/42/67/47/01426747.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.585,
+          -24.434444
+        ]
+      },
+      "properties": {
+        "gbifID": "1424506366",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-25",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/72/2/00937202.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.144444,
+          -23.342222
+        ]
+      },
+      "properties": {
+        "gbifID": "3107247334",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-10",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/43/82/27/01438227.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.1,
+          -22.32
+        ]
+      },
+      "properties": {
+        "gbifID": "1423936500",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-09-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/19/12/46/01191246.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.566667,
+          -22.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1424206283",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-08-09",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/71/41/00477141.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.620833,
+          -22.430278
+        ]
+      },
+      "properties": {
+        "gbifID": "1987023455",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-10-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/40/11/77/01401177.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.995278,
+          -22.425556
+        ]
+      },
+      "properties": {
+        "gbifID": "2302490397",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.35,
+          -24.3
+        ]
+      },
+      "properties": {
+        "gbifID": "2998127792",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -37.740278,
+          -22.733611
+        ]
+      },
+      "properties": {
+        "gbifID": "4900590977",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.378611,
+          -26.250556
+        ]
+      },
+      "properties": {
+        "gbifID": "4427257469",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-02-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.74,
+          -22.499722
+        ]
+      },
+      "properties": {
+        "gbifID": "3345564084",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.991389,
+          -21.948055
+        ]
+      },
+      "properties": {
+        "gbifID": "1424299019",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-28",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/58/80/24/00588024.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.711667,
+          -25.428611
+        ]
+      },
+      "properties": {
+        "gbifID": "1304599487",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1992-01-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.990833,
+          -24.657222
+        ]
+      },
+      "properties": {
+        "gbifID": "1304594689",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1999-11-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.8731,
+          -10.8339
+        ]
+      },
+      "properties": {
+        "gbifID": "1302645825",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.991667,
+          -21.948333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304603178",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2004-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.25,
+          -22.866667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304608497",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1966-11-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.991667,
+          -21.948056
+        ]
+      },
+      "properties": {
+        "gbifID": "2997956531",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.217778,
+          -24.320278
+        ]
+      },
+      "properties": {
+        "gbifID": "1424506415",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-15",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/72/5/00937205.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.983333,
+          -22.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "1424433330",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-14",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/74/52/37/00745237.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.393333,
+          -24.645278
+        ]
+      },
+      "properties": {
+        "gbifID": "1424505783",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-23",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/62/23/00936223.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.574951,
+          -25.886992
+        ]
+      },
+      "properties": {
+        "gbifID": "1927861661",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-20",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/439/v-287-00770732.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.712258,
+          -25.432485
+        ]
+      },
+      "properties": {
+        "gbifID": "1929363060",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "38300.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-01-06",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/437/v-287-00770729.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.99167,
+          -21.94819
+        ]
+      },
+      "properties": {
+        "gbifID": "1928023249",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-28",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1610/846/01039009.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.2042,
+          -21.0022
+        ]
+      },
+      "properties": {
+        "gbifID": "1930128282",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-05",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/997/430/01801852.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.991374,
+          -24.661073
+        ]
+      },
+      "properties": {
+        "gbifID": "1929340721",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-17",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/113/v-287-00700632.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.055881,
+          -25.309682
+        ]
+      },
+      "properties": {
+        "gbifID": "1928355640",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1963-01-20",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1609/171/00770731.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.3081,
+          -26.3233
+        ]
+      },
+      "properties": {
+        "gbifID": "1928141764",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-10",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/997/415/01801837.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.530921,
+          -22.28575
+        ]
+      },
+      "properties": {
+        "gbifID": "1928899330",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1822-10/1823-01",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1609/173/00770734.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.391958,
+          -24.646414
+        ]
+      },
+      "properties": {
+        "gbifID": "2565919680",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -37.740278,
+          -22.500278
+        ]
+      },
+      "properties": {
+        "gbifID": "1571775744",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Feira de Santana",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.392083,
+          -24.646639
+        ]
+      },
+      "properties": {
+        "gbifID": "1978401961",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.933333,
+          -22.7
+        ]
+      },
+      "properties": {
+        "gbifID": "2464834807",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-10-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Londrina",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.215,
+          -24.299167
+        ]
+      },
+      "properties": {
+        "gbifID": "2464838767",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Londrina",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.400278,
+          -24.639444
+        ]
+      },
+      "properties": {
+        "gbifID": "1086904730",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.32,
+          -22.68
+        ]
+      },
+      "properties": {
+        "gbifID": "1086913787",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.317778,
+          -22.394444
+        ]
+      },
+      "properties": {
+        "gbifID": "4603569358",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-01-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Pontifícia Universidade Católica do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.23,
+          -26.64
+        ]
+      },
+      "properties": {
+        "gbifID": "5208803512",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2025-04-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Regional de Blumenau",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.910639,
+          -25.811083
+        ]
+      },
+      "properties": {
+        "gbifID": "1077475648",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Tecnológica Federal do Paraná - Campus Campo Mourão",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.999456,
+          -22.452275
+        ]
+      },
+      "properties": {
+        "gbifID": "1123830777",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.1439,
+          -24.3178
+        ]
+      },
+      "properties": {
+        "gbifID": "1090563846",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.1447,
+          -22.7553
+        ]
+      },
+      "properties": {
+        "gbifID": "1090565582",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-10-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.631018,
+          -26.417593
+        ]
+      },
+      "properties": {
+        "gbifID": "1086733758",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-02-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Semiárido",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.315833,
+          -26.282778
+        ]
+      },
+      "properties": {
+        "gbifID": "1087653921",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-02-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.681211,
+          -24.545186
+        ]
+      },
+      "properties": {
+        "gbifID": "4519556455",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-12-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.665556,
+          -22.650278
+        ]
+      },
+      "properties": {
+        "gbifID": "1455401018",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-10-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.578056,
+          -24.424444
+        ]
+      },
+      "properties": {
+        "gbifID": "1087653580",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-12-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.308028,
+          -26.323417
+        ]
+      },
+      "properties": {
+        "gbifID": "1087655410",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.204111,
+          -21.002333
+        ]
+      },
+      "properties": {
+        "gbifID": "1087656429",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.009889,
+          -22.447056
+        ]
+      },
+      "properties": {
+        "gbifID": "1087656025",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-11-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.265278,
+          -27.326667
+        ]
+      },
+      "properties": {
+        "gbifID": "4903629800",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.5,
+          -22.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228327282",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-11-24",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.2075,
+          -22.90278
+        ]
+      },
+      "properties": {
+        "gbifID": "1849001349",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum, Vienna",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://object.jacq.org/europeana/W/141487.jpg",
+            "references": "https://api.jacq.org/v1/images/show/141487?withredirect=1",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.08982,
+          -10.773109
+        ]
+      },
+      "properties": {
+        "gbifID": "1055890086",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "4364.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/c6bec2a1-9715-4c9b-9bc4-c8e1ce1a7852",
+            "references": null,
+            "title": "BM000846152",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          },
+          {
+            "url": "https://data.nhm.ac.uk/media/c6000e36-765a-4549-a9ef-5a78e7cdf69a",
+            "references": null,
+            "title": "BM000846152_back",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.556528,
+          -22.376722
+        ]
+      },
+      "properties": {
+        "gbifID": "5104367946",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "7752.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-10-24T09:54",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/456189332",
+            "title": null,
+            "creator": "Don Marsille",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Don Marsille"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189331/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/456189331",
+            "title": null,
+            "creator": "Don Marsille",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Don Marsille"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189383/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/456189383",
+            "title": null,
+            "creator": "Don Marsille",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Don Marsille"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.500652,
+          -22.31213
+        ]
+      },
+      "properties": {
+        "gbifID": "5104313944",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "914.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-10-24T14:59",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456191166/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/456191166",
+            "title": null,
+            "creator": "Don Marsille",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Don Marsille"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456191161/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/456191161",
+            "title": null,
+            "creator": "Don Marsille",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Don Marsille"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456191173/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/456191173",
+            "title": null,
+            "creator": "Don Marsille",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Don Marsille"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.580587,
+          -22.322737
+        ]
+      },
+      "properties": {
+        "gbifID": "4014926371",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "4.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-11-12T11:30:41",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/104163452/original.jpg",
+            "references": "https://www.inaturalist.org/photos/104163452",
+            "title": null,
+            "creator": "Jean-Paul Boerekamps",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Jean-Paul Boerekamps"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/104163465/original.jpg",
+            "references": "https://www.inaturalist.org/photos/104163465",
+            "title": null,
+            "creator": "Jean-Paul Boerekamps",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Jean-Paul Boerekamps"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/104163479/original.jpg",
+            "references": "https://www.inaturalist.org/photos/104163479",
+            "title": null,
+            "creator": "Jean-Paul Boerekamps",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Jean-Paul Boerekamps"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.144323,
+          -20.576811
+        ]
+      },
+      "properties": {
+        "gbifID": "5908752819",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "30472.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-06-15T12:21:42",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/521615360/original.jpg",
+            "references": "https://www.inaturalist.org/photos/521615360",
+            "title": null,
+            "creator": "rogeriotruglio",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "rogeriotruglio"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/521615511/original.jpg",
+            "references": "https://www.inaturalist.org/photos/521615511",
+            "title": null,
+            "creator": "rogeriotruglio",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "rogeriotruglio"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/521615616/original.jpg",
+            "references": "https://www.inaturalist.org/photos/521615616",
+            "title": null,
+            "creator": "rogeriotruglio",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "rogeriotruglio"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/521615706/original.jpg",
+            "references": "https://www.inaturalist.org/photos/521615706",
+            "title": null,
+            "creator": "rogeriotruglio",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "rogeriotruglio"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/521615757/original.jpg",
+            "references": "https://www.inaturalist.org/photos/521615757",
+            "title": null,
+            "creator": "rogeriotruglio",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "rogeriotruglio"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.355206,
+          -11.524631
+        ]
+      },
+      "properties": {
+        "gbifID": "2250685652",
+        "species": "Solanum piluliferum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum piluliferum Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_SAMPLE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "The International Barcode of Life Consortium",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/456189332/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/456189332",
+          "title": null,
+          "creator": "Don Marsille",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Don Marsille"
+        }
+      }
+    }
+  ]
+}

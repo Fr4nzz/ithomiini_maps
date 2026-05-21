@@ -1,0 +1,1930 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora panamensis",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora panamensis",
+      "slug": "species_passiflora_panamensis",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Heliconius erato"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_passiflora_panamensis.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora panamensis",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3587558,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora panamensis Killip",
+        "canonical_name": "Passiflora panamensis",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:42+00:00"
+      },
+      "gbif_taxon_key": 3587558,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora panamensis",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3587558,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora panamensis Killip",
+      "canonical_name": "Passiflora panamensis",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:42+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 48
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:21+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.33333,
+          7.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1576175995",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "4823.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.63139,
+          8.315587
+        ]
+      },
+      "properties": {
+        "gbifID": "3413381537",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-17",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.634351,
+          8.31946
+        ]
+      },
+      "properties": {
+        "gbifID": "3413382047",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-16",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.63948,
+          8.295817
+        ]
+      },
+      "properties": {
+        "gbifID": "3413382173",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-12",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.632585,
+          8.321591
+        ]
+      },
+      "properties": {
+        "gbifID": "3413382722",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-19",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.640686,
+          8.294005
+        ]
+      },
+      "properties": {
+        "gbifID": "3413388867",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-20",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.642225,
+          8.291097
+        ]
+      },
+      "properties": {
+        "gbifID": "3053074941",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-11",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.631462,
+          8.311031
+        ]
+      },
+      "properties": {
+        "gbifID": "3413382728",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-18",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.632817,
+          8.314203
+        ]
+      },
+      "properties": {
+        "gbifID": "3413386035",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-05",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.638089,
+          8.297122
+        ]
+      },
+      "properties": {
+        "gbifID": "3413388970",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-20",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.639495,
+          8.295387
+        ]
+      },
+      "properties": {
+        "gbifID": "3413380981",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-20",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.637466,
+          8.312498
+        ]
+      },
+      "properties": {
+        "gbifID": "3413381553",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-16",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.6356,
+          8.311871
+        ]
+      },
+      "properties": {
+        "gbifID": "3413385957",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-05",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.632245,
+          8.315659
+        ]
+      },
+      "properties": {
+        "gbifID": "3413381163",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-17",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.630079,
+          8.315054
+        ]
+      },
+      "properties": {
+        "gbifID": "3413385470",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-04",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.636795,
+          8.315345
+        ]
+      },
+      "properties": {
+        "gbifID": "3413387230",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-05",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.63933,
+          8.296787
+        ]
+      },
+      "properties": {
+        "gbifID": "3413389030",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-20",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.63812,
+          8.296846
+        ]
+      },
+      "properties": {
+        "gbifID": "3413389120",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-20",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.63324,
+          8.321506
+        ]
+      },
+      "properties": {
+        "gbifID": "3413380886",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-06-19",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA.",
+        "publisher": "Cerro Matoso S.A",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.333333,
+          7.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "4032099790",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-05-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100421000/9CFDDDE0-887B-4E0E-A5D5-974A91586A6F.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100421701",
+            "title": "Callejas Posada - 3629 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.733333,
+          8.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031555911",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-08-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100738000/284FD160-3809-47A2-9667-0EC591F8B0D2.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100738570",
+            "title": "Foster - 2837 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.374444,
+          7.022778
+        ]
+      },
+      "properties": {
+        "gbifID": "1260157508",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-07-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages4/detailimages/TropicosImagesVol4/101341000/4F4295B1-80C0-4113-BFD3-0428194836AF.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101341728",
+            "title": "Santa - 797 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.05,
+          7.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031469879",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-04-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103874000/54D52F4B-ED7D-44D8-9DE8-94E96A49B197.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103874462",
+            "title": "Garwood - 998 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.262778,
+          7.003611
+        ]
+      },
+      "properties": {
+        "gbifID": "1260157403",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-07-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103874000/55F449D6-E4F9-44D5-90D0-C0D0D688C1A3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103874461",
+            "title": "Santa - 777 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.361389,
+          7.025278
+        ]
+      },
+      "properties": {
+        "gbifID": "4031366885",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-07-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages4/detailimages/TropicosImagesVol4/101341000/534BA5E2-D5D4-469E-862F-0121C1D41F57.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101341729",
+            "title": "Santa - 787 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.05,
+          7.45
+        ]
+      },
+      "properties": {
+        "gbifID": "1260168871",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-01-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100457000/90AC98FD-3A13-4966-9A28-4D2BC07A2E29.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100457982",
+            "title": "Knapp - 3044 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.716667,
+          8.0
+        ]
+      },
+      "properties": {
+        "gbifID": "4031686971",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100777000/5E965056-F632-4018-9CF1-EA1F1DB8A977.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100777473",
+            "title": "MacDougal - 444 - Panama",
+            "creator": "John M. MacDougal",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "John M. MacDougal, 1980"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100777000/8AC9ADB1-96BB-4261-826F-A3EEBC5D4DDC.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100777472",
+            "title": "MacDougal - 444 - Panama",
+            "creator": "John M. MacDougal",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "John M. MacDougal, 1980"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.333333,
+          7.05
+        ]
+      },
+      "properties": {
+        "gbifID": "4031779886",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100738000/A54E509D-20C4-4F10-8197-49FA9C49FBC5.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100738522",
+            "title": "Zarucchi - 5107 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.33,
+          7.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1843578812",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-28",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15459199&h=2000",
+            "references": null,
+            "title": "01944070.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.33,
+          7.42
+        ]
+      },
+      "properties": {
+        "gbifID": "1843549113",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-05-17",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15451599&h=2000",
+            "references": null,
+            "title": "01944093.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5,
+          7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228240782",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-28",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.3333,
+          7.05
+        ]
+      },
+      "properties": {
+        "gbifID": "2242465324",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/200100.jpg",
+            "references": null,
+            "title": "Passiflora panamensis Killip - Colombia, Antioquia (BARCODE: 200100) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.33918,
+          7.029207
+        ]
+      },
+      "properties": {
+        "gbifID": "4081334252",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-08-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Eastern Illinois University, Stover-Ebinger Herbarium (EIU)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.416667,
+          7.233333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257795808",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-06-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.316111,
+          7.016111
+        ]
+      },
+      "properties": {
+        "gbifID": "1257765140",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-09-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.63333,
+          7.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "4060950473",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1967-05-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.05,
+          7.816667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260178870",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1912-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.266667,
+          7.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257765123",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-05-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.44,
+          9.99
+        ]
+      },
+      "properties": {
+        "gbifID": "45703434",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-11-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.1623,
+          7.5162
+        ]
+      },
+      "properties": {
+        "gbifID": "1057352271",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-01-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.724725,
+          8.017933
+        ]
+      },
+      "properties": {
+        "gbifID": "4954308795",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-03-24T17:53:38",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/440241784/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/440241784",
+            "title": null,
+            "creator": "Mike REVI Boyd",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mike REVI Boyd"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.32042,
+          6.968119
+        ]
+      },
+      "properties": {
+        "gbifID": "1123902269",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "42791.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-08-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Antioquia",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.413756,
+          7.093246
+        ]
+      },
+      "properties": {
+        "gbifID": "1123907964",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "30.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-09-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Antioquia",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.393854,
+          7.069602
+        ]
+      },
+      "properties": {
+        "gbifID": "1123902311",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "2768.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-08-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Antioquia",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.444444,
+          9.993055
+        ]
+      },
+      "properties": {
+        "gbifID": "4903198251",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-11-07T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K005037785",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.663533,
+          6.156795
+        ]
+      },
+      "properties": {
+        "gbifID": "6131392875",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "1412.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-11-19T12:56:13",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/454553018/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/454553018",
+            "title": null,
+            "creator": "Miguel José Lengua Hernández",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Miguel José Lengua Hernández"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/454553031/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/454553031",
+            "title": null,
+            "creator": "Miguel José Lengua Hernández",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Miguel José Lengua Hernández"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/454553047/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/454553047",
+            "title": null,
+            "creator": "Miguel José Lengua Hernández",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Miguel José Lengua Hernández"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/454553061/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/454553061",
+            "title": null,
+            "creator": "Miguel José Lengua Hernández",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Miguel José Lengua Hernández"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.703048,
+          8.002861
+        ]
+      },
+      "properties": {
+        "gbifID": "4430400078",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "14751.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-12-10T09:39",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/247622902/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/247622902",
+            "title": null,
+            "creator": "Kai Squires",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Kai Squires"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.339583,
+          7.028307
+        ]
+      },
+      "properties": {
+        "gbifID": "1898917937",
+        "species": "Passiflora panamensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora panamensis Killip",
+        "coordinateUncertaintyInMeters": "898.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-28",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/c568d5079bc957c1d68cad93d753fc3c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005037785",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,5560 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum vaillantii",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum vaillantii",
+      "slug": "species_solanum_vaillantii",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis lysimnia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_vaillantii.geojson",
+      "gbif_resolution": {
+        "query": "Solanum vaillantii",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2930786,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum vaillantii Dunal",
+        "canonical_name": "Solanum vaillantii",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:58+00:00"
+      },
+      "gbif_taxon_key": 2930786,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum vaillantii",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2930786,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum vaillantii Dunal",
+      "canonical_name": "Solanum vaillantii",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:58+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 137
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:25+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.238889,
+          -29.370833
+        ]
+      },
+      "properties": {
+        "gbifID": "4950907723",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-10-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências Univates - Universidade do Vale do Taquari",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.813889,
+          -23.140278
+        ]
+      },
+      "properties": {
+        "gbifID": "4955275700",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-09-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Escola Superior de Agricultura Luiz de Queiroz",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.23333,
+          -26.21666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260373174",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-01-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100450000/D9780676-2F0E-464E-97C6-AE7F6F9BF1C8.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100450448",
+            "title": "Smith - 15006 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.23,
+          -26.22
+        ]
+      },
+      "properties": {
+        "gbifID": "1456018612",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-01-23",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11913174&h=2000",
+            "references": null,
+            "title": "01934125",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12651079&h=2000",
+            "references": null,
+            "title": "01934125.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.63,
+          -22.47
+        ]
+      },
+      "properties": {
+        "gbifID": "1456081989",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11913162&h=2000",
+            "references": null,
+            "title": "01934114",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12646779&h=2000",
+            "references": null,
+            "title": "01934114.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.869722,
+          -22.671667
+        ]
+      },
+      "properties": {
+        "gbifID": "4162764195",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.480833,
+          -27.134722
+        ]
+      },
+      "properties": {
+        "gbifID": "2996463692",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-11-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.816667,
+          -20.483333
+        ]
+      },
+      "properties": {
+        "gbifID": "4526425315",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-11-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.185,
+          -22.121944
+        ]
+      },
+      "properties": {
+        "gbifID": "1086683850",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-12-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Paraná",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.391944,
+          -18.431944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997849229",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.161667,
+          -25.095
+        ]
+      },
+      "properties": {
+        "gbifID": "2997375342",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-02-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.018333,
+          -22.879444
+        ]
+      },
+      "properties": {
+        "gbifID": "2998009022",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.179167,
+          -29.168333
+        ]
+      },
+      "properties": {
+        "gbifID": "2998012009",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.890556,
+          -29.219167
+        ]
+      },
+      "properties": {
+        "gbifID": "2997511971",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.273056,
+          -25.428056
+        ]
+      },
+      "properties": {
+        "gbifID": "2997370173",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-02-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.881667,
+          -20.754167
+        ]
+      },
+      "properties": {
+        "gbifID": "2997478783",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.069722,
+          -23.430278
+        ]
+      },
+      "properties": {
+        "gbifID": "2998014994",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-10-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.3,
+          -23.75
+        ]
+      },
+      "properties": {
+        "gbifID": "2997383331",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.023056,
+          -30.081111
+        ]
+      },
+      "properties": {
+        "gbifID": "2997479976",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.760556,
+          -28.17
+        ]
+      },
+      "properties": {
+        "gbifID": "2996140076",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-12-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.36,
+          -26.233333
+        ]
+      },
+      "properties": {
+        "gbifID": "2996120249",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-02-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.083611,
+          -20.516111
+        ]
+      },
+      "properties": {
+        "gbifID": "1424271706",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-08",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/55/80/0/00558000.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.6175,
+          -28.045
+        ]
+      },
+      "properties": {
+        "gbifID": "1424456411",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-01-15",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/79/42/66/00794266.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.183333,
+          -22.8525
+        ]
+      },
+      "properties": {
+        "gbifID": "1424403095",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-12-28",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/5/66/00700566.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.45,
+          -22.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "1424197461",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-02-13",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "MULTIMEDIA_URI_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/46/89/5/00468905.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          },
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/46/89/5/00468905-1.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.848889,
+          -23.346389
+        ]
+      },
+      "properties": {
+        "gbifID": "1424221954",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-01-25",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/49/15/23/00491523.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.161944,
+          -25.751111
+        ]
+      },
+      "properties": {
+        "gbifID": "4900643266",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-08-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.633333,
+          -22.466667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304606648",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.1925,
+          -22.8164
+        ]
+      },
+      "properties": {
+        "gbifID": "1302656479",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2006-10-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.2181,
+          -23.0903
+        ]
+      },
+      "properties": {
+        "gbifID": "1302655569",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1975-05-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.216667,
+          -25.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304581731",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1996-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.0294,
+          -20.7331
+        ]
+      },
+      "properties": {
+        "gbifID": "1302648963",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1995-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.0711,
+          -23.4339
+        ]
+      },
+      "properties": {
+        "gbifID": "1302655611",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1971-05-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.2669,
+          -22.8219
+        ]
+      },
+      "properties": {
+        "gbifID": "1302655590",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1976-11-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.9597,
+          -23.0744
+        ]
+      },
+      "properties": {
+        "gbifID": "1302656496",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1939-02-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.8731,
+          -10.8339
+        ]
+      },
+      "properties": {
+        "gbifID": "1302645110",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1836",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.529722,
+          -23.66
+        ]
+      },
+      "properties": {
+        "gbifID": "1304597526",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1980-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.8464,
+          -23.5322
+        ]
+      },
+      "properties": {
+        "gbifID": "1302648916",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1940-11-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.413056,
+          -20.464444
+        ]
+      },
+      "properties": {
+        "gbifID": "1304602448",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-12-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.279167,
+          -28.82
+        ]
+      },
+      "properties": {
+        "gbifID": "1304590756",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1994-01-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.869722,
+          -22.284167
+        ]
+      },
+      "properties": {
+        "gbifID": "1304588024",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1982-10-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.233333,
+          -26.216667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304580232",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1965-01-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.93,
+          -28.33
+        ]
+      },
+      "properties": {
+        "gbifID": "1302655545",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.581111,
+          -22.381944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997486000",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1892-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.22,
+          -25.37
+        ]
+      },
+      "properties": {
+        "gbifID": "2997901231",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.939722,
+          -22.709444
+        ]
+      },
+      "properties": {
+        "gbifID": "3331270345",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-11-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/44/29/21/01442921.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.135278,
+          -23.465833
+        ]
+      },
+      "properties": {
+        "gbifID": "3107253336",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-10",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/43/82/31/01438231.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.427222,
+          -21.505833
+        ]
+      },
+      "properties": {
+        "gbifID": "2997674562",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.071389,
+          -23.232222
+        ]
+      },
+      "properties": {
+        "gbifID": "2997663551",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.555278,
+          -22.423889
+        ]
+      },
+      "properties": {
+        "gbifID": "2997857557",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.02,
+          -23.124444
+        ]
+      },
+      "properties": {
+        "gbifID": "2997859561",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-12-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.522778,
+          -21.423056
+        ]
+      },
+      "properties": {
+        "gbifID": "2997666546",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-01-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.3025,
+          -19.134722
+        ]
+      },
+      "properties": {
+        "gbifID": "2997853752",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-03-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.386111,
+          -30.180833
+        ]
+      },
+      "properties": {
+        "gbifID": "2997641259",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-09-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.860644,
+          -20.766686
+        ]
+      },
+      "properties": {
+        "gbifID": "1929667829",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "2181.57",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1930-03-07",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1613/998/00707693.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.581244,
+          -22.382006
+        ]
+      },
+      "properties": {
+        "gbifID": "1929659039",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1892-12",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/345/00781510.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.890537,
+          -29.219297
+        ]
+      },
+      "properties": {
+        "gbifID": "1930094526",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-03",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/338/00781501.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.069998,
+          -23.434165
+        ]
+      },
+      "properties": {
+        "gbifID": "1927831207",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-10-24",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/336/00781497.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.881844,
+          -20.758024
+        ]
+      },
+      "properties": {
+        "gbifID": "1931237372",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "13937.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-12-18",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1613/997/00707692.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.02385,
+          -30.085031
+        ]
+      },
+      "properties": {
+        "gbifID": "1927906093",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03-29",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/343/00781507.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.391944,
+          -18.43185
+        ]
+      },
+      "properties": {
+        "gbifID": "1929002632",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "10000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-02-14",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/159/857/v-287-00707695.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.018386,
+          -22.88326
+        ]
+      },
+      "properties": {
+        "gbifID": "1929041664",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-24",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/334/00781493.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.273697,
+          -25.431983
+        ]
+      },
+      "properties": {
+        "gbifID": "1928212139",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/159/973/v-287-00781498.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.179955,
+          -29.17222
+        ]
+      },
+      "properties": {
+        "gbifID": "1929229831",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "49662.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-04-07",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/335/00781494.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.162357,
+          -25.098874
+        ]
+      },
+      "properties": {
+        "gbifID": "1930824607",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-02-20",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/159/972/v-287-00781495.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.869982,
+          -22.288048
+        ]
+      },
+      "properties": {
+        "gbifID": "1928516993",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "26914.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-10-08",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1613/999/00707696.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.279959,
+          -28.823916
+        ]
+      },
+      "properties": {
+        "gbifID": "1929427582",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-04",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/337/00781500.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.413144,
+          -20.46822
+        ]
+      },
+      "properties": {
+        "gbifID": "1927875255",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-12-05",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/340/00781503.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.738417,
+          -20.507472
+        ]
+      },
+      "properties": {
+        "gbifID": "2565920526",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-11-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.033611,
+          -23.212222
+        ]
+      },
+      "properties": {
+        "gbifID": "2565919865",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-12-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.5225,
+          -22.765278
+        ]
+      },
+      "properties": {
+        "gbifID": "1213636505",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-05-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.929722,
+          -15.779722
+        ]
+      },
+      "properties": {
+        "gbifID": "1213547153",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-09-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.866667,
+          -23.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "2565918917",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-11-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.720278,
+          -21.849722
+        ]
+      },
+      "properties": {
+        "gbifID": "1978402089",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.874417,
+          -21.708417
+        ]
+      },
+      "properties": {
+        "gbifID": "1978403694",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-01-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.931667,
+          -22.710833
+        ]
+      },
+      "properties": {
+        "gbifID": "1978402990",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.120556,
+          -23.389722
+        ]
+      },
+      "properties": {
+        "gbifID": "1978402176",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.507028,
+          -19.229583
+        ]
+      },
+      "properties": {
+        "gbifID": "1978402998",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-03-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.922222,
+          -27.022222
+        ]
+      },
+      "properties": {
+        "gbifID": "1570757050",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade do Extremo Sul Catarinense",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.560333,
+          -24.33325
+        ]
+      },
+      "properties": {
+        "gbifID": "2464861552",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-11-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Londrina",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.480833,
+          -27.147222
+        ]
+      },
+      "properties": {
+        "gbifID": "2464880817",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-11-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Londrina",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.58975,
+          -24.337056
+        ]
+      },
+      "properties": {
+        "gbifID": "2464861768",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-10-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Londrina",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.59,
+          -22.73
+        ]
+      },
+      "properties": {
+        "gbifID": "4953432560",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-03-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.615556,
+          -22.334722
+        ]
+      },
+      "properties": {
+        "gbifID": "4974609403",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-10-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu Nacional / UFRJ",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.615556,
+          -22.333056
+        ]
+      },
+      "properties": {
+        "gbifID": "4974609377",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-03-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu Nacional / UFRJ",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.174444,
+          -29.480833
+        ]
+      },
+      "properties": {
+        "gbifID": "1090606064",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-02-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.776611,
+          -27.419444
+        ]
+      },
+      "properties": {
+        "gbifID": "2618388092",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1911-06-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.625278,
+          -22.412222
+        ]
+      },
+      "properties": {
+        "gbifID": "2618386112",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1902-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.933333,
+          -28.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "2618554120",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-01-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.153889,
+          -29.137778
+        ]
+      },
+      "properties": {
+        "gbifID": "4949726572",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2021-02-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Caxias do Sul",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.0,
+          10.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "2618553116",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-04-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.153056,
+          -25.093333
+        ]
+      },
+      "properties": {
+        "gbifID": "2618381095",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-02-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.958611,
+          -15.709722
+        ]
+      },
+      "properties": {
+        "gbifID": "2285832051",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-03-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Cenargen",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.1447,
+          -22.7553
+        ]
+      },
+      "properties": {
+        "gbifID": "1090566024",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-02-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.583611,
+          -22.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1087652793",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.51,
+          -20.431667
+        ]
+      },
+      "properties": {
+        "gbifID": "3914324332",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.283333,
+          -18.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "1087632323",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.740556,
+          -22.363333
+        ]
+      },
+      "properties": {
+        "gbifID": "1087646606",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-10-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.486611,
+          -20.715528
+        ]
+      },
+      "properties": {
+        "gbifID": "1087653848",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-04-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.492169,
+          -20.426858
+        ]
+      },
+      "properties": {
+        "gbifID": "4903629607",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-02-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.581167,
+          -20.218806
+        ]
+      },
+      "properties": {
+        "gbifID": "1291012023",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-03-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.506944,
+          -19.229444
+        ]
+      },
+      "properties": {
+        "gbifID": "1087626909",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-03-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.684722,
+          -20.086944
+        ]
+      },
+      "properties": {
+        "gbifID": "2382967967",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-02-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.666667,
+          -22.066667
+        ]
+      },
+      "properties": {
+        "gbifID": "1087641707",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-03-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.465833,
+          -20.186667
+        ]
+      },
+      "properties": {
+        "gbifID": "1087644691",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-12-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.51275,
+          -20.438278
+        ]
+      },
+      "properties": {
+        "gbifID": "1087651409",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-01-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.34725,
+          -22.609444
+        ]
+      },
+      "properties": {
+        "gbifID": "1087652680",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.939708,
+          -22.709328
+        ]
+      },
+      "properties": {
+        "gbifID": "2563082475",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-11-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.605,
+          -22.432222
+        ]
+      },
+      "properties": {
+        "gbifID": "3914327337",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-04-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.681389,
+          -23.328889
+        ]
+      },
+      "properties": {
+        "gbifID": "4021012301",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.919444,
+          -21.627222
+        ]
+      },
+      "properties": {
+        "gbifID": "5000791718",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-01-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.919525,
+          -21.627092
+        ]
+      },
+      "properties": {
+        "gbifID": "1270105881",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-01-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Santa Cecília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.23333,
+          -26.21667
+        ]
+      },
+      "properties": {
+        "gbifID": "437869003",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-01-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441366176753e7hkMeuqq45kvcHM",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.189722,
+          -22.9025
+        ]
+      },
+      "properties": {
+        "gbifID": "2618382135",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1901-11-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.0,
+          -18.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228196865",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-12-18",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.0,
+          -24.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228217535",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-12-19",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.5,
+          -22.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228572964",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-01",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.316667,
+          -23.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "2252407885",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-12-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Multidisciplinario de Biología Vegetal - IMBIV",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.467099,
+          -23.583779
+        ]
+      },
+      "properties": {
+        "gbifID": "3967735424",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1995",
+        "country": null,
+        "datasetName": "SinBIOTA",
+        "publisher": "Programa BIOTA/FAPESP - The Virtual Institute of Biodiversity",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_MISMATCH",
+          "COORDINATE_REPROJECTED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.5,
+          -29.4
+        ]
+      },
+      "properties": {
+        "gbifID": "137523910",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-03-05",
+        "country": null,
+        "datasetName": "Herbario de la Universidad de Extremadura (UNEX)",
+        "publisher": "Dep. of Plant Biology, Ecology and Earth Sciences, Botany Area, Univ. Extremadura",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.071944,
+          -23.435833
+        ]
+      },
+      "properties": {
+        "gbifID": "4455845540",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-10-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.850436,
+          -24.926736
+        ]
+      },
+      "properties": {
+        "gbifID": "2270554219",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "30000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-02-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Arizona State University Biocollections",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/h_seinet/seinet/ASU/ASU0059/ASU0059443_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "Arizona State University Vascular Plant Herbarium"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.754332,
+          -26.274736
+        ]
+      },
+      "properties": {
+        "gbifID": "2270556640",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "3036.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Arizona State University Biocollections",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/h_seinet/seinet/ASU/ASU0051/ASU0051300_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "Arizona State University Vascular Plant Herbarium"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.98,
+          -26.0
+        ]
+      },
+      "properties": {
+        "gbifID": "417065997",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botánica Darwinion - CONICET",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.843024,
+          -23.139005
+        ]
+      },
+      "properties": {
+        "gbifID": "4510246437",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "41839.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-01-05T14:33:10",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345344701/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345344701",
+            "title": null,
+            "creator": "Mariana Amado Costa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mariana Amado Costa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345344724/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345344724",
+            "title": null,
+            "creator": "Mariana Amado Costa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mariana Amado Costa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345344732/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345344732",
+            "title": null,
+            "creator": "Mariana Amado Costa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mariana Amado Costa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345344745/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345344745",
+            "title": null,
+            "creator": "Mariana Amado Costa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mariana Amado Costa"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.096503,
+          -19.690239
+        ]
+      },
+      "properties": {
+        "gbifID": "1057092451",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1840",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/594ef578-2115-4b99-9e47-a706bee87de7",
+            "references": null,
+            "title": "BM000099890",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.08982,
+          -10.773109
+        ]
+      },
+      "properties": {
+        "gbifID": "1055370707",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "4364.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1815",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/683ac548-9ddc-4cae-bf89-4782d1885173",
+            "references": null,
+            "title": "BM000099876",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          },
+          {
+            "url": "https://data.nhm.ac.uk/media/e3efa99f-aea0-4f42-a016-e9fb43fd1499",
+            "references": null,
+            "title": "BM000099876_back",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.494917,
+          -25.974512
+        ]
+      },
+      "properties": {
+        "gbifID": "3925159562",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-06-28T09:07:08",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/210441904/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/210441904",
+            "title": null,
+            "creator": "Andrea Talone Rìo",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Andrea Talone Rìo"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.423794,
+          -24.237792
+        ]
+      },
+      "properties": {
+        "gbifID": "6147531261",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "8.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-01-03T16:21:23",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605524373/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605524373",
+            "title": null,
+            "creator": "Ericson Cernawsky Igual",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ericson Cernawsky Igual"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605524385/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605524385",
+            "title": null,
+            "creator": "Ericson Cernawsky Igual",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ericson Cernawsky Igual"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.412672,
+          -24.265396
+        ]
+      },
+      "properties": {
+        "gbifID": "5166803364",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "200.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-11-05T18:02",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/242504666/original.jpg",
+            "references": "https://www.inaturalist.org/photos/242504666",
+            "title": null,
+            "creator": "Ronaldo Garcia",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronaldo Garcia"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.851967,
+          -23.131101
+        ]
+      },
+      "properties": {
+        "gbifID": "4507911109",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "40038.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-12-28T18:59:43",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/343205754/original.jpg",
+            "references": "https://www.inaturalist.org/photos/343205754",
+            "title": null,
+            "creator": "Mariana Amado Costa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mariana Amado Costa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/343205809/original.jpg",
+            "references": "https://www.inaturalist.org/photos/343205809",
+            "title": null,
+            "creator": "Mariana Amado Costa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mariana Amado Costa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/343205911/original.jpg",
+            "references": "https://www.inaturalist.org/photos/343205911",
+            "title": null,
+            "creator": "Mariana Amado Costa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Mariana Amado Costa"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.020439,
+          -29.088287
+        ]
+      },
+      "properties": {
+        "gbifID": "4096795399",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "418.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-05-29T17:26:15",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/132461334/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/132461334",
+            "title": null,
+            "creator": "carolinasschmith",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "carolinasschmith"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.320707,
+          -25.325964
+        ]
+      },
+      "properties": {
+        "gbifID": "4949928022",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "72.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-09-22T17:46",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/434126485/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/434126485",
+            "title": null,
+            "creator": "Helena Ody Neves",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Helena Ody Neves"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.402778,
+          -24.523333
+        ]
+      },
+      "properties": {
+        "gbifID": "6131378761",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-01-05T16:53:52",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/606629850/original.jpg",
+            "references": "https://www.inaturalist.org/photos/606629850",
+            "title": null,
+            "creator": "Lucas Mantelo Cruz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Lucas Mantelo Cruz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.08445,
+          -22.540318
+        ]
+      },
+      "properties": {
+        "gbifID": "4102584454",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "15.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-01-14T14:13",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/252110062/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/252110062",
+            "title": null,
+            "creator": "Victor Hugo Rebecchi Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Victor Hugo Rebecchi Siqueira"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/252110053/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/252110053",
+            "title": null,
+            "creator": "Victor Hugo Rebecchi Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Victor Hugo Rebecchi Siqueira"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/252110072/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/252110072",
+            "title": null,
+            "creator": "Victor Hugo Rebecchi Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Victor Hugo Rebecchi Siqueira"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/252110098/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/252110098",
+            "title": null,
+            "creator": "Victor Hugo Rebecchi Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Victor Hugo Rebecchi Siqueira"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.083333,
+          -7.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1252645043",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1970-02-28T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001058931",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          },
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/c692ae3e085a79c0589cd339ae2417a2.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001058931",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.355206,
+          -11.524631
+        ]
+      },
+      "properties": {
+        "gbifID": "2250686293",
+        "species": "Solanum vaillantii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum vaillantii Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_SAMPLE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "The International Barcode of Life Consortium",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/367615cdfd9f406942f93e60640f6c39.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001058931",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

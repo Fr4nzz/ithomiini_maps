@@ -1,0 +1,5457 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum adhaerens",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum adhaerens",
+      "slug": "species_solanum_adhaerens",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis polymnia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_adhaerens.geojson",
+      "gbif_resolution": {
+        "query": "Solanum adhaerens",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2929035,
+        "accepted_usage_key": 2929028,
+        "scientific_name": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "canonical_name": "Solanum adhaerens",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:59:21+00:00"
+      },
+      "gbif_taxon_key": 2929035,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum adhaerens",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2929035,
+      "accepted_usage_key": 2929028,
+      "scientific_name": "Solanum adhaerens Willd. ex Roem. & Schult.",
+      "canonical_name": "Solanum adhaerens",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:59:21+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 140
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:22+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24487,
+          10.8924
+        ]
+      },
+      "properties": {
+        "gbifID": "1846719295",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2014-10-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.85,
+          10.183333
+        ]
+      },
+      "properties": {
+        "gbifID": "1089171686",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_COORDINATE_MISMATCH",
+          "CONTINENT_COUNTRY_MISMATCH",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.6125,
+          17.361389
+        ]
+      },
+      "properties": {
+        "gbifID": "2629768451",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-05",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.0,
+          17.75
+        ]
+      },
+      "properties": {
+        "gbifID": "2629655757",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-03-03",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.783889,
+          17.795556
+        ]
+      },
+      "properties": {
+        "gbifID": "2629753586",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-10-19",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.964444,
+          16.899444
+        ]
+      },
+      "properties": {
+        "gbifID": "2629490772",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-02-04",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.920278,
+          16.135
+        ]
+      },
+      "properties": {
+        "gbifID": "2629580666",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-04-23",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.943337,
+          18.333064
+        ]
+      },
+      "properties": {
+        "gbifID": "1895405995",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "10.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-05-29",
+        "country": null,
+        "datasetName": "Catálogo electrónico de especímenes depositados en el Herbario de la Universidad de Texas en Austin, Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.0,
+          10.43333
+        ]
+      },
+      "properties": {
+        "gbifID": "2515705221",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-04-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1740840/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.73333,
+          11.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517319722",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1949-08-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1740843/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.9,
+          7.61667
+        ]
+      },
+      "properties": {
+        "gbifID": "2515455735",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-07-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1741322/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.00556,
+          9.675
+        ]
+      },
+      "properties": {
+        "gbifID": "2515527459",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-06-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1740839/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.85,
+          10.1833
+        ]
+      },
+      "properties": {
+        "gbifID": "1936651345",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Real Jardín Botánico (CSIC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.816667,
+          9.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "4905648645",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-02-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.060528,
+          10.312694
+        ]
+      },
+      "properties": {
+        "gbifID": "4905625254",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-11-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.357778,
+          17.144444
+        ]
+      },
+      "properties": {
+        "gbifID": "6158968799",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-09-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of Texas at Austin, Biodiversity Collections",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.105,
+          17.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "1893569139",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-20",
+        "country": null,
+        "datasetName": "Inventario de la biodiversidad de vertebrados terrestres de los Chimalapas, Oaxaca",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.141667,
+          16.758333
+        ]
+      },
+      "properties": {
+        "gbifID": "3306420469",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-10-02",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.55,
+          10.383
+        ]
+      },
+      "properties": {
+        "gbifID": "3308301672",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-04-29",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.267,
+          12.917
+        ]
+      },
+      "properties": {
+        "gbifID": "3308326410",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-12",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.0325,
+          16.68722
+        ]
+      },
+      "properties": {
+        "gbifID": "3308105280",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-02-12",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.633,
+          13.6
+        ]
+      },
+      "properties": {
+        "gbifID": "3308367026",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-04-27",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.533,
+          12.4
+        ]
+      },
+      "properties": {
+        "gbifID": "3307790747",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-11-29",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.367,
+          17.883
+        ]
+      },
+      "properties": {
+        "gbifID": "3308045787",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-04-27",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.783,
+          13.767
+        ]
+      },
+      "properties": {
+        "gbifID": "3307812025",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-12-12",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.90322,
+          16.80697
+        ]
+      },
+      "properties": {
+        "gbifID": "3308097304",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-04-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.02621,
+          16.76403
+        ]
+      },
+      "properties": {
+        "gbifID": "3307741269",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "1398.02",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-02-13",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.383,
+          12.3
+        ]
+      },
+      "properties": {
+        "gbifID": "3307857191",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-09-23",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.92583,
+          17.52528
+        ]
+      },
+      "properties": {
+        "gbifID": "3308616152",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-02-05",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.28361,
+          17.00583
+        ]
+      },
+      "properties": {
+        "gbifID": "3308058061",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-05-24",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.96444,
+          16.89806
+        ]
+      },
+      "properties": {
+        "gbifID": "3308724665",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-02-04",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.583,
+          13.567
+        ]
+      },
+      "properties": {
+        "gbifID": "3308752926",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-03-02",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.633,
+          13.5
+        ]
+      },
+      "properties": {
+        "gbifID": "3308365689",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-19",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.617,
+          13.5
+        ]
+      },
+      "properties": {
+        "gbifID": "3307779612",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-19",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.55472,
+          16.96139
+        ]
+      },
+      "properties": {
+        "gbifID": "3308661909",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-09-22",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.967,
+          11.717
+        ]
+      },
+      "properties": {
+        "gbifID": "3307805641",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-12-29",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.5,
+          13.667
+        ]
+      },
+      "properties": {
+        "gbifID": "3307797470",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-03-18",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.02325,
+          17.09711
+        ]
+      },
+      "properties": {
+        "gbifID": "3308690097",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-22",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.233,
+          16.367
+        ]
+      },
+      "properties": {
+        "gbifID": "3307825574",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-11-03",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.35778,
+          17.14444
+        ]
+      },
+      "properties": {
+        "gbifID": "3308611953",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-09-22",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.817,
+          9.617
+        ]
+      },
+      "properties": {
+        "gbifID": "3308238583",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-02-10",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.90972,
+          16.80583
+        ]
+      },
+      "properties": {
+        "gbifID": "3308658036",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-03-31",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.883,
+          12.117
+        ]
+      },
+      "properties": {
+        "gbifID": "3308478877",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-08-05",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.217,
+          13.483
+        ]
+      },
+      "properties": {
+        "gbifID": "3308268630",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-04-26",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.55,
+          12.633
+        ]
+      },
+      "properties": {
+        "gbifID": "3307736064",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-01-08",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.283,
+          12.15
+        ]
+      },
+      "properties": {
+        "gbifID": "3308415330",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-02-12",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.083,
+          8.633
+        ]
+      },
+      "properties": {
+        "gbifID": "3307727892",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-01-29",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -86.883,
+          13.1
+        ]
+      },
+      "properties": {
+        "gbifID": "3307808796",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-09-28",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.86,
+          16.76167
+        ]
+      },
+      "properties": {
+        "gbifID": "3308720878",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-20",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.983,
+          13.817
+        ]
+      },
+      "properties": {
+        "gbifID": "3308047488",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-04",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.983,
+          17.55
+        ]
+      },
+      "properties": {
+        "gbifID": "3307829288",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-02-19",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.983,
+          13.75
+        ]
+      },
+      "properties": {
+        "gbifID": "3308446987",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-03-19",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.467,
+          13.967
+        ]
+      },
+      "properties": {
+        "gbifID": "3307734252",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-22",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.95,
+          11.7
+        ]
+      },
+      "properties": {
+        "gbifID": "3307748284",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-08-28",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.167,
+          11.967
+        ]
+      },
+      "properties": {
+        "gbifID": "3307852274",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-01-31",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.31528,
+          20.00833
+        ]
+      },
+      "properties": {
+        "gbifID": "3308096917",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-09-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.27139,
+          16.93028
+        ]
+      },
+      "properties": {
+        "gbifID": "3308689221",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-05-06",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.133,
+          9.45
+        ]
+      },
+      "properties": {
+        "gbifID": "3308239606",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-02-18",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.133,
+          16.75
+        ]
+      },
+      "properties": {
+        "gbifID": "3307875488",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-10-02",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.96611,
+          16.89333
+        ]
+      },
+      "properties": {
+        "gbifID": "3308657831",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-19",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.68333,
+          17.99861
+        ]
+      },
+      "properties": {
+        "gbifID": "3308413152",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.9258,
+          17.52528
+        ]
+      },
+      "properties": {
+        "gbifID": "3308611937",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-02-05",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.4,
+          12.067
+        ]
+      },
+      "properties": {
+        "gbifID": "3308408364",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-05",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.2,
+          14.317
+        ]
+      },
+      "properties": {
+        "gbifID": "3308316430",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-09-29",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.0,
+          12.833
+        ]
+      },
+      "properties": {
+        "gbifID": "3307911650",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-14",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.783,
+          11.133
+        ]
+      },
+      "properties": {
+        "gbifID": "3307862461",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-12-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.011667,
+          17.7325
+        ]
+      },
+      "properties": {
+        "gbifID": "1893306909",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-03-03",
+        "country": null,
+        "datasetName": "Formación del banco de datos del herbario (UCAM)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.366667,
+          17.644167
+        ]
+      },
+      "properties": {
+        "gbifID": "1894550547",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-05",
+        "country": null,
+        "datasetName": "Actualización de las bases de datos de las colecciones de plantas vasculares y macromicetos del herbario de la UJAT",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.829167,
+          17.933333
+        ]
+      },
+      "properties": {
+        "gbifID": "1894550543",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-12",
+        "country": null,
+        "datasetName": "Actualización de las bases de datos de las colecciones de plantas vasculares y macromicetos del herbario de la UJAT",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.298889,
+          18.249167
+        ]
+      },
+      "properties": {
+        "gbifID": "1894550539",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-05-02",
+        "country": null,
+        "datasetName": "Actualización de las bases de datos de las colecciones de plantas vasculares y macromicetos del herbario de la UJAT",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.65556,
+          9.702778
+        ]
+      },
+      "properties": {
+        "gbifID": "1144783478",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "1000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-10-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "SwissNatColl",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.502694,
+          18.431389
+        ]
+      },
+      "properties": {
+        "gbifID": "1894419355",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-05",
+        "country": null,
+        "datasetName": "Flora acuática vascular y de zonas inundables del área de protección de flora y fauna Laguna de Términos, Campeche, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_MISMATCH",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.583056,
+          18.431944
+        ]
+      },
+      "properties": {
+        "gbifID": "1894419356",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-05",
+        "country": null,
+        "datasetName": "Flora acuática vascular y de zonas inundables del área de protección de flora y fauna Laguna de Términos, Campeche, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_MISMATCH",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.211667,
+          18.448333
+        ]
+      },
+      "properties": {
+        "gbifID": "1893618427",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-11-25",
+        "country": null,
+        "datasetName": "Etapa final de la captura y catalogación del Herbario del Instituto de Ecología, A.C., Centro Regional del Bajío",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.852778,
+          18.258333
+        ]
+      },
+      "properties": {
+        "gbifID": "1893618788",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-10-16",
+        "country": null,
+        "datasetName": "Etapa final de la captura y catalogación del Herbario del Instituto de Ecología, A.C., Centro Regional del Bajío",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.613333,
+          17.256389
+        ]
+      },
+      "properties": {
+        "gbifID": "1893618415",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-05-29",
+        "country": null,
+        "datasetName": "Etapa final de la captura y catalogación del Herbario del Instituto de Ecología, A.C., Centro Regional del Bajío",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.376667,
+          18.013333
+        ]
+      },
+      "properties": {
+        "gbifID": "1893618780",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-08-12",
+        "country": null,
+        "datasetName": "Etapa final de la captura y catalogación del Herbario del Instituto de Ecología, A.C., Centro Regional del Bajío",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.641667,
+          16.475
+        ]
+      },
+      "properties": {
+        "gbifID": "1894680245",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-12-02",
+        "country": null,
+        "datasetName": "Base de datos del Herbario CIQR de El Colegio de la Frontera Sur, unidad Chetumal",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.108333,
+          15.125
+        ]
+      },
+      "properties": {
+        "gbifID": "1894680242",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-10",
+        "country": null,
+        "datasetName": "Base de datos del Herbario CIQR de El Colegio de la Frontera Sur, unidad Chetumal",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.366667,
+          18.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1421380858",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-02-08",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.66,
+          18.04
+        ]
+      },
+      "properties": {
+        "gbifID": "1421403387",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-09",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.255556,
+          14.901389
+        ]
+      },
+      "properties": {
+        "gbifID": "1421369760",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "110.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-30",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.798611,
+          17.425
+        ]
+      },
+      "properties": {
+        "gbifID": "1421377563",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-27",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.578333,
+          15.7425
+        ]
+      },
+      "properties": {
+        "gbifID": "1421377852",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-10",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.363889,
+          18.630556
+        ]
+      },
+      "properties": {
+        "gbifID": "1421377960",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-17",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.168056,
+          14.938889
+        ]
+      },
+      "properties": {
+        "gbifID": "1421392903",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "110.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-03-29",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.778056,
+          17.981944
+        ]
+      },
+      "properties": {
+        "gbifID": "1421392520",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-01-30",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.008333,
+          17.733333
+        ]
+      },
+      "properties": {
+        "gbifID": "1421404411",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-08-16",
+        "country": null,
+        "datasetName": "Depuración de la colección y base de datos del Herbario CICY. Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.315278,
+          20.008333
+        ]
+      },
+      "properties": {
+        "gbifID": "1897367436",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-09-17",
+        "country": null,
+        "datasetName": "Actualización y depuración de la base de datos del Herbario del Instituto de Ecología, AC, Centro Regional del Bajío. Fase 2",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.964577,
+          16.900235
+        ]
+      },
+      "properties": {
+        "gbifID": "5101673025",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-02-04",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.000156,
+          17.750747
+        ]
+      },
+      "properties": {
+        "gbifID": "5101741295",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-03-03",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.93333,
+          9.78333
+        ]
+      },
+      "properties": {
+        "gbifID": "2422389741",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-08-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California Riverside",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.06667,
+          13.8
+        ]
+      },
+      "properties": {
+        "gbifID": "3913396268",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-01-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.93333,
+          13.81667
+        ]
+      },
+      "properties": {
+        "gbifID": "3913391800",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.98333,
+          13.81667
+        ]
+      },
+      "properties": {
+        "gbifID": "3913396500",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-05-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.58333,
+          13.56667
+        ]
+      },
+      "properties": {
+        "gbifID": "3913392203",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-03-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.48119,
+          13.794
+        ]
+      },
+      "properties": {
+        "gbifID": "3913400968",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-08-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.51,
+          8.7
+        ]
+      },
+      "properties": {
+        "gbifID": "46000163",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-10-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.57,
+          9.8
+        ]
+      },
+      "properties": {
+        "gbifID": "46000409",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-04-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.04,
+          9.39
+        ]
+      },
+      "properties": {
+        "gbifID": "46000422",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-01-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.102665,
+          8.507188
+        ]
+      },
+      "properties": {
+        "gbifID": "1056827305",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "650.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1850-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/09863b55-6aaa-4d9e-8dc4-f8e6695d49f4",
+            "references": null,
+            "title": "BM000578943",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.684767,
+          17.217668
+        ]
+      },
+      "properties": {
+        "gbifID": "1057074659",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-06-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/0d08a9eb-5d90-479b-b3a0-5dd4f8d23342",
+            "references": null,
+            "title": "BM000516372",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -86.619143,
+          14.819222
+        ]
+      },
+      "properties": {
+        "gbifID": "1056145631",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "662.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/baea2a4f-f01b-4af3-af5b-d2ddb539ca7b",
+            "references": null,
+            "title": "BM000578942",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.034783,
+          12.839906
+        ]
+      },
+      "properties": {
+        "gbifID": "1056153743",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "508.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1895-11-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/74969491-ff99-4a3d-b4fc-d23a70d6bb10",
+            "references": null,
+            "title": "BM000578947",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.100781,
+          12.123119
+        ]
+      },
+      "properties": {
+        "gbifID": "1055726927",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/81a30ae3-40f5-494b-9c40-8fad9b114b82",
+            "references": null,
+            "title": "BM000578937",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.0,
+          8.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1055666395",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-08-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/1bae0a6c-b426-4b32-8bad-980ea212c21a",
+            "references": null,
+            "title": "BM000578950",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.879883,
+          17.020131
+        ]
+      },
+      "properties": {
+        "gbifID": "1057480760",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-11-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/535afdfa-3007-4df1-b2e5-b2ccdc472f5e",
+            "references": null,
+            "title": "BM000578963",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.655556,
+          9.702778
+        ]
+      },
+      "properties": {
+        "gbifID": "1253737910",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-10-30",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.576167,
+          9.808889
+        ]
+      },
+      "properties": {
+        "gbifID": "1253885957",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-02",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.026611,
+          9.671694
+        ]
+      },
+      "properties": {
+        "gbifID": "1253887085",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-05-26",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.125556,
+          9.833611
+        ]
+      },
+      "properties": {
+        "gbifID": "1253599747",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-09-01",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.574472,
+          9.809222
+        ]
+      },
+      "properties": {
+        "gbifID": "1253891902",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-12-07",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.008333,
+          10.433333
+        ]
+      },
+      "properties": {
+        "gbifID": "1253822195",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-09-08",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.366667,
+          10.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1253642775",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-12-08",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.431517,
+          9.235489
+        ]
+      },
+      "properties": {
+        "gbifID": "1273759863",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1981-03-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Jardín Botánico de Cartagena \"Guillermo Piñeres\"",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.169461,
+          9.879744
+        ]
+      },
+      "properties": {
+        "gbifID": "1273759869",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1980-08-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Jardín Botánico de Cartagena \"Guillermo Piñeres\"",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.962425,
+          9.721356
+        ]
+      },
+      "properties": {
+        "gbifID": "1273759807",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1987-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Jardín Botánico de Cartagena \"Guillermo Piñeres\"",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.372364,
+          10.415516
+        ]
+      },
+      "properties": {
+        "gbifID": "2250680362",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_SAMPLE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "The International Barcode of Life Consortium",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.983333,
+          10.983333
+        ]
+      },
+      "properties": {
+        "gbifID": "1844935512",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-09-07",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.260335,
+          9.371826
+        ]
+      },
+      "properties": {
+        "gbifID": "1890898591",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "700.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-08-25",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.833336,
+          9.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "1844903906",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-05-15/1965-05-20",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.241296,
+          6.474623
+        ]
+      },
+      "properties": {
+        "gbifID": "1844899451",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "18337.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1936-07-31",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.428884,
+          1.307939
+        ]
+      },
+      "properties": {
+        "gbifID": "1844943958",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "24100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.091791,
+          8.343274
+        ]
+      },
+      "properties": {
+        "gbifID": "1890904585",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "34130.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-07-10",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.549911,
+          10.970604
+        ]
+      },
+      "properties": {
+        "gbifID": "1844915071",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "31049.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-11-26",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.6968,
+          8.1501
+        ]
+      },
+      "properties": {
+        "gbifID": "1844936330",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "1200.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-01-15",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.241993,
+          2.554874
+        ]
+      },
+      "properties": {
+        "gbifID": "1891007327",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "5046.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1967-10-03/1967-10-04",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.09608,
+          6.276657
+        ]
+      },
+      "properties": {
+        "gbifID": "1844899446",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "847.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-03-14",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.167296,
+          7.824586
+        ]
+      },
+      "properties": {
+        "gbifID": "1890969966",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "21098.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-06-14",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.72285,
+          8.09882
+        ]
+      },
+      "properties": {
+        "gbifID": "1844901868",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "850.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1959-09-19",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.78333,
+          13.88333
+        ]
+      },
+      "properties": {
+        "gbifID": "1585320658",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-03-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.00069,
+          13.82225
+        ]
+      },
+      "properties": {
+        "gbifID": "2563052393",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "3.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-11-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.51667,
+          14.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1585320597",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-10-25T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.95097,
+          13.65433
+        ]
+      },
+      "properties": {
+        "gbifID": "1585320871",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-02-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.51667,
+          14.01667
+        ]
+      },
+      "properties": {
+        "gbifID": "1585320656",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-10-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.86667,
+          13.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1585320804",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-12-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.06729,
+          13.85019
+        ]
+      },
+      "properties": {
+        "gbifID": "2563052389",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-12-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.71667,
+          13.36667
+        ]
+      },
+      "properties": {
+        "gbifID": "1585320562",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.58333,
+          13.61667
+        ]
+      },
+      "properties": {
+        "gbifID": "1585320750",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-09-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+          "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.67311,
+          13.99638
+        ]
+      },
+      "properties": {
+        "gbifID": "2575868887",
+        "species": "Solanum volubile",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum adhaerens Willd. ex Roem. & Schult.",
+        "coordinateUncertaintyInMeters": "3.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-03-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://api.jacq.org/v1/images/europeana/1565043?withredirect=1",
+            "references": "https://api.jacq.org/v1/images/show/1565043?withredirect=1",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    }
+  ]
+}

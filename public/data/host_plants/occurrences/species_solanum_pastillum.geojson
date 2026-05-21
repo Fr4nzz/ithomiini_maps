@@ -1,0 +1,1653 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum pastillum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum pastillum",
+      "slug": "species_solanum_pastillum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Pteronymia artena",
+        "Pteronymia simplex"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_solanum_pastillum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum pastillum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2931693,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum pastillum S.Knapp",
+        "canonical_name": "Solanum pastillum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:29+00:00"
+      },
+      "gbif_taxon_key": 2931693,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum pastillum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2931693,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum pastillum S.Knapp",
+      "canonical_name": "Solanum pastillum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:29+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 39
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.775,
+          10.320833
+        ]
+      },
+      "properties": {
+        "gbifID": "4031411093",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-07-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.0,
+          13.76666
+        ]
+      },
+      "properties": {
+        "gbifID": "1259148209",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-05-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.46,
+          10.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1262247348",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-06-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.244444,
+          8.749722
+        ]
+      },
+      "properties": {
+        "gbifID": "1259683406",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-06-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.233333,
+          8.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "1259683539",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-06-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.466667,
+          10.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249635",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8,
+          10.33
+        ]
+      },
+      "properties": {
+        "gbifID": "1258699175",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-08-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.218889,
+          12.958333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031652002",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-09-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.21666,
+          8.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1259688269",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-08-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8,
+          10.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259412578",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.58889,
+          10.215278
+        ]
+      },
+      "properties": {
+        "gbifID": "1257834108",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-07-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.815278,
+          10.308333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262245580",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.12361,
+          8.52277
+        ]
+      },
+      "properties": {
+        "gbifID": "1259418044",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-09-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.991667,
+          13.7375
+        ]
+      },
+      "properties": {
+        "gbifID": "1262244805",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1262240975",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-06-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.4,
+          9.82
+        ]
+      },
+      "properties": {
+        "gbifID": "1259411831",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-07-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.81,
+          9.73
+        ]
+      },
+      "properties": {
+        "gbifID": "1262247302",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-11-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.81666,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250764",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-12-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.74,
+          10.24
+        ]
+      },
+      "properties": {
+        "gbifID": "1258715460",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-06-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.820556,
+          10.344631
+        ]
+      },
+      "properties": {
+        "gbifID": "4032128296",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-08-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.839722,
+          10.3375
+        ]
+      },
+      "properties": {
+        "gbifID": "1262252482",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-09-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.38278,
+          10.288056
+        ]
+      },
+      "properties": {
+        "gbifID": "4031835700",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-07-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.6,
+          10.216667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257837640",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-08-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.79861,
+          10.3125
+        ]
+      },
+      "properties": {
+        "gbifID": "1262252407",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-07-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.016667,
+          13.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "1258381139",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-04-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.9519,
+          10.0114
+        ]
+      },
+      "properties": {
+        "gbifID": "1302647000",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1982-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.39251,
+          10.184258
+        ]
+      },
+      "properties": {
+        "gbifID": "1928234754",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "1822.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1938-07-11",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.410341,
+          10.182452
+        ]
+      },
+      "properties": {
+        "gbifID": "1928283080",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "1062.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1938-07-01",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/114/782/v-287-00753645-02.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          },
+          {
+            "url": "http://sweetgum.nybg.org/images3/113/937/v-287-00753645-01.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.98333,
+          13.75
+        ]
+      },
+      "properties": {
+        "gbifID": "607614477",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441376268268ow3Srro86yzHg1ri",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.5,
+          10.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1701754729",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-05-13",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.967,
+          11.833
+        ]
+      },
+      "properties": {
+        "gbifID": "3307807843",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-02-26",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.5,
+          10.45
+        ]
+      },
+      "properties": {
+        "gbifID": "1261911585",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-12-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.86,
+          9.01
+        ]
+      },
+      "properties": {
+        "gbifID": "46006161",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-08-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.46,
+          10.91
+        ]
+      },
+      "properties": {
+        "gbifID": "46007408",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museo Nacional de Costa Rica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.382778,
+          10.288056
+        ]
+      },
+      "properties": {
+        "gbifID": "1253742605",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-07-20",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.619444,
+          10.441667
+        ]
+      },
+      "properties": {
+        "gbifID": "1253870919",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-05-12",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.341667,
+          9.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "1253635443",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-08-14",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.800005,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1253688195",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-06-25",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.816667,
+          9.733333
+        ]
+      },
+      "properties": {
+        "gbifID": "1253633522",
+        "species": "Solanum pastillum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pastillum S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-11-15",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "http://sweetgum.nybg.org/images3/1246/078/00753619.jpg",
+          "references": null,
+          "title": null,
+          "creator": "The New York Botanical Garden",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The New York Botanical Garden"
+        }
+      }
+    }
+  ]
+}

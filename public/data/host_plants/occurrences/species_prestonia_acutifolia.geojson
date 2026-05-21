@@ -1,0 +1,4685 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Prestonia acutifolia",
+      "rank": "species",
+      "family": "Apocynaceae",
+      "genus": "Prestonia",
+      "species": "Prestonia acutifolia",
+      "slug": "species_prestonia_acutifolia",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Aeria olena",
+        "Tithorea harmonia"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_prestonia_acutifolia.geojson",
+      "gbif_resolution": {
+        "query": "Prestonia acutifolia",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 9227341,
+        "accepted_usage_key": 5414415,
+        "scientific_name": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "canonical_name": "Prestonia acutifolia",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Apocynaceae",
+        "genus": "Prestonia",
+        "resolved_at": "2026-05-21T03:59:10+00:00"
+      },
+      "gbif_taxon_key": 9227341,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Prestonia acutifolia",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 9227341,
+      "accepted_usage_key": 5414415,
+      "scientific_name": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+      "canonical_name": "Prestonia acutifolia",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Apocynaceae",
+      "genus": "Prestonia",
+      "resolved_at": "2026-05-21T03:59:10+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 117
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:22+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.135556,
+          -18.011944
+        ]
+      },
+      "properties": {
+        "gbifID": "1090720493",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-04-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Goiás",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.861884,
+          8.533735
+        ]
+      },
+      "properties": {
+        "gbifID": "1988693616",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1896-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of Michigan Herbarium",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.447222,
+          -21.269444
+        ]
+      },
+      "properties": {
+        "gbifID": "4032122310",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-02-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101452000/8D972818-41A3-45C4-90F1-72CDC5B5FABC.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101452896",
+            "title": "Nee - 54002 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.31666,
+          -4.91666
+        ]
+      },
+      "properties": {
+        "gbifID": "1258269116",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/5ADCA503-22A7-41BF-AD2B-72063A209620.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456670",
+            "title": "Jaramillo - 1029 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.75,
+          -7.18333
+        ]
+      },
+      "properties": {
+        "gbifID": "4433146373",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1962-03-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/5A39A0F8-49FC-4D8D-AEBE-88CE2FE1F6CE.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456574",
+            "title": "Woytkowski - 7117 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.903711,
+          4.907644
+        ]
+      },
+      "properties": {
+        "gbifID": "1260166031",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/4D51D697-1022-49FB-BDAB-BEC2295E3808.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456568",
+            "title": "Silverstone-Sopkin - 6316 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.55,
+          -24.85
+        ]
+      },
+      "properties": {
+        "gbifID": "1261122094",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101452000/125CDC66-C48D-4853-9243-3140486708C3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101452958",
+            "title": "Brunner - 1854 - Paraguay",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.61666,
+          -16.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261124115",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-03-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/A55C3FCA-DE75-4B75-9446-7E7B54B9364A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456552",
+            "title": "Solomon - 11721 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.15,
+          -14.7
+        ]
+      },
+      "properties": {
+        "gbifID": "4433148367",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-06-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/44B1BED0-19A6-49AA-9804-94795B9E6845.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456555",
+            "title": "Guillén Villarroel - 1767 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.26666,
+          -25.71666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031378768",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-12-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages6/detailimages/TropicosImagesVol6/102419000/C2F14C54-9DD6-4516-B4BA-DA665DC98C6C.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=102419893",
+            "title": "Zardini - 16794 - Paraguay",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.28333,
+          -3.45
+        ]
+      },
+      "properties": {
+        "gbifID": "1261118557",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-07-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/B9465E5D-F25A-4E05-866B-14736791743C.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456570",
+            "title": "Gentry - 16646 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.61666,
+          -25.63333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031378762",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages6/detailimages/TropicosImagesVol6/102419000/B4282B7A-25FD-42F3-8FAA-FCE556B44A71.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=102419896",
+            "title": "Zardini - 34676 - Paraguay",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.96666,
+          0.16666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031382902",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-02-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/62E48D0A-4A92-486B-AC5B-D8492ABB0999.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456592",
+            "title": "Holm-Nielsen - 21159 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.45,
+          -12.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1261124057",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-06-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/145283A5-C9BD-4AA9-9D60-EF7D5B4B7B5D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456554",
+            "title": "Solomon - 16852 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.08333,
+          -22.66666
+        ]
+      },
+      "properties": {
+        "gbifID": "1261125150",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-03-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/F637B0A7-8CA2-4387-824D-A9525968FE2E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456550",
+            "title": "Hahn - 1234 - Paraguay",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.04388,
+          -14.77138
+        ]
+      },
+      "properties": {
+        "gbifID": "4433139364",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-05-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/FA5F2B34-A9B0-4264-A58A-977F301714FF.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456553",
+            "title": "Guillén Villarroel - 1598 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.55,
+          -25.36666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031379784",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages6/detailimages/TropicosImagesVol6/102419000/B36A1E54-7601-47F2-BD4E-A4890AFEFF9A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=102419892",
+            "title": "Zardini - 18730 - Paraguay",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.75,
+          -2.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031386842",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101456000/7049793F-4434-4DFE-B5DD-7F798572CABC.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101456591",
+            "title": "Øllgaard - 35037 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.6,
+          7.4
+        ]
+      },
+      "properties": {
+        "gbifID": "2515077800",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-05-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/L.3738855/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.46667,
+          3.06667
+        ]
+      },
+      "properties": {
+        "gbifID": "2517831203",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-02-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1619783/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.77889,
+          -11.86333
+        ]
+      },
+      "properties": {
+        "gbifID": "2515418670",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1096446/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.61667,
+          -25.63333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517836223",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1619784/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.40417,
+          4.79861
+        ]
+      },
+      "properties": {
+        "gbifID": "2515683296",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.67306,
+          3.58389
+        ]
+      },
+      "properties": {
+        "gbifID": "2517298472",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.31667,
+          -4.91667
+        ]
+      },
+      "properties": {
+        "gbifID": "2517812253",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1619795/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.03333,
+          -9.65
+        ]
+      },
+      "properties": {
+        "gbifID": "2516130875",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-03-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1619786/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.23333,
+          4.83333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517321910",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1920-09-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1095768/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.26667,
+          -11.93333
+        ]
+      },
+      "properties": {
+        "gbifID": "2516106029",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1619787/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.54,
+          5.02
+        ]
+      },
+      "properties": {
+        "gbifID": "2515294564",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-06-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1095763/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.47061,
+          -1.43728
+        ]
+      },
+      "properties": {
+        "gbifID": "2516899262",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1095765/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.7167,
+          6.79167
+        ]
+      },
+      "properties": {
+        "gbifID": "1455947173",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-10-13",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13372553&h=2000",
+            "references": null,
+            "title": "00474914.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.54,
+          8.12
+        ]
+      },
+      "properties": {
+        "gbifID": "1456075002",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-11-04/1929-11-25",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13387655&h=2000",
+            "references": null,
+            "title": "00964304.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.92,
+          -14.15
+        ]
+      },
+      "properties": {
+        "gbifID": "2235970630",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1901-12-11",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13392056&h=2000",
+            "references": null,
+            "title": "03251868.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.8833,
+          -15.4833
+        ]
+      },
+      "properties": {
+        "gbifID": "2236041059",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1886-05",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13370385&h=2000",
+            "references": null,
+            "title": "03251871.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.55,
+          6.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1456251752",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13369440&h=2000",
+            "references": null,
+            "title": "00601595.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.4833,
+          5.175
+        ]
+      },
+      "properties": {
+        "gbifID": "1456445994",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-05-08",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.48,
+          -2.87
+        ]
+      },
+      "properties": {
+        "gbifID": "2236166307",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-06-20",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13388760&h=2000",
+            "references": null,
+            "title": "03251920.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.6828,
+          4.67583
+        ]
+      },
+      "properties": {
+        "gbifID": "1455964679",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-09-30",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13382491&h=2000",
+            "references": null,
+            "title": "00602332.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.43,
+          -0.92
+        ]
+      },
+      "properties": {
+        "gbifID": "2236044330",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-07-20",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13381974&h=2000",
+            "references": null,
+            "title": "03251918.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.78,
+          3.38
+        ]
+      },
+      "properties": {
+        "gbifID": "1456222826",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1956-04-19",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13379187&h=2000",
+            "references": null,
+            "title": "00964311.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.31,
+          2.63
+        ]
+      },
+      "properties": {
+        "gbifID": "1456021613",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1942-06-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13385026&h=2000",
+            "references": null,
+            "title": "00964312.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.769444,
+          -10.979444
+        ]
+      },
+      "properties": {
+        "gbifID": "2997922200",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-03-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.0,
+          -6.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "2997948172",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-05-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.556667,
+          -18.358889
+        ]
+      },
+      "properties": {
+        "gbifID": "2997955722",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.43,
+          -0.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997930203",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-07-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.749444,
+          -17.411389
+        ]
+      },
+      "properties": {
+        "gbifID": "2997973708",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1962-11-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.433333,
+          -0.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997944173",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-07-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.941667,
+          -1.206667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997926196",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.83,
+          1.96
+        ]
+      },
+      "properties": {
+        "gbifID": "1456338365",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-26",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13385643&h=2000",
+            "references": null,
+            "title": "00751082.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.5351,
+          -14.4296
+        ]
+      },
+      "properties": {
+        "gbifID": "2235872552",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1921-12-06",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13390723&h=2000",
+            "references": null,
+            "title": "03251867.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.433333,
+          3.4
+        ]
+      },
+      "properties": {
+        "gbifID": "2997951155",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.903889,
+          -8.761944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997950158",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1950-05-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.414444,
+          -12.341944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997484293",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-07-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.555278,
+          -1.174167
+        ]
+      },
+      "properties": {
+        "gbifID": "2997492714",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.23,
+          10.8814
+        ]
+      },
+      "properties": {
+        "gbifID": "2447314403",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-09-04",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/981/04201896.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.749531,
+          -17.411382
+        ]
+      },
+      "properties": {
+        "gbifID": "1929353091",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1962-11-18",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1611/109/01131724.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.55,
+          6.33
+        ]
+      },
+      "properties": {
+        "gbifID": "2447320906",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-22",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/986/04201901.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.85,
+          -16.53
+        ]
+      },
+      "properties": {
+        "gbifID": "1929002068",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-06-23",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1611/058/01131628.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.941621,
+          -1.206781
+        ]
+      },
+      "properties": {
+        "gbifID": "1929679617",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-17",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3721/675/01251552.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.905351,
+          -8.765455
+        ]
+      },
+      "properties": {
+        "gbifID": "1930233326",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1950-05-28",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3721/679/01251557.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.72,
+          -2.57
+        ]
+      },
+      "properties": {
+        "gbifID": "2447330602",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-22",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/969/04201884.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.769326,
+          -10.979438
+        ]
+      },
+      "properties": {
+        "gbifID": "1930008223",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-03-21",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3721/674/01251551.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.67,
+          10.0
+        ]
+      },
+      "properties": {
+        "gbifID": "2447364057",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-07-16",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/983/04201898.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.55675,
+          -18.3589
+        ]
+      },
+      "properties": {
+        "gbifID": "1929986848",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "10000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1970-03-04",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1611/072/01131642.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.97,
+          -0.17
+        ]
+      },
+      "properties": {
+        "gbifID": "2447344146",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-02-15",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/968/04201883.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.7639,
+          -2.4256
+        ]
+      },
+      "properties": {
+        "gbifID": "2447364017",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-22",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/979/04201894.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.58,
+          3.88
+        ]
+      },
+      "properties": {
+        "gbifID": "2447327805",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-17",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/964/04201879.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.5,
+          6.92
+        ]
+      },
+      "properties": {
+        "gbifID": "2447318838",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-10-07",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3724/980/04201895.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.931111,
+          -1.295278
+        ]
+      },
+      "properties": {
+        "gbifID": "1135815086",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.695833,
+          -12.572222
+        ]
+      },
+      "properties": {
+        "gbifID": "1135815455",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-07-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.65,
+          -19.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "1077308141",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-04-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Pantanal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.633333,
+          -19.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1077312550",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-01-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Pantanal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.549819,
+          -3.477945
+        ]
+      },
+      "properties": {
+        "gbifID": "2248071104",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Caatinga Biome - RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://rb.jbrj.gov.br/v2/templaterb2.php?colbot=RB&codtestemunho=45761&arquivo=00045761.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.4,
+          -0.68333
+        ]
+      },
+      "properties": {
+        "gbifID": "328250506",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "5500.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-04-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museum of Evolution, Uppsala University",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.816667,
+          10.45
+        ]
+      },
+      "properties": {
+        "gbifID": "4603425676",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-11-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.816667,
+          9.066667
+        ]
+      },
+      "properties": {
+        "gbifID": "4603438862",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.533333,
+          1.95
+        ]
+      },
+      "properties": {
+        "gbifID": "4603442221",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-12-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.916667,
+          7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "4603430975",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03",
+        "country": null,
+        "datasetName": "Proyecto inventario C.V.G. Tecmin, C.A. en colaboración con Herbario Universitario PORT, Programa de Recursos Naturales Renovables, UNELLEZ, Guanare.",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.5,
+          2.25
+        ]
+      },
+      "properties": {
+        "gbifID": "4603442165",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-12-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.833333,
+          1.966667
+        ]
+      },
+      "properties": {
+        "gbifID": "4603424006",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.416667,
+          1.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "4603426303",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-12-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.416667,
+          2.25
+        ]
+      },
+      "properties": {
+        "gbifID": "4603433359",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-09-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.5,
+          2.0
+        ]
+      },
+      "properties": {
+        "gbifID": "4603440888",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "INBIO-Venezuela",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.833333,
+          3.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "2998248993",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.65,
+          -19.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "2998251001",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-01-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0,
+          -16.0
+        ]
+      },
+      "properties": {
+        "gbifID": "2998260985",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.9119,
+          7.0758
+        ]
+      },
+      "properties": {
+        "gbifID": "1701751489",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1896-05",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.14,
+          -9.1839
+        ]
+      },
+      "properties": {
+        "gbifID": "1701751549",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1932-01-03",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.435,
+          -16.7261
+        ]
+      },
+      "properties": {
+        "gbifID": "1701751562",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-10",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.8731,
+          -10.8339
+        ]
+      },
+      "properties": {
+        "gbifID": "1701751569",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-06-23",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8667,
+          3.8811
+        ]
+      },
+      "properties": {
+        "gbifID": "1701751468",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.758611,
+          17.442222
+        ]
+      },
+      "properties": {
+        "gbifID": "1896078201",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-10-09",
+        "country": null,
+        "datasetName": "Computarización del Herbario ENCB, IPN. Fase IV. Base de datos de la familia Pinaceae y de distintas familias de la clase Magnoliopsida depositadas en el Herbario de la Escuela Nacional de Ciencias Biológicas, IPN",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.515833,
+          17.705
+        ]
+      },
+      "properties": {
+        "gbifID": "1894549593",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-10-09",
+        "country": null,
+        "datasetName": "Actualización de las bases de datos de las colecciones de plantas vasculares y macromicetos del herbario de la UJAT",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.52,
+          11.03
+        ]
+      },
+      "properties": {
+        "gbifID": "1261829941",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-12-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.74,
+          10.47
+        ]
+      },
+      "properties": {
+        "gbifID": "1261559805",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-12-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.18333,
+          -0.01666
+        ]
+      },
+      "properties": {
+        "gbifID": "1261125169",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-08-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.83333,
+          -2.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1261125195",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.9,
+          9.81
+        ]
+      },
+      "properties": {
+        "gbifID": "1261562113",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-02-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.45,
+          -25.68333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259720063",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-03-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5,
+          7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "3032741971",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1947-01-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de la Salle",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "MULTIMEDIA_URI_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.966667,
+          -0.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "6115617358",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-02-15T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/ef0fc0057d3a5c432630b184754b11c4.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001488667",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.716667,
+          -2.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "6115639772",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-22T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/3ea5f4fb4bc80583c5ac25864a051b9e.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001488668",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.966667,
+          1.75
+        ]
+      },
+      "properties": {
+        "gbifID": "5004233856",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1962-08-13T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/663e40cbb0b58a22211660ed2acf9578.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K006231392",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.166667,
+          3.55
+        ]
+      },
+      "properties": {
+        "gbifID": "5004253972",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-05-23T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/888142ae23ee47ac4331f5613fc1d9d0.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K006231372",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.583333,
+          3.883334
+        ]
+      },
+      "properties": {
+        "gbifID": "5004260398",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-17T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/c0daf4ed419280a021719c3d6f519e2d.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K006231382",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.395,
+          -0.680833
+        ]
+      },
+      "properties": {
+        "gbifID": "6115634946",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-06-21T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/dfbc3870dcc2bd0226874fbd63517910.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001488666",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.0,
+          11.0
+        ]
+      },
+      "properties": {
+        "gbifID": "6115617844",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-04-07T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/71901107f94cf55cd7c74d84c90eadd7.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001488662",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.516667,
+          10.430833
+        ]
+      },
+      "properties": {
+        "gbifID": "6115620363",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-07-10T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/c56317d4359b8aa3db0c4735e62f7335.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001488663",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.808575,
+          -18.929808
+        ]
+      },
+      "properties": {
+        "gbifID": "5004291250",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-11-29T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/d9d762d6eaab906a99f6d7e10276470b.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K006231369",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          },
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/a71e0418365e44c778cf0c1e37c11696.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K006231369",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.779933,
+          -19.00798
+        ]
+      },
+      "properties": {
+        "gbifID": "5004292760",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-11-19T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/6b0a3d5684b9320aba0f98c51d259780.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K000652930",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.75,
+          -2.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "6115635102",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-22T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/8c3f596741b426e63ca69339e8c73b08.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001488669",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.133333,
+          9.577778
+        ]
+      },
+      "properties": {
+        "gbifID": "1253707672",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-11-11",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.6628,
+          3.7617
+        ]
+      },
+      "properties": {
+        "gbifID": "1061293999",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-07-01/2003-07-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Icesi",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.166667,
+          2.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "2013820641",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "29737.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-02-01",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.785652,
+          4.515703
+        ]
+      },
+      "properties": {
+        "gbifID": "1844955009",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "700.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1930-07-01",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.4616,
+          -25.192067
+        ]
+      },
+      "properties": {
+        "gbifID": "1089057989",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-01-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.86425,
+          -22.375861
+        ]
+      },
+      "properties": {
+        "gbifID": "1089043630",
+        "species": "Prestonia quinquangularis",
+        "genus": "Prestonia",
+        "family": "Apocynaceae",
+        "scientificName": "Prestonia acutifolia (Benth. ex Müll.Arg.) Schum.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-01-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/057caba639193fe16637075f1258e7a3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001488660",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

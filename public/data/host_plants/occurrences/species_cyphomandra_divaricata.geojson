@@ -1,0 +1,514 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Cyphomandra divaricata",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Cyphomandra",
+      "species": "Cyphomandra divaricata",
+      "slug": "species_cyphomandra_divaricata",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Mechanitis lysimnia",
+        "Thyridia psidii"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_cyphomandra_divaricata.geojson",
+      "gbif_resolution": {
+        "query": "Cyphomandra divaricata",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2931388,
+        "accepted_usage_key": 2931386,
+        "scientific_name": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "canonical_name": "Cyphomandra divaricata",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:57:29+00:00"
+      },
+      "gbif_taxon_key": 2931388,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Cyphomandra divaricata",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2931388,
+      "accepted_usage_key": 2931386,
+      "scientific_name": "Cyphomandra divaricata (Mart.) Sendtn.",
+      "canonical_name": "Cyphomandra divaricata",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:57:29+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 11
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.121667,
+          -22.588889
+        ]
+      },
+      "properties": {
+        "gbifID": "1089189721",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-12-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.8825,
+          14.927222
+        ]
+      },
+      "properties": {
+        "gbifID": "2629769831",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-07-13",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.121667,
+          -22.568889
+        ]
+      },
+      "properties": {
+        "gbifID": "1424403158",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-12-17",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/25/00700625.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.3825,
+          -22.373333
+        ]
+      },
+      "properties": {
+        "gbifID": "1424403124",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-02-16",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/36/00700636.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.044167,
+          -23.256944
+        ]
+      },
+      "properties": {
+        "gbifID": "1424505097",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-12-18",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/41/27/00934127.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.169167,
+          -22.256667
+        ]
+      },
+      "properties": {
+        "gbifID": "1424403128",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-11-28",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.023889,
+          -23.1525
+        ]
+      },
+      "properties": {
+        "gbifID": "2997833657",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-12-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.073056,
+          -13.370278
+        ]
+      },
+      "properties": {
+        "gbifID": "1213627755",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.85843,
+          -26.459578
+        ]
+      },
+      "properties": {
+        "gbifID": "1802957718",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Anchietano de Pesquisas/UNISINOS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.65972,
+          -22.40444
+        ]
+      },
+      "properties": {
+        "gbifID": "1144593197",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "SwissNatColl",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.0,
+          -24.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "1089011142",
+        "species": "Solanum melissarum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra divaricata (Mart.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-11-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/6/42/00700642.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,2102 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Cestrum amictum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Cestrum",
+      "species": "Cestrum amictum",
+      "slug": "species_cestrum_amictum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Heterosais edessa",
+        "Pseudoscada erruca"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_cestrum_amictum.geojson",
+      "gbif_resolution": {
+        "query": "Cestrum amictum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 7299284,
+        "accepted_usage_key": 7299228,
+        "scientific_name": "Cestrum amictum Schltdl.",
+        "canonical_name": "Cestrum amictum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Cestrum",
+        "resolved_at": "2026-05-21T03:57:10+00:00"
+      },
+      "gbif_taxon_key": 7299284,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Cestrum amictum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 7299284,
+      "accepted_usage_key": 7299228,
+      "scientific_name": "Cestrum amictum Schltdl.",
+      "canonical_name": "Cestrum amictum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Cestrum",
+      "resolved_at": "2026-05-21T03:57:10+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 52
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:18+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.4,
+          -24.3
+        ]
+      },
+      "properties": {
+        "gbifID": "4955364557",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Escola Superior de Agricultura Luiz de Queiroz",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.29431,
+          -24.01115
+        ]
+      },
+      "properties": {
+        "gbifID": "4955327084",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-03-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Escola Superior de Agricultura Luiz de Queiroz",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.31605,
+          -24.02021
+        ]
+      },
+      "properties": {
+        "gbifID": "4955235343",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-03-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Escola Superior de Agricultura Luiz de Queiroz",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.83333,
+          -25.5
+        ]
+      },
+      "properties": {
+        "gbifID": "2515698890",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.88333,
+          -23.71667
+        ]
+      },
+      "properties": {
+        "gbifID": "2517128881",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1736121/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.75,
+          -27.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1456140896",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-10-12",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12664110&h=2000",
+            "references": null,
+            "title": "01934343.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11913402&h=2000",
+            "references": null,
+            "title": "01934343",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.566667,
+          -22.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1424206087",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-15",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/70/58/00477058.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0,
+          -24.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1424505617",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-03-30",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/56/82/00935682.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.447222,
+          -24.270833
+        ]
+      },
+      "properties": {
+        "gbifID": "1424506823",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-17",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/85/39/00938539.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.339167,
+          -21.204444
+        ]
+      },
+      "properties": {
+        "gbifID": "1424403003",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-04-05",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/70/5/13/00700513.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.294444,
+          -24.011111
+        ]
+      },
+      "properties": {
+        "gbifID": "2995881113",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-03-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.284444,
+          -24.470556
+        ]
+      },
+      "properties": {
+        "gbifID": "2997832619",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.52,
+          -23.38
+        ]
+      },
+      "properties": {
+        "gbifID": "2997833735",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.545833,
+          -25.011389
+        ]
+      },
+      "properties": {
+        "gbifID": "2997837638",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.52,
+          -20.81
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189660",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.37,
+          -21.04
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189656",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-07-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.942222,
+          -22.372222
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189693",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-05-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.834444,
+          -25.476944
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189666",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-08-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.38,
+          -20.03
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189657",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.37,
+          -20.82
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189661",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-12-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.055278,
+          -25.305556
+        ]
+      },
+      "properties": {
+        "gbifID": "2998189692",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.478694,
+          -24.784611
+        ]
+      },
+      "properties": {
+        "gbifID": "1889179693",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.916583,
+          -25.0205
+        ]
+      },
+      "properties": {
+        "gbifID": "1889179694",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.866667,
+          -23.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "1889180139",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.198056,
+          -23.324722
+        ]
+      },
+      "properties": {
+        "gbifID": "2464880916",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Londrina",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63,
+          -23.54
+        ]
+      },
+      "properties": {
+        "gbifID": "1086899066",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-02-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.97,
+          -23.03
+        ]
+      },
+      "properties": {
+        "gbifID": "1086899166",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-09-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.986944,
+          -24.062222
+        ]
+      },
+      "properties": {
+        "gbifID": "1086900436",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-04-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.36,
+          -24.09
+        ]
+      },
+      "properties": {
+        "gbifID": "1086902620",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.702222,
+          -23.428889
+        ]
+      },
+      "properties": {
+        "gbifID": "1086908013",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-03-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.39,
+          -23.96
+        ]
+      },
+      "properties": {
+        "gbifID": "1086896774",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-03-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.41,
+          -23.62
+        ]
+      },
+      "properties": {
+        "gbifID": "1086897542",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-09-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.55,
+          -24.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1086893991",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-07-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.027778,
+          -27.234444
+        ]
+      },
+      "properties": {
+        "gbifID": "1090610091",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.174444,
+          -29.480833
+        ]
+      },
+      "properties": {
+        "gbifID": "1090604734",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-10-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.495762,
+          -30.8552
+        ]
+      },
+      "properties": {
+        "gbifID": "1077427007",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-10-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fundação Zoobotânica do Rio Grande do Sul",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.20361,
+          -25.50833
+        ]
+      },
+      "properties": {
+        "gbifID": "1675523271",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-09-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Pontifícia Universidade Católica do Paraná",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.25,
+          -9.16667
+        ]
+      },
+      "properties": {
+        "gbifID": "607572404",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-04-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441376148666KaL6T50HXDxZ0uA5",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.86667,
+          -23.63333
+        ]
+      },
+      "properties": {
+        "gbifID": "607572406",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441376148630bz1ddgpKe5KQC8xz",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.0,
+          -18.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228299125",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-02-19",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.0,
+          -24.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228202938",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1914-06-19",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.5,
+          -22.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228238490",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1961-07-08",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.0,
+          -27.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228575849",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1911-05-31",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.8731,
+          -10.8339
+        ]
+      },
+      "properties": {
+        "gbifID": "1228422097",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.833333,
+          -25.5
+        ]
+      },
+      "properties": {
+        "gbifID": "2996007836",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-04-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.380556,
+          -20.81
+        ]
+      },
+      "properties": {
+        "gbifID": "1089050786",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.563889,
+          -24.056389
+        ]
+      },
+      "properties": {
+        "gbifID": "1089078025",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-04-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.564722,
+          -21.838889
+        ]
+      },
+      "properties": {
+        "gbifID": "1088994390",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-11-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.169167,
+          -22.535833
+        ]
+      },
+      "properties": {
+        "gbifID": "1089013875",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-08-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.889722,
+          -24.956944
+        ]
+      },
+      "properties": {
+        "gbifID": "1089063922",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-11-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.36275,
+          -21.376536
+        ]
+      },
+      "properties": {
+        "gbifID": "1089087657",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-01-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.735,
+          -23.835556
+        ]
+      },
+      "properties": {
+        "gbifID": "1089040935",
+        "species": "Cestrum bracteatum",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum amictum Schltdl.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-09-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://medialib.naturalis.nl/file/id/U.1736134/format/large",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "rightsHolder": "Naturalis Biodiversity Center"
+        }
+      }
+    }
+  ]
+}

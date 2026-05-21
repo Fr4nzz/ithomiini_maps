@@ -1,0 +1,2269 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora trifasciata",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora trifasciata",
+      "slug": "species_passiflora_trifasciata",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Dryas iulia",
+        "Heliconius erato"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_passiflora_trifasciata.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora trifasciata",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3587210,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora trifasciata Lem.",
+        "canonical_name": "Passiflora trifasciata",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:58+00:00"
+      },
+      "gbif_taxon_key": 3587210,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora trifasciata",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3587210,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora trifasciata Lem.",
+      "canonical_name": "Passiflora trifasciata",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:58+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 47
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:21+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.183333,
+          -23.516667
+        ]
+      },
+      "properties": {
+        "gbifID": "1837840309",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Espírito Santo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.688611,
+          -1.323611
+        ]
+      },
+      "properties": {
+        "gbifID": "1257514247",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-03-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages6/detailimages/TropicosImagesVol6/102468000/A33B2737-423C-4C8F-8892-C91C2B1EF3C9.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=102468339",
+            "title": "Cerón Martínez - 56672 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages6/detailimages/TropicosImagesVol6/102470000/CE571A89-4A74-4CC9-961F-0FDF402FE016.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=102470610",
+            "title": "Cerón Martínez - 56672 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.259028,
+          -6.420806
+        ]
+      },
+      "properties": {
+        "gbifID": "1257572248",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-06-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.3,
+          -6.4
+        ]
+      },
+      "properties": {
+        "gbifID": "4031861847",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-10-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages4/detailimages/TropicosImagesVol4/101054000/3ADC77E5-272B-4720-A251-BFEB68B309FB.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101054240",
+            "title": "Knapp - 8475 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.833333,
+          -13.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1260175409",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages4/detailimages/TropicosImagesVol4/101054000/06586F8B-D0F2-400A-AE8A-7B315F52862E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101054241",
+            "title": "Gentry - 77272 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.2,
+          -6.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031364909",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-08-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.25,
+          -8.383333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031661491",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-07-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100738000/D95D0EE7-57AD-457D-98EA-B00FAF574EAE.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100738541",
+            "title": "Schunke Vigo - 7642 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.23,
+          -14.63
+        ]
+      },
+      "properties": {
+        "gbifID": "2997913018",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.774722,
+          -9.328889
+        ]
+      },
+      "properties": {
+        "gbifID": "2027496043",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-05-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade do Estado de Mato Grosso",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.049,
+          -1.406
+        ]
+      },
+      "properties": {
+        "gbifID": "6147763212",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-07-25",
+        "country": null,
+        "datasetName": "Vascular",
+        "publisher": "Herbario HUTPL de la Universidad Técnica Particular de Loja",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.683,
+          -1.05
+        ]
+      },
+      "properties": {
+        "gbifID": "47821115",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.866,
+          -1.233
+        ]
+      },
+      "properties": {
+        "gbifID": "47821402",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-05-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.40786,
+          29.61194
+        ]
+      },
+      "properties": {
+        "gbifID": "1457765119",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Florida Museum of Natural History",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/83e4c2d3-219d-4cf9-adcb-baa697eaffa0",
+            "references": null,
+            "title": "Passiflora trifasciata",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          },
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/e4825a56-af96-4cd3-a51f-b717415122a8",
+            "references": null,
+            "title": "Passiflora trifasciata",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.120833,
+          -1.454167
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618112",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1956-03-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.6,
+          -5.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061754627",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-08-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.066667,
+          -5.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1260915114",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-09-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.033333,
+          -5.883333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061697900",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-08-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.230556,
+          -20.307222
+        ]
+      },
+      "properties": {
+        "gbifID": "1259795580",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.866667,
+          -1.233333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260006373",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-05-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.521111,
+          -5.861944
+        ]
+      },
+      "properties": {
+        "gbifID": "1257536207",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-05-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.365556,
+          -6.501389
+        ]
+      },
+      "properties": {
+        "gbifID": "1260887326",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-12-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.3,
+          -6.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061773447",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.523583,
+          -17.084805
+        ]
+      },
+      "properties": {
+        "gbifID": "3946804284",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-12-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.010278,
+          -9.318611
+        ]
+      },
+      "properties": {
+        "gbifID": "1257514999",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1961-06-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.98333,
+          -9.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1257514964",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.05,
+          -1.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618115",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1956-04-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.833333,
+          -13.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257504222",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-04-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.028056,
+          -9.324722
+        ]
+      },
+      "properties": {
+        "gbifID": "1257607601",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1949-10-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.083333,
+          -5.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1260915106",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-08-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.683333,
+          -1.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1260141374",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.55,
+          -8.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257676175",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1902-10-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001234211",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.890511,
+          -5.962883
+        ]
+      },
+      "properties": {
+        "gbifID": "3456938453",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2012-10-09T18:16",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/173784129/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/173784129",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/173784227/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/173784227",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/173784485/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/173784485",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/173784605/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/173784605",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.308105,
+          -6.459028
+        ]
+      },
+      "properties": {
+        "gbifID": "5293070021",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "4.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-08-05T11:38:35",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/548648316/original.jpg",
+            "references": "https://www.inaturalist.org/photos/548648316",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/548648342/original.jpg",
+            "references": "https://www.inaturalist.org/photos/548648342",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/548648279/original.jpg",
+            "references": "https://www.inaturalist.org/photos/548648279",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.338844,
+          -6.460134
+        ]
+      },
+      "properties": {
+        "gbifID": "3124639402",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2011-04-25T22:29",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/115997948/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/115997948",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.861067,
+          -1.472527
+        ]
+      },
+      "properties": {
+        "gbifID": "4908719494",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "25120.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-03-14T13:39",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/281476453/original.jpg",
+            "references": "https://www.inaturalist.org/photos/281476453",
+            "title": null,
+            "creator": "Kevin Chiang",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Kevin Chiang"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/281993428/original.jpg",
+            "references": "https://www.inaturalist.org/photos/281993428",
+            "title": null,
+            "creator": "Kevin Chiang",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Kevin Chiang"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.397902,
+          -6.404926
+        ]
+      },
+      "properties": {
+        "gbifID": "3330786390",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "500.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2011-05-07T17:42",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/116005109/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/116005109",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/116005137/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/116005137",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/116005188/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/116005188",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/116005208/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/116005208",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.107577,
+          -1.454588
+        ]
+      },
+      "properties": {
+        "gbifID": "6162962317",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-02-13T13:37",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/617451217/original.jpg",
+            "references": "https://www.inaturalist.org/photos/617451217",
+            "title": null,
+            "creator": "Lynn Harper",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Lynn Harper"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/617452176/original.jpg",
+            "references": "https://www.inaturalist.org/photos/617452176",
+            "title": null,
+            "creator": "Lynn Harper",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Lynn Harper"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.296608,
+          -6.445539
+        ]
+      },
+      "properties": {
+        "gbifID": "5830972660",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "1076.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-08-05T12:30",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566006887/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566006887",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566006746/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566006746",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566006769/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566006769",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566006895/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566006895",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.313202,
+          -6.452636
+        ]
+      },
+      "properties": {
+        "gbifID": "3061732097",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "500.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2011-05-06T20:23",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/116004635/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/116004635",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/116004658/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/116004658",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/116004723/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/116004723",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.188259,
+          -5.831226
+        ]
+      },
+      "properties": {
+        "gbifID": "5198973475",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "148.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-10-07T06:57:44",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/440642286/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/440642286",
+            "title": null,
+            "creator": "Ronald Mori",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronald Mori"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/440642350/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/440642350",
+            "title": null,
+            "creator": "Ronald Mori",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronald Mori"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/440642394/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/440642394",
+            "title": null,
+            "creator": "Ronald Mori",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronald Mori"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.769008,
+          -2.145666
+        ]
+      },
+      "properties": {
+        "gbifID": "4130299768",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "977.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-12-14T16:27",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287120157/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/287120157",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.479422,
+          -6.653512
+        ]
+      },
+      "properties": {
+        "gbifID": "3858669747",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "1781.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2015-10-02T13:26",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/208497760/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/208497760",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/208497777/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/208497777",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/208497796/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/208497796",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.627266,
+          -16.042389
+        ]
+      },
+      "properties": {
+        "gbifID": "4525211087",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-12-01T12:14",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/351754087/original.jpg",
+            "references": "https://www.inaturalist.org/photos/351754087",
+            "title": null,
+            "creator": "Alfredo F. Fuentes Claros",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Alfredo F. Fuentes Claros"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.222833,
+          -6.588284
+        ]
+      },
+      "properties": {
+        "gbifID": "3881384536",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "208.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-02-24T12:59",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387509/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387509",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387527/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387527",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387533/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387533",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387550/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387550",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387575/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387575",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387595/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387595",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387608/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387608",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387624/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387624",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/215387634/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/215387634",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.855385,
+          -10.054766
+        ]
+      },
+      "properties": {
+        "gbifID": "2557807656",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2019-12-19T14:28:11",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/59681140/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/59681140",
+            "title": null,
+            "creator": "Martin Acosta",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin Acosta"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/59681185/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/59681185",
+            "title": null,
+            "creator": "Martin Acosta",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin Acosta"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.233333,
+          -14.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "4958545162",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-11-09T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/b8c97eb0eff9859e85356a47fc1a822b.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001234211",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.254442,
+          -6.430923
+        ]
+      },
+      "properties": {
+        "gbifID": "6273156411",
+        "species": "Passiflora trifasciata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora trifasciata Lem.",
+        "coordinateUncertaintyInMeters": "50.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-05-07T13:38:12",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/657283678/original.jpg",
+            "references": "https://www.inaturalist.org/photos/657283678",
+            "title": null,
+            "creator": "Ronald Mori",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronald Mori"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/657283748/original.jpg",
+            "references": "https://www.inaturalist.org/photos/657283748",
+            "title": null,
+            "creator": "Ronald Mori",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronald Mori"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/657283894/original.jpg",
+            "references": "https://www.inaturalist.org/photos/657283894",
+            "title": null,
+            "creator": "Ronald Mori",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronald Mori"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/657283979/original.jpg",
+            "references": "https://www.inaturalist.org/photos/657283979",
+            "title": null,
+            "creator": "Ronald Mori",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Ronald Mori"
+          }
+        ]
+      }
+    }
+  ]
+}

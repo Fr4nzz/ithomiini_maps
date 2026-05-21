@@ -1,0 +1,1485 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora cubensis",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora cubensis",
+      "slug": "species_passiflora_cubensis",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Dryas iulia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_passiflora_cubensis.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora cubensis",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 7313409,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora cubensis Urb.",
+        "canonical_name": "Passiflora cubensis",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:14+00:00"
+      },
+      "gbif_taxon_key": 7313409,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora cubensis",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 7313409,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora cubensis Urb.",
+      "canonical_name": "Passiflora cubensis",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:14+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 36
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:20+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.9,
+          20.86666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031558688",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1856",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/Tropicos/242/BF826FC6-225F-4F87-8A7E-B0BD59D96B31.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=9250",
+            "title": "Wright - 198a - Caribbean",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.94965,
+          22.333862
+        ]
+      },
+      "properties": {
+        "gbifID": "2626929989",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1953-06-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_REPROJECTED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.96212,
+          20.616397
+        ]
+      },
+      "properties": {
+        "gbifID": "473272456",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1943-04-16/1943-04-23",
+        "country": null,
+        "datasetName": "Marie-Victorin Herbarium (MT)",
+        "publisher": "Université de Montréal Biodiversity Centre",
+        "license": "CC0_1_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.462953,
+          20.416978
+        ]
+      },
+      "properties": {
+        "gbifID": "473272460",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1942-12-21",
+        "country": null,
+        "datasetName": "Marie-Victorin Herbarium (MT)",
+        "publisher": "Université de Montréal Biodiversity Centre",
+        "license": "CC0_1_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.052738,
+          22.417059
+        ]
+      },
+      "properties": {
+        "gbifID": "473272454",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "1000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1941-06",
+        "country": null,
+        "datasetName": "Marie-Victorin Herbarium (MT)",
+        "publisher": "Université de Montréal Biodiversity Centre",
+        "license": "CC0_1_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.861255,
+          22.909878
+        ]
+      },
+      "properties": {
+        "gbifID": "1930002176",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1919-08-30",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1110/733/01921932.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.7895,
+          20.483
+        ]
+      },
+      "properties": {
+        "gbifID": "1929250805",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-10-27",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/3212/897/01163980-02.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          },
+          {
+            "url": "http://sweetgum.nybg.org/images3/3212/896/01163980-01.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.336782,
+          22.992844
+        ]
+      },
+      "properties": {
+        "gbifID": "4135907440",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1981",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.366667,
+          22.183333
+        ]
+      },
+      "properties": {
+        "gbifID": "4135918615",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "2011/2013",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.83333,
+          21.66667
+        ]
+      },
+      "properties": {
+        "gbifID": "4135875668",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "2010",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.264444,
+          21.545278
+        ]
+      },
+      "properties": {
+        "gbifID": "4135873875",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1999",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.844444,
+          21.610556
+        ]
+      },
+      "properties": {
+        "gbifID": "4135901319",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1985",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.95,
+          22.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "4135892304",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "2011/2013",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.001213,
+          22.405502
+        ]
+      },
+      "properties": {
+        "gbifID": "4135907956",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "2001/2013",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.467226,
+          22.748346
+        ]
+      },
+      "properties": {
+        "gbifID": "4135898436",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1996/1999",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.798248,
+          21.715791
+        ]
+      },
+      "properties": {
+        "gbifID": "4135876046",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1985",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.016667,
+          22.066667
+        ]
+      },
+      "properties": {
+        "gbifID": "4135894796",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "2011/2013",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.333333,
+          22.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "4135897893",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "2011/2013",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.25176,
+          21.55435
+        ]
+      },
+      "properties": {
+        "gbifID": "4135878938",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1999",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.908889,
+          21.682778
+        ]
+      },
+      "properties": {
+        "gbifID": "4135901496",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1989",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.75,
+          21.35
+        ]
+      },
+      "properties": {
+        "gbifID": "4135886165",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "1985",
+        "country": null,
+        "datasetName": "",
+        "publisher": "IUCN/SSC Cuban Plant Specialist Group",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.650556,
+          20.753333
+        ]
+      },
+      "properties": {
+        "gbifID": "5905105227",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1914-11-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Lund University Biological Museum",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.26392,
+          21.545145
+        ]
+      },
+      "properties": {
+        "gbifID": "1801075609",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-25",
+        "country": null,
+        "datasetName": "Moscow Digital Herbarium",
+        "publisher": "Lomonosov Moscow State University",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://plant.depo.msu.ru/open/public/item/MW0577457/img/0.jpg?gbif",
+            "references": "https://plant.depo.msu.ru/open/public/item/MW0577457",
+            "title": "Passiflora cubensis Urb. (Страстоцвет), Moscow University Herbarium",
+            "creator": "ELAR corporation (Moscow, Russia)",
+            "publisher": "Moscow State University",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Moscow State University (copyright is managed by Dr. Alexey P. Seregin)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.933333,
+          20.65
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618636",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1946-04-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.066667,
+          20.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618641",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1935-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.983333,
+          22.383333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618593",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-03-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.683333,
+          22.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260110801",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1950-07-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.666,
+          20.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618659",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1941-10-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.95111,
+          21.36333
+        ]
+      },
+      "properties": {
+        "gbifID": "1211531142",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-03-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.75,
+          20.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618612",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1943-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.2,
+          21.72
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618601",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1950-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.85,
+          21.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257618613",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1909-04-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.05,
+          22.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1057581551",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.03635,
+          21.62117
+        ]
+      },
+      "properties": {
+        "gbifID": "1056893442",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "1134.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/82891644",
+          "title": null,
+          "creator": "Craig Peter",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Craig Peter"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.960166,
+          21.873999
+        ]
+      },
+      "properties": {
+        "gbifID": "3061620425",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "30338.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2010-01-21T09:25",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891644/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/82891644",
+            "title": null,
+            "creator": "Craig Peter",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Craig Peter"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891658/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/82891658",
+            "title": null,
+            "creator": "Craig Peter",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Craig Peter"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/82891674/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/82891674",
+            "title": null,
+            "creator": "Craig Peter",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Craig Peter"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.787689,
+          20.481304
+        ]
+      },
+      "properties": {
+        "gbifID": "3070660659",
+        "species": "Passiflora cubensis",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cubensis Urb.",
+        "coordinateUncertaintyInMeters": "61.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2013-12-08T13:14Z",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/118289228/original.jpg",
+            "references": "https://www.inaturalist.org/photos/118289228",
+            "title": null,
+            "creator": "J. L. Gómez-Hechavarría",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "J. L. Gómez-Hechavarría"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,5929 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Dunalia solanacea",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Dunalia",
+      "species": "Dunalia solanacea",
+      "slug": "species_dunalia_solanacea",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Pagyris cymothoe"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_dunalia_solanacea.geojson",
+      "gbif_resolution": {
+        "query": "Dunalia solanacea",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 5580835,
+        "accepted_usage_key": 10330766,
+        "scientific_name": "Dunalia solanacea Kunth",
+        "canonical_name": "Dunalia solanacea",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Saracha",
+        "resolved_at": "2026-05-21T03:57:39+00:00"
+      },
+      "gbif_taxon_key": 5580835,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Dunalia solanacea",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 5580835,
+      "accepted_usage_key": 10330766,
+      "scientific_name": "Dunalia solanacea Kunth",
+      "canonical_name": "Dunalia solanacea",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Saracha",
+      "resolved_at": "2026-05-21T03:57:39+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 153
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.042472,
+          2.529306
+        ]
+      },
+      "properties": {
+        "gbifID": "1702525888",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-02-14",
+        "country": null,
+        "datasetName": "Colección general del herbario del Jardín Botánico de Bogotá José Celestino Mutis",
+        "publisher": "Jardín Botánico José Celestino Mutis",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.337861,
+          4.617056
+        ]
+      },
+      "properties": {
+        "gbifID": "1702525874",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-02-10",
+        "country": null,
+        "datasetName": "Colección general del herbario del Jardín Botánico de Bogotá José Celestino Mutis",
+        "publisher": "Jardín Botánico José Celestino Mutis",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.433971,
+          5.030132
+        ]
+      },
+      "properties": {
+        "gbifID": "1576172693",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "872.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-08-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.424094,
+          5.151867
+        ]
+      },
+      "properties": {
+        "gbifID": "1576185405",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1291.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-11-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.4351,
+          4.940235
+        ]
+      },
+      "properties": {
+        "gbifID": "1576185268",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "17646.21",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-11-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.4892,
+          4.63763
+        ]
+      },
+      "properties": {
+        "gbifID": "1576178239",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "10000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.688725,
+          5.086719
+        ]
+      },
+      "properties": {
+        "gbifID": "1576181770",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "830.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.832028,
+          6.086861
+        ]
+      },
+      "properties": {
+        "gbifID": "1584049771",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-08-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.810167,
+          6.090278
+        ]
+      },
+      "properties": {
+        "gbifID": "1584049816",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-08-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.830611,
+          6.08425
+        ]
+      },
+      "properties": {
+        "gbifID": "2013027491",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-08-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.6705,
+          5.747722
+        ]
+      },
+      "properties": {
+        "gbifID": "2284493866",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-02-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.66666,
+          -0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1262255598",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-06-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.55,
+          2.36666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262245199",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.657222,
+          -0.295
+        ]
+      },
+      "properties": {
+        "gbifID": "4031671512",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-08-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.366667,
+          0.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1262242527",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.03333,
+          6.4
+        ]
+      },
+      "properties": {
+        "gbifID": "1262239007",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-02-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.85,
+          -0.93333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258458513",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-11-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.83527,
+          -0.59222
+        ]
+      },
+      "properties": {
+        "gbifID": "4031533683",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-07-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.674167,
+          0.451944
+        ]
+      },
+      "properties": {
+        "gbifID": "4032169062",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-06-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.68333,
+          6.31666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262238730",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.08333,
+          3.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1260295416",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-11-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.36666,
+          -0.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1262242565",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-10-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8,
+          5.516667
+        ]
+      },
+      "properties": {
+        "gbifID": "1262255861",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.93333,
+          -0.68333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031487128",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-06-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.03333,
+          3.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260297279",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-05-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.7,
+          0.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250688",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-12-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.41666,
+          0.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250739",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-11-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.46666,
+          4.63333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262245714",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.613611,
+          6.075833
+        ]
+      },
+      "properties": {
+        "gbifID": "1259139485",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.61083,
+          -0.09666
+        ]
+      },
+      "properties": {
+        "gbifID": "1258787914",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-05-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.96138,
+          -0.56722
+        ]
+      },
+      "properties": {
+        "gbifID": "4031530683",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-07-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.33333,
+          5.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260302291",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-10-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.38333,
+          0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "4031487175",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-04-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.91666,
+          -0.96666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262252588",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.334167,
+          1.145
+        ]
+      },
+      "properties": {
+        "gbifID": "1260299649",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-02-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7,
+          -0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "4031384154",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.7,
+          6.28333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258260684",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.63333,
+          -0.28333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031877156",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-11-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.45,
+          4.61666
+        ]
+      },
+      "properties": {
+        "gbifID": "1258342491",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.829304,
+          5.012866
+        ]
+      },
+      "properties": {
+        "gbifID": "2995123541",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2018-04-11/2018-08-04",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA",
+        "publisher": "Grupo Energía Bogotá",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.829268,
+          5.012894
+        ]
+      },
+      "properties": {
+        "gbifID": "2995123552",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2018-04-11/2018-08-04",
+        "country": null,
+        "datasetName": "Inerco Consultoría Colombia LTDA",
+        "publisher": "Grupo Energía Bogotá",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.5,
+          -0.05
+        ]
+      },
+      "properties": {
+        "gbifID": "4031895158",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-11-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.58333,
+          4.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1258344040",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-08-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.28,
+          0.11
+        ]
+      },
+      "properties": {
+        "gbifID": "4031384191",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-08-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.6775,
+          -0.294167
+        ]
+      },
+      "properties": {
+        "gbifID": "4031591068",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-03-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.43333,
+          0.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031377171",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-08-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.71666,
+          -0.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031478086",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-09-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.533333,
+          4.616667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260299087",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-06-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.98333,
+          -0.96666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031789163",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8,
+          5.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1259139500",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-01-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.75,
+          0.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262254769",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.58333,
+          4.66666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260295855",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-05-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.883333,
+          0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1262254635",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-07-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.95,
+          4.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1261855667",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-09-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.633333,
+          6.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257965947",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-06-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.48333,
+          -1.63333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260775238",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-10-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.5,
+          0.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1262242547",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.08333,
+          -0.36861
+        ]
+      },
+      "properties": {
+        "gbifID": "1259140465",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.5,
+          0.01666
+        ]
+      },
+      "properties": {
+        "gbifID": "1261177169",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages4/detailimages/TropicosImagesVol4/101293000/09F01AF5-1E8F-44C3-9B20-6297466F4E57.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101293364",
+            "title": "Zak - 1821 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.75,
+          -0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "2235922192",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-20",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12617543&h=2000",
+            "references": null,
+            "title": "02821783.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.392,
+          5.075
+        ]
+      },
+      "properties": {
+        "gbifID": "2235935400",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-10-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12611756&h=2000",
+            "references": null,
+            "title": "02821814.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8,
+          5.52
+        ]
+      },
+      "properties": {
+        "gbifID": "2235836359",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-29",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12611440&h=2000",
+            "references": null,
+            "title": "02821833.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.47,
+          4.63
+        ]
+      },
+      "properties": {
+        "gbifID": "2236087469",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-13",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12609618&h=2000",
+            "references": null,
+            "title": "02821831.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.63,
+          -0.28
+        ]
+      },
+      "properties": {
+        "gbifID": "2235804101",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-23",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12609106&h=2000",
+            "references": null,
+            "title": "02821785.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.6742,
+          0.4519
+        ]
+      },
+      "properties": {
+        "gbifID": "1318133004",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-06-21",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.03,
+          6.4
+        ]
+      },
+      "properties": {
+        "gbifID": "2236156419",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-02-27",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12611077&h=2000",
+            "references": null,
+            "title": "02821835.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.982912,
+          -0.964947
+        ]
+      },
+      "properties": {
+        "gbifID": "2626947729",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-07-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_REPROJECTED",
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.558333,
+          0.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "2626942766",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-06-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.633333,
+          -0.283333
+        ]
+      },
+      "properties": {
+        "gbifID": "2859469490",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Carnegie Museums",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.666667,
+          -0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "2859502540",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-06-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Carnegie Museums",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5833,
+          4.6667
+        ]
+      },
+      "properties": {
+        "gbifID": "1936403290",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-05-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Real Jardín Botánico (CSIC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.039733,
+          3.5556
+        ]
+      },
+      "properties": {
+        "gbifID": "1936309576",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Real Jardín Botánico (CSIC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.433333,
+          0.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1096774040",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-08-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.907114,
+          3.92008
+        ]
+      },
+      "properties": {
+        "gbifID": "4440568556",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "68.05",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-09-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto para la Investigación y la Preservación del Patrimonio Cultural y Natural del Valle del Cauca - INCIVA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.033333,
+          -0.95
+        ]
+      },
+      "properties": {
+        "gbifID": "1096774042",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-07-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5,
+          7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228567574",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1935-06",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.5,
+          3.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1228334417",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1946-03-25",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.8333,
+          2.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1228497913",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-11-12",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.6667,
+          -0.1667
+        ]
+      },
+      "properties": {
+        "gbifID": "1228398657",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-20",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0,
+          1.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228623233",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-03-23",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5,
+          5.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1228337833",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1946-11-27",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.1667,
+          5.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228485357",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1938-10-01",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.679444,
+          1.882778
+        ]
+      },
+      "properties": {
+        "gbifID": "2252414777",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-04-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Multidisciplinario de Biología Vegetal - IMBIV",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.866667,
+          -0.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "5073761232",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-12-05",
+        "country": null,
+        "datasetName": "Digitalización y sistematización - 2020",
+        "publisher": "Instituto de Botánica del Nordeste",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.433,
+          0.333
+        ]
+      },
+      "properties": {
+        "gbifID": "47759957",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-08-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.033,
+          -0.95
+        ]
+      },
+      "properties": {
+        "gbifID": "47760362",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-07-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.733,
+          -0.466
+        ]
+      },
+      "properties": {
+        "gbifID": "47760447",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-09-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.033,
+          -0.216
+        ]
+      },
+      "properties": {
+        "gbifID": "4130384628",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://www.aubot.dk/specimenimages/Solanaceae1/IMG_0182.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.716,
+          -0.466
+        ]
+      },
+      "properties": {
+        "gbifID": "47760450",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-09-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.683,
+          6.317
+        ]
+      },
+      "properties": {
+        "gbifID": "3308479855",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-22",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "CONTINENT_COORDINATE_MISMATCH",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.736051,
+          3.829175
+        ]
+      },
+      "properties": {
+        "gbifID": "4948128686",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2019-09-04",
+        "country": null,
+        "datasetName": "Biodiversidad registrada en el área de influencia del programa Río Saldaña una Cuenca de Vida en el departamento del Tolima",
+        "publisher": "WCS Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.66666,
+          -0.3
+        ]
+      },
+      "properties": {
+        "gbifID": "4061925333",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-09-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.86666,
+          -0.56666
+        ]
+      },
+      "properties": {
+        "gbifID": "4061058351",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-12-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.73333,
+          -0.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "4061229429",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-11-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.45,
+          0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "4061045316",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.03333,
+          -0.95
+        ]
+      },
+      "properties": {
+        "gbifID": "4061202327",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.98333,
+          -0.9333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258407673",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1959-05-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.003889,
+          -0.223611
+        ]
+      },
+      "properties": {
+        "gbifID": "2268881758",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-12-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.5,
+          0.56666
+        ]
+      },
+      "properties": {
+        "gbifID": "1258407193",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.536111,
+          0.569444
+        ]
+      },
+      "properties": {
+        "gbifID": "1135488304",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-12-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/a529ac73-2564-40f9-a377-b6334c54245d",
+            "references": null,
+            "title": "001070785",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.083333,
+          -0.368611
+        ]
+      },
+      "properties": {
+        "gbifID": "1055543716",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/8bbc4f6c-1245-4c93-b484-b78ebf135ef6",
+            "references": null,
+            "title": "001070781",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.767071,
+          -1.427421
+        ]
+      },
+      "properties": {
+        "gbifID": "1055813186",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "710.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-04-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/0d0cfc92-acf3-4505-9b4d-5fd2c2cc0bf0",
+            "references": null,
+            "title": "000046967",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.35725,
+          0.204333
+        ]
+      },
+      "properties": {
+        "gbifID": "1056775904",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/ad283721-b403-41ce-961b-fde08afc31d7",
+            "references": null,
+            "title": "001120351",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.081944,
+          -0.369722
+        ]
+      },
+      "properties": {
+        "gbifID": "1055865342",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/040429cb-b4e6-476d-9e17-73e2ca26d7f8",
+            "references": null,
+            "title": "001120526",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.489538,
+          4.462424
+        ]
+      },
+      "properties": {
+        "gbifID": "1944880759",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "2105.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2013-07-01/2015-06-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.495043,
+          4.471901
+        ]
+      },
+      "properties": {
+        "gbifID": "1944955152",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "605.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2013-10-12/2015-04-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.466667,
+          4.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "1707513365",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.934167,
+          5.0575
+        ]
+      },
+      "properties": {
+        "gbifID": "1707518479",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-12-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.95,
+          1.383333
+        ]
+      },
+      "properties": {
+        "gbifID": "1707569352",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.389583,
+          5.104194
+        ]
+      },
+      "properties": {
+        "gbifID": "1707595364",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-02-03",
+        "country": null,
+        "datasetName": "Evaluación de oportunidades de conservación en Paisajes Rurales",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.939917,
+          2.211722
+        ]
+      },
+      "properties": {
+        "gbifID": "1707576785",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-09-06",
+        "country": null,
+        "datasetName": "Diversificación de zonas de laderas con productos de alto valor: mieles y plantas medicinales. IAvH - CIAT - UNAL - CAM",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.4055,
+          5.086917
+        ]
+      },
+      "properties": {
+        "gbifID": "1707595261",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-02-17",
+        "country": null,
+        "datasetName": "Evaluación de oportunidades de conservación en Paisajes Rurales",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.35,
+          4.61667
+        ]
+      },
+      "properties": {
+        "gbifID": "3032742592",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1946-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de la Salle",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "MULTIMEDIA_URI_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.485854,
+          4.713583
+        ]
+      },
+      "properties": {
+        "gbifID": "930994818",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1505.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-06-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Antioquia",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.353333,
+          5.383333
+        ]
+      },
+      "properties": {
+        "gbifID": "930997226",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "3836.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-09-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Antioquia",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.83682,
+          1.08698
+        ]
+      },
+      "properties": {
+        "gbifID": "1099627211",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1958.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-10-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.27364,
+          1.15831
+        ]
+      },
+      "properties": {
+        "gbifID": "1099633316",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1330.37",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-02-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.29226,
+          1.23478
+        ]
+      },
+      "properties": {
+        "gbifID": "1099633459",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "687.59",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.26445,
+          1.27932
+        ]
+      },
+      "properties": {
+        "gbifID": "1099634086",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "2128.68",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-08-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.37235,
+          4.96806
+        ]
+      },
+      "properties": {
+        "gbifID": "1099638452",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "10335.66",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1961-05-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.17808,
+          1.16267
+        ]
+      },
+      "properties": {
+        "gbifID": "1099634886",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "305.95",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-06-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.93554,
+          1.603147
+        ]
+      },
+      "properties": {
+        "gbifID": "1099641280",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1415.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-07-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.137668,
+          1.618636
+        ]
+      },
+      "properties": {
+        "gbifID": "1099641461",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "11968.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.90022,
+          1.22134
+        ]
+      },
+      "properties": {
+        "gbifID": "1099627794",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1248.05",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1963-02-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Nariño",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.916667,
+          -0.966667
+        ]
+      },
+      "properties": {
+        "gbifID": "4979583786",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-22T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001820129",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.9794,
+          7.01455
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005191",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1983-04-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9099,
+          4.67559
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005206",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1974-02-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8,
+          5.51667
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005207",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1988-10-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.6833,
+          6.31667
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005210",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1988-05-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.3426,
+          2.65625
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005218",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1948-10-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8072,
+          5.52302
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005163",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1987-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.1711,
+          4.87297
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005232",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1947-07-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5095,
+          5.09149
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005204",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1948-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.3289,
+          4.5991
+        ]
+      },
+      "properties": {
+        "gbifID": "1315005211",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1997-01-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COORDINATE_PRECISION_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.80723,
+          5.52302
+        ]
+      },
+      "properties": {
+        "gbifID": "1898904860",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "750.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-01-31",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27287,
+          4.544431
+        ]
+      },
+      "properties": {
+        "gbifID": "1890956122",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1710.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1938-10-01",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.484345,
+          4.714977
+        ]
+      },
+      "properties": {
+        "gbifID": "1898899240",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1127.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-22",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.679245,
+          1.876147
+        ]
+      },
+      "properties": {
+        "gbifID": "1934718022",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "7184.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-03-23",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.328888,
+          4.5991
+        ]
+      },
+      "properties": {
+        "gbifID": "2013791040",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "400.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-16",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.909851,
+          4.675589
+        ]
+      },
+      "properties": {
+        "gbifID": "1890914893",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "280.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-02-28",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.897025,
+          1.224444
+        ]
+      },
+      "properties": {
+        "gbifID": "1844902019",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1150.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1963-02-21",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.800003,
+          5.516667
+        ]
+      },
+      "properties": {
+        "gbifID": "1898904404",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "290.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-29",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.683334,
+          6.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1898900867",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "110.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-22",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.97937,
+          7.01455
+        ]
+      },
+      "properties": {
+        "gbifID": "1890993445",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1700.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-04-03",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.50945,
+          5.09149
+        ]
+      },
+      "properties": {
+        "gbifID": "1898866154",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "22604.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1948-01-01",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.800003,
+          5.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1898903150",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-01-26",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.290406,
+          4.569753
+        ]
+      },
+      "properties": {
+        "gbifID": "1898864180",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1710.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1946-10-14",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.54823,
+          4.70855
+        ]
+      },
+      "properties": {
+        "gbifID": "1898893880",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "1722.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-05-25",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.117875,
+          2.219452
+        ]
+      },
+      "properties": {
+        "gbifID": "1844939203",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "883.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-07-20",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.379723,
+          5.046389
+        ]
+      },
+      "properties": {
+        "gbifID": "2013809887",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-03-25",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.390556,
+          5.029444
+        ]
+      },
+      "properties": {
+        "gbifID": "2013809838",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-08-12",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.07476,
+          3.740972
+        ]
+      },
+      "properties": {
+        "gbifID": "1455897100",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2013-11-16",
+        "country": null,
+        "datasetName": "Registros biológicos de algunos predios promocionados como Reservas Naturales de la Sociedad Civil-RNSC en el Cañón de Amaime, municipio de El Cerrito, Valle del Cauca.",
+        "publisher": "CVC - Corporación Autónoma Regional del Valle del Cauca",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.003889,
+          -0.221667
+        ]
+      },
+      "properties": {
+        "gbifID": "4071435231",
+        "species": "Saracha nigribaccata",
+        "genus": "Saracha",
+        "family": "Solanaceae",
+        "scientificName": "Dunalia solanacea Kunth",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-01-12",
+        "country": null,
+        "datasetName": "Colección del herbario HUTI de la Universidad Tecnológica Indoamérica",
+        "publisher": "Herbario Universidad Tecnológica Indoamérica (HUTI)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/48f0cd2730ffd69dba0f385483f117d3.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001820129",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}
