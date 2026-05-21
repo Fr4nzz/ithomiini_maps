@@ -1,0 +1,2416 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum pabstii",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum pabstii",
+      "slug": "species_solanum_pabstii",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Hypothyris ninonia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_pabstii.geojson",
+      "gbif_resolution": {
+        "query": "Solanum pabstii",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2930362,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum pabstii L.B.Sm. & Downs",
+        "canonical_name": "Solanum pabstii",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:26+00:00"
+      },
+      "gbif_taxon_key": 2930362,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum pabstii",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2930362,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum pabstii L.B.Sm. & Downs",
+      "canonical_name": "Solanum pabstii",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:26+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 57
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.41666,
+          -26.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1260804880",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100448000/7D635B22-F7CA-46EB-B8AB-A7127560727D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100448783",
+            "title": "Smith - 13489 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.5503,
+          -29.3647
+        ]
+      },
+      "properties": {
+        "gbifID": "1321697456",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-14",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.42,
+          -26.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1319553957",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-03",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12665679&h=2000",
+            "references": null,
+            "title": "00982965.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11952513&h=2000",
+            "references": null,
+            "title": "00982965",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.2,
+          -26.95
+        ]
+      },
+      "properties": {
+        "gbifID": "2517877273",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-10-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1842674/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.55028,
+          -29.36472
+        ]
+      },
+      "properties": {
+        "gbifID": "2515260426",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/L.4154196/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.370833,
+          -26.880556
+        ]
+      },
+      "properties": {
+        "gbifID": "4439765783",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.498611,
+          -28.007778
+        ]
+      },
+      "properties": {
+        "gbifID": "2996417874",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.320556,
+          -27.990556
+        ]
+      },
+      "properties": {
+        "gbifID": "2996472585",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.488333,
+          -20.056389
+        ]
+      },
+      "properties": {
+        "gbifID": "4526422301",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.591667,
+          -28.015
+        ]
+      },
+      "properties": {
+        "gbifID": "2997981810",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.325833,
+          -27.816111
+        ]
+      },
+      "properties": {
+        "gbifID": "2997380069",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.580278,
+          -26.381389
+        ]
+      },
+      "properties": {
+        "gbifID": "2996168581",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-11-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.1325,
+          -27.275
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146356",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-03-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.303333,
+          -26.818889
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146470",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.940833,
+          -26.461667
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146473",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-01-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.578611,
+          -27.631944
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146353",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-03-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.498333,
+          -28.082778
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146475",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-01-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.498333,
+          -28.074444
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146477",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.22,
+          -27.630833
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146345",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-04-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.76,
+          -27.0
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146354",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-05-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.480278,
+          -26.6375
+        ]
+      },
+      "properties": {
+        "gbifID": "2996132906",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-03-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.78,
+          -27.54
+        ]
+      },
+      "properties": {
+        "gbifID": "2996146347",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-07-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.320556,
+          -27.990555
+        ]
+      },
+      "properties": {
+        "gbifID": "1902143902",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-09",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/39/69/20/01396920.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.371111,
+          -26.880556
+        ]
+      },
+      "properties": {
+        "gbifID": "3345578789",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.498458,
+          -28.007756
+        ]
+      },
+      "properties": {
+        "gbifID": "1302653882",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2009-04-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.219975,
+          -27.630834
+        ]
+      },
+      "properties": {
+        "gbifID": "1302653900",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2008-04-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.132414,
+          -27.275022
+        ]
+      },
+      "properties": {
+        "gbifID": "1302653898",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2008-03-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.416667,
+          -26.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1304607946",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1964-12-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.580303,
+          -26.381312
+        ]
+      },
+      "properties": {
+        "gbifID": "1302653921",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2007-11-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.578672,
+          -27.632026
+        ]
+      },
+      "properties": {
+        "gbifID": "1302653916",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2008-03-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.940893,
+          -26.461762
+        ]
+      },
+      "properties": {
+        "gbifID": "1302653911",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2008-01-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.356389,
+          -26.406944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997898079",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-10-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.6925,
+          -27.025833
+        ]
+      },
+      "properties": {
+        "gbifID": "5900610037",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2025-10-09",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.080833,
+          -27.733889
+        ]
+      },
+      "properties": {
+        "gbifID": "2998635937",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-09-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.364167,
+          -28.058333
+        ]
+      },
+      "properties": {
+        "gbifID": "2997600602",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-10-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.621667,
+          -28.329444
+        ]
+      },
+      "properties": {
+        "gbifID": "2997600613",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.775278,
+          -25.409167
+        ]
+      },
+      "properties": {
+        "gbifID": "2997600607",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-12-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.592334,
+          -28.018915
+        ]
+      },
+      "properties": {
+        "gbifID": "1930116637",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-12-12",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/525/v-287-00962107.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.4883,
+          -20.0564
+        ]
+      },
+      "properties": {
+        "gbifID": "1928046717",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-13",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1134/422/02064902.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.326485,
+          -27.820009
+        ]
+      },
+      "properties": {
+        "gbifID": "1928860567",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "70701.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1963-11-02",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/526/v-287-00962108.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.356349,
+          -26.406902
+        ]
+      },
+      "properties": {
+        "gbifID": "1930353170",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-10-26",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/538/v-287-00962135.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.5,
+          -22.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1087500736",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual Paulista",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.575278,
+          -26.715556
+        ]
+      },
+      "properties": {
+        "gbifID": "2575898950",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Santa Catarina",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.174444,
+          -29.480833
+        ]
+      },
+      "properties": {
+        "gbifID": "1090602619",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-02-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.144444,
+          -29.047778
+        ]
+      },
+      "properties": {
+        "gbifID": "1090608616",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.080833,
+          -27.733888
+        ]
+      },
+      "properties": {
+        "gbifID": "1095257990",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-09-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Cenargen",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.448889,
+          -25.647222
+        ]
+      },
+      "properties": {
+        "gbifID": "4037876341",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-02-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.489028,
+          -28.054861
+        ]
+      },
+      "properties": {
+        "gbifID": "1087655403",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-02-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.4825,
+          -26.818056
+        ]
+      },
+      "properties": {
+        "gbifID": "1087646255",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-03-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.41667,
+          -26.75
+        ]
+      },
+      "properties": {
+        "gbifID": "439314906",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441368645364pr3Cfc5clpD4sVSp",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.0,
+          -30.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228186811",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1949-10-23",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.0,
+          -24.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228236893",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-10-19",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.5,
+          -29.4
+        ]
+      },
+      "properties": {
+        "gbifID": "137523892",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-14",
+        "country": null,
+        "datasetName": "Herbario de la Universidad de Extremadura (UNEX)",
+        "publisher": "Dep. of Plant Biology, Ecology and Earth Sciences, Botany Area, Univ. Extremadura",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.549999,
+          -29.35
+        ]
+      },
+      "properties": {
+        "gbifID": "214396367",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Salamanca. Nucleus",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+          "references": "https://www.inaturalist.org/photos/586496860",
+          "title": null,
+          "creator": "Fabrício Mil Homens Riella",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Fabrício Mil Homens Riella"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.428574,
+          -26.96687
+        ]
+      },
+      "properties": {
+        "gbifID": "5889990110",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "29798.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-10-30T16:32",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586496860/original.jpg",
+            "references": "https://www.inaturalist.org/photos/586496860",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.025355,
+          -26.266532
+        ]
+      },
+      "properties": {
+        "gbifID": "4980403619",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "29868.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-11-05T18:01",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349295/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349295",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349297/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349297",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349293/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349293",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349303/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349303",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349390/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349390",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349364/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349364",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349367/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349367",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/448349376/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/448349376",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.457407,
+          -27.165431
+        ]
+      },
+      "properties": {
+        "gbifID": "5892861967",
+        "species": "Solanum pabstii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pabstii L.B.Sm. & Downs",
+        "coordinateUncertaintyInMeters": "29775.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-10-27T16:57",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586182877/original.jpg",
+            "references": "https://www.inaturalist.org/photos/586182877",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586182884/original.jpg",
+            "references": "https://www.inaturalist.org/photos/586182884",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/586182881/original.jpg",
+            "references": "https://www.inaturalist.org/photos/586182881",
+            "title": null,
+            "creator": "Fabrício Mil Homens Riella",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Fabrício Mil Homens Riella"
+          }
+        ]
+      }
+    }
+  ]
+}

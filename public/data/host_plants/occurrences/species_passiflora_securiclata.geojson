@@ -1,0 +1,3651 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora securiclata",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora securiclata",
+      "slug": "species_passiflora_securiclata",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Dryas iulia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_passiflora_securiclata.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora securiclata",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3586874,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora securiclata Mast.",
+        "canonical_name": "Passiflora securiclata",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:52+00:00"
+      },
+      "gbif_taxon_key": 3586874,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora securiclata",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3586874,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora securiclata Mast.",
+      "canonical_name": "Passiflora securiclata",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:52+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 88
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:21+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.194217,
+          6.770417
+        ]
+      },
+      "properties": {
+        "gbifID": "2427925290",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "31.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-04-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.860389,
+          5.789806
+        ]
+      },
+      "properties": {
+        "gbifID": "1803913716",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-05-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.616667,
+          -7.616667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260125789",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-08-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/B2453E83-4F77-40A9-875D-16EF3D3B6A24.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934085",
+            "title": "Croat - 62286 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.531667,
+          4.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "2268938767",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-03-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103817000/8A4E7D28-753D-4CFB-88C4-F6F6754041CB.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103817171",
+            "title": "Hoffman - 1234 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.066667,
+          7.066667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257807900",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/82505255-3391-49BB-9C73-854E2B8D0617.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934088",
+            "title": "Duno de Stefano - 240 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.983333,
+          6.983333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260138037",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-07-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/BCF25ABC-14F2-42ED-9083-4786E6EDA63A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934073",
+            "title": "Liesner - 5494 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.833333,
+          6.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1259079251",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-02-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/44BD0767-8035-4156-A7DD-5806D5D361E4.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934078",
+            "title": "Davidse - 13787 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.283333,
+          2.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1258170580",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning02/detailImages/RISScanning02/103145000/159389AF-0561-41DC-AB0E-28CC569CFABB.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103145637",
+            "title": "Stergios - 14765 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.916667,
+          7.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1259080664",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-05-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/0B924791-4FF0-4E39-9684-8B754B8DE7BA.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934079",
+            "title": "Davidse - 13141 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.883333,
+          8.4
+        ]
+      },
+      "properties": {
+        "gbifID": "1257807874",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-05-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/0B3143DE-8862-4E7D-B973-846AD7A60822.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934086",
+            "title": "Montes - 1780 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.583333,
+          3.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257808177",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-10-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103915000/843E0697-3F9E-414D-849A-16E8E8C75438.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103915613",
+            "title": "Maas - 3831 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.516667,
+          6.266667
+        ]
+      },
+      "properties": {
+        "gbifID": "1259101775",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-02-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/69BEBBAB-B0EF-4B84-A24D-3FBE38B60A54.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934082",
+            "title": "Davidse - 14364 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.533333,
+          9.233333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259099877",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/B6D09798-C9DC-413C-9E38-DFB10159B4C0.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934072",
+            "title": "Davidse - 18583 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.116667,
+          2.433333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257580787",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-01-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/42E78388-F577-44F7-A9B8-65A94B028F40.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934069",
+            "title": "Stergios - 15063 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.283333,
+          7.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1259105368",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-03-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/C645EEB1-03C5-4757-BB62-2106CC53500B.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934077",
+            "title": "Davidse - 14824 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.65,
+          7.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259080048",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-05-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/9C80D945-95FC-46D6-A8E1-D23B77239BD1.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934080",
+            "title": "Davidse - 12899 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.216667,
+          6.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259101937",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-02-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/1D7D9C3B-A1D0-442D-BFDC-E95492141851.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934074",
+            "title": "Davidse - 14389 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.1,
+          6.7
+        ]
+      },
+      "properties": {
+        "gbifID": "1257807879",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/6CCCF2F2-D3D6-4784-BCAC-7E7F9E4E342F.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934087",
+            "title": "Castillo - 3103 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.166667,
+          5.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257807229",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/83C719C4-0892-45A2-96B7-EF1F150B6E0A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934081",
+            "title": "Steyermark - 117934 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.7575,
+          6.36
+        ]
+      },
+      "properties": {
+        "gbifID": "1257808079",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-05-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/F7184D28-6997-4EDD-82E2-48EFE34E0A81.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934089",
+            "title": "Stergios - 10761 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.702222,
+          4.048611
+        ]
+      },
+      "properties": {
+        "gbifID": "1259045574",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-03-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/6C1FF9B9-F160-40AE-86C2-1444A75018D0.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934070",
+            "title": "Gentry - 10914 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.05,
+          8.533333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259087505",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-03-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/192BBF8F-F5A6-41B5-8C59-29C8C075C3CA.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934075",
+            "title": "Davidse - 16450 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.8,
+          5.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260146125",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-02-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/6E063490-3CAE-4DEE-8DB5-B798854FC85E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934071",
+            "title": "Carnevali - 1539 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.15,
+          5.183333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260157496",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-03-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/38B4FF6A-DAF7-4A25-8168-31CD28372132.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934090",
+            "title": "Zarucchi - 3813 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.483333,
+          6.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1259102930",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-02-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/74581583-2A38-413A-8877-8C819748902B.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934084",
+            "title": "Davidse - 14564 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.85,
+          7.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1259077616",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-04-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/F9651C5E-41F9-4FE0-B2E3-4436604139DE.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934076",
+            "title": "Davidse - 12120A - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.168056,
+          7.635
+        ]
+      },
+      "properties": {
+        "gbifID": "1257807290",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1948-01-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/9ED5B368-24D9-45ED-AEFB-16AB43448182.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934083",
+            "title": "Tamayo - 3459 - Venezuela",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.749,
+          4.193
+        ]
+      },
+      "properties": {
+        "gbifID": "197166070",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2003-11-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Conservation International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.04,
+          3.855
+        ]
+      },
+      "properties": {
+        "gbifID": "197166116",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2003-11-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Conservation International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.76667,
+          5.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517717168",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-11-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1148693/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.41,
+          8.51
+        ]
+      },
+      "properties": {
+        "gbifID": "1456430545",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-03-26",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15463383&h=2000",
+            "references": null,
+            "title": "01081130.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.2922,
+          3.62756
+        ]
+      },
+      "properties": {
+        "gbifID": "1456382051",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-20",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15493236&h=2000",
+            "references": null,
+            "title": "01080576.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.62,
+          5.66
+        ]
+      },
+      "properties": {
+        "gbifID": "1456336473",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1931-05",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15449391&h=2000",
+            "references": null,
+            "title": "00758736.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.55,
+          3.16
+        ]
+      },
+      "properties": {
+        "gbifID": "1455983471",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1942-05-19",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15467534&h=2000",
+            "references": null,
+            "title": "00758737.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.5317,
+          4.01667
+        ]
+      },
+      "properties": {
+        "gbifID": "1456360776",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-03-08",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.7722,
+          3.80972
+        ]
+      },
+      "properties": {
+        "gbifID": "1456239336",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-09-25",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.5167,
+          4.01667
+        ]
+      },
+      "properties": {
+        "gbifID": "1456322747",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-03-09",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.46,
+          6.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1456414769",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1943-07",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15450536&h=2000",
+            "references": null,
+            "title": "00758728.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.73,
+          3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1456469436",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1942-04-27",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15456317&h=2000",
+            "references": null,
+            "title": "00758731.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.43,
+          3.12
+        ]
+      },
+      "properties": {
+        "gbifID": "2571375877",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-02-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=14400756&h=2000",
+            "references": null,
+            "title": "03456735.tif",
+            "creator": "Botany Digitization Intern",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.025,
+          1.91
+        ]
+      },
+      "properties": {
+        "gbifID": "1319826601",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-01-30",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=10474833&h=2000",
+            "references": null,
+            "title": "01203145.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15458693&h=2000",
+            "references": null,
+            "title": "01203145.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.86,
+          6.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1456332322",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-04-05",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15450598&h=2000",
+            "references": null,
+            "title": "01081128.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.9,
+          6.98
+        ]
+      },
+      "properties": {
+        "gbifID": "1456323621",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-03-28",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15463501&h=2000",
+            "references": null,
+            "title": "00758732.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.54,
+          8.12
+        ]
+      },
+      "properties": {
+        "gbifID": "1456474260",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-11-04/1929-11-25",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15460324&h=2000",
+            "references": null,
+            "title": "00758735.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.8289,
+          3.17167
+        ]
+      },
+      "properties": {
+        "gbifID": "1456087174",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-09-17",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.33,
+          6.83
+        ]
+      },
+      "properties": {
+        "gbifID": "1455964244",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-03-30",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15474989&h=2000",
+            "references": null,
+            "title": "00758730.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.433333,
+          -0.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "4162901499",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-07-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.83,
+          3.15
+        ]
+      },
+      "properties": {
+        "gbifID": "1456185659",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1942-05-07",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15470586&h=2000",
+            "references": null,
+            "title": "00758733.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.708056,
+          -1.083056
+        ]
+      },
+      "properties": {
+        "gbifID": "2997354174",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-06-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.170833,
+          -2.825833
+        ]
+      },
+      "properties": {
+        "gbifID": "2997815186",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-06-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.732778,
+          -3.535
+        ]
+      },
+      "properties": {
+        "gbifID": "2997355761",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-11-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.4875,
+          -0.558889
+        ]
+      },
+      "properties": {
+        "gbifID": "2997820195",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1971-10-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.764444,
+          -9.561944
+        ]
+      },
+      "properties": {
+        "gbifID": "1423899146",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-06-09",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/5/63/17/01056317.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.42,
+          -0.42
+        ]
+      },
+      "properties": {
+        "gbifID": "2997869196",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-06-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.545556,
+          -0.562778
+        ]
+      },
+      "properties": {
+        "gbifID": "2997839654",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.726389,
+          -9.326944
+        ]
+      },
+      "properties": {
+        "gbifID": "2998614991",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.487458,
+          -0.558828
+        ]
+      },
+      "properties": {
+        "gbifID": "1929897564",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1971-10-13",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/696/893/01550580.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.7328,
+          -3.535
+        ]
+      },
+      "properties": {
+        "gbifID": "1930390439",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-11-29",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/603/279/01291757.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.708,
+          -1.083
+        ]
+      },
+      "properties": {
+        "gbifID": "1927883756",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-06-27",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/696/884/01550571.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.170818,
+          -2.825945
+        ]
+      },
+      "properties": {
+        "gbifID": "1931095375",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-06-10",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/696/892/01550579.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.915556,
+          -0.941389
+        ]
+      },
+      "properties": {
+        "gbifID": "1913597118",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.726388,
+          -9.326944
+        ]
+      },
+      "properties": {
+        "gbifID": "1095248720",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Cenargen",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.178361,
+          0.014097
+        ]
+      },
+      "properties": {
+        "gbifID": "1413715530",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-07-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Federal de Educação, Ciência e Tecnologia do Amazonas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.416028,
+          8.511222
+        ]
+      },
+      "properties": {
+        "gbifID": "4905662703",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-03-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.23525,
+          7.115194
+        ]
+      },
+      "properties": {
+        "gbifID": "4905623794",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-03-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.766667,
+          2.116667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257767267",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-01-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.233333,
+          4.816667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257610749",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1835",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.666667,
+          2.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257610986",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1908-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.583333,
+          4.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1257610764",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1889",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.583333,
+          3.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1257610815",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.540833,
+          8.128889
+        ]
+      },
+      "properties": {
+        "gbifID": "4061751473",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-11-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.6,
+          7.4
+        ]
+      },
+      "properties": {
+        "gbifID": "4060996809",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-05-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.601111,
+          5.658889
+        ]
+      },
+      "properties": {
+        "gbifID": "1257610992",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1931-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.9,
+          7.31666
+        ]
+      },
+      "properties": {
+        "gbifID": "4061731890",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-05-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.111667,
+          2.001944
+        ]
+      },
+      "properties": {
+        "gbifID": "1257610972",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.766667,
+          7.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "4062066668",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-05-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.686787,
+          5.298905
+        ]
+      },
+      "properties": {
+        "gbifID": "3330518495",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "31384.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-04-22T15:57",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/140152732/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/140152732",
+            "title": null,
+            "creator": "Alejandro Garay Marín",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alejandro Garay Marín"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/140153853/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/140153853",
+            "title": null,
+            "creator": "Alejandro Garay Marín",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alejandro Garay Marín"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/140153908/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/140153908",
+            "title": null,
+            "creator": "Alejandro Garay Marín",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alejandro Garay Marín"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/140154046/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/140154046",
+            "title": null,
+            "creator": "Alejandro Garay Marín",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alejandro Garay Marín"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/140154139/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/140154139",
+            "title": null,
+            "creator": "Alejandro Garay Marín",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alejandro Garay Marín"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/140154180/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/140154180",
+            "title": null,
+            "creator": "Alejandro Garay Marín",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alejandro Garay Marín"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.122672,
+          6.535389
+        ]
+      },
+      "properties": {
+        "gbifID": "3415401578",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "200.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2003-02-17T12:25",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.61905,
+          4.154553
+        ]
+      },
+      "properties": {
+        "gbifID": "4405435738",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "10.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2018-02-22T15:27:37",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/313574627/original.jpg",
+            "references": "https://www.inaturalist.org/photos/313574627",
+            "title": null,
+            "creator": "John Ocampo",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "John Ocampo"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.668111,
+          5.508306
+        ]
+      },
+      "properties": {
+        "gbifID": "1707494190",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-03-02",
+        "country": null,
+        "datasetName": "Parcelas Permanentes de 1ha BST (Puerto Carreño Vichada)",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://colecciones.humboldt.org.co/rec/imagenes/FMB/FMB-105971/FMB-105971.JPG",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.95,
+          5.3075
+        ]
+      },
+      "properties": {
+        "gbifID": "1707573391",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-02-11",
+        "country": null,
+        "datasetName": "Caracterización PNN Tuparro",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://colecciones.humboldt.org.co/rec/imagenes/FMB/FMB-76912/FMB-76912.JPG",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.161179,
+          9.285921
+        ]
+      },
+      "properties": {
+        "gbifID": "2850950347",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "1953.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2011-06-25T21:57",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/29589036/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/29589036",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.66222,
+          0.73416
+        ]
+      },
+      "properties": {
+        "gbifID": "768760532",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-07-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.531666,
+          4.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "4903195869",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-03-08T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/70f70bc19fc02859534ff035747474cb.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K005038726",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.772222,
+          3.809722
+        ]
+      },
+      "properties": {
+        "gbifID": "4903214361",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-09-25T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K005038729",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.2685,
+          4.772667
+        ]
+      },
+      "properties": {
+        "gbifID": "1934718314",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-09-28",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.272778,
+          4.7875
+        ]
+      },
+      "properties": {
+        "gbifID": "1934717787",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-09-14",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.15,
+          5.18333
+        ]
+      },
+      "properties": {
+        "gbifID": "1932919075",
+        "species": "Passiflora securiclata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora securiclata Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/0f791c08ec453b0b73d6f181644b8757.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038729",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

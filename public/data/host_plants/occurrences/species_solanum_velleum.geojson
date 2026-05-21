@@ -1,0 +1,2565 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum velleum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum velleum",
+      "slug": "species_solanum_velleum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis lysimnia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_velleum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum velleum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2929985,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum velleum Thunb.",
+        "canonical_name": "Solanum velleum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:01:00+00:00"
+      },
+      "gbif_taxon_key": 2929985,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum velleum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2929985,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum velleum Thunb.",
+      "canonical_name": "Solanum velleum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:01:00+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 63
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:25+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.979444,
+          -20.192778
+        ]
+      },
+      "properties": {
+        "gbifID": "5000812728",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-01-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.573333,
+          -22.531667
+        ]
+      },
+      "properties": {
+        "gbifID": "4162765570",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-03-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.865556,
+          -22.6625
+        ]
+      },
+      "properties": {
+        "gbifID": "4162765430",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-10-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.795555,
+          -20.434444
+        ]
+      },
+      "properties": {
+        "gbifID": "4526436428",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-12-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.232778,
+          -25.448055
+        ]
+      },
+      "properties": {
+        "gbifID": "5204096302",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-08-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Paraná",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.753333,
+          -18.035833
+        ]
+      },
+      "properties": {
+        "gbifID": "2997533485",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.3175,
+          -22.585
+        ]
+      },
+      "properties": {
+        "gbifID": "2997373534",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.984722,
+          -20.099167
+        ]
+      },
+      "properties": {
+        "gbifID": "3331270346",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-11-02",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/44/29/58/01442958.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.566667,
+          -22.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1424206228",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-17",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/47/71/3/00477103.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.923056,
+          -22.695555
+        ]
+      },
+      "properties": {
+        "gbifID": "1424271530",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-07-13",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/55/77/34/00557734.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.573056,
+          -22.533611
+        ]
+      },
+      "properties": {
+        "gbifID": "1423935463",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-03-24",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/18/91/5/01189105.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.316944,
+          -22.585
+        ]
+      },
+      "properties": {
+        "gbifID": "1424413847",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-19",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.230833,
+          -22.409722
+        ]
+      },
+      "properties": {
+        "gbifID": "1424274706",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-03-13",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/56/7/86/00560786.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.325278,
+          -22.579444
+        ]
+      },
+      "properties": {
+        "gbifID": "1424417672",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/83/40/00718340.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.517222,
+          -20.364167
+        ]
+      },
+      "properties": {
+        "gbifID": "1424378427",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-05-17",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/67/42/23/00674223.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.154167,
+          -22.537222
+        ]
+      },
+      "properties": {
+        "gbifID": "4428565315",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-11",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/50/7/8/01500708.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          },
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/50/7/8/01500708-1.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.284722,
+          -22.475278
+        ]
+      },
+      "properties": {
+        "gbifID": "2429181297",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-01-11",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.291944,
+          -22.463333
+        ]
+      },
+      "properties": {
+        "gbifID": "4079381425",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-12-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/48/48/95/01484895-1.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          },
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/48/48/95/01484895.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.944444,
+          -22.709444
+        ]
+      },
+      "properties": {
+        "gbifID": "3331269362",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-11-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/44/31/90/01443190.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.721111,
+          -22.330833
+        ]
+      },
+      "properties": {
+        "gbifID": "1500100027",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-04-06",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/31/10/39/01311039.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.561111,
+          -20.594722
+        ]
+      },
+      "properties": {
+        "gbifID": "1424485394",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-11-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/86/43/77/00864377.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.13,
+          -20.08
+        ]
+      },
+      "properties": {
+        "gbifID": "2997869585",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.474444,
+          -20.263889
+        ]
+      },
+      "properties": {
+        "gbifID": "2997660367",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-12-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.728889,
+          -18.166944
+        ]
+      },
+      "properties": {
+        "gbifID": "4999686118",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-12-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.983611,
+          -20.093056
+        ]
+      },
+      "properties": {
+        "gbifID": "2997642051",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-08-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.7533,
+          -18.0359
+        ]
+      },
+      "properties": {
+        "gbifID": "1929363014",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1970-03-28",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/479/00829552.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.539757,
+          -19.388386
+        ]
+      },
+      "properties": {
+        "gbifID": "1929610826",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1614/453/00825684.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.681111,
+          -20.094722
+        ]
+      },
+      "properties": {
+        "gbifID": "4953448669",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-03-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.391111,
+          -20.165556
+        ]
+      },
+      "properties": {
+        "gbifID": "4953443861",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-08-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.719167,
+          -22.333889
+        ]
+      },
+      "properties": {
+        "gbifID": "2597529577",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-10-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Feira de Santana",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.216667,
+          -20.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "1978402751",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.795556,
+          -20.444444
+        ]
+      },
+      "properties": {
+        "gbifID": "1252621256",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-12-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.655278,
+          -22.684722
+        ]
+      },
+      "properties": {
+        "gbifID": "1086910507",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-01-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.508889,
+          -13.341944
+        ]
+      },
+      "properties": {
+        "gbifID": "4441959814",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-01-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.744444,
+          -22.368611
+        ]
+      },
+      "properties": {
+        "gbifID": "4508427739",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-04-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual Paulista",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.110833,
+          -22.847778
+        ]
+      },
+      "properties": {
+        "gbifID": "4903627732",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-04-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual Paulista",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.795556,
+          -20.434444
+        ]
+      },
+      "properties": {
+        "gbifID": "1123826933",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-12-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.859722,
+          -19.992778
+        ]
+      },
+      "properties": {
+        "gbifID": "1142077809",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-09-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.625278,
+          -22.412222
+        ]
+      },
+      "properties": {
+        "gbifID": "2618384122",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1902-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.728888,
+          -18.166944
+        ]
+      },
+      "properties": {
+        "gbifID": "4928868989",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-12-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Cenargen",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.5503,
+          -23.1169
+        ]
+      },
+      "properties": {
+        "gbifID": "1090570620",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-09-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.296944,
+          -22.102778
+        ]
+      },
+      "properties": {
+        "gbifID": "1087663003",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-12-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.743611,
+          -22.368611
+        ]
+      },
+      "properties": {
+        "gbifID": "1801097892",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-11-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.514444,
+          -20.429167
+        ]
+      },
+      "properties": {
+        "gbifID": "3914330337",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-04-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.325333,
+          -22.579389
+        ]
+      },
+      "properties": {
+        "gbifID": "1087653333",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.573056,
+          -22.531389
+        ]
+      },
+      "properties": {
+        "gbifID": "1840923216",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-03-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.960278,
+          -20.079444
+        ]
+      },
+      "properties": {
+        "gbifID": "1455400834",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.923056,
+          -22.695633
+        ]
+      },
+      "properties": {
+        "gbifID": "1801097823",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-07-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.987011,
+          -20.049981
+        ]
+      },
+      "properties": {
+        "gbifID": "1801097838",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.655389,
+          -22.684778
+        ]
+      },
+      "properties": {
+        "gbifID": "1087646920",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.983536,
+          -20.094469
+        ]
+      },
+      "properties": {
+        "gbifID": "1087648833",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-11-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.489244,
+          -20.431603
+        ]
+      },
+      "properties": {
+        "gbifID": "4903629449",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-02-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.316806,
+          -22.585056
+        ]
+      },
+      "properties": {
+        "gbifID": "1087652435",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.890222,
+          -21.9715
+        ]
+      },
+      "properties": {
+        "gbifID": "1087654594",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-10-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.270603,
+          -22.526667
+        ]
+      },
+      "properties": {
+        "gbifID": "1499618717",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-11-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.944389,
+          -22.7095
+        ]
+      },
+      "properties": {
+        "gbifID": "2563082502",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-11-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.616072,
+          -22.775086
+        ]
+      },
+      "properties": {
+        "gbifID": "4021015307",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-11-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.984611,
+          -20.099167
+        ]
+      },
+      "properties": {
+        "gbifID": "2447819406",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-11-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.646361,
+          -20.184889
+        ]
+      },
+      "properties": {
+        "gbifID": "4021013349",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-04-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.983333,
+          -20.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "4442010239",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-04-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fundação Zoo-Botânica de Belo Horizonte/Jardim Botânico",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.983333,
+          -20.1
+        ]
+      },
+      "properties": {
+        "gbifID": "1087180409",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-08-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fundação Zoo-Botânica de Belo Horizonte/Jardim Botânico",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.879444,
+          -20.75
+        ]
+      },
+      "properties": {
+        "gbifID": "4455833411",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-09-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.603328,
+          -23.100544
+        ]
+      },
+      "properties": {
+        "gbifID": "2425858067",
+        "species": "Solanum velleum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum velleum Thunb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/34/53/00713453.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": null
+        }
+      }
+    }
+  ]
+}

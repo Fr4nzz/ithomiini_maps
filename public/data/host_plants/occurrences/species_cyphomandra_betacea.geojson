@@ -1,0 +1,4752 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Cyphomandra betacea",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Cyphomandra",
+      "species": "Cyphomandra betacea",
+      "slug": "species_cyphomandra_betacea",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 6,
+      "butterfly_taxa": [
+        "Mechanitis lysimnia",
+        "Mechanitis mazaeus",
+        "Mechanitis polymnia",
+        "Placidina euryanassa",
+        "Pteronymia veia",
+        "Thyridia psidii"
+      ],
+      "confidence_counts": {
+        "medium": 5,
+        "low": 1
+      },
+      "occurrence_file": "occurrences/species_cyphomandra_betacea.geojson",
+      "gbif_resolution": {
+        "query": "Cyphomandra betacea",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2928852,
+        "accepted_usage_key": 2930216,
+        "scientific_name": "Cyphomandra betacea (Cav.) Sendtn.",
+        "canonical_name": "Cyphomandra betacea",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:57:27+00:00"
+      },
+      "gbif_taxon_key": 2928852,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Cyphomandra betacea",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2928852,
+      "accepted_usage_key": 2930216,
+      "scientific_name": "Cyphomandra betacea (Cav.) Sendtn.",
+      "canonical_name": "Cyphomandra betacea",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:57:27+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 119
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.75,
+          -18.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1090714331",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-02-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Goiás",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.943611,
+          19.513056
+        ]
+      },
+      "properties": {
+        "gbifID": "2629475835",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-11-20",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.094444,
+          15.079444
+        ]
+      },
+      "properties": {
+        "gbifID": "2629676641",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-01-23",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.983889,
+          19.513056
+        ]
+      },
+      "properties": {
+        "gbifID": "2629659812",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-04-20",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.9025,
+          19.499444
+        ]
+      },
+      "properties": {
+        "gbifID": "2629574387",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-06-15",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.207222,
+          19.832222
+        ]
+      },
+      "properties": {
+        "gbifID": "2629645599",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-28",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.944167,
+          19.513056
+        ]
+      },
+      "properties": {
+        "gbifID": "2629557052",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-12",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.0,
+          16.183333
+        ]
+      },
+      "properties": {
+        "gbifID": "2629755649",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-05",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.285,
+          19.841389
+        ]
+      },
+      "properties": {
+        "gbifID": "2629765899",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-09",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.920555,
+          19.548056
+        ]
+      },
+      "properties": {
+        "gbifID": "2629731302",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-15",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.896111,
+          19.447778
+        ]
+      },
+      "properties": {
+        "gbifID": "2629565648",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-05-17",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.117997,
+          -13.302021
+        ]
+      },
+      "properties": {
+        "gbifID": "5070680358",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "2500.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1963-09-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Indiana University Herbarium",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "The Trustees of Indiana University"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.476945,
+          16.871672
+        ]
+      },
+      "properties": {
+        "gbifID": "1895520595",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "10.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-08-11",
+        "country": null,
+        "datasetName": "Catálogo electrónico de especímenes depositados en el Herbario de la Universidad de Texas en Austin, Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.570287,
+          15.550833
+        ]
+      },
+      "properties": {
+        "gbifID": "1895520603",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "250.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1945-03-06",
+        "country": null,
+        "datasetName": "Catálogo electrónico de especímenes depositados en el Herbario de la Universidad de Texas en Austin, Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.920585,
+          19.547681
+        ]
+      },
+      "properties": {
+        "gbifID": "1895520608",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "510.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-06-09",
+        "country": null,
+        "datasetName": "Catálogo electrónico de especímenes depositados en el Herbario de la Universidad de Texas en Austin, Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.932717,
+          19.525086
+        ]
+      },
+      "properties": {
+        "gbifID": "1895520597",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-11-20",
+        "country": null,
+        "datasetName": "Catálogo electrónico de especímenes depositados en el Herbario de la Universidad de Texas en Austin, Fase IV",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.5,
+          -0.11666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031412684",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-12-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.73333,
+          -1.21666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262243632",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-06-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.51305,
+          -20.76
+        ]
+      },
+      "properties": {
+        "gbifID": "1260806107",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.53333,
+          -22.23333
+        ]
+      },
+      "properties": {
+        "gbifID": "2514650343",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/L.2864318/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.2,
+          -21.4667
+        ]
+      },
+      "properties": {
+        "gbifID": "1321087763",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-10-04",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12644098&h=2000",
+            "references": null,
+            "title": "00641501.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.53333,
+          -22.25
+        ]
+      },
+      "properties": {
+        "gbifID": "2515514489",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-10-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1728981/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.6667,
+          -15.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1320332406",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-12-08",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12660413&h=2000",
+            "references": null,
+            "title": "00641504.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.9583,
+          -18.8667
+        ]
+      },
+      "properties": {
+        "gbifID": "1319848324",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-12-27",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12644406&h=2000",
+            "references": null,
+            "title": "00641502.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.5333,
+          -22.2333
+        ]
+      },
+      "properties": {
+        "gbifID": "1321490712",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-06",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12654606&h=2000",
+            "references": null,
+            "title": "00641503.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.58,
+          -10.58
+        ]
+      },
+      "properties": {
+        "gbifID": "1852147693",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-03-10",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12647349&h=2000",
+            "references": null,
+            "title": "02840969.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.95,
+          -5.97
+        ]
+      },
+      "properties": {
+        "gbifID": "1852118986",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-03",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12643246&h=2000",
+            "references": null,
+            "title": "02840970.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.034444,
+          -13.382778
+        ]
+      },
+      "properties": {
+        "gbifID": "1424505108",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-03-29",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/93/41/29/00934129.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.142222,
+          14.632778
+        ]
+      },
+      "properties": {
+        "gbifID": "3306070335",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-03-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad del Valle de Guatemala",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.495833,
+          14.570278
+        ]
+      },
+      "properties": {
+        "gbifID": "3306070344",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-11-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad del Valle de Guatemala",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.46,
+          19.923333
+        ]
+      },
+      "properties": {
+        "gbifID": "2418033849",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-05-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Chico State Herbarium",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/cch2/CHSC_VascularPlants/CHSC106/CHSC106718_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "CC BY-NC-SA (Attribution-NonCommercial-ShareAlike)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.866667,
+          -12.9
+        ]
+      },
+      "properties": {
+        "gbifID": "2997304681",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-06-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.9333,
+          19.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1936103342",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-11-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Real Jardín Botánico (CSIC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.725,
+          -18.537222
+        ]
+      },
+      "properties": {
+        "gbifID": "1087230805",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-09-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.083333,
+          -19.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1213546811",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-11-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.088056,
+          -29.755
+        ]
+      },
+      "properties": {
+        "gbifID": "1090612212",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.55,
+          -17.83333
+        ]
+      },
+      "properties": {
+        "gbifID": "351868572",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museum of Evolution, Uppsala University",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.11667,
+          -18.46667
+        ]
+      },
+      "properties": {
+        "gbifID": "351868612",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-06-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museum of Evolution, Uppsala University",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.2,
+          -17.86667
+        ]
+      },
+      "properties": {
+        "gbifID": "351868556",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museum of Evolution, Uppsala University",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.75,
+          -17.75
+        ]
+      },
+      "properties": {
+        "gbifID": "351868574",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museum of Evolution, Uppsala University",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.243,
+          34.052
+        ]
+      },
+      "properties": {
+        "gbifID": "2572937068",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "43952.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Desert Botanical Garden Herbarium",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/seinet/swnode/DES/DES00090/DES00090969.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Desert Botanical Garden Herbarium (DES-)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.86667,
+          -12.9
+        ]
+      },
+      "properties": {
+        "gbifID": "437246620",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-06-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/14413650980811zRAWa02jR1nMzb2",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.13,
+          -6.58
+        ]
+      },
+      "properties": {
+        "gbifID": "3033623287",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "3421.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-05-28",
+        "country": null,
+        "datasetName": "Col·lecció de Cormòfits de l'herbari BCN",
+        "publisher": "Herbario BCN (CeDocBiV-Univ. de Barcelona)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.46484,
+          -25.00832
+        ]
+      },
+      "properties": {
+        "gbifID": "2269390222",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-11-01",
+        "country": null,
+        "datasetName": "V",
+        "publisher": "Universidad de Chile",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.757222,
+          -22.471944
+        ]
+      },
+      "properties": {
+        "gbifID": "2252396449",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-07-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Multidisciplinario de Biología Vegetal - IMBIV",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.366,
+          -2.166
+        ]
+      },
+      "properties": {
+        "gbifID": "47754026",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-07-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.93333,
+          19.5
+        ]
+      },
+      "properties": {
+        "gbifID": "2807641333",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-11-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of Texas at Austin, Biodiversity Collections",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.896944,
+          21.1525
+        ]
+      },
+      "properties": {
+        "gbifID": "1894705574",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-04-25",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase 3 (Chapulhuacán y Pisaflores)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.899722,
+          21.151389
+        ]
+      },
+      "properties": {
+        "gbifID": "1894705578",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-28",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase 3 (Chapulhuacán y Pisaflores)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.883611,
+          21.175833
+        ]
+      },
+      "properties": {
+        "gbifID": "1894705580",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-08-22",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase 3 (Chapulhuacán y Pisaflores)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.61,
+          20.635
+        ]
+      },
+      "properties": {
+        "gbifID": "1895676508",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-01",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase II (Tlahuelompa y Eloxochitlán)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.591944,
+          20.647778
+        ]
+      },
+      "properties": {
+        "gbifID": "1895676518",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-10-15",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase II (Tlahuelompa y Eloxochitlán)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.7,
+          20.756667
+        ]
+      },
+      "properties": {
+        "gbifID": "1895677275",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-06-29",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase II (Tlahuelompa y Eloxochitlán)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.638889,
+          16.851111
+        ]
+      },
+      "properties": {
+        "gbifID": "3306425963",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-02-05",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.481944,
+          16.865278
+        ]
+      },
+      "properties": {
+        "gbifID": "3306433091",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-10-23",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.391667,
+          16.972222
+        ]
+      },
+      "properties": {
+        "gbifID": "3306432801",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-11-25",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.570833,
+          16.888611
+        ]
+      },
+      "properties": {
+        "gbifID": "3306424543",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-12-10",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.429167,
+          16.947222
+        ]
+      },
+      "properties": {
+        "gbifID": "3306429394",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-07-16",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.491667,
+          16.876111
+        ]
+      },
+      "properties": {
+        "gbifID": "3306428473",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-01-14",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.486111,
+          16.85
+        ]
+      },
+      "properties": {
+        "gbifID": "3306426175",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-11-26",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.408333,
+          16.875
+        ]
+      },
+      "properties": {
+        "gbifID": "3306431697",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-03-23",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.0,
+          16.183
+        ]
+      },
+      "properties": {
+        "gbifID": "3307821952",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-05",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.933,
+          19.5
+        ]
+      },
+      "properties": {
+        "gbifID": "3308528892",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-05-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -100.374,
+          19.421
+        ]
+      },
+      "properties": {
+        "gbifID": "3308087811",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-26",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.89694,
+          21.1525
+        ]
+      },
+      "properties": {
+        "gbifID": "3308619197",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-04-25",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.89972,
+          21.15139
+        ]
+      },
+      "properties": {
+        "gbifID": "3308624050",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-28",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.25,
+          13.667
+        ]
+      },
+      "properties": {
+        "gbifID": "3307948612",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-13",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.736944,
+          19.97
+        ]
+      },
+      "properties": {
+        "gbifID": "3307833008",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-06",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -102.05872,
+          19.42006
+        ]
+      },
+      "properties": {
+        "gbifID": "3308199452",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "5280.02",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_MISMATCH",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.433,
+          3.75
+        ]
+      },
+      "properties": {
+        "gbifID": "3308410021",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-10-15",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "CONTINENT_COORDINATE_MISMATCH",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.2,
+          19.867
+        ]
+      },
+      "properties": {
+        "gbifID": "3308103297",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-06-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.437222,
+          19.919722
+        ]
+      },
+      "properties": {
+        "gbifID": "1895963524",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-10-06",
+        "country": null,
+        "datasetName": "Actualización e incremento de la base de datos del Herbario de la Benemérita Universidad Autónoma de Puebla",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.7,
+          -22.98333
+        ]
+      },
+      "properties": {
+        "gbifID": "1144664945",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "1500.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-03-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "SwissNatColl",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.491667,
+          16.875
+        ]
+      },
+      "properties": {
+        "gbifID": "3307557587",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1965-08-11",
+        "country": null,
+        "datasetName": "Sistematización del Herbario Nacional Forestal Biól Luciano Vela Gálvez",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.697222,
+          20.860833
+        ]
+      },
+      "properties": {
+        "gbifID": "1894054005",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Bosque Mesófilo de Montaña de México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.898611,
+          19.435556
+        ]
+      },
+      "properties": {
+        "gbifID": "1894054034",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "MATERIAL_CITATION",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Bosque Mesófilo de Montaña de México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -99.32,
+          21.181667
+        ]
+      },
+      "properties": {
+        "gbifID": "1893656537",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-09-04",
+        "country": null,
+        "datasetName": "Etapa final de la captura y catalogación del Herbario del Instituto de Ecología, A.C., Centro Regional del Bajío",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -99.473333,
+          21.221667
+        ]
+      },
+      "properties": {
+        "gbifID": "1893656574",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-02-01",
+        "country": null,
+        "datasetName": "Etapa final de la captura y catalogación del Herbario del Instituto de Ecología, A.C., Centro Regional del Bajío",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.573611,
+          16.963889
+        ]
+      },
+      "properties": {
+        "gbifID": "1895137571",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-02-28",
+        "country": null,
+        "datasetName": "Sistematización de la colección entomológica y actualización de la colección del herbario CHIP del Instituto de Historia Natural y Ecología (IHNE), Chiapas",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.565555,
+          17.010833
+        ]
+      },
+      "properties": {
+        "gbifID": "1895137614",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-06-08",
+        "country": null,
+        "datasetName": "Sistematización de la colección entomológica y actualización de la colección del herbario CHIP del Instituto de Historia Natural y Ecología (IHNE), Chiapas",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.256944,
+          20.335833
+        ]
+      },
+      "properties": {
+        "gbifID": "1895035934",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-09-03",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase I (Tenango de Doria y Tlanchinol)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.608333,
+          20.975
+        ]
+      },
+      "properties": {
+        "gbifID": "1895035942",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-01-22",
+        "country": null,
+        "datasetName": "Florística y biogeografía de algunos bosques mesófilos de la Huasteca Hidalguense: Fase I (Tenango de Doria y Tlanchinol)",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.2,
+          -21.466667
+        ]
+      },
+      "properties": {
+        "gbifID": "1042653431",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.09,
+          15.772778
+        ]
+      },
+      "properties": {
+        "gbifID": "2630147794",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-07-17",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.624417,
+          15.422194
+        ]
+      },
+      "properties": {
+        "gbifID": "2630157089",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-11-18",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.943611,
+          15.722778
+        ]
+      },
+      "properties": {
+        "gbifID": "2630150232",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-09-01",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.100833,
+          16.794444
+        ]
+      },
+      "properties": {
+        "gbifID": "2630159438",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-27",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.944639,
+          17.109139
+        ]
+      },
+      "properties": {
+        "gbifID": "1897489000",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-12-11",
+        "country": null,
+        "datasetName": "Inventario etnoflorístico en regiones oaxaqueñas con gran biodiversidad",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -99.201245,
+          21.565285
+        ]
+      },
+      "properties": {
+        "gbifID": "2629423318",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "1580.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-02-01",
+        "country": null,
+        "datasetName": "Digitalización de la colección científica del Herbario de Querétaro \"Dr. Jerzy Rzedowski\" QMEX",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -99.060722,
+          21.210833
+        ]
+      },
+      "properties": {
+        "gbifID": "2629431401",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-09-04",
+        "country": null,
+        "datasetName": "Digitalización de la colección científica del Herbario de Querétaro \"Dr. Jerzy Rzedowski\" QMEX",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.943874,
+          19.513709
+        ]
+      },
+      "properties": {
+        "gbifID": "5101711920",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-11-20",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.207491,
+          19.832859
+        ]
+      },
+      "properties": {
+        "gbifID": "5101874053",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-28",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.984153,
+          19.513708
+        ]
+      },
+      "properties": {
+        "gbifID": "5101855680",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-04-20",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.94443,
+          19.513709
+        ]
+      },
+      "properties": {
+        "gbifID": "5101719833",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-12",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.0946,
+          15.08033
+        ]
+      },
+      "properties": {
+        "gbifID": "5101591327",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-01-23",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.920818,
+          19.548707
+        ]
+      },
+      "properties": {
+        "gbifID": "5101702627",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-15",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.08667,
+          19.11778
+        ]
+      },
+      "properties": {
+        "gbifID": "2422387998",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-08-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California Riverside",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.34,
+          33.9975
+        ]
+      },
+      "properties": {
+        "gbifID": "2422531551",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California Riverside",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.21888,
+          -16.92416
+        ]
+      },
+      "properties": {
+        "gbifID": "1260778815",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-01-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.68333,
+          0.13333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249108",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-11-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.8,
+          -18.1
+        ]
+      },
+      "properties": {
+        "gbifID": "1258965995",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.53472,
+          -17.81805
+        ]
+      },
+      "properties": {
+        "gbifID": "1258965518",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.73333,
+          -17.73333
+        ]
+      },
+      "properties": {
+        "gbifID": "4062223752",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-07-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.36666,
+          -2.16666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249115",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.81666,
+          -17.23333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260785447",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-02-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.75,
+          -2.76667
+        ]
+      },
+      "properties": {
+        "gbifID": "210248932",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Bioversity International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7667,
+          -2.88333
+        ]
+      },
+      "properties": {
+        "gbifID": "210248936",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Bioversity International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.4,
+          0.05
+        ]
+      },
+      "properties": {
+        "gbifID": "210248926",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Bioversity International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.2167,
+          -4.0
+        ]
+      },
+      "properties": {
+        "gbifID": "210248942",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Bioversity International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8758,
+          -3.8675
+        ]
+      },
+      "properties": {
+        "gbifID": "210248938",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Bioversity International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8992,
+          -4.03028
+        ]
+      },
+      "properties": {
+        "gbifID": "210248939",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Bioversity International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.8167,
+          -2.2
+        ]
+      },
+      "properties": {
+        "gbifID": "210248931",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Bioversity International",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.7,
+          -22.98
+        ]
+      },
+      "properties": {
+        "gbifID": "416896918",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botánica Darwinion - CONICET",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.718194,
+          5.714417
+        ]
+      },
+      "properties": {
+        "gbifID": "1707563144",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-10-06",
+        "country": null,
+        "datasetName": "Conservación y uso sostenible de la biodiversidad en los Andes Colombianos. Ejecutó: CENICAFE. Financió: Instituto Alexander von Humboldt",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5,
+          7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "3032732343",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1948-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de la Salle",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "MULTIMEDIA_URI_INVALID"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.130361,
+          1.477139
+        ]
+      },
+      "properties": {
+        "gbifID": "768780228",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2012-11-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Federación Nacional de Cafeteros de Colombia",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.11175,
+          1.57075
+        ]
+      },
+      "properties": {
+        "gbifID": "768780265",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2012-11-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Federación Nacional de Cafeteros de Colombia",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.031944,
+          1.649806
+        ]
+      },
+      "properties": {
+        "gbifID": "768780715",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2012-11-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Federación Nacional de Cafeteros de Colombia",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.93167,
+          -32.48917
+        ]
+      },
+      "properties": {
+        "gbifID": "1144593196",
+        "species": "Solanum betaceum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra betacea (Cav.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "SwissNatColl",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "http://purl.dlib.indiana.edu/iudl/herbarium/full/IND-0104730",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "The Trustees of Indiana University"
+        }
+      }
+    }
+  ]
+}

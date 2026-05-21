@@ -1,0 +1,1120 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Drymonia oxysepala",
+      "rank": "species",
+      "family": "Gesneriaceae",
+      "genus": "Drymonia",
+      "species": "Drymonia oxysepala",
+      "slug": "species_drymonia_oxysepala",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Hyposcada anchiala"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_drymonia_oxysepala.geojson",
+      "gbif_resolution": {
+        "query": "Drymonia oxysepala",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 5590696,
+        "accepted_usage_key": null,
+        "scientific_name": "Drymonia oxysepala Leeuwenb.",
+        "canonical_name": "Drymonia oxysepala",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Gesneriaceae",
+        "genus": "Drymonia",
+        "resolved_at": "2026-05-21T03:57:38+00:00"
+      },
+      "gbif_taxon_key": 5590696,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Drymonia oxysepala",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 5590696,
+      "accepted_usage_key": null,
+      "scientific_name": "Drymonia oxysepala Leeuwenb.",
+      "canonical_name": "Drymonia oxysepala",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Gesneriaceae",
+      "genus": "Drymonia",
+      "resolved_at": "2026-05-21T03:57:38+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 26
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.5,
+          -8.183333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261195659",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-01-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.333333,
+          -10.2
+        ]
+      },
+      "properties": {
+        "gbifID": "4032126627",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-11-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.83333,
+          -1.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1259578404",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-04-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.806389,
+          -5.8225
+        ]
+      },
+      "properties": {
+        "gbifID": "2456364307",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-06-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.990833,
+          -7.341667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031819897",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-09-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101607000/AD140C6A-16DF-4A11-88D6-3B09A96A726A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101607034",
+            "title": "Vásquez Martínez - 42095 - Peru",
+            "creator": "Rocio Del P.",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101607000/E1911AA3-AA0A-4C92-948B-2E39BDADF0E8.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101607035",
+            "title": "Vásquez Martínez - 42095 - Peru",
+            "creator": "Rocio Del P.",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.991389,
+          -7.359167
+        ]
+      },
+      "properties": {
+        "gbifID": "6221977313",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2021-05-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.41666,
+          -9.66666
+        ]
+      },
+      "properties": {
+        "gbifID": "1261200628",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-10-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.328889,
+          -10.194722
+        ]
+      },
+      "properties": {
+        "gbifID": "4031713714",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-11-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -1.06666
+        ]
+      },
+      "properties": {
+        "gbifID": "1261195853",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-03-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.5,
+          -1.13333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031498302",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-08-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.925278,
+          -3.019444
+        ]
+      },
+      "properties": {
+        "gbifID": "4031629634",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.7726,
+          -6.2741
+        ]
+      },
+      "properties": {
+        "gbifID": "1261195655",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-05-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -1.066667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031379221",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-05-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.9,
+          -16.42
+        ]
+      },
+      "properties": {
+        "gbifID": "1320710201",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-11-24",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12849315&h=2000",
+            "references": null,
+            "title": "00817929.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.52,
+          -9.07
+        ]
+      },
+      "properties": {
+        "gbifID": "1318714319",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-09-27",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12849378&h=2000",
+            "references": null,
+            "title": "00961806.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -1.07
+        ]
+      },
+      "properties": {
+        "gbifID": "1321686539",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-09-04",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12849142&h=2000",
+            "references": null,
+            "title": "00581314.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.8064,
+          -5.8225
+        ]
+      },
+      "properties": {
+        "gbifID": "1828922181",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-06-06",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13026390&h=2000",
+            "references": null,
+            "title": "01940896.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.4,
+          -5.85
+        ]
+      },
+      "properties": {
+        "gbifID": "1321297058",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-11-06",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12849196&h=2000",
+            "references": null,
+            "title": "00590801.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.7483,
+          -5.6658
+        ]
+      },
+      "properties": {
+        "gbifID": "1828932804",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-06-05",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13026532&h=2000",
+            "references": null,
+            "title": "01940919.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.35,
+          -10.53
+        ]
+      },
+      "properties": {
+        "gbifID": "1317818841",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-08-17",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15802714&h=2000",
+            "references": null,
+            "title": "00817554.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.4383,
+          -10.4464
+        ]
+      },
+      "properties": {
+        "gbifID": "1321884381",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-02-12",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12849404&h=2000",
+            "references": null,
+            "title": "01106899.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.730683,
+          -7.179499
+        ]
+      },
+      "properties": {
+        "gbifID": "1929517680",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1936-04",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/75/262/v-291-00312915.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.0,
+          -4.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228241618",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-05-16",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.14,
+          -9.1839
+        ]
+      },
+      "properties": {
+        "gbifID": "1228365088",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1971-09-10",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.8333,
+          -7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228213502",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1936-04",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K006272720",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.0,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "5051847818",
+        "species": "Drymonia oxysepala",
+        "genus": "Drymonia",
+        "family": "Gesneriaceae",
+        "scientificName": "Drymonia oxysepala Leeuwenb.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1960-09-16T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/92e4e13f079ca77a3b0d9c7aa042ad24.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K006272720",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    }
+  ]
+}

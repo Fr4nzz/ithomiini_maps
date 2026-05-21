@@ -1,0 +1,676 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Cyphomandra diversifolia",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Cyphomandra",
+      "species": "Cyphomandra diversifolia",
+      "slug": "species_cyphomandra_diversifolia",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Thyridia psidii"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_cyphomandra_diversifolia.geojson",
+      "gbif_resolution": {
+        "query": "Cyphomandra diversifolia",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2930189,
+        "accepted_usage_key": 5792748,
+        "scientific_name": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "canonical_name": "Cyphomandra diversifolia",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:57:30+00:00"
+      },
+      "gbif_taxon_key": 2930189,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Cyphomandra diversifolia",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2930189,
+      "accepted_usage_key": 5792748,
+      "scientific_name": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+      "canonical_name": "Cyphomandra diversifolia",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:57:30+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 15
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.12027,
+          9.24527
+        ]
+      },
+      "properties": {
+        "gbifID": "1259383232",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.873889,
+          10.5425
+        ]
+      },
+      "properties": {
+        "gbifID": "4031387066",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.194038,
+          8.559437
+        ]
+      },
+      "properties": {
+        "gbifID": "1260298379",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.69,
+          9.62
+        ]
+      },
+      "properties": {
+        "gbifID": "4031926088",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-02-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.166667,
+          8.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031881977",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-07-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.134444,
+          9.256944
+        ]
+      },
+      "properties": {
+        "gbifID": "1258977931",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-01-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.65,
+          10.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1259090292",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.216667,
+          8.683333
+        ]
+      },
+      "properties": {
+        "gbifID": "3884135671",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "500.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-08-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Biologiezentrum Linz Oberoesterreich",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://www.zobodat.at/bilder/belege/00006149.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.68,
+          10.67
+        ]
+      },
+      "properties": {
+        "gbifID": "1852154664",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-17",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12663275&h=2000",
+            "references": null,
+            "title": "02840994.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.121667,
+          8.6675
+        ]
+      },
+      "properties": {
+        "gbifID": "4905654184",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.8611,
+          8.27243
+        ]
+      },
+      "properties": {
+        "gbifID": "1801094278",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-03-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+            "references": null,
+            "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2,
+          9.216667
+        ]
+      },
+      "properties": {
+        "gbifID": "1055415389",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-07-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_HIGHERRANK"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/8c8fb48f-42f1-47fd-9e6a-bb98c4107a01",
+            "references": null,
+            "title": "BM000778002",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.189722,
+          8.817222
+        ]
+      },
+      "properties": {
+        "gbifID": "1253633304",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-12-07",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.691667,
+          9.625
+        ]
+      },
+      "properties": {
+        "gbifID": "1253689812",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-02-15",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.194167,
+          8.559444
+        ]
+      },
+      "properties": {
+        "gbifID": "1273757832",
+        "species": "Solanum diversifolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Cyphomandra diversifolia (Humb. & Bonpl. ex Dunal) Bitter",
+        "coordinateUncertaintyInMeters": "1.56",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "1985-04-09/1985-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Jardín Botánico de Cartagena \"Guillermo Piñeres\"",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/110669.jpg",
+          "references": null,
+          "title": "Cyphomandra diversifolia (Dunal) Bitter - Panama, Chiriquí Prov. (BARCODE: 110669) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    }
+  ]
+}

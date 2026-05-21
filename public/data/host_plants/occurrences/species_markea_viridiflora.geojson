@@ -1,0 +1,606 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Markea viridiflora",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Markea",
+      "species": "Markea viridiflora",
+      "slug": "species_markea_viridiflora",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 3,
+      "butterfly_taxa": [
+        "Melinaea ethra",
+        "Melinaea ludovica",
+        "Pteronymia sylvo"
+      ],
+      "confidence_counts": {
+        "medium": 3
+      },
+      "occurrence_file": "occurrences/species_markea_viridiflora.geojson",
+      "gbif_resolution": {
+        "query": "Markea viridiflora",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3801155,
+        "accepted_usage_key": 7299241,
+        "scientific_name": "Markea viridiflora (Sims) Ducke",
+        "canonical_name": "Markea viridiflora",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Dyssochroma",
+        "resolved_at": "2026-05-21T03:57:55+00:00"
+      },
+      "gbif_taxon_key": 3801155,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Markea viridiflora",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3801155,
+      "accepted_usage_key": 7299241,
+      "scientific_name": "Markea viridiflora (Sims) Ducke",
+      "canonical_name": "Markea viridiflora",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Dyssochroma",
+      "resolved_at": "2026-05-21T03:57:55+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 13
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.32,
+          -15.096667
+        ]
+      },
+      "properties": {
+        "gbifID": "1258042492",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-06-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+            "title": "Amorim - 3544 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.722222,
+          -13.597222
+        ]
+      },
+      "properties": {
+        "gbifID": "2997500531",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.530833,
+          -17.039444
+        ]
+      },
+      "properties": {
+        "gbifID": "2997487550",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-01-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.75,
+          -19.92
+        ]
+      },
+      "properties": {
+        "gbifID": "2997912798",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-02-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.3,
+          -23.75
+        ]
+      },
+      "properties": {
+        "gbifID": "2997495574",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-11-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.17,
+          -15.17
+        ]
+      },
+      "properties": {
+        "gbifID": "2998002231",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-02-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.049167,
+          -14.789167
+        ]
+      },
+      "properties": {
+        "gbifID": "2997479540",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-02-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.92,
+          -24.37
+        ]
+      },
+      "properties": {
+        "gbifID": "2997981582",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-09-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.049087,
+          -14.792907
+        ]
+      },
+      "properties": {
+        "gbifID": "1930831876",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-02-16",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1608/002/00656130.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.530718,
+          -17.043155
+        ]
+      },
+      "properties": {
+        "gbifID": "1929564477",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-01-23",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1608/003/00656131.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.32,
+          -15.0967
+        ]
+      },
+      "properties": {
+        "gbifID": "1929002804",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-06-27",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1079/886/01805757.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.924681,
+          -24.202432
+        ]
+      },
+      "properties": {
+        "gbifID": "1929626383",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-09-04",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1608/006/00656134.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.316667,
+          -23.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "2565918945",
+        "species": "Dyssochroma viridiflorum",
+        "genus": "Dyssochroma",
+        "family": "Solanaceae",
+        "scientificName": "Markea viridiflora (Sims) Ducke",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-11-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botânica, São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100441000/248DA120-1CD1-4EB8-B672-4F12698EDBE4.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100441973",
+          "title": "Amorim - 3544 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    }
+  ]
+}

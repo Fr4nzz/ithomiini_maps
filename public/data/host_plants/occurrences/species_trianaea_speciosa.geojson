@@ -1,0 +1,1720 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Trianaea speciosa",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Trianaea",
+      "species": "Trianaea speciosa",
+      "slug": "species_trianaea_speciosa",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Melinaea mothone"
+      ],
+      "confidence_counts": {
+        "high": 1
+      },
+      "occurrence_file": "occurrences/species_trianaea_speciosa.geojson",
+      "gbif_resolution": {
+        "query": "Trianaea speciosa",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 7949375,
+        "accepted_usage_key": 3799505,
+        "scientific_name": "Trianaea speciosa (Drake) Soler.",
+        "canonical_name": "Trianaea speciosa",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Poortmannia",
+        "resolved_at": "2026-05-21T11:25:52+00:00"
+      },
+      "gbif_taxon_key": 7949375,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Trianaea speciosa",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 7949375,
+      "accepted_usage_key": 3799505,
+      "scientific_name": "Trianaea speciosa (Drake) Soler.",
+      "canonical_name": "Trianaea speciosa",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Poortmannia",
+      "resolved_at": "2026-05-21T11:25:52+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0005694-260519110011954",
+      "download_doi": "10.15468/dl.k7s3y7",
+      "download_doi_url": "https://doi.org/10.15468/dl.k7s3y7",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 42
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:25+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.07833,
+          -4.47278
+        ]
+      },
+      "properties": {
+        "gbifID": "5920009645",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2025-03-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.739667,
+          -5.663667
+        ]
+      },
+      "properties": {
+        "gbifID": "5082964848",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-11-25T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001808403",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.580833,
+          -6.243333
+        ]
+      },
+      "properties": {
+        "gbifID": "5082962845",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-08-21T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/d76dde479595fe1918c7fa6f55cc6fd7.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001808396",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.0,
+          -4.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "5082960850",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-06T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/0c6944107ba1e3207be0ff12bdcbd419.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001808398",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.866667,
+          -9.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "5082954832",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-12-27T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/0917afc82259a04a591e5c357bfaa239.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001808404",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.654444,
+          -9.992222
+        ]
+      },
+      "properties": {
+        "gbifID": "5082952834",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-05-24T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/ecef327f9d43ecf513f1dc952f0e8151.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001808405",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.26666,
+          1.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061774702",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.45,
+          0.13333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061011723",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-11-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.63333,
+          0.01666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031472974",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-01-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.90031,
+          1.69914
+        ]
+      },
+      "properties": {
+        "gbifID": "3114993673",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-03-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.909278,
+          1.654806
+        ]
+      },
+      "properties": {
+        "gbifID": "3068342591",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-01-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.35,
+          -0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "2859502544",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.873417,
+          16.549417
+        ]
+      },
+      "properties": {
+        "gbifID": "2630152018",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-02-23",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.633333,
+          0.125
+        ]
+      },
+      "properties": {
+        "gbifID": "2626948632",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-11-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.86667,
+          -9.08333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517616811",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-12-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1751404/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.73333,
+          -0.06667
+        ]
+      },
+      "properties": {
+        "gbifID": "2515682658",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1751403/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.6725,
+          3.348444
+        ]
+      },
+      "properties": {
+        "gbifID": "1934700953",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-12-20",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.900306,
+          1.699139
+        ]
+      },
+      "properties": {
+        "gbifID": "1932891348",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-03-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.73,
+          -0.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1852132844",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-07",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12660972&h=2000",
+            "references": null,
+            "title": "02842776.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99508,
+          -0.42496
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369297",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99713,
+          -0.41942
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369296",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99715,
+          -0.41728
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369295",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99478,
+          -0.42882
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369294",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99498,
+          -0.42467
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369293",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.98714,
+          -0.41212
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369287",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99118,
+          -0.41946
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369286",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99959,
+          -0.41815
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369277",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.99105,
+          -0.41978
+        ]
+      },
+      "properties": {
+        "gbifID": "1503369276",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.733333,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1314852892",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.01666,
+          1.08333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262255593",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-12-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.51666,
+          -13.15
+        ]
+      },
+      "properties": {
+        "gbifID": "1261514940",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-10-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.365,
+          -5.624722
+        ]
+      },
+      "properties": {
+        "gbifID": "1261490430",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-10-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.43333,
+          -3.26666
+        ]
+      },
+      "properties": {
+        "gbifID": "1258413318",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-01-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.06666,
+          -3.98333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258336189",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-04-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.654528,
+          -6.992194
+        ]
+      },
+      "properties": {
+        "gbifID": "1257748681",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-05-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COLLECTION_MATCH_NONE",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100446000/B388ED92-1C36-4A9F-A992-C3606D1BF5A5.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100446647",
+            "title": "Paniagua Zambrana - 8476 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.72,
+          -5.67
+        ]
+      },
+      "properties": {
+        "gbifID": "1228603064",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-07-01",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_COLLECTION",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.8333,
+          2.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1228598647",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1939-07-15",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_COLLECTION",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8333,
+          -9.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1228560832",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-12-27",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_COLLECTION",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.5667,
+          0.66667
+        ]
+      },
+      "properties": {
+        "gbifID": "1099641132",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "3742.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-04-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/44c1e879c29f4006dd5ac61442128caf.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001808403",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.583333,
+          -5.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1057174380",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-07-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/4f1a3692-7f03-42bc-9bb2-74b59297e3c7",
+            "references": null,
+            "title": "000795876",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.716667,
+          -5.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "1057159961",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-07-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/d3995e2e-8575-49c3-ab89-6a048141e99b",
+            "references": null,
+            "title": "000995014",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.767071,
+          -1.427421
+        ]
+      },
+      "properties": {
+        "gbifID": "1055800903",
+        "species": "Poortmannia speciosa",
+        "genus": "Poortmannia",
+        "family": "Solanaceae",
+        "scientificName": "Trianaea speciosa (Drake) Soler.",
+        "coordinateUncertaintyInMeters": "710.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "RECORDED_DATE_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/8d7d471e-ce2e-466a-aaab-252b91108f05",
+            "references": null,
+            "title": "000559395",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    }
+  ]
+}

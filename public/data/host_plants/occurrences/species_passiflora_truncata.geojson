@@ -1,0 +1,1033 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora truncata",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora truncata",
+      "slug": "species_passiflora_truncata",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 3,
+      "butterfly_taxa": [
+        "Dryas iulia",
+        "Heliconius erato",
+        "Heliconius sara"
+      ],
+      "confidence_counts": {
+        "medium": 2,
+        "low": 1
+      },
+      "occurrence_file": "occurrences/species_passiflora_truncata.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora truncata",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3586920,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora truncata Regel",
+        "canonical_name": "Passiflora truncata",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:59+00:00"
+      },
+      "gbif_taxon_key": 3586920,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora truncata",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3586920,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora truncata Regel",
+      "canonical_name": "Passiflora truncata",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:59+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 24
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:21+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.725,
+          5.25833
+        ]
+      },
+      "properties": {
+        "gbifID": "1456348041",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-02-23",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11965049&h=2000",
+            "references": null,
+            "title": "01908550.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.378611,
+          -26.250556
+        ]
+      },
+      "properties": {
+        "gbifID": "5295088898",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-10-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "MULTIMEDIA_URI_INVALID"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.753889,
+          -23.358056
+        ]
+      },
+      "properties": {
+        "gbifID": "4977458074",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-02-12",
+        "country": null,
+        "datasetName": "HRJ - Herbário da UERJ",
+        "publisher": "Universidade do Estado do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.754167,
+          -23.357778
+        ]
+      },
+      "properties": {
+        "gbifID": "4977458072",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-02-12",
+        "country": null,
+        "datasetName": "HRJ - Herbário da UERJ",
+        "publisher": "Universidade do Estado do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.751667,
+          -23.357222
+        ]
+      },
+      "properties": {
+        "gbifID": "4977458075",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-02-12",
+        "country": null,
+        "datasetName": "HRJ - Herbário da UERJ",
+        "publisher": "Universidade do Estado do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.016667,
+          -17.303056
+        ]
+      },
+      "properties": {
+        "gbifID": "2997930375",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-09-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.68,
+          -27.18
+        ]
+      },
+      "properties": {
+        "gbifID": "2996113917",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-12-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.320833,
+          -27.271667
+        ]
+      },
+      "properties": {
+        "gbifID": "2996120912",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-10-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.160278,
+          -27.993889
+        ]
+      },
+      "properties": {
+        "gbifID": "3032969307",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-12-27",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/43/50/57/01435057.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.017248,
+          -17.306849
+        ]
+      },
+      "properties": {
+        "gbifID": "1929462647",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-09-26",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/205/480/v-228-00823228.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.613611,
+          -25.691667
+        ]
+      },
+      "properties": {
+        "gbifID": "6160819622",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2025-11-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Paraná",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63,
+          -23.54
+        ]
+      },
+      "properties": {
+        "gbifID": "1086881785",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.58,
+          -23.31
+        ]
+      },
+      "properties": {
+        "gbifID": "1086902004",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-03-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6361,
+          -23.5475
+        ]
+      },
+      "properties": {
+        "gbifID": "1090564638",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-12-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.5867,
+          -23.3186
+        ]
+      },
+      "properties": {
+        "gbifID": "1090571248",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-03-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.2958,
+          -22.7775
+        ]
+      },
+      "properties": {
+        "gbifID": "1090574384",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-01-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.216,
+          -17.3905
+        ]
+      },
+      "properties": {
+        "gbifID": "2242464997",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-09-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+            "references": null,
+            "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.616667,
+          -23.65
+        ]
+      },
+      "properties": {
+        "gbifID": "1257543304",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-12-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.0,
+          -27.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257606514",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-12-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.212778,
+          -22.949444
+        ]
+      },
+      "properties": {
+        "gbifID": "1257538269",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1874-09-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.2075,
+          -22.902778
+        ]
+      },
+      "properties": {
+        "gbifID": "4062241586",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1832-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.390278,
+          -22.990278
+        ]
+      },
+      "properties": {
+        "gbifID": "4061064343",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1958-10-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.5,
+          -27.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257631337",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1956-11-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.466667,
+          -27.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257631331",
+        "species": "Passiflora truncata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora truncata Regel",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1953-11-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://cdn.plantatlas.org/img/specimens/USF/171483.jpg",
+          "references": null,
+          "title": "Passiflora truncata Regel - Brazil, Goiás (BARCODE: 171483) - USF Herbarium",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "rightsHolder": "University of South Florida Herbarium (USF)"
+        }
+      }
+    }
+  ]
+}

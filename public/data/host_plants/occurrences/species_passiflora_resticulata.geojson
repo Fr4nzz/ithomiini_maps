@@ -1,0 +1,3456 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora resticulata",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora resticulata",
+      "slug": "species_passiflora_resticulata",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Heliconius erato"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_passiflora_resticulata.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora resticulata",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3587668,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora resticulata Mast. & André",
+        "canonical_name": "Passiflora resticulata",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:49+00:00"
+      },
+      "gbif_taxon_key": 3587668,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora resticulata",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3587668,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora resticulata Mast. & André",
+      "canonical_name": "Passiflora resticulata",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:49+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 80
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:21+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.95,
+          0.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031456055",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-03-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/7A3212CC-2D3D-4E43-BB31-840BD904443D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927642",
+            "title": "Vargas López - 1308 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.81666,
+          -7.48333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259215451",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-05-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/6189F515-AE27-477D-9354-C3D49571F468.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927645",
+            "title": "Sagástegui Alva - 15254 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.733333,
+          0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1258344293",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/D65DA6DA-47E6-4E4F-99D7-E2C5EE65F8F8.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927625",
+            "title": "Clark - 3684 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.73333,
+          0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "4031420495",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-10-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/D3B2EE24-0270-426B-A567-5BFC820EDEBB.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927624",
+            "title": "Pitman - 867 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.733333,
+          -1.05
+        ]
+      },
+      "properties": {
+        "gbifID": "4031563903",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/0B57721E-67C5-4D47-9589-E546A4846833.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927640",
+            "title": "Holm-Nielsen - 19969 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.68777,
+          -4.32055
+        ]
+      },
+      "properties": {
+        "gbifID": "1260109388",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-04-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/9C7EE5ED-6E76-4604-A434-6BC6E17CCADD.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927623",
+            "title": "Jørgensen - 560 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.633333,
+          0.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260248403",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-07-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103817000/CB06C8FD-538A-4724-BE94-167940B9D207.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103817392",
+            "title": "Webster - 27879 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.73333,
+          -0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1260247045",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/8F03F92C-02FB-4594-A0CE-445542F93C9A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927630",
+            "title": "Dodson - 14364 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.333333,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1260246869",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/2A9FB644-04E9-4C5E-930F-1C91C676B538.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927631",
+            "title": "Dodson - 14665 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/D5AAE56D-03C6-4189-869C-035DB86CADFC.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927628",
+            "title": "Dodson - 14665 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.196944,
+          0.991389
+        ]
+      },
+      "properties": {
+        "gbifID": "1258678262",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-09-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/AC6E3FF1-5860-4DBD-97FB-E2A90F851FDA.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927637",
+            "title": "Gentry - 26467 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.065278,
+          -0.290833
+        ]
+      },
+      "properties": {
+        "gbifID": "4031685244",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/E87FBABF-4390-4002-8A2B-416D3AAAB90F.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927644",
+            "title": "Ortiz - 22 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.88833,
+          -0.30527
+        ]
+      },
+      "properties": {
+        "gbifID": "1260247498",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-07-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/BE55A469-5A4E-46E9-94EC-DB6B3362FC9F.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927632",
+            "title": "Fallen - 833 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.71111,
+          0.36
+        ]
+      },
+      "properties": {
+        "gbifID": "4032021765",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/DF4B3FFB-9FB1-415B-B36B-B0CF2E0E4932.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927639",
+            "title": "Palacios Cuenca - 13534 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.6,
+          -0.26666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260246917",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-04-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/36A2057E-ECC2-407C-A477-35F1BEE4EA14.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927629",
+            "title": "Dodson - 14165 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.721111,
+          -3.325278
+        ]
+      },
+      "properties": {
+        "gbifID": "4032109958",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-02-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/6049DC59-535C-4409-9575-5501E9D4A401.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927647",
+            "title": "Jørgensen - 2456 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.66666,
+          -2.45
+        ]
+      },
+      "properties": {
+        "gbifID": "1260174730",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-02-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.211111,
+          -0.535
+        ]
+      },
+      "properties": {
+        "gbifID": "4031960839",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-02-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/B941A7E4-53DE-47F1-ADF5-1E41578530B9.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927636",
+            "title": "Dodson - 12388 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.08333,
+          9.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1260246622",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-08-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/05B8FAAB-83A6-4223-8529-91E42DE5A41F.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927622",
+            "title": "GUILLERMO - 4768 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.366667,
+          -0.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260248047",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-03-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/B3F35573-6520-4795-9C2A-B77D488866B2.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927638",
+            "title": "Dodson - 9570 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.65,
+          0.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260148979",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-01-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/812D81D5-A4C8-42B2-B5ED-DA7459B03C16.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927626",
+            "title": "Cerón Martínez - 5944 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.128889,
+          -4.629444
+        ]
+      },
+      "properties": {
+        "gbifID": "4031665931",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-02-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/612753BA-A3CF-4AAD-BBCD-C328D4171887.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927646",
+            "title": "Jørgensen - 2452 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.842222,
+          -0.354444
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624280",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.4875,
+          -4.252778
+        ]
+      },
+      "properties": {
+        "gbifID": "4031530867",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/FCEFA9A1-8006-4FCD-BC97-2E7B8C909134.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927643",
+            "title": "Jaramillo Asanza - 10373 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.780139,
+          0.059583
+        ]
+      },
+      "properties": {
+        "gbifID": "4031723674",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-04-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/E600FFC4-4F95-47F3-ABFB-9565EED2B000.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927619",
+            "title": "Ulloa Ulloa - 2207 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.86666,
+          -3.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260104598",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/F8DC8D9A-0731-48A9-AAE7-FD94D14BFB06.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927641",
+            "title": "Vásquez Martínez - 18282 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.78333,
+          -0.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1260148883",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-03-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/73611BA7-BA42-434A-AC00-77AE93C79E79.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927627",
+            "title": "Cerón Martínez - 8946 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.333333,
+          -0.6
+        ]
+      },
+      "properties": {
+        "gbifID": "4031366857",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-02-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103927000/FAFDA067-FDF1-4B7A-894F-587ECDE9C0AB.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103927634",
+            "title": "Gentry - 9920 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.73,
+          0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "3357312537",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-02",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15472454&h=2000",
+            "references": null,
+            "title": "00480591.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.58,
+          -0.08
+        ]
+      },
+      "properties": {
+        "gbifID": "1321679655",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-01-20",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15460498&h=2000",
+            "references": null,
+            "title": "01203039.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=10474526&h=2000",
+            "references": null,
+            "title": "01203039.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.633333,
+          0.125
+        ]
+      },
+      "properties": {
+        "gbifID": "2626933339",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-08-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.633333,
+          0.116667
+        ]
+      },
+      "properties": {
+        "gbifID": "2626934314",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-09-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.65,
+          0.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "2626948181",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-07-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.633333,
+          0.025
+        ]
+      },
+      "properties": {
+        "gbifID": "2626937390",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-06-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.4167,
+          0.3667
+        ]
+      },
+      "properties": {
+        "gbifID": "1228457072",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1949-05-28",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.033,
+          0.1
+        ]
+      },
+      "properties": {
+        "gbifID": "47821549",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.756,
+          -1.438
+        ]
+      },
+      "properties": {
+        "gbifID": "2242465680",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-02-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USF Water Institute",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.plantatlas.org/img/specimens/USF/150275.jpg",
+            "references": null,
+            "title": "Passiflora resticulata Mast. & André - Ecuador, Los Ríos Prov. (BARCODE: 150275) - USF Herbarium",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "rightsHolder": "University of South Florida Herbarium (USF)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.466667,
+          0.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624244",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-07-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.666667,
+          0.116667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624320",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.723889,
+          -3.655833
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624213",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.95,
+          -0.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624275",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.866667,
+          2.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "4061736947",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1922-07-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.252778,
+          -0.9825
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624309",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1967-06-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.7,
+          3.516667
+        ]
+      },
+      "properties": {
+        "gbifID": "4061538695",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.766667,
+          -0.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "2268887938",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-05-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.45,
+          -0.466667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257593339",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1896-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.911111,
+          -0.326111
+        ]
+      },
+      "properties": {
+        "gbifID": "1258374072",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-11-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.429722,
+          4.443889
+        ]
+      },
+      "properties": {
+        "gbifID": "1257593288",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.96666,
+          -0.43333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258379735",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.65,
+          -0.483333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257593346",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.752778,
+          -0.232222
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624294",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-05-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.921667,
+          -0.3175
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624257",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1955-07-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.933333,
+          2.533333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257766924",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-01-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.23333,
+          -0.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061328960",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-04-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.683333,
+          -0.433333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257593334",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.453056,
+          0.882778
+        ]
+      },
+      "properties": {
+        "gbifID": "1257624252",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1949-05-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.955,
+          -0.011944
+        ]
+      },
+      "properties": {
+        "gbifID": "1258374061",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-06-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.11666,
+          -0.73333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258374058",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-11-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.71666,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1258379690",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-11-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.373889,
+          4.449444
+        ]
+      },
+      "properties": {
+        "gbifID": "4061766613",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1922",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.616667,
+          -2.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257593323",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1876",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.066667,
+          4.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257593310",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1876-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.03333,
+          0.1
+        ]
+      },
+      "properties": {
+        "gbifID": "4061792710",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.712861,
+          0.226771
+        ]
+      },
+      "properties": {
+        "gbifID": "4130209490",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "1953.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-12-05T15:51",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/287121861",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.213915,
+          0.524312
+        ]
+      },
+      "properties": {
+        "gbifID": "3415542704",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "280.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2018-01-16T16:35",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/170141060/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/170141060",
+            "title": null,
+            "creator": "Karsten Mody",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Karsten Mody"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/170145490/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/170145490",
+            "title": null,
+            "creator": "Karsten Mody",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Karsten Mody"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/170145495/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/170145495",
+            "title": null,
+            "creator": "Karsten Mody",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Karsten Mody"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.629907,
+          0.123755
+        ]
+      },
+      "properties": {
+        "gbifID": "4018113402",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "920.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-12-18T08:15",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/108984703/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/108984703",
+            "title": null,
+            "creator": "Holger Beck",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Holger Beck"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/120857901/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/120857901",
+            "title": null,
+            "creator": "Holger Beck",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Holger Beck"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.362866,
+          -0.588089
+        ]
+      },
+      "properties": {
+        "gbifID": "5133158104",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "15.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-03-20T06:51",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/485103456/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/485103456",
+            "title": null,
+            "creator": "Cristian van den Berghe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Cristian van den Berghe"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.630443,
+          0.123133
+        ]
+      },
+      "properties": {
+        "gbifID": "3061649343",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "19.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2019-02-06",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/38717762/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/38717762",
+            "title": null,
+            "creator": "Holger Beck",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Holger Beck"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.632437,
+          0.025811
+        ]
+      },
+      "properties": {
+        "gbifID": "3058932694",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "207.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-11-03T10:19",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/103397384/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/103397384",
+            "title": null,
+            "creator": "ana-moncayo",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "ana-moncayo"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.781244,
+          5.618017
+        ]
+      },
+      "properties": {
+        "gbifID": "5133117229",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "8.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-07-30T10:16Z",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/149477834/original.jpg",
+            "references": "https://www.inaturalist.org/photos/149477834",
+            "title": null,
+            "creator": "Daniel Mesa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Daniel Mesa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/149477887/original.jpg",
+            "references": "https://www.inaturalist.org/photos/149477887",
+            "title": null,
+            "creator": "Daniel Mesa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Daniel Mesa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/149477976/original.jpg",
+            "references": "https://www.inaturalist.org/photos/149477976",
+            "title": null,
+            "creator": "Daniel Mesa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Daniel Mesa"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/149478048/original.jpg",
+            "references": "https://www.inaturalist.org/photos/149478048",
+            "title": null,
+            "creator": "Daniel Mesa",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Daniel Mesa"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.705463,
+          0.014627
+        ]
+      },
+      "properties": {
+        "gbifID": "6184922949",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "122.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-03-20T12:12",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/626902691/original.jpg",
+            "references": "https://www.inaturalist.org/photos/626902691",
+            "title": null,
+            "creator": "Marcelo Donoso",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Marcelo Donoso"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/626903033/original.jpg",
+            "references": "https://www.inaturalist.org/photos/626903033",
+            "title": null,
+            "creator": "Marcelo Donoso",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Marcelo Donoso"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.362419,
+          -0.5902
+        ]
+      },
+      "properties": {
+        "gbifID": "5134869966",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "382.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-03-20T19:57",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/484782113/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/484782113",
+            "title": null,
+            "creator": "Eric van den Berghe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Eric van den Berghe"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.842337,
+          0.053146
+        ]
+      },
+      "properties": {
+        "gbifID": "6179444132",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "8.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-03-03T15:13:24",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/621006092/original.jpg",
+            "references": "https://www.inaturalist.org/photos/621006092",
+            "title": null,
+            "creator": "Juliano Cabral",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Juliano Cabral"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.157578,
+          -1.796342
+        ]
+      },
+      "properties": {
+        "gbifID": "4129730467",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "9.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-12-26T15:23:24",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249278183/original.jpg",
+            "references": "https://www.inaturalist.org/photos/249278183",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.948495,
+          0.066081
+        ]
+      },
+      "properties": {
+        "gbifID": "4121092825",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "3812.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-05-20T12:42:41",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/281518355/original.jpg",
+            "references": "https://www.inaturalist.org/photos/281518355",
+            "title": null,
+            "creator": "maquimg",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "maquimg"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.930388,
+          -0.313262
+        ]
+      },
+      "properties": {
+        "gbifID": "4120962942",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "29.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-05-18T13:13:46",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/281616145/original.jpg",
+            "references": "https://www.inaturalist.org/photos/281616145",
+            "title": null,
+            "creator": "Amanda Fisher",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Amanda Fisher"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/281616285/original.jpg",
+            "references": "https://www.inaturalist.org/photos/281616285",
+            "title": null,
+            "creator": "Amanda Fisher",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Amanda Fisher"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/281616579/original.jpg",
+            "references": "https://www.inaturalist.org/photos/281616579",
+            "title": null,
+            "creator": "Amanda Fisher",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Amanda Fisher"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.057289,
+          -0.940992
+        ]
+      },
+      "properties": {
+        "gbifID": "4011831720",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "15.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-12-27T15:40:59",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249447617/original.jpg",
+            "references": "https://www.inaturalist.org/photos/249447617",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249447630/original.jpg",
+            "references": "https://www.inaturalist.org/photos/249447630",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249447642/original.jpg",
+            "references": "https://www.inaturalist.org/photos/249447642",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249447656/original.jpg",
+            "references": "https://www.inaturalist.org/photos/249447656",
+            "title": null,
+            "creator": "Martin W",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin W"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.639664,
+          0.026081
+        ]
+      },
+      "properties": {
+        "gbifID": "3061603340",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "212.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2015-08-03",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/39351219/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/39351219",
+            "title": null,
+            "creator": "Holger Beck",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Holger Beck"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.666122,
+          0.374278
+        ]
+      },
+      "properties": {
+        "gbifID": "4908977190",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-07-03T08:41:03",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/402520239/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/402520239",
+            "title": null,
+            "creator": "Jacob Dixon",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Jacob Dixon"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.6878,
+          -4.3206
+        ]
+      },
+      "properties": {
+        "gbifID": "4464622387",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-04-24",
+        "country": null,
+        "datasetName": "UNL:HERBARIO LOJA:ESPECIMEN PRERSERVADO",
+        "publisher": "Herbario Reinado Espinosa (Herbario LOJA) de la Universidad Nacional de Loja",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.55,
+          -3.95
+        ]
+      },
+      "properties": {
+        "gbifID": "4077749599",
+        "species": "Passiflora resticulata",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora resticulata Mast. & André",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-03",
+        "country": null,
+        "datasetName": "UNL:HERBARIO LOJA:ESPECIMEN PRERSERVADO",
+        "publisher": "Herbario Reinado Espinosa (Herbario LOJA) de la Universidad Nacional de Loja",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/287121861/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/287121861",
+          "title": null,
+          "creator": "J.R. Kuethe",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "J.R. Kuethe"
+        }
+      }
+    }
+  ]
+}

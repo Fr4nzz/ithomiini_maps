@@ -1,0 +1,2657 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Dilkea parviflora",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Dilkea",
+      "species": "Dilkea parviflora",
+      "slug": "species_dilkea_parviflora",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Heliconius numata"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_dilkea_parviflora.geojson",
+      "gbif_resolution": {
+        "query": "Dilkea parviflora",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3588162,
+        "accepted_usage_key": 3586537,
+        "scientific_name": "Dilkea parviflora Killip",
+        "canonical_name": "Dilkea parviflora",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Dilkea",
+        "resolved_at": "2026-05-21T03:57:35+00:00"
+      },
+      "gbif_taxon_key": 3588162,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Dilkea parviflora",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3588162,
+      "accepted_usage_key": 3586537,
+      "scientific_name": "Dilkea parviflora Killip",
+      "canonical_name": "Dilkea parviflora",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Dilkea",
+      "resolved_at": "2026-05-21T03:57:35+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 64
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:19+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.222778,
+          -0.975278
+        ]
+      },
+      "properties": {
+        "gbifID": "4031679159",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-02-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.86666,
+          -0.73333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031960864",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.75,
+          -4.91666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260168128",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-02-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/7394EE3D-BDEE-4F5C-A1EC-95E0289BC82B.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852368",
+            "title": "Gentry - 56579 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.43,
+          -4.00416
+        ]
+      },
+      "properties": {
+        "gbifID": "1261237963",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-09-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/CEFE36AF-FF8C-490D-8C13-4CD1727FA84A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852351",
+            "title": "Vásquez Martínez - 14392 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.75,
+          -4.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1261883377",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/43199511-D19D-4E19-B819-846395E4986E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852501",
+            "title": "Hedin - 19 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.13333,
+          0.56666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260248513",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-09-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/9C58D034-5310-49B2-9A73-F80F8699427E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852373",
+            "title": "Londoño Vega - 416 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.933333,
+          -1.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "4032113274",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-06-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -1.066667
+        ]
+      },
+      "properties": {
+        "gbifID": "1261520163",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-01-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/E0790E78-181A-4EB9-AC07-322DB4F94D02.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852503",
+            "title": "Cerón Martínez - 878 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.471944,
+          -3.940833
+        ]
+      },
+      "properties": {
+        "gbifID": "1260177635",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/A92250D9-AA4C-421A-B877-B61D26D72675.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852372",
+            "title": "Gentry - 28920 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.833333,
+          -2.466667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260133943",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-07-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/41BDF9D0-8303-4841-A1F3-828CC11162EE.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852358",
+            "title": "Vásquez Martínez - 14081 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.81666,
+          -3.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259882188",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-10-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/7471DAC9-D0A5-49B7-937B-F0E50290DDD2.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852343",
+            "title": "Ayala Flores - 2773 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.7,
+          0.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1261496345",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-27",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/8BB69C6E-C099-4DD5-8350-565C6911228A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852425",
+            "title": "Gentry - 64266 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.40944,
+          -11.88666
+        ]
+      },
+      "properties": {
+        "gbifID": "1258679217",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-10-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/6EBDCD5D-9161-4DA9-8A37-4F2AB42034A9.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852470",
+            "title": "Gentry - 26811 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.418889,
+          -3.971111
+        ]
+      },
+      "properties": {
+        "gbifID": "1260100837",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-02-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/7BF2AA83-6A17-469E-AF74-FECABA7DD224.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852440",
+            "title": "Gentry - 56018 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.4875,
+          -3.884167
+        ]
+      },
+      "properties": {
+        "gbifID": "1260248708",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-06-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/0169FE0C-FA0E-4525-A16E-B80BD914B12E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852376",
+            "title": "Rimachi Y. - 4431 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.9,
+          -3.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1258284296",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-01-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/307B9722-7340-4F41-A255-D32D1A4F71D3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852340",
+            "title": "Grández Rios - 3568 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.58333,
+          -3.83333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260137938",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-03-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/7A73CC26-D617-43A1-BBDB-A654BB61A859.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852502",
+            "title": "Vásquez Martínez - 2919 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.247222,
+          -3.748055
+        ]
+      },
+      "properties": {
+        "gbifID": "1260156786",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/82F5F0D4-A79E-44B5-B5C4-0C2709C58B96.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852375",
+            "title": "Revilla Cardenas - 4329 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.86666,
+          -3.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260136423",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-07-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/62F930DE-5447-492E-9E38-B039ECDAC98B.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852344",
+            "title": "Vásquez Martínez - 17443 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.133333,
+          0.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260246653",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103817000/2730B669-FF10-4C88-89E8-9C59F903943D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103817106",
+            "title": "Londoño Vega - 1176 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.96138,
+          -4.15361
+        ]
+      },
+      "properties": {
+        "gbifID": "1258463840",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-04-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/9293B9BA-F0AE-4C7B-BF53-E4F32C63504E.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852493",
+            "title": "Vásquez Martínez - 23151 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.583333,
+          -3.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260178405",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-01-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/6C510B0D-7A5E-4343-9DF6-94AF5571CF74.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852379",
+            "title": "Gentry - 15773 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.5,
+          -0.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031999597",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-11-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/5703D367-74B2-41AC-B565-37191589984C.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852334",
+            "title": "Aulestia - 1282 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.429444,
+          -0.665833
+        ]
+      },
+      "properties": {
+        "gbifID": "4031491157",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-08-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.91666,
+          -3.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1261847801",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/EF2A74B3-8CF0-4A19-BDC2-2ED5C0C2FEB3.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852341",
+            "title": "Ortiz - 88 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.0,
+          -3.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261516262",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-07-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103817000/6778B1F2-7AE6-4047-BDF7-9C9A0D0BE574.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103817099",
+            "title": "Rudas Lleras - 5078 - Colombia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.266667,
+          -3.766667
+        ]
+      },
+      "properties": {
+        "gbifID": "4032057924",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1930-04-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103862000/1FBF7AA0-B5AD-4163-91B6-1C01C6219E50.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103862240",
+            "title": "Klug - 1158 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.7,
+          -3.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1261555157",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-02-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/3136CBBA-D99E-465F-8391-AA1404967AA5.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852371",
+            "title": "Huashikat - 1996 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.19,
+          -1.022222
+        ]
+      },
+      "properties": {
+        "gbifID": "4031494337",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-04-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.35,
+          -3.883333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260178926",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-07-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/0FF97544-93ED-4E65-B7A9-BFA4199CE0BE.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852504",
+            "title": "Croat - 18195 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8,
+          -4.08333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261099390",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-08-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/F02B8E07-2FC2-4AFF-A089-5CD661167C32.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852527",
+            "title": "Gentry - 29264 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.833333,
+          -3.466667
+        ]
+      },
+      "properties": {
+        "gbifID": "1261847722",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103852000/71967CE7-FEEC-4FB5-A792-3BCD10D3FBE5.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103852339",
+            "title": "Ortiz - 46 - Peru",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.38333,
+          -0.6
+        ]
+      },
+      "properties": {
+        "gbifID": "2516792533",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-03-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/L.4169840/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8,
+          -3.47
+        ]
+      },
+      "properties": {
+        "gbifID": "3800629817",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-23/1984-07-27",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=16176157&h=2000",
+            "references": null,
+            "title": "04182234.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.58,
+          -7.62
+        ]
+      },
+      "properties": {
+        "gbifID": "2997375562",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1971-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.412281,
+          -3.792532
+        ]
+      },
+      "properties": {
+        "gbifID": "1930592915",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1930-01",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/494/339/00110390.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.194639,
+          -1.02625
+        ]
+      },
+      "properties": {
+        "gbifID": "1936560490",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-04-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Real Jardín Botánico (CSIC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.0,
+          -4.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228168839",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-06-16",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.6667,
+          -11.3333
+        ]
+      },
+      "properties": {
+        "gbifID": "1228342168",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-07-14",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.149444,
+          -2.136944
+        ]
+      },
+      "properties": {
+        "gbifID": "1424779900",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "5.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-08-27",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.516,
+          -2.35
+        ]
+      },
+      "properties": {
+        "gbifID": "47757119",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.966,
+          -1.633
+        ]
+      },
+      "properties": {
+        "gbifID": "47757101",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-05-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.183,
+          -0.016
+        ]
+      },
+      "properties": {
+        "gbifID": "47757160",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-08-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.183,
+          0.016
+        ]
+      },
+      "properties": {
+        "gbifID": "47757044",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.96666,
+          -1.63333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260144662",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-05-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.180556,
+          -13.123889
+        ]
+      },
+      "properties": {
+        "gbifID": "5903661522",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-10-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.123889,
+          -0.668889
+        ]
+      },
+      "properties": {
+        "gbifID": "1257750291",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-05-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.726667,
+          -0.725556
+        ]
+      },
+      "properties": {
+        "gbifID": "1259689504",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-05-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.183333,
+          0.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1259966317",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.516667,
+          -2.383333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260120448",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.18333,
+          0.01666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260145107",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.183333,
+          -0.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260144900",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-08-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.415278,
+          0.209444
+        ]
+      },
+      "properties": {
+        "gbifID": "1707568044",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-02-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.4175,
+          0.211944
+        ]
+      },
+      "properties": {
+        "gbifID": "1707589051",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-02-15",
+        "country": null,
+        "datasetName": "Caracterización PNN Chiribiquete, Fundación Puerto Rastrojo - Grupo GEMA",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.9375,
+          0.242222
+        ]
+      },
+      "properties": {
+        "gbifID": "1707580659",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-01-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.133333,
+          -0.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "1707557188",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-10-05",
+        "country": null,
+        "datasetName": "Análisis Estructural de Dos Bosques, Financiado por programa Tropenbos, Universidad Nacional de Colombia, Jardín Botánico Joaquín Antonio Uribe (Med-Col)",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.4575,
+          0.070556
+        ]
+      },
+      "properties": {
+        "gbifID": "1707559413",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-11-15",
+        "country": null,
+        "datasetName": "Caracterización de estructura y composición de dos bosques ubicados en la cuenca de la quebrada La Piscina; PNN Chiribiquete, Instituto Alexander von Humboldt - Fundación Puerto Rastrojo",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.423611,
+          0.213333
+        ]
+      },
+      "properties": {
+        "gbifID": "1707567650",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-02-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.632778,
+          0.534444
+        ]
+      },
+      "properties": {
+        "gbifID": "1707568117",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-11-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.333333,
+          -5.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "5294406201",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-05-07T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K005185693",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.504361,
+          -1.080139
+        ]
+      },
+      "properties": {
+        "gbifID": "1934696379",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "5115.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-05-25",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.185171,
+          1.260055
+        ]
+      },
+      "properties": {
+        "gbifID": "1890950167",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "1230.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1970-03-29",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.706915,
+          -1.466488
+        ]
+      },
+      "properties": {
+        "gbifID": "1844950345",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "608.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-06-07",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.0,
+          -3.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "2013812391",
+        "species": "Dilkea retusa",
+        "genus": "Dilkea",
+        "family": "Passifloraceae",
+        "scientificName": "Dilkea parviflora Killip",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-07-09",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/db1d4cbf96b824feb466ed538376551b.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005185693",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

@@ -62,6 +62,7 @@ public/data/map_points.json
 
 # Agent artifacts
 .worktrees/
+temp_gbif_download/
 .playwright-cli/
 .playwright-mcp/
 .playwright/

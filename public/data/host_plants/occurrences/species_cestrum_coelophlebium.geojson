@@ -1,0 +1,2226 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Cestrum coelophlebium",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Cestrum",
+      "species": "Cestrum coelophlebium",
+      "slug": "species_cestrum_coelophlebium",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Greta diaphanus"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_cestrum_coelophlebium.geojson",
+      "gbif_resolution": {
+        "query": "Cestrum coelophlebium",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3797081,
+        "accepted_usage_key": null,
+        "scientific_name": "Cestrum coelophlebium O.E.Schulz",
+        "canonical_name": "Cestrum coelophlebium",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Cestrum",
+        "resolved_at": "2026-05-21T03:57:11+00:00"
+      },
+      "gbif_taxon_key": 3797081,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Cestrum coelophlebium",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3797081,
+      "accepted_usage_key": null,
+      "scientific_name": "Cestrum coelophlebium O.E.Schulz",
+      "canonical_name": "Cestrum coelophlebium",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Cestrum",
+      "resolved_at": "2026-05-21T03:57:11+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 54
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:18+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.3,
+          19.30138
+        ]
+      },
+      "properties": {
+        "gbifID": "1259891303",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-04-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8333,
+          19.8333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259889256",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1929-04-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.41666,
+          18.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259892520",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-07-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.28611,
+          18.33083
+        ]
+      },
+      "properties": {
+        "gbifID": "1259892720",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-06-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.5,
+          18.23333
+        ]
+      },
+      "properties": {
+        "gbifID": "2515455668",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-03-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1736191/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.41667,
+          18.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517575600",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-07-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1736192/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.6969,
+          18.3064
+        ]
+      },
+      "properties": {
+        "gbifID": "1322883247",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-17",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12657559&h=2000",
+            "references": null,
+            "title": "01162760.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.714,
+          18.8435
+        ]
+      },
+      "properties": {
+        "gbifID": "1322936842",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-05-30",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12649962&h=2000",
+            "references": null,
+            "title": "01042654.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.7822,
+          18.6938
+        ]
+      },
+      "properties": {
+        "gbifID": "1318093321",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-06-24",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12661978&h=2000",
+            "references": null,
+            "title": "00980928.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.2861,
+          18.3308
+        ]
+      },
+      "properties": {
+        "gbifID": "1319537347",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-06-13",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12665642&h=2000",
+            "references": null,
+            "title": "00824884.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.1885,
+          18.1045
+        ]
+      },
+      "properties": {
+        "gbifID": "1321817151",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-05-20",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=10648608&h=2000",
+            "references": null,
+            "title": "13827.TIF",
+            "creator": "Acevedo, P.",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12656774&h=2000",
+            "references": null,
+            "title": "01011062.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.05,
+          18.85
+        ]
+      },
+      "properties": {
+        "gbifID": "1318126781",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-30",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12647040&h=2000",
+            "references": null,
+            "title": "01191018.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.5572,
+          18.6519
+        ]
+      },
+      "properties": {
+        "gbifID": "1319362446",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-06-19",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12648443&h=2000",
+            "references": null,
+            "title": "01048709.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.16667,
+          18.75
+        ]
+      },
+      "properties": {
+        "gbifID": "2515648783",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1736190/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.744141,
+          18.904087
+        ]
+      },
+      "properties": {
+        "gbifID": "2981265273",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Staatliche Naturwissenschaftliche Sammlungen Bayerns",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://pictures.snsb.info/BSMvplantscoll/web/M-0172/M-0172053_20111215_132441.jpg",
+            "references": "http://zoomview.snsb.info/BSMvplantscoll/M-0172/M-0172053_20111215_132441.html",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-sa/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5,
+          19.0333
+        ]
+      },
+      "properties": {
+        "gbifID": "122922263",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fairchild Tropical Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.566,
+          18.0
+        ]
+      },
+      "properties": {
+        "gbifID": "122921864",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "301.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-06-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fairchild Tropical Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.35,
+          18.7167
+        ]
+      },
+      "properties": {
+        "gbifID": "122922254",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-02-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fairchild Tropical Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.6402,
+          18.7742
+        ]
+      },
+      "properties": {
+        "gbifID": "1318666566",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-05-24",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12649287&h=2000",
+            "references": null,
+            "title": "01010769.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.17,
+          18.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1320564678",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-13",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12662777&h=2000",
+            "references": null,
+            "title": "00824873.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.72,
+          18.28
+        ]
+      },
+      "properties": {
+        "gbifID": "1929894995",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-06",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/242/v-287-01284395.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.741874,
+          18.889666
+        ]
+      },
+      "properties": {
+        "gbifID": "1929421849",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-04-28",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/278/v-287-01284431.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.415807,
+          18.489071
+        ]
+      },
+      "properties": {
+        "gbifID": "1929425043",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-03-24/1975-03-26",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/255/v-287-01284408.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.56467,
+          19.084694
+        ]
+      },
+      "properties": {
+        "gbifID": "1929981457",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "1851.57",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-05-24",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/269/v-287-01284422.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.738773,
+          18.912805
+        ]
+      },
+      "properties": {
+        "gbifID": "1927805102",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-02",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/539/226/00111318.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.751427,
+          18.929095
+        ]
+      },
+      "properties": {
+        "gbifID": "1929804042",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-01-19/1974-01-20",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/237/v-287-01284390.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.5,
+          18.23
+        ]
+      },
+      "properties": {
+        "gbifID": "1929715190",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-03-17",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/264/v-287-01284417.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.58,
+          18.67
+        ]
+      },
+      "properties": {
+        "gbifID": "1929346690",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-12-24",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/272/v-287-01284425.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.57,
+          19.07
+        ]
+      },
+      "properties": {
+        "gbifID": "1931082015",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-04-14",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/233/v-287-01284386.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.7,
+          18.83
+        ]
+      },
+      "properties": {
+        "gbifID": "1928082730",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-24",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/232/v-287-01284385.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.42,
+          18.53
+        ]
+      },
+      "properties": {
+        "gbifID": "1930043793",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-07-06",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/263/v-287-01284416.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.75,
+          18.83
+        ]
+      },
+      "properties": {
+        "gbifID": "1929045686",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-02-24",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/247/v-287-01284400.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.53,
+          19.03
+        ]
+      },
+      "properties": {
+        "gbifID": "1929836382",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-01-13",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/234/v-287-01284387.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.735649,
+          18.835678
+        ]
+      },
+      "properties": {
+        "gbifID": "1929419096",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "10691.57",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-02-27",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/261/v-287-01284414.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.59359,
+          19.075898
+        ]
+      },
+      "properties": {
+        "gbifID": "1930304811",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "2976.57",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-06-17/1968-06-18",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/259/v-287-01284412.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5,
+          19.03
+        ]
+      },
+      "properties": {
+        "gbifID": "1930369316",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-25",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/239/v-287-01284392.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.98,
+          19.03
+        ]
+      },
+      "properties": {
+        "gbifID": "1931151896",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-01-14",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/258/v-287-01284411.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.92,
+          18.98
+        ]
+      },
+      "properties": {
+        "gbifID": "1931043371",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-06-23",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/373/235/v-287-01284388.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.641667,
+          18.866667
+        ]
+      },
+      "properties": {
+        "gbifID": "2618406380",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.583333,
+          19.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1096767540",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-05-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.7,
+          18.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "2618576416",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.4333,
+          19.3833
+        ]
+      },
+      "properties": {
+        "gbifID": "607837267",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1928-03-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441376148981H1CL9ex0sGiRRXFs",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.97671,
+          18.88106
+        ]
+      },
+      "properties": {
+        "gbifID": "4598144309",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2021-05-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Florida Museum of Natural History",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/b42def76-a6f6-4a63-ada6-a8ed320e6efe",
+            "references": null,
+            "title": "Cestrum coelophlebium",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.3,
+          19.266667
+        ]
+      },
+      "properties": {
+        "gbifID": "4976959499",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-05-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Florida Museum of Natural History",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/07728d14-3a2a-4e11-929c-1f0553619ee0",
+            "references": null,
+            "title": "Cestrum coelophlebium",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.76885,
+          18.67339
+        ]
+      },
+      "properties": {
+        "gbifID": "4161664349",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2021-05-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Florida Museum of Natural History",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/cd14f8f9-2488-4832-8415-80c9c8afe5e4",
+            "references": null,
+            "title": "Cestrum coelophlebium",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.216667,
+          19.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "4976959561",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Florida Museum of Natural History",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/c0179e7d-dcf8-44d0-b883-30d84123b066",
+            "references": null,
+            "title": "Cestrum coelophlebium",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.11828,
+          18.12154
+        ]
+      },
+      "properties": {
+        "gbifID": "4432716303",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-05-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Florida Museum of Natural History",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/840cbeb3-b9c2-4494-862d-ff8343badce0",
+            "references": null,
+            "title": "Cestrum coelophlebium",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.697,
+          18.306
+        ]
+      },
+      "properties": {
+        "gbifID": "3308598869",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.308,
+          18.435
+        ]
+      },
+      "properties": {
+        "gbifID": "3308599777",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-15",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.743,
+          18.258
+        ]
+      },
+      "properties": {
+        "gbifID": "3308041036",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-17",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/136891422",
+          "title": null,
+          "creator": "Martin Reith",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Martin Reith"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.29973,
+          18.379993
+        ]
+      },
+      "properties": {
+        "gbifID": "5166817388",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "9.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-06-15T08:24:03",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891422/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/136891422",
+            "title": null,
+            "creator": "Martin Reith",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin Reith"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891413/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/136891413",
+            "title": null,
+            "creator": "Martin Reith",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin Reith"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136891436/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/136891436",
+            "title": null,
+            "creator": "Martin Reith",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Martin Reith"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.484634,
+          18.894446
+        ]
+      },
+      "properties": {
+        "gbifID": "1055730883",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "390.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1910-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/7eb9b3c0-c177-4e84-8192-c07f369cb3cf",
+            "references": null,
+            "title": "BM000617886",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.148325,
+          18.181261
+        ]
+      },
+      "properties": {
+        "gbifID": "1055418642",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1912-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/986be7e2-c1b3-4c3f-8896-e3655bb83020",
+            "references": null,
+            "title": "BM000617884",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.623182,
+          18.150023
+        ]
+      },
+      "properties": {
+        "gbifID": "4512119507",
+        "species": "Cestrum coelophlebium",
+        "genus": "Cestrum",
+        "family": "Solanaceae",
+        "scientificName": "Cestrum coelophlebium O.E.Schulz",
+        "coordinateUncertaintyInMeters": "4.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-07-28T12:55:54",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/147195593/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/147195593",
+            "title": null,
+            "creator": "Yolanda M. Leon",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Yolanda M. Leon"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/147195629/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/147195629",
+            "title": null,
+            "creator": "Yolanda M. Leon",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Yolanda M. Leon"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/147195650/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/147195650",
+            "title": null,
+            "creator": "Yolanda M. Leon",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Yolanda M. Leon"
+          }
+        ]
+      }
+    }
+  ]
+}

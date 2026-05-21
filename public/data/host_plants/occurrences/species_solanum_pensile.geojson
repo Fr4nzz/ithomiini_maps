@@ -1,0 +1,4356 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum pensile",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum pensile",
+      "slug": "species_solanum_pensile",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Callithomia lenea"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_pensile.geojson",
+      "gbif_resolution": {
+        "query": "Solanum pensile",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2932361,
+        "accepted_usage_key": 2932359,
+        "scientific_name": "Solanum pensile Sendtn.",
+        "canonical_name": "Solanum pensile",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:31+00:00"
+      },
+      "gbif_taxon_key": 2932361,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum pensile",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2932361,
+      "accepted_usage_key": 2932359,
+      "scientific_name": "Solanum pensile Sendtn.",
+      "canonical_name": "Solanum pensile",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:31+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 112
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.37319,
+          -3.7826
+        ]
+      },
+      "properties": {
+        "gbifID": "1576178227",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "4804.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Caldas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.528611,
+          -15.158056
+        ]
+      },
+      "properties": {
+        "gbifID": "2812932591",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-04-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.083333,
+          5.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "4072574411",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-03-03",
+        "country": null,
+        "datasetName": "Meise Botanic Garden Herbarium (BR)",
+        "publisher": "Meise Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://oxalis.br.fgov.be/images/BR0/000/036/152/582/BR0000036152582.jpg",
+            "references": null,
+            "title": "Solanum pensile Sendtn.",
+            "creator": "Meise Botanic Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Meise Botanic Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.35,
+          4.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "4072508002",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-01-18",
+        "country": null,
+        "datasetName": "Meise Botanic Garden Herbarium (BR)",
+        "publisher": "Meise Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://oxalis.br.fgov.be/images/BR0/000/009/156/517/BR0000009156517.jpg",
+            "references": null,
+            "title": "Solanum pensile Sendtn.",
+            "creator": "Meise Botanic Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Meise Botanic Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.73333,
+          0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "4031840476",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-11-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.0,
+          6.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1262248605",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-08-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.333333,
+          4.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "4031608847",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-08-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.36666,
+          -0.58333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258405403",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.01,
+          -15.75
+        ]
+      },
+      "properties": {
+        "gbifID": "4031418368",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1890",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/Tropicos/296/79F17056-AB2D-45B9-8A4E-0B41E110E761.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=35778",
+            "title": "Bang - 522 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/Tropicos/296/AC320CB9-D37A-419F-B46E-1B0D96FABFC7.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=35779",
+            "title": "Bang - 522 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.41666,
+          0.88333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262254742",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-08-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.7,
+          7.7
+        ]
+      },
+      "properties": {
+        "gbifID": "4032051803",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1940-03-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImages2/296/14FD489F-5059-4107-B8A7-F53FC1BE0962.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=30627",
+            "title": "Terry - 1605 - Panama",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.91666,
+          7.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250787",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-03-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.56333,
+          -0.82666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031649541",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-10-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2403,
+          -12.4466
+        ]
+      },
+      "properties": {
+        "gbifID": "80087062",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanical Research Institute of Texas",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1,
+          -12.57
+        ]
+      },
+      "properties": {
+        "gbifID": "80106960",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-05-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanical Research Institute of Texas",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.7,
+          7.36667
+        ]
+      },
+      "properties": {
+        "gbifID": "2515646411",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-12-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1750697/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.25861,
+          3.22139
+        ]
+      },
+      "properties": {
+        "gbifID": "2515717261",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-04-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1750676/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.36667,
+          4.05
+        ]
+      },
+      "properties": {
+        "gbifID": "2517590766",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1969-02-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1750698/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.6,
+          4.81667
+        ]
+      },
+      "properties": {
+        "gbifID": "2517581757",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-01-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1750700/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.2506,
+          3.52356
+        ]
+      },
+      "properties": {
+        "gbifID": "1456445309",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-28",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.92967,
+          4.59417
+        ]
+      },
+      "properties": {
+        "gbifID": "2845791398",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1616300/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.07483,
+          4.53433
+        ]
+      },
+      "properties": {
+        "gbifID": "2845801406",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1616295/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.81067,
+          4.875
+        ]
+      },
+      "properties": {
+        "gbifID": "2845778393",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1616297/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.11667,
+          4.58333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517278765",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-02-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1750606/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.18333,
+          3.55
+        ]
+      },
+      "properties": {
+        "gbifID": "2517572693",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1971-03-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1750699/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.3,
+          2.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1456080907",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-10-11",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.5167,
+          7.23333
+        ]
+      },
+      "properties": {
+        "gbifID": "1456161458",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.5078,
+          4.28667
+        ]
+      },
+      "properties": {
+        "gbifID": "1456291538",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-02-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.95,
+          7.86333
+        ]
+      },
+      "properties": {
+        "gbifID": "1456302787",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-12-17",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.8333,
+          4.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "1456468494",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-09-28",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.5667,
+          4.66667
+        ]
+      },
+      "properties": {
+        "gbifID": "1456219281",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-07-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.880402,
+          -15.498532
+        ]
+      },
+      "properties": {
+        "gbifID": "2981276232",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1892-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Staatliche Naturwissenschaftliche Sammlungen Bayerns",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "http://pictures.snsb.info/BSMvplantscoll/web/M-0166/M-0166072_20111215_083536.jpg",
+            "references": "http://zoomview.snsb.info/BSMvplantscoll/M-0166/M-0166072_20111215_083536.html",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-sa/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.083333,
+          -1.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "4162766329",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-06-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.45,
+          -1.7
+        ]
+      },
+      "properties": {
+        "gbifID": "4162764715",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.383333,
+          -12.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1094279081",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-09-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro de Ensino São Lucas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.5667,
+          -10.1833
+        ]
+      },
+      "properties": {
+        "gbifID": "123009532",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-09-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Fairchild Tropical Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.75,
+          -0.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304246276",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.25,
+          -12.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1302647116",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1976-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.35,
+          -5.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646833",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1996-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.366667,
+          4.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1304345507",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1969-02-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.733333,
+          -13.6
+        ]
+      },
+      "properties": {
+        "gbifID": "1304607233",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.43,
+          3.4
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654273",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.38,
+          -12.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654263",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8,
+          10.266667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304580790",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1985-06-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.583333,
+          -10.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654420",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1982-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.7017,
+          4.7364
+        ]
+      },
+      "properties": {
+        "gbifID": "1302647364",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.5,
+          -12.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1302647049",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1985-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.43,
+          -9.08
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646936",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2004-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.183333,
+          3.55
+        ]
+      },
+      "properties": {
+        "gbifID": "1304345484",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1971-03-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.733333,
+          0.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1304581599",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1994-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.833333,
+          -10.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654395",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1985-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.05,
+          9.672222
+        ]
+      },
+      "properties": {
+        "gbifID": "1304220949",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.616667,
+          -10.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654295",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1979-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.5,
+          -14.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646976",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1988-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.9106,
+          8.5714
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646776",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1940-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8333,
+          -9.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1302647072",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1964-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.6,
+          4.816667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304345539",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2003-01-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.4,
+          -10.5667
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646492",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1982-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.0,
+          -4.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646955",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1977-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.033333,
+          -12.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654370",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1985-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.62,
+          -10.58
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654255",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.0,
+          -1.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654407",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1982-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.083333,
+          -15.15
+        ]
+      },
+      "properties": {
+        "gbifID": "1304579631",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2004-10-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.0,
+          -4.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1302647097",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1978-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.116667,
+          4.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304345502",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1998-02-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.833333,
+          3.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654305",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1979-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.433333,
+          3.4
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654359",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1986-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.8,
+          5.516667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304583173",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1988-10-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.7,
+          7.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304345481",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1995-12-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.45,
+          -12.066667
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654334",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1987-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.933333,
+          -2.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654347",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1991-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.366667,
+          -4.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1302654325",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1969-01-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.95,
+          -1.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "2418007508",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-11-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Chico State Herbarium",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/cch2/CHSC_VascularPlants/CHSC085/CHSC085874_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "CC BY-NC-SA (Attribution-NonCommercial-ShareAlike)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.416667,
+          -1.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "2418006942",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-10-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Chico State Herbarium",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/cch2/CHSC_VascularPlants/CHSC085/CHSC085345_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "CC BY-NC-SA (Attribution-NonCommercial-ShareAlike)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.23,
+          -12.18
+        ]
+      },
+      "properties": {
+        "gbifID": "2997623236",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-09-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.0,
+          2.6
+        ]
+      },
+      "properties": {
+        "gbifID": "2997344983",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-09-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.25,
+          2.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "2997319835",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.783333,
+          5.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997323789",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.75,
+          -0.6
+        ]
+      },
+      "properties": {
+        "gbifID": "1936655667",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-06-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Real Jardín Botánico (CSIC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.05,
+          9.6722
+        ]
+      },
+      "properties": {
+        "gbifID": "1936651656",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-07-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Real Jardín Botánico (CSIC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.696111,
+          -14.735
+        ]
+      },
+      "properties": {
+        "gbifID": "1090467781",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-02-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Comissão Executiva do Plano da Lavoura Cacaueira – Centro de Pesquisas do Cacau",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.516667,
+          -15.15
+        ]
+      },
+      "properties": {
+        "gbifID": "1090476144",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-02-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Comissão Executiva do Plano da Lavoura Cacaueira – Centro de Pesquisas do Cacau",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.25,
+          2.08333
+        ]
+      },
+      "properties": {
+        "gbifID": "437649264",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441369425312r8h2xsvnt4NRMUFh",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.78333,
+          5.66667
+        ]
+      },
+      "properties": {
+        "gbifID": "439315067",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441369425333UJRBk0Np0ZaNQiIt",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.35,
+          4.56667
+        ]
+      },
+      "properties": {
+        "gbifID": "438981653",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-01-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441369436142NiOgZ2G4Xx517eI0",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.0,
+          5.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228424267",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1841",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.30211,
+          4.58764
+        ]
+      },
+      "properties": {
+        "gbifID": "3310438203",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2004",
+        "country": null,
+        "datasetName": "",
+        "publisher": "UAR PatriNat (OFB-MNHN-CNRS-IRD), Paris",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.2,
+          -0.483
+        ]
+      },
+      "properties": {
+        "gbifID": "47849276",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-06-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.866,
+          -0.666
+        ]
+      },
+      "properties": {
+        "gbifID": "47848628",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-11-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8,
+          10.267
+        ]
+      },
+      "properties": {
+        "gbifID": "3308433720",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-06-18",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.58,
+          -10.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1042662170",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.37,
+          4.1734
+        ]
+      },
+      "properties": {
+        "gbifID": "1042601715",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.08,
+          -1.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "1042593236",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.93,
+          -2.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "1042575289",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.43,
+          4.1702
+        ]
+      },
+      "properties": {
+        "gbifID": "1042537395",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.03,
+          -12.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1042664185",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.83,
+          -10.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1042516126",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.51666,
+          -15.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1259010220",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-01-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.65,
+          -0.18333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258408993",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-02-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.71666,
+          -17.65
+        ]
+      },
+      "properties": {
+        "gbifID": "1258762620",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.33333,
+          -15.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1259010608",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-03-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.35,
+          -0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "4061257218",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1961-10-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.333333,
+          -15.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061370176",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-01-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.03333,
+          -11.75
+        ]
+      },
+      "properties": {
+        "gbifID": "4062081180",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-12-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.2,
+          -0.48333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262245458",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-06-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.767071,
+          -1.427421
+        ]
+      },
+      "properties": {
+        "gbifID": "1055434547",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "710.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+            "references": null,
+            "title": "BM000554993",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.333333,
+          6.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1123906414",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "4611.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-07-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad de Antioquia",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.988583,
+          7.039194
+        ]
+      },
+      "properties": {
+        "gbifID": "2985982221",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-03-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidad Industrial de Santander",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.271262,
+          4.84805
+        ]
+      },
+      "properties": {
+        "gbifID": "1890939150",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "545.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-03-25",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.183827,
+          5.261072
+        ]
+      },
+      "properties": {
+        "gbifID": "1844909360",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "568.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1947-08-13",
+        "country": null,
+        "datasetName": "Convenio Especial de Cooperación #13-238 entre IAvH y UN - 30 Septiembre 2013",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.068445,
+          7.296829
+        ]
+      },
+      "properties": {
+        "gbifID": "1890974540",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "512.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-04-07",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/fda95f9b-36ea-43c5-9664-0b3b88cd1c59",
+          "references": null,
+          "title": "BM000554993",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.253828,
+          -3.749125
+        ]
+      },
+      "properties": {
+        "gbifID": "3978752356",
+        "species": "Solanum uncinellum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum pensile Sendtn.",
+        "coordinateUncertaintyInMeters": "7466.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-06-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Baylor University, Mayborn Museum Complex",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://web.corral.tacc.utexas.edu/torch/BAYLU/BAYLU0050000/BAYLU050137.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Baylor University Herbarium (BAYLU-BAYLU)"
+          }
+        ]
+      }
+    }
+  ]
+}

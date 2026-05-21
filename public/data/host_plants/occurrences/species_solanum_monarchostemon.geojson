@@ -1,0 +1,3508 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum monarchostemon",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum monarchostemon",
+      "slug": "species_solanum_monarchostemon",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Forbestra olivencia",
+        "Mechanitis messenoides"
+      ],
+      "confidence_counts": {
+        "high": 2
+      },
+      "occurrence_file": "occurrences/species_solanum_monarchostemon.geojson",
+      "gbif_resolution": {
+        "query": "Solanum monarchostemon",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2931032,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum monarchostemon S.Knapp",
+        "canonical_name": "Solanum monarchostemon",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:10+00:00"
+      },
+      "gbif_taxon_key": 2931032,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum monarchostemon",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2931032,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum monarchostemon S.Knapp",
+      "canonical_name": "Solanum monarchostemon",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:10+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 82
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.90806,
+          1.62983
+        ]
+      },
+      "properties": {
+        "gbifID": "3114993587",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.45,
+          -1.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250557",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/Tropicos/296/8C364C4E-41D4-4518-8EB0-B26C4F15E98A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=16593",
+            "title": "Palacios Cuenca - 10117 - Ecuador",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.9,
+          -3.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251806",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-07-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.100556,
+          0.085278
+        ]
+      },
+      "properties": {
+        "gbifID": "4031461304",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-02-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.896389,
+          -3.258889
+        ]
+      },
+      "properties": {
+        "gbifID": "1258746338",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-06-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.25,
+          -3.78333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262252449",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-11-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.833333,
+          -3.466667
+        ]
+      },
+      "properties": {
+        "gbifID": "1262241271",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-01-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.65,
+          -1.48333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249675",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-08-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.83333,
+          -3.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262238417",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-06-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.91666,
+          -3.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262252306",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-03-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.08333,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250914",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-06-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.25,
+          -3.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "1261139188",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-08-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.516667,
+          -0.433333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031669319",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-05-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.183333,
+          -0.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1262241510",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8,
+          -3.46666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262255274",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-02-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "4031843221",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-01-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.03333,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250965",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-02-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.13333,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "4031379087",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-08-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.75,
+          -0.36666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250809",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-11-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.6,
+          -0.71666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249104",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.83333,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251251",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.61666,
+          -0.36666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031435252",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-03-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.78333,
+          -1.01666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262243060",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.26666,
+          -0.16666
+        ]
+      },
+      "properties": {
+        "gbifID": "4031751854",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.01666,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262241289",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.833333,
+          -3.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1258362975",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-03-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.05,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262241720",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-02-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.366389,
+          -0.921111
+        ]
+      },
+      "properties": {
+        "gbifID": "4031596980",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-04-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.9925,
+          0.085
+        ]
+      },
+      "properties": {
+        "gbifID": "1258362987",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-03-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.6992,
+          -11.7856
+        ]
+      },
+      "properties": {
+        "gbifID": "1318050979",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12655587&h=2000",
+            "references": null,
+            "title": "00593502.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.8325,
+          -1.7814
+        ]
+      },
+      "properties": {
+        "gbifID": "1321928971",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-08-10",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8,
+          -3.47
+        ]
+      },
+      "properties": {
+        "gbifID": "1317260651",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-23",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12665010&h=2000",
+            "references": null,
+            "title": "00840787.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.0,
+          -4.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646570",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1978-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.373889,
+          -0.497778
+        ]
+      },
+      "properties": {
+        "gbifID": "1304602472",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2000-08-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.833333,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1304582906",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1990-09-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.416667,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1304582935",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1982-07-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.8325,
+          -1.781389
+        ]
+      },
+      "properties": {
+        "gbifID": "1304602870",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2005-08-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.83,
+          -3.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1931113979",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-09-27",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4467/654/00723062.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.42,
+          -0.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1928939707",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-07-15",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/108/403/v-287-00723063.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.1494,
+          -0.6364
+        ]
+      },
+      "properties": {
+        "gbifID": "1929859730",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-05-24",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4468/307/01552725.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.35,
+          -0.25
+        ]
+      },
+      "properties": {
+        "gbifID": "47848900",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1981-08-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.483,
+          -0.566
+        ]
+      },
+      "properties": {
+        "gbifID": "47849126",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.266,
+          -0.166
+        ]
+      },
+      "properties": {
+        "gbifID": "47849128",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.416,
+          -0.95
+        ]
+      },
+      "properties": {
+        "gbifID": "47849125",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-08-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.366,
+          -0.533
+        ]
+      },
+      "properties": {
+        "gbifID": "47849029",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-10-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.966,
+          -1.633
+        ]
+      },
+      "properties": {
+        "gbifID": "47848825",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-05-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.383,
+          -0.533
+        ]
+      },
+      "properties": {
+        "gbifID": "47848650",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-04-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.866,
+          0.083
+        ]
+      },
+      "properties": {
+        "gbifID": "47849362",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "2000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-08-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Herbarium of the University of Aarhus",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.36666,
+          -0.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "4061772490",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-10-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.38333,
+          -0.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259960668",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-06-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.130833,
+          -10.156111
+        ]
+      },
+      "properties": {
+        "gbifID": "2268840296",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-02-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.149711,
+          -0.637587
+        ]
+      },
+      "properties": {
+        "gbifID": "4028842130",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "15.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-10-24T20:50",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/245113032/original.jpg",
+            "references": "https://www.inaturalist.org/photos/245113032",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/245113045/original.jpg",
+            "references": "https://www.inaturalist.org/photos/245113045",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.150352,
+          -0.637128
+        ]
+      },
+      "properties": {
+        "gbifID": "4028816970",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "8.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-10-24T17:20",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/244614534/original.jpg",
+            "references": "https://www.inaturalist.org/photos/244614534",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/244614551/original.jpg",
+            "references": "https://www.inaturalist.org/photos/244614551",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.155448,
+          -0.633125
+        ]
+      },
+      "properties": {
+        "gbifID": "5206243623",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "352.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-05-13T11:57:06",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/518571590/original.jpg",
+            "references": "https://www.inaturalist.org/photos/518571590",
+            "title": null,
+            "creator": "Francisco Velalcázar",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Francisco Velalcázar"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/518571649/original.jpg",
+            "references": "https://www.inaturalist.org/photos/518571649",
+            "title": null,
+            "creator": "Francisco Velalcázar",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Francisco Velalcázar"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/518571670/original.jpg",
+            "references": "https://www.inaturalist.org/photos/518571670",
+            "title": null,
+            "creator": "Francisco Velalcázar",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Francisco Velalcázar"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.150314,
+          -0.637081
+        ]
+      },
+      "properties": {
+        "gbifID": "4039315664",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-11-01T11:37:47",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/241078942/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/241078942",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/241079082/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/241079082",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/241079263/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/241079263",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.164472,
+          -0.637389
+        ]
+      },
+      "properties": {
+        "gbifID": "4028749024",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-11-04T11:42:41",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/241626941/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/241626941",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/241627056/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/241627056",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.59697,
+          -0.681862
+        ]
+      },
+      "properties": {
+        "gbifID": "4519014230",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "4.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-12-19T08:56:34",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/341641192/original.jpg",
+            "references": "https://www.inaturalist.org/photos/341641192",
+            "title": null,
+            "creator": "Grey Hayes",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Grey Hayes"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.149328,
+          -0.638184
+        ]
+      },
+      "properties": {
+        "gbifID": "5281972362",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "190.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-07-18T13:22:07",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/538788836/original.jpg",
+            "references": "https://www.inaturalist.org/photos/538788836",
+            "title": null,
+            "creator": "Nicole Wonderlin",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nicole Wonderlin"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/538789685/original.jpg",
+            "references": "https://www.inaturalist.org/photos/538789685",
+            "title": null,
+            "creator": "Nicole Wonderlin",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nicole Wonderlin"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/538789662/original.jpg",
+            "references": "https://www.inaturalist.org/photos/538789662",
+            "title": null,
+            "creator": "Nicole Wonderlin",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nicole Wonderlin"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.546123,
+          0.396077
+        ]
+      },
+      "properties": {
+        "gbifID": "6188110859",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "5.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-05-07T14:16:10",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/504880863/original.jpg",
+            "references": "https://www.inaturalist.org/photos/504880863",
+            "title": null,
+            "creator": "Danna Pillimue",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Danna Pillimue"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.44022,
+          -0.524482
+        ]
+      },
+      "properties": {
+        "gbifID": "4022257346",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2007-10-07T15:09",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.040349,
+          -0.529652
+        ]
+      },
+      "properties": {
+        "gbifID": "4075644771",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "31.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-10-12T17:32",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/238293854/original.jpg",
+            "references": "https://www.inaturalist.org/photos/238293854",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/238293870/original.jpg",
+            "references": "https://www.inaturalist.org/photos/238293870",
+            "title": null,
+            "creator": "David Torres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Torres"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.77778,
+          -0.15555
+        ]
+      },
+      "properties": {
+        "gbifID": "768755483",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-09-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.77944,
+          -0.15555
+        ]
+      },
+      "properties": {
+        "gbifID": "1932877169",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-09-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.080958,
+          0.674725
+        ]
+      },
+      "properties": {
+        "gbifID": "1416798728",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-03-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.264389,
+          -3.854111
+        ]
+      },
+      "properties": {
+        "gbifID": "3705120896",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-06-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.95,
+          -0.020889
+        ]
+      },
+      "properties": {
+        "gbifID": "1147306149",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-08-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.820278,
+          0.742306
+        ]
+      },
+      "properties": {
+        "gbifID": "1932878469",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-11-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.908056,
+          1.629833
+        ]
+      },
+      "properties": {
+        "gbifID": "1932892143",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.071639,
+          0.6375
+        ]
+      },
+      "properties": {
+        "gbifID": "3068335763",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-07-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.75,
+          -2.7
+        ]
+      },
+      "properties": {
+        "gbifID": "3068339898",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.75758,
+          0.87319
+        ]
+      },
+      "properties": {
+        "gbifID": "768751557",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-12-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.657361,
+          0.182806
+        ]
+      },
+      "properties": {
+        "gbifID": "768776825",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-08-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.630222,
+          1.077917
+        ]
+      },
+      "properties": {
+        "gbifID": "1147304347",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-01-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.083164,
+          0.683639
+        ]
+      },
+      "properties": {
+        "gbifID": "1416797981",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-03-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.997441,
+          -2.458616
+        ]
+      },
+      "properties": {
+        "gbifID": "4172058242",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "50.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-07-22T11:11",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/306631830/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/306631830",
+            "title": null,
+            "creator": "David Díaz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Díaz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/306631848/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/306631848",
+            "title": null,
+            "creator": "David Díaz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "David Díaz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.149834,
+          -0.638059
+        ]
+      },
+      "properties": {
+        "gbifID": "4062905389",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "212.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-10-02T06:24:59",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/161730296/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/161730296",
+            "title": null,
+            "creator": "Alisson Fierro-Minda",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alisson Fierro-Minda"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/161730312/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/161730312",
+            "title": null,
+            "creator": "Alisson Fierro-Minda",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alisson Fierro-Minda"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/161730326/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/161730326",
+            "title": null,
+            "creator": "Alisson Fierro-Minda",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alisson Fierro-Minda"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/161730341/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/161730341",
+            "title": null,
+            "creator": "Alisson Fierro-Minda",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alisson Fierro-Minda"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/161730358/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/161730358",
+            "title": null,
+            "creator": "Alisson Fierro-Minda",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alisson Fierro-Minda"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.148709,
+          -0.636125
+        ]
+      },
+      "properties": {
+        "gbifID": "4162114665",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "212.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-06-18T10:32:05",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/294477662/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/294477662",
+            "title": null,
+            "creator": "Janella Calderón",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Janella Calderón"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/294477801/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/294477801",
+            "title": null,
+            "creator": "Janella Calderón",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Janella Calderón"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/294477830/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/294477830",
+            "title": null,
+            "creator": "Janella Calderón",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Janella Calderón"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/294477863/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/294477863",
+            "title": null,
+            "creator": "Janella Calderón",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Janella Calderón"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.113457,
+          -1.452779
+        ]
+      },
+      "properties": {
+        "gbifID": "6188146408",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "55.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-03-28T21:15:47",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/634058384/original.jpg",
+            "references": "https://www.inaturalist.org/photos/634058384",
+            "title": null,
+            "creator": "Alex Bentley",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alex Bentley"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/634058412/original.jpg",
+            "references": "https://www.inaturalist.org/photos/634058412",
+            "title": null,
+            "creator": "Alex Bentley",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alex Bentley"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/634058447/original.jpg",
+            "references": "https://www.inaturalist.org/photos/634058447",
+            "title": null,
+            "creator": "Alex Bentley",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alex Bentley"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/634058467/original.jpg",
+            "references": "https://www.inaturalist.org/photos/634058467",
+            "title": null,
+            "creator": "Alex Bentley",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Alex Bentley"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.149664,
+          -0.636825
+        ]
+      },
+      "properties": {
+        "gbifID": "5062637293",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-09-13T21:19:13",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001164777",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8,
+          -3.466667
+        ]
+      },
+      "properties": {
+        "gbifID": "1252681886",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-23T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/4fa74e3e9f341c73836703a30777482d.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001164777",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.016667,
+          -0.6
+        ]
+      },
+      "properties": {
+        "gbifID": "1252681904",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-26T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/7f48a335b568b3e3e01d956958cc535d.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001164774",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.145783,
+          -0.637717
+        ]
+      },
+      "properties": {
+        "gbifID": "5281850731",
+        "species": "Solanum monarchostemon",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum monarchostemon S.Knapp",
+        "coordinateUncertaintyInMeters": "13.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-07-18T14:42:08",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/538789754/original.jpg",
+            "references": "https://www.inaturalist.org/photos/538789754",
+            "title": null,
+            "creator": "Nicole Wonderlin",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nicole Wonderlin"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/538789774/original.jpg",
+            "references": "https://www.inaturalist.org/photos/538789774",
+            "title": null,
+            "creator": "Nicole Wonderlin",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nicole Wonderlin"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/538789762/original.jpg",
+            "references": "https://www.inaturalist.org/photos/538789762",
+            "title": null,
+            "creator": "Nicole Wonderlin",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nicole Wonderlin"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/538789811/original.jpg",
+            "references": "https://www.inaturalist.org/photos/538789811",
+            "title": null,
+            "creator": "Nicole Wonderlin",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nicole Wonderlin"
+          }
+        ]
+      }
+    }
+  ]
+}

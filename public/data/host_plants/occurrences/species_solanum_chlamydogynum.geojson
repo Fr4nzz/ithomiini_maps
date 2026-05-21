@@ -1,0 +1,425 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum chlamydogynum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum chlamydogynum",
+      "slug": "species_solanum_chlamydogynum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Episcada hymenaea",
+        "Pteronymia latilla"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_solanum_chlamydogynum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum chlamydogynum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2932573,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum chlamydogynum Bitter",
+        "canonical_name": "Solanum chlamydogynum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:59:37+00:00"
+      },
+      "gbif_taxon_key": 2932573,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum chlamydogynum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2932573,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum chlamydogynum Bitter",
+      "canonical_name": "Solanum chlamydogynum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:59:37+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 9
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:22+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.25,
+          10.41805
+        ]
+      },
+      "properties": {
+        "gbifID": "1260331779",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-03-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://ans-images.ansp.org/botany/Spermatophyte/Fullsize/00030/PH00030394.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "Academy of Natural Sciences of Drexel University (ANSP-ANSP)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.13,
+          10.43
+        ]
+      },
+      "properties": {
+        "gbifID": "1843546935",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-29",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12616469&h=2000",
+            "references": null,
+            "title": "02832824.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.133333,
+          10.433333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304606516",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-10-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://ans-images.ansp.org/botany/Spermatophyte/Fullsize/00030/PH00030394.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "Academy of Natural Sciences of Drexel University (ANSP-ANSP)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.9119,
+          7.0758
+        ]
+      },
+      "properties": {
+        "gbifID": "1302645787",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1891",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://ans-images.ansp.org/botany/Spermatophyte/Fullsize/00030/PH00030394.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "Academy of Natural Sciences of Drexel University (ANSP-ANSP)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.166667,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1304605897",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-10-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://ans-images.ansp.org/botany/Spermatophyte/Fullsize/00030/PH00030394.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "Academy of Natural Sciences of Drexel University (ANSP-ANSP)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.2894,
+          10.4056
+        ]
+      },
+      "properties": {
+        "gbifID": "1927819189",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1854/1855",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/540/100/00139089.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.17,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1930496260",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-29",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/230/066/v-287-00731171.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.9167,
+          10.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1228520225",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-02-27",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://ans-images.ansp.org/botany/Spermatophyte/Fullsize/00030/PH00030394.jpg",
+          "references": null,
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": null,
+          "rightsHolder": "Academy of Natural Sciences of Drexel University (ANSP-ANSP)"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.290347,
+          10.408886
+        ]
+      },
+      "properties": {
+        "gbifID": "4929899511",
+        "species": "Solanum chlamydogynum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum chlamydogynum Bitter",
+        "coordinateUncertaintyInMeters": "3610.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1854",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Academy of Natural Sciences",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://ans-images.ansp.org/botany/Spermatophyte/Fullsize/00030/PH00030394.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": "Academy of Natural Sciences of Drexel University (ANSP-ANSP)"
+          }
+        ]
+      }
+    }
+  ]
+}

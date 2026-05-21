@@ -1,0 +1,219 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum jatrophaefolium",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum jatrophaefolium",
+      "slug": "species_solanum_jatrophaefolium",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis lysimnia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_jatrophaefolium.geojson",
+      "gbif_resolution": {
+        "query": "Solanum jatrophaefolium",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 8198858,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum jatrophaefolium Sendtn.",
+        "canonical_name": "Solanum jatrophaefolium",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "DOUBTFUL",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:59:59+00:00"
+      },
+      "gbif_taxon_key": 8198858,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum jatrophaefolium",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 8198858,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum jatrophaefolium Sendtn.",
+      "canonical_name": "Solanum jatrophaefolium",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "DOUBTFUL",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:59:59+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 5
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.115433,
+          -22.830546
+        ]
+      },
+      "properties": {
+        "gbifID": "2626951056",
+        "species": "Solanum jatrophaefolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum jatrophaefolium Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of California, Davis",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_REPROJECTED",
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.2669,
+          -22.8219
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652585",
+        "species": "Solanum jatrophaefolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum jatrophaefolium Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1976-01-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.8731,
+          -10.8339
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646088",
+        "species": "Solanum jatrophaefolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum jatrophaefolium Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.9072,
+          -21.1858
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652594",
+        "species": "Solanum jatrophaefolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum jatrophaefolium Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1938-11-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.901072,
+          -21.220292
+        ]
+      },
+      "properties": {
+        "gbifID": "1090535293",
+        "species": "Solanum jatrophaefolium",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum jatrophaefolium Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1938-11-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ]
+      }
+    }
+  ]
+}

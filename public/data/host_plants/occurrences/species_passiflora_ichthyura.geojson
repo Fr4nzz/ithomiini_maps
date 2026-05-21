@@ -1,0 +1,201 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora ichthyura",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora ichthyura",
+      "slug": "species_passiflora_ichthyura",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 3,
+      "butterfly_taxa": [
+        "Dryas iulia",
+        "Heliconius erato"
+      ],
+      "confidence_counts": {
+        "medium": 3
+      },
+      "occurrence_file": "occurrences/species_passiflora_ichthyura.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora ichthyura",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3587502,
+        "accepted_usage_key": 3586594,
+        "scientific_name": "Passiflora ichthyura Mast.",
+        "canonical_name": "Passiflora ichthyura",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:24+00:00"
+      },
+      "gbif_taxon_key": 3587502,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora ichthyura",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3587502,
+      "accepted_usage_key": 3586594,
+      "scientific_name": "Passiflora ichthyura Mast.",
+      "canonical_name": "Passiflora ichthyura",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:24+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 3
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:20+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.668417,
+          -18.243028
+        ]
+      },
+      "properties": {
+        "gbifID": "4031784803",
+        "species": "Passiflora pohlii",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora ichthyura Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-12-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103899000/481F78DF-2F9D-41F1-BC48-5E9A88D296E5.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103899717",
+            "title": "Villarroel Segarra - 1494 - Bolivia",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.75,
+          -22.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257546345",
+        "species": "Passiflora pohlii",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora ichthyura Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1814",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/88c7d5914e8575c6a9a7beae8a6af4c8.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005039068",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.133333,
+          -15.933333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257528115",
+        "species": "Passiflora pohlii",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora ichthyura Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1836",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/88c7d5914e8575c6a9a7beae8a6af4c8.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005039068",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

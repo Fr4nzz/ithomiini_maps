@@ -1,0 +1,1545 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum sieberi",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum sieberi",
+      "slug": "species_solanum_sieberi",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Episcada clausina"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_sieberi.geojson",
+      "gbif_resolution": {
+        "query": "Solanum sieberi",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2930015,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "canonical_name": "Solanum sieberi",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:46+00:00"
+      },
+      "gbif_taxon_key": 2930015,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum sieberi",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2930015,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum sieberi Van Heurck & Müll.Arg.",
+      "canonical_name": "Solanum sieberi",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:46+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 38
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:24+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.33333,
+          10.86666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260362226",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.95,
+          10.83333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258268344",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-04-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.28861,
+          10.91527
+        ]
+      },
+      "properties": {
+        "gbifID": "1260362879",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-08-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.66666,
+          11.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1260363253",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.58333,
+          9.08333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260363334",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-06-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.201667,
+          11.2375
+        ]
+      },
+      "properties": {
+        "gbifID": "1259054498",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1898",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.666667,
+          11.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031521174",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-06-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.67,
+          11.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1317934592",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-29",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12657553&h=2000",
+            "references": null,
+            "title": "00992281.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.33,
+          10.87
+        ]
+      },
+      "properties": {
+        "gbifID": "1852126161",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12652005&h=2000",
+            "references": null,
+            "title": "02834617.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.25,
+          10.87
+        ]
+      },
+      "properties": {
+        "gbifID": "1852091552",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12656839&h=2000",
+            "references": null,
+            "title": "02834623.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.95,
+          10.83
+        ]
+      },
+      "properties": {
+        "gbifID": "1852091976",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-04-28",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12663048&h=2000",
+            "references": null,
+            "title": "02834596.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.97,
+          11.32
+        ]
+      },
+      "properties": {
+        "gbifID": "1852136791",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1972-10-26",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12663018&h=2000",
+            "references": null,
+            "title": "02834606.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.27,
+          10.87
+        ]
+      },
+      "properties": {
+        "gbifID": "1852153761",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12658045&h=2000",
+            "references": null,
+            "title": "02834621.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.966667,
+          11.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304606016",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1972-10-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.666667,
+          11.2
+        ]
+      },
+      "properties": {
+        "gbifID": "1304605535",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-09-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.333333,
+          10.866667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304586500",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.266667,
+          10.866667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304586487",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.45,
+          10.933333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304608798",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1983-05-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.516667,
+          9.683333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304584806",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1973-07-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.25,
+          10.866667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304608491",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.3,
+          10.908333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304596013",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1974-08-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.95,
+          10.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304608361",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1988-04-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.52,
+          9.68
+        ]
+      },
+      "properties": {
+        "gbifID": "1930460606",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-07-28/1973-07-31",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/178/838/v-287-00724328.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.67,
+          11.13
+        ]
+      },
+      "properties": {
+        "gbifID": "1928489758",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-06-20",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4469/171/00986875.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.3,
+          10.908
+        ]
+      },
+      "properties": {
+        "gbifID": "1929752142",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-08-31",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/178/837/v-287-00724327.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.45,
+          10.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1931248809",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-09",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/178/842/v-287-00724342.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.41667,
+          10.86972
+        ]
+      },
+      "properties": {
+        "gbifID": "607614476",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-05-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441376268150HaqjJ0hrSqVGVzhZ",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.9119,
+          7.0758
+        ]
+      },
+      "properties": {
+        "gbifID": "1228182370",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-01",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.5,
+          10.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228485712",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-08-07",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.5,
+          11.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1228351183",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1944-07-04",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.8333,
+          11.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228527127",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-09-29",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.073369,
+          3.901155
+        ]
+      },
+      "properties": {
+        "gbifID": "1055680500",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "1840.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1786",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+            "references": null,
+            "title": "BM000846452",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.277639,
+          4.918611
+        ]
+      },
+      "properties": {
+        "gbifID": "2813153314",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-10-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Pontificia Universidad Javeriana",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.25306,
+          10.46861
+        ]
+      },
+      "properties": {
+        "gbifID": "1144989947",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "SwissNatColl",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_COORDINATE_MISMATCH",
+          "CONTINENT_COUNTRY_MISMATCH",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.949997,
+          10.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "2013797149",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-04-28",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.269167,
+          4.884722
+        ]
+      },
+      "properties": {
+        "gbifID": "1934694806",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "1801.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-16/2010-03-22",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.71749,
+          -1.482583
+        ]
+      },
+      "properties": {
+        "gbifID": "1934692398",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "1350.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-07-20",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.281667,
+          4.891667
+        ]
+      },
+      "properties": {
+        "gbifID": "1934703126",
+        "species": "Solanum sieberi",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum sieberi Van Heurck & Müll.Arg.",
+        "coordinateUncertaintyInMeters": "1801.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-09-01/2010-09-10",
+        "country": null,
+        "datasetName": "Datos Depurados/sistematizados por Expedición por la historia - ColombiaBio",
+        "publisher": "Universidad Nacional de Colombia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED"
+        ],
+        "fallback_media": {
+          "url": "https://data.nhm.ac.uk/media/d7bf0581-c933-491f-9a36-f071796fd5ac",
+          "references": null,
+          "title": "BM000846452",
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "The Trustees of the Natural History Museum, London"
+        }
+      }
+    }
+  ]
+}

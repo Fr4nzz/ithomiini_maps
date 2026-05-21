@@ -1,0 +1,1978 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum nr ripense",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum nr ripense",
+      "slug": "species_solanum_nr_ripense",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 3,
+      "butterfly_taxa": [
+        "Godyris kedema",
+        "Greta andromica",
+        "Pteronymia latilla"
+      ],
+      "confidence_counts": {
+        "medium": 3
+      },
+      "occurrence_file": "occurrences/species_solanum_nr_ripense.geojson",
+      "gbif_resolution": {
+        "query": "Solanum nr ripense",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2931933,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum ripense Dunal",
+        "canonical_name": "Solanum ripense",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:21+00:00"
+      },
+      "gbif_taxon_key": 2931933,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum nr ripense",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2931933,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum ripense Dunal",
+      "canonical_name": "Solanum ripense",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:21+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 49
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:23+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.90264,
+          1.69797
+        ]
+      },
+      "properties": {
+        "gbifID": "3114995945",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-03-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.90761,
+          1.66897
+        ]
+      },
+      "properties": {
+        "gbifID": "3114996002",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-03-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.13333,
+          10.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260517515",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-02-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.55,
+          2.36666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262245780",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.49805,
+          4.69361
+        ]
+      },
+      "properties": {
+        "gbifID": "4031954810",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-10-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.26666,
+          8.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260361434",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.316667,
+          4.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262254285",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-03-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1,
+          9.3
+        ]
+      },
+      "properties": {
+        "gbifID": "4031930099",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-10-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.66666,
+          4.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031451804",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.58333,
+          4.75
+        ]
+      },
+      "properties": {
+        "gbifID": "1258343960",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-08-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.31666,
+          6.51666
+        ]
+      },
+      "properties": {
+        "gbifID": "4032032713",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-10-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.18,
+          9.23
+        ]
+      },
+      "properties": {
+        "gbifID": "1318812772",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-04-28",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13364643&h=2000",
+            "references": null,
+            "title": "00773443.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1936,
+          9.2061
+        ]
+      },
+      "properties": {
+        "gbifID": "1320210962",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13395713&h=2000",
+            "references": null,
+            "title": "00656026.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.27,
+          8.53
+        ]
+      },
+      "properties": {
+        "gbifID": "1852094999",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12664509&h=2000",
+            "references": null,
+            "title": "02834440.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2092,
+          9.2456
+        ]
+      },
+      "properties": {
+        "gbifID": "1320032411",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-06-24/1995-06-26",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13394965&h=2000",
+            "references": null,
+            "title": "00507896.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.1624,
+          10.2855
+        ]
+      },
+      "properties": {
+        "gbifID": "1852153848",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12661476&h=2000",
+            "references": null,
+            "title": "02834444.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.18,
+          9.58
+        ]
+      },
+      "properties": {
+        "gbifID": "1319081590",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-11",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12651284&h=2000",
+            "references": null,
+            "title": "00840579.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1936,
+          9.20611
+        ]
+      },
+      "properties": {
+        "gbifID": "1317518039",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-15",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13395916&h=2000",
+            "references": null,
+            "title": "00728349.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.3,
+          9.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1320991666",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-10-31",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12647641&h=2000",
+            "references": null,
+            "title": "00840576.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2261,
+          9.4186
+        ]
+      },
+      "properties": {
+        "gbifID": "1321429851",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-06-04",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13394952&h=2000",
+            "references": null,
+            "title": "00507866.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2119,
+          9.2497
+        ]
+      },
+      "properties": {
+        "gbifID": "1321169367",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-06-17/1995-06-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=13394959&h=2000",
+            "references": null,
+            "title": "00507883.tif",
+            "creator": "Daniel Fernicola",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.308333,
+          9.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1304581617",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1990-10-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.266667,
+          8.533333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304583373",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1984-10-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.9119,
+          7.0758
+        ]
+      },
+      "properties": {
+        "gbifID": "1302647246",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1843-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.191667,
+          9.575
+        ]
+      },
+      "properties": {
+        "gbifID": "1304595792",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1988-05-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.183333,
+          9.233333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304580379",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1988-04-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.141667,
+          10.541667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304595727",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2000-02-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.33,
+          4.62
+        ]
+      },
+      "properties": {
+        "gbifID": "1930323232",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-20",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4323/253/00724492.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.142,
+          10.542
+        ]
+      },
+      "properties": {
+        "gbifID": "1929866604",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-02-19",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/229/881/v-287-00713149.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.42,
+          7.42
+        ]
+      },
+      "properties": {
+        "gbifID": "1929458335",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-23",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4323/305/00735291.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.803056,
+          -0.231389
+        ]
+      },
+      "properties": {
+        "gbifID": "1929107728",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-02-10",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4323/266/00731193.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.67,
+          4.33
+        ]
+      },
+      "properties": {
+        "gbifID": "1931008805",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-05-16",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/178/897/v-287-00731284.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.308,
+          9.35
+        ]
+      },
+      "properties": {
+        "gbifID": "1928672025",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-10-31",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/179/057/v-287-00820011.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.192,
+          9.575
+        ]
+      },
+      "properties": {
+        "gbifID": "1929321526",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-11",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/179/062/v-287-00820037.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.168801,
+          9.146454
+        ]
+      },
+      "properties": {
+        "gbifID": "1928553011",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-15",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4485/250/00829337.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.1667,
+          8.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1228209393",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-22",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.083333,
+          8.716667
+        ]
+      },
+      "properties": {
+        "gbifID": "4905619536",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-03-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.121667,
+          8.6675
+        ]
+      },
+      "properties": {
+        "gbifID": "4905654124",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.138333,
+          8.664722
+        ]
+      },
+      "properties": {
+        "gbifID": "4905639129",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-02-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Venezolano de Investigaciones Científicas (IVIC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.116667,
+          10.45
+        ]
+      },
+      "properties": {
+        "gbifID": "4060992862",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-11-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.116667,
+          10.533333
+        ]
+      },
+      "properties": {
+        "gbifID": "1057124129",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-11-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/eba08407-b9ea-404a-a739-54c002fbbd84",
+            "references": null,
+            "title": "BM001017374",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.169564,
+          7.122449
+        ]
+      },
+      "properties": {
+        "gbifID": "1056785131",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "1480.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/24124c62-44c8-4553-a1f5-671df750ff3f",
+            "references": null,
+            "title": "BM000559073",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.742492,
+          1.750181
+        ]
+      },
+      "properties": {
+        "gbifID": "3068332076",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-04-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.907611,
+          1.668972
+        ]
+      },
+      "properties": {
+        "gbifID": "3705110961",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-03-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.777642,
+          1.782756
+        ]
+      },
+      "properties": {
+        "gbifID": "3068330801",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-06-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.902639,
+          1.697972
+        ]
+      },
+      "properties": {
+        "gbifID": "1932882218",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-03-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.900472,
+          1.704528
+        ]
+      },
+      "properties": {
+        "gbifID": "1932887934",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-01-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Amazónico de Investigaciones Científicas - SINCHI",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.133333,
+          8.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "1252682618",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-21T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001165556",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.23972,
+          8.45444
+        ]
+      },
+      "properties": {
+        "gbifID": "1144989935",
+        "species": "Solanum ripense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum ripense Dunal",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "SwissNatColl",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/80b111c83c70f8d693f6ca1a53dc84c9.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001165556",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    }
+  ]
+}

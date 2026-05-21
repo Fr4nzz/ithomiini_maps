@@ -1,0 +1,210 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Aureliana lucida",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Aureliana",
+      "species": "Aureliana lucida",
+      "slug": "species_aureliana_lucida",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 4,
+      "butterfly_taxa": [
+        "Epityches eupompe",
+        "Ithomia agnosia",
+        "Ithomia drymo",
+        "Ithomia lichyi"
+      ],
+      "confidence_counts": {
+        "medium": 4
+      },
+      "occurrence_file": "occurrences/species_aureliana_lucida.geojson",
+      "gbif_resolution": {
+        "query": "Aureliana lucida",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 7300024,
+        "accepted_usage_key": 9922638,
+        "scientific_name": "Aureliana lucida (Moric.) Sendtn.",
+        "canonical_name": "Aureliana lucida",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Athenaea",
+        "resolved_at": "2026-05-21T03:56:56+00:00"
+      },
+      "gbif_taxon_key": 7300024,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Aureliana lucida",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 7300024,
+      "accepted_usage_key": 9922638,
+      "scientific_name": "Aureliana lucida (Moric.) Sendtn.",
+      "canonical_name": "Aureliana lucida",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Athenaea",
+      "resolved_at": "2026-05-21T03:56:56+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 3
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:18+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.104722,
+          -14.485
+        ]
+      },
+      "properties": {
+        "gbifID": "1257773013",
+        "species": "Athenaea fasciculata",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Aureliana lucida (Moric.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-04-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100430000/8492CF65-BCA7-43A7-B166-8EAC096E1FDA.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100430644",
+            "title": "Jardim - 2981 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -36.0,
+          -8.31
+        ]
+      },
+      "properties": {
+        "gbifID": "1456310432",
+        "species": "Athenaea fasciculata",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Aureliana lucida (Moric.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-12",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11915848&h=2000",
+            "references": null,
+            "title": "01936091",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12612510&h=2000",
+            "references": null,
+            "title": "01936091.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.888222,
+          -9.231389
+        ]
+      },
+      "properties": {
+        "gbifID": "1055563061",
+        "species": "Athenaea fasciculata",
+        "genus": "Athenaea",
+        "family": "Solanaceae",
+        "scientificName": "Aureliana lucida (Moric.) Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-05-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/23eb3163-d066-49a4-8242-c4dc8e1eb69d",
+            "references": null,
+            "title": "001016045",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    }
+  ]
+}

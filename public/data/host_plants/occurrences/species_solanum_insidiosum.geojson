@@ -1,0 +1,5695 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum insidiosum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum insidiosum",
+      "slug": "species_solanum_insidiosum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 4,
+      "butterfly_taxa": [
+        "Ceratinia neso",
+        "Dircenna loreta",
+        "Hypothyris ninonia",
+        "Oleria astrea"
+      ],
+      "confidence_counts": {
+        "medium": 4
+      },
+      "occurrence_file": "occurrences/species_solanum_insidiosum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum insidiosum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2929131,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum insidiosum Mart.",
+        "canonical_name": "Solanum insidiosum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:59:57+00:00"
+      },
+      "gbif_taxon_key": 2929131,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum insidiosum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2929131,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum insidiosum Mart.",
+      "canonical_name": "Solanum insidiosum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:59:57+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 143
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:22+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.033333,
+          -15.924167
+        ]
+      },
+      "properties": {
+        "gbifID": "2382969045",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.835278,
+          -18.4325
+        ]
+      },
+      "properties": {
+        "gbifID": "2612618848",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-02-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Espírito Santo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.611389,
+          -19.991111
+        ]
+      },
+      "properties": {
+        "gbifID": "5054022327",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2025-01-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Espírito Santo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.5925,
+          -19.971389
+        ]
+      },
+      "properties": {
+        "gbifID": "3047665861",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2018-11-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Espírito Santo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.606111,
+          -19.989722
+        ]
+      },
+      "properties": {
+        "gbifID": "4953856663",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Espírito Santo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.61,
+          -19.990278
+        ]
+      },
+      "properties": {
+        "gbifID": "4953860056",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-02-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Espírito Santo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.6,
+          -19.91666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251116",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-02-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/171928B6-D5BC-49AF-8C80-FD5EF89F6D1A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447981",
+            "title": "Peixoto - 3441 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.146667,
+          -19.3575
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251159",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-01-31",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100448000/EB11C636-4C5B-4C5B-8B68-51CBE20D3E69.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100448030",
+            "title": "Peixoto - 3042 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.31667,
+          -23.78333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517558759",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-10-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1750218/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.415833,
+          -17.141667
+        ]
+      },
+      "properties": {
+        "gbifID": "5295088719",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-05-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.304444,
+          -17.045556
+        ]
+      },
+      "properties": {
+        "gbifID": "5295086561",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-05-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.410556,
+          -16.892222
+        ]
+      },
+      "properties": {
+        "gbifID": "5295085120",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-05-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.031111,
+          -21.74
+        ]
+      },
+      "properties": {
+        "gbifID": "2998084273",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-02-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.448056,
+          -21.797222
+        ]
+      },
+      "properties": {
+        "gbifID": "2998084583",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-03-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.760833,
+          -15.869722
+        ]
+      },
+      "properties": {
+        "gbifID": "4439741185",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-12-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.416667,
+          -16.883333
+        ]
+      },
+      "properties": {
+        "gbifID": "4850648122",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-01-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.621111,
+          -19.911111
+        ]
+      },
+      "properties": {
+        "gbifID": "1086680544",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-12-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Paraná",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.304444,
+          -17.045555
+        ]
+      },
+      "properties": {
+        "gbifID": "5169874681",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-05-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Paraná",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.008333,
+          -22.530833
+        ]
+      },
+      "properties": {
+        "gbifID": "2997464900",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.499167,
+          -19.897222
+        ]
+      },
+      "properties": {
+        "gbifID": "2997436702",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.765,
+          -19.782222
+        ]
+      },
+      "properties": {
+        "gbifID": "2997822497",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-01-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.841944,
+          -21.086389
+        ]
+      },
+      "properties": {
+        "gbifID": "2997815234",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-02-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.65,
+          -20.32
+        ]
+      },
+      "properties": {
+        "gbifID": "2997912440",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-01-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.600278,
+          -19.935833
+        ]
+      },
+      "properties": {
+        "gbifID": "2997477920",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.303889,
+          -21.744722
+        ]
+      },
+      "properties": {
+        "gbifID": "2997846184",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-06-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.89,
+          -20.879722
+        ]
+      },
+      "properties": {
+        "gbifID": "2997495844",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.786667,
+          -22.370833
+        ]
+      },
+      "properties": {
+        "gbifID": "2997382314",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.875833,
+          -19.234444
+        ]
+      },
+      "properties": {
+        "gbifID": "1424238043",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-01-18",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/52/13/6/00521306.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.89,
+          -20.87972
+        ]
+      },
+      "properties": {
+        "gbifID": "1424437000",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-03",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/75/36/66/00753666.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.528333,
+          -19.969722
+        ]
+      },
+      "properties": {
+        "gbifID": "1424416225",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-06",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/65/60/00716560.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.325833,
+          -17.094722
+        ]
+      },
+      "properties": {
+        "gbifID": "6163448543",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2025-09-11",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.585,
+          -22.930556
+        ]
+      },
+      "properties": {
+        "gbifID": "5867699540",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-12-19",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.917222,
+          -21.823056
+        ]
+      },
+      "properties": {
+        "gbifID": "1819182762",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-12-19",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/37/81/37/01378137.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.260833,
+          -17.856111
+        ]
+      },
+      "properties": {
+        "gbifID": "1424458896",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-16",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/79/92/90/00799290.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.652222,
+          -19.251944
+        ]
+      },
+      "properties": {
+        "gbifID": "1424154642",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-04-07",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/42/16/49/00421649.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.256944,
+          -22.963889
+        ]
+      },
+      "properties": {
+        "gbifID": "2565880926",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-01-28",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/42/66/70/01426670.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.5375,
+          -19.967778
+        ]
+      },
+      "properties": {
+        "gbifID": "1424416267",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-06",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/65/54/00716554.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.572778,
+          -19.854722
+        ]
+      },
+      "properties": {
+        "gbifID": "1424416151",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/71/65/21/00716521.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.287222,
+          -22.9425
+        ]
+      },
+      "properties": {
+        "gbifID": "4999676826",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-12-27",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/57/69/68/01576968.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.12,
+          -21.96
+        ]
+      },
+      "properties": {
+        "gbifID": "2996859007",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-12-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.608889,
+          -19.931944
+        ]
+      },
+      "properties": {
+        "gbifID": "3068483327",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2019-03-29",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/43/68/83/01436883.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.642222,
+          -20.023333
+        ]
+      },
+      "properties": {
+        "gbifID": "1424275637",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-26",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/56/17/12/00561712.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.037222,
+          -19.276111
+        ]
+      },
+      "properties": {
+        "gbifID": "1424154575",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-04-05",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/42/16/46/00421646.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.861667,
+          -20.933611
+        ]
+      },
+      "properties": {
+        "gbifID": "1424436638",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-04",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/75/31/57/00753157.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.271389,
+          -22.948889
+        ]
+      },
+      "properties": {
+        "gbifID": "4537179698",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-01-22",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/51/62/31/01516231.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.754444,
+          -20.203333
+        ]
+      },
+      "properties": {
+        "gbifID": "1424275891",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-03-15",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/56/19/15/00561915.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.177777,
+          -16.230277
+        ]
+      },
+      "properties": {
+        "gbifID": "1305102850",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2002-11-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.03415,
+          -7.805139
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652498",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2007-11-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.4167,
+          -16.8833
+        ]
+      },
+      "properties": {
+        "gbifID": "1302677960",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1977-01-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0608,
+          -22.9056
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652464",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1944-01-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.6422,
+          -20.0233
+        ]
+      },
+      "properties": {
+        "gbifID": "1302677919",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2007-01-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.9297,
+          -15.7797
+        ]
+      },
+      "properties": {
+        "gbifID": "1305102944",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2000-09-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.316667,
+          -23.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304332942",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1986-10-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.0736,
+          -22.4694
+        ]
+      },
+      "properties": {
+        "gbifID": "1302677880",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2008-01-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.03333,
+          -15.92417
+        ]
+      },
+      "properties": {
+        "gbifID": "1305102891",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1996-06-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.766667,
+          -20.866667
+        ]
+      },
+      "properties": {
+        "gbifID": "1304586436",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1994-12-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.0606,
+          -22.3147
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652492",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1978-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.183333,
+          -20.15
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652499",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1986-02-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -38.7667,
+          -11.8667
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652466",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1976-07-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.0372,
+          -19.2761
+        ]
+      },
+      "properties": {
+        "gbifID": "1302677940",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2006-04-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.193611,
+          -22.903333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304590887",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.7544,
+          -20.2033
+        ]
+      },
+      "properties": {
+        "gbifID": "1302677905",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2007-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.6,
+          -19.92
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652443",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.350278,
+          -21.764444
+        ]
+      },
+      "properties": {
+        "gbifID": "1304602612",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1995-06-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.0,
+          -15.86667
+        ]
+      },
+      "properties": {
+        "gbifID": "1305102883",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1996-08-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.0,
+          -5.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1302646215",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.15,
+          -19.36
+        ]
+      },
+      "properties": {
+        "gbifID": "1302652450",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.071944,
+          -19.391111
+        ]
+      },
+      "properties": {
+        "gbifID": "1304595051",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1993-01-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.05,
+          -15.86667
+        ]
+      },
+      "properties": {
+        "gbifID": "1305102876",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1996-01-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.77,
+          -20.87
+        ]
+      },
+      "properties": {
+        "gbifID": "2997876400",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-12-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.75,
+          -19.88
+        ]
+      },
+      "properties": {
+        "gbifID": "2997438791",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-01-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.725556,
+          -20.07
+        ]
+      },
+      "properties": {
+        "gbifID": "2997370398",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.3,
+          -23.77
+        ]
+      },
+      "properties": {
+        "gbifID": "2997452637",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-11-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.073611,
+          -22.469444
+        ]
+      },
+      "properties": {
+        "gbifID": "1424233907",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-01-29",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/51/71/76/00517176.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.085833,
+          -22.218889
+        ]
+      },
+      "properties": {
+        "gbifID": "1424038682",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-12-20",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "MULTIMEDIA_URI_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/25/28/86/00252886.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          },
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/25/28/86/00252886-1.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.19,
+          -23.47
+        ]
+      },
+      "properties": {
+        "gbifID": "2997855352",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-11-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.46,
+          -20.52
+        ]
+      },
+      "properties": {
+        "gbifID": "2997838292",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-12-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.85,
+          -15.866667
+        ]
+      },
+      "properties": {
+        "gbifID": "4427184345",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-12-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.901389,
+          -15.728333
+        ]
+      },
+      "properties": {
+        "gbifID": "2998634809",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.939722,
+          -15.724722
+        ]
+      },
+      "properties": {
+        "gbifID": "2998672176",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-03-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.980833,
+          -15.767222
+        ]
+      },
+      "properties": {
+        "gbifID": "4427237656",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.303974,
+          -21.744661
+        ]
+      },
+      "properties": {
+        "gbifID": "1929903425",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-06-03",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/082/v-287-00700514.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.071853,
+          -19.3949
+        ]
+      },
+      "properties": {
+        "gbifID": "1928063878",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-13",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1620/808/00852466.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.5728,
+          -19.8547
+        ]
+      },
+      "properties": {
+        "gbifID": "1929233344",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1172/772/01921596.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.600289,
+          -19.93961
+        ]
+      },
+      "properties": {
+        "gbifID": "1930237132",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "23813.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-02-04",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1620/682/00770703.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.78677,
+          -22.374652
+        ]
+      },
+      "properties": {
+        "gbifID": "1931142834",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-06-09",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/209/431/v-287-00770708.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.765,
+          -19.7822
+        ]
+      },
+      "properties": {
+        "gbifID": "1929965726",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-01-14",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1133/812/01018779.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.49922,
+          -19.89733
+        ]
+      },
+      "properties": {
+        "gbifID": "1930071169",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-26",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1621/105/01144724.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.89,
+          -20.8797
+        ]
+      },
+      "properties": {
+        "gbifID": "1929459172",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-03",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1093/963/01844237.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.841828,
+          -21.086253
+        ]
+      },
+      "properties": {
+        "gbifID": "1928817762",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-02-08",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/4466/932/01551628.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          },
+          {
+            "url": "http://sweetgum.nybg.org/images3/830/255/01551628.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.7256,
+          -20.07
+        ]
+      },
+      "properties": {
+        "gbifID": "1929796118",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1093/969/01844243.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.939203,
+          -19.121019
+        ]
+      },
+      "properties": {
+        "gbifID": "4074127309",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "CVRD - Reserva Natural Vale",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.03415,
+          -7.805138
+        ]
+      },
+      "properties": {
+        "gbifID": "1702652912",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-11-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal do Vale do São Francisco",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.53,
+          -23.66
+        ]
+      },
+      "properties": {
+        "gbifID": "1086901424",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-10-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Florestal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.211111,
+          -22.951944
+        ]
+      },
+      "properties": {
+        "gbifID": "1096882844",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1902-01-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Swedish Museum of Natural History",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.506944,
+          -19.936111
+        ]
+      },
+      "properties": {
+        "gbifID": "1123786122",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-05-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.65,
+          -19.915556
+        ]
+      },
+      "properties": {
+        "gbifID": "1123786142",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-05-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.553056,
+          -19.9075
+        ]
+      },
+      "properties": {
+        "gbifID": "1123799543",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-04-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.6075,
+          -19.931389
+        ]
+      },
+      "properties": {
+        "gbifID": "1123801792",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-12-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.992417,
+          -21.218889
+        ]
+      },
+      "properties": {
+        "gbifID": "1123823736",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-04-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.649444,
+          -19.981111
+        ]
+      },
+      "properties": {
+        "gbifID": "1503378960",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-11-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.643333,
+          -19.936667
+        ]
+      },
+      "properties": {
+        "gbifID": "1503379037",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2016-11-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.533333,
+          -19.95
+        ]
+      },
+      "properties": {
+        "gbifID": "1915523249",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-12-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.530278,
+          -19.971389
+        ]
+      },
+      "properties": {
+        "gbifID": "1123787216",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-04-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.683611,
+          -19.931111
+        ]
+      },
+      "properties": {
+        "gbifID": "1123791757",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-01-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.574722,
+          -20.082778
+        ]
+      },
+      "properties": {
+        "gbifID": "1123816862",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-04-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.5125,
+          -19.971944
+        ]
+      },
+      "properties": {
+        "gbifID": "1123786184",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-04-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.499222,
+          -19.8975
+        ]
+      },
+      "properties": {
+        "gbifID": "1123822965",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-01-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.56025,
+          -20.111778
+        ]
+      },
+      "properties": {
+        "gbifID": "1123830893",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-07-02",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.432222,
+          -20.093889
+        ]
+      },
+      "properties": {
+        "gbifID": "1123812142",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-03-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.601944,
+          -19.906111
+        ]
+      },
+      "properties": {
+        "gbifID": "1123786148",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-12-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.645833,
+          -19.981944
+        ]
+      },
+      "properties": {
+        "gbifID": "1123816247",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-12-28",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.55525,
+          -20.112139
+        ]
+      },
+      "properties": {
+        "gbifID": "1123830879",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-03-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.581111,
+          -19.951944
+        ]
+      },
+      "properties": {
+        "gbifID": "1503379047",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-12-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.589167,
+          -19.922222
+        ]
+      },
+      "properties": {
+        "gbifID": "1123792571",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-03-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.470556,
+          -20.059167
+        ]
+      },
+      "properties": {
+        "gbifID": "1123811228",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-01-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Nacional da Mata Atlântica",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.901388,
+          -15.728333
+        ]
+      },
+      "properties": {
+        "gbifID": "1095252972",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2010-11-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Cenargen",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.551583,
+          -19.835
+        ]
+      },
+      "properties": {
+        "gbifID": "1087652672",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.260944,
+          -17.855986
+        ]
+      },
+      "properties": {
+        "gbifID": "1087656659",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.106389,
+          -21.4125
+        ]
+      },
+      "properties": {
+        "gbifID": "3800718350",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-01-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.528306,
+          -19.969806
+        ]
+      },
+      "properties": {
+        "gbifID": "1087654303",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.536133,
+          -19.971111
+        ]
+      },
+      "properties": {
+        "gbifID": "1087663976",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-12-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.922222,
+          -21.823056
+        ]
+      },
+      "properties": {
+        "gbifID": "2542594289",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-12-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.107778,
+          -21.410556
+        ]
+      },
+      "properties": {
+        "gbifID": "3800715343",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-01-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.433417,
+          -17.630194
+        ]
+      },
+      "properties": {
+        "gbifID": "1087631586",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-02-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.445556,
+          -18.786944
+        ]
+      },
+      "properties": {
+        "gbifID": "1087648589",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-05-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.725528,
+          -20.069917
+        ]
+      },
+      "properties": {
+        "gbifID": "1087652513",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.572889,
+          -19.854806
+        ]
+      },
+      "properties": {
+        "gbifID": "1087652667",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.106111,
+          -21.4125
+        ]
+      },
+      "properties": {
+        "gbifID": "3800713346",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2020-02-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.911111,
+          -21.712778
+        ]
+      },
+      "properties": {
+        "gbifID": "3914329333",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2022-04-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.889889,
+          -20.879722
+        ]
+      },
+      "properties": {
+        "gbifID": "1087656437",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2012-06-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -41.066667,
+          -21.4
+        ]
+      },
+      "properties": {
+        "gbifID": "3800719335",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-12-01",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.537889,
+          -19.801611
+        ]
+      },
+      "properties": {
+        "gbifID": "1087654262",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-02-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.070011,
+          -20.073058
+        ]
+      },
+      "properties": {
+        "gbifID": "1801097837",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-03-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Minas Gerais",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.580583,
+          -22.559083
+        ]
+      },
+      "properties": {
+        "gbifID": "1143431308",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-08-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Santa Cecília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.0,
+          -18.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228330712",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1932-01",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.5,
+          -22.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228347922",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-03-20",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.75,
+          -20.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228399861",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1973-02-08",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.70083,
+          -22.98167
+        ]
+      },
+      "properties": {
+        "gbifID": "1231105563",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum, Vienna",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://object.jacq.org/europeana/W/141301.jpg",
+            "references": "https://api.jacq.org/v1/images/show/141301?withredirect=1",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.08982,
+          -10.773109
+        ]
+      },
+      "properties": {
+        "gbifID": "1055638798",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "4364.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/245b3ea0-ff23-44d5-99b8-bd95bfa71699",
+            "references": null,
+            "title": "BM000099850",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.086522,
+          -19.134455
+        ]
+      },
+      "properties": {
+        "gbifID": "5006781425",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "67.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-10-28T11:17:10",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/446124865",
+            "title": null,
+            "creator": "Geovane Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Geovane Siqueira"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124885/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/446124885",
+            "title": null,
+            "creator": "Geovane Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Geovane Siqueira"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124897/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/446124897",
+            "title": null,
+            "creator": "Geovane Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Geovane Siqueira"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124910/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/446124910",
+            "title": null,
+            "creator": "Geovane Siqueira",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Geovane Siqueira"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.497062,
+          -22.310076
+        ]
+      },
+      "properties": {
+        "gbifID": "5133489681",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "204.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-01-04T15:49",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/369097165/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/369097165",
+            "title": null,
+            "creator": "bettinadungs",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "bettinadungs"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/369097282/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/369097282",
+            "title": null,
+            "creator": "bettinadungs",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "bettinadungs"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.415833,
+          -18.383333
+        ]
+      },
+      "properties": {
+        "gbifID": "5151223315",
+        "species": "Solanum insidiosum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum insidiosum Mart.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2024-05-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Campinas",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/446124865/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/446124865",
+          "title": null,
+          "creator": "Geovane Siqueira",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Geovane Siqueira"
+        }
+      }
+    }
+  ]
+}

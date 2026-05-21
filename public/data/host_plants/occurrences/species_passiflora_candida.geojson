@@ -1,0 +1,4218 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora candida",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora candida",
+      "slug": "species_passiflora_candida",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Heliconius numata",
+        "Heliconius sara"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_passiflora_candida.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora candida",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3587321,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "canonical_name": "Passiflora candida",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:05+00:00"
+      },
+      "gbif_taxon_key": 3587321,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora candida",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3587321,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora candida (Poepp. & Endl.) Mast.",
+      "canonical_name": "Passiflora candida",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:05+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 90
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:20+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.616667,
+          4.966667
+        ]
+      },
+      "properties": {
+        "gbifID": "4072679852",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-11-25",
+        "country": null,
+        "datasetName": "Meise Botanic Garden Herbarium (BR)",
+        "publisher": "Meise Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://oxalis.br.fgov.be/images/BR0/000/020/843/670/BR0000020843670.jpg",
+            "references": null,
+            "title": "Passiflora candida (Poepp. & Endl.) Mast.",
+            "creator": "Meise Botanic Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Meise Botanic Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.383333,
+          4.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "4072620393",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-01",
+        "country": null,
+        "datasetName": "Meise Botanic Garden Herbarium (BR)",
+        "publisher": "Meise Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://oxalis.br.fgov.be/images/BR0/000/020/844/080/BR0000020844080.jpg",
+            "references": null,
+            "title": "Passiflora candida (Poepp. & Endl.) Mast.",
+            "creator": "Meise Botanic Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Meise Botanic Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.25,
+          4.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "4072499543",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-12-03",
+        "country": null,
+        "datasetName": "Meise Botanic Garden Herbarium (BR)",
+        "publisher": "Meise Botanic Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://oxalis.br.fgov.be/images/BR0/000/009/073/760/BR0000009073760.jpg",
+            "references": null,
+            "title": "Passiflora candida (Poepp. & Endl.) Mast.",
+            "creator": "Meise Botanic Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Meise Botanic Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.23333,
+          1.51666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260235552",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-09-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/CC33224C-DABC-41AF-8885-6F2DF847F585.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934218",
+            "title": "Clarke - 8520 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.0,
+          -7.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1257808098",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/52DDDC76-EE92-4A86-BBAB-75D6FE137A95.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934224",
+            "title": "Cid Ferreira - 5216 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.3,
+          4.65
+        ]
+      },
+      "properties": {
+        "gbifID": "1257669029",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2009-03-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning02/detailImages/RISScanning02/103145000/4671FD06-C832-4119-8A7F-A9BBA80BA804.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103145793",
+            "title": "Feuillet - 17056 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.966667,
+          -2.883333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257540686",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-08-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/AB570781-8F40-43FE-BB12-128EA0D213A2.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934219",
+            "title": "Costa - 757 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.383333,
+          4.616667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257808017",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-02-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/789CF915-5304-494C-8F15-7695646F7C32.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934223",
+            "title": "Billiet - 5721 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.583333,
+          4.883333
+        ]
+      },
+      "properties": {
+        "gbifID": "4062278317",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101765000/DAECAF6A-D141-4C79-A334-2FCE7AC6C668.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101765417",
+            "title": "Feuillet - 4615 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.283333,
+          4.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257984468",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-02-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.745,
+          -2.171389
+        ]
+      },
+      "properties": {
+        "gbifID": "1257608896",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1907-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.300139,
+          4.656639
+        ]
+      },
+      "properties": {
+        "gbifID": "4031710551",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-03-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103817000/80C6C5B2-1264-4A74-A2A6-5FBD46BD9595.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103817586",
+            "title": "Croat - 102764 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100492000/E8753241-53FB-46A8-BF44-9FF83C58D594.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100492075",
+            "title": "Croat - 102764 - French Guiana",
+            "creator": "Thomas Croat",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.23333,
+          1.51667
+        ]
+      },
+      "properties": {
+        "gbifID": "2515376414",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-09-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1475621/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.21667,
+          5.91667
+        ]
+      },
+      "properties": {
+        "gbifID": "2517496135",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-05-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1464683/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.32223,
+          4.37055
+        ]
+      },
+      "properties": {
+        "gbifID": "2515188450",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-02-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/L.3977334/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.58,
+          4.91
+        ]
+      },
+      "properties": {
+        "gbifID": "3311064348",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-01-26",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=16566193&h=2000",
+            "references": null,
+            "title": "04721104.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.15,
+          4.55
+        ]
+      },
+      "properties": {
+        "gbifID": "1456028303",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-02-06",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15458171&h=2000",
+            "references": null,
+            "title": "00758688.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.2,
+          4.28
+        ]
+      },
+      "properties": {
+        "gbifID": "1456226244",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-12-05",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.59,
+          4.88
+        ]
+      },
+      "properties": {
+        "gbifID": "1456313841",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-25",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.01,
+          4.03
+        ]
+      },
+      "properties": {
+        "gbifID": "1455943982",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-11-30",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=16002137&h=2000",
+            "references": null,
+            "title": "04695953.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.31,
+          4.41
+        ]
+      },
+      "properties": {
+        "gbifID": "1456258166",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-12",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15462925&h=2000",
+            "references": null,
+            "title": "00758689.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.08,
+          -2.32
+        ]
+      },
+      "properties": {
+        "gbifID": "1317858269",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-21",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15465120&h=2000",
+            "references": null,
+            "title": "01205442.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=10522060&h=2000",
+            "references": null,
+            "title": "01205442.TIF",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.61,
+          4.91
+        ]
+      },
+      "properties": {
+        "gbifID": "1456103615",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-10",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15489826&h=2000",
+            "references": null,
+            "title": "00758687.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.2397,
+          1.52778
+        ]
+      },
+      "properties": {
+        "gbifID": "1456282094",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-09-13",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15454857&h=2000",
+            "references": null,
+            "title": "00687912.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.33,
+          4.41
+        ]
+      },
+      "properties": {
+        "gbifID": "3357290537",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-19",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.08333,
+          -2.31667
+        ]
+      },
+      "properties": {
+        "gbifID": "2517235421",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1475619/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.5,
+          -7.5
+        ]
+      },
+      "properties": {
+        "gbifID": "2997376564",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.433333,
+          -7.498889
+        ]
+      },
+      "properties": {
+        "gbifID": "2997882734",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-11-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.833333,
+          -2.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997354176",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-21",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.091667,
+          -2.326667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997820194",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-02-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.8,
+          -0.13
+        ]
+      },
+      "properties": {
+        "gbifID": "2997359757",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-12-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.216667,
+          -7.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "1424420760",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-23",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/72/16/18/00721618.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.45,
+          4.55
+        ]
+      },
+      "properties": {
+        "gbifID": "3357270323",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-14",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.378611,
+          -9.400556
+        ]
+      },
+      "properties": {
+        "gbifID": "1423905754",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-11-28",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/1/10/67/82/01106782.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.025,
+          -3.101944
+        ]
+      },
+      "properties": {
+        "gbifID": "2997361182",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-02-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.083333,
+          -2.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1424420839",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-21",
+        "country": null,
+        "datasetName": "RB - Rio de Janeiro Botanical Garden Herbarium Collection",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "http://jbrj-public-img.s3-sa-east-1.amazonaws.com/JPG/rb/0/72/16/91/00721691.jpg",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": null,
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.622778,
+          -9.263056
+        ]
+      },
+      "properties": {
+        "gbifID": "2998657413",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-07-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.091744,
+          -2.326638
+        ]
+      },
+      "properties": {
+        "gbifID": "1930445272",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-02-12",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/696/875/01550561.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.026206,
+          -3.105321
+        ]
+      },
+      "properties": {
+        "gbifID": "1929147706",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-02-13",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_REPROJECTED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/696/874/01550560.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.433256,
+          -7.498983
+        ]
+      },
+      "properties": {
+        "gbifID": "1930411132",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1966-11-23",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/945/118/1748001.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.97,
+          -2.88
+        ]
+      },
+      "properties": {
+        "gbifID": "1929948905",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-07-17",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/603/072/01291551.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.43,
+          3.4
+        ]
+      },
+      "properties": {
+        "gbifID": "1930825771",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-14",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/2167/498/00749765.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.800278,
+          -3.466944
+        ]
+      },
+      "properties": {
+        "gbifID": "5900292528",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2021-08-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu Botânico Municipal",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.05,
+          -3.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "5066691754",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1955-10-24",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Jardim Botânico de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.622777,
+          -9.263055
+        ]
+      },
+      "properties": {
+        "gbifID": "1095255819",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-07-15",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Embrapa Cenargen",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.22416,
+          4.29642
+        ]
+      },
+      "properties": {
+        "gbifID": "3072832293",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2010",
+        "country": null,
+        "datasetName": "",
+        "publisher": "UAR PatriNat (OFB-MNHN-CNRS-IRD), Paris",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.71139,
+          -3.35417
+        ]
+      },
+      "properties": {
+        "gbifID": "2236662109",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1831",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum, Vienna",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.08,
+          -2.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1042580279",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.97,
+          -2.883333
+        ]
+      },
+      "properties": {
+        "gbifID": "1042476427",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.22,
+          -7.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "1042515920",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.62,
+          -9.263056
+        ]
+      },
+      "properties": {
+        "gbifID": "1042693981",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Coleção Botânica, Instituto Nacional de Pesquisas da Amazônia (INPA)",
+        "publisher": "Instituto Nacional de Pesquisas da Amazônia - INPA",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "MODIFIED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "ELEVATION_MIN_MAX_SWAPPED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.463056,
+          -1.866944
+        ]
+      },
+      "properties": {
+        "gbifID": "4900474172",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2023-10-20",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.2,
+          -1.133333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257608885",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1901-09-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.5,
+          4.9
+        ]
+      },
+      "properties": {
+        "gbifID": "4061134260",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.708333,
+          -2.443055
+        ]
+      },
+      "properties": {
+        "gbifID": "1257608906",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1877",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.711389,
+          -3.354167
+        ]
+      },
+      "properties": {
+        "gbifID": "1257608860",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1831-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.58333,
+          4.88333
+        ]
+      },
+      "properties": {
+        "gbifID": "5029326048",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://image.bgbm.org/images/internal/HerbarThumbs/B101274357_1700",
+            "references": "https://herbarium.bgbm.org/object/B101274357",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.31667,
+          4.41667
+        ]
+      },
+      "properties": {
+        "gbifID": "178141517",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://image.bgbm.org/images/internal/HerbarThumbs/B100293116_1700",
+            "references": "https://herbarium.bgbm.org/object/B100293116",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.58333,
+          4.91667
+        ]
+      },
+      "properties": {
+        "gbifID": "5029323557",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-01-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://image.bgbm.org/images/internal/HerbarThumbs/B101274354_1700",
+            "references": "https://herbarium.bgbm.org/object/B101274354",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.60908,
+          4.89168
+        ]
+      },
+      "properties": {
+        "gbifID": "4011521869",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "801.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-12-27T13:49",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709446/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709446",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709459/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709459",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709499/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709499",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709519/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709519",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709510/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709510",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709484/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709484",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709529/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709529",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249709546/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249709546",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.124972,
+          4.532727
+        ]
+      },
+      "properties": {
+        "gbifID": "4516880026",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-01-21T11:45",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/348125287/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/348125287",
+            "title": null,
+            "creator": "Jessica Launay",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Jessica Launay"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.569027,
+          4.905702
+        ]
+      },
+      "properties": {
+        "gbifID": "5935202391",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "17.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-02T12:11",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602777110/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602777110",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.273499,
+          4.610373
+        ]
+      },
+      "properties": {
+        "gbifID": "1500224582",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "8457.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2009-03-07T09:37:53",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.321265,
+          4.654385
+        ]
+      },
+      "properties": {
+        "gbifID": "4500589806",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-12-16T16:55",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/341195570/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/341195570",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/341195582/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/341195582",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/341195599/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/341195599",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/341195587/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/341195587",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.568201,
+          4.905054
+        ]
+      },
+      "properties": {
+        "gbifID": "5936104338",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "108.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-02T11:45",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602776614/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602776614",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602776612/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602776612",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602776617/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602776617",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.230103,
+          4.589566
+        ]
+      },
+      "properties": {
+        "gbifID": "1500224580",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "16919.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2009-03-07T09:37:42",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K001185125",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.213903,
+          -1.350472
+        ]
+      },
+      "properties": {
+        "gbifID": "5828894775",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "5.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-09-06T14:15",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566875199/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566875199",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566875182/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566875182",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566875202/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566875202",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566875224/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566875224",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/566875250/original.jpg",
+            "references": "https://www.inaturalist.org/photos/566875250",
+            "title": null,
+            "creator": "J.R. Kuethe",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "J.R. Kuethe"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.814147,
+          3.907393
+        ]
+      },
+      "properties": {
+        "gbifID": "5938233252",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-05T14:53",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604751537/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604751537",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604751519/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604751519",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604751521/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604751521",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604751539/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604751539",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604751518/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604751518",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.397542,
+          4.706722
+        ]
+      },
+      "properties": {
+        "gbifID": "4863534212",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "365.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2015-01-03T08:54",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/379778102/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/379778102",
+            "title": null,
+            "creator": "Vincent Rufray",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Vincent Rufray"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/379778125/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/379778125",
+            "title": null,
+            "creator": "Vincent Rufray",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Vincent Rufray"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.394329,
+          4.710627
+        ]
+      },
+      "properties": {
+        "gbifID": "4054771874",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-10-22T07:28",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258904931/original.jpg",
+            "references": "https://www.inaturalist.org/photos/258904931",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258904975/original.jpg",
+            "references": "https://www.inaturalist.org/photos/258904975",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258905080/original.jpg",
+            "references": "https://www.inaturalist.org/photos/258905080",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.545577,
+          4.925047
+        ]
+      },
+      "properties": {
+        "gbifID": "3698220276",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "61.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-02-04T22:18",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/180561538/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/180561538",
+            "title": null,
+            "creator": "Elendil Cocchi",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Elendil Cocchi"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.86481,
+          3.866438
+        ]
+      },
+      "properties": {
+        "gbifID": "4512226469",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-12-30T15:11",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345690874/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345690874",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345690893/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345690893",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345690908/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345690908",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/345691065/original.jpg",
+            "references": "https://www.inaturalist.org/photos/345691065",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.445881,
+          4.5454
+        ]
+      },
+      "properties": {
+        "gbifID": "4506522929",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-12-24T12:31:53",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/342639968/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/342639968",
+            "title": null,
+            "creator": "accidentalshrike",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "accidentalshrike"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/342639976/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/342639976",
+            "title": null,
+            "creator": "accidentalshrike",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "accidentalshrike"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/342639983/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/342639983",
+            "title": null,
+            "creator": "accidentalshrike",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "accidentalshrike"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/342639990/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/342639990",
+            "title": null,
+            "creator": "accidentalshrike",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "accidentalshrike"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/342640005/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/342640005",
+            "title": null,
+            "creator": "accidentalshrike",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "accidentalshrike"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.135507,
+          4.184145
+        ]
+      },
+      "properties": {
+        "gbifID": "4129956504",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-03-12T13:42:35",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260457221/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/260457221",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260457327/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/260457327",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260457398/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/260457398",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260457456/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/260457456",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260457514/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/260457514",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260457563/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/260457563",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260457630/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/260457630",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.110935,
+          4.238989
+        ]
+      },
+      "properties": {
+        "gbifID": "4872076359",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-04-12T09:55",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/385100666/original.jpg",
+            "references": "https://www.inaturalist.org/photos/385100666",
+            "title": null,
+            "creator": "Nils Servientis - Bivouac Naturaliste",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nils Servientis - Bivouac Naturaliste"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/385100702/original.jpg",
+            "references": "https://www.inaturalist.org/photos/385100702",
+            "title": null,
+            "creator": "Nils Servientis - Bivouac Naturaliste",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nils Servientis - Bivouac Naturaliste"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/385100700/original.jpg",
+            "references": "https://www.inaturalist.org/photos/385100700",
+            "title": null,
+            "creator": "Nils Servientis - Bivouac Naturaliste",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nils Servientis - Bivouac Naturaliste"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.496968,
+          4.825225
+        ]
+      },
+      "properties": {
+        "gbifID": "3455695479",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-12-18T10:01",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/172762144/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/172762144",
+            "title": null,
+            "creator": "Olivier Fortune - Isabelle Delafosse",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Olivier Fortune - Isabelle Delafosse"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.85776,
+          3.978474
+        ]
+      },
+      "properties": {
+        "gbifID": "5938331847",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-05T15:23",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605022676/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605022676",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605022681/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605022681",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605022683/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605022683",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605025090/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605025090",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.558044,
+          4.915763
+        ]
+      },
+      "properties": {
+        "gbifID": "5935454698",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-02T11:23",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602776286/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602776286",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602776290/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602776290",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.283817,
+          4.618716
+        ]
+      },
+      "properties": {
+        "gbifID": "6162944211",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "66.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-02-14T12:10",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/616629548/original.jpg",
+            "references": "https://www.inaturalist.org/photos/616629548",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/616629814/original.jpg",
+            "references": "https://www.inaturalist.org/photos/616629814",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/616629821/original.jpg",
+            "references": "https://www.inaturalist.org/photos/616629821",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/616629963/original.jpg",
+            "references": "https://www.inaturalist.org/photos/616629963",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/616629967/original.jpg",
+            "references": "https://www.inaturalist.org/photos/616629967",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.60527,
+          4.92246
+        ]
+      },
+      "properties": {
+        "gbifID": "5153216106",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-01-03T09:14",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/503345164/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/503345164",
+            "title": null,
+            "creator": "Olivier Claessens",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Olivier Claessens"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.583333,
+          4.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "4519461983",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-01-26T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/94bd8aea8953c0fe727207793e016e35.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001636933",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.966667,
+          -2.883334
+        ]
+      },
+      "properties": {
+        "gbifID": "4958518973",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-07-17T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/4aea591043606383b47c1785d19a17e2.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K001185125",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.321667,
+          4.37
+        ]
+      },
+      "properties": {
+        "gbifID": "4938749784",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2017-02-16T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/41efcec75de403c7dc4bda2ee6538b3f.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K005038671",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.309432,
+          4.390723
+        ]
+      },
+      "properties": {
+        "gbifID": "5935640052",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "1953.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-03T14:23",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/603262343/original.jpg",
+            "references": "https://www.inaturalist.org/photos/603262343",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/603262319/original.jpg",
+            "references": "https://www.inaturalist.org/photos/603262319",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/603262334/original.jpg",
+            "references": "https://www.inaturalist.org/photos/603262334",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/603262356/original.jpg",
+            "references": "https://www.inaturalist.org/photos/603262356",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.567381,
+          4.905841
+        ]
+      },
+      "properties": {
+        "gbifID": "5935590095",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-02T11:41",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602776336/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602776336",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/602776369/original.jpg",
+            "references": "https://www.inaturalist.org/photos/602776369",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.124267,
+          4.533517
+        ]
+      },
+      "properties": {
+        "gbifID": "5868148210",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "20.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-09-29T12:36",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/581386302/original.jpg",
+            "references": "https://www.inaturalist.org/photos/581386302",
+            "title": null,
+            "creator": "msva",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "msva"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/581386313/original.jpg",
+            "references": "https://www.inaturalist.org/photos/581386313",
+            "title": null,
+            "creator": "msva",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "msva"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.842962,
+          3.882855
+        ]
+      },
+      "properties": {
+        "gbifID": "5938670331",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-06T11:53",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605592396/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605592396",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605592364/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605592364",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605592395/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605592395",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605592365/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605592365",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.226473,
+          4.575614
+        ]
+      },
+      "properties": {
+        "gbifID": "4516869040",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-01-20T16:07",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347512837/original.jpg",
+            "references": "https://www.inaturalist.org/photos/347512837",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347512849/original.jpg",
+            "references": "https://www.inaturalist.org/photos/347512849",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347512851/original.jpg",
+            "references": "https://www.inaturalist.org/photos/347512851",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347512853/original.jpg",
+            "references": "https://www.inaturalist.org/photos/347512853",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347512862/original.jpg",
+            "references": "https://www.inaturalist.org/photos/347512862",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347512873/original.jpg",
+            "references": "https://www.inaturalist.org/photos/347512873",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.127597,
+          4.144033
+        ]
+      },
+      "properties": {
+        "gbifID": "5938680747",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-07T10:24",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605693536/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605693536",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/605693514/original.jpg",
+            "references": "https://www.inaturalist.org/photos/605693514",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.126631,
+          4.532825
+        ]
+      },
+      "properties": {
+        "gbifID": "5868001117",
+        "species": "Passiflora candida",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora candida (Poepp. & Endl.) Mast.",
+        "coordinateUncertaintyInMeters": "102.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-09-29T12:41",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/581386351/original.jpg",
+            "references": "https://www.inaturalist.org/photos/581386351",
+            "title": null,
+            "creator": "msva",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "msva"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/581386341/original.jpg",
+            "references": "https://www.inaturalist.org/photos/581386341",
+            "title": null,
+            "creator": "msva",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "msva"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1443 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum fastigiatum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum fastigiatum",
+      "slug": "species_solanum_fastigiatum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis lysimnia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_fastigiatum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum fastigiatum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2929634,
+        "accepted_usage_key": 2929628,
+        "scientific_name": "Solanum fastigiatum Willd.",
+        "canonical_name": "Solanum fastigiatum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T03:59:46+00:00"
+      },
+      "gbif_taxon_key": 2929634,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum fastigiatum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2929634,
+      "accepted_usage_key": 2929628,
+      "scientific_name": "Solanum fastigiatum Willd.",
+      "canonical_name": "Solanum fastigiatum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T03:59:46+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 34
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:22+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.25,
+          -25.91666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260341473",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.33333,
+          -26.16666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260337473",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.63333,
+          -25.13333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262241064",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.56666,
+          -26.66666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260338751",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-11-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+            "title": "Smith - 13221 - Brazil",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.83333,
+          -26.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1262246127",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-08-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.83333,
+          -26.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1262246590",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-03-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.4,
+          -27.13333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260339160",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1946",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.26666,
+          -27.86666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260339628",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1947",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.33333,
+          -25.8
+        ]
+      },
+      "properties": {
+        "gbifID": "1262239143",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-10-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.58333,
+          -25.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1262246476",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-12-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.25,
+          -25.8
+        ]
+      },
+      "properties": {
+        "gbifID": "1262250980",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-09-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.76666,
+          -27.16666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260336497",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.45,
+          -26.16666
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251158",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-10-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.283333,
+          -26.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260341391",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-22",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.58333,
+          -25.28333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259839745",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-03-28",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.25,
+          -26.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260341107",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-12-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.51666,
+          -27.98333
+        ]
+      },
+      "properties": {
+        "gbifID": "1260339483",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1947",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.71667,
+          -27.16667
+        ]
+      },
+      "properties": {
+        "gbifID": "2517758065",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-10-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/WAG.1203877/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.42,
+          -27.12
+        ]
+      },
+      "properties": {
+        "gbifID": "1456129968",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-10-16",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11886858&h=2000",
+            "references": null,
+            "title": "01915314",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12648836&h=2000",
+            "references": null,
+            "title": "01915314.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.72,
+          -27.17
+        ]
+      },
+      "properties": {
+        "gbifID": "1456070070",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-10-17",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11886854&h=2000",
+            "references": null,
+            "title": "01915313",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12648394&h=2000",
+            "references": null,
+            "title": "01915313.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.57,
+          -26.67
+        ]
+      },
+      "properties": {
+        "gbifID": "1456046136",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-11-13",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12647035&h=2000",
+            "references": null,
+            "title": "01915311.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11886848&h=2000",
+            "references": null,
+            "title": "01915311",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.1,
+          -26.37
+        ]
+      },
+      "properties": {
+        "gbifID": "1456011336",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-07",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=11886844&h=2000",
+            "references": null,
+            "title": "01915310",
+            "creator": "Reflora Team",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          },
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12652366&h=2000",
+            "references": null,
+            "title": "01915310.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "Usage Conditions Apply",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.118389,
+          -30.046583
+        ]
+      },
+      "properties": {
+        "gbifID": "1090611823",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-03-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.027778,
+          -27.234444
+        ]
+      },
+      "properties": {
+        "gbifID": "1090602772",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-09-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Museu de Ciências e Tecnologia - PUCRS",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.416667,
+          -27.116667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997615777",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-10-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.716667,
+          -27.166667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997633795",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-11-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.1,
+          -26.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997624812",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-07",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.566667,
+          -26.666667
+        ]
+      },
+      "properties": {
+        "gbifID": "2997610790",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-11-13",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.0,
+          -24.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228594356",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1908-10-04",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.0,
+          -30.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1228218612",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1956-03-09",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.1689,
+          -23.2025
+        ]
+      },
+      "properties": {
+        "gbifID": "1228261332",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1931-02",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.1,
+          -29.1
+        ]
+      },
+      "properties": {
+        "gbifID": "137523898",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1999-09-22",
+        "country": null,
+        "datasetName": "Herbario de la Universidad de Extremadura (UNEX)",
+        "publisher": "Dep. of Plant Biology, Ecology and Earth Sciences, Botany Area, Univ. Extremadura",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.58,
+          -25.28
+        ]
+      },
+      "properties": {
+        "gbifID": "417064092",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botánica Darwinion - CONICET",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.87,
+          -29.04
+        ]
+      },
+      "properties": {
+        "gbifID": "417064093",
+        "species": "Solanum bonariense",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum fastigiatum Willd.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botánica Darwinion - CONICET",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://images.mobot.org/tropicosimages3/detailimages/TropicosImageVol3/100447000/A7194C4B-4F67-4327-BBD3-67C56E0FF593.jpg",
+          "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=100447292",
+          "title": "Smith - 13221 - Brazil",
+          "creator": "MBG",
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "rightsHolder": "MBG"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,995 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Physalis neesiana",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Physalis",
+      "species": "Physalis neesiana",
+      "slug": "species_physalis_neesiana",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Epityches eupompe"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_physalis_neesiana.geojson",
+      "gbif_resolution": {
+        "query": "Physalis neesiana",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 5581231,
+        "accepted_usage_key": null,
+        "scientific_name": "Physalis neesiana Sendtn.",
+        "canonical_name": "Physalis neesiana",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "HETEROTYPIC_SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 98,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Physalis",
+        "resolved_at": "2026-05-21T03:59:08+00:00"
+      },
+      "gbif_taxon_key": 5581231,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Physalis neesiana",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 5581231,
+      "accepted_usage_key": null,
+      "scientific_name": "Physalis neesiana Sendtn.",
+      "canonical_name": "Physalis neesiana",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "HETEROTYPIC_SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Physalis",
+      "resolved_at": "2026-05-21T03:59:08+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 24
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:21+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.004889,
+          -8.2205
+        ]
+      },
+      "properties": {
+        "gbifID": "1087045363",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-06-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Pernambuco",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.835556,
+          -8.335833
+        ]
+      },
+      "properties": {
+        "gbifID": "1087067428",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-07-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal de Pernambuco",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.45,
+          -23.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "3313910809",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2013-10-27",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.02,
+          -13.29
+        ]
+      },
+      "properties": {
+        "gbifID": "2997622787",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.733333,
+          -26.533333
+        ]
+      },
+      "properties": {
+        "gbifID": "2997273763",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Pesquisas Jardim Botanico do Rio de Janeiro",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.929722,
+          -15.779722
+        ]
+      },
+      "properties": {
+        "gbifID": "1213547118",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-06",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de Brasília",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.033333,
+          -13.483333
+        ]
+      },
+      "properties": {
+        "gbifID": "1889180190",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-04-12",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade de São Paulo",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -38.228333,
+          -9.088056
+        ]
+      },
+      "properties": {
+        "gbifID": "1213517361",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2004-03-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal Rural de Pernambuco",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.077171,
+          -22.870251
+        ]
+      },
+      "properties": {
+        "gbifID": "1090549131",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-05-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.0608,
+          -22.9056
+        ]
+      },
+      "properties": {
+        "gbifID": "1090554645",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-02-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico (IAC)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.217778,
+          -22.684083
+        ]
+      },
+      "properties": {
+        "gbifID": "5053877742",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-08-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Maringá",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.264444,
+          -22.756667
+        ]
+      },
+      "properties": {
+        "gbifID": "5053876036",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-07-16",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Maringá",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.282222,
+          -22.702778
+        ]
+      },
+      "properties": {
+        "gbifID": "5053875870",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-07-09",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Maringá",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.302778,
+          -22.481944
+        ]
+      },
+      "properties": {
+        "gbifID": "5053877850",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-08-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Estadual de Maringá",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.083333,
+          -12.533333
+        ]
+      },
+      "properties": {
+        "gbifID": "1094942765",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-05",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Bahia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.316667,
+          -10.433333
+        ]
+      },
+      "properties": {
+        "gbifID": "1077223071",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-01-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Bahia",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -38.321111,
+          -7.983333
+        ]
+      },
+      "properties": {
+        "gbifID": "1077559052",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1996-04-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico de Pernambuco",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -34.985278,
+          -8.227222
+        ]
+      },
+      "properties": {
+        "gbifID": "1077576949",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2008-06-25",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Agronômico de Pernambuco",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.73333,
+          -26.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "438983382",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-12-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/14413643605461rLYe6jxBElXbqDm",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.88,
+          -27.985
+        ]
+      },
+      "properties": {
+        "gbifID": "2252396231",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-06-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto Multidisciplinario de Biología Vegetal - IMBIV",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.205,
+          -26.91638
+        ]
+      },
+      "properties": {
+        "gbifID": "1259716911",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.11666,
+          -22.66666
+        ]
+      },
+      "properties": {
+        "gbifID": "1259838933",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-09-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.21,
+          -26.92
+        ]
+      },
+      "properties": {
+        "gbifID": "417024305",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Instituto de Botánica Darwinion - CONICET",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/ee2e919831782e8258688533b299802c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K000042316",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.885278,
+          -15.944722
+        ]
+      },
+      "properties": {
+        "gbifID": "1135485597",
+        "species": "Physalis pubescens",
+        "genus": "Physalis",
+        "family": "Solanaceae",
+        "scientificName": "Physalis neesiana Sendtn.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-09-26",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Natural History Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY"
+        ],
+        "media": [
+          {
+            "url": "https://data.nhm.ac.uk/media/2b548352-eed7-46e6-8978-54936c01ac05",
+            "references": null,
+            "title": "000994467",
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The Trustees of the Natural History Museum, London"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3443 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum tuerckheimii",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum tuerckheimii",
+      "slug": "species_solanum_tuerckheimii",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 3,
+      "butterfly_taxa": [
+        "Pteronymia latilla",
+        "Pteronymia notilla",
+        "Pteronymia simplex"
+      ],
+      "confidence_counts": {
+        "medium": 3
+      },
+      "occurrence_file": "occurrences/species_solanum_tuerckheimii.geojson",
+      "gbif_resolution": {
+        "query": "Solanum tuerckheimii",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2930298,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum tuerckheimii Greenm.",
+        "canonical_name": "Solanum tuerckheimii",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:56+00:00"
+      },
+      "gbif_taxon_key": 2930298,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum tuerckheimii",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2930298,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum tuerckheimii Greenm.",
+      "canonical_name": "Solanum tuerckheimii",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:56+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 83
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:25+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.815278,
+          9.936111
+        ]
+      },
+      "properties": {
+        "gbifID": "1089171760",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-03-31",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_COORDINATE_MISMATCH",
+          "CONTINENT_COUNTRY_MISMATCH",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.471328,
+          10.924658
+        ]
+      },
+      "properties": {
+        "gbifID": "1089171830",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-08-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Universidade Federal da Paraíba",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "CONTINENT_COORDINATE_MISMATCH",
+          "CONTINENT_COUNTRY_MISMATCH",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.816667,
+          17.583333
+        ]
+      },
+      "properties": {
+        "gbifID": "2629514680",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-06-09",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.628889,
+          19.789444
+        ]
+      },
+      "properties": {
+        "gbifID": "2629687811",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-17",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "GEODETIC_DATUM_INVALID",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.451464,
+          16.877056
+        ]
+      },
+      "properties": {
+        "gbifID": "2629754547",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-06-28",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.662222,
+          17.395833
+        ]
+      },
+      "properties": {
+        "gbifID": "2629756306",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-06-11",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.16946,
+          10.174392
+        ]
+      },
+      "properties": {
+        "gbifID": "1257839760",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-03-19",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.833333,
+          10.783333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262255789",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-08-20",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.916667,
+          13.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1262244734",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-12-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.191111,
+          15.9025
+        ]
+      },
+      "properties": {
+        "gbifID": "1257689240",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2006-09-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.858889,
+          10.329722
+        ]
+      },
+      "properties": {
+        "gbifID": "1262252623",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-09-24",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.683333,
+          13.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1260057507",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-01-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.42777,
+          16.50888
+        ]
+      },
+      "properties": {
+        "gbifID": "1259418450",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1961-08-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "4031908899",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-05-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.683333,
+          13.283333
+        ]
+      },
+      "properties": {
+        "gbifID": "4031976549",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-07-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.94388,
+          15.80444
+        ]
+      },
+      "properties": {
+        "gbifID": "1259416629",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1964-07-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.50833,
+          15.79833
+        ]
+      },
+      "properties": {
+        "gbifID": "1259416353",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-10-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.37888,
+          16.53944
+        ]
+      },
+      "properties": {
+        "gbifID": "1259418102",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1961-06-12",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.9,
+          13.016667
+        ]
+      },
+      "properties": {
+        "gbifID": "1261540570",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-16",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.46,
+          10.1
+        ]
+      },
+      "properties": {
+        "gbifID": "1260138042",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.933333,
+          13.033333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258374907",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1978-06-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.922222,
+          13.006944
+        ]
+      },
+      "properties": {
+        "gbifID": "1258413867",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-05-26",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8,
+          10.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "1259419827",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-09-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.95055,
+          10.36861
+        ]
+      },
+      "properties": {
+        "gbifID": "1259415455",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1930-02-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.39,
+          19.49
+        ]
+      },
+      "properties": {
+        "gbifID": "1258697861",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1980-07-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.833333,
+          10.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262253079",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.493889,
+          10.927222
+        ]
+      },
+      "properties": {
+        "gbifID": "1262243083",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-06-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.91666,
+          13.03333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258413862",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-05-25",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.816667,
+          10.316667
+        ]
+      },
+      "properties": {
+        "gbifID": "1258739590",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-08-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.8075,
+          10.308611
+        ]
+      },
+      "properties": {
+        "gbifID": "1262252426",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-08-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.916667,
+          13.009167
+        ]
+      },
+      "properties": {
+        "gbifID": "1262246515",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-08-30",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.91666,
+          13.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1262254984",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-01-06",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.66666,
+          17.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1259416819",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-08-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.815278,
+          10.308333
+        ]
+      },
+      "properties": {
+        "gbifID": "1262245598",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-10-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.31,
+          10.8
+        ]
+      },
+      "properties": {
+        "gbifID": "1262251946",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-08-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.933333,
+          13.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1260057490",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1976-11-02",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.466667,
+          10.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1262249633",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-15",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.56222,
+          15.76666
+        ]
+      },
+      "properties": {
+        "gbifID": "1259418544",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-10-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.44194,
+          16.19972
+        ]
+      },
+      "properties": {
+        "gbifID": "1259419362",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1959-07-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.1,
+          16.86
+        ]
+      },
+      "properties": {
+        "gbifID": "1262238882",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-06-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.44916,
+          15.99638
+        ]
+      },
+      "properties": {
+        "gbifID": "1259418651",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1975-07-29",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.4672,
+          10.9256
+        ]
+      },
+      "properties": {
+        "gbifID": "1318995480",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-07-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=12604938&h=2000",
+            "references": null,
+            "title": "00991861.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.916667,
+          13.008333
+        ]
+      },
+      "properties": {
+        "gbifID": "1304595434",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1985-08-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.471389,
+          10.924722
+        ]
+      },
+      "properties": {
+        "gbifID": "1302656149",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "2002-08-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.808333,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1304581139",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "1985-06-10",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro Internacional de Agricultura Tropical - CIAT",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.58155,
+          10.3728
+        ]
+      },
+      "properties": {
+        "gbifID": "1927885724",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1928-06",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/231/219/v-287-00745352.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.9,
+          13.02
+        ]
+      },
+      "properties": {
+        "gbifID": "1930372854",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-05-16",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/1254/426/00745379.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.92,
+          13.0
+        ]
+      },
+      "properties": {
+        "gbifID": "1930737087",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-05-23/1985-05-25",
+        "country": null,
+        "datasetName": "Vascular plants",
+        "publisher": "The New York Botanical Garden",
+        "license": "CC0_1_0",
+        "issues": [
+          "MODIFIED_DATE_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "http://sweetgum.nybg.org/images3/231/232/v-287-00753375.jpg",
+            "references": null,
+            "title": null,
+            "creator": "The New York Botanical Garden",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "The New York Botanical Garden"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.91667,
+          13.00833
+        ]
+      },
+      "properties": {
+        "gbifID": "607748753",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-08-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441376268116Le7xeNRMyUf79VLj",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.91667,
+          13.0
+        ]
+      },
+      "properties": {
+        "gbifID": "607747339",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-06-03",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "http://mediaphoto.mnhn.fr/media/1441376379431imCLJ0S8YvchG0xN",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.307861,
+          10.764139
+        ]
+      },
+      "properties": {
+        "gbifID": "5109406052",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2013-06-04T11:00Z",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Pl@ntNet",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "COUNTRY_DERIVED_FROM_COORDINATES",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://bs.plantnet.org/image/o/028e6654d97f751822ee2701d84d1997ad597182",
+            "references": null,
+            "title": "Solanum tuerckheimii Greenm.: flower",
+            "creator": "Nelson Zamora Villalobos",
+            "publisher": null,
+            "license": "Nelson Zamora Villalobos (cc-by-nc)",
+            "rightsHolder": "Nelson Zamora Villalobos"
+          },
+          {
+            "url": "https://bs.plantnet.org/image/o/29046082b77dfa40475526535c0d491a0f81eee5",
+            "references": null,
+            "title": "Solanum tuerckheimii Greenm.: leaf",
+            "creator": "Nelson Zamora Villalobos",
+            "publisher": null,
+            "license": "Nelson Zamora Villalobos (cc-by-nc)",
+            "rightsHolder": "Nelson Zamora Villalobos"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.5,
+          10.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1847922677",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1977-06-15",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.0,
+          15.6667
+        ]
+      },
+      "properties": {
+        "gbifID": "1847943625",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-10-14",
+        "country": null,
+        "datasetName": "seeds-22-sep-2023",
+        "publisher": "Field Museum",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "AMBIGUOUS_COLLECTION"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.421389,
+          14.925278
+        ]
+      },
+      "properties": {
+        "gbifID": "3749313608",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "100.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-08-17",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Centro de Estudios Conservacionistas (CECON), Universidad de San Carlos de Guatemala (USAC)",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_FUZZY",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://media01.symbiota.org/media/guatemala/USAC_USCG/00039/USCG_39168_1649310200_lg.jpg",
+            "references": null,
+            "title": null,
+            "creator": "Herbario USCG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "USAC, CECON, Herbario USCG (USAC-USCG)"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.46722,
+          10.92555
+        ]
+      },
+      "properties": {
+        "gbifID": "4955618797",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1994-07-22",
+        "country": null,
+        "datasetName": "",
+        "publisher": "University of Connecticut",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.316667,
+          10.8
+        ]
+      },
+      "properties": {
+        "gbifID": "4939473823",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-08-14",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Florida Museum of Natural History",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE"
+        ],
+        "media": [
+          {
+            "url": "https://cdn.floridamuseum.ufl.edu/Herbarium/18ff66cf-4b31-4381-9537-bc03e86631af",
+            "references": null,
+            "title": "Solanum tuerckheimii",
+            "creator": "University of Florida Herbarium",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Florida Museum of Natural History Herbarium - University of Florida"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.70194,
+          17.75833
+        ]
+      },
+      "properties": {
+        "gbifID": "3308733919",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-05-27",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.6,
+          17.267
+        ]
+      },
+      "properties": {
+        "gbifID": "3308067558",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-08-24",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.917,
+          13.0
+        ]
+      },
+      "properties": {
+        "gbifID": "3308436869",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1983-07-07",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.075,
+          14.02611
+        ]
+      },
+      "properties": {
+        "gbifID": "3307890094",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-03-02",
+        "country": null,
+        "datasetName": "Digitalización y Sistematización de las Colecciones Biológicas Nacionales del Instituto de Biología, UNAM",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.075,
+          18.761667
+        ]
+      },
+      "properties": {
+        "gbifID": "1894548008",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "80.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-06-11",
+        "country": null,
+        "datasetName": "Actualización de las bases de datos de las colecciones de plantas vasculares y macromicetos del herbario de la UJAT",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_COORDINATE_MISMATCH",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.634167,
+          17.858056
+        ]
+      },
+      "properties": {
+        "gbifID": "1894548002",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-06-09",
+        "country": null,
+        "datasetName": "Actualización de las bases de datos de las colecciones de plantas vasculares y macromicetos del herbario de la UJAT",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "RECORDED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.613333,
+          17.256389
+        ]
+      },
+      "properties": {
+        "gbifID": "1893684331",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "90.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1974-08-24",
+        "country": null,
+        "datasetName": "Etapa final de la captura y catalogación del Herbario del Instituto de Ecología, A.C., Centro Regional del Bajío",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.78027,
+          19.752988
+        ]
+      },
+      "properties": {
+        "gbifID": "1894679713",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "1300.0",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-04-24",
+        "country": null,
+        "datasetName": "Base de datos del Herbario CIQR de El Colegio de la Frontera Sur, unidad Chetumal",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.101528,
+          15.103667
+        ]
+      },
+      "properties": {
+        "gbifID": "2630158656",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-09-23",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.18,
+          15.125944
+        ]
+      },
+      "properties": {
+        "gbifID": "2630173515",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-09-24",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.096028,
+          15.105722
+        ]
+      },
+      "properties": {
+        "gbifID": "2630147620",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2014-09-24",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.350292,
+          16.840792
+        ]
+      },
+      "properties": {
+        "gbifID": "2630145680",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1998-06-28",
+        "country": null,
+        "datasetName": "Flora y vegetación de la región terrestre prioritaria Tacaná-Boquerón, Chiapas, México",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.68675,
+          15.204556
+        ]
+      },
+      "properties": {
+        "gbifID": "1897532886",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-06-21",
+        "country": null,
+        "datasetName": "Fortalecimiento de las colecciones de ECOSUR. Primera fase",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "TAXON_ID_NOT_FOUND",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.628952,
+          19.790092
+        ]
+      },
+      "properties": {
+        "gbifID": "5101718841",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-06-17",
+        "country": null,
+        "datasetName": "Digitalización y sistematización de las colecciones biológicas del INECOL",
+        "publisher": "Comisión nacional para el conocimiento y uso de la biodiversidad",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "SCIENTIFIC_NAME_ID_NOT_FOUND",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.966667,
+          13.083333
+        ]
+      },
+      "properties": {
+        "gbifID": "2902163308",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1947-07-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.16946,
+          10.17439
+        ]
+      },
+      "properties": {
+        "gbifID": "3763052449",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-03-19",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Botanic Garden and Botanical Museum Berlin",
+        "license": "CC0_1_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://image.bgbm.org/images/internal/HerbarThumbs/B101112410_1700",
+            "references": "https://herbarium.bgbm.org/object/B101112410",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.307278,
+          10.763972
+        ]
+      },
+      "properties": {
+        "gbifID": "4441030440",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2015-02-13",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101906000/06A55894-FD03-4DA0-BF3B-F4E608BA29D1.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101906906",
+            "title": "Zamora Villalobos - 7413 - Costa Rica",
+            "creator": "N. Zamora",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          },
+          {
+            "url": "https://images.mobot.org/tropicosimages5/detailimages/TropicosImagesVol5/101906000/F713F364-C43A-4165-BC67-DA6760F3966D.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=101906907",
+            "title": "Zamora Villalobos - 7413 - Costa Rica",
+            "creator": "N. Zamora",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.07932,
+          15.071677
+        ]
+      },
+      "properties": {
+        "gbifID": "3859291710",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-05-07T10:50",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/207989710",
+            "title": null,
+            "creator": "Luis Humberto Vicente-Rivera",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Luis Humberto Vicente-Rivera"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989729/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/207989729",
+            "title": null,
+            "creator": "Luis Humberto Vicente-Rivera",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Luis Humberto Vicente-Rivera"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989741/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/207989741",
+            "title": null,
+            "creator": "Luis Humberto Vicente-Rivera",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Luis Humberto Vicente-Rivera"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.815789,
+          10.324736
+        ]
+      },
+      "properties": {
+        "gbifID": "6163115385",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "150.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-06-15T16:07",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207894835/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/207894835",
+            "title": null,
+            "creator": "Stephanie Lyon",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Stephanie Lyon"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207894873/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/207894873",
+            "title": null,
+            "creator": "Stephanie Lyon",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Stephanie Lyon"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.04089,
+          10.712528
+        ]
+      },
+      "properties": {
+        "gbifID": "1253734000",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2001-08-15",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.466667,
+          10.1
+        ]
+      },
+      "properties": {
+        "gbifID": "1253581614",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-05-25",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.089559,
+          9.318855
+        ]
+      },
+      "properties": {
+        "gbifID": "1253868833",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-16/2005-03-30",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.169464,
+          10.174392
+        ]
+      },
+      "properties": {
+        "gbifID": "1253791949",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2003-03-19",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.470834,
+          10.929167
+        ]
+      },
+      "properties": {
+        "gbifID": "1253633665",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-06-03",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.475,
+          10.925
+        ]
+      },
+      "properties": {
+        "gbifID": "1253633542",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-07-15",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.471328,
+          10.924659
+        ]
+      },
+      "properties": {
+        "gbifID": "1253772518",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2002-08-10",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.800003,
+          10.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1253688219",
+        "species": "Solanum tuerckheimii",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum tuerckheimii Greenm.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-06-27",
+        "country": null,
+        "datasetName": "Atta",
+        "publisher": "Instituto Nacional de Biodiversidad (INBio), Costa Rica",
+        "license": "CC0_1_0",
+        "issues": [
+          "IDENTIFIED_DATE_INVALID",
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "CONTINENT_INVALID",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/207989710/original.jpeg",
+          "references": "https://www.inaturalist.org/photos/207989710",
+          "title": null,
+          "creator": "Luis Humberto Vicente-Rivera",
+          "publisher": "iNaturalist",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "rightsHolder": "Luis Humberto Vicente-Rivera"
+        }
+      }
+    }
+  ]
+}

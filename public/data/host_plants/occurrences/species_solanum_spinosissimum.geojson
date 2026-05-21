@@ -1,0 +1,105 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Solanum spinosissimum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum spinosissimum",
+      "slug": "species_solanum_spinosissimum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis polymnia"
+      ],
+      "confidence_counts": {
+        "medium": 1
+      },
+      "occurrence_file": "occurrences/species_solanum_spinosissimum.geojson",
+      "gbif_resolution": {
+        "query": "Solanum spinosissimum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 8451571,
+        "accepted_usage_key": 3800215,
+        "scientific_name": "Solanum spinosissimum Lodd.Cat.",
+        "canonical_name": "Solanum spinosissimum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "SYNONYM",
+        "match_type": "EXACT",
+        "confidence": 99,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-21T04:00:49+00:00"
+      },
+      "gbif_taxon_key": 8451571,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Solanum spinosissimum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 8451571,
+      "accepted_usage_key": 3800215,
+      "scientific_name": "Solanum spinosissimum Lodd.Cat.",
+      "canonical_name": "Solanum spinosissimum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 99,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-21T04:00:49+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 1
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:24+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.95,
+          -9.5
+        ]
+      },
+      "properties": {
+        "gbifID": "41500228",
+        "species": "Solanum spinosissimum",
+        "genus": "Solanum",
+        "family": "Solanaceae",
+        "scientificName": "Solanum spinosissimum Lodd.Cat.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "OCCURRENCE",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "USDA Agricultural Research Service (ARS)",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "BASIS_OF_RECORD_INVALID",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ]
+      }
+    }
+  ]
+}

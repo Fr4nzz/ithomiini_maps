@@ -1,0 +1,5075 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "host_taxon": {
+      "canonical_name": "Passiflora cirrhiflora",
+      "rank": "species",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "species": "Passiflora cirrhiflora",
+      "slug": "species_passiflora_cirrhiflora",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 2,
+      "butterfly_taxa": [
+        "Heliconius numata",
+        "Heliconius sara"
+      ],
+      "confidence_counts": {
+        "medium": 2
+      },
+      "occurrence_file": "occurrences/species_passiflora_cirrhiflora.geojson",
+      "gbif_resolution": {
+        "query": "Passiflora cirrhiflora",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 3587803,
+        "accepted_usage_key": null,
+        "scientific_name": "Passiflora cirrhiflora Juss.",
+        "canonical_name": "Passiflora cirrhiflora",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Passifloraceae",
+        "genus": "Passiflora",
+        "resolved_at": "2026-05-21T03:58:09+00:00"
+      },
+      "gbif_taxon_key": 3587803,
+      "gbif_status": "resolved",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated",
+      "occurrence_cap": null
+    },
+    "gbif_resolution": {
+      "query": "Passiflora cirrhiflora",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 3587803,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora cirrhiflora Juss.",
+      "canonical_name": "Passiflora cirrhiflora",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-21T03:58:09+00:00"
+    },
+    "occurrence_query": {
+      "method": "gbif_download_api",
+      "download_key": "0004690-260519110011954",
+      "download_doi": "10.15468/dl.s2gcc3",
+      "download_doi_url": "https://doi.org/10.15468/dl.s2gcc3",
+      "limit": null,
+      "dedupe": "Exact duplicate coordinates removed per taxon after DWCA download.",
+      "filters": "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and coordinate uncertainty <=100km applied locally.",
+      "returned_unique_coordinate_records": 113
+    },
+    "scientific_caveat": "GBIF plant occurrences are sampling-biased context records and do not prove local host use or ecological availability for the butterfly.",
+    "generated_at": "2026-05-21T15:57:20+00:00"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.466667,
+          7.366667
+        ]
+      },
+      "properties": {
+        "gbifID": "1260507911",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-04-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103933000/2C7F1C62-B8EF-4D60-9686-34B0C2DAC9B2.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103933229",
+            "title": "McDowell - 4211 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.63333,
+          5.16666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260150915",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-08-01",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103933000/CC0872B3-35D5-4736-B502-3EB97A3FC11A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103933228",
+            "title": "POLAK - 215 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.33333,
+          4.41666
+        ]
+      },
+      "properties": {
+        "gbifID": "1260181747",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-02-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103933000/9FAF24E9-3FB3-430E-8AE1-472B6F3B2CAC.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103933231",
+            "title": "Croat - 74293 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.666667,
+          8.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257606967",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1923-04-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103934000/987E69F8-43CD-424F-9FEF-45948A7E2118.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103934271",
+            "title": "de la Cruz - 3621 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.5,
+          4.9
+        ]
+      },
+      "properties": {
+        "gbifID": "1257756395",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-21",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103818000/29E70A95-C5B7-434E-A606-97FF74163579.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103818148",
+            "title": "Feuillet - 2118 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.283333,
+          4.833333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258362502",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-05-05",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103933000/46188279-0178-4A8F-A745-13B4093F99EC.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103933227",
+            "title": "Acevedo-Rodríguez - 4894 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.801389,
+          2.355
+        ]
+      },
+      "properties": {
+        "gbifID": "1262228520",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-23",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103817000/D27C526D-69F7-4259-A7FC-71AAA1CDA76A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103817859",
+            "title": "Hoffman - 6083 - Suriname",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.166667,
+          4.55
+        ]
+      },
+      "properties": {
+        "gbifID": "4031455690",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-07-08",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103933000/6CF95C26-5E21-4E34-833A-4A6019B07EB0.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103933225",
+            "title": "Feuillet - 1482 - French Guiana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.0,
+          6.5
+        ]
+      },
+      "properties": {
+        "gbifID": "1258359741",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1982-01-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103933000/BDBA0690-9C8B-4521-B785-D280EC47203A.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103933226",
+            "title": "Knapp - 2909 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.483333,
+          7.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1260508049",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-03-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://images.mobot.org/RISScanning04/detailImages/RISScanning04/103933000/1DB03191-0A2F-43B4-98F4-538F2AD0A288.jpg",
+            "references": "https://www.tropicos.org/ImageFullView.aspx?imageid=103933230",
+            "title": "McDowell - 4261 - Guyana",
+            "creator": "MBG",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "rightsHolder": "MBG"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.91267,
+          4.62667
+        ]
+      },
+      "properties": {
+        "gbifID": "2845776362",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2011-04-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1615125/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.05,
+          5.1
+        ]
+      },
+      "properties": {
+        "gbifID": "2517133106",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1968-04-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1572098/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.21667,
+          6.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "2515499018",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-18",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1475648/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.41667,
+          7.25
+        ]
+      },
+      "properties": {
+        "gbifID": "2515475579",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-03-04",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [
+          "CONTINENT_COORDINATE_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1475647/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.85,
+          5.56
+        ]
+      },
+      "properties": {
+        "gbifID": "1455965148",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-09",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15456573&h=2000",
+            "references": null,
+            "title": "00758744.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.63,
+          4.85
+        ]
+      },
+      "properties": {
+        "gbifID": "1456246995",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-10",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15462218&h=2000",
+            "references": null,
+            "title": "00758746.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.33,
+          4.41
+        ]
+      },
+      "properties": {
+        "gbifID": "3357307647",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-06-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.16,
+          5.15
+        ]
+      },
+      "properties": {
+        "gbifID": "3357288652",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-05-15",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.8014,
+          2.35222
+        ]
+      },
+      "properties": {
+        "gbifID": "1456135574",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-23",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.53,
+          5.58
+        ]
+      },
+      "properties": {
+        "gbifID": "1456067771",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-02-22",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15468148&h=2000",
+            "references": null,
+            "title": "01081087.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.8333,
+          4.41667
+        ]
+      },
+      "properties": {
+        "gbifID": "1456166055",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-03-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15468674&h=2000",
+            "references": null,
+            "title": "00660519.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.16,
+          5.33
+        ]
+      },
+      "properties": {
+        "gbifID": "1455994219",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-29",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15457359&h=2000",
+            "references": null,
+            "title": "00758741.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.0,
+          5.33
+        ]
+      },
+      "properties": {
+        "gbifID": "1456459993",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-04-25",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15460825&h=2000",
+            "references": null,
+            "title": "01081086.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.35,
+          4.86
+        ]
+      },
+      "properties": {
+        "gbifID": "1456076831",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-01-11",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15470792&h=2000",
+            "references": null,
+            "title": "00760371.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.53,
+          2.95
+        ]
+      },
+      "properties": {
+        "gbifID": "1456198013",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1995-05-19",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.5833,
+          7.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1456475427",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-03-04",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15472562&h=2000",
+            "references": null,
+            "title": "00626404.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.5333,
+          4.95
+        ]
+      },
+      "properties": {
+        "gbifID": "1456120036",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1986-10-25",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.6,
+          4.93
+        ]
+      },
+      "properties": {
+        "gbifID": "1852144421",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-30",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.6667,
+          5.41667
+        ]
+      },
+      "properties": {
+        "gbifID": "1456162860",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-04-21",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.2167,
+          6.53333
+        ]
+      },
+      "properties": {
+        "gbifID": "1456446974",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15491565&h=2000",
+            "references": null,
+            "title": "00825649.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.5,
+          4.91
+        ]
+      },
+      "properties": {
+        "gbifID": "1456160163",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-09-07",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15451212&h=2000",
+            "references": null,
+            "title": "00480527.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.4667,
+          7.36667
+        ]
+      },
+      "properties": {
+        "gbifID": "1456050018",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-04-04",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15472079&h=2000",
+            "references": null,
+            "title": "00626417.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.7,
+          8.3
+        ]
+      },
+      "properties": {
+        "gbifID": "1456192969",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1923-04-03/1923-04-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15454335&h=2000",
+            "references": null,
+            "title": "00758740.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.03,
+          3.69
+        ]
+      },
+      "properties": {
+        "gbifID": "1456447593",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-12-03",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15456392&h=2000",
+            "references": null,
+            "title": "00998858.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.16667,
+          5.33333
+        ]
+      },
+      "properties": {
+        "gbifID": "2517212303",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1993-01-29",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Naturalis Biodiversity Center",
+        "license": "CC0_1_0",
+        "issues": [],
+        "media": [
+          {
+            "url": "https://medialib.naturalis.nl/file/id/U.1475645/format/large",
+            "references": null,
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": "Naturalis Biodiversity Center"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.33,
+          4.58
+        ]
+      },
+      "properties": {
+        "gbifID": "1456077652",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1979-05-04",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15471880&h=2000",
+            "references": null,
+            "title": "01081088.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.6,
+          4.8
+        ]
+      },
+      "properties": {
+        "gbifID": "1456173507",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1955-01-02",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15460610&h=2000",
+            "references": null,
+            "title": "00758739.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.92,
+          8.03
+        ]
+      },
+      "properties": {
+        "gbifID": "1456146376",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1920-01-17/1920-01-18",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15449475&h=2000",
+            "references": null,
+            "title": "00758742.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.63,
+          5.33
+        ]
+      },
+      "properties": {
+        "gbifID": "1456118726",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-02-07",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15491359&h=2000",
+            "references": null,
+            "title": "00760372.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.6,
+          4.95
+        ]
+      },
+      "properties": {
+        "gbifID": "1852122823",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1985-04-01",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=16524637&h=2000",
+            "references": null,
+            "title": "04721064.tiff",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.61,
+          4.91
+        ]
+      },
+      "properties": {
+        "gbifID": "3311098319",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1988-02-25",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=16566637&h=2000",
+            "references": null,
+            "title": "04721099.tif",
+            "creator": "Ingrid P. Lin",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.38,
+          6.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1456133242",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03-14",
+        "country": null,
+        "datasetName": "NMNH Extant Biology",
+        "publisher": "National Museum of Natural History, Smithsonian Institution",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84"
+        ],
+        "media": [
+          {
+            "url": "https://collections.nmnh.si.edu/media/?i=15448984&h=2000",
+            "references": null,
+            "title": "00760373.tif",
+            "creator": "Conveyor Belt",
+            "publisher": "Smithsonian Institution, NMNH, Botany",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.6,
+          4.93333
+        ]
+      },
+      "properties": {
+        "gbifID": "2273925875",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-30",
+        "country": null,
+        "datasetName": "",
+        "publisher": "MNHN - Museum national d'Histoire naturelle",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES"
+        ],
+        "media": [
+          {
+            "url": "https://mediaphoto.mnhn.fr/media/15621680853730bX98HW5eWLiGbxy",
+            "references": null,
+            "title": null,
+            "creator": "Fabrice Clermont",
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by-nc-nd/4.0/",
+            "rightsHolder": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.801389,
+          2.352222
+        ]
+      },
+      "properties": {
+        "gbifID": "2005921498",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2005-03-23",
+        "country": null,
+        "datasetName": "",
+        "publisher": "The National Herbarium of Suriname (BBS)",
+        "license": "CC0_1_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "INSTITUTION_MATCH_NONE"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.28165,
+          4.88725
+        ]
+      },
+      "properties": {
+        "gbifID": "4547683520",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "4613.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2017-10-11",
+        "country": null,
+        "datasetName": "",
+        "publisher": "UAR PatriNat (OFB-MNHN-CNRS-IRD), Paris",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.346,
+          4.89868
+        ]
+      },
+      "properties": {
+        "gbifID": "3847673579",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "1.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2020-04-08",
+        "country": null,
+        "datasetName": "",
+        "publisher": "UAR PatriNat (OFB-MNHN-CNRS-IRD), Paris",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.03273,
+          2.59705
+        ]
+      },
+      "properties": {
+        "gbifID": "3073481857",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2004",
+        "country": null,
+        "datasetName": "",
+        "publisher": "UAR PatriNat (OFB-MNHN-CNRS-IRD), Paris",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.07424,
+          4.97064
+        ]
+      },
+      "properties": {
+        "gbifID": "3310625169",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2010",
+        "country": null,
+        "datasetName": "",
+        "publisher": "UAR PatriNat (OFB-MNHN-CNRS-IRD), Paris",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.90449,
+          3.5355
+        ]
+      },
+      "properties": {
+        "gbifID": "3310637472",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "5000.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2011",
+        "country": null,
+        "datasetName": "",
+        "publisher": "UAR PatriNat (OFB-MNHN-CNRS-IRD), Paris",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COUNTRY_MISMATCH",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.216667,
+          6.533333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856829",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1992-10-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.833333,
+          5.633333
+        ]
+      },
+      "properties": {
+        "gbifID": "1258634144",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1890-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.35,
+          4.85
+        ]
+      },
+      "properties": {
+        "gbifID": "4061136966",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1987-01-11",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.633333,
+          4.85
+        ]
+      },
+      "properties": {
+        "gbifID": "4061869917",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-05-10",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.416667,
+          7.25
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856815",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1991-03-04",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_COORDINATE_MISMATCH",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.5,
+          4.916667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856849",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2000-09-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.666667,
+          5.333333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856827",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-02-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "ELEVATION_NON_NUMERIC",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.031944,
+          3.698333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856848",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "2007-12-03",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.916667,
+          8.0
+        ]
+      },
+      "properties": {
+        "gbifID": "4061751362",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1920-01-17",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.85,
+          5.566667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856851",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1990-02-09",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.633333,
+          4.683333
+        ]
+      },
+      "properties": {
+        "gbifID": "1257606973",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.333333,
+          4.933333
+        ]
+      },
+      "properties": {
+        "gbifID": "4060944031",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.166667,
+          6.8
+        ]
+      },
+      "properties": {
+        "gbifID": "1257606970",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1895-07",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "INSTITUTION_MATCH_FUZZY",
+          "COLLECTION_MATCH_NONE",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.833333,
+          4.416667
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856846",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1997-03-18",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.383333,
+          6.05
+        ]
+      },
+      "properties": {
+        "gbifID": "1257856823",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1989-03-14",
+        "country": null,
+        "datasetName": "Tropicos",
+        "publisher": "Missouri Botanical Garden",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT",
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "AMBIGUOUS_INSTITUTION",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.313381,
+          4.72275
+        ]
+      },
+      "properties": {
+        "gbifID": "6251837322",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-05-01T15:43",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652093179/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652093179",
+            "title": null,
+            "creator": "luzluz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "luzluz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652093221/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652093221",
+            "title": null,
+            "creator": "luzluz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "luzluz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.260315,
+          4.594768
+        ]
+      },
+      "properties": {
+        "gbifID": "1500224914",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "4228.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2009-08-23T12:29:08",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.772942,
+          5.096057
+        ]
+      },
+      "properties": {
+        "gbifID": "6133598653",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-02-01T18:47:44",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/612536838/original.jpg",
+            "references": "https://www.inaturalist.org/photos/612536838",
+            "title": null,
+            "creator": "Léna Sardini",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Léna Sardini"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/612536871/original.jpg",
+            "references": "https://www.inaturalist.org/photos/612536871",
+            "title": null,
+            "creator": "Léna Sardini",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Léna Sardini"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/612536908/original.jpg",
+            "references": "https://www.inaturalist.org/photos/612536908",
+            "title": null,
+            "creator": "Léna Sardini",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Léna Sardini"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.481452,
+          5.25352
+        ]
+      },
+      "properties": {
+        "gbifID": "5759721430",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "464.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-07-27T12:55",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/556868786/original.jpg",
+            "references": "https://www.inaturalist.org/photos/556868786",
+            "title": null,
+            "creator": "Pierrot F.",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Pierrot F."
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/556868787/original.jpg",
+            "references": "https://www.inaturalist.org/photos/556868787",
+            "title": null,
+            "creator": "Pierrot F.",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Pierrot F."
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/556868805/original.jpg",
+            "references": "https://www.inaturalist.org/photos/556868805",
+            "title": null,
+            "creator": "Pierrot F.",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Pierrot F."
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/556868816/original.jpg",
+            "references": "https://www.inaturalist.org/photos/556868816",
+            "title": null,
+            "creator": "Pierrot F.",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Pierrot F."
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/556868815/original.jpg",
+            "references": "https://www.inaturalist.org/photos/556868815",
+            "title": null,
+            "creator": "Pierrot F.",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Pierrot F."
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/556868825/original.jpg",
+            "references": "https://www.inaturalist.org/photos/556868825",
+            "title": null,
+            "creator": "Pierrot F.",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Pierrot F."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.440181,
+          4.943837
+        ]
+      },
+      "properties": {
+        "gbifID": "5168458666",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-05-21T17:09",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/510787350/original.jpg",
+            "references": "https://www.inaturalist.org/photos/510787350",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.15562,
+          3.81207
+        ]
+      },
+      "properties": {
+        "gbifID": "4442718598",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "31.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-11-17T09:59",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/335504865/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/335504865",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/335505292/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/335505292",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/335505326/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/335505326",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/335505332/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/335505332",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.699572,
+          5.074024
+        ]
+      },
+      "properties": {
+        "gbifID": "5840062030",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-10-02T17:19",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/576346858/original.jpg",
+            "references": "https://www.inaturalist.org/photos/576346858",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.419243,
+          4.93606
+        ]
+      },
+      "properties": {
+        "gbifID": "4597366329",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-03-06T12:31",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/355786596/original.jpg",
+            "references": "https://www.inaturalist.org/photos/355786596",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/355786594/original.jpg",
+            "references": "https://www.inaturalist.org/photos/355786594",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/355786620/original.jpg",
+            "references": "https://www.inaturalist.org/photos/355786620",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/355786616/original.jpg",
+            "references": "https://www.inaturalist.org/photos/355786616",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.544689,
+          3.733419
+        ]
+      },
+      "properties": {
+        "gbifID": "6130040941",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-01-06T12:56",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/607459453/original.jpg",
+            "references": "https://www.inaturalist.org/photos/607459453",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/607459562/original.jpg",
+            "references": "https://www.inaturalist.org/photos/607459562",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.695609,
+          5.073275
+        ]
+      },
+      "properties": {
+        "gbifID": "6235834716",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "7.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-04-25T15:58:07",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/645655254/original.jpg",
+            "references": "https://www.inaturalist.org/photos/645655254",
+            "title": null,
+            "creator": "lisaguyane",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "lisaguyane"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.856033,
+          3.873019
+        ]
+      },
+      "properties": {
+        "gbifID": "6251815666",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-04-24T11:45",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/650359428/original.jpg",
+            "references": "https://www.inaturalist.org/photos/650359428",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.525278,
+          5.226111
+        ]
+      },
+      "properties": {
+        "gbifID": "4029090307",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-01-28T10:16:10",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/254131495/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/254131495",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/254131532/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/254131532",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/254131564/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/254131564",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/254131601/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/254131601",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/254131633/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/254131633",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/254131675/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/254131675",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.476159,
+          4.802383
+        ]
+      },
+      "properties": {
+        "gbifID": "5206735594",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "4.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-06-22T17:05",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/525338201/original.jpg",
+            "references": "https://www.inaturalist.org/photos/525338201",
+            "title": null,
+            "creator": "pelletier_vincent973",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "pelletier_vincent973"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.092907,
+          4.995865
+        ]
+      },
+      "properties": {
+        "gbifID": "4522833438",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "150.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-02-11T07:35",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/351239976/original.jpg",
+            "references": "https://www.inaturalist.org/photos/351239976",
+            "title": null,
+            "creator": "Guillaume Delaitre",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Guillaume Delaitre"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.753082,
+          5.091706
+        ]
+      },
+      "properties": {
+        "gbifID": "5154328313",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "789.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-04-06T00:53",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/502371627/original.jpg",
+            "references": "https://www.inaturalist.org/photos/502371627",
+            "title": null,
+            "creator": "Lilian L",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Lilian L"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.707656,
+          3.791081
+        ]
+      },
+      "properties": {
+        "gbifID": "5292435124",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "138.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-08-14T17:37:22",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/552433917/original.jpg",
+            "references": "https://www.inaturalist.org/photos/552433917",
+            "title": null,
+            "creator": "mnco3",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "mnco3"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/552433969/original.jpg",
+            "references": "https://www.inaturalist.org/photos/552433969",
+            "title": null,
+            "creator": "mnco3",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "mnco3"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/552434011/original.jpg",
+            "references": "https://www.inaturalist.org/photos/552434011",
+            "title": null,
+            "creator": "mnco3",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "mnco3"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.351402,
+          4.847179
+        ]
+      },
+      "properties": {
+        "gbifID": "5167952798",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-06-09T08:57:49",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/508428484/original.jpg",
+            "references": "https://www.inaturalist.org/photos/508428484",
+            "title": null,
+            "creator": "victoiremarty",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "victoiremarty"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.48511,
+          4.747239
+        ]
+      },
+      "properties": {
+        "gbifID": "5154361814",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-04-27T11:21",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/497627244/original.jpg",
+            "references": "https://www.inaturalist.org/photos/497627244",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/497627271/original.jpg",
+            "references": "https://www.inaturalist.org/photos/497627271",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.308248,
+          2.61338
+        ]
+      },
+      "properties": {
+        "gbifID": "4417158595",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "800.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-09-23T10:07:50",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/322942870/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/322942870",
+            "title": null,
+            "creator": "Guillaume Delaitre",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Guillaume Delaitre"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.350759,
+          4.849906
+        ]
+      },
+      "properties": {
+        "gbifID": "5140871915",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "630.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-04-27T13:50",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/494690889/original.jpg",
+            "references": "https://www.inaturalist.org/photos/494690889",
+            "title": null,
+            "creator": "luzluz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "luzluz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.351702,
+          4.861377
+        ]
+      },
+      "properties": {
+        "gbifID": "4034975503",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "61.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-02-12T11:07",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC0_1_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/255969428/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/255969428",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/255971356/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/255971356",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.422082,
+          4.772672
+        ]
+      },
+      "properties": {
+        "gbifID": "4597428583",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-03-05T14:00",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/356650269/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/356650269",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/356650241/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/356650241",
+            "title": null,
+            "creator": "Robin Heymans",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Robin Heymans"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.423444,
+          4.744
+        ]
+      },
+      "properties": {
+        "gbifID": "4875264300",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "4.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-05-15T09:53",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/389628257/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/389628257",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/389628283/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/389628283",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/389628256/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/389628256",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.176543,
+          3.596597
+        ]
+      },
+      "properties": {
+        "gbifID": "4111752163",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-07-21T11:05",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/275813146/original.jpg",
+            "references": "https://www.inaturalist.org/photos/275813146",
+            "title": null,
+            "creator": "Nils Servientis - Bivouac Naturaliste",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nils Servientis - Bivouac Naturaliste"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/275813167/original.jpg",
+            "references": "https://www.inaturalist.org/photos/275813167",
+            "title": null,
+            "creator": "Nils Servientis - Bivouac Naturaliste",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nils Servientis - Bivouac Naturaliste"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/275813165/original.jpg",
+            "references": "https://www.inaturalist.org/photos/275813165",
+            "title": null,
+            "creator": "Nils Servientis - Bivouac Naturaliste",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nils Servientis - Bivouac Naturaliste"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.743396,
+          5.119256
+        ]
+      },
+      "properties": {
+        "gbifID": "4055005663",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "204.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2023-03-01T10:59",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258625057/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/258625057",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258625078/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/258625078",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258625087/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/258625087",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.333056,
+          4.816111
+        ]
+      },
+      "properties": {
+        "gbifID": "4891975860",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "2162.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-06-09T10:03",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/392827679/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/392827679",
+            "title": null,
+            "creator": "christian marty",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "christian marty"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.742477,
+          5.119628
+        ]
+      },
+      "properties": {
+        "gbifID": "4009669111",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "217.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-12-25T14:41",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249141062/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249141062",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249141056/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249141056",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249141085/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249141085",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249141092/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249141092",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/249141075/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/249141075",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.542696,
+          5.508305
+        ]
+      },
+      "properties": {
+        "gbifID": "4872335037",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "8.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-05-23T14:50",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/385687608/original.jpg",
+            "references": "https://www.inaturalist.org/photos/385687608",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/385687639/original.jpg",
+            "references": "https://www.inaturalist.org/photos/385687639",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.297119,
+          4.640487
+        ]
+      },
+      "properties": {
+        "gbifID": "1500224937",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "8455.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2009-08-23T09:29:01",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.696453,
+          5.069926
+        ]
+      },
+      "properties": {
+        "gbifID": "3881427387",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2021-11-16T16:37:10Z",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/169126872/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/169126872",
+            "title": null,
+            "creator": "Guillaume Delaitre",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Guillaume Delaitre"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.04228,
+          -2.101257
+        ]
+      },
+      "properties": {
+        "gbifID": "4096765776",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "30.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2016-10-19T17:19",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268972738/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268972738",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268972924/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268972924",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268973386/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268973386",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268973699/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268973699",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268974209/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268974209",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268974703/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268974703",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268975170/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268975170",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268975520/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268975520",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268975795/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268975795",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/268976050/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/268976050",
+            "title": null,
+            "creator": "Neil Rosser",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Neil Rosser"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.360748,
+          4.60125
+        ]
+      },
+      "properties": {
+        "gbifID": "5007638710",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-12-26T15:37",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/459654501/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/459654501",
+            "title": null,
+            "creator": "Sébastien SANT",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Sébastien SANT"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.530352,
+          4.942861
+        ]
+      },
+      "properties": {
+        "gbifID": "3873459031",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "61.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2022-07-10T14:57",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/213733667/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/213733667",
+            "title": null,
+            "creator": "Elendil Cocchi",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Elendil Cocchi"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.617688,
+          4.853284
+        ]
+      },
+      "properties": {
+        "gbifID": "6159669899",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "417.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-02-14T11:01",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/615903297/original.jpg",
+            "references": "https://www.inaturalist.org/photos/615903297",
+            "title": null,
+            "creator": "Hervé GALLIFFET",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Hervé GALLIFFET"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.056198,
+          5.292602
+        ]
+      },
+      "properties": {
+        "gbifID": "5104600957",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "8.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-03-21T21:57:48",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/478650847/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/478650847",
+            "title": null,
+            "creator": "nicolasdelarue",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "nicolasdelarue"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/478650932/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/478650932",
+            "title": null,
+            "creator": "nicolasdelarue",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "nicolasdelarue"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.313497,
+          4.722783
+        ]
+      },
+      "properties": {
+        "gbifID": "6253318694",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-05-01T15:44",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652045953/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652045953",
+            "title": null,
+            "creator": "Maël Dewynter",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Maël Dewynter"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652046036/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652046036",
+            "title": null,
+            "creator": "Maël Dewynter",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Maël Dewynter"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652046059/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652046059",
+            "title": null,
+            "creator": "Maël Dewynter",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Maël Dewynter"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652045849/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652045849",
+            "title": null,
+            "creator": "Maël Dewynter",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Maël Dewynter"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.037691,
+          4.056064
+        ]
+      },
+      "properties": {
+        "gbifID": "5938195846",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-05T11:46",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604737983/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604737983",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604737937/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604737937",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604737941/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604737941",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/604737988/original.jpg",
+            "references": "https://www.inaturalist.org/photos/604737988",
+            "title": null,
+            "creator": "fmunoz",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "fmunoz"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.772641,
+          5.096355
+        ]
+      },
+      "properties": {
+        "gbifID": "6251436676",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-04-25T17:05",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/650216718/original.jpg",
+            "references": "https://www.inaturalist.org/photos/650216718",
+            "title": null,
+            "creator": "Jérémie Lapèze",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Jérémie Lapèze"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.342228,
+          4.314542
+        ]
+      },
+      "properties": {
+        "gbifID": "6252461534",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "31.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-04-25T14:41",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652266390/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652266390",
+            "title": null,
+            "creator": "carstonchance",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "carstonchance"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.342298,
+          4.314636
+        ]
+      },
+      "properties": {
+        "gbifID": "6253149923",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-04-25T14:40",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/652835894/original.jpg",
+            "references": "https://www.inaturalist.org/photos/652835894",
+            "title": null,
+            "creator": "Nils Servientis - Bivouac Naturaliste",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Nils Servientis - Bivouac Naturaliste"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.93165,
+          5.329739
+        ]
+      },
+      "properties": {
+        "gbifID": "5892510721",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-09-17T12:54",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/589494056/original.jpg",
+            "references": "https://www.inaturalist.org/photos/589494056",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.6,
+          4.933334
+        ]
+      },
+      "properties": {
+        "gbifID": "4903203196",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "1984-06-30T00:00",
+        "country": null,
+        "datasetName": "",
+        "publisher": "Royal Botanic Gardens, Kew",
+        "license": "CC_BY_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "INSTITUTION_MATCH_FUZZY",
+          "INSTITUTION_COLLECTION_MISMATCH"
+        ],
+        "media": [
+          {
+            "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+            "references": "http://specimens.kew.org/Herbarium/K005038657",
+            "title": null,
+            "creator": null,
+            "publisher": null,
+            "license": "http://creativecommons.org/licenses/by/4.0/",
+            "rightsHolder": "Royal Botanic Gardens, Kew"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.271288,
+          4.350836
+        ]
+      },
+      "properties": {
+        "gbifID": "4952998192",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2024-09-26T08:52:09",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/435737106/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/435737106",
+            "title": null,
+            "creator": "Wim.Jacobs",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Wim.Jacobs"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/435737134/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/435737134",
+            "title": null,
+            "creator": "Wim.Jacobs",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Wim.Jacobs"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.69783,
+          5.073525
+        ]
+      },
+      "properties": {
+        "gbifID": "5897142749",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "15.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-11-11T17:44",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/590499892/original.jpg",
+            "references": "https://www.inaturalist.org/photos/590499892",
+            "title": null,
+            "creator": "Anna Delesmillieres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Anna Delesmillieres"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/590499893/original.jpg",
+            "references": "https://www.inaturalist.org/photos/590499893",
+            "title": null,
+            "creator": "Anna Delesmillieres",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Anna Delesmillieres"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.398702,
+          4.709113
+        ]
+      },
+      "properties": {
+        "gbifID": "4863793224",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "211.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2015-01-03T08:51",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/379778094/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/379778094",
+            "title": null,
+            "creator": "Vincent Rufray",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Vincent Rufray"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/379778122/original.jpeg",
+            "references": "https://www.inaturalist.org/photos/379778122",
+            "title": null,
+            "creator": "Vincent Rufray",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Vincent Rufray"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.158939,
+          3.807786
+        ]
+      },
+      "properties": {
+        "gbifID": "6170882026",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2026-02-21T18:13",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/619601334/original.jpg",
+            "references": "https://www.inaturalist.org/photos/619601334",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.454486,
+          4.928603
+        ]
+      },
+      "properties": {
+        "gbifID": "5936084584",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-08T16:29",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/600369325/original.jpg",
+            "references": "https://www.inaturalist.org/photos/600369325",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/600369324/original.jpg",
+            "references": "https://www.inaturalist.org/photos/600369324",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/600369318/original.jpg",
+            "references": "https://www.inaturalist.org/photos/600369318",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          },
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/600369348/original.jpg",
+            "references": "https://www.inaturalist.org/photos/600369348",
+            "title": null,
+            "creator": "Guillaume Léotard",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Guillaume Léotard"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.63889,
+          3.78889
+        ]
+      },
+      "properties": {
+        "gbifID": "1144644964",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "",
+        "basisOfRecord": "PRESERVED_SPECIMEN",
+        "eventDate": "",
+        "country": null,
+        "datasetName": "",
+        "publisher": "SwissNatColl",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "GEODETIC_DATUM_ASSUMED_WGS84",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "fallback_media": {
+          "url": "https://d2jcv3kl45hlgi.cloudfront.net/60589ef14752f82ac54ee687edb7e17c.jpg",
+          "references": "http://specimens.kew.org/Herbarium/K005038657",
+          "title": null,
+          "creator": null,
+          "publisher": null,
+          "license": "http://creativecommons.org/licenses/by/4.0/",
+          "rightsHolder": "Royal Botanic Gardens, Kew"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.453623,
+          4.928569
+        ]
+      },
+      "properties": {
+        "gbifID": "5932714343",
+        "species": "Passiflora cirrhiflora",
+        "genus": "Passiflora",
+        "family": "Passifloraceae",
+        "scientificName": "Passiflora cirrhiflora Juss.",
+        "coordinateUncertaintyInMeters": "31.0",
+        "basisOfRecord": "HUMAN_OBSERVATION",
+        "eventDate": "2025-12-08T15:43",
+        "country": null,
+        "datasetName": "iNaturalist research-grade observations",
+        "publisher": "iNaturalist.org",
+        "license": "CC_BY_NC_4_0",
+        "issues": [
+          "COORDINATE_ROUNDED",
+          "CONTINENT_DERIVED_FROM_COORDINATES",
+          "TAXON_ID_NOT_FOUND"
+        ],
+        "media": [
+          {
+            "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/600051460/original.jpg",
+            "references": "https://www.inaturalist.org/photos/600051460",
+            "title": null,
+            "creator": "Julien Piolain",
+            "publisher": "iNaturalist",
+            "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "rightsHolder": "Julien Piolain"
+          }
+        ]
+      }
+    }
+  ]
+}
