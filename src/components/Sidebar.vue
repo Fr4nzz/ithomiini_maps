@@ -254,22 +254,111 @@ const otherFilterActiveCount = (key) => {
 const otherFilterLabel = (key) =>
   OTHER_FILTERS.find(filter => filter.key === key)?.label || key
 
-const hostPlantConfidence = ref('high')
-const selectedHostButterflyOptions = ref([])
-const autoHostPlantSlugs = ref(new Set())
+const HOST_BUTTERFLY_COLORS = [
+  '#4ade80',
+  '#38bdf8',
+  '#f59e0b',
+  '#f472b6',
+  '#a78bfa',
+  '#22d3ee',
+  '#fb7185',
+  '#84cc16',
+]
+
+const selectedHostPlantConfidenceLevels = ref(['high'])
+const selectedHostButterflyValues = ref([])
+const autoHostPlantSlugsByButterfly = ref(new Map())
 const selectedButterfliesForHostPlants = computed(() =>
-  selectedHostButterflyOptions.value.map(option => option.value || option).filter(Boolean)
+  selectedHostButterflyValues.value.filter(Boolean)
 )
+
+const selectedHostButterflyColorMap = computed(() => {
+  const map = new Map()
+  selectedButterfliesForHostPlants.value.forEach((butterfly, index) => {
+    map.set(butterfly, HOST_BUTTERFLY_COLORS[index % HOST_BUTTERFLY_COLORS.length])
+  })
+  return map
+})
+
+const optionColorStyle = (colors = []) => {
+  const unique = [...new Set(colors.filter(Boolean))]
+  if (unique.length === 0) return null
+  if (unique.length === 1) return { background: unique[0] }
+  const step = 100 / unique.length
+  const stops = unique.flatMap((color, index) => {
+    const start = Math.round(index * step)
+    const end = Math.round((index + 1) * step)
+    return [`${color} ${start}%`, `${color} ${end}%`]
+  })
+  return { background: `linear-gradient(90deg, ${stops.join(', ')})` }
+}
+
 const hostPlantButterflyOptions = computed(() =>
-  hostPlantStore.getButterflyOptionsForHostPlants()
+  hostPlantStore.getButterflyOptionsForHostPlants().map(option => {
+    const color = selectedHostButterflyColorMap.value.get(option.value)
+    return {
+      ...option,
+      color,
+      colorStyle: color ? { background: color } : null,
+    }
+  })
 )
+const selectedHostButterflyOptions = computed({
+  get() {
+    return selectedHostButterflyValues.value.map(value => (
+      hostPlantButterflyOptions.value.find(option => option.value === value)
+      || { label: value, value, color: selectedHostButterflyColorMap.value.get(value) }
+    ))
+  },
+  set(options) {
+    selectedHostButterflyValues.value = (options || []).map(option => option.value || option).filter(Boolean)
+  }
+})
 const hostPlantTaxaForSelection = computed(() => {
   const selected = selectedButterfliesForHostPlants.value
   if (selected.length === 0) return hostPlantStore.taxa.filter(taxon => taxon.occurrence_count > 0)
-  return hostPlantStore.getTaxaForButterflies(selected, hostPlantConfidence.value)
+  return hostPlantStore.getTaxaForButterflies(selected, selectedHostPlantConfidenceLevels.value)
+})
+const confidenceRank = { high: 3, medium: 2, low: 1, unknown: 0 }
+
+const hostPlantContributorSegmentsBySlug = computed(() => {
+  const bySlug = new Map()
+  for (const butterfly of selectedButterfliesForHostPlants.value) {
+    const color = selectedHostButterflyColorMap.value.get(butterfly)
+    if (!color) continue
+    const taxa = hostPlantStore.getTaxaForButterflies([butterfly], selectedHostPlantConfidenceLevels.value)
+    for (const taxon of taxa) {
+      let bestConfidence = 'low'
+      for (const association of taxon.associations || []) {
+        const bucket = hostPlantStore.confidenceBucket(association.confidence)
+        if ((confidenceRank[bucket] || 0) > (confidenceRank[bestConfidence] || 0)) {
+          bestConfidence = bucket
+        }
+      }
+      const segments = bySlug.get(taxon.slug) || []
+      segments.push({ color, confidence: bestConfidence, butterfly })
+      bySlug.set(taxon.slug, segments)
+    }
+  }
+  return bySlug
 })
 const hostPlantOptions = computed(() =>
-  hostPlantStore.getOccurrenceTaxonOptionsForButterflies([], hostPlantConfidence.value)
+  hostPlantStore
+    .getOccurrenceTaxonOptionsForButterflies([], selectedHostPlantConfidenceLevels.value)
+    .map(option => {
+      const segments = hostPlantContributorSegmentsBySlug.value.get(option.value) || []
+      const colors = segments.map(segment => segment.color)
+      const taxon = hostPlantStore.taxaBySlug.get(option.value)
+      return {
+        ...option,
+        segments,
+        colors,
+        color: colors[0] || null,
+        colorStyle: optionColorStyle(colors),
+        tagBadge: taxon?.occurrence_count || null,
+        confidence: segments.length === 1 ? segments[0].confidence : null,
+      }
+    })
 )
 const selectedHostPlantOptions = computed({
   get() {
@@ -280,31 +369,44 @@ const selectedHostPlantOptions = computed({
   }
 })
 
-const selectedHostPlantTaxa = computed(() =>
-  hostPlantStore.selectedTaxonSlugs
-    .map(slug => hostPlantStore.taxaBySlug.get(slug))
-    .filter(Boolean)
-)
-
-const hostPlantAssociationSummary = (taxon) => {
-  const associations = taxon.associations || hostPlantStore.associations.filter(a => a.host_taxon_slug === taxon.slug)
-  return {
-    confidence: [...new Set(associations.map(a => a.confidence === 'needs_check' ? 'needs check' : a.confidence).filter(Boolean))].join(', '),
-    butterflies: [...new Set(associations.map(a => a.butterfly_taxon).filter(Boolean))],
-    first: associations[0] || null,
+const toggleHostPlantConfidenceLevel = (level) => {
+  const selected = new Set(selectedHostPlantConfidenceLevels.value)
+  if (selected.has(level)) {
+    if (selected.size === 1) return
+    selected.delete(level)
+  } else {
+    selected.add(level)
   }
+  selectedHostPlantConfidenceLevels.value = hostPlantStore.confidenceLevels
+    .map(confidence => confidence.key)
+    .filter(key => selected.has(key))
 }
 
-watch([selectedButterfliesForHostPlants, hostPlantConfidence], () => {
-  const eligible = new Set(
-    hostPlantStore
-      .getTaxaForButterflies(selectedButterfliesForHostPlants.value, hostPlantConfidence.value)
-      .filter(taxon => taxon.occurrence_count > 0 && ['species', 'genus'].includes(taxon.rank))
-      .map(taxon => taxon.slug)
-  )
-  const manual = hostPlantStore.selectedTaxonSlugs.filter(slug => !autoHostPlantSlugs.value.has(slug))
-  hostPlantStore.setSelectedTaxa([...manual, ...eligible])
-  autoHostPlantSlugs.value = eligible
+watch([selectedButterfliesForHostPlants, selectedHostPlantConfidenceLevels], () => {
+  const previousAutoSlugs = new Set()
+  for (const slugs of autoHostPlantSlugsByButterfly.value.values()) {
+    for (const slug of slugs) previousAutoSlugs.add(slug)
+  }
+
+  const nextByButterfly = new Map()
+  for (const butterfly of selectedButterfliesForHostPlants.value) {
+    const slugs = new Set(
+      hostPlantStore
+        .getTaxaForButterflies([butterfly], selectedHostPlantConfidenceLevels.value)
+        .filter(taxon => taxon.occurrence_count > 0 && ['species', 'genus'].includes(taxon.rank))
+        .map(taxon => taxon.slug)
+    )
+    nextByButterfly.set(butterfly, slugs)
+  }
+
+  const nextAutoSlugs = new Set()
+  for (const slugs of nextByButterfly.values()) {
+    for (const slug of slugs) nextAutoSlugs.add(slug)
+  }
+
+  const manual = hostPlantStore.selectedTaxonSlugs.filter(slug => !previousAutoSlugs.has(slug))
+  hostPlantStore.setSelectedTaxa([...manual, ...nextAutoSlugs])
+  autoHostPlantSlugsByButterfly.value = nextByButterfly
 }, { deep: true })
 
 hostPlantStore.loadMetadata().catch(() => {})
@@ -1064,16 +1166,14 @@ const updateExportHeight = (value) => {
                   v-for="level in hostPlantStore.confidenceLevels"
                   :key="level.key"
                   type="button"
-                  :class="{ active: hostPlantConfidence === level.key }"
-                  @click="hostPlantConfidence = level.key"
+                  :class="{ active: selectedHostPlantConfidenceLevels.includes(level.key) }"
+                  @click="toggleHostPlantConfidenceLevel(level.key)"
                   :title="level.description"
                 >
-                  {{ level.label }}
+                  <span class="confidence-label">{{ level.label }}</span>
+                  <span class="confidence-description">{{ level.description }}</span>
                 </button>
               </div>
-              <p class="filter-stack-hint">
-                {{ hostPlantStore.confidenceLevels.find(level => level.key === hostPlantConfidence)?.description }}
-              </p>
             </div>
 
             <p v-if="hostPlantStore.loading" class="filter-hint">Loading host plant metadata...</p>
@@ -1107,7 +1207,7 @@ const updateExportHeight = (value) => {
               Associations found, but no GBIF occurrence layer has been generated for those host taxa yet.
             </p>
 
-            <div v-if="selectedHostPlantTaxa.length > 0" class="sdm-opacity-row">
+            <div v-if="hostPlantStore.selectedTaxonSlugs.length > 0" class="sdm-opacity-row">
               <span class="sdm-opacity-label">Opacity</span>
               <input
                 type="range"
@@ -1117,27 +1217,6 @@ const updateExportHeight = (value) => {
                 v-model.number="hostPlantStore.opacity"
               />
               <span class="sdm-opacity-value">{{ Math.round(hostPlantStore.opacity * 100) }}%</span>
-            </div>
-
-            <div v-if="selectedHostPlantTaxa.length > 0" class="sdm-model-info">
-              <div class="sdm-info-grid" v-for="taxon in selectedHostPlantTaxa" :key="taxon.slug">
-                <span class="sdm-info-label">Host</span>
-                <span class="sdm-info-value">{{ taxon.canonical_name }}</span>
-                <span class="sdm-info-label">Records</span>
-                <span class="sdm-info-value">{{ taxon.occurrence_count }}</span>
-                <span class="sdm-info-label">Confidence</span>
-                <span class="sdm-info-value">{{ hostPlantAssociationSummary(taxon).confidence || '—' }}</span>
-                <span v-if="hostPlantAssociationSummary(taxon).first?.doi_or_url" class="sdm-info-label">Source</span>
-                <a
-                  v-if="hostPlantAssociationSummary(taxon).first?.doi_or_url"
-                  :href="hostPlantAssociationSummary(taxon).first.doi_or_url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="host-plant-source-link"
-                >
-                  Literature
-                </a>
-              </div>
             </div>
 
             <p class="filter-hint">

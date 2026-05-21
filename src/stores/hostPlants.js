@@ -22,12 +22,12 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     {
       key: 'medium',
       label: 'Medium',
-      description: 'Includes high plus genus-level or plausible literature/catalogue evidence; verify for formal citation.',
+      description: 'Genus-level or catalogue/literature evidence that is useful but not exact species-level high confidence.',
     },
     {
       key: 'low',
       label: 'Low',
-      description: 'Includes dubious, broad, captive-only without checked source, or taxonomically unresolved records.',
+      description: 'Dubious, broad, imprecise, or weak records kept for audit and exploration.',
     },
   ]
 
@@ -87,6 +87,20 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     return order[confidenceBucket(confidence)] >= order[minimum]
   }
 
+  function normalizeConfidenceSelection(selection = 'low') {
+    if (Array.isArray(selection)) {
+      const selected = selection.map(confidenceBucket).filter(bucket => bucket !== 'unknown')
+      return new Set(selected.length > 0 ? selected : ['high'])
+    }
+    if (selection === 'high') return new Set(['high'])
+    if (selection === 'medium') return new Set(['high', 'medium'])
+    return new Set(['high', 'medium', 'low'])
+  }
+
+  function confidenceIncluded(confidence, selection = 'low') {
+    return normalizeConfidenceSelection(selection).has(confidenceBucket(confidence))
+  }
+
   function confidenceLabel(confidence) {
     if (confidence === 'needs_check') return 'needs check'
     return confidence || 'unknown'
@@ -130,6 +144,11 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
           label: name,
           value: name,
           meta: `${counts.high} high · ${counts.medium} medium · ${counts.low} low`,
+          badges: [
+            { key: 'high', label: `${counts.high} high` },
+            { key: 'medium', label: `${counts.medium} medium` },
+            { key: 'low', label: `${counts.low} low` },
+          ],
           counts,
           total,
           searchText: name.toLowerCase(),
@@ -139,13 +158,13 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
       .sort((a, b) => a.label.localeCompare(b.label))
   }
 
-  function getTaxaForButterflies(butterflyTaxa, minimumConfidence = 'low') {
+  function getTaxaForButterflies(butterflyTaxa, confidenceSelection = 'low') {
     const selected = new Set((butterflyTaxa || []).filter(Boolean))
     if (selected.size === 0) return []
     const bySlug = new Map()
     for (const association of associations.value) {
       if (!selected.has(association.butterfly_taxon)) continue
-      if (!confidencePasses(association.confidence, minimumConfidence)) continue
+      if (!confidenceIncluded(association.confidence, confidenceSelection)) continue
       const taxon = taxaBySlug.value.get(association.host_taxon_slug)
       if (!taxon) continue
       if (taxon.occurrence_count <= 0 || !['species', 'genus'].includes(taxon.rank)) continue
@@ -158,14 +177,14 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     )
   }
 
-  function getOccurrenceTaxonOptionsForButterflies(butterflyTaxa, minimumConfidence = 'low') {
+  function getOccurrenceTaxonOptionsForButterflies(butterflyTaxa, confidenceSelection = 'low') {
     const selected = (butterflyTaxa || []).filter(Boolean)
     const sourceTaxa = selected.length > 0
-      ? getTaxaForButterflies(selected, minimumConfidence)
+      ? getTaxaForButterflies(selected, confidenceSelection)
       : taxa.value.map(taxon => ({
         ...taxon,
         associations: associations.value.filter(a =>
-          a.host_taxon_slug === taxon.slug && confidencePasses(a.confidence, minimumConfidence)
+          a.host_taxon_slug === taxon.slug && confidenceIncluded(a.confidence, confidenceSelection)
         ),
       })).filter(taxon => taxon.associations.length > 0)
 
@@ -173,7 +192,7 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
       .filter(taxon => taxon.occurrence_count > 0 && ['species', 'genus'].includes(taxon.rank))
       .map(taxon => {
         const taxonAssociations = (taxon.associations || associations.value.filter(a => a.host_taxon_slug === taxon.slug))
-          .filter(a => selected.length === 0 || confidencePasses(a.confidence, minimumConfidence))
+          .filter(a => selected.length === 0 || confidenceIncluded(a.confidence, confidenceSelection))
         const confidence = selected.length > 0
           ? [...new Set(taxonAssociations.map(a => confidenceLabel(a.confidence)).filter(Boolean))].join(', ')
           : null

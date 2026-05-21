@@ -657,15 +657,20 @@
 
 .host-confidence-toggle button {
   flex: 1;
-  padding: 7px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 94px;
+  padding: 8px 7px;
   background: var(--color-bg-tertiary, #2d2d4a);
   border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 5px;
   color: var(--color-text-secondary, #aaa);
-  font-size: 0.75rem;
-  font-weight: 500;
+  text-align: left;
   cursor: pointer;
   transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
 .host-confidence-toggle button:hover {
@@ -677,6 +682,41 @@
   background: var(--color-accent, #4ade80);
   border-color: var(--color-accent, #4ade80);
   color: var(--color-bg-primary, #1a1a2e);
+}
+
+.host-confidence-toggle button::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 6px;
+  height: 3px;
+  border-radius: 999px;
+  background: #22c55e;
+}
+
+.host-confidence-toggle button.active::after {
+  filter: saturate(1.1) brightness(0.95);
+}
+
+.host-confidence-toggle button:nth-child(2)::after {
+  background: #eab308;
+}
+
+.host-confidence-toggle button:nth-child(3)::after {
+  background: #ef4444;
+}
+
+.confidence-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.confidence-description {
+  font-size: 0.62rem;
+  line-height: 1.25;
+  color: inherit;
+  opacity: 0.76;
 }
 
 /* CAMID Autocomplete */
