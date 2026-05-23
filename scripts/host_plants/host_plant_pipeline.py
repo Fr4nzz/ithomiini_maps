@@ -627,26 +627,18 @@ def accepted_genus(taxon: dict[str, Any]) -> str | None:
 
 
 def selected_taxa_for_download_request(taxa: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, str]]:
-    """Avoid redundant species predicates when an accepted genus is already requested."""
-    selected_genera = {
-        accepted_genus(taxon)
-        for taxon in taxa
-        if taxon.get("rank") == "genus" and taxon.get("gbif_taxon_key")
-    }
-    selected_genera = {genus for genus in selected_genera if genus}
-    suppressed: dict[str, str] = {}
-    targets = []
-    for taxon in taxa:
-        if not taxon.get("gbif_taxon_key"):
-            continue
-        if taxon.get("rank") == "species":
-            genus = accepted_genus(taxon)
-            literal_genus = clean_text(taxon.get("genus"))
-            if genus and genus in selected_genera and genus == literal_genus:
-                suppressed[taxon["slug"]] = f"covered_by_genus:{genus}"
-                continue
-        targets.append(taxon)
-    return targets, suppressed
+    """Return every resolved host taxon for one comprehensive GBIF download request.
+
+    Earlier versions suppressed species when a selected genus appeared to cover
+    them. That made the predicate smaller, but it also made the downloaded DWCA
+    less auditable: exact species taxon keys were absent from the request even
+    when the UI/table expected species-level host layers and gallery media. Keep
+    all resolved species and genus keys in one request; downstream processing
+    still assigns occurrences to each taxon and deduplicates exact coordinates
+    per taxon.
+    """
+    targets = [taxon for taxon in taxa if taxon.get("gbif_taxon_key")]
+    return targets, {}
 
 
 def _dwca_row_to_occurrence(row: dict[str, str]) -> dict[str, Any] | None:
