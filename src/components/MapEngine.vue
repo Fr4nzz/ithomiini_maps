@@ -452,9 +452,9 @@ let previousDataLength = 0
 let previousScatterState = false
 
 // Handle open gallery from popup
-const handleOpenGallery = () => {
+const handleOpenGallery = (mode = 'butterflies') => {
   closeEnhancedPopup()
-  emit('open-gallery')
+  emit('open-gallery', mode)
 }
 
 // Debounced addDataLayer to batch rapid successive calls
@@ -692,6 +692,7 @@ watch(
           :occurrence="enhancedPopupData.occurrence"
           :taxon="enhancedPopupData.taxon"
           @close="closeEnhancedPopup"
+          @open-gallery="handleOpenGallery"
           @toggle-dock="toggleDock"
         />
       </div>
@@ -735,6 +736,7 @@ watch(
             :occurrence="enhancedPopupData.occurrence"
             :taxon="enhancedPopupData.taxon"
             @close="closeEnhancedPopup"
+            @open-gallery="handleOpenGallery"
             @toggle-dock="toggleDock"
           />
         </div>

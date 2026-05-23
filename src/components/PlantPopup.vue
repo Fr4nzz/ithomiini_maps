@@ -1,6 +1,8 @@
 <script setup>
 import { computed } from 'vue'
+import { useDataStore } from '../stores/data'
 
+const store = useDataStore()
 const props = defineProps({
   coordinates: {
     type: Object,
@@ -16,7 +18,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['close', 'toggle-dock'])
+const emit = defineEmits(['close', 'toggle-dock', 'open-gallery'])
 
 const gbifUrl = computed(() => {
   if (!props.occurrence?.gbifID) return null
@@ -39,6 +41,12 @@ const displayName = computed(() =>
 )
 
 const plantImage = computed(() => {
+  if (props.occurrence.image_url) {
+    return {
+      url: props.occurrence.image_url,
+      fallback: Boolean(props.occurrence.image_is_fallback),
+    }
+  }
   const media = parseJsonProperty(props.occurrence.media, [])
   const direct = Array.isArray(media) ? media[0] : null
   const fallback = parseJsonProperty(props.occurrence.fallback_media, null)
@@ -48,6 +56,15 @@ const plantImage = computed(() => {
 })
 
 const rankLabel = computed(() => props.taxon.rank || 'host taxon')
+
+const openGallery = () => {
+  store.gallerySelection = {
+    mode: 'host-plants',
+    hostTaxon: props.taxon.canonical_name || props.occurrence.host_taxon_name || props.occurrence.species,
+    occurrenceId: props.occurrence.gbifID,
+  }
+  emit('open-gallery', 'host-plants')
+}
 </script>
 
 <template>
@@ -87,6 +104,18 @@ const rankLabel = computed(() => props.taxon.rank || 'host taxon')
           <div v-if="plantImage?.fallback" class="photo-indicator">
             Same host species
           </div>
+          <button
+            class="open-gallery-btn"
+            type="button"
+            title="Open host plant gallery"
+            @click="openGallery"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6"/>
+              <path d="M10 14 21 3"/>
+              <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>
+            </svg>
+          </button>
         </div>
 
         <div class="individuals-section">
@@ -280,6 +309,36 @@ const rankLabel = computed(() => props.taxon.rank || 'host taxon')
   padding: 3px 6px;
   border-radius: 3px;
   text-align: center;
+  pointer-events: none;
+}
+
+.open-gallery-btn {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.open-gallery-btn:hover {
+  background: #60a5fa;
+  transform: translateY(-1px);
+}
+
+.open-gallery-btn svg {
+  width: 17px;
+  height: 17px;
+  filter: none;
 }
 
 .section-header {

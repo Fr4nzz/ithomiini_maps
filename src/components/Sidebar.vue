@@ -175,7 +175,7 @@ const TAXONOMY_LEVELS = [
   { key: 'family', label: 'Family', storeKey: 'family', optionsKey: 'uniqueFamilies', placeholder: 'All Families' },
   { key: 'tribe', label: 'Tribe', storeKey: 'tribe', optionsKey: 'uniqueTribes', placeholder: 'All Tribes' },
   { key: 'genus', label: 'Genus', storeKey: 'genus', optionsKey: 'uniqueGenera', placeholder: 'All Genera' },
-  { key: 'species', label: 'Species', storeKey: 'species', optionsKey: 'uniqueSpecies', placeholder: 'Search species...' },
+  { key: 'species', label: 'Species', storeKey: 'species', optionsKey: 'speciesFilterOptions', placeholder: 'Search species...' },
   { key: 'subspecies', label: 'Subsp.', storeKey: 'subspecies', optionsKey: 'uniqueSubspecies', placeholder: 'Search subspecies...' },
   { key: 'sex', label: 'Sex', storeKey: 'sex', placeholder: 'All sexes' },
 ]
@@ -233,6 +233,18 @@ const taxonomyActiveCount = (key) => {
   return Array.isArray(val) ? val.length : 0
 }
 
+const selectedSpeciesFilterOptions = computed({
+  get() {
+    return store.filters.species.map(species => (
+      store.speciesFilterOptions.find(option => option.value === species && !option.synonym)
+      || { label: species, value: species }
+    ))
+  },
+  set(options) {
+    store.filters.species = (options || []).map(option => option.value || option).filter(Boolean)
+  }
+})
+
 const otherFilterActiveCount = (key) => {
   if (key === 'camid') return (camidInput.value || '').split(/[,\s]+/).filter(Boolean).length
   if (key === 'status') return store.filters.status.length
@@ -265,7 +277,8 @@ const HOST_BUTTERFLY_COLORS = [
   '#84cc16',
 ]
 
-const selectedHostPlantConfidenceLevels = ref(['high'])
+const selectedHostIdLevels = ref(['species'])
+const selectedHostEvidenceLevels = ref(['direct', 'literature'])
 const selectedHostButterflyValues = ref([])
 const autoHostPlantSlugsByButterfly = ref(new Map())
 const selectedButterfliesForHostPlants = computed(() =>
@@ -316,27 +329,30 @@ const selectedHostButterflyOptions = computed({
 })
 const hostPlantTaxaForSelection = computed(() => {
   const selected = selectedButterfliesForHostPlants.value
-  if (selected.length === 0) return hostPlantStore.taxa.filter(taxon => taxon.occurrence_count > 0)
-  return hostPlantStore.getTaxaForButterflies(selected, selectedHostPlantConfidenceLevels.value)
+  if (selected.length === 0) {
+    return hostPlantStore.taxa.filter(taxon =>
+      taxon.occurrence_count > 0 && selectedHostIdLevels.value.includes(taxon.rank)
+    )
+  }
+  return hostPlantStore.getTaxaForButterflies(selected, {
+    hostIdLevels: selectedHostIdLevels.value,
+    evidenceLevels: selectedHostEvidenceLevels.value,
+  })
 })
-const confidenceRank = { high: 3, medium: 2, low: 1, unknown: 0 }
 
 const hostPlantContributorSegmentsBySlug = computed(() => {
   const bySlug = new Map()
   for (const butterfly of selectedButterfliesForHostPlants.value) {
     const color = selectedHostButterflyColorMap.value.get(butterfly)
     if (!color) continue
-    const taxa = hostPlantStore.getTaxaForButterflies([butterfly], selectedHostPlantConfidenceLevels.value)
+    const taxa = hostPlantStore.getTaxaForButterflies([butterfly], {
+      hostIdLevels: selectedHostIdLevels.value,
+      evidenceLevels: selectedHostEvidenceLevels.value,
+    })
     for (const taxon of taxa) {
-      let bestConfidence = 'low'
-      for (const association of taxon.associations || []) {
-        const bucket = hostPlantStore.confidenceBucket(association.confidence)
-        if ((confidenceRank[bucket] || 0) > (confidenceRank[bestConfidence] || 0)) {
-          bestConfidence = bucket
-        }
-      }
       const segments = bySlug.get(taxon.slug) || []
-      segments.push({ color, confidence: bestConfidence, butterfly })
+      const evidence = [...new Set((taxon.associations || []).map(association => association.evidence_level).filter(Boolean))].join(', ')
+      segments.push({ color, evidence, butterfly })
       bySlug.set(taxon.slug, segments)
     }
   }
@@ -344,7 +360,10 @@ const hostPlantContributorSegmentsBySlug = computed(() => {
 })
 const hostPlantOptions = computed(() =>
   hostPlantStore
-    .getOccurrenceTaxonOptionsForButterflies([], selectedHostPlantConfidenceLevels.value)
+    .getOccurrenceTaxonOptionsForButterflies([], {
+      hostIdLevels: selectedHostIdLevels.value,
+      evidenceLevels: selectedHostEvidenceLevels.value,
+    })
     .map(option => {
       const segments = hostPlantContributorSegmentsBySlug.value.get(option.value) || []
       const colors = segments.map(segment => segment.color)
@@ -356,7 +375,7 @@ const hostPlantOptions = computed(() =>
         color: colors[0] || null,
         colorStyle: optionColorStyle(colors),
         tagBadge: taxon?.occurrence_count || null,
-        confidence: segments.length === 1 ? segments[0].confidence : null,
+        evidence: segments.length === 1 ? segments[0].evidence : null,
       }
     })
 )
@@ -369,20 +388,29 @@ const selectedHostPlantOptions = computed({
   }
 })
 
-const toggleHostPlantConfidenceLevel = (level) => {
-  const selected = new Set(selectedHostPlantConfidenceLevels.value)
+const toggleHostPlantIdLevel = (level) => {
+  const selected = new Set(selectedHostIdLevels.value)
   if (selected.has(level)) {
     if (selected.size === 1) return
     selected.delete(level)
   } else {
     selected.add(level)
   }
-  selectedHostPlantConfidenceLevels.value = hostPlantStore.confidenceLevels
-    .map(confidence => confidence.key)
-    .filter(key => selected.has(key))
+  selectedHostIdLevels.value = hostPlantStore.hostIdLevels.map(item => item.key).filter(key => selected.has(key))
 }
 
-watch([selectedButterfliesForHostPlants, selectedHostPlantConfidenceLevels], () => {
+const toggleHostEvidenceLevel = (level) => {
+  const selected = new Set(selectedHostEvidenceLevels.value)
+  if (selected.has(level)) {
+    if (selected.size === 1) return
+    selected.delete(level)
+  } else {
+    selected.add(level)
+  }
+  selectedHostEvidenceLevels.value = hostPlantStore.evidenceLevels.map(item => item.key).filter(key => selected.has(key))
+}
+
+watch([selectedButterfliesForHostPlants, selectedHostIdLevels, selectedHostEvidenceLevels], () => {
   const previousAutoSlugs = new Set()
   for (const slugs of autoHostPlantSlugsByButterfly.value.values()) {
     for (const slug of slugs) previousAutoSlugs.add(slug)
@@ -390,9 +418,12 @@ watch([selectedButterfliesForHostPlants, selectedHostPlantConfidenceLevels], () 
 
   const nextByButterfly = new Map()
   for (const butterfly of selectedButterfliesForHostPlants.value) {
+    const taxa = hostPlantStore.getTaxaForButterflies([butterfly], {
+      hostIdLevels: selectedHostIdLevels.value,
+      evidenceLevels: selectedHostEvidenceLevels.value,
+    })
     const slugs = new Set(
-      hostPlantStore
-        .getTaxaForButterflies([butterfly], selectedHostPlantConfidenceLevels.value)
+      taxa
         .filter(taxon => taxon.occurrence_count > 0 && ['species', 'genus'].includes(taxon.rank))
         .map(taxon => taxon.slug)
     )
@@ -753,6 +784,16 @@ const updateExportHeight = (value) => {
                 <option value="female">♀ Female only</option>
               </select>
             </div>
+            <FilterSelect
+              v-else-if="level.key === 'species' && enabledTaxonomyLevels.has(level.key)"
+              :label="level.label"
+              v-model="selectedSpeciesFilterOptions"
+              :options="store.speciesFilterOptions"
+              :filter-options="store.filterSpeciesOptions"
+              :placeholder="level.placeholder"
+              :multiple="true"
+              :show-count="true"
+            />
             <FilterSelect
               v-else-if="enabledTaxonomyLevels.has(level.key)"
               :label="level.label"
@@ -1160,14 +1201,28 @@ const updateExportHeight = (value) => {
               </span>
             </button>
             <div class="host-confidence-group">
+              <label class="filter-stack-label">Host ID level</label>
+              <div class="host-confidence-toggle">
+                <button
+                  v-for="level in hostPlantStore.hostIdLevels"
+                  :key="level.key"
+                  type="button"
+                  :class="{ active: selectedHostIdLevels.includes(level.key) }"
+                  @click="toggleHostPlantIdLevel(level.key)"
+                  :title="level.description"
+                >
+                  <span class="confidence-label">{{ level.label }}</span>
+                  <span class="confidence-description">{{ level.description }}</span>
+                </button>
+              </div>
               <label class="filter-stack-label">Evidence</label>
               <div class="host-confidence-toggle">
                 <button
-                  v-for="level in hostPlantStore.confidenceLevels"
+                  v-for="level in hostPlantStore.evidenceLevels"
                   :key="level.key"
                   type="button"
-                  :class="{ active: selectedHostPlantConfidenceLevels.includes(level.key) }"
-                  @click="toggleHostPlantConfidenceLevel(level.key)"
+                  :class="{ active: selectedHostEvidenceLevels.includes(level.key) }"
+                  @click="toggleHostEvidenceLevel(level.key)"
                   :title="level.description"
                 >
                   <span class="confidence-label">{{ level.label }}</span>

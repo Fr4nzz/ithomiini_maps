@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { STATUS_COLORS } from '../utils/constants'
 import { getProxyState, setProxyMode } from '../utils/imageProxy'
+import GallerySearchSelect from './GallerySearchSelect.vue'
 
 const props = defineProps({
   currentSpecimen: Object,
@@ -16,7 +17,11 @@ const props = defineProps({
   allFilteredTotal: Number,
   allFilteredWithoutImages: Number,
   coordinates: Object,
-  locationName: String
+  locationName: String,
+  mode: {
+    type: String,
+    default: 'butterflies',
+  },
 })
 
 const emit = defineEmits([
@@ -27,6 +32,38 @@ const emit = defineEmits([
 ])
 
 const subspeciesCount = computed(() => props.subspeciesList?.length || 0)
+const isHostPlants = computed(() => props.mode === 'host-plants')
+const primaryLabel = computed(() => isHostPlants.value ? 'Host Taxa' : 'Species')
+const secondaryLabel = computed(() => isHostPlants.value ? 'Occurrence Sets' : 'Subspecies')
+const individualLabel = computed(() => isHostPlants.value ? 'Occurrences' : 'Individuals')
+const speciesOptions = computed(() =>
+  (props.speciesList || []).map(sp => ({
+    value: sp.species,
+    label: `${sp.species} (${sp.count})`,
+    meta: sp.meta,
+    searchText: sp.searchText || sp.species,
+  }))
+)
+const subspeciesOptions = computed(() =>
+  (props.subspeciesList || []).map(ssp => ({
+    value: ssp.name,
+    label: `${ssp.name} (${ssp.count})`,
+    searchText: ssp.name,
+  }))
+)
+const individualOptions = computed(() =>
+  (props.individualsList || []).map(ind => ({
+    value: ind.id,
+    label: ind.id,
+    meta: ind.observation_date || ind.country || '',
+    searchText: [ind.id, ind.observation_date, ind.country, ind.source].filter(Boolean).join(' '),
+  }))
+)
+const hostButterflySummary = computed(() => {
+  const names = props.currentSpecimen?.associated_butterflies || []
+  if (names.length === 0) return null
+  return names.slice(0, 5).join(', ') + (names.length > 5 ? ` +${names.length - 5} more` : '')
+})
 
 const showImageCache = ref(false)
 const proxyState = getProxyState()
@@ -35,6 +72,7 @@ const proxyOptions = [
   { value: 'wsrv', label: 'wsrv.nl', desc: 'Cached, fastest' },
   { value: 'lh3', label: 'Google CDN', desc: 'Direct, highest quality' },
   { value: 'thumbnail', label: 'Thumbnail', desc: 'Direct, lower quality' },
+  { value: 'off', label: 'Off', desc: 'Original image URLs, no cache service' },
 ]
 function statusClass(tier) {
   const s = proxyState.tierStatus.value[tier]
@@ -50,65 +88,44 @@ function statusClass(tier) {
     <div class="sidebar-section">
       <div class="section-header">
         <span class="count-badge">{{ totalSpecies }}</span>
-        <span class="section-label">Species</span>
+        <span class="section-label">{{ primaryLabel }}</span>
       </div>
-      <select
-        :value="selectedSpecies || ''"
-        @change="emit('select-species', $event.target.value || null)"
-        class="sidebar-select"
-      >
-        <option value="" disabled>Select species...</option>
-        <option
-          v-for="sp in speciesList"
-          :key="sp.species"
-          :value="sp.species"
-        >
-          {{ sp.species }} ({{ sp.count }})
-        </option>
-      </select>
+      <GallerySearchSelect
+        :model-value="selectedSpecies || ''"
+        :options="speciesOptions"
+        :placeholder="isHostPlants ? 'Search host taxa...' : 'Search species...'"
+        @update:model-value="emit('select-species', $event || null)"
+      />
     </div>
 
     <!-- Subspecies Section -->
     <div v-if="subspeciesList?.length > 0" class="sidebar-section">
       <div class="section-header">
         <span class="count-badge">{{ subspeciesCount }}</span>
-        <span class="section-label">Subspecies</span>
+        <span class="section-label">{{ secondaryLabel }}</span>
       </div>
-      <select
-        :value="selectedSubspecies || ''"
-        @change="emit('select-subspecies', $event.target.value || null)"
-        class="sidebar-select"
-      >
-        <option
-          v-for="ssp in subspeciesList"
-          :key="ssp.name"
-          :value="ssp.name"
-        >
-          {{ ssp.name }} ({{ ssp.count }})
-        </option>
-      </select>
+      <GallerySearchSelect
+        :model-value="selectedSubspecies || ''"
+        :options="subspeciesOptions"
+        :placeholder="isHostPlants ? 'Search sets...' : 'Search subspecies...'"
+        @update:model-value="emit('select-subspecies', $event || null)"
+      />
     </div>
 
     <!-- Individuals Section -->
     <div class="sidebar-section">
       <div class="section-header">
         <span class="count-badge">{{ individualsList?.length || 0 }}</span>
-        <span class="section-label">Individuals</span>
+        <span class="section-label">{{ individualLabel }}</span>
       </div>
-      <select
+      <GallerySearchSelect
         v-if="individualsList?.length > 1"
-        :value="currentSpecimen?.id || ''"
-        @change="emit('select-individual', $event.target.value)"
-        class="sidebar-select individual-select"
-      >
-        <option
-          v-for="ind in individualsList"
-          :key="ind.id"
-          :value="ind.id"
-        >
-          {{ ind.id }}
-        </option>
-      </select>
+        :model-value="currentSpecimen?.id || ''"
+        :options="individualOptions"
+        :placeholder="isHostPlants ? 'Search occurrences...' : 'Search individuals...'"
+        monospace
+        @update:model-value="emit('select-individual', $event)"
+      />
       <div v-else class="single-individual-id">
         {{ currentSpecimen?.id || 'N/A' }}
       </div>
@@ -124,8 +141,28 @@ function statusClass(tier) {
         <span class="detail-value">{{ currentSpecimen.observation_date }}</span>
       </div>
 
+      <div v-if="isHostPlants && currentSpecimen?.host_taxon_rank" class="detail-row">
+        <span class="detail-label">Rank:</span>
+        <span class="detail-value">{{ currentSpecimen.host_taxon_rank }}</span>
+      </div>
+
+      <div v-if="isHostPlants && currentSpecimen?.host_family" class="detail-row">
+        <span class="detail-label">Family:</span>
+        <span class="detail-value">{{ currentSpecimen.host_family }}</span>
+      </div>
+
+      <div v-if="isHostPlants && currentSpecimen?.duplicate_image_record_count > 1" class="detail-row">
+        <span class="detail-label">Image:</span>
+        <span class="detail-value">{{ currentSpecimen.duplicate_image_record_count }} records share this image</span>
+      </div>
+
+      <div v-if="isHostPlants && hostButterflySummary" class="detail-row">
+        <span class="detail-label">Hosts:</span>
+        <span class="detail-value">{{ hostButterflySummary }}</span>
+      </div>
+
       <!-- Mimicry Ring -->
-      <div v-if="currentSpecimen?.mimicry_ring && currentSpecimen.mimicry_ring !== 'Unknown'" class="detail-row">
+      <div v-if="!isHostPlants && currentSpecimen?.mimicry_ring && currentSpecimen.mimicry_ring !== 'Unknown'" class="detail-row">
         <span class="detail-label">Mimicry:</span>
         <span class="detail-value">{{ currentSpecimen.mimicry_ring }}</span>
       </div>
@@ -137,7 +174,7 @@ function statusClass(tier) {
       </div>
 
       <!-- Status -->
-      <div class="detail-row">
+      <div v-if="!isHostPlants" class="detail-row">
         <span class="detail-label">Status:</span>
         <span
           class="detail-value status-badge"
@@ -204,11 +241,11 @@ function statusClass(tier) {
       <div class="summary-title">Search Summary</div>
       <div class="summary-stats-grid">
         <div class="stat-row">
-          <span class="stat-label">Species:</span>
+          <span class="stat-label">{{ isHostPlants ? 'Host taxa:' : 'Species:' }}</span>
           <span class="stat-value">{{ totalSpecies }}</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Subspecies:</span>
+          <span class="stat-label">{{ isHostPlants ? 'Occurrence sets:' : 'Subspecies:' }}</span>
           <span class="stat-value">{{ totalSubspeciesCount }}</span>
         </div>
         <div class="stat-row">
@@ -220,7 +257,7 @@ function statusClass(tier) {
           <span class="stat-value">{{ allFilteredWithoutImages }}</span>
         </div>
         <div class="stat-row total-row">
-          <span class="stat-label">Total individuals:</span>
+          <span class="stat-label">{{ isHostPlants ? 'Total records:' : 'Total individuals:' }}</span>
           <span class="stat-value">{{ allFilteredTotal }}</span>
         </div>
       </div>

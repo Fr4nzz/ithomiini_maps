@@ -6,6 +6,8 @@ import { generateColoredShapeImage, getColoredShapeImageName } from '../utils/sh
 
 const SOURCE_PREFIX = 'host-plant-source'
 const LAYER_PREFIX = 'host-plant-layer'
+const SOURCE_ID = 'host-plant-source'
+const LAYER_ID = 'host-plant-layer'
 const COLORS = ['#16a34a', '#f59e0b', '#06b6d4', '#ef4444', '#8b5cf6']
 
 export function useHostPlantLayer(map, options = {}) {
@@ -36,6 +38,9 @@ export function useHostPlantLayer(map, options = {}) {
 
   function removeAllLayers() {
     if (!map.value) return
+    removeLayerHandlers(LAYER_ID)
+    try { removeLayerAndSource(map.value, LAYER_ID, SOURCE_ID) }
+    catch { /* layer may already be absent */ }
     for (const slug of hostPlantStore.selectedTaxonSlugs) {
       removeLayerHandlers(layerId(slug))
       try { removeLayerAndSource(map.value, layerId(slug), sourceId(slug)) }
@@ -61,7 +66,7 @@ export function useHostPlantLayer(map, options = {}) {
     layerHandlers.delete(lid)
   }
 
-  function registerLayerHandlers(lid, taxon) {
+  function registerLayerHandlers(lid) {
     if (!map.value) return
     removeLayerHandlers(lid)
     const handlers = {
@@ -70,6 +75,7 @@ export function useHostPlantLayer(map, options = {}) {
         const feature = event.features[0]
         const props = feature.properties || {}
         const coords = feature.geometry.coordinates.slice()
+        const taxon = hostPlantStore.taxaBySlug.get(props.host_taxon_slug)
         onShowPopup({
           type: 'plant',
           coordinates: {
@@ -94,23 +100,29 @@ export function useHostPlantLayer(map, options = {}) {
     layerHandlers.set(lid, handlers)
   }
 
-  async function addTaxonLayer(taxon, index) {
-    const collection = await hostPlantStore.loadOccurrences(taxon.slug)
-    if (!collection || !map.value) return
+  async function addUnifiedLayer() {
+    const taxa = hostPlantStore.activeTaxa.filter(taxon => taxon.occurrence_count > 0)
+    await hostPlantStore.loadOccurrences(taxa.map(taxon => taxon.slug))
+    if (!map.value) return
+    const collection = hostPlantStore.getOccurrenceCollectionForTaxa(taxa.map(taxon => taxon.slug))
+    if (collection.features.length === 0) return
 
-    const sid = sourceId(taxon.slug)
-    const lid = layerId(taxon.slug)
-    try { removeLayerAndSource(map.value, lid, sid) } catch { /* */ }
+    try { removeLayerAndSource(map.value, LAYER_ID, SOURCE_ID) } catch { /* */ }
 
-    map.value.addSource(sid, { type: 'geojson', data: collection })
+    map.value.addSource(SOURCE_ID, { type: 'geojson', data: collection })
     const beforeLayer = map.value.getLayer('points-layer') ? 'points-layer' : undefined
-    const color = COLORS[index % COLORS.length]
+    const imageExpression = ['match', ['get', 'host_taxon_slug']]
+    taxa.forEach((taxon, index) => {
+      const color = COLORS[index % COLORS.length]
+      imageExpression.push(taxon.slug, ensureTriangleImage(color))
+    })
+    imageExpression.push(ensureTriangleImage(COLORS[0]))
     map.value.addLayer({
-      id: lid,
+      id: LAYER_ID,
       type: 'symbol',
-      source: sid,
+      source: SOURCE_ID,
       layout: {
-        'icon-image': ensureTriangleImage(color),
+        'icon-image': imageExpression,
         'icon-size': [
           'interpolate', ['linear'], ['zoom'],
           2, 0.18,
@@ -124,15 +136,14 @@ export function useHostPlantLayer(map, options = {}) {
         'icon-opacity': hostPlantStore.opacity,
       },
     }, beforeLayer)
-    registerLayerHandlers(lid, taxon)
+    registerLayerHandlers(LAYER_ID)
   }
 
   async function updateLayer() {
     if (!map.value) return
     removeAllLayers()
     if (!hostPlantStore.enabled) return
-    const taxa = hostPlantStore.activeTaxa.filter(taxon => taxon.occurrence_count > 0)
-    await Promise.all(taxa.map((taxon, index) => addTaxonLayer(taxon, index)))
+    await addUnifiedLayer()
   }
 
   watch(
@@ -144,11 +155,8 @@ export function useHostPlantLayer(map, options = {}) {
     () => hostPlantStore.opacity,
     () => {
       if (!map.value) return
-      for (const taxon of hostPlantStore.activeTaxa) {
-        const id = layerId(taxon.slug)
-        if (map.value.getLayer(id)) {
-          map.value.setPaintProperty(id, 'icon-opacity', hostPlantStore.opacity)
-        }
+      if (map.value.getLayer(LAYER_ID)) {
+        map.value.setPaintProperty(LAYER_ID, 'icon-opacity', hostPlantStore.opacity)
       }
     }
   )

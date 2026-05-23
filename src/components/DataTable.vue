@@ -457,9 +457,13 @@ const hostPlantEvidenceRows = computed(() => {
       host: association.host_taxon_name,
       host_rank: association.host_taxon_rank,
       family: association.host_plant_family || taxon?.family || '—',
+      evidence_level: association.evidence_level || 'needs_check',
+      evidence_display: hostPlantStore.evidenceLevels.find(level => level.key === association.evidence_level)?.label || 'Needs check',
+      host_id_level: association.host_id_level || association.host_taxon_rank,
       confidence: association.confidence === 'needs_check' ? 'needs check' : association.confidence,
+      confidence_display: hostPlantStore.confidenceDisplayLabel(association.confidence),
       confidence_bucket: association.confidence_bucket || hostPlantStore.confidenceBucket(association.confidence),
-      evidence: association.evidence_basis || association.evidence_type || '—',
+      evidence: association.evidence_detail || association.evidence_basis || association.evidence_type || '—',
       source,
       source_url: association.doi_or_url,
       gbif_records: taxon?.occurrence_count || 0,
@@ -470,6 +474,9 @@ const hostPlantEvidenceRows = computed(() => {
         association.host_taxon_name,
         association.host_taxon_rank,
         association.host_plant_family,
+        association.evidence_level,
+        association.host_id_level,
+        association.evidence_detail,
         association.confidence,
         association.evidence_basis,
         association.evidence_type,
@@ -482,7 +489,7 @@ const hostPlantEvidenceRows = computed(() => {
   return rows
 })
 
-const confidenceRank = { high: 3, medium: 2, low: 1, 'needs check': 0, unknown: 0 }
+const evidenceRank = { direct: 3, literature: 2, needs_check: 1, unknown: 0 }
 
 const compactSourceLabel = (source) => {
   if (!source || source === '—') return null
@@ -499,25 +506,27 @@ const hostPlantButterflyRows = computed(() => {
     const entry = byButterfly.get(row.butterfly) || {
       butterfly: row.butterfly,
       hostPlants: new Map(),
-      counts: { high: 0, medium: 0, low: 0 },
+      counts: { species: 0, genus: 0, family: 0 },
       families: new Set(),
       sources: new Set(),
       occurrenceBacked: new Set(),
     }
     const existing = entry.hostPlants.get(row.host)
-    if (!existing || confidenceRank[row.confidence] > confidenceRank[existing.confidence]) {
+    if (!existing || evidenceRank[row.evidence_level] > evidenceRank[existing.evidence_level]) {
       entry.hostPlants.set(row.host, {
         name: row.host,
         confidence: row.confidence,
         confidence_bucket: row.confidence_bucket,
+        evidence_level: row.evidence_level,
+        evidence_display: row.evidence_display,
+        evidence_detail: row.evidence,
+        host_id_level: row.host_id_level,
         rank: row.host_rank,
         family: row.family,
         gbif_records: row.gbif_records,
       })
     }
-    if (row.confidence_bucket === 'high') entry.counts.high += 1
-    else if (row.confidence_bucket === 'medium') entry.counts.medium += 1
-    else entry.counts.low += 1
+    if (entry.counts[row.host_id_level] != null) entry.counts[row.host_id_level] += 1
     if (row.family && row.family !== '—') entry.families.add(row.family)
     const source = compactSourceLabel(row.source)
     if (source) entry.sources.add(source)
@@ -527,7 +536,7 @@ const hostPlantButterflyRows = computed(() => {
 
   return [...byButterfly.values()].map(entry => {
     const hosts = [...entry.hostPlants.values()].sort((a, b) => {
-      const rankDiff = confidenceRank[b.confidence] - confidenceRank[a.confidence]
+      const rankDiff = evidenceRank[b.evidence_level] - evidenceRank[a.evidence_level]
       if (rankDiff) return rankDiff
       return a.name.localeCompare(b.name)
     })
@@ -567,7 +576,7 @@ const filteredHostPlantEvidenceRows = computed(() => {
     const mapped = String(filters.mapped || '').trim().toLowerCase()
     if (butterfly && !row.butterfly.toLowerCase().includes(butterfly)) return false
     if (host && !row.host.toLowerCase().includes(host)) return false
-    if (confidence && row.confidence.toLowerCase() !== confidence) return false
+    if (confidence && row.evidence_level.toLowerCase() !== confidence) return false
     if (family && row.family.toLowerCase() !== family) return false
     if (source && !row.source.toLowerCase().includes(source)) return false
     if (mapped === 'yes' && !row.mapped) return false
@@ -588,15 +597,15 @@ const sortedHostPlantButterflyRows = computed(() => {
     } else if (col === 'occurrence_backed_count') {
       valA = a.occurrence_backed_count
       valB = b.occurrence_backed_count
-    } else if (col === 'high') {
-      valA = a.counts.high
-      valB = b.counts.high
-    } else if (col === 'medium') {
-      valA = a.counts.medium
-      valB = b.counts.medium
-    } else if (col === 'low') {
-      valA = a.counts.low
-      valB = b.counts.low
+    } else if (col === 'species') {
+      valA = a.counts.species
+      valB = b.counts.species
+    } else if (col === 'genus') {
+      valA = a.counts.genus
+      valB = b.counts.genus
+    } else if (col === 'family') {
+      valA = a.counts.family
+      valB = b.counts.family
     } else {
       valA = String(valA || '').toLowerCase()
       valB = String(valB || '').toLowerCase()
@@ -617,9 +626,9 @@ const sortedHostPlantEvidenceRows = computed(() => {
     if (col === 'gbif_records') {
       valA = a.gbif_records
       valB = b.gbif_records
-    } else if (col === 'confidence') {
-      valA = confidenceRank[a.confidence] || 0
-      valB = confidenceRank[b.confidence] || 0
+    } else if (col === 'evidence_level') {
+      valA = evidenceRank[a.evidence_level] || 0
+      valB = evidenceRank[b.evidence_level] || 0
     } else {
       valA = String(valA || '').toLowerCase()
       valB = String(valB || '').toLowerCase()
@@ -644,9 +653,9 @@ const paginatedHostPlantEvidenceRows = computed(() => {
 const hostPlantButterflyColumns = [
   { key: 'butterfly', label: 'Butterfly species', width: '220px' },
   { key: 'host_count', label: 'Host plants', width: '420px' },
-  { key: 'high', label: 'High', width: '70px' },
-  { key: 'medium', label: 'Medium', width: '85px' },
-  { key: 'low', label: 'Low', width: '70px' },
+  { key: 'species', label: 'Species', width: '95px' },
+  { key: 'genus', label: 'Genus', width: '95px' },
+  { key: 'family', label: 'Family', width: '95px' },
   { key: 'families', label: 'Families', width: '180px' },
   { key: 'occurrence_backed_count', label: 'Mapped taxa', width: '105px' },
   { key: 'sources', label: 'Sources', width: '260px' },
@@ -655,9 +664,9 @@ const hostPlantButterflyColumns = [
 const hostPlantEvidenceColumns = [
   { key: 'butterfly', label: 'Butterfly species', width: '210px' },
   { key: 'host', label: 'Host plant', width: '220px' },
-  { key: 'host_rank', label: 'Rank', width: '80px' },
+  { key: 'host_rank', label: 'Host rank / ID level', width: '120px' },
   { key: 'family', label: 'Family', width: '130px' },
-  { key: 'confidence', label: 'Confidence', width: '110px' },
+  { key: 'evidence_level', label: 'Evidence', width: '110px' },
   { key: 'evidence', label: 'Evidence basis', width: '280px' },
   { key: 'source', label: 'Source', width: '280px' },
   { key: 'gbif_records', label: 'GBIF records', width: '110px' },
@@ -795,10 +804,10 @@ const toggleHostButterflyExpanded = (butterfly) => {
   expandedHostButterflies.value = next
 }
 
-const hostPlantsByConfidence = (plants) => ({
-  high: plants.filter(plant => plant.confidence_bucket === 'high'),
-  medium: plants.filter(plant => plant.confidence_bucket === 'medium'),
-  low: plants.filter(plant => !['high', 'medium'].includes(plant.confidence_bucket)),
+const hostPlantsByHostIdLevel = (plants) => ({
+  species: plants.filter(plant => plant.host_id_level === 'species' || plant.rank === 'species'),
+  genus: plants.filter(plant => plant.host_id_level === 'genus' || plant.rank === 'genus'),
+  family: plants.filter(plant => plant.host_id_level === 'family' || plant.rank === 'family'),
 })
 
 const confidenceClass = (confidence) => {
@@ -1397,9 +1406,9 @@ const conciseList = (items, limit = 3) => {
                   </button>
                 </div>
               </td>
-              <td class="cell-records"><span class="confidence-pill high">{{ row.counts.high }}</span></td>
-              <td class="cell-records"><span class="confidence-pill medium">{{ row.counts.medium }}</span></td>
-              <td class="cell-records"><span class="confidence-pill low">{{ row.counts.low }}</span></td>
+              <td class="cell-records"><span class="confidence-pill high">{{ row.counts.species }}</span></td>
+              <td class="cell-records"><span class="confidence-pill medium">{{ row.counts.genus }}</span></td>
+              <td class="cell-records"><span class="confidence-pill low">{{ row.counts.family }}</span></td>
               <td>{{ conciseList(row.families, 3) }}</td>
               <td class="cell-records">{{ row.occurrence_backed_count }}</td>
               <td>{{ conciseList(row.sources, 2) }}</td>
@@ -1408,7 +1417,7 @@ const conciseList = (items, limit = 3) => {
               <td :colspan="hostPlantButterflyColumns.length">
                 <div class="host-expanded-panel">
                   <div
-                    v-for="level in hostPlantStore.confidenceLevels"
+                    v-for="level in hostPlantStore.hostIdLevels"
                     :key="level.key"
                     class="host-confidence-block"
                   >
@@ -1416,20 +1425,20 @@ const conciseList = (items, limit = 3) => {
                       <span class="confidence-pill" :class="level.key">
                         {{ level.label }}
                       </span>
-                      <span>{{ hostPlantsByConfidence(row.hostPlants)[level.key].length }} taxa</span>
+                      <span>{{ hostPlantsByHostIdLevel(row.hostPlants)[level.key].length }} taxa</span>
                     </div>
                     <div class="host-chip-list expanded">
                       <span
-                        v-for="plant in hostPlantsByConfidence(row.hostPlants)[level.key]"
+                        v-for="plant in hostPlantsByHostIdLevel(row.hostPlants)[level.key]"
                         :key="plant.name"
                         class="host-chip"
                         :class="confidenceClass(plant.confidence)"
-                        :title="`${plant.rank}; ${plant.family}; ${plant.gbif_records.toLocaleString()} GBIF records`"
+                        :title="`${plant.rank}; ${plant.family}; ${plant.evidence_display}; ${plant.evidence_detail}; ${plant.gbif_records.toLocaleString()} GBIF records`"
                       >
                         <em>{{ plant.name }}</em>
                         <span v-if="plant.gbif_records > 0" class="chip-count">{{ plant.gbif_records.toLocaleString() }}</span>
                       </span>
-                      <span v-if="hostPlantsByConfidence(row.hostPlants)[level.key].length === 0" class="text-muted">—</span>
+                      <span v-if="hostPlantsByHostIdLevel(row.hostPlants)[level.key].length === 0" class="text-muted">—</span>
                     </div>
                   </div>
                 </div>
@@ -1487,10 +1496,9 @@ const conciseList = (items, limit = 3) => {
             <th class="filter-cell">
               <select class="column-filter-select" v-model="columnFilters.confidence">
                 <option value="">All</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-                <option value="needs check">Needs check</option>
+                <option value="direct">Direct</option>
+                <option value="literature">Literature</option>
+                <option value="needs_check">Needs check</option>
               </select>
             </th>
             <th class="filter-cell"></th>
@@ -1512,11 +1520,11 @@ const conciseList = (items, limit = 3) => {
           <tr v-for="row in paginatedHostPlantEvidenceRows" :key="row.id">
             <td class="cell-species"><em>{{ row.butterfly }}</em></td>
             <td class="cell-host"><em>{{ row.host }}</em></td>
-            <td>{{ row.host_rank }}</td>
+            <td>{{ row.host_rank }} / {{ row.host_id_level }}</td>
             <td>{{ row.family }}</td>
             <td>
-              <span class="confidence-pill" :class="confidenceClass(row.confidence)">
-                {{ row.confidence }}
+              <span class="confidence-pill" :class="confidenceClass(row.evidence_level)">
+                {{ row.evidence_display }}
               </span>
             </td>
             <td class="cell-long-text">{{ row.evidence }}</td>
@@ -1619,6 +1627,7 @@ const conciseList = (items, limit = 3) => {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-width: 0;
   background: var(--color-bg-secondary, #252540);
   border-radius: 8px;
   overflow: hidden;
@@ -1809,12 +1818,19 @@ const conciseList = (items, limit = 3) => {
 .table-wrapper {
   flex: 1;
   overflow: auto;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
+}
+
+.host-plant-table {
+  width: max-content;
+  min-width: 100%;
 }
 
 .data-table th {
