@@ -1496,8 +1496,8 @@ const conciseList = (items, limit = 3) => {
             <th class="filter-cell">
               <select class="column-filter-select" v-model="columnFilters.confidence">
                 <option value="">All</option>
-                <option value="direct">Direct</option>
-                <option value="literature">Literature</option>
+                <option value="direct">Observed</option>
+                <option value="literature">Reported</option>
                 <option value="needs_check">Needs check</option>
               </select>
             </th>

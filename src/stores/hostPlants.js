@@ -26,8 +26,8 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
   ]
 
   const evidenceLevels = [
-    { key: 'direct', label: 'Direct', description: 'Observed host use: eggs, larvae, feeding, oviposition, or rearing.' },
-    { key: 'literature', label: 'Literature', description: 'Reported in a paper, catalogue, cited expert source, or captive/lab record.' },
+    { key: 'direct', label: 'Observed', description: 'Observed host use: eggs, larvae, feeding, oviposition, or rearing.' },
+    { key: 'literature', label: 'Reported', description: 'Host use reported by a catalogue, paper, expert source, or captive/lab record without checked direct-use details.' },
     { key: 'needs_check', label: 'Needs check', description: 'Unresolved or audit-level records.' },
   ]
 
@@ -216,7 +216,7 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
         return {
           label: name,
           value: name,
-          meta: `${hostIdCounts.species} species · ${hostIdCounts.genus} genus · ${hostIdCounts.family} family · ${evidenceCounts.direct} direct · ${evidenceCounts.literature} literature · ${evidenceCounts.needs_check} needs check`,
+          meta: `${hostIdCounts.species} species · ${hostIdCounts.genus} genus · ${hostIdCounts.family} family · ${evidenceCounts.direct} observed · ${evidenceCounts.literature} reported · ${evidenceCounts.needs_check} needs check`,
           badges: [
             { key: 'species', label: `${hostIdCounts.species} species` },
             { key: 'genus', label: `${hostIdCounts.genus} genus` },

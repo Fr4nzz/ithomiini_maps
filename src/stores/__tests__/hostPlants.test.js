@@ -135,7 +135,7 @@ describe('useHostPlantStore', () => {
       {
         label: 'Prestonia coalita',
         value: 'species_prestonia_coalita',
-        meta: 'species · Apocynaceae · Direct · 2 records',
+        meta: 'species · Apocynaceae · Observed · 2 records',
       },
     ])
     expect(store.getOccurrenceTaxonOptionsForButterflies([], { hostIdLevels: ['species', 'genus'], evidenceLevels: ['direct', 'literature', 'needs_check'] })).toMatchObject([
@@ -163,11 +163,11 @@ describe('useHostPlantStore', () => {
     expect(store.getButterflyOptionsForHostPlants()).toEqual([
       expect.objectContaining({
         label: 'Aeria elara',
-        meta: '1 species · 0 genus · 0 family · 1 direct · 0 literature · 0 needs check',
+        meta: '1 species · 0 genus · 0 family · 1 observed · 0 reported · 0 needs check',
       }),
       expect.objectContaining({
         label: 'Callithomia alexirrhoe',
-        meta: '0 species · 1 genus · 1 family · 0 direct · 1 literature · 1 needs check',
+        meta: '0 species · 1 genus · 1 family · 0 observed · 1 reported · 1 needs check',
       }),
     ])
   })
@@ -243,8 +243,8 @@ describe('useHostPlantStore', () => {
     await store.loadMetadata()
 
     expect(store.getButterflyOptionsForHostPlants()).toEqual([
-      expect.objectContaining({ label: 'Aeria elara', meta: '1 species · 0 genus · 0 family · 1 direct · 0 literature · 0 needs check' }),
-      expect.objectContaining({ label: 'Callithomia alexirrhoe', meta: '0 species · 1 genus · 1 family · 0 direct · 1 literature · 1 needs check' }),
+      expect.objectContaining({ label: 'Aeria elara', meta: '1 species · 0 genus · 0 family · 1 observed · 0 reported · 0 needs check' }),
+      expect.objectContaining({ label: 'Callithomia alexirrhoe', meta: '0 species · 1 genus · 1 family · 0 observed · 1 reported · 1 needs check' }),
     ])
   })
 
