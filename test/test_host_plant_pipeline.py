@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -10,12 +11,78 @@ from scripts.host_plants.host_plant_pipeline import (
     confidence_is_excluded,
     attach_multimedia_to_occurrences,
     process_download_api_occurrences,
+    resolve_taxon,
+    selected_taxa_for_download_request,
     select_taxa_for_occurrence_download,
     taxon_key_map,
+    normalize_host_id_level,
+    normalize_evidence_level,
+    apply_source_level_audit,
 )
 
 
 class HostPlantPipelineTests(unittest.TestCase):
+
+    def test_host_id_and_evidence_fields_are_normalized(self):
+        records = [
+            {
+                "butterfly_taxon": "Aeria elara",
+                "host_plant_species": "Prestonia coalita",
+                "host_plant_genus": "Prestonia",
+                "host_plant_family": "Apocynaceae",
+                "host_taxon_rank": "species",
+                "confidence": "high",
+                "evidence_type": "larvae feeding observed in field",
+                "evidence_basis": "Direct juvenile-stage evidence.",
+            },
+            {
+                "butterfly_taxon": "Aeria elara",
+                "host_plant_genus": "Markea",
+                "host_plant_family": "Solanaceae",
+                "host_taxon_rank": "genus_spp",
+                "confidence": "low",
+                "evidence_type": "catalogue record",
+            },
+        ]
+
+        associations, taxa = build_association_outputs(records)
+
+        by_name = {association["host_taxon_name"]: association for association in associations}
+        self.assertEqual(by_name["Prestonia coalita"]["host_id_level"], "species")
+        self.assertEqual(by_name["Prestonia coalita"]["evidence_level"], "direct")
+        self.assertEqual(by_name["Prestonia coalita"]["evidence_detail"], "Direct juvenile-stage evidence.")
+        self.assertEqual(by_name["Markea"]["host_id_level"], "genus")
+        self.assertEqual(by_name["Markea"]["evidence_level"], "literature")
+        taxa_by_name = {taxon["canonical_name"]: taxon for taxon in taxa}
+        self.assertEqual(taxa_by_name["Markea"]["host_id_level_counts"], {"genus": 1})
+        self.assertEqual(taxa_by_name["Prestonia coalita"]["evidence_counts"], {"direct": 1})
+
+    def test_source_level_audit_can_override_new_evidence_fields(self):
+        records = [{
+            "butterfly_taxon": "Aeria elara",
+            "host_plant_family": "Apocynaceae",
+            "host_taxon_rank": "family",
+            "confidence": "low",
+            "evidence_type": "catalogue row",
+        }]
+
+        apply_source_level_audit(records, {1: {
+            "evidence_level": "needs_check",
+            "evidence_detail": "Family-only Beccaloni fallback; check primary refs.",
+            "host_id_level": "family",
+        }})
+        associations, _taxa = build_association_outputs(records)
+
+        self.assertEqual(associations[0]["host_id_level"], "family")
+        self.assertEqual(associations[0]["evidence_level"], "needs_check")
+        self.assertIn("Family-only", associations[0]["evidence_detail"])
+
+    def test_normalization_helpers_map_rank_and_source_text(self):
+        self.assertEqual(normalize_host_id_level("genus_spp"), "genus")
+        self.assertEqual(normalize_host_id_level("unidentified_species"), "family")
+        self.assertEqual(normalize_evidence_level("eggs observed on plant"), "direct")
+        self.assertEqual(normalize_evidence_level("Beccaloni catalogue citation"), "literature")
+        self.assertEqual(normalize_evidence_level("unresolved needs check"), "needs_check")
     def test_excludes_records_marked_exclude_or_erroneous(self):
         records = [
             {
@@ -102,6 +169,17 @@ class HostPlantPipelineTests(unittest.TestCase):
         self.assertEqual(taxon["rank"], "family")
         self.assertFalse(taxon["resolvable_to_gbif"])
 
+    def test_uses_host_plant_species_value_without_pipeline_name_correction(self):
+        taxon = canonical_host_taxon({
+            "host_plant_species": "Solanum stramonifolium",
+            "host_plant_genus": "Solanum",
+            "host_plant_family": "Solanaceae",
+            "host_taxon_rank": "species",
+        })
+
+        self.assertEqual(taxon["canonical_name"], "Solanum stramonifolium")
+        self.assertEqual(taxon["slug"], "species_solanum_stramonifolium")
+
     def test_confidence_helpers_are_case_insensitive(self):
         self.assertTrue(confidence_is_excluded("Exclude"))
         self.assertTrue(confidence_allows_default_download("HIGH"))
@@ -133,7 +211,28 @@ class HostPlantPipelineTests(unittest.TestCase):
         self.assertEqual(associations[0]["confidence_bucket"], "high")
         self.assertEqual(associations[0]["curation_action"], "upgrade")
         self.assertEqual(associations[0]["citation_for_ui"], "Brown & Freitas 1994")
+        self.assertEqual(
+            associations[0]["doi_or_url"],
+            "https://journals.flvc.org/troplep/article/download/89949/86313",
+        )
         self.assertEqual(taxa[0]["confidence_counts"], {"high": 1})
+
+    def test_source_url_matches_beccaloni_display_citation(self):
+        records = [
+            {
+                "butterfly_taxon": "Aeria elara",
+                "host_plant_family": "Apocynaceae",
+                "host_taxon_rank": "family",
+                "confidence": "low",
+                "citation_for_ui": "Beccaloni et al. 2008",
+                "doi_or_url": "https://www.cabidigitallibrary.org/doi/full/10.5555/20093181648",
+            }
+        ]
+
+        associations, _taxa = build_association_outputs(records)
+
+        self.assertIn("researchgate.net", associations[0]["doi_or_url"])
+        self.assertIn("Catalogue-of-the-Hostplants", associations[0]["doi_or_url"])
 
     def test_select_taxa_can_limit_to_species_rank(self):
         taxa = [
@@ -171,22 +270,62 @@ class HostPlantPipelineTests(unittest.TestCase):
 
         self.assertEqual(taxon_key_map(taxa), {"species_prestonia_coalita": 5536637})
 
+    def test_species_resolution_rejects_higher_rank_gbif_match(self):
+        taxon = {
+            "canonical_name": "Solanum stramoniifolium",
+            "rank": "species",
+            "resolvable_to_gbif": True,
+        }
+
+        class MockResponse:
+            def raise_for_status(self):
+                return None
+
+            def json(self):
+                return {
+                    "usageKey": 2928997,
+                    "rank": "GENUS",
+                    "kingdom": "Plantae",
+                    "scientificName": "Solanum L.",
+                    "canonicalName": "Solanum",
+                    "matchType": "HIGHERRANK",
+                    "confidence": 99,
+                }
+
+        with patch(
+            "scripts.host_plants.host_plant_pipeline.requests.get",
+            return_value=MockResponse(),
+        ):
+            resolution = resolve_taxon(taxon, {"taxa": {}}, refresh=True)
+
+        self.assertEqual(resolution["status"], "not_resolved")
+        self.assertIn("refusing higher-rank occurrence layer", resolution["note"])
+
     def test_zero_download_limit_keeps_all_unique_coordinates(self):
-        taxa = [{"slug": "species_prestonia_coalita", "gbif_taxon_key": 5536637}]
+        taxa = [{
+            "slug": "species_prestonia_coalita",
+            "canonical_name": "Prestonia coalita",
+            "rank": "species",
+            "species": "Prestonia coalita",
+            "genus": "Prestonia",
+            "gbif_taxon_key": 5536637,
+        }]
         with TemporaryDirectory() as temp_dir:
             occurrence_path = Path(temp_dir) / "occurrence.txt"
             occurrence_path.write_text(
                 "\t".join([
                     "taxonKey",
+                    "species",
+                    "genus",
                     "decimalLongitude",
                     "decimalLatitude",
                     "occurrenceStatus",
                     "gbifID",
                 ])
                 + "\n"
-                + "5536637\t-78.1\t-0.1\tPRESENT\t1\n"
-                + "5536637\t-78.2\t-0.2\tPRESENT\t2\n"
-                + "5536637\t-78.3\t-0.3\tPRESENT\t3\n",
+                + "5536637\tPrestonia coalita\tPrestonia\t-78.1\t-0.1\tPRESENT\t1\n"
+                + "5536637\tPrestonia coalita\tPrestonia\t-78.2\t-0.2\tPRESENT\t2\n"
+                + "5536637\tPrestonia coalita\tPrestonia\t-78.3\t-0.3\tPRESENT\t3\n",
                 encoding="utf-8",
             )
 
@@ -202,12 +341,21 @@ class HostPlantPipelineTests(unittest.TestCase):
         self.assertIsNone(meta["limit"])
 
     def test_download_processing_excludes_high_coordinate_uncertainty(self):
-        taxa = [{"slug": "species_prestonia_coalita", "gbif_taxon_key": 5536637}]
+        taxa = [{
+            "slug": "species_prestonia_coalita",
+            "canonical_name": "Prestonia coalita",
+            "rank": "species",
+            "species": "Prestonia coalita",
+            "genus": "Prestonia",
+            "gbif_taxon_key": 5536637,
+        }]
         with TemporaryDirectory() as temp_dir:
             occurrence_path = Path(temp_dir) / "occurrence.txt"
             occurrence_path.write_text(
                 "\t".join([
                     "taxonKey",
+                    "species",
+                    "genus",
                     "decimalLongitude",
                     "decimalLatitude",
                     "coordinateUncertaintyInMeters",
@@ -215,8 +363,8 @@ class HostPlantPipelineTests(unittest.TestCase):
                     "gbifID",
                 ])
                 + "\n"
-                + "5536637\t-78.1\t-0.1\t100000\tPRESENT\t1\n"
-                + "5536637\t-78.2\t-0.2\t100001\tPRESENT\t2\n",
+                + "5536637\tPrestonia coalita\tPrestonia\t-78.1\t-0.1\t100000\tPRESENT\t1\n"
+                + "5536637\tPrestonia coalita\tPrestonia\t-78.2\t-0.2\t100001\tPRESENT\t2\n",
                 encoding="utf-8",
             )
 
@@ -229,6 +377,76 @@ class HostPlantPipelineTests(unittest.TestCase):
 
         records, _meta = results["species_prestonia_coalita"]
         self.assertEqual([record["gbifID"] for record in records], ["1"])
+
+    def test_species_chip_does_not_receive_genus_only_rows(self):
+        taxa = [
+            {
+                "slug": "species_solanum_crinitum",
+                "canonical_name": "Solanum crinitum",
+                "rank": "species",
+                "species": "Solanum crinitum",
+                "genus": "Solanum",
+                "gbif_taxon_key": 2931012,
+            },
+            {
+                "slug": "genus_solanum",
+                "canonical_name": "Solanum",
+                "rank": "genus",
+                "genus": "Solanum",
+                "gbif_taxon_key": 2928997,
+            },
+        ]
+        with TemporaryDirectory() as temp_dir:
+            occurrence_path = Path(temp_dir) / "occurrence.txt"
+            occurrence_path.write_text(
+                "taxonKey\tspecies\tgenus\tscientificName\tdecimalLongitude\tdecimalLatitude\toccurrenceStatus\tgbifID\n"
+                "2928997\t\tSolanum\tSolanum L.\t-76.1\t-1.1\tPRESENT\tgenus-row\n"
+                "2931012\tSolanum crinitum\tSolanum\tSolanum crinitum Lam.\t-76.2\t-1.2\tPRESENT\tspecies-row\n",
+                encoding="utf-8",
+            )
+
+            results = process_download_api_occurrences(
+                Path(temp_dir),
+                taxa,
+                limit=0,
+                download_info={"key": "test-download", "doi": "10.15468/test"},
+            )
+
+        species_records, _ = results["species_solanum_crinitum"]
+        genus_records, _ = results["genus_solanum"]
+        self.assertEqual([record["gbifID"] for record in species_records], ["species-row"])
+        self.assertEqual([record["gbifID"] for record in genus_records], ["genus-row", "species-row"])
+
+    def test_species_download_is_suppressed_when_selected_genus_covers_it(self):
+        taxa = [
+            {
+                "slug": "genus_solanum",
+                "canonical_name": "Solanum",
+                "rank": "genus",
+                "genus": "Solanum",
+                "gbif_taxon_key": 2928997,
+            },
+            {
+                "slug": "species_solanum_crinitum",
+                "canonical_name": "Solanum crinitum",
+                "rank": "species",
+                "genus": "Solanum",
+                "gbif_taxon_key": 2931012,
+            },
+            {
+                "slug": "species_jaltomata_procumbens",
+                "canonical_name": "Solanum procumbens",
+                "rank": "species",
+                "genus": "Solanum",
+                "gbif_taxon_key": 123,
+                "gbif_resolution": {"genus": "Jaltomata"},
+            },
+        ]
+
+        targets, suppressed = selected_taxa_for_download_request(taxa)
+
+        self.assertEqual([taxon["slug"] for taxon in targets], ["genus_solanum", "species_jaltomata_procumbens"])
+        self.assertEqual(suppressed, {"species_solanum_crinitum": "covered_by_genus:Solanum"})
 
     def test_multimedia_fallback_uses_same_species_image(self):
         results = {

@@ -22,24 +22,43 @@ csv.field_size_limit(sys.maxsize)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
-DEFAULT_SEED_PATH = Path(
-    "/home/franz/Documents/CodeProjs/ithomiini-gpt-pro-hostplants-20260520/"
-    "response/ithomiini_hostplant_evidence_seed.json"
-)
+DEFAULT_SEED_PATH = PROJECT_ROOT / "scripts" / "host_plants" / "ithomiini_hostplant_evidence_seed.json"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "public" / "data" / "host_plants"
 DEFAULT_CACHE_PATH = PROJECT_ROOT / "scripts" / "host_plants" / "gbif_host_plant_taxa_cache.json"
 DEFAULT_SUPPLEMENT_PATH = PROJECT_ROOT / "scripts" / "host_plants" / "host_plant_literature_supplement.json"
+OCCURRENCE_DATASET_NAME = "host_plant_occurrences.json"
+OCCURRENCE_CORE_DATASET_NAME = "host_plant_occurrence_core.json"
+GALLERY_DATASET_NAME = "host_plant_gallery.json"
 DEFAULT_CONFIDENCE_AUDIT_PATH = (
     PROJECT_ROOT
     / "scripts"
     / "host_plants"
     / "host_plant_confidence_reaudit_codex_20260521_taxon_level.csv"
 )
+DEFAULT_SOURCE_LEVEL_AUDIT_PATH = (
+    PROJECT_ROOT / "scripts" / "host_plants" / "hostplant_source_level_audit_20260523.csv"
+)
+DEFAULT_RECORDS_TO_CHANGE_PATH = (
+    PROJECT_ROOT / "scripts" / "host_plants" / "hostplant_records_to_change_20260523.csv"
+)
 
 GBIF_SPECIES_MATCH_URL = "https://api.gbif.org/v1/species/match"
 GBIF_PLANT_KINGDOM_KEY = 6
 REQUEST_DELAY_SECONDS = 0.2
 MAX_COORDINATE_UNCERTAINTY_METERS = 100_000
+BECCALONI_2008_URL = (
+    "https://www.researchgate.net/profile/George-Beccaloni-2/publication/"
+    "262099000_Catalogue_of_the_Hostplants_of_the_Neotropical_Butterflies_"
+    "Catalogo_de_las_Plantas_Huesped_de_las_Mariposas_Neotropicales/links/"
+    "5cc0d98a92851c8d2202f3f1/Catalogue-of-the-Hostplants-of-the-Neotropical-"
+    "Butterflies-Catalogo-de-las-Plantas-Huesped-de-las-Mariposas-Neotropicales.pdf"
+)
+BROWN_FREITAS_1994_URL = "https://journals.flvc.org/troplep/article/download/89949/86313"
+
+SOURCE_URL_BY_CITATION = {
+    "beccaloni et al. 2008": BECCALONI_2008_URL,
+    "brown & freitas 1994": BROWN_FREITAS_1994_URL,
+}
 
 STUDY_EXTENT = {
     "min_lon": -120,
@@ -59,7 +78,6 @@ RANK_ALIASES = {
     "unknown": "family",
 }
 
-
 def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
@@ -74,6 +92,25 @@ def clean_text(value: Any) -> str | None:
         return None
     text = str(value).strip()
     return text or None
+
+
+def clean_scientific_name(value: Any) -> str | None:
+    text = clean_text(value)
+    if not text:
+        return None
+    text = re.sub(r"\s*\([A-Z][a-zA-Z&\s.\-]+,?\s*\d{4}\)", "", text)
+    text = re.sub(r"\s+[A-Z][a-zA-Z&\s.\-]+,\s*\d{4}$", "", text)
+    text = re.sub(r"\s+[A-Z][a-zA-Z]+\s+\d{4}$", "", text)
+    text = " ".join(text.split())
+    parts = text.split()
+    if len(parts) < 2:
+        return text
+    return f"{parts[0]} {parts[1]}"
+
+
+def lower_name(value: Any) -> str | None:
+    text = clean_scientific_name(value)
+    return text.lower() if text else None
 
 
 def normalize_confidence(value: Any) -> str:
@@ -98,6 +135,55 @@ def confidence_bucket(value: Any) -> str:
     if confidence in {"low", "needs_check"}:
         return "low"
     return "unknown"
+
+
+def normalize_host_id_level(value: Any) -> str:
+    text = (clean_text(value) or "unknown").lower()
+    return RANK_ALIASES.get(text, text) if RANK_ALIASES.get(text, text) in {"species", "genus", "family"} else "family"
+
+
+def normalize_evidence_level(*values: Any) -> str:
+    haystack = " ".join(str(value or "") for value in values).lower()
+    if any(term in haystack for term in ("exclude", "erroneous", "unresolved", "needs check", "needs_check", "dubious", "audit")):
+        return "needs_check"
+    if any(term in haystack for term in ("egg", "larva", "larvae", "feeding", "oviposition", "rearing", "observed", "field observation", "direct")):
+        return "direct"
+    if any(term in haystack for term in ("literature", "catalogue", "catalog", "citation", "cited", "paper", "beccaloni", "brown", "expert", "captive", "lab")):
+        return "literature"
+    confidence = normalize_confidence(values[0] if values else None)
+    if confidence == "high":
+        return "direct"
+    if confidence == "medium":
+        return "literature"
+    if confidence in {"low", "needs_check"}:
+        return "needs_check"
+    return "literature"
+
+
+def evidence_detail_for_record(record: dict[str, Any]) -> str | None:
+    return (
+        clean_text(record.get("evidence_detail"))
+        or clean_text(record.get("evidence_basis"))
+        or clean_text(record.get("source_checked"))
+        or clean_text(record.get("notes_for_web_app"))
+        or clean_text(record.get("evidence_type"))
+        or clean_text(record.get("source_refs"))
+    )
+
+
+def source_url_for_record(record: dict[str, Any]) -> str | None:
+    """Prefer a URL that matches the source label shown in the app."""
+    display_source = (
+        clean_text(record.get("citation_for_ui"))
+        or clean_text(record.get("source_checked"))
+        or clean_text(record.get("source_citation"))
+        or clean_text(record.get("source_refs"))
+    )
+    source_key = display_source.lower() if display_source else ""
+    for citation, url in SOURCE_URL_BY_CITATION.items():
+        if citation in source_key:
+            return url
+    return clean_text(record.get("doi_or_url"))
 
 
 def record_marked_erroneous(record: dict[str, Any]) -> bool:
@@ -190,6 +276,34 @@ def apply_confidence_audit(
         record["notes_for_web_app"] = clean_text(row.get("notes_for_web_app"))
 
 
+def load_source_level_audit(path: Path | None) -> dict[int, dict[str, str]]:
+    return load_confidence_audit(path)
+
+
+def apply_source_level_audit(
+    records: list[dict[str, Any]],
+    audit_rows: dict[int, dict[str, str]],
+) -> None:
+    if not audit_rows:
+        return
+    for index, record in enumerate(records, 1):
+        row = audit_rows.get(index)
+        if not row:
+            continue
+        if clean_text(row.get("host_id_level")):
+            record["host_id_level"] = normalize_host_id_level(row.get("host_id_level"))
+        if clean_text(row.get("evidence_level")):
+            record["evidence_level"] = normalize_evidence_level(row.get("evidence_level"))
+        detail = (
+            clean_text(row.get("evidence_detail"))
+            or clean_text(row.get("source_level_detail"))
+            or clean_text(row.get("evidence_basis"))
+            or clean_text(row.get("notes_for_web_app"))
+        )
+        if detail:
+            record["evidence_detail"] = detail
+
+
 def build_association_outputs(records: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     associations = []
     taxa_by_key: dict[tuple[str, str, str | None], dict[str, Any]] = {}
@@ -200,6 +314,16 @@ def build_association_outputs(records: list[dict[str, Any]]) -> tuple[list[dict[
 
         taxon = canonical_host_taxon(record)
         confidence = normalize_confidence(record.get("confidence"))
+        host_id_level = normalize_host_id_level(record.get("host_id_level") or taxon["rank"])
+        evidence_level = normalize_evidence_level(
+            record.get("evidence_level"),
+            record.get("evidence_type"),
+            record.get("evidence_basis"),
+            record.get("source_checked"),
+            record.get("notes_for_web_app"),
+            record.get("confidence"),
+        )
+        evidence_detail = evidence_detail_for_record(record)
         use_for_default_download = (
             taxon["resolvable_to_gbif"] and confidence_allows_default_download(confidence)
         )
@@ -220,9 +344,12 @@ def build_association_outputs(records: list[dict[str, Any]]) -> tuple[list[dict[
             "beccaloni_marker": clean_text(record.get("beccaloni_marker")),
             "source_citation": clean_text(record.get("source_citation")),
             "source_refs": clean_text(record.get("source_refs")),
-            "doi_or_url": clean_text(record.get("doi_or_url")),
+            "doi_or_url": source_url_for_record(record),
             "confidence": confidence,
             "confidence_bucket": confidence_bucket(confidence),
+            "host_id_level": host_id_level,
+            "evidence_level": evidence_level,
+            "evidence_detail": evidence_detail,
             "curated_confidence": clean_text(record.get("curated_confidence")) or confidence,
             "curation_action": clean_text(record.get("curation_action")),
             "evidence_basis": clean_text(record.get("evidence_basis")),
@@ -248,7 +375,9 @@ def build_association_outputs(records: list[dict[str, Any]]) -> tuple[list[dict[
                 "association_count": 0,
                 "butterfly_taxa": [],
                 "confidence_counts": {},
-                "occurrence_file": f"occurrences/{taxon['slug']}.geojson",
+                "host_id_level_counts": {},
+                "evidence_counts": {},
+                "occurrence_file": None,
             },
         )
         entry["association_count"] += 1
@@ -257,11 +386,17 @@ def build_association_outputs(records: list[dict[str, Any]]) -> tuple[list[dict[
             entry["butterfly_taxa"].append(association["butterfly_taxon"])
         entry["_confidence_counter"] = entry.get("_confidence_counter", Counter())
         entry["_confidence_counter"][confidence] += 1
+        entry["_host_id_level_counter"] = entry.get("_host_id_level_counter", Counter())
+        entry["_host_id_level_counter"][host_id_level] += 1
+        entry["_evidence_counter"] = entry.get("_evidence_counter", Counter())
+        entry["_evidence_counter"][evidence_level] += 1
 
     taxa = []
     for taxon in taxa_by_key.values():
         counter = taxon.pop("_confidence_counter", Counter())
         taxon["confidence_counts"] = dict(counter)
+        taxon["host_id_level_counts"] = dict(taxon.pop("_host_id_level_counter", Counter()))
+        taxon["evidence_counts"] = dict(taxon.pop("_evidence_counter", Counter()))
         taxon["butterfly_taxa"].sort()
         taxa.append(taxon)
 
@@ -295,7 +430,23 @@ def load_cache(path: Path) -> dict[str, Any]:
 def resolve_taxon(taxon: dict[str, Any], cache: dict[str, Any], *, refresh: bool = False) -> dict[str, Any]:
     cache_key = f"{taxon['rank']}:{taxon['canonical_name'].lower()}"
     if not refresh and cache_key in cache.get("taxa", {}):
-        return cache["taxa"][cache_key]
+        cached = cache["taxa"][cache_key]
+        requested_rank = clean_text(taxon.get("rank")).lower()
+        gbif_rank = clean_text(cached.get("gbif_rank")).lower()
+        if cached.get("status") == "resolved" and requested_rank in {"species", "genus"} and gbif_rank != requested_rank:
+            cached = {
+                "query": taxon["canonical_name"],
+                "rank": taxon["rank"],
+                "status": "not_resolved",
+                "match_type": cached.get("match_type"),
+                "note": (
+                    f"GBIF matched {taxon['canonical_name']} to {cached.get('gbif_rank')} "
+                    f"({cached.get('scientific_name')}); refusing higher-rank occurrence layer."
+                ),
+                "gbif_response": cached,
+            }
+            cache["taxa"][cache_key] = cached
+        return cached
 
     if not taxon["resolvable_to_gbif"]:
         resolution = {
@@ -320,8 +471,11 @@ def resolve_taxon(taxon: dict[str, Any], cache: dict[str, Any], *, refresh: bool
     usage_key = data.get("usageKey") or data.get("acceptedUsageKey")
     kingdom = data.get("kingdom")
     match_type = data.get("matchType")
+    gbif_rank = clean_text(data.get("rank")).lower()
+    requested_rank = clean_text(taxon.get("rank")).lower()
+    rank_mismatch = requested_rank in {"species", "genus"} and gbif_rank != requested_rank
 
-    if not usage_key or match_type == "NONE" or (kingdom and kingdom != "Plantae"):
+    if not usage_key or match_type == "NONE" or rank_mismatch or (kingdom and kingdom != "Plantae"):
         resolution = {
             "query": taxon["canonical_name"],
             "rank": taxon["rank"],
@@ -329,6 +483,11 @@ def resolve_taxon(taxon: dict[str, Any], cache: dict[str, Any], *, refresh: bool
             "match_type": match_type,
             "gbif_response": data,
         }
+        if rank_mismatch:
+            resolution["note"] = (
+                f"GBIF matched {taxon['canonical_name']} to {data.get('rank')} "
+                f"({data.get('scientificName')}); refusing higher-rank occurrence layer."
+            )
     else:
         resolution = {
             "query": taxon["canonical_name"],
@@ -462,6 +621,34 @@ def taxon_key_map(taxa: list[dict[str, Any]]) -> dict[str, int]:
     }
 
 
+def accepted_genus(taxon: dict[str, Any]) -> str | None:
+    resolution = taxon.get("gbif_resolution") or {}
+    return clean_text(resolution.get("genus")) or clean_text(taxon.get("genus"))
+
+
+def selected_taxa_for_download_request(taxa: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, str]]:
+    """Avoid redundant species predicates when an accepted genus is already requested."""
+    selected_genera = {
+        accepted_genus(taxon)
+        for taxon in taxa
+        if taxon.get("rank") == "genus" and taxon.get("gbif_taxon_key")
+    }
+    selected_genera = {genus for genus in selected_genera if genus}
+    suppressed: dict[str, str] = {}
+    targets = []
+    for taxon in taxa:
+        if not taxon.get("gbif_taxon_key"):
+            continue
+        if taxon.get("rank") == "species":
+            genus = accepted_genus(taxon)
+            literal_genus = clean_text(taxon.get("genus"))
+            if genus and genus in selected_genera and genus == literal_genus:
+                suppressed[taxon["slug"]] = f"covered_by_genus:{genus}"
+                continue
+        targets.append(taxon)
+    return targets, suppressed
+
+
 def _dwca_row_to_occurrence(row: dict[str, str]) -> dict[str, Any] | None:
     lon = row.get("decimalLongitude")
     lat = row.get("decimalLatitude")
@@ -486,6 +673,12 @@ def _dwca_row_to_occurrence(row: dict[str, str]) -> dict[str, Any] | None:
 
     return {
         "gbifID": row.get("gbifID"),
+        "taxonKey": row.get("taxonKey"),
+        "acceptedTaxonKey": row.get("acceptedTaxonKey"),
+        "speciesKey": row.get("speciesKey"),
+        "taxonRank": row.get("taxonRank"),
+        "taxonomicStatus": row.get("taxonomicStatus"),
+        "acceptedScientificName": row.get("acceptedScientificName"),
         "species": row.get("species"),
         "genus": row.get("genus"),
         "family": row.get("family"),
@@ -503,6 +696,42 @@ def _dwca_row_to_occurrence(row: dict[str, str]) -> dict[str, Any] | None:
     }
 
 
+def occurrence_species_name(record: dict[str, Any]) -> str | None:
+    species = clean_scientific_name(record.get("species"))
+    if species:
+        return species
+    genus = clean_text(record.get("genus"))
+    scientific = clean_scientific_name(record.get("scientificName"))
+    if scientific and genus and scientific.split()[0] == genus and len(scientific.split()) >= 2:
+        return scientific
+    return None
+
+
+def species_match_names(taxon: dict[str, Any]) -> set[str]:
+    resolution = taxon.get("gbif_resolution") or {}
+    names = {
+        lower_name(taxon.get("canonical_name")),
+        lower_name(taxon.get("species")),
+        lower_name(resolution.get("canonical_name")),
+        lower_name(resolution.get("scientific_name")),
+    }
+    return {name for name in names if name}
+
+
+def occurrence_matches_taxon(record: dict[str, Any], taxon: dict[str, Any]) -> bool:
+    rank = taxon.get("rank")
+    if rank == "species":
+        record_species = lower_name(occurrence_species_name(record))
+        if not record_species:
+            return False
+        return record_species in species_match_names(taxon)
+    if rank == "genus":
+        record_genus = clean_text(record.get("genus"))
+        target_genus = accepted_genus(taxon)
+        return bool(record_genus and target_genus and record_genus.lower() == target_genus.lower())
+    return False
+
+
 def process_download_api_occurrences(
     extract_dir: Path,
     taxa: list[dict[str, Any]],
@@ -512,31 +741,32 @@ def process_download_api_occurrences(
 ) -> dict[str, tuple[list[dict[str, Any]], dict[str, Any]]]:
     effective_limit = limit if limit and limit > 0 else None
     occurrence_path = extract_dir / "occurrence.txt"
-    key_to_taxon = {
-        str(taxon["gbif_taxon_key"]): taxon
-        for taxon in taxa
-        if taxon.get("gbif_taxon_key")
-    }
     records_by_slug: dict[str, list[dict[str, Any]]] = {taxon["slug"]: [] for taxon in taxa}
     seen_by_slug: dict[str, set[tuple[float, float]]] = {taxon["slug"]: set() for taxon in taxa}
 
     with occurrence_path.open(encoding="utf-8") as handle:
         reader = csv.DictReader(handle, delimiter="\t")
         for row in reader:
-            taxon = key_to_taxon.get(str(row.get("taxonKey") or row.get("acceptedTaxonKey") or ""))
-            if not taxon:
-                continue
-            slug = taxon["slug"]
-            if effective_limit is not None and len(records_by_slug[slug]) >= effective_limit:
-                continue
             record = _dwca_row_to_occurrence(row)
             if not record:
                 continue
-            coord = (record["decimalLongitude"], record["decimalLatitude"])
-            if coord in seen_by_slug[slug]:
-                continue
-            seen_by_slug[slug].add(coord)
-            records_by_slug[slug].append(record)
+            for taxon in taxa:
+                slug = taxon["slug"]
+                if effective_limit is not None and len(records_by_slug[slug]) >= effective_limit:
+                    continue
+                if not occurrence_matches_taxon(record, taxon):
+                    continue
+                coord = (record["decimalLongitude"], record["decimalLatitude"])
+                if coord in seen_by_slug[slug]:
+                    continue
+                seen_by_slug[slug].add(coord)
+                records_by_slug[slug].append({
+                    **record,
+                    "host_taxon_slug": slug,
+                    "host_taxon_rank": taxon["rank"],
+                    "host_taxon_name": taxon["canonical_name"],
+                    "resolved_taxon_key": taxon.get("gbif_taxon_key"),
+                })
 
     doi = download_info.get("doi")
     query_meta = {
@@ -555,6 +785,47 @@ def process_download_api_occurrences(
     return {
         slug: (records, {**query_meta, "returned_unique_coordinate_records": len(records)})
         for slug, records in records_by_slug.items()
+    }
+
+
+def to_occurrence_feature_collection(
+    occurrence_results: dict[str, tuple[list[dict[str, Any]], dict[str, Any]]],
+    *,
+    download_info: dict[str, Any] | None,
+) -> dict[str, Any]:
+    features = []
+    for records, _meta in occurrence_results.values():
+        for record in records:
+            features.append({
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [record["decimalLongitude"], record["decimalLatitude"]],
+                },
+                "properties": {
+                    key: value
+                    for key, value in record.items()
+                    if key not in {"decimalLongitude", "decimalLatitude"}
+                },
+            })
+    doi = (download_info or {}).get("doi")
+    return {
+        "type": "FeatureCollection",
+        "metadata": {
+            "generated_at": utc_now(),
+            "method": "gbif_download_api",
+            "download_key": (download_info or {}).get("key"),
+            "download_doi": doi,
+            "download_doi_url": f"https://doi.org/{doi}" if doi else None,
+            "feature_count": len(features),
+            "filters": (
+                "GBIF Download API DWCA with TAXON_KEY, HAS_COORDINATE=true, "
+                "HAS_GEOSPATIAL_ISSUE=false, OCCURRENCE_STATUS=PRESENT; app study extent and "
+                "coordinate uncertainty <=100km applied locally. Species/genus assignment uses "
+                "each occurrence row's own taxonomy."
+            ),
+        },
+        "features": features,
     }
 
 
@@ -627,7 +898,7 @@ def fetch_occurrences_via_download_api(
     limit: int,
     reuse_download_hours: int,
     download_key: str | None,
-) -> tuple[dict[str, tuple[list[dict[str, Any]], dict[str, Any]]], dict[str, Any]]:
+) -> tuple[dict[str, tuple[list[dict[str, Any]], dict[str, Any]]], dict[str, Any], dict[str, str]]:
     from scripts.gbif_download_api import (
         download_and_extract,
         find_recent_download,
@@ -636,16 +907,19 @@ def fetch_occurrences_via_download_api(
     )
 
     credentials = load_credentials()
+    download_targets, suppressed = selected_taxa_for_download_request(taxa)
+    if not download_targets:
+        raise ValueError("No resolved GBIF taxon keys available for host plant download.")
     if download_key:
         download_info = wait_for_download(download_key, credentials)
     else:
         download_info = find_recent_download(
             credentials,
-            taxon_key_map(taxa),
+            taxon_key_map(download_targets),
             max_age_hours=reuse_download_hours,
         )
     if not download_info and not download_key:
-        download_key = submit_host_plant_download_request(credentials, taxa)
+        download_key = submit_host_plant_download_request(credentials, download_targets)
         download_info = wait_for_download(download_key, credentials)
     extract_dir = download_and_extract(download_info)
     results = process_download_api_occurrences(
@@ -655,7 +929,7 @@ def fetch_occurrences_via_download_api(
         download_info=download_info,
     )
     attach_multimedia_to_occurrences(extract_dir, results)
-    return results, download_info
+    return results, download_info, suppressed
 
 
 def to_geojson(taxon: dict[str, Any], resolution: dict[str, Any], records: list[dict[str, Any]], meta: dict[str, Any]) -> dict[str, Any]:
@@ -720,6 +994,9 @@ def build_manifest(taxa: list[dict[str, Any]], seed_metadata: dict[str, Any], ar
             ),
             "occurrence_limit_per_taxon": args.occurrence_limit if args.occurrence_limit > 0 else None,
             "gbif_method": args.gbif_method,
+            "occurrence_dataset": OCCURRENCE_DATASET_NAME,
+            "occurrence_core_dataset": OCCURRENCE_CORE_DATASET_NAME,
+            "gallery_dataset": GALLERY_DATASET_NAME,
         },
         "taxa": taxa,
     }
@@ -761,6 +1038,10 @@ def run_pipeline(args: argparse.Namespace) -> dict[str, Any]:
         records.extend(supplement.get("records", []))
     confidence_audit = load_confidence_audit(args.confidence_audit)
     apply_confidence_audit(records, confidence_audit)
+    source_level_audit = load_source_level_audit(args.source_level_audit)
+    apply_source_level_audit(records, source_level_audit)
+    records_to_change = load_source_level_audit(args.records_to_change)
+    apply_source_level_audit(records, records_to_change)
     associations, taxa = build_association_outputs(records)
     cache = load_cache(args.cache)
 
@@ -800,8 +1081,10 @@ def run_pipeline(args: argparse.Namespace) -> dict[str, Any]:
     ]
 
     download_api_results: dict[str, tuple[list[dict[str, Any]], dict[str, Any]]] = {}
+    suppressed_download_slugs: dict[str, str] = {}
+    download_info: dict[str, Any] | None = None
     if not args.dry_run and selected_resolved and args.gbif_method == "download-api":
-        download_api_results, download_info = fetch_occurrences_via_download_api(
+        download_api_results, download_info, suppressed_download_slugs = fetch_occurrences_via_download_api(
             selected_resolved,
             limit=args.occurrence_limit,
             reuse_download_hours=args.reuse_download_hours,
@@ -810,17 +1093,34 @@ def run_pipeline(args: argparse.Namespace) -> dict[str, Any]:
         args.gbif_download_doi = download_info.get("doi")
 
     if not args.dry_run:
+        unified_results: dict[str, tuple[list[dict[str, Any]], dict[str, Any]]] = {}
         for taxon in selected_resolved:
             resolution = taxon["gbif_resolution"]
             if args.gbif_method == "download-api":
                 records, meta = download_api_results.get(taxon["slug"], ([], {}))
             else:
                 records, meta = fetch_occurrences(int(resolution["gbif_taxon_key"]), limit=args.occurrence_limit)
-            geojson = to_geojson(taxon, resolution, records, meta)
-            write_json(occurrence_dir / f"{taxon['slug']}.geojson", geojson)
+                records = [
+                    {
+                        **record,
+                        "host_taxon_slug": taxon["slug"],
+                        "host_taxon_rank": taxon["rank"],
+                        "host_taxon_name": taxon["canonical_name"],
+                        "resolved_taxon_key": taxon.get("gbif_taxon_key"),
+                    }
+                    for record in records
+                    if occurrence_matches_taxon(record, taxon)
+                ]
+            unified_results[taxon["slug"]] = (records, meta)
             taxon["occurrence_count"] = len(records)
-            taxon["occurrence_mode"] = "raw_points_capped"
+            taxon["occurrence_mode"] = "unified_dataset"
             taxon["occurrence_cap"] = args.occurrence_limit if args.occurrence_limit > 0 else None
+            if taxon["slug"] in suppressed_download_slugs:
+                taxon["download_request"] = suppressed_download_slugs[taxon["slug"]]
+        write_json(
+            args.output / OCCURRENCE_DATASET_NAME,
+            to_occurrence_feature_collection(unified_results, download_info=download_info),
+        )
 
     write_json(args.cache, cache)
     write_json(args.output / "host_plant_associations.json", {
@@ -833,7 +1133,22 @@ def run_pipeline(args: argparse.Namespace) -> dict[str, Any]:
                 if args.confidence_audit and args.confidence_audit.exists()
                 else None
             ),
+            "source_level_audit": (
+                str(args.source_level_audit)
+                if args.source_level_audit and args.source_level_audit.exists()
+                else None
+            ),
+            "records_to_change": (
+                str(args.records_to_change)
+                if args.records_to_change and args.records_to_change.exists()
+                else None
+            ),
             "record_count": len(associations),
+            "host_filter_schema": {
+                "host_id_level": ["species", "genus", "family"],
+                "evidence_level": ["direct", "literature", "needs_check"],
+                "defaults": {"host_id_level": ["species"], "evidence_level": ["direct", "literature"]},
+            },
             "excluded_policy": "confidence=exclude and records marked erroneous are omitted.",
         },
         "associations": associations,
@@ -855,6 +1170,12 @@ def run_pipeline(args: argparse.Namespace) -> dict[str, Any]:
     seed.setdefault("metadata", {})["supplement"] = supplement_metadata
     manifest = build_manifest(taxa, seed.get("metadata", {}), args)
     write_json(args.output / "host_plant_layers_manifest.json", manifest)
+    if not args.dry_run and (args.output / OCCURRENCE_DATASET_NAME).exists():
+        from build_host_plant_occurrence_core import build_occurrence_core
+        from build_host_plant_gallery_index import build_gallery_index
+
+        write_json(args.output / OCCURRENCE_CORE_DATASET_NAME, build_occurrence_core(args.output))
+        write_json(args.output / GALLERY_DATASET_NAME, build_gallery_index(args.output))
     return {"associations": associations, "taxa": taxa, "selected": selected}
 
 
@@ -863,6 +1184,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=Path, default=DEFAULT_SEED_PATH)
     parser.add_argument("--supplement", type=Path, default=DEFAULT_SUPPLEMENT_PATH)
     parser.add_argument("--confidence-audit", type=Path, default=DEFAULT_CONFIDENCE_AUDIT_PATH)
+    parser.add_argument("--source-level-audit", type=Path, default=DEFAULT_SOURCE_LEVEL_AUDIT_PATH)
+    parser.add_argument("--records-to-change", type=Path, default=DEFAULT_RECORDS_TO_CHANGE_PATH)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--cache", type=Path, default=DEFAULT_CACHE_PATH)
     parser.add_argument("--taxon", action="append", default=[], help="Canonical host taxon name or slug to generate.")

@@ -48,6 +48,7 @@ TEMP_DIR = PROJECT_ROOT / "temp_gbif_download"
 OUTPUT_FILE = OUTPUT_DIR / "gbif_occurrences.json"
 CITATION_FILE = OUTPUT_DIR / "gbif_citation.json"
 TAXON_KEYS_FILE = OUTPUT_DIR / "gbif_taxon_keys.json"
+TAXON_KEY_VALIDATION_FILE = OUTPUT_DIR / "gbif_taxon_key_validation.json"
 TAXONOMY_CACHE_FILE = OUTPUT_DIR / "gbif_taxonomy_cache.json"
 
 # Cache duration - skip new download if data is less than this old
@@ -122,8 +123,25 @@ def load_credentials():
 # TAXON KEY LOOKUP
 # ═══════════════════════════════════════════════════════════════════
 
-def get_genus_taxon_key(genus_name):
-    """Look up the GBIF taxon key for a genus."""
+def _validate_genus_match(genus_name, data, *, expected_family='Nymphalidae'):
+    """Return (ok, reason) for a GBIF genus match response."""
+    if not data or data.get('matchType') == 'NONE':
+        return False, 'no_match'
+    if data.get('matchType') == 'HIGHERRANK':
+        return False, 'matched_higher_rank'
+    if data.get('rank') != 'GENUS':
+        return False, f"wrong_rank:{data.get('rank') or 'unknown'}"
+    if (data.get('canonicalName') or '').lower() != genus_name.lower():
+        return False, f"wrong_name:{data.get('canonicalName') or 'unknown'}"
+    if data.get('order') != 'Lepidoptera':
+        return False, f"wrong_order:{data.get('order') or 'unknown'}"
+    if expected_family and data.get('family') != expected_family:
+        return False, f"wrong_family:{data.get('family') or 'unknown'}"
+    return True, 'accepted'
+
+
+def get_genus_taxon_key(genus_name, *, expected_family='Nymphalidae'):
+    """Look up and strictly validate the GBIF taxon key for a genus."""
     try:
         match_url = "https://api.gbif.org/v1/species/match"
         params = {
@@ -138,13 +156,60 @@ def get_genus_taxon_key(genus_name):
         response.raise_for_status()
         data = response.json()
 
-        # Verify it's in Nymphalidae
-        if data.get('family') == 'Nymphalidae' and data.get('matchType') != 'NONE':
-            return data.get('usageKey')
-        return None
+        ok, reason = _validate_genus_match(genus_name, data, expected_family=expected_family)
+        validation = {
+            'query': genus_name,
+            'accepted': ok,
+            'reason': reason,
+            'usageKey': data.get('usageKey'),
+            'matchType': data.get('matchType'),
+            'rank': data.get('rank'),
+            'canonicalName': data.get('canonicalName'),
+            'scientificName': data.get('scientificName'),
+            'family': data.get('family'),
+            'order': data.get('order'),
+            'class': data.get('class'),
+        }
+        return (data.get('usageKey') if ok else None), validation
     except Exception as e:
         print(f"    Error looking up {genus_name}: {e}")
-        return None
+        return None, {
+            'query': genus_name,
+            'accepted': False,
+            'reason': f"lookup_error:{e}",
+        }
+
+
+def validate_cached_taxon_keys(cached_genera, configured_genera):
+    """Keep only taxon keys for currently configured genera."""
+    configured = set(configured_genera)
+    validation = []
+    pruned = {}
+    for genus in configured_genera:
+        key = cached_genera.get(genus)
+        if key:
+            pruned[genus] = key
+            validation.append({
+                'query': genus,
+                'usageKey': key,
+                'accepted': True,
+                'reason': 'cached_configured_genus',
+            })
+        else:
+            validation.append({
+                'query': genus,
+                'accepted': False,
+                'reason': 'missing_from_cache',
+            })
+    for genus, key in sorted(cached_genera.items()):
+        if genus not in configured:
+            validation.append({
+                'query': genus,
+                'usageKey': key,
+                'accepted': False,
+                'reason': 'not_in_configured_download_list',
+            })
+    return pruned, validation
 
 
 def get_all_taxon_keys(use_cache=True):
@@ -155,22 +220,44 @@ def get_all_taxon_keys(use_cache=True):
             with open(TAXON_KEYS_FILE, 'r') as f:
                 cached = json.load(f)
             if cached.get('genera') and len(cached['genera']) > 0:
-                print(f"Loaded {len(cached['genera'])} taxon keys from cache")
-                return cached['genera']
+                genera, validation = validate_cached_taxon_keys(cached['genera'], ITHOMIINI_GENERA)
+                missing = [row for row in validation if row['reason'] == 'missing_from_cache']
+                extras = [row for row in validation if row['reason'] == 'not_in_configured_download_list']
+                if not missing:
+                    if extras or len(genera) != len(cached['genera']):
+                        cache_data = {
+                            'created': cached.get('created') or datetime.now().isoformat(),
+                            'genera': genera,
+                        }
+                        with open(TAXON_KEYS_FILE, 'w') as f:
+                            json.dump(cache_data, f, indent=2)
+                    with open(TAXON_KEY_VALIDATION_FILE, 'w') as f:
+                        json.dump({
+                            'generated': datetime.now().isoformat(),
+                            'source': 'cache',
+                            'validation': validation,
+                        }, f, indent=2)
+                    print(f"Loaded {len(genera)} configured taxon keys from cache")
+                    if extras:
+                        print(f"Pruned {len(extras)} stale cached taxon key(s) not in configured list")
+                    return genera
+                print(f"Cache missing {len(missing)} configured genera; refreshing taxon keys")
         except Exception as e:
             print(f"Cache load failed: {e}")
 
     print(f"Looking up taxon keys for {len(ITHOMIINI_GENERA)} genera...")
     genera_keys = {}
+    validation = []
 
     for i, genus in enumerate(ITHOMIINI_GENERA, 1):
         print(f"  [{i}/{len(ITHOMIINI_GENERA)}] {genus}...", end=" ")
-        key = get_genus_taxon_key(genus)
+        key, validation_row = get_genus_taxon_key(genus)
+        validation.append(validation_row)
         if key:
             genera_keys[genus] = key
             print(f"key={key}")
         else:
-            print("not found")
+            print(f"skipped ({validation_row.get('reason', 'not found')})")
         time.sleep(0.2)  # Be polite
 
     # Save to cache
@@ -181,6 +268,12 @@ def get_all_taxon_keys(use_cache=True):
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     with open(TAXON_KEYS_FILE, 'w') as f:
         json.dump(cache_data, f, indent=2)
+    with open(TAXON_KEY_VALIDATION_FILE, 'w') as f:
+        json.dump({
+            'generated': datetime.now().isoformat(),
+            'source': 'gbif_species_match',
+            'validation': validation,
+        }, f, indent=2)
 
     print(f"\nFound {len(genera_keys)} genera with taxon keys")
     return genera_keys
@@ -956,10 +1049,6 @@ def main():
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 70)
 
-    # Load credentials
-    credentials = load_credentials()
-    print(f"Credentials loaded for: {credentials['GBIF_USERNAME']}")
-
     # Get taxon keys
     taxon_keys = get_all_taxon_keys(use_cache=True)
 
@@ -970,6 +1059,10 @@ def main():
     if args.keys_only:
         print("\n--keys-only specified, exiting")
         return
+
+    # Load credentials only for actual occurrence downloads.
+    credentials = load_credentials()
+    print(f"Credentials loaded for: {credentials['GBIF_USERNAME']}")
 
     # Check cache (needs taxon_keys to verify query hasn't changed)
     if not args.force:
