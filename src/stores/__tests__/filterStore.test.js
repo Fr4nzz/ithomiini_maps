@@ -139,6 +139,50 @@ describe('useFilterStore', () => {
     ])
   })
 
+  it('orders accepted species matches before synonym species matches', () => {
+    const datasetStore = useDatasetStore()
+    const filterStore = useFilterStore()
+
+    datasetStore.allFeatures = [
+      makeFeature({ scientific_name: 'Mechanitis polymnia', genus: 'Mechanitis' }),
+      makeFeature({ scientific_name: 'Mechanitis lysimnia', genus: 'Mechanitis' }),
+    ]
+    datasetStore.taxonomySynonyms = [
+      { synonym: 'Methona polymnia', accepted: 'Mechanitis lysimnia' },
+      { synonym: 'Papilio polymnia', accepted: 'Mechanitis polymnia' },
+    ]
+
+    const matches = filterStore.filterSpeciesOptions(filterStore.speciesFilterOptions, 'polymn')
+
+    expect(matches).toEqual([
+      expect.objectContaining({ label: 'Mechanitis polymnia', value: 'Mechanitis polymnia' }),
+      expect.objectContaining({
+        label: 'Mechanitis lysimnia',
+        value: 'Mechanitis lysimnia',
+        synonymMeta: 'synonym: Methona polymnia',
+      }),
+    ])
+  })
+
+  it('does not show synonyms for an accepted species text match', () => {
+    const datasetStore = useDatasetStore()
+    const filterStore = useFilterStore()
+
+    datasetStore.allFeatures = [
+      makeFeature({ scientific_name: 'Mechanitis polymnia', genus: 'Mechanitis' }),
+    ]
+    datasetStore.taxonomySynonyms = [
+      { synonym: 'Mechanitis angustifascia', accepted: 'Mechanitis polymnia' },
+      { synonym: 'Mechanitis apicenotata', accepted: 'Mechanitis polymnia' },
+    ]
+
+    const matches = filterStore.filterSpeciesOptions(filterStore.speciesFilterOptions, 'poly')
+
+    expect(matches).toEqual([
+      expect.objectContaining({ label: 'Mechanitis polymnia', value: 'Mechanitis polymnia' }),
+    ])
+  })
+
   it('filters GeoJSON with the active filter state', () => {
     const datasetStore = useDatasetStore()
     const filterStore = useFilterStore()

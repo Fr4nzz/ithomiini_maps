@@ -172,6 +172,9 @@ const segmentStyle = (segment) => ({
             <span v-if="typeof option === 'object' && option.matchMeta" class="option-match-meta">
               {{ option.matchMeta }}
             </span>
+            <span v-if="typeof option === 'object' && option.synonymMeta" class="option-synonym-meta">
+              {{ option.synonymMeta }}
+            </span>
           </span>
         </span>
       </template>
@@ -349,6 +352,13 @@ const segmentStyle = (segment) => ({
   color: var(--color-accent, #4ade80);
   font-size: 0.72rem;
   font-weight: 500;
+  line-height: 1.25;
+}
+
+.option-synonym-meta {
+  color: #ef4444;
+  font-size: 0.72rem;
+  font-weight: 600;
   line-height: 1.25;
 }
 
