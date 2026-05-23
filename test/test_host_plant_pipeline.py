@@ -417,7 +417,7 @@ class HostPlantPipelineTests(unittest.TestCase):
         self.assertEqual([record["gbifID"] for record in species_records], ["species-row"])
         self.assertEqual([record["gbifID"] for record in genus_records], ["genus-row", "species-row"])
 
-    def test_species_and_genus_keys_are_kept_in_one_download_request(self):
+    def test_species_download_is_suppressed_when_selected_genus_covers_it(self):
         taxa = [
             {
                 "slug": "genus_solanum",
@@ -434,18 +434,19 @@ class HostPlantPipelineTests(unittest.TestCase):
                 "gbif_taxon_key": 2931012,
             },
             {
-                "slug": "species_unresolved",
-                "canonical_name": "Unresolved species",
+                "slug": "species_jaltomata_procumbens",
+                "canonical_name": "Solanum procumbens",
                 "rank": "species",
-                "genus": "Unresolved",
-                "gbif_taxon_key": None,
+                "genus": "Solanum",
+                "gbif_taxon_key": 123,
+                "gbif_resolution": {"genus": "Jaltomata"},
             },
         ]
 
         targets, suppressed = selected_taxa_for_download_request(taxa)
 
-        self.assertEqual([taxon["slug"] for taxon in targets], ["genus_solanum", "species_solanum_crinitum"])
-        self.assertEqual(suppressed, {})
+        self.assertEqual([taxon["slug"] for taxon in targets], ["genus_solanum", "species_jaltomata_procumbens"])
+        self.assertEqual(suppressed, {"species_solanum_crinitum": "covered_by_genus:Solanum"})
 
     def test_multimedia_fallback_uses_same_species_image(self):
         results = {
