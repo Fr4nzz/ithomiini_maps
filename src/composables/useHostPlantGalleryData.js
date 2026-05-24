@@ -7,8 +7,9 @@ function groupPlantItems(items) {
   for (const item of items) {
     if (!item.scientific_name) continue
     if (!grouped[item.scientific_name]) {
-      grouped[item.scientific_name] = { count: 0, subspecies: {}, butterflyTaxa: new Set() }
+      grouped[item.scientific_name] = { count: 0, subspecies: {}, butterflyTaxa: new Set(), hostTaxonSlugs: new Set() }
     }
+    if (item.host_taxon_slug) grouped[item.scientific_name].hostTaxonSlugs.add(item.host_taxon_slug)
     grouped[item.scientific_name].count += 1
     for (const name of item.associated_butterflies || []) {
       grouped[item.scientific_name].butterflyTaxa.add(name)
@@ -113,11 +114,20 @@ export function useHostPlantGalleryData(hostPlantStore) {
       .map(([speciesName, speciesData]) => {
         const individuals = Object.values(speciesData.subspecies)
           .flatMap(group => group.individuals)
+        const hostTaxonSlugs = [...(speciesData.hostTaxonSlugs || [])]
+        const primarySlug = hostTaxonSlugs.length === 1 ? hostTaxonSlugs[0] : null
+        const index = primarySlug ? hostPlantStore.galleryIndexCache?.[primarySlug] : null
+        const totalAvailable = index?.total_images || individuals.length
+        const loadedLimit = primarySlug ? (hostPlantStore.galleryVisibleLimitBySlug?.[primarySlug] || individuals.length) : individuals.length
         return {
           type: 'species',
           name: speciesName,
           color: speciesColors.value[speciesName],
           totalImages: individuals.length,
+          totalAvailableImages: totalAvailable,
+          loadedLimit,
+          canLoadMore: Boolean(primarySlug && totalAvailable > loadedLimit),
+          hostTaxonSlug: primarySlug,
           subspecies: Object.entries(speciesData.subspecies)
             .map(([subspeciesName, subspeciesData]) => ({
               type: 'subspecies',

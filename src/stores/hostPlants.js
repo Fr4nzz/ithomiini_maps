@@ -697,7 +697,8 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     galleryError.value = null
     try {
       await ensureGalleryPagesForLimit(slug, next)
-      rebuildGalleryDatasetFromPages(selectedTaxonSlugs.value)
+      const loadedSlugs = galleryDataset.value?.metadata?.loaded_slugs || selectedTaxonSlugs.value || [slug]
+      rebuildGalleryDatasetFromPages(loadedSlugs.includes(slug) ? loadedSlugs : [...loadedSlugs, slug])
       return galleryDataset.value
     } catch (error) {
       galleryError.value = error instanceof Error ? error.message : String(error)

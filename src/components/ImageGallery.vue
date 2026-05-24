@@ -368,9 +368,9 @@ const canLoadMoreHostImages = computed(() =>
   currentHostSlug.value &&
   currentHostTotalImages.value > currentHostLoadedLimit.value
 )
-const loadMoreHostImages = async () => {
-  if (!currentHostSlug.value) return
-  await hostPlantStore.loadMoreGalleryForSlug(currentHostSlug.value, 10)
+const loadMoreHostImages = async (slug = currentHostSlug.value) => {
+  if (!slug) return
+  await hostPlantStore.loadMoreGalleryForSlug(slug, 10)
 }
 
 // Current specimen
@@ -446,9 +446,14 @@ const resolvedThumbUrl = (url) => {
   return getThumbnailUrl(url)
 }
 
+const thumbCandidateCache = new Map()
 const resolvedThumbCandidates = (url) => {
-  void proxyVersion.value
-  return getImageUrlCandidates(url, { width: 400 })
+  const version = proxyVersion.value
+  const key = `${version}|${url}`
+  if (!thumbCandidateCache.has(key)) {
+    thumbCandidateCache.set(key, getImageUrlCandidates(url, { width: 400 }))
+  }
+  return thumbCandidateCache.get(key)
 }
 
 // Navigation
@@ -937,15 +942,6 @@ watch(currentIndex, () => {
           <div class="image-counter">
             {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
           </div>
-          <button
-            v-if="canLoadMoreHostImages"
-            class="host-gallery-load-more"
-            :disabled="hostPlantStore.galleryLoading"
-            @click="loadMoreHostImages"
-          >
-            Load 10 more images for this host taxon
-            <span>{{ Math.min(currentHostLoadedLimit, currentHostTotalImages) }} / {{ currentHostTotalImages }}</span>
-          </button>
 
         </div>
       </div>
@@ -962,36 +958,11 @@ watch(currentIndex, () => {
         @toggle-species="toggleSpeciesCollapse"
         @toggle-subspecies="toggleSubspeciesCollapse"
         @select-individual="selectIndividual"
+        @load-more-host="loadMoreHostImages"
       />
     </template>
   </div>
 </template>
 
 
-<style scoped>
-.host-gallery-load-more {
-  position: absolute;
-  right: 1rem;
-  bottom: 4.5rem;
-  z-index: 5;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  padding: 0.55rem 0.85rem;
-  background: var(--panel-bg);
-  color: var(--text-primary);
-  box-shadow: var(--shadow-md);
-  cursor: pointer;
-}
-.host-gallery-load-more:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-.host-gallery-load-more span {
-  color: var(--text-muted);
-  font-size: 0.85em;
-}
-</style>
 <style scoped src="./image-gallery-styles.css"></style>

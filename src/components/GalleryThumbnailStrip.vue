@@ -30,6 +30,7 @@ const emit = defineEmits([
   'toggle-species',
   'toggle-subspecies',
   'select-individual',
+  'load-more-host',
 ])
 
 const thumbnailStripRef = ref(null)
@@ -161,6 +162,15 @@ defineExpose({
                     />
                     <span class="expand-badge" @click.stop="emit('toggle-subspecies', subgroupKey(speciesGroup.name, subspGroup.name))" title="Expand group">+</span>
                   </button>
+                  <button
+                    v-if="speciesGroup.canLoadMore && subspGroup === speciesGroup.subspecies[speciesGroup.subspecies.length - 1]"
+                    class="thumbnail load-more-thumb"
+                    title="Load more host plant images"
+                    @click="emit('load-more-host', speciesGroup.hostTaxonSlug)"
+                  >
+                    <span>+10</span>
+                    <small>{{ speciesGroup.totalImages }} / {{ speciesGroup.totalAvailableImages }}</small>
+                  </button>
                 </div>
 
                 <div class="thumbnails-container" v-if="!collapsedSubspecies.has(subgroupKey(speciesGroup.name, subspGroup.name))">
@@ -177,6 +187,15 @@ defineExpose({
                       :alt="specimen.id"
                       loading="lazy"
                     />
+                  </button>
+                  <button
+                    v-if="speciesGroup.canLoadMore && subspGroup === speciesGroup.subspecies[speciesGroup.subspecies.length - 1]"
+                    class="thumbnail load-more-thumb"
+                    title="Load more host plant images"
+                    @click="emit('load-more-host', speciesGroup.hostTaxonSlug)"
+                  >
+                    <span>+10</span>
+                    <small>{{ speciesGroup.totalImages }} / {{ speciesGroup.totalAvailableImages }}</small>
                   </button>
                 </div>
               </div>
