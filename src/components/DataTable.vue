@@ -1553,8 +1553,8 @@ const conciseList = (items, limit = 3) => {
         <tbody>
           <tr v-for="row in paginatedHostPlantEvidenceRows" :key="row.id">
             <td class="cell-species"><em>{{ row.butterfly }}</em></td>
-            <td class="cell-host">
-              <em>{{ row.host }}</em>
+            <td class="cell-host" :class="{ 'has-accepted-host': row.accepted_host }">
+              <em class="reported-host-name">{{ row.host }}</em>
               <span v-if="row.accepted_host" class="accepted-host-name">→ <em>{{ row.accepted_host }}</em></span>
             </td>
             <td>{{ row.host_rank }} / {{ row.host_id_level }}</td>
@@ -2397,18 +2397,24 @@ const conciseList = (items, limit = 3) => {
   color: #be123c;
 }
 
-.accepted-host-name {
+.cell-host.has-accepted-host .reported-host-name {
   color: #b8bec8;
-  font-size: 0.7rem;
 }
 
-:global([data-mode="light"]) .accepted-host-name {
+.accepted-host-name {
+  color: var(--color-text-primary, #e0e0e0);
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+:global([data-mode="light"]) .cell-host.has-accepted-host .reported-host-name {
   color: #52606d;
 }
 
-.accepted-host-name {
-  display: block;
-  margin-top: 2px;
+:global([data-mode="light"]) .accepted-host-name {
+  color: #111827;
 }
 
 .host-chip.species,
