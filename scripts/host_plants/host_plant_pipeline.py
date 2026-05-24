@@ -42,7 +42,8 @@ DEFAULT_RECORDS_TO_CHANGE_PATH = (
     PROJECT_ROOT / "scripts" / "host_plants" / "hostplant_records_to_change_20260523.csv"
 )
 
-GBIF_SPECIES_MATCH_URL = "https://api.gbif.org/v1/species/match"
+GBIF_SPECIES_URL = "https://api.gbif.org/v1/species"
+GBIF_SPECIES_MATCH_URL = f"{GBIF_SPECIES_URL}/match"
 GBIF_PLANT_KINGDOM_KEY = 6
 REQUEST_DELAY_SECONDS = 0.2
 MAX_COORDINATE_UNCERTAINTY_METERS = 100_000
@@ -427,6 +428,26 @@ def load_cache(path: Path) -> dict[str, Any]:
     return load_json(path)
 
 
+def enrich_accepted_usage(resolution: dict[str, Any], cache: dict[str, Any]) -> dict[str, Any]:
+    """Attach accepted canonical/scientific names for GBIF synonym matches."""
+    accepted_key = resolution.get("accepted_usage_key")
+    if not accepted_key or resolution.get("accepted_canonical_name"):
+        return resolution
+    accepted_cache = cache.setdefault("accepted_taxa", {})
+    cache_key = str(accepted_key)
+    data = accepted_cache.get(cache_key)
+    if data is None:
+        response = requests.get(f"{GBIF_SPECIES_URL}/{accepted_key}", timeout=30)
+        response.raise_for_status()
+        data = response.json()
+        accepted_cache[cache_key] = data
+        time.sleep(REQUEST_DELAY_SECONDS)
+    resolution["accepted_scientific_name"] = data.get("scientificName")
+    resolution["accepted_canonical_name"] = data.get("canonicalName") or clean_scientific_name(data.get("scientificName"))
+    resolution["accepted_rank"] = data.get("rank")
+    return resolution
+
+
 def resolve_taxon(taxon: dict[str, Any], cache: dict[str, Any], *, refresh: bool = False) -> dict[str, Any]:
     cache_key = f"{taxon['rank']}:{taxon['canonical_name'].lower()}"
     if not refresh and cache_key in cache.get("taxa", {}):
@@ -446,7 +467,7 @@ def resolve_taxon(taxon: dict[str, Any], cache: dict[str, Any], *, refresh: bool
                 "gbif_response": cached,
             }
             cache["taxa"][cache_key] = cached
-        return cached
+        return enrich_accepted_usage(cached, cache)
 
     if not taxon["resolvable_to_gbif"]:
         resolution = {
@@ -507,6 +528,7 @@ def resolve_taxon(taxon: dict[str, Any], cache: dict[str, Any], *, refresh: bool
             "resolved_at": utc_now(),
         }
 
+    resolution = enrich_accepted_usage(resolution, cache)
     cache.setdefault("taxa", {})[cache_key] = resolution
     time.sleep(REQUEST_DELAY_SECONDS)
     return resolution
@@ -714,6 +736,8 @@ def species_match_names(taxon: dict[str, Any]) -> set[str]:
         lower_name(taxon.get("species")),
         lower_name(resolution.get("canonical_name")),
         lower_name(resolution.get("scientific_name")),
+        lower_name(resolution.get("accepted_canonical_name")),
+        lower_name(resolution.get("accepted_scientific_name")),
     }
     return {name for name in names if name}
 
@@ -746,11 +770,17 @@ def process_download_api_occurrences(
     taxa_by_slug = {taxon["slug"]: taxon for taxon in taxa}
 
     species_slugs_by_name: dict[str, set[str]] = {}
+    species_slugs_by_key: dict[str, set[str]] = {}
     genus_slugs_by_name: dict[str, set[str]] = {}
     for taxon in taxa:
         if taxon.get("rank") == "species":
             for name in species_match_names(taxon):
                 species_slugs_by_name.setdefault(name, set()).add(taxon["slug"])
+            resolution = taxon.get("gbif_resolution") or {}
+            for key in (taxon.get("gbif_taxon_key"), resolution.get("accepted_usage_key")):
+                key_text = clean_text(key)
+                if key_text:
+                    species_slugs_by_key.setdefault(key_text, set()).add(taxon["slug"])
         elif taxon.get("rank") == "genus":
             genus = accepted_genus(taxon)
             if genus:
@@ -766,6 +796,10 @@ def process_download_api_occurrences(
             record_species = lower_name(occurrence_species_name(record))
             if record_species:
                 candidate_slugs.update(species_slugs_by_name.get(record_species, set()))
+            for key in (record.get("taxonKey"), record.get("acceptedTaxonKey"), record.get("speciesKey")):
+                key_text = clean_text(key)
+                if key_text:
+                    candidate_slugs.update(species_slugs_by_key.get(key_text, set()))
             record_genus = clean_text(record.get("genus"))
             if record_genus:
                 candidate_slugs.update(genus_slugs_by_name.get(record_genus.lower(), set()))
@@ -924,22 +958,33 @@ def fetch_occurrences_via_download_api(
         wait_for_download,
     )
 
-    credentials = load_credentials()
     download_targets, suppressed = selected_taxa_for_download_request(taxa)
     if not download_targets:
         raise ValueError("No resolved GBIF taxon keys available for host plant download.")
-    if download_key:
-        download_info = wait_for_download(download_key, credentials)
+
+    local_extract_dir = PROJECT_ROOT / "temp_gbif_download" / "extracted"
+    if download_key and (local_extract_dir / "occurrence.txt").exists():
+        download_info = {
+            "key": download_key,
+            "doi": "10.15468/dl.3464gs" if download_key == "0009656-260519110011954" else None,
+            "downloadLink": None,
+            "local_extract_dir": str(local_extract_dir),
+        }
+        extract_dir = local_extract_dir
     else:
-        download_info = find_recent_download(
-            credentials,
-            taxon_key_map(download_targets),
-            max_age_hours=reuse_download_hours,
-        )
-    if not download_info and not download_key:
-        download_key = submit_host_plant_download_request(credentials, download_targets)
-        download_info = wait_for_download(download_key, credentials)
-    extract_dir = download_and_extract(download_info)
+        credentials = load_credentials()
+        if download_key:
+            download_info = wait_for_download(download_key, credentials)
+        else:
+            download_info = find_recent_download(
+                credentials,
+                taxon_key_map(download_targets),
+                max_age_hours=reuse_download_hours,
+            )
+        if not download_info and not download_key:
+            download_key = submit_host_plant_download_request(credentials, download_targets)
+            download_info = wait_for_download(download_key, credentials)
+        extract_dir = download_and_extract(download_info)
     results = process_download_api_occurrences(
         extract_dir,
         taxa,

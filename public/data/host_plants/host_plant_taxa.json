@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-05-24T03:33:03+00:00",
+    "generated_at": "2026-05-24T14:36:42+00:00",
     "source_seed": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/ithomiini_hostplant_evidence_seed.json",
     "source_supplement": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/host_plant_literature_supplement.json",
     "source_confidence_audit": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/host_plant_confidence_reaudit_codex_20260521_taxon_level.csv",
@@ -170,7 +170,10 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Iochroma",
-        "resolved_at": "2026-05-23T22:40:12+00:00"
+        "resolved_at": "2026-05-23T22:40:12+00:00",
+        "accepted_scientific_name": "Iochroma Benth.",
+        "accepted_canonical_name": "Iochroma",
+        "accepted_rank": "GENUS"
       },
       "gbif_taxon_key": 2928875,
       "gbif_status": "resolved",
@@ -1627,7 +1630,10 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:40:16+00:00"
+        "resolved_at": "2026-05-23T22:40:16+00:00",
+        "accepted_scientific_name": "Solanum L.",
+        "accepted_canonical_name": "Solanum",
+        "accepted_rank": "GENUS"
       },
       "gbif_taxon_key": 2928849,
       "gbif_status": "resolved",
@@ -1921,7 +1927,10 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:40:23+00:00"
+        "resolved_at": "2026-05-23T22:40:23+00:00",
+        "accepted_scientific_name": "Solanum L.",
+        "accepted_canonical_name": "Solanum",
+        "accepted_rank": "GENUS"
       },
       "gbif_taxon_key": 2932923,
       "gbif_status": "resolved",
@@ -2459,11 +2468,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Iochroma",
-        "resolved_at": "2026-05-23T22:40:32+00:00"
+        "resolved_at": "2026-05-23T22:40:32+00:00",
+        "accepted_scientific_name": "Iochroma arborescens (L.) J.M.H.Shaw",
+        "accepted_canonical_name": "Iochroma arborescens",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2928878,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 695,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -2560,11 +2572,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Athenaea",
-        "resolved_at": "2026-05-23T22:40:33+00:00"
+        "resolved_at": "2026-05-23T22:40:33+00:00",
+        "accepted_scientific_name": "Athenaea fasciculata (Vell.) I.M.C.Rodrigues & Stehmann",
+        "accepted_canonical_name": "Athenaea fasciculata",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 7300024,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 3,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -3274,11 +3289,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Cestrum",
-        "resolved_at": "2026-05-23T22:40:45+00:00"
+        "resolved_at": "2026-05-23T22:40:45+00:00",
+        "accepted_scientific_name": "Cestrum bracteatum Link & Otto",
+        "accepted_canonical_name": "Cestrum bracteatum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 7299284,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 468,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Cestrum"
@@ -4105,11 +4123,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Cestrum",
-        "resolved_at": "2026-05-23T22:40:57+00:00"
+        "resolved_at": "2026-05-23T22:40:57+00:00",
+        "accepted_scientific_name": "Cestrum mariquitense Kunth",
+        "accepted_canonical_name": "Cestrum mariquitense",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3801287,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 508,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Cestrum"
@@ -4388,11 +4409,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:01+00:00"
+        "resolved_at": "2026-05-23T22:41:01+00:00",
+        "accepted_scientific_name": "Solanum betaceum Cav.",
+        "accepted_canonical_name": "Solanum betaceum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2928852,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 1136,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4435,11 +4459,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:02+00:00"
+        "resolved_at": "2026-05-23T22:41:02+00:00",
+        "accepted_scientific_name": "Solanum corymbiflorum subsp. corymbiflorum",
+        "accepted_canonical_name": "Solanum corymbiflorum corymbiflorum",
+        "accepted_rank": "SUBSPECIES"
       },
       "gbif_taxon_key": 2929608,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 245,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4483,11 +4510,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:03+00:00"
+        "resolved_at": "2026-05-23T22:41:03+00:00",
+        "accepted_scientific_name": "Solanum diploconos (Mart.) Bohs",
+        "accepted_canonical_name": "Solanum diploconos",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2930894,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 166,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4532,11 +4562,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:03+00:00"
+        "resolved_at": "2026-05-23T22:41:03+00:00",
+        "accepted_scientific_name": "Solanum melissarum Bohs",
+        "accepted_canonical_name": "Solanum melissarum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2931388,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 247,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4578,11 +4611,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:05+00:00"
+        "resolved_at": "2026-05-23T22:41:05+00:00",
+        "accepted_scientific_name": "Solanum diversifolium subsp. diversifolium",
+        "accepted_canonical_name": "Solanum diversifolium diversifolium",
+        "accepted_rank": "SUBSPECIES"
       },
       "gbif_taxon_key": 2930189,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 52,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4625,11 +4661,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:05+00:00"
+        "resolved_at": "2026-05-23T22:41:05+00:00",
+        "accepted_scientific_name": "Solanum splendens (Dunal) Bohs",
+        "accepted_canonical_name": "Solanum splendens",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2928850,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 901,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4672,11 +4711,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:06+00:00"
+        "resolved_at": "2026-05-23T22:41:06+00:00",
+        "accepted_scientific_name": "Solanum calidum Bohs",
+        "accepted_canonical_name": "Solanum calidum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2932294,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 115,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4720,11 +4762,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:07+00:00"
+        "resolved_at": "2026-05-23T22:41:07+00:00",
+        "accepted_scientific_name": "Solanum sciadostylis (Sendtn.) Bohs",
+        "accepted_canonical_name": "Solanum sciadostylis",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2932350,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 85,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4768,11 +4813,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T22:41:08+00:00"
+        "resolved_at": "2026-05-23T22:41:08+00:00",
+        "accepted_scientific_name": "Solanum luridifuscescens Bitter",
+        "accepted_canonical_name": "Solanum luridifuscescens",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2931475,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 37,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -4897,11 +4945,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Dilkea",
-        "resolved_at": "2026-05-23T22:41:10+00:00"
+        "resolved_at": "2026-05-23T22:41:10+00:00",
+        "accepted_scientific_name": "Dilkea retusa Mast.",
+        "accepted_canonical_name": "Dilkea retusa",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3588162,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 201,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Dilkea"
@@ -5085,11 +5136,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Saracha",
-        "resolved_at": "2026-05-23T22:41:13+00:00"
+        "resolved_at": "2026-05-23T22:41:13+00:00",
+        "accepted_scientific_name": "Saracha nigribaccata J.M.H.Shaw",
+        "accepted_canonical_name": "Saracha nigribaccata",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 5580835,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 152,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -5131,11 +5185,14 @@
         "kingdom": "Plantae",
         "family": "Apocynaceae",
         "genus": "Echites",
-        "resolved_at": "2026-05-23T22:41:14+00:00"
+        "resolved_at": "2026-05-23T22:41:14+00:00",
+        "accepted_scientific_name": "Echites panduratus A.DC.",
+        "accepted_canonical_name": "Echites panduratus",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 5414402,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 356,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -5911,11 +5968,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Merinthopodium",
-        "resolved_at": "2026-05-23T21:08:02+00:00"
+        "resolved_at": "2026-05-23T21:08:02+00:00",
+        "accepted_scientific_name": "Merinthopodium neuranthum Donn.Sm.",
+        "accepted_canonical_name": "Merinthopodium neuranthum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3801338,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 31,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -5961,11 +6021,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Dyssochroma",
-        "resolved_at": "2026-05-23T21:08:03+00:00"
+        "resolved_at": "2026-05-23T21:08:03+00:00",
+        "accepted_scientific_name": "Dyssochroma viridiflorum (Sims) Miers",
+        "accepted_canonical_name": "Dyssochroma viridiflorum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3801155,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 13,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -6342,11 +6405,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:10+00:00"
+        "resolved_at": "2026-05-23T21:08:10+00:00",
+        "accepted_scientific_name": "Passiflora magnoliifolia F.Dietr.",
+        "accepted_canonical_name": "Passiflora magnoliifolia",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3587244,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 248,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -7651,11 +7717,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:30+00:00"
+        "resolved_at": "2026-05-23T21:08:30+00:00",
+        "accepted_scientific_name": "Passiflora porophylla Vell.",
+        "accepted_canonical_name": "Passiflora porophylla",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3586635,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 311,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -7828,11 +7897,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:32+00:00"
+        "resolved_at": "2026-05-23T21:08:32+00:00",
+        "accepted_scientific_name": "Passiflora pohlii Mast.",
+        "accepted_canonical_name": "Passiflora pohlii",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3587502,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 204,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -7876,11 +7948,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:33+00:00"
+        "resolved_at": "2026-05-23T21:08:33+00:00",
+        "accepted_scientific_name": "Passiflora mediterranea Vell.",
+        "accepted_canonical_name": "Passiflora mediterranea",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3587121,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 221,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -8070,11 +8145,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:36+00:00"
+        "resolved_at": "2026-05-23T21:08:36+00:00",
+        "accepted_scientific_name": "Passiflora retipetala Mast.",
+        "accepted_canonical_name": "Passiflora retipetala",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3588373,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 28,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -8260,11 +8338,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:40+00:00"
+        "resolved_at": "2026-05-23T21:08:40+00:00",
+        "accepted_scientific_name": "Passiflora tripartita var. mollissima (Kunth) Holm-Niels. & P.Jørg.",
+        "accepted_canonical_name": "Passiflora tripartita mollissima",
+        "accepted_rank": "VARIETY"
       },
       "gbif_taxon_key": 2874196,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 1165,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -8738,11 +8819,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:44+00:00"
+        "resolved_at": "2026-05-23T21:08:44+00:00",
+        "accepted_scientific_name": "Passiflora porophylla Vell.",
+        "accepted_canonical_name": "Passiflora porophylla",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 7313499,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 311,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -9494,11 +9578,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:08:57+00:00"
+        "resolved_at": "2026-05-23T21:08:57+00:00",
+        "accepted_scientific_name": "Passiflora tetraden Vell.",
+        "accepted_canonical_name": "Passiflora tetraden",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 7905861,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 99,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Passiflora"
@@ -10110,11 +10197,14 @@
         "kingdom": "Plantae",
         "family": "Apocynaceae",
         "genus": "Macropharynx",
-        "resolved_at": "2026-05-23T21:09:07+00:00"
+        "resolved_at": "2026-05-23T21:09:07+00:00",
+        "accepted_scientific_name": "Macropharynx peltata (Vell.) J.F.Morales, M.E.Endress & Liede",
+        "accepted_canonical_name": "Macropharynx peltata",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 5535920,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 191,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -10207,7 +10297,7 @@
       },
       "gbif_taxon_key": 5581231,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 24,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -10331,11 +10421,14 @@
         "kingdom": "Plantae",
         "family": "Apocynaceae",
         "genus": "Prestonia",
-        "resolved_at": "2026-05-23T21:09:10+00:00"
+        "resolved_at": "2026-05-23T21:09:10+00:00",
+        "accepted_scientific_name": "Prestonia quinquangularis (Jacq.) Spreng.",
+        "accepted_canonical_name": "Prestonia quinquangularis",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 9227341,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 531,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Prestonia"
@@ -10995,11 +11088,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:09:21+00:00"
+        "resolved_at": "2026-05-23T21:09:21+00:00",
+        "accepted_scientific_name": "Solanum concinnum Schott ex Sendtn.",
+        "accepted_canonical_name": "Solanum concinnum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3802875,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 247,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -11042,11 +11138,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:09:22+00:00"
+        "resolved_at": "2026-05-23T21:09:22+00:00",
+        "accepted_scientific_name": "Solanum volubile Sw.",
+        "accepted_canonical_name": "Solanum volubile",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2929035,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 928,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -11632,11 +11731,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:09:33+00:00"
+        "resolved_at": "2026-05-23T21:09:33+00:00",
+        "accepted_scientific_name": "Solanum wacketii Witasek",
+        "accepted_canonical_name": "Solanum wacketii",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2932626,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 56,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -12353,11 +12455,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:09:46+00:00"
+        "resolved_at": "2026-05-23T21:09:46+00:00",
+        "accepted_scientific_name": "Solanum bonariense L.",
+        "accepted_canonical_name": "Solanum bonariense",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2929634,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 572,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -12449,11 +12554,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:09:48+00:00"
+        "resolved_at": "2026-05-23T21:09:48+00:00",
+        "accepted_scientific_name": "Solanum aethiopicum L.",
+        "accepted_canonical_name": "Solanum aethiopicum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2929852,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 77,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -13148,11 +13256,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:09:56+00:00"
+        "resolved_at": "2026-05-23T21:09:56+00:00",
+        "accepted_scientific_name": "Solanum asperolanatum Ruiz & Pav.",
+        "accepted_canonical_name": "Solanum asperolanatum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2931635,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 1256,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -14716,11 +14827,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:10:20+00:00"
+        "resolved_at": "2026-05-23T21:10:20+00:00",
+        "accepted_scientific_name": "Solanum uncinellum Lindl.",
+        "accepted_canonical_name": "Solanum uncinellum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2932361,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 673,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -15271,11 +15385,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:10:28+00:00"
+        "resolved_at": "2026-05-23T21:10:28+00:00",
+        "accepted_scientific_name": "Solanum uncinellum Lindl.",
+        "accepted_canonical_name": "Solanum uncinellum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2932361,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 673,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -15417,11 +15534,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:10:31+00:00"
+        "resolved_at": "2026-05-23T21:10:31+00:00",
+        "accepted_scientific_name": "Solanum trizygum Bitter",
+        "accepted_canonical_name": "Solanum trizygum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2930473,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 307,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -15616,11 +15736,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:10:34+00:00"
+        "resolved_at": "2026-05-23T21:10:34+00:00",
+        "accepted_scientific_name": "Solanum aethiopicum L.",
+        "accepted_canonical_name": "Solanum aethiopicum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 2929870,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 77,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null,
       "download_request": "covered_by_genus:Solanum"
@@ -16325,7 +16448,10 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-23T21:10:46+00:00"
+        "resolved_at": "2026-05-23T21:10:46+00:00",
+        "accepted_scientific_name": "Solanum spinosissimum Lodd.Cat. ex G.Don",
+        "accepted_canonical_name": "Solanum spinosissimum",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 8451571,
       "gbif_status": "resolved",
@@ -17144,11 +17270,14 @@
         "kingdom": "Plantae",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-23T21:11:00+00:00"
+        "resolved_at": "2026-05-23T21:11:00+00:00",
+        "accepted_scientific_name": "Passiflora ovalis Vell.",
+        "accepted_canonical_name": "Passiflora ovalis",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 3588191,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 112,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -17190,11 +17319,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Poortmannia",
-        "resolved_at": "2026-05-23T21:11:01+00:00"
+        "resolved_at": "2026-05-23T21:11:01+00:00",
+        "accepted_scientific_name": "Poortmannia speciosa Drake",
+        "accepted_canonical_name": "Poortmannia speciosa",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 7949375,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 42,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -17330,11 +17462,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Cuatresia",
-        "resolved_at": "2026-05-23T21:11:04+00:00"
+        "resolved_at": "2026-05-23T21:11:04+00:00",
+        "accepted_scientific_name": "Cuatresia cuneata (Standl.) Bohs",
+        "accepted_canonical_name": "Cuatresia cuneata",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 5581171,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 157,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },
@@ -17424,11 +17559,14 @@
         "kingdom": "Plantae",
         "family": "Solanaceae",
         "genus": "Cuatresia",
-        "resolved_at": "2026-05-23T21:11:05+00:00"
+        "resolved_at": "2026-05-23T21:11:05+00:00",
+        "accepted_scientific_name": "Cuatresia morii (D' Arcy) Sousa-Peña ex Bohs",
+        "accepted_canonical_name": "Cuatresia morii",
+        "accepted_rank": "SPECIES"
       },
       "gbif_taxon_key": 7691957,
       "gbif_status": "resolved",
-      "occurrence_count": 0,
+      "occurrence_count": 1,
       "occurrence_mode": "unified_dataset",
       "occurrence_cap": null
     },

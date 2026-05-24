@@ -441,14 +441,20 @@ const activeButterflySpecies = computed(() => new Set(
   rawData.value.map(row => row.scientific_name).filter(Boolean)
 ))
 
+const normalizeHostName = (name) => String(name || '').trim().replace(/\s+/g, ' ').toLowerCase()
+
 const acceptedHostName = (taxon) => {
   const resolution = taxon?.gbif_resolution || {}
   const originalName = taxon?.canonical_name
-  const resolvedName = resolution.canonical_name || resolution.genus || resolution.scientific_name
+  const resolvedName = resolution.accepted_canonical_name
+    || resolution.accepted_scientific_name
+    || resolution.canonical_name
+    || resolution.genus
+    || resolution.scientific_name
   const status = String(resolution.taxonomic_status || '').toUpperCase()
   const isSynonym = status === 'SYNONYM' || Boolean(resolution.accepted_usage_key)
-  const isCorrectedName = originalName && resolvedName && resolvedName !== originalName
-  return (isSynonym || isCorrectedName) && resolvedName ? resolvedName : null
+  const isCorrectedName = originalName && resolvedName && normalizeHostName(resolvedName) !== normalizeHostName(originalName)
+  return (isSynonym || isCorrectedName) && isCorrectedName && resolvedName ? resolvedName : null
 }
 
 const hostDisplayTitle = (plant) => [
