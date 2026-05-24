@@ -28,6 +28,14 @@ const persistenceStore = usePersistenceStore()
 const legendStore = useLegendStore()
 const sdmStore = useSDMStore()
 const hostPlantStore = useHostPlantStore()
+const expandedSdmResponsePlots = ref(new Set())
+const toggleSdmResponsePlots = (species) => {
+  const next = new Set(expandedSdmResponsePlots.value)
+  if (next.has(species)) next.delete(species)
+  else next.add(species)
+  expandedSdmResponsePlots.value = next
+}
+
 
 // Toggle persistence
 function togglePersistence() {
@@ -1112,42 +1120,56 @@ const updateExportHeight = (value) => {
                   </div>
                 </div>
                 <div v-if="sdmStore.getSDMInfo(sp)?.env_summary?.length" class="sdm-env-section">
-                  <div
-                    v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
-                    :key="env.variable"
-                    class="sdm-env-card"
+                  <button
+                    type="button"
+                    class="sdm-response-toggle"
+                    :class="{ active: expandedSdmResponsePlots.has(sp) }"
+                    @click="toggleSdmResponsePlots(sp)"
                   >
-                    <div class="sdm-env-header">
-                      <span class="sdm-env-name">{{ env.label }}</span>
-                      <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
-                    </div>
-                    <div class="sdm-chart-wrap">
-                      <span class="sdm-y-label">Suitability</span>
-                      <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
-                        <polyline
-                          :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
-                          fill="none"
-                          stroke="var(--color-accent, #4ade80)"
-                          stroke-width="1.5"
-                        />
-                        <polygon
-                          :points="[
-                            ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
-                            ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
-                          ].join(' ')"
-                          fill="var(--color-accent, #4ade80)"
-                          fill-opacity="0.15"
-                        />
-                      </svg>
-                    </div>
-                    <div class="sdm-x-axis">
-                      <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
-                      <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
-                      <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
-                    </div>
-                    <div class="sdm-env-footer">
-                      <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
-                      <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
+                    <span>Suitability response plots</span>
+                    <span>{{ sdmStore.getSDMInfo(sp).env_summary.length }} variables</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </button>
+                  <div v-if="expandedSdmResponsePlots.has(sp)" class="sdm-env-list">
+                    <div
+                      v-for="env in sdmStore.getSDMInfo(sp).env_summary.slice(0, 5)"
+                      :key="env.variable"
+                      class="sdm-env-card"
+                    >
+                      <div class="sdm-env-header">
+                        <span class="sdm-env-name">{{ env.label }}</span>
+                        <span class="sdm-env-range">{{ env.optimal_range[0] }}–{{ env.optimal_range[1] }}{{ env.unit }}</span>
+                      </div>
+                      <div class="sdm-chart-wrap">
+                        <span class="sdm-y-label">Suitability</span>
+                        <svg class="sdm-sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+                          <polyline
+                            :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
+                            fill="none"
+                            stroke="var(--color-accent, #4ade80)"
+                            stroke-width="1.5"
+                          />
+                          <polygon
+                            :points="[
+                              ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
+                              ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
+                            ].join(' ')"
+                            fill="var(--color-accent, #4ade80)"
+                            fill-opacity="0.15"
+                          />
+                        </svg>
+                      </div>
+                      <div class="sdm-x-axis">
+                        <span>{{ Math.round(env.gradient[0] * 10) / 10 }}</span>
+                        <span class="sdm-x-axis-label">{{ env.label }} ({{ env.unit || 'index' }})</span>
+                        <span>{{ Math.round(env.gradient[env.gradient.length - 1] * 10) / 10 }}</span>
+                      </div>
+                      <div class="sdm-env-footer">
+                        <span class="sdm-env-importance" :style="{ width: (env.importance * 100) + '%' }"></span>
+                        <span class="sdm-env-conf">{{ Math.round(env.confidence * 100) }}%</span>
+                      </div>
                     </div>
                   </div>
                 </div>
