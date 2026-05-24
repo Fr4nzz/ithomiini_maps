@@ -1061,18 +1061,6 @@ const updateExportHeight = (value) => {
             v-if="enabledOtherFilters.has('sdm')"
             class="filter-stack-item"
           >
-            <button
-              type="button"
-              class="filter-section-toggle filter-tile active"
-              title="Species distribution model controls"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-              <span>Species Distribution Models</span>
-              <span v-if="otherFilterActiveCount('sdm') > 0" class="filter-tile-count">
-                {{ otherFilterActiveCount('sdm') }}
-              </span>
-            </button>
-
             <FilterSelect
               label="Model Species"
               v-model="sdmStore.selectedSpecies"
@@ -1194,17 +1182,6 @@ const updateExportHeight = (value) => {
             v-if="enabledOtherFilters.has('hostplants')"
             class="filter-stack-item"
           >
-            <button
-              type="button"
-              class="filter-section-toggle filter-tile active"
-              title="Host plant filter controls"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-7 8-9 5 2 8 5 8 9a7 7 0 0 1-7 7"/><path d="M12 14v8"/><path d="M8 14c1.5 1 3 1 4 0 1 1 2.5 1 4 0"/></svg>
-              <span>Host Plant Filters</span>
-              <span v-if="otherFilterActiveCount('hostplants') > 0" class="filter-tile-count">
-                {{ otherFilterActiveCount('hostplants') }}
-              </span>
-            </button>
             <div class="host-confidence-group">
               <label class="filter-stack-label">Host ID level</label>
               <div class="host-confidence-toggle">
