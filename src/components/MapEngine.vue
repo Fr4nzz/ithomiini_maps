@@ -830,7 +830,16 @@ watch(
       class="sdm-cursor-tooltip"
       :style="{ left: (sdmCursorPos.x + 15) + 'px', top: (sdmCursorPos.y - 10) + 'px' }"
     >
-      <span class="sdm-cursor-value">{{ (sdmCursorValue[0].value * 100).toFixed(0) }}%</span>
+      <div
+        v-for="(item, index) in sdmCursorValue"
+        :key="item.species"
+        class="sdm-cursor-row"
+        :class="index === 0 ? 'warm' : 'cool'"
+      >
+        <span class="sdm-cursor-dot"></span>
+        <span class="sdm-cursor-species">{{ item.species }}</span>
+        <span class="sdm-cursor-value">{{ (item.value * 100).toFixed(0) }}%</span>
+      </div>
     </div>
 
     <!-- Map Layer Controls -->
