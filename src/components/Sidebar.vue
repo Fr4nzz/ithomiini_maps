@@ -194,21 +194,19 @@ const OTHER_FILTERS = [
   { key: 'country', label: 'Country' },
   { key: 'timerange', label: 'Time Range' },
   { key: 'goat', label: 'GoaT' },
-  { key: 'sdm', label: 'Species Models' },
-  { key: 'hostplants', label: 'Host plants' },
 ]
 
 // Tiles whose availability depends on runtime state (view, feature flags, data loaded)
 const availableOtherFilters = computed(() =>
   OTHER_FILTERS.filter(f => {
     if (f.key === 'sdm') return props.currentView === 'map' && sdmStore.hasData
-    if (f.key === 'hostplants') return props.currentView === 'map'
+    if (f.key === 'hostplants') return true
     if (f.key === 'goat') return config.features.goatIntegration
     return true
   })
 )
 
-const enabledOtherFilters = ref(new Set(['camid']))
+const enabledOtherFilters = ref(new Set(['camid', 'sdm', 'hostplants']))
 const toggleOtherFilter = (key) => {
   const next = new Set(enabledOtherFilters.value)
   if (next.has(key)) next.delete(key)
@@ -254,7 +252,7 @@ const otherFilterActiveCount = (key) => {
   }
   if (key === 'goat') {
     return (store.filters.goatCoverage !== 'all' ? 1 : 0)
-      + store.filters.goatDataSource.length
+      + store.filters.goatDataSource.filter(source => source !== 'none').length
       + (store.filters.goatChromosomeMin != null ? 1 : 0)
       + (store.filters.goatChromosomeMax != null ? 1 : 0)
   }
@@ -808,7 +806,7 @@ const updateExportHeight = (value) => {
 
         <!-- Others filter tile row -->
         <div class="filter-tile-group">
-          <span class="filter-tile-group-label">Others</span>
+          <span class="filter-tile-group-label">Other filters</span>
           <div class="filter-tile-row">
             <button
               v-for="other in availableOtherFilters"
@@ -1013,14 +1011,6 @@ const updateExportHeight = (value) => {
                   />
                   <span>Estimated (phylogenetic)</span>
                 </label>
-                <label class="source-checkbox">
-                  <input
-                    type="checkbox"
-                    :checked="store.filters.goatDataSource.includes('none')"
-                    @change="toggleGoatSource('none')"
-                  />
-                  <span>No GoaT data</span>
-                </label>
               </div>
             </div>
 
@@ -1057,19 +1047,27 @@ const updateExportHeight = (value) => {
             </p>
           </div>
 
-          <!-- Species Distribution Modelling (tile-driven) -->
+        </div>
+      </div>
+
+      <!-- Species Distribution Models -->
+      <div v-if="currentView === 'map' && sdmStore.hasData" class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          Species Distribution Models
+        </label>
+        <div class="active-filters-stack">
           <div
-            v-if="enabledOtherFilters.has('sdm') && currentView === 'map' && sdmStore.hasData"
+            v-if="enabledOtherFilters.has('sdm')"
             class="filter-stack-item"
           >
             <button
               type="button"
               class="filter-section-toggle filter-tile active"
-              title="Disable species models filter"
-              @click="toggleOtherFilter('sdm')"
+              title="Species distribution model controls"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-              <span>{{ otherFilterLabel('sdm') }}</span>
+              <span>Species Distribution Models</span>
               <span v-if="otherFilterActiveCount('sdm') > 0" class="filter-tile-count">
                 {{ otherFilterActiveCount('sdm') }}
               </span>
@@ -1182,20 +1180,27 @@ const updateExportHeight = (value) => {
               {{ sdmStore.nSpecies }} species modelled · Tiered ensemble
             </p>
           </div>
+        </div>
+      </div>
 
-          <!-- Host plant overlays (tile-driven) -->
+      <!-- Host Plant Filters -->
+      <div class="filter-section">
+        <label class="section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-7 8-9 5 2 8 5 8 9a7 7 0 0 1-7 7"/><path d="M12 14v8"/><path d="M8 14c1.5 1 3 1 4 0 1 1 2.5 1 4 0"/></svg>
+          Host Plant Filters
+        </label>
+        <div class="active-filters-stack">
           <div
-            v-if="enabledOtherFilters.has('hostplants') && currentView === 'map'"
+            v-if="enabledOtherFilters.has('hostplants')"
             class="filter-stack-item"
           >
             <button
               type="button"
               class="filter-section-toggle filter-tile active"
-              title="Disable host plant filter"
-              @click="toggleOtherFilter('hostplants')"
+              title="Host plant filter controls"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-7 8-9 5 2 8 5 8 9a7 7 0 0 1-7 7"/><path d="M12 14v8"/><path d="M8 14c1.5 1 3 1 4 0 1 1 2.5 1 4 0"/></svg>
-              <span>{{ otherFilterLabel('hostplants') }}</span>
+              <span>Host Plant Filters</span>
               <span v-if="otherFilterActiveCount('hostplants') > 0" class="filter-tile-count">
                 {{ otherFilterActiveCount('hostplants') }}
               </span>
@@ -1273,6 +1278,10 @@ const updateExportHeight = (value) => {
               />
               <span class="sdm-opacity-value">{{ Math.round(hostPlantStore.opacity * 100) }}%</span>
             </div>
+
+            <p v-if="currentView !== 'map'" class="filter-hint">
+              Host plant selections are used by the map overlay; the Host Plants table summarizes all associations.
+            </p>
 
             <p class="filter-hint">
               {{ hostPlantStore.manifest?.metadata?.gbif_download_doi_note || 'GBIF citation metadata unavailable.' }}

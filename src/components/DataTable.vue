@@ -441,6 +441,25 @@ const activeButterflySpecies = computed(() => new Set(
   rawData.value.map(row => row.scientific_name).filter(Boolean)
 ))
 
+const acceptedHostName = (taxon) => {
+  const resolution = taxon?.gbif_resolution || {}
+  const originalName = taxon?.canonical_name
+  const resolvedName = resolution.canonical_name || resolution.genus || resolution.scientific_name
+  const status = String(resolution.taxonomic_status || '').toUpperCase()
+  const isSynonym = status === 'SYNONYM' || Boolean(resolution.accepted_usage_key)
+  const isCorrectedName = originalName && resolvedName && resolvedName !== originalName
+  return (isSynonym || isCorrectedName) && resolvedName ? resolvedName : null
+}
+
+const hostDisplayTitle = (plant) => [
+  `${plant.rank} / ${plant.host_id_level}`,
+  plant.accepted_name ? `Accepted: ${plant.accepted_name}` : null,
+  plant.family,
+  plant.evidence_display,
+  plant.evidence_detail,
+  `${Number(plant.gbif_records || 0).toLocaleString()} GBIF records`,
+].filter(Boolean).join('; ')
+
 const hostPlantEvidenceRows = computed(() => {
   const activeSpecies = activeButterflySpecies.value
   const rows = []
@@ -455,6 +474,7 @@ const hostPlantEvidenceRows = computed(() => {
       id: association.id,
       butterfly: association.butterfly_taxon,
       host: association.host_taxon_name,
+      accepted_host: acceptedHostName(taxon),
       host_rank: association.host_taxon_rank,
       family: association.host_plant_family || taxon?.family || '—',
       evidence_level: association.evidence_level || 'needs_check',
@@ -472,6 +492,7 @@ const hostPlantEvidenceRows = computed(() => {
       searchText: [
         association.butterfly_taxon,
         association.host_taxon_name,
+        acceptedHostName(taxon),
         association.host_taxon_rank,
         association.host_plant_family,
         association.evidence_level,
@@ -515,6 +536,7 @@ const hostPlantButterflyRows = computed(() => {
     if (!existing || evidenceRank[row.evidence_level] > evidenceRank[existing.evidence_level]) {
       entry.hostPlants.set(row.host, {
         name: row.host,
+        accepted_name: row.accepted_host,
         confidence: row.confidence,
         confidence_bucket: row.confidence_bucket,
         evidence_level: row.evidence_level,
@@ -814,6 +836,11 @@ const confidenceClass = (confidence) => {
   const normalized = String(confidence || '').toLowerCase().replace(/\s+/g, '-')
   if (normalized === 'needs-check') return 'low'
   return normalized || 'unknown'
+}
+
+const hostLevelClass = (level) => {
+  const normalized = String(level || '').toLowerCase().replace(/\s+/g, '-')
+  return ['species', 'genus', 'family'].includes(normalized) ? normalized : 'unknown'
 }
 
 const conciseList = (items, limit = 3) => {
@@ -1390,10 +1417,11 @@ const conciseList = (items, limit = 3) => {
                     v-for="plant in row.hostPlants.slice(0, 8)"
                     :key="plant.name"
                     class="host-chip"
-                    :class="confidenceClass(plant.confidence)"
-                    :title="`${plant.confidence}; ${plant.gbif_records.toLocaleString()} GBIF records`"
+                    :class="hostLevelClass(plant.host_id_level || plant.rank)"
+                    :title="hostDisplayTitle(plant)"
                   >
                     <em>{{ plant.name }}</em>
+                    <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
                     <span v-if="plant.gbif_records > 0" class="chip-count">{{ plant.gbif_records.toLocaleString() }}</span>
                   </span>
                   <button
@@ -1406,15 +1434,16 @@ const conciseList = (items, limit = 3) => {
                   </button>
                 </div>
               </td>
-              <td class="cell-records"><span class="confidence-pill high">{{ row.counts.species }}</span></td>
-              <td class="cell-records"><span class="confidence-pill medium">{{ row.counts.genus }}</span></td>
-              <td class="cell-records"><span class="confidence-pill low">{{ row.counts.family }}</span></td>
+              <td class="cell-records"><span class="confidence-pill species">{{ row.counts.species }}</span></td>
+              <td class="cell-records"><span class="confidence-pill genus">{{ row.counts.genus }}</span></td>
+              <td class="cell-records"><span class="confidence-pill family">{{ row.counts.family }}</span></td>
               <td>{{ conciseList(row.families, 3) }}</td>
               <td class="cell-records">{{ row.occurrence_backed_count }}</td>
               <td>{{ conciseList(row.sources, 2) }}</td>
             </tr>
             <tr v-if="expandedHostButterflies.has(row.butterfly)" class="host-expanded-row">
-              <td :colspan="hostPlantButterflyColumns.length">
+              <td class="host-expanded-spacer" aria-hidden="true"></td>
+              <td :colspan="hostPlantButterflyColumns.length - 1">
                 <div class="host-expanded-panel">
                   <div
                     v-for="level in hostPlantStore.hostIdLevels"
@@ -1432,10 +1461,11 @@ const conciseList = (items, limit = 3) => {
                         v-for="plant in hostPlantsByHostIdLevel(row.hostPlants)[level.key]"
                         :key="plant.name"
                         class="host-chip"
-                        :class="confidenceClass(plant.confidence)"
-                        :title="`${plant.rank}; ${plant.family}; ${plant.evidence_display}; ${plant.evidence_detail}; ${plant.gbif_records.toLocaleString()} GBIF records`"
+                        :class="hostLevelClass(plant.host_id_level || plant.rank)"
+                        :title="hostDisplayTitle(plant)"
                       >
                         <em>{{ plant.name }}</em>
+                        <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
                         <span v-if="plant.gbif_records > 0" class="chip-count">{{ plant.gbif_records.toLocaleString() }}</span>
                       </span>
                       <span v-if="hostPlantsByHostIdLevel(row.hostPlants)[level.key].length === 0" class="text-muted">—</span>
@@ -1519,7 +1549,10 @@ const conciseList = (items, limit = 3) => {
         <tbody>
           <tr v-for="row in paginatedHostPlantEvidenceRows" :key="row.id">
             <td class="cell-species"><em>{{ row.butterfly }}</em></td>
-            <td class="cell-host"><em>{{ row.host }}</em></td>
+            <td class="cell-host">
+              <em>{{ row.host }}</em>
+              <span v-if="row.accepted_host" class="accepted-host-name">→ <em>{{ row.accepted_host }}</em></span>
+            </td>
             <td>{{ row.host_rank }} / {{ row.host_id_level }}</td>
             <td>{{ row.family }}</td>
             <td>
@@ -2229,9 +2262,16 @@ const conciseList = (items, limit = 3) => {
 }
 
 .host-butterfly-row .cell-species {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  white-space: nowrap;
+}
+
+.host-butterfly-row .cell-species .row-expand-btn {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.host-butterfly-row .cell-species em {
+  vertical-align: middle;
 }
 
 .row-expand-btn {
@@ -2301,18 +2341,33 @@ const conciseList = (items, limit = 3) => {
   white-space: nowrap;
 }
 
+.accepted-name,
+.accepted-host-name {
+  color: var(--color-text-muted, #888);
+  font-size: 0.7rem;
+  margin-left: 2px;
+}
+
+.accepted-host-name {
+  display: block;
+  margin-top: 2px;
+}
+
+.host-chip.species,
 .host-chip.high {
   background: rgba(74, 222, 128, 0.14);
   border-color: rgba(74, 222, 128, 0.28);
   color: #86efac;
 }
 
+.host-chip.genus,
 .host-chip.medium {
   background: rgba(251, 191, 36, 0.12);
   border-color: rgba(251, 191, 36, 0.25);
   color: #fcd34d;
 }
 
+.host-chip.family,
 .host-chip.low,
 .host-chip.needs-check {
   background: rgba(251, 113, 133, 0.12);
@@ -2349,16 +2404,21 @@ const conciseList = (items, limit = 3) => {
   text-transform: capitalize;
 }
 
-.confidence-pill.high {
+.confidence-pill.species,
+.confidence-pill.high,
+.confidence-pill.direct {
   background: rgba(74, 222, 128, 0.16);
   color: #4ade80;
 }
 
-.confidence-pill.medium {
+.confidence-pill.genus,
+.confidence-pill.medium,
+.confidence-pill.literature {
   background: rgba(251, 191, 36, 0.15);
   color: #fbbf24;
 }
 
+.confidence-pill.family,
 .confidence-pill.low,
 .confidence-pill.needs-check {
   background: rgba(251, 113, 133, 0.15);
@@ -2367,18 +2427,26 @@ const conciseList = (items, limit = 3) => {
 
 .host-expanded-row td {
   background: rgba(0, 0, 0, 0.12);
-  padding: 12px 16px;
+  padding: 8px 14px;
+}
+
+.host-expanded-row .host-expanded-spacer {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0;
 }
 
 .host-expanded-panel {
   display: grid;
-  gap: 12px;
+  gap: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .host-confidence-block {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 12px;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 8px;
   align-items: start;
 }
 

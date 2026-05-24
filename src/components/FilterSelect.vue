@@ -215,8 +215,8 @@ const segmentStyle = (segment) => ({
 
 /* Vue-multiselect customization for dark theme */
 :deep(.multiselect__tags) {
-  min-height: 38px;
-  padding: 6px 40px 6px 10px;
+  min-height: 34px;
+  padding: 4px 36px 4px 8px;
   border-radius: 6px;
   border: 1px solid var(--color-border, #3d3d5c);
   background: var(--color-bg-tertiary, #2d2d4a);
@@ -309,15 +309,16 @@ const segmentStyle = (segment) => ({
   background: var(--color-accent, #4ade80);
   color: var(--color-bg-primary, #1a1a2e);
   border-radius: 4px;
-  padding: 4px 26px 4px 8px;
+  padding: 2px 24px 2px 8px;
   margin-right: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   font-size: 0.75rem;
   font-weight: 500;
+  line-height: 18px;
 }
 
 :deep(.multiselect__tag-icon) {
-  line-height: 20px;
+  line-height: 18px;
 }
 
 :deep(.multiselect__tag-icon:after) {
@@ -386,8 +387,8 @@ const segmentStyle = (segment) => ({
   position: absolute;
   left: 6px;
   right: 22px;
-  bottom: 2px;
-  height: 3px;
+  bottom: 1px;
+  height: 2px;
   border-radius: 999px;
   background: #22c55e;
   z-index: 1;
@@ -436,8 +437,8 @@ const segmentStyle = (segment) => ({
   position: absolute;
   left: 4px;
   right: 4px;
-  bottom: 2px;
-  height: 3px;
+  bottom: 1px;
+  height: 2px;
   border-radius: 999px;
   background: var(--confidence-color, #22c55e);
 }
