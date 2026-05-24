@@ -1420,8 +1420,10 @@ const conciseList = (items, limit = 3) => {
                     :class="hostLevelClass(plant.host_id_level || plant.rank)"
                     :title="hostDisplayTitle(plant)"
                   >
-                    <em>{{ plant.name }}</em>
-                    <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
+                    <span class="host-chip-names">
+                      <em class="reported-name">{{ plant.name }}</em>
+                      <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
+                    </span>
                     <span v-if="plant.gbif_records > 0" class="chip-count">{{ plant.gbif_records.toLocaleString() }}</span>
                   </span>
                   <button
@@ -1464,8 +1466,10 @@ const conciseList = (items, limit = 3) => {
                         :class="hostLevelClass(plant.host_id_level || plant.rank)"
                         :title="hostDisplayTitle(plant)"
                       >
-                        <em>{{ plant.name }}</em>
-                        <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
+                        <span class="host-chip-names">
+                          <em class="reported-name">{{ plant.name }}</em>
+                          <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
+                        </span>
                         <span v-if="plant.gbif_records > 0" class="chip-count">{{ plant.gbif_records.toLocaleString() }}</span>
                       </span>
                       <span v-if="hostPlantsByHostIdLevel(row.hostPlants)[level.key].length === 0" class="text-muted">—</span>
@@ -2323,7 +2327,7 @@ const conciseList = (items, limit = 3) => {
 .host-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   min-height: 24px;
   padding: 3px 7px;
   border-radius: 5px;
@@ -2332,20 +2336,33 @@ const conciseList = (items, limit = 3) => {
   color: var(--color-text-primary, #e0e0e0);
   font-size: 0.74rem;
   line-height: 1.2;
-  max-width: 260px;
+  max-width: 280px;
+  vertical-align: top;
 }
 
-.host-chip em {
+.host-chip-names {
+  display: grid;
+  min-width: 0;
+  row-gap: 1px;
+}
+
+.host-chip em,
+.host-chip .reported-name,
+.host-chip .accepted-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.host-chip .chip-count {
+  flex: 0 0 auto;
+  align-self: center;
 }
 
 .accepted-name,
 .accepted-host-name {
   color: var(--color-text-muted, #888);
   font-size: 0.7rem;
-  margin-left: 2px;
 }
 
 .accepted-host-name {
