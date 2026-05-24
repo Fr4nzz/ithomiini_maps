@@ -2433,6 +2433,29 @@ const conciseList = (items, limit = 3) => {
   color: #fda4af;
 }
 
+
+:global([data-mode="light"]) .host-chip.species,
+:global([data-mode="light"]) .host-chip.high {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(22, 163, 74, 0.34);
+  color: #15803d;
+}
+
+:global([data-mode="light"]) .host-chip.genus,
+:global([data-mode="light"]) .host-chip.medium {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(217, 119, 6, 0.38);
+  color: #92400e;
+}
+
+:global([data-mode="light"]) .host-chip.family,
+:global([data-mode="light"]) .host-chip.low,
+:global([data-mode="light"]) .host-chip.needs-check {
+  background: rgba(244, 63, 94, 0.13);
+  border-color: rgba(225, 29, 72, 0.34);
+  color: #be123c;
+}
+
 .host-chip.more {
   cursor: pointer;
   color: #60a5fa;
@@ -2446,6 +2469,11 @@ const conciseList = (items, limit = 3) => {
   font-size: 0.64rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+
+:global([data-mode="light"]) .chip-count {
+  background: rgba(15, 23, 42, 0.16);
+  color: inherit;
 }
 
 .confidence-pill {
