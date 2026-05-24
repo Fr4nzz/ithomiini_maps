@@ -1420,7 +1420,7 @@ const conciseList = (items, limit = 3) => {
                     :class="hostLevelClass(plant.host_id_level || plant.rank)"
                     :title="hostDisplayTitle(plant)"
                   >
-                    <span class="host-chip-names">
+                    <span class="host-chip-names" :class="{ 'has-accepted-name': plant.accepted_name }">
                       <em class="reported-name">{{ plant.name }}</em>
                       <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
                     </span>
@@ -1466,7 +1466,7 @@ const conciseList = (items, limit = 3) => {
                         :class="hostLevelClass(plant.host_id_level || plant.rank)"
                         :title="hostDisplayTitle(plant)"
                       >
-                        <span class="host-chip-names">
+                        <span class="host-chip-names" :class="{ 'has-accepted-name': plant.accepted_name }">
                           <em class="reported-name">{{ plant.name }}</em>
                           <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
                         </span>
@@ -2360,6 +2360,10 @@ const conciseList = (items, limit = 3) => {
 }
 
 .host-chip .reported-name {
+  color: inherit;
+}
+
+.host-chip-names.has-accepted-name .reported-name {
   color: #b8bec8;
 }
 
@@ -2373,7 +2377,7 @@ const conciseList = (items, limit = 3) => {
   color: inherit;
 }
 
-:global([data-mode="light"]) .host-chip .reported-name {
+:global([data-mode="light"]) .host-chip-names.has-accepted-name .reported-name {
   color: #52606d;
 }
 
