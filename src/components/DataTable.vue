@@ -535,7 +535,7 @@ const hostPlantButterflyRows = computed(() => {
       hostPlants: new Map(),
       counts: { species: 0, genus: 0, family: 0 },
       families: new Set(),
-      sources: new Set(),
+      sources: new Map(),
       occurrenceBacked: new Set(),
     }
     const existing = entry.hostPlants.get(row.host)
@@ -557,7 +557,11 @@ const hostPlantButterflyRows = computed(() => {
     if (entry.counts[row.host_id_level] != null) entry.counts[row.host_id_level] += 1
     if (row.family && row.family !== '—') entry.families.add(row.family)
     const source = compactSourceLabel(row.source)
-    if (source) entry.sources.add(source)
+    if (source && !entry.sources.has(source)) {
+      entry.sources.set(source, { label: source, url: row.source_url })
+    } else if (source && row.source_url && !entry.sources.get(source)?.url) {
+      entry.sources.set(source, { label: source, url: row.source_url })
+    }
     if (row.mapped) entry.occurrenceBacked.add(row.host)
     byButterfly.set(row.butterfly, entry)
   }
@@ -574,13 +578,14 @@ const hostPlantButterflyRows = computed(() => {
       host_count: hosts.length,
       counts: entry.counts,
       families: [...entry.families].sort(),
-      sources: [...entry.sources].sort(),
+      sources: [...entry.sources.keys()].sort(),
+      sourceLinks: [...entry.sources.values()].sort((a, b) => a.label.localeCompare(b.label)),
       occurrence_backed_count: entry.occurrenceBacked.size,
       searchText: [
         entry.butterfly,
         ...hosts.map(host => host.name),
         ...entry.families,
-        ...entry.sources,
+        ...entry.sources.keys(),
       ].join(' ').toLowerCase(),
     }
   })
@@ -1447,7 +1452,21 @@ const conciseList = (items, limit = 3) => {
               <td class="cell-records"><span class="confidence-pill family">{{ row.counts.family }}</span></td>
               <td>{{ conciseList(row.families, 3) }}</td>
               <td class="cell-records">{{ row.occurrence_backed_count }}</td>
-              <td>{{ conciseList(row.sources, 2) }}</td>
+              <td>
+                <span class="source-list compact-source-list">
+                  <template v-for="source in row.sourceLinks.slice(0, 2)" :key="source.label">
+                    <a
+                      v-if="source.url"
+                      :href="source.url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="source-link"
+                    >{{ source.label }}</a>
+                    <span v-else>{{ source.label }}</span>
+                  </template>
+                  <span v-if="row.sourceLinks.length > 2" class="text-muted">+{{ row.sourceLinks.length - 2 }} more</span>
+                </span>
+              </td>
             </tr>
             <tr v-if="expandedHostButterflies.has(row.butterfly)" class="host-expanded-row">
               <td class="host-expanded-spacer" aria-hidden="true"></td>
@@ -2571,6 +2590,13 @@ const conciseList = (items, limit = 3) => {
 .source-link:hover {
   color: #93c5fd;
   text-decoration: underline;
+}
+
+.compact-source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
 }
 
 .mapped-badge {
