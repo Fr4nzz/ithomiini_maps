@@ -352,6 +352,27 @@ const coordinates = computed(() => {
   return null
 })
 
+
+const currentHostSlug = computed(() => currentSpecimen.value?.host_taxon_slug || null)
+const currentHostGalleryIndex = computed(() => {
+  const slug = currentHostSlug.value
+  return slug ? hostPlantStore.galleryIndexCache?.[slug] : null
+})
+const currentHostLoadedLimit = computed(() => {
+  const slug = currentHostSlug.value
+  return slug ? (hostPlantStore.galleryVisibleLimitBySlug?.[slug] || 0) : 0
+})
+const currentHostTotalImages = computed(() => currentHostGalleryIndex.value?.total_images || 0)
+const canLoadMoreHostImages = computed(() =>
+  galleryMode.value === 'host-plants' &&
+  currentHostSlug.value &&
+  currentHostTotalImages.value > currentHostLoadedLimit.value
+)
+const loadMoreHostImages = async () => {
+  if (!currentHostSlug.value) return
+  await hostPlantStore.loadMoreGalleryForSlug(currentHostSlug.value, 10)
+}
+
 // Current specimen
 const currentSpecimen = computed(() => {
   return specimensWithImages.value[currentIndex.value] || null
@@ -916,6 +937,16 @@ watch(currentIndex, () => {
           <div class="image-counter">
             {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
           </div>
+          <button
+            v-if="canLoadMoreHostImages"
+            class="host-gallery-load-more"
+            :disabled="hostPlantStore.galleryLoading"
+            @click="loadMoreHostImages"
+          >
+            Load 10 more images for this host taxon
+            <span>{{ Math.min(currentHostLoadedLimit, currentHostTotalImages) }} / {{ currentHostTotalImages }}</span>
+          </button>
+
         </div>
       </div>
 
@@ -937,4 +968,30 @@ watch(currentIndex, () => {
 </template>
 
 
+<style scoped>
+.host-gallery-load-more {
+  position: absolute;
+  right: 1rem;
+  bottom: 4.5rem;
+  z-index: 5;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.55rem 0.85rem;
+  background: var(--panel-bg);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+.host-gallery-load-more:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.host-gallery-load-more span {
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+</style>
 <style scoped src="./image-gallery-styles.css"></style>

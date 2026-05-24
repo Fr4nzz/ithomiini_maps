@@ -15,9 +15,14 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
   const occurrenceError = ref(null)
   const loadedOccurrenceShards = ref([])
   const occurrenceShardCache = shallowRef({})
+  const occurrenceRefCache = shallowRef({})
+  const occurrenceChunkCache = shallowRef({})
   const galleryDataset = shallowRef(null)
+  const galleryIndexCache = shallowRef({})
+  const galleryPageCache = shallowRef({})
   const galleryLoading = ref(false)
   const galleryError = ref(null)
+  const galleryVisibleLimitBySlug = ref({})
 
   const hostIdLevels = [
     { key: 'species', label: 'Species', description: 'Exact host plant species reported.' },
@@ -388,6 +393,53 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     return [...names]
   }
 
+  function enrichOccurrenceForSlug(record, slug) {
+    const taxon = taxaBySlug.value.get(slug) || {}
+    return {
+      ...record,
+      id: record.id || record.gbifID || `${slug}-${record.lat},${record.lng}`,
+      host_taxon_slug: slug,
+      host_taxon_rank: taxon.rank || record.host_taxon_rank,
+      host_taxon_name: taxon.canonical_name || record.host_taxon_name || record.scientific_name,
+      host_family: taxon.family || record.family,
+      gallery_kind: 'host-plants',
+    }
+  }
+
+  function rebuildOccurrenceDatasetFromV2(slugs = selectedTaxonSlugs.value) {
+    const selected = new Set((slugs || []).filter(Boolean))
+    const records = []
+    const statsBySlug = {}
+    const seen = new Set()
+    for (const slug of selected) {
+      const ref = occurrenceRefCache.value[slug]
+      if (!ref) continue
+      statsBySlug[slug] = ref.stats_by_slug?.[slug] || { total_records: ref.metadata?.total_records || 0 }
+      for (const [chunkName, indexes] of Object.entries(ref.chunks || {})) {
+        const chunk = occurrenceChunkCache.value[chunkName]
+        if (!chunk) continue
+        for (const index of indexes || []) {
+          const record = chunk.records?.[index]
+          if (!record) continue
+          const key = `${slug}|${record.gbifID || record.id || index}`
+          if (seen.has(key)) continue
+          seen.add(key)
+          records.push(enrichOccurrenceForSlug(record, slug))
+        }
+      }
+    }
+    occurrenceDataset.value = {
+      metadata: {
+        ...(manifest.value?.metadata || {}),
+        loaded_slugs: [...selected],
+        total_records: records.length,
+        occurrence_store_version: 2,
+      },
+      stats_by_slug: statsBySlug,
+      records,
+    }
+  }
+
   function rebuildOccurrenceDataset() {
     const cache = occurrenceShardCache.value || {}
     const records = []
@@ -418,6 +470,39 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
 
   async function loadOccurrences(slugs = selectedTaxonSlugs.value) {
     await loadMetadata()
+    const selected = [...new Set((slugs || []).filter(Boolean))]
+    const refsByTaxon = manifest.value?.metadata?.occurrence_refs_by_taxon || {}
+
+    if (manifest.value?.metadata?.occurrence_store_version === 2 && Object.keys(refsByTaxon).length > 0) {
+      occurrenceLoading.value = true
+      occurrenceError.value = null
+      try {
+        const missingRefs = selected.filter(slug => refsByTaxon[slug] && !occurrenceRefCache.value[slug])
+        const loadedRefs = await Promise.all(missingRefs.map(async slug => [slug, await fetchJson(refsByTaxon[slug])]))
+        if (loadedRefs.length > 0) {
+          occurrenceRefCache.value = { ...occurrenceRefCache.value, ...Object.fromEntries(loadedRefs) }
+        }
+        const neededChunks = new Set()
+        for (const slug of selected) {
+          const ref = occurrenceRefCache.value[slug]
+          for (const chunkName of Object.keys(ref?.chunks || {})) neededChunks.add(chunkName)
+        }
+        const missingChunks = [...neededChunks].filter(name => !occurrenceChunkCache.value[name])
+        const loadedChunks = await Promise.all(missingChunks.map(async name => [name, await fetchJson(name)]))
+        if (loadedChunks.length > 0) {
+          occurrenceChunkCache.value = { ...occurrenceChunkCache.value, ...Object.fromEntries(loadedChunks) }
+        }
+        loadedOccurrenceShards.value = [...neededChunks]
+        rebuildOccurrenceDatasetFromV2(selected)
+        return occurrenceDataset.value
+      } catch (error) {
+        occurrenceError.value = error instanceof Error ? error.message : String(error)
+        return null
+      } finally {
+        occurrenceLoading.value = false
+      }
+    }
+
     const shardNames = occurrenceShardNamesForSlugs(slugs)
     const missing = shardNames.filter(name => !occurrenceShardCache.value[name])
     if (missing.length === 0) {
@@ -460,13 +545,96 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     }
   }
 
+  function rebuildGalleryDatasetFromPages(slugs = selectedTaxonSlugs.value) {
+    const selected = [...new Set((slugs || []).filter(Boolean))]
+    const statsBySlug = {}
+    const items = []
+    const indexesBySlug = manifest.value?.metadata?.gallery_indexes_by_taxon || {}
+    for (const slug of selected) {
+      const index = galleryIndexCache.value[slug]
+      if (!index) continue
+      statsBySlug[slug] = index.stats_by_slug?.[slug] || {
+        total_records: index.total_images || 0,
+        records_with_images: index.total_images || 0,
+        records_without_images: 0,
+      }
+      const pages = index.pages || []
+      const visibleLimit = galleryVisibleLimitBySlug.value[slug] || (manifest.value?.metadata?.gallery_page_size || 100)
+      let added = 0
+      for (const pagePath of pages) {
+        const page = galleryPageCache.value[pagePath]
+        if (!page) continue
+        for (const item of page.items || []) {
+          if (added >= visibleLimit) break
+          items.push(item)
+          added += 1
+        }
+        if (added >= visibleLimit) break
+      }
+    }
+    galleryDataset.value = {
+      metadata: {
+        ...(manifest.value?.metadata || {}),
+        loaded_slugs: selected,
+        item_count: items.length,
+        gallery_store_version: 2,
+      },
+      stats_by_slug: statsBySlug,
+      items,
+      indexes_by_slug: Object.fromEntries(selected.map(slug => [slug, galleryIndexCache.value[slug]]).filter(([, index]) => Boolean(index))),
+      loaded_limits_by_slug: { ...galleryVisibleLimitBySlug.value },
+    }
+  }
+
+  async function ensureGalleryPagesForLimit(slug, limit) {
+    const index = galleryIndexCache.value[slug]
+    if (!index) return
+    const pageSize = index.page_size || manifest.value?.metadata?.gallery_page_size || 100
+    const pageCount = Math.min(index.pages?.length || 0, Math.ceil(limit / pageSize))
+    const pagePaths = (index.pages || []).slice(0, pageCount)
+    const missingPages = pagePaths.filter(path => !galleryPageCache.value[path])
+    if (missingPages.length === 0) return
+    const loadedPages = await Promise.all(missingPages.map(async path => [path, await fetchJson(path)]))
+    galleryPageCache.value = { ...galleryPageCache.value, ...Object.fromEntries(loadedPages) }
+  }
+
   async function loadGallery(slugs = selectedTaxonSlugs.value) {
     await loadMetadata()
+    const selected = [...new Set((slugs || []).filter(Boolean))]
+    const galleryIndexes = manifest.value?.metadata?.gallery_indexes_by_taxon || {}
+
+    if (Object.keys(galleryIndexes).length > 0) {
+      const sourceSlugs = selected.length > 0 ? selected : Object.keys(galleryIndexes)
+      galleryLoading.value = true
+      galleryError.value = null
+      try {
+        const missingIndexes = sourceSlugs.filter(slug => galleryIndexes[slug] && !galleryIndexCache.value[slug])
+        const loadedIndexes = await Promise.all(missingIndexes.map(async slug => [slug, await fetchJson(galleryIndexes[slug])]))
+        if (loadedIndexes.length > 0) {
+          galleryIndexCache.value = { ...galleryIndexCache.value, ...Object.fromEntries(loadedIndexes) }
+        }
+        const defaultLimit = manifest.value?.metadata?.gallery_initial_limit || 10
+        for (const slug of sourceSlugs) {
+          if (!galleryVisibleLimitBySlug.value[slug]) {
+            galleryVisibleLimitBySlug.value = { ...galleryVisibleLimitBySlug.value, [slug]: defaultLimit }
+          }
+          await ensureGalleryPagesForLimit(slug, galleryVisibleLimitBySlug.value[slug])
+        }
+        rebuildGalleryDatasetFromPages(sourceSlugs)
+        return galleryDataset.value
+      } catch (error) {
+        galleryError.value = error instanceof Error ? error.message : String(error)
+        return null
+      } finally {
+        galleryLoading.value = false
+      }
+    }
+
     const byTaxon = manifest.value?.metadata?.gallery_shards_by_taxon || {}
-    const selected = new Set((slugs || []).filter(Boolean))
+    const selectedSet = new Set(selected)
 
     if (Object.keys(byTaxon).length > 0) {
-      const sourceSlugs = selected.size > 0 ? [...selected] : Object.keys(byTaxon)
+      const sourceSlugs = selectedSet.size > 0 ? [...selectedSet] : Object.keys(byTaxon)
       const shardNames = [...new Set(sourceSlugs.flatMap(slug => {
         const shard = byTaxon[slug]
         return Array.isArray(shard) ? shard : (shard ? [shard] : [])
@@ -520,6 +688,25 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     }
   }
 
+  async function loadMoreGalleryForSlug(slug, increment = 10) {
+    await loadMetadata()
+    const current = galleryVisibleLimitBySlug.value[slug] || 0
+    const next = current + increment
+    galleryVisibleLimitBySlug.value = { ...galleryVisibleLimitBySlug.value, [slug]: next }
+    galleryLoading.value = true
+    galleryError.value = null
+    try {
+      await ensureGalleryPagesForLimit(slug, next)
+      rebuildGalleryDatasetFromPages(selectedTaxonSlugs.value)
+      return galleryDataset.value
+    } catch (error) {
+      galleryError.value = error instanceof Error ? error.message : String(error)
+      return null
+    } finally {
+      galleryLoading.value = false
+    }
+  }
+
   function getOccurrenceCollectionForTaxa(slugs = selectedTaxonSlugs.value) {
     const selected = new Set((slugs || []).filter(Boolean))
     const features = (occurrenceDataset.value?.records || [])
@@ -551,9 +738,14 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     occurrenceError,
     loadedOccurrenceShards,
     occurrenceShardCache,
+    occurrenceRefCache,
+    occurrenceChunkCache,
     galleryDataset,
     galleryLoading,
     galleryError,
+    galleryIndexCache,
+    galleryPageCache,
+    galleryVisibleLimitBySlug,
     confidenceLevels,
     hostIdLevels,
     evidenceLevels,
@@ -580,6 +772,7 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     loadOccurrences,
     occurrenceShardNamesForSlugs,
     loadGallery,
+    loadMoreGalleryForSlug,
     getOccurrenceCollectionForTaxa,
     occurrenceCountForSlug,
   }
