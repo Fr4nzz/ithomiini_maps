@@ -2583,6 +2583,41 @@ const conciseList = (items, limit = 3) => {
   color: #4ade80;
 }
 
+
+/* Light-mode host chip contrast: keep fully global so scoped CSS cannot miss the html theme class. */
+:global(html.light .host-chip.species),
+:global(html.light .host-chip.high) {
+  background: rgba(34, 197, 94, 0.18) !important;
+  border-color: rgba(22, 163, 74, 0.42) !important;
+  color: #166534 !important;
+}
+
+:global(html.light .host-chip.genus),
+:global(html.light .host-chip.medium) {
+  background: rgba(245, 158, 11, 0.18) !important;
+  border-color: rgba(217, 119, 6, 0.46) !important;
+  color: #92400e !important;
+}
+
+:global(html.light .host-chip.family),
+:global(html.light .host-chip.low),
+:global(html.light .host-chip.needs-check) {
+  background: rgba(244, 63, 94, 0.16) !important;
+  border-color: rgba(225, 29, 72, 0.42) !important;
+  color: #9f1239 !important;
+}
+
+:global(html.light .host-chip .reported-name),
+:global(html.light .host-chip .accepted-name),
+:global(html.light .host-chip .accepted-name em),
+:global(html.light .host-chip .chip-count) {
+  color: inherit !important;
+}
+
+:global(html.light .host-chip-names.has-accepted-name .reported-name) {
+  color: #64748b !important;
+}
+
 /* Empty State */
 .empty-state {
   text-align: center;
