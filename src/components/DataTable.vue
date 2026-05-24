@@ -2359,9 +2359,22 @@ const conciseList = (items, limit = 3) => {
   align-self: center;
 }
 
-.accepted-name,
+.host-chip .reported-name {
+  color: #b8bec8;
+}
+
+.host-chip .accepted-name {
+  color: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.host-chip .accepted-name em {
+  color: inherit;
+}
+
 .accepted-host-name {
-  color: var(--color-text-muted, #888);
+  color: #b8bec8;
   font-size: 0.7rem;
 }
 
