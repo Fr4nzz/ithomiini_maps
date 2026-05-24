@@ -7,9 +7,13 @@ import { getStatusColor } from '../utils/constants'
 import { getTableThumbnailUrl } from '../utils/imageProxy'
 import { getCorrectionInfo, getGoatUrl } from '../utils/goatHelpers'
 import { useTableSort } from '../composables/useTableSort'
+import { useThemeStore } from '../stores/theme'
+import { getThemeOptions } from '../themes/presets'
+import { Sun, Moon, Palette } from 'lucide-vue-next'
 
 const store = useDataStore()
 const hostPlantStore = useHostPlantStore()
+const themeStore = useThemeStore()
 const openImageGallery = inject('openImageGallery')
 
 // Pagination
@@ -18,6 +22,22 @@ const currentPage = ref(1)
 const tableView = ref('records')
 const hostPlantTableMode = ref('butterflies')
 const expandedHostButterflies = ref(new Set())
+const showThemeDropdown = ref(false)
+const themeOptions = getThemeOptions()
+
+const selectTheme = (themeKey) => {
+  themeStore.setTheme(themeKey)
+  showThemeDropdown.value = false
+}
+
+const currentThemeName = computed(() => {
+  return themeStore.availableThemes[themeStore.currentTheme]?.name || 'Emerald'
+})
+
+const toggleThemeMode = () => {
+  themeStore.toggleMode()
+}
+
 
 // Column visibility
 const visibleColumns = ref({
@@ -884,6 +904,65 @@ const conciseList = (items, limit = 3) => {
       </div>
       
       <div class="header-right">
+        <div class="table-theme-controls">
+          <div class="table-theme-static" title="Map style is available in Map view">
+            <svg class="layer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+            <span>{{ themeStore.isDarkMode ? 'Dark' : 'Light' }}</span>
+          </div>
+
+          <div class="table-theme-dropdown">
+            <button
+              type="button"
+              class="table-theme-trigger"
+              @click.stop="showThemeDropdown = !showThemeDropdown"
+            >
+              <Palette class="layer-icon" />
+              <span>{{ currentThemeName }}</span>
+              <svg class="chevron" :class="{ open: showThemeDropdown }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+
+            <Transition name="fade">
+              <div v-if="showThemeDropdown" class="table-theme-menu">
+                <button
+                  v-for="option in themeOptions"
+                  :key="option.value"
+                  type="button"
+                  :class="{ active: themeStore.currentTheme === option.value }"
+                  @click="selectTheme(option.value)"
+                >
+                  <div
+                    class="theme-swatch"
+                    :style="{ backgroundColor: themeStore.isDarkMode ? option.previewBgDark : option.previewBgLight }"
+                  >
+                    <div
+                      class="theme-swatch-accent"
+                      :style="{ backgroundColor: option.accentColor }"
+                    />
+                  </div>
+                  <span>{{ option.label }}</span>
+                </button>
+              </div>
+            </Transition>
+          </div>
+
+          <button
+            type="button"
+            class="table-mode-toggle"
+            :class="{ 'is-light': !themeStore.isDarkMode }"
+            @click="toggleThemeMode"
+            :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+          >
+            <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
+            <Moon v-else class="mode-icon" />
+          </button>
+        </div>
+
         <div class="view-mode-toggle">
           <button
             :class="{ active: tableView === 'records' }"
@@ -1730,6 +1809,125 @@ const conciseList = (items, limit = 3) => {
   align-items: center;
   gap: 12px;
   position: relative;
+}
+
+.table-theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-theme-static,
+.table-theme-trigger,
+.table-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.table-theme-trigger,
+.table-mode-toggle {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.table-theme-trigger:hover,
+.table-mode-toggle:hover {
+  background: var(--color-bg-secondary, #353558);
+  border-color: var(--color-border-light, #4d4d6c);
+}
+
+.table-theme-static .layer-icon,
+.table-theme-trigger .layer-icon,
+.table-mode-toggle .mode-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent, #4ade80);
+}
+
+.table-mode-toggle {
+  width: 34px;
+  justify-content: center;
+  padding: 0;
+}
+
+.table-mode-toggle.is-light .mode-icon {
+  color: #f59e0b;
+}
+
+.table-theme-trigger .chevron {
+  width: 13px;
+  height: 13px;
+  color: var(--color-text-muted, #888);
+  transition: transform 0.2s;
+}
+
+.table-theme-trigger .chevron.open {
+  transform: rotate(180deg);
+}
+
+.table-theme-dropdown {
+  position: relative;
+}
+
+.table-theme-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 160px;
+  padding: 4px;
+  background: var(--color-bg-overlay, var(--color-bg-primary, #1a1a2e));
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px var(--color-shadow-color, rgba(0, 0, 0, 0.25));
+  z-index: 20;
+}
+
+.table-theme-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.table-theme-menu button:hover,
+.table-theme-menu button.active {
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  color: var(--color-accent, #4ade80);
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border, #3d3d5c);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.theme-swatch-accent {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
 .page-size-select {
