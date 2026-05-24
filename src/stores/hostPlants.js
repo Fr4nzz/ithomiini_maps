@@ -359,11 +359,21 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
 
   function occurrenceShardNamesForSlugs(slugs = selectedTaxonSlugs.value) {
     const selected = new Set((slugs || []).filter(Boolean))
-    const shards = manifest.value?.metadata?.occurrence_core_shards || {}
+    const byTaxon = manifest.value?.metadata?.occurrence_core_shards_by_taxon || {}
     const names = new Set()
+    if (Object.keys(byTaxon).length > 0) {
+      const sourceSlugs = selected.size > 0 ? [...selected] : Object.keys(byTaxon)
+      for (const slug of sourceSlugs) {
+        const shard = byTaxon[slug]
+        if (Array.isArray(shard)) shard.forEach(name => names.add(name))
+        else if (shard) names.add(shard)
+      }
+      return [...names]
+    }
+
+    const shards = manifest.value?.metadata?.occurrence_core_shards || {}
     if (Object.keys(shards).length === 0) {
       const datasetPath = manifest.value?.metadata?.occurrence_core_dataset
-        || manifest.value?.metadata?.gallery_dataset
         || 'host_plant_occurrence_core.json'
       names.add(datasetPath)
       return [...names]
@@ -383,9 +393,15 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     const records = []
     const statsBySlug = {}
     const shardMetadata = []
+    const aliasLookup = manifest.value?.metadata?.occurrence_core_aliases_by_taxon || {}
     for (const [file, dataset] of Object.entries(cache)) {
       records.push(...(dataset.records || []))
       Object.assign(statsBySlug, dataset.stats_by_slug || {})
+      for (const [alias, target] of Object.entries(aliasLookup)) {
+        if (dataset.stats_by_slug?.[target] && !statsBySlug[alias]) {
+          statsBySlug[alias] = dataset.stats_by_slug[target]
+        }
+      }
       shardMetadata.push({ file, ...(dataset.metadata || {}) })
     }
     occurrenceDataset.value = {
@@ -444,7 +460,51 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     }
   }
 
-  async function loadGallery() {
+  async function loadGallery(slugs = selectedTaxonSlugs.value) {
+    await loadMetadata()
+    const byTaxon = manifest.value?.metadata?.gallery_shards_by_taxon || {}
+    const selected = new Set((slugs || []).filter(Boolean))
+
+    if (Object.keys(byTaxon).length > 0) {
+      const sourceSlugs = selected.size > 0 ? [...selected] : Object.keys(byTaxon)
+      const shardNames = [...new Set(sourceSlugs.flatMap(slug => {
+        const shard = byTaxon[slug]
+        return Array.isArray(shard) ? shard : (shard ? [shard] : [])
+      }))]
+      galleryLoading.value = true
+      galleryError.value = null
+      try {
+        const datasets = await Promise.all(shardNames.map(name => fetchJson(name)))
+        const statsBySlug = {}
+        const items = []
+        const aliasLookup = manifest.value?.metadata?.gallery_aliases_by_taxon || {}
+        for (const dataset of datasets) {
+          Object.assign(statsBySlug, dataset.stats_by_slug || {})
+          for (const [alias, target] of Object.entries(aliasLookup)) {
+            if (dataset.stats_by_slug?.[target] && !statsBySlug[alias]) {
+              statsBySlug[alias] = dataset.stats_by_slug[target]
+            }
+          }
+          items.push(...(dataset.items || dataset.records || []))
+        }
+        galleryDataset.value = {
+          metadata: {
+            ...(manifest.value?.metadata || {}),
+            loaded_shards: shardNames,
+            item_count: items.length,
+          },
+          stats_by_slug: statsBySlug,
+          items,
+        }
+        return galleryDataset.value
+      } catch (error) {
+        galleryError.value = error instanceof Error ? error.message : String(error)
+        return null
+      } finally {
+        galleryLoading.value = false
+      }
+    }
+
     if (galleryDataset.value) return galleryDataset.value
     const datasetPath = manifest.value?.metadata?.gallery_dataset || 'host_plant_gallery.json'
     galleryLoading.value = true

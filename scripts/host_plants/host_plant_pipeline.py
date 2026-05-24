@@ -431,8 +431,8 @@ def resolve_taxon(taxon: dict[str, Any], cache: dict[str, Any], *, refresh: bool
     cache_key = f"{taxon['rank']}:{taxon['canonical_name'].lower()}"
     if not refresh and cache_key in cache.get("taxa", {}):
         cached = cache["taxa"][cache_key]
-        requested_rank = clean_text(taxon.get("rank")).lower()
-        gbif_rank = clean_text(cached.get("gbif_rank")).lower()
+        requested_rank = (clean_text(taxon.get("rank")) or "").lower()
+        gbif_rank = (clean_text(cached.get("gbif_rank")) or "").lower()
         if cached.get("status") == "resolved" and requested_rank in {"species", "genus"} and gbif_rank != requested_rank:
             cached = {
                 "query": taxon["canonical_name"],
@@ -743,6 +743,18 @@ def process_download_api_occurrences(
     occurrence_path = extract_dir / "occurrence.txt"
     records_by_slug: dict[str, list[dict[str, Any]]] = {taxon["slug"]: [] for taxon in taxa}
     seen_by_slug: dict[str, set[tuple[float, float]]] = {taxon["slug"]: set() for taxon in taxa}
+    taxa_by_slug = {taxon["slug"]: taxon for taxon in taxa}
+
+    species_slugs_by_name: dict[str, set[str]] = {}
+    genus_slugs_by_name: dict[str, set[str]] = {}
+    for taxon in taxa:
+        if taxon.get("rank") == "species":
+            for name in species_match_names(taxon):
+                species_slugs_by_name.setdefault(name, set()).add(taxon["slug"])
+        elif taxon.get("rank") == "genus":
+            genus = accepted_genus(taxon)
+            if genus:
+                genus_slugs_by_name.setdefault(genus.lower(), set()).add(taxon["slug"])
 
     with occurrence_path.open(encoding="utf-8") as handle:
         reader = csv.DictReader(handle, delimiter="\t")
@@ -750,11 +762,17 @@ def process_download_api_occurrences(
             record = _dwca_row_to_occurrence(row)
             if not record:
                 continue
-            for taxon in taxa:
-                slug = taxon["slug"]
+            candidate_slugs: set[str] = set()
+            record_species = lower_name(occurrence_species_name(record))
+            if record_species:
+                candidate_slugs.update(species_slugs_by_name.get(record_species, set()))
+            record_genus = clean_text(record.get("genus"))
+            if record_genus:
+                candidate_slugs.update(genus_slugs_by_name.get(record_genus.lower(), set()))
+
+            for slug in candidate_slugs:
+                taxon = taxa_by_slug[slug]
                 if effective_limit is not None and len(records_by_slug[slug]) >= effective_limit:
-                    continue
-                if not occurrence_matches_taxon(record, taxon):
                     continue
                 coord = (record["decimalLongitude"], record["decimalLatitude"])
                 if coord in seen_by_slug[slug]:
@@ -1171,11 +1189,9 @@ def run_pipeline(args: argparse.Namespace) -> dict[str, Any]:
     manifest = build_manifest(taxa, seed.get("metadata", {}), args)
     write_json(args.output / "host_plant_layers_manifest.json", manifest)
     if not args.dry_run and (args.output / OCCURRENCE_DATASET_NAME).exists():
-        from build_host_plant_occurrence_core import build_occurrence_core
-        from build_host_plant_gallery_index import build_gallery_index
+        from build_host_plant_taxon_shards import build_taxon_shards
 
-        write_json(args.output / OCCURRENCE_CORE_DATASET_NAME, build_occurrence_core(args.output))
-        write_json(args.output / GALLERY_DATASET_NAME, build_gallery_index(args.output))
+        build_taxon_shards(args.output)
     return {"associations": associations, "taxa": taxa, "selected": selected}
 
 

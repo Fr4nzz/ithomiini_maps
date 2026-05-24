@@ -18,7 +18,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T02:59:28+00:00"
+      "resolved_at": "2026-05-23T22:40:50+00:00"
     },
     "species:prestonia coalita": {
       "query": "Prestonia coalita",
@@ -35,7 +35,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Prestonia",
-      "resolved_at": "2026-05-21T02:59:29+00:00"
+      "resolved_at": "2026-05-23T21:09:11+00:00"
     },
     "species:acnistus arborescens": {
       "query": "Acnistus arborescens",
@@ -52,7 +52,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Iochroma",
-      "resolved_at": "2026-05-21T03:56:54+00:00"
+      "resolved_at": "2026-05-23T22:40:32+00:00"
     },
     "species:athenaea picta": {
       "query": "Athenaea picta",
@@ -69,7 +69,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Athenaea",
-      "resolved_at": "2026-05-21T03:56:55+00:00"
+      "resolved_at": "2026-05-23T22:40:32+00:00"
     },
     "species:aureliana lucida": {
       "query": "Aureliana lucida",
@@ -86,7 +86,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Athenaea",
-      "resolved_at": "2026-05-21T03:56:56+00:00"
+      "resolved_at": "2026-05-23T22:40:33+00:00"
     },
     "species:besleria aggregata": {
       "query": "Besleria aggregata",
@@ -103,7 +103,7 @@
       "kingdom": "Plantae",
       "family": "Gesneriaceae",
       "genus": "Besleria",
-      "resolved_at": "2026-05-21T03:56:56+00:00"
+      "resolved_at": "2026-05-23T22:40:34+00:00"
     },
     "species:brachistus stramoniifolius": {
       "query": "Brachistus stramoniifolius",
@@ -120,7 +120,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brachistus",
-      "resolved_at": "2026-05-21T03:56:57+00:00"
+      "resolved_at": "2026-05-23T22:40:35+00:00"
     },
     "species:brugmansia candida": {
       "query": "Brugmansia candida",
@@ -137,7 +137,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brugmansia",
-      "resolved_at": "2026-05-21T03:56:58+00:00"
+      "resolved_at": "2026-05-23T22:40:36+00:00"
     },
     "species:brugmansia suaveolens": {
       "query": "Brugmansia suaveolens",
@@ -154,7 +154,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brugmansia",
-      "resolved_at": "2026-05-21T03:56:59+00:00"
+      "resolved_at": "2026-05-23T22:40:37+00:00"
     },
     "species:brunfelsia amazonica": {
       "query": "Brunfelsia amazonica",
@@ -171,7 +171,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brunfelsia",
-      "resolved_at": "2026-05-21T03:57:00+00:00"
+      "resolved_at": "2026-05-23T22:40:37+00:00"
     },
     "species:brunfelsia americana": {
       "query": "Brunfelsia americana",
@@ -205,7 +205,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brunfelsia",
-      "resolved_at": "2026-05-21T03:57:01+00:00"
+      "resolved_at": "2026-05-23T22:40:38+00:00"
     },
     "species:brunfelsia dwyeri": {
       "query": "Brunfelsia dwyeri",
@@ -222,7 +222,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brunfelsia",
-      "resolved_at": "2026-05-21T03:57:02+00:00"
+      "resolved_at": "2026-05-23T22:40:39+00:00"
     },
     "species:brunfelsia grandiflora": {
       "query": "Brunfelsia grandiflora",
@@ -239,7 +239,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brunfelsia",
-      "resolved_at": "2026-05-21T03:57:04+00:00"
+      "resolved_at": "2026-05-23T22:40:40+00:00"
     },
     "species:brunfelsia pauciflora": {
       "query": "Brunfelsia pauciflora",
@@ -256,7 +256,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brunfelsia",
-      "resolved_at": "2026-05-21T03:57:04+00:00"
+      "resolved_at": "2026-05-23T22:40:41+00:00"
     },
     "species:brunfelsia pilosa": {
       "query": "Brunfelsia pilosa",
@@ -273,7 +273,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brunfelsia",
-      "resolved_at": "2026-05-21T03:57:05+00:00"
+      "resolved_at": "2026-05-23T22:40:42+00:00"
     },
     "species:brunfelsia uniflora": {
       "query": "Brunfelsia uniflora",
@@ -290,7 +290,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Brunfelsia",
-      "resolved_at": "2026-05-21T03:57:07+00:00"
+      "resolved_at": "2026-05-23T22:40:42+00:00"
     },
     "species:capsicum lycianthoides": {
       "query": "Capsicum lycianthoides",
@@ -307,7 +307,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Capsicum",
-      "resolved_at": "2026-05-21T03:57:08+00:00"
+      "resolved_at": "2026-05-23T22:40:43+00:00"
     },
     "species:capsicum rhomboideum": {
       "query": "Capsicum rhomboideum",
@@ -324,7 +324,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Capsicum",
-      "resolved_at": "2026-05-21T03:57:09+00:00"
+      "resolved_at": "2026-05-23T22:40:44+00:00"
     },
     "species:cestrum amictum": {
       "query": "Cestrum amictum",
@@ -341,7 +341,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:10+00:00"
+      "resolved_at": "2026-05-23T22:40:45+00:00"
     },
     "species:cestrum aurantiacum": {
       "query": "Cestrum aurantiacum",
@@ -375,7 +375,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:11+00:00"
+      "resolved_at": "2026-05-23T22:40:46+00:00"
     },
     "species:cestrum elegans": {
       "query": "Cestrum elegans",
@@ -409,7 +409,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:13+00:00"
+      "resolved_at": "2026-05-23T22:40:47+00:00"
     },
     "species:cestrum glanduliferum": {
       "query": "Cestrum glanduliferum",
@@ -426,7 +426,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:14+00:00"
+      "resolved_at": "2026-05-23T22:40:48+00:00"
     },
     "species:cestrum laevigatum": {
       "query": "Cestrum laevigatum",
@@ -443,7 +443,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:15+00:00"
+      "resolved_at": "2026-05-23T22:40:48+00:00"
     },
     "species:cestrum latifolium": {
       "query": "Cestrum latifolium",
@@ -460,7 +460,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:15+00:00"
+      "resolved_at": "2026-05-23T22:40:49+00:00"
     },
     "species:cestrum microcalyx": {
       "query": "Cestrum microcalyx",
@@ -477,7 +477,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:16+00:00"
+      "resolved_at": "2026-05-23T22:40:51+00:00"
     },
     "species:cestrum newelli": {
       "query": "Cestrum newelli",
@@ -511,7 +511,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:18+00:00"
+      "resolved_at": "2026-05-23T22:40:52+00:00"
     },
     "species:cestrum nr nocturnum": {
       "query": "Cestrum nr nocturnum",
@@ -528,7 +528,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:19+00:00"
+      "resolved_at": "2026-05-23T22:40:53+00:00"
     },
     "species:cestrum parqui": {
       "query": "Cestrum parqui",
@@ -545,7 +545,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:19+00:00"
+      "resolved_at": "2026-05-23T22:40:53+00:00"
     },
     "species:cestrum racemosum": {
       "query": "Cestrum racemosum",
@@ -562,7 +562,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:20+00:00"
+      "resolved_at": "2026-05-23T22:40:54+00:00"
     },
     "species:cestrum rugulosum": {
       "query": "Cestrum rugulosum",
@@ -579,7 +579,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:21+00:00"
+      "resolved_at": "2026-05-23T22:40:55+00:00"
     },
     "species:cestrum schlechtendalii": {
       "query": "Cestrum schlechtendalii",
@@ -596,7 +596,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:22+00:00"
+      "resolved_at": "2026-05-23T22:40:56+00:00"
     },
     "species:cestrum sendtnerianum": {
       "query": "Cestrum sendtnerianum",
@@ -613,7 +613,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:23+00:00"
+      "resolved_at": "2026-05-23T22:40:57+00:00"
     },
     "species:cestrum tomentosum": {
       "query": "Cestrum tomentosum",
@@ -630,7 +630,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cestrum",
-      "resolved_at": "2026-05-21T03:57:24+00:00"
+      "resolved_at": "2026-05-23T22:40:58+00:00"
     },
     "species:columnea consanguinea": {
       "query": "Columnea consanguinea",
@@ -647,7 +647,7 @@
       "kingdom": "Plantae",
       "family": "Gesneriaceae",
       "genus": "Columnea",
-      "resolved_at": "2026-05-21T03:57:24+00:00"
+      "resolved_at": "2026-05-23T22:40:58+00:00"
     },
     "species:columnea grata": {
       "query": "Columnea grata",
@@ -664,7 +664,7 @@
       "kingdom": "Plantae",
       "family": "Gesneriaceae",
       "genus": "Columnea",
-      "resolved_at": "2026-05-21T03:57:25+00:00"
+      "resolved_at": "2026-05-23T22:40:59+00:00"
     },
     "species:cuatresia riparia": {
       "query": "Cuatresia riparia",
@@ -681,7 +681,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cuatresia",
-      "resolved_at": "2026-05-21T03:57:26+00:00"
+      "resolved_at": "2026-05-23T22:41:00+00:00"
     },
     "species:cyphomandra betacea": {
       "query": "Cyphomandra betacea",
@@ -698,7 +698,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:27+00:00"
+      "resolved_at": "2026-05-23T22:41:01+00:00"
     },
     "species:cyphomandra corymbiflora": {
       "query": "Cyphomandra corymbiflora",
@@ -715,7 +715,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:28+00:00"
+      "resolved_at": "2026-05-23T22:41:02+00:00"
     },
     "species:cyphomandra diploconos": {
       "query": "Cyphomandra diploconos",
@@ -732,7 +732,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:29+00:00"
+      "resolved_at": "2026-05-23T22:41:03+00:00"
     },
     "species:cyphomandra divaricata": {
       "query": "Cyphomandra divaricata",
@@ -749,7 +749,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:29+00:00"
+      "resolved_at": "2026-05-23T22:41:03+00:00"
     },
     "species:cyphomandra diversifolia": {
       "query": "Cyphomandra diversifolia",
@@ -766,7 +766,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:30+00:00"
+      "resolved_at": "2026-05-23T22:41:05+00:00"
     },
     "species:cyphomandra hartwegii": {
       "query": "Cyphomandra hartwegii",
@@ -783,7 +783,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:31+00:00"
+      "resolved_at": "2026-05-23T22:41:05+00:00"
     },
     "species:cyphomandra pilosa": {
       "query": "Cyphomandra pilosa",
@@ -800,7 +800,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:32+00:00"
+      "resolved_at": "2026-05-23T22:41:06+00:00"
     },
     "species:cyphomandra sciadostylis": {
       "query": "Cyphomandra sciadostylis",
@@ -817,7 +817,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:33+00:00"
+      "resolved_at": "2026-05-23T22:41:07+00:00"
     },
     "species:cyphomandra velutina": {
       "query": "Cyphomandra velutina",
@@ -834,7 +834,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:57:34+00:00"
+      "resolved_at": "2026-05-23T22:41:08+00:00"
     },
     "species:datura stramonium": {
       "query": "Datura stramonium",
@@ -851,7 +851,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Datura",
-      "resolved_at": "2026-05-21T03:57:34+00:00"
+      "resolved_at": "2026-05-23T22:41:09+00:00"
     },
     "species:dilkea parviflora": {
       "query": "Dilkea parviflora",
@@ -868,7 +868,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Dilkea",
-      "resolved_at": "2026-05-21T03:57:35+00:00"
+      "resolved_at": "2026-05-23T22:41:10+00:00"
     },
     "species:dilkea retusa": {
       "query": "Dilkea retusa",
@@ -885,7 +885,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Dilkea",
-      "resolved_at": "2026-05-21T03:57:36+00:00"
+      "resolved_at": "2026-05-23T22:41:10+00:00"
     },
     "species:drymonia conchocalyx": {
       "query": "Drymonia conchocalyx",
@@ -902,7 +902,7 @@
       "kingdom": "Plantae",
       "family": "Gesneriaceae",
       "genus": "Drymonia",
-      "resolved_at": "2026-05-21T03:57:37+00:00"
+      "resolved_at": "2026-05-23T22:41:11+00:00"
     },
     "species:drymonia oxysepala": {
       "query": "Drymonia oxysepala",
@@ -919,7 +919,7 @@
       "kingdom": "Plantae",
       "family": "Gesneriaceae",
       "genus": "Drymonia",
-      "resolved_at": "2026-05-21T03:57:38+00:00"
+      "resolved_at": "2026-05-23T22:41:12+00:00"
     },
     "species:dunalia solanacea": {
       "query": "Dunalia solanacea",
@@ -936,7 +936,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Saracha",
-      "resolved_at": "2026-05-21T03:57:39+00:00"
+      "resolved_at": "2026-05-23T22:41:13+00:00"
     },
     "species:fernaldia pandurata": {
       "query": "Fernaldia pandurata",
@@ -953,7 +953,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Echites",
-      "resolved_at": "2026-05-21T03:57:40+00:00"
+      "resolved_at": "2026-05-23T22:41:14+00:00"
     },
     "species:hawkesiophyton ulei": {
       "query": "Hawkesiophyton ulei",
@@ -970,7 +970,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Hawkesiophyton",
-      "resolved_at": "2026-05-21T03:57:41+00:00"
+      "resolved_at": "2026-05-23T22:41:14+00:00"
     },
     "species:juanulloa mexicana": {
       "query": "Juanulloa mexicana",
@@ -987,7 +987,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Juanulloa",
-      "resolved_at": "2026-05-21T03:57:42+00:00"
+      "resolved_at": "2026-05-23T22:41:15+00:00"
     },
     "species:lycianthes heteroclita": {
       "query": "Lycianthes heteroclita",
@@ -1004,7 +1004,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:43+00:00"
+      "resolved_at": "2026-05-23T22:41:17+00:00"
     },
     "species:lycianthes howardiana": {
       "query": "Lycianthes howardiana",
@@ -1021,7 +1021,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:44+00:00"
+      "resolved_at": "2026-05-23T21:07:55+00:00"
     },
     "species:lycianthes maxonii": {
       "query": "Lycianthes maxonii",
@@ -1038,7 +1038,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:45+00:00"
+      "resolved_at": "2026-05-23T21:07:56+00:00"
     },
     "species:lycianthes multiflora": {
       "query": "Lycianthes multiflora",
@@ -1055,7 +1055,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:46+00:00"
+      "resolved_at": "2026-05-23T21:07:57+00:00"
     },
     "species:lycianthes nr multiflora": {
       "query": "Lycianthes nr multiflora",
@@ -1072,7 +1072,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:47+00:00"
+      "resolved_at": "2026-05-23T21:07:58+00:00"
     },
     "species:lycianthes radiata": {
       "query": "Lycianthes radiata",
@@ -1089,7 +1089,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:48+00:00"
+      "resolved_at": "2026-05-23T21:07:59+00:00"
     },
     "species:lycianthes sanctaeclarae": {
       "query": "Lycianthes sanctaeclarae",
@@ -1106,7 +1106,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:50+00:00"
+      "resolved_at": "2026-05-23T21:08:00+00:00"
     },
     "species:lycianthes sp": {
       "query": "lycianthes sp",
@@ -1147,31 +1147,110 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Lycianthes",
-      "resolved_at": "2026-05-21T03:57:52+00:00"
+      "resolved_at": "2026-05-23T21:08:00+00:00"
     },
     "species:lycopersicon esculentum": {
-      "query": "lycopersicon esculentum",
+      "query": "Lycopersicon esculentum",
       "rank": "species",
       "status": "not_resolved",
       "match_type": "HIGHERRANK",
-      "note": "GBIF matched lycopersicon esculentum to GENUS (Solanum L.); refusing higher-rank occurrence layer.",
       "gbif_response": {
-        "query": "Lycopersicon esculentum",
-        "rank": "species",
-        "status": "resolved",
-        "gbif_taxon_key": 2928997,
-        "accepted_usage_key": null,
-        "scientific_name": "Solanum L.",
-        "canonical_name": "Solanum",
-        "gbif_rank": "GENUS",
-        "taxonomic_status": "ACCEPTED",
-        "match_type": "HIGHERRANK",
+        "usageKey": 2928997,
+        "scientificName": "Solanum L.",
+        "canonicalName": "Solanum",
+        "rank": "GENUS",
+        "status": "ACCEPTED",
         "confidence": 98,
+        "note": "nextMatch=0",
+        "matchType": "HIGHERRANK",
+        "alternatives": [
+          {
+            "usageKey": 12388934,
+            "scientificName": "Lycopersicon esculentum Mill.",
+            "canonicalName": "Lycopersicon esculentum",
+            "rank": "SPECIES",
+            "status": "HETEROTYPIC_SYNONYM",
+            "confidence": 98,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=-1; score=119",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum lycopersicoides",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2930364,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2930181,
+            "scientificName": "Lycopersicon esculentum Mill.",
+            "canonicalName": "Lycopersicon esculentum",
+            "rank": "SPECIES",
+            "status": "HETEROTYPIC_SYNONYM",
+            "confidence": 98,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=-1; score=119",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum lycopersicum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2930137,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 3801770,
+            "scientificName": "Lycopersicum esculentum Mill",
+            "canonicalName": "Lycopersicum esculentum",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 76,
+            "note": "Similarity: name=65; authorship=0; classification=4; rank=6; status=1; score=76",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Lycopersicum esculentum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 3801770,
+            "class": "Magnoliopsida"
+          }
+        ],
         "kingdom": "Plantae",
+        "phylum": "Tracheophyta",
+        "order": "Solanales",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-21T03:57:53+00:00"
-      }
+        "kingdomKey": 6,
+        "phylumKey": 7707728,
+        "classKey": 220,
+        "orderKey": 1176,
+        "familyKey": 7717,
+        "genusKey": 2928997,
+        "class": "Magnoliopsida"
+      },
+      "note": "GBIF matched Lycopersicon esculentum to GENUS (Solanum L.); refusing higher-rank occurrence layer."
     },
     "species:markea neurantha": {
       "query": "Markea neurantha",
@@ -1188,7 +1267,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Merinthopodium",
-      "resolved_at": "2026-05-21T03:57:54+00:00"
+      "resolved_at": "2026-05-23T21:08:02+00:00"
     },
     "species:markea viridiflora": {
       "query": "Markea viridiflora",
@@ -1205,7 +1284,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Dyssochroma",
-      "resolved_at": "2026-05-21T03:57:55+00:00"
+      "resolved_at": "2026-05-23T21:08:03+00:00"
     },
     "species:mesechites trifida": {
       "query": "Mesechites trifida",
@@ -1222,7 +1301,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Mesechites",
-      "resolved_at": "2026-05-21T03:57:56+00:00"
+      "resolved_at": "2026-05-23T21:08:04+00:00"
     },
     "species:nicandra physalodes": {
       "query": "Nicandra physalodes",
@@ -1239,7 +1318,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Nicandra",
-      "resolved_at": "2026-05-21T03:57:56+00:00"
+      "resolved_at": "2026-05-23T21:08:05+00:00"
     },
     "species:passiflora actinia": {
       "query": "Passiflora actinia",
@@ -1256,7 +1335,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:57:57+00:00"
+      "resolved_at": "2026-05-23T21:08:06+00:00"
     },
     "species:passiflora acuminata": {
       "query": "Passiflora acuminata",
@@ -1273,7 +1352,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:57:58+00:00"
+      "resolved_at": "2026-05-23T21:08:06+00:00"
     },
     "species:passiflora adenopoda": {
       "query": "Passiflora adenopoda",
@@ -1290,7 +1369,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:57:59+00:00"
+      "resolved_at": "2026-05-23T21:08:07+00:00"
     },
     "species:passiflora alata": {
       "query": "Passiflora alata",
@@ -1307,7 +1386,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:00+00:00"
+      "resolved_at": "2026-05-23T21:08:08+00:00"
     },
     "species:passiflora ambigua": {
       "query": "Passiflora ambigua",
@@ -1324,7 +1403,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:01+00:00"
+      "resolved_at": "2026-05-23T21:08:09+00:00"
     },
     "species:passiflora arborea": {
       "query": "Passiflora arborea",
@@ -1341,7 +1420,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:01+00:00"
+      "resolved_at": "2026-05-23T21:08:10+00:00"
     },
     "species:passiflora auriculata": {
       "query": "Passiflora auriculata",
@@ -1358,7 +1437,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:02+00:00"
+      "resolved_at": "2026-05-23T21:08:11+00:00"
     },
     "species:passiflora bicornis": {
       "query": "Passiflora bicornis",
@@ -1375,7 +1454,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:03+00:00"
+      "resolved_at": "2026-05-23T21:08:11+00:00"
     },
     "species:passiflora biflora": {
       "query": "Passiflora biflora",
@@ -1392,7 +1471,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:04+00:00"
+      "resolved_at": "2026-05-23T21:08:12+00:00"
     },
     "species:passiflora caerulea": {
       "query": "Passiflora caerulea",
@@ -1409,7 +1488,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:05+00:00"
+      "resolved_at": "2026-05-23T21:08:13+00:00"
     },
     "species:passiflora candida": {
       "query": "Passiflora candida",
@@ -1426,7 +1505,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:05+00:00"
+      "resolved_at": "2026-05-23T21:08:14+00:00"
     },
     "species:passiflora candollei": {
       "query": "Passiflora candollei",
@@ -1443,7 +1522,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:06+00:00"
+      "resolved_at": "2026-05-23T21:08:15+00:00"
     },
     "species:passiflora capsularis": {
       "query": "Passiflora capsularis",
@@ -1460,7 +1539,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:07+00:00"
+      "resolved_at": "2026-05-23T21:08:16+00:00"
     },
     "species:passiflora chelidonea": {
       "query": "Passiflora chelidonea",
@@ -1477,7 +1556,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:08+00:00"
+      "resolved_at": "2026-05-23T21:08:16+00:00"
     },
     "species:passiflora cirrhiflora": {
       "query": "Passiflora cirrhiflora",
@@ -1494,31 +1573,137 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:09+00:00"
+      "resolved_at": "2026-05-23T21:08:17+00:00"
     },
     "species:passiflora citrifolia": {
-      "query": "passiflora citrifolia",
+      "query": "Passiflora citrifolia",
       "rank": "species",
       "status": "not_resolved",
       "match_type": "HIGHERRANK",
-      "note": "GBIF matched passiflora citrifolia to GENUS (Passiflora L.); refusing higher-rank occurrence layer.",
       "gbif_response": {
-        "query": "Passiflora citrifolia",
-        "rank": "species",
-        "status": "resolved",
-        "gbif_taxon_key": 2874172,
-        "accepted_usage_key": null,
-        "scientific_name": "Passiflora L.",
-        "canonical_name": "Passiflora",
-        "gbif_rank": "GENUS",
-        "taxonomic_status": "ACCEPTED",
-        "match_type": "HIGHERRANK",
+        "usageKey": 2874172,
+        "scientificName": "Passiflora L.",
+        "canonicalName": "Passiflora",
+        "rank": "GENUS",
+        "status": "ACCEPTED",
         "confidence": 99,
+        "note": "nextMatch=0",
+        "matchType": "HIGHERRANK",
+        "alternatives": [
+          {
+            "usageKey": 8310798,
+            "acceptedUsageKey": 2874181,
+            "scientificName": "Passiflora citrifolia Salisb.",
+            "canonicalName": "Passiflora citrifolia",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Malpighiales",
+            "family": "Passifloraceae",
+            "genus": "Passiflora",
+            "species": "Passiflora alata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1414,
+            "familyKey": 2378,
+            "genusKey": 2874172,
+            "speciesKey": 2874181,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 3587735,
+            "acceptedUsageKey": 7799031,
+            "scientificName": "Passiflora citrifolia (Juss.) Mast.",
+            "canonicalName": "Passiflora citrifolia",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Malpighiales",
+            "family": "Passifloraceae",
+            "genus": "Passiflora",
+            "species": "Passiflora jussieui",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1414,
+            "familyKey": 2378,
+            "genusKey": 2874172,
+            "speciesKey": 7799031,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2874186,
+            "scientificName": "Passiflora vitifolia Kunth",
+            "canonicalName": "Passiflora vitifolia",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 16,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=1; score=16",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Malpighiales",
+            "family": "Passifloraceae",
+            "genus": "Passiflora",
+            "species": "Passiflora vitifolia",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1414,
+            "familyKey": 2378,
+            "genusKey": 2874172,
+            "speciesKey": 2874186,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 8396351,
+            "acceptedUsageKey": 7313529,
+            "scientificName": "Passiflora lyrifolia Tussac",
+            "canonicalName": "Passiflora lyrifolia",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 15,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=0; score=15",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Malpighiales",
+            "family": "Passifloraceae",
+            "genus": "Passiflora",
+            "species": "Passiflora oblongata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1414,
+            "familyKey": 2378,
+            "genusKey": 2874172,
+            "speciesKey": 7313529,
+            "class": "Magnoliopsida"
+          }
+        ],
         "kingdom": "Plantae",
+        "phylum": "Tracheophyta",
+        "order": "Malpighiales",
         "family": "Passifloraceae",
         "genus": "Passiflora",
-        "resolved_at": "2026-05-21T03:58:09+00:00"
-      }
+        "kingdomKey": 6,
+        "phylumKey": 7707728,
+        "classKey": 220,
+        "orderKey": 1414,
+        "familyKey": 2378,
+        "genusKey": 2874172,
+        "class": "Magnoliopsida"
+      },
+      "note": "GBIF matched Passiflora citrifolia to GENUS (Passiflora L.); refusing higher-rank occurrence layer."
     },
     "species:passiflora cobanensis": {
       "query": "Passiflora cobanensis",
@@ -1535,7 +1720,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:10+00:00"
+      "resolved_at": "2026-05-23T21:08:19+00:00"
     },
     "species:passiflora coccinea": {
       "query": "Passiflora coccinea",
@@ -1552,7 +1737,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:11+00:00"
+      "resolved_at": "2026-05-23T21:08:20+00:00"
     },
     "species:passiflora coriacea": {
       "query": "Passiflora coriacea",
@@ -1569,7 +1754,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:12+00:00"
+      "resolved_at": "2026-05-23T21:08:21+00:00"
     },
     "species:passiflora costaricensis": {
       "query": "Passiflora costaricensis",
@@ -1586,7 +1771,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:13+00:00"
+      "resolved_at": "2026-05-23T21:08:22+00:00"
     },
     "species:passiflora costata": {
       "query": "Passiflora costata",
@@ -1603,7 +1788,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:14+00:00"
+      "resolved_at": "2026-05-23T21:08:22+00:00"
     },
     "species:passiflora cubensis": {
       "query": "Passiflora cubensis",
@@ -1620,7 +1805,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:14+00:00"
+      "resolved_at": "2026-05-23T21:08:23+00:00"
     },
     "species:passiflora cuspidifolia": {
       "query": "Passiflora cuspidifolia",
@@ -1637,7 +1822,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:15+00:00"
+      "resolved_at": "2026-05-23T21:08:24+00:00"
     },
     "species:passiflora edulis": {
       "query": "Passiflora edulis",
@@ -1654,7 +1839,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:16+00:00"
+      "resolved_at": "2026-05-23T21:08:25+00:00"
     },
     "species:passiflora eichleriana": {
       "query": "Passiflora eichleriana",
@@ -1671,7 +1856,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:17+00:00"
+      "resolved_at": "2026-05-23T21:08:26+00:00"
     },
     "species:passiflora elegans": {
       "query": "Passiflora elegans",
@@ -1688,7 +1873,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:18+00:00"
+      "resolved_at": "2026-05-23T21:08:27+00:00"
     },
     "species:passiflora faroana": {
       "query": "Passiflora faroana",
@@ -1705,7 +1890,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:19+00:00"
+      "resolved_at": "2026-05-23T21:08:27+00:00"
     },
     "species:passiflora foetida": {
       "query": "Passiflora foetida",
@@ -1722,7 +1907,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:20+00:00"
+      "resolved_at": "2026-05-23T21:08:28+00:00"
     },
     "species:passiflora glandulosa": {
       "query": "Passiflora glandulosa",
@@ -1739,7 +1924,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:20+00:00"
+      "resolved_at": "2026-05-23T21:08:29+00:00"
     },
     "species:passiflora glaucescens": {
       "query": "Passiflora glaucescens",
@@ -1756,7 +1941,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:21+00:00"
+      "resolved_at": "2026-05-23T21:08:30+00:00"
     },
     "species:passiflora hahnii": {
       "query": "Passiflora hahnii",
@@ -1773,7 +1958,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:22+00:00"
+      "resolved_at": "2026-05-23T21:08:31+00:00"
     },
     "species:passiflora helleri": {
       "query": "Passiflora helleri",
@@ -1790,7 +1975,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:23+00:00"
+      "resolved_at": "2026-05-23T21:08:31+00:00"
     },
     "species:passiflora herbertiana": {
       "query": "Passiflora herbertiana",
@@ -1824,7 +2009,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:24+00:00"
+      "resolved_at": "2026-05-23T21:08:32+00:00"
     },
     "species:passiflora jileki": {
       "query": "Passiflora jileki",
@@ -1841,7 +2026,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:25+00:00"
+      "resolved_at": "2026-05-23T21:08:33+00:00"
     },
     "species:passiflora lancifolia": {
       "query": "Passiflora lancifolia",
@@ -1858,7 +2043,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:26+00:00"
+      "resolved_at": "2026-05-23T21:08:34+00:00"
     },
     "species:passiflora laurifolia": {
       "query": "Passiflora laurifolia",
@@ -1875,7 +2060,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:27+00:00"
+      "resolved_at": "2026-05-23T21:08:35+00:00"
     },
     "species:passiflora leptopoda": {
       "query": "Passiflora leptopoda",
@@ -1892,7 +2077,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:28+00:00"
+      "resolved_at": "2026-05-23T21:08:36+00:00"
     },
     "species:passiflora lonchophora": {
       "query": "Passiflora lonchophora",
@@ -1909,7 +2094,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:29+00:00"
+      "resolved_at": "2026-05-23T21:08:36+00:00"
     },
     "species:passiflora mansoi": {
       "query": "Passiflora mansoi",
@@ -1926,7 +2111,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:30+00:00"
+      "resolved_at": "2026-05-23T21:08:37+00:00"
     },
     "species:passiflora miersii": {
       "query": "Passiflora miersii",
@@ -1943,7 +2128,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:31+00:00"
+      "resolved_at": "2026-05-23T21:08:38+00:00"
     },
     "species:passiflora misera": {
       "query": "Passiflora misera",
@@ -1960,7 +2145,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:32+00:00"
+      "resolved_at": "2026-05-23T21:08:39+00:00"
     },
     "species:passiflora mollissima": {
       "query": "Passiflora mollissima",
@@ -1977,7 +2162,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:32+00:00"
+      "resolved_at": "2026-05-23T21:08:40+00:00"
     },
     "species:passiflora morifolia": {
       "query": "Passiflora morifolia",
@@ -1994,7 +2179,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:33+00:00"
+      "resolved_at": "2026-05-23T21:08:41+00:00"
     },
     "species:passiflora mucronata": {
       "query": "Passiflora mucronata",
@@ -2011,7 +2196,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:34+00:00"
+      "resolved_at": "2026-05-23T21:08:42+00:00"
     },
     "species:passiflora nitida": {
       "query": "Passiflora nitida",
@@ -2028,7 +2213,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:35+00:00"
+      "resolved_at": "2026-05-23T21:08:43+00:00"
     },
     "species:passiflora nr acuminata": {
       "query": "Passiflora nr acuminata",
@@ -2154,7 +2339,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:41+00:00"
+      "resolved_at": "2026-05-23T21:08:44+00:00"
     },
     "species:passiflora organensis": {
       "query": "Passiflora organensis",
@@ -2171,7 +2356,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:42+00:00"
+      "resolved_at": "2026-05-23T21:08:44+00:00"
     },
     "species:passiflora panamensis": {
       "query": "Passiflora panamensis",
@@ -2188,7 +2373,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:42+00:00"
+      "resolved_at": "2026-05-23T21:08:45+00:00"
     },
     "species:passiflora pentagona": {
       "query": "Passiflora pentagona",
@@ -2205,7 +2390,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:43+00:00"
+      "resolved_at": "2026-05-23T21:08:46+00:00"
     },
     "species:passiflora pittieri": {
       "query": "Passiflora pittieri",
@@ -2222,7 +2407,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:44+00:00"
+      "resolved_at": "2026-05-23T21:08:47+00:00"
     },
     "species:passiflora platyloba": {
       "query": "Passiflora platyloba",
@@ -2239,7 +2424,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:45+00:00"
+      "resolved_at": "2026-05-23T21:08:48+00:00"
     },
     "species:passiflora pohlii": {
       "query": "Passiflora pohlii",
@@ -2256,7 +2441,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:46+00:00"
+      "resolved_at": "2026-05-23T21:08:49+00:00"
     },
     "species:passiflora punctata": {
       "query": "Passiflora punctata",
@@ -2273,7 +2458,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:47+00:00"
+      "resolved_at": "2026-05-23T21:08:49+00:00"
     },
     "species:passiflora quadriglandulosa": {
       "query": "Passiflora quadriglandulosa",
@@ -2290,7 +2475,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:48+00:00"
+      "resolved_at": "2026-05-23T21:08:50+00:00"
     },
     "species:passiflora resticulata": {
       "query": "Passiflora resticulata",
@@ -2307,7 +2492,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:49+00:00"
+      "resolved_at": "2026-05-23T21:08:51+00:00"
     },
     "species:passiflora rhamnifolia": {
       "query": "Passiflora rhamnifolia",
@@ -2324,7 +2509,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:50+00:00"
+      "resolved_at": "2026-05-23T21:08:52+00:00"
     },
     "species:passiflora rubra": {
       "query": "Passiflora rubra",
@@ -2341,7 +2526,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:50+00:00"
+      "resolved_at": "2026-05-23T21:08:53+00:00"
     },
     "species:passiflora sclerophylla": {
       "query": "Passiflora sclerophylla",
@@ -2358,7 +2543,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:51+00:00"
+      "resolved_at": "2026-05-23T21:08:54+00:00"
     },
     "species:passiflora securiclata": {
       "query": "Passiflora securiclata",
@@ -2375,7 +2560,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:52+00:00"
+      "resolved_at": "2026-05-23T21:08:54+00:00"
     },
     "species:passiflora setacea": {
       "query": "Passiflora setacea",
@@ -2392,7 +2577,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:53+00:00"
+      "resolved_at": "2026-05-23T21:08:55+00:00"
     },
     "species:passiflora sexflora": {
       "query": "Passiflora sexflora",
@@ -2409,7 +2594,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:54+00:00"
+      "resolved_at": "2026-05-23T21:08:56+00:00"
     },
     "species:passiflora sidaefolia": {
       "query": "Passiflora sidaefolia",
@@ -2426,7 +2611,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:55+00:00"
+      "resolved_at": "2026-05-23T21:08:57+00:00"
     },
     "species:passiflora suberosa": {
       "query": "Passiflora suberosa",
@@ -2443,7 +2628,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:55+00:00"
+      "resolved_at": "2026-05-23T21:08:58+00:00"
     },
     "species:passiflora talamancensis": {
       "query": "Passiflora talamancensis",
@@ -2460,7 +2645,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:56+00:00"
+      "resolved_at": "2026-05-23T21:08:59+00:00"
     },
     "species:passiflora tricuspis": {
       "query": "Passiflora tricuspis",
@@ -2477,7 +2662,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:57+00:00"
+      "resolved_at": "2026-05-23T21:08:59+00:00"
     },
     "species:passiflora trifasciata": {
       "query": "Passiflora trifasciata",
@@ -2494,7 +2679,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:58+00:00"
+      "resolved_at": "2026-05-23T21:09:00+00:00"
     },
     "species:passiflora truncata": {
       "query": "Passiflora truncata",
@@ -2511,7 +2696,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:59+00:00"
+      "resolved_at": "2026-05-23T21:09:01+00:00"
     },
     "species:passiflora tryphostemmatoides": {
       "query": "Passiflora tryphostemmatoides",
@@ -2528,7 +2713,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:58:59+00:00"
+      "resolved_at": "2026-05-23T21:09:02+00:00"
     },
     "species:passiflora tuberosa": {
       "query": "Passiflora tuberosa",
@@ -2545,7 +2730,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:59:00+00:00"
+      "resolved_at": "2026-05-23T21:09:03+00:00"
     },
     "species:passiflora vellozii": {
       "query": "Passiflora vellozii",
@@ -2562,7 +2747,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:59:01+00:00"
+      "resolved_at": "2026-05-23T21:09:04+00:00"
     },
     "species:passiflora vespertilio": {
       "query": "Passiflora vespertilio",
@@ -2579,7 +2764,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:59:04+00:00"
+      "resolved_at": "2026-05-23T21:09:05+00:00"
     },
     "species:passiflora vitifolia": {
       "query": "Passiflora vitifolia",
@@ -2596,7 +2781,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:59:05+00:00"
+      "resolved_at": "2026-05-23T21:09:05+00:00"
     },
     "species:passiflora xiikzodz": {
       "query": "Passiflora xiikzodz",
@@ -2613,7 +2798,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T03:59:05+00:00"
+      "resolved_at": "2026-05-23T21:09:06+00:00"
     },
     "species:peltastes peltatus": {
       "query": "Peltastes peltatus",
@@ -2630,7 +2815,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Macropharynx",
-      "resolved_at": "2026-05-21T03:59:06+00:00"
+      "resolved_at": "2026-05-23T21:09:07+00:00"
     },
     "species:physalis angulata": {
       "query": "Physalis angulata",
@@ -2647,7 +2832,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Physalis",
-      "resolved_at": "2026-05-21T03:59:07+00:00"
+      "resolved_at": "2026-05-23T21:09:08+00:00"
     },
     "species:physalis neesiana": {
       "query": "Physalis neesiana",
@@ -2664,7 +2849,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Physalis",
-      "resolved_at": "2026-05-21T03:59:08+00:00"
+      "resolved_at": "2026-05-23T21:09:09+00:00"
     },
     "species:physalis nr peruviana": {
       "query": "Physalis nr peruviana",
@@ -2698,7 +2883,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Physalis",
-      "resolved_at": "2026-05-21T03:59:09+00:00"
+      "resolved_at": "2026-05-23T21:09:10+00:00"
     },
     "species:prestonia acutifolia": {
       "query": "Prestonia acutifolia",
@@ -2715,7 +2900,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Prestonia",
-      "resolved_at": "2026-05-21T03:59:10+00:00"
+      "resolved_at": "2026-05-23T21:09:10+00:00"
     },
     "species:prestonia dusenii": {
       "query": "Prestonia dusenii",
@@ -2732,7 +2917,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Prestonia",
-      "resolved_at": "2026-05-21T03:59:11+00:00"
+      "resolved_at": "2026-05-23T21:09:12+00:00"
     },
     "species:prestonia longifolia": {
       "query": "Prestonia longifolia",
@@ -2749,7 +2934,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Prestonia",
-      "resolved_at": "2026-05-21T03:59:12+00:00"
+      "resolved_at": "2026-05-23T21:09:13+00:00"
     },
     "species:prestonia nr portobellensis": {
       "query": "Prestonia nr portobellensis",
@@ -2766,7 +2951,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Prestonia",
-      "resolved_at": "2026-05-21T03:59:13+00:00"
+      "resolved_at": "2026-05-23T21:09:14+00:00"
     },
     "species:prestonia portobellensis": {
       "query": "Prestonia portobellensis",
@@ -2783,7 +2968,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Prestonia",
-      "resolved_at": "2026-05-21T03:59:13+00:00"
+      "resolved_at": "2026-05-23T21:09:15+00:00"
     },
     "species:prestonia quinquangularis": {
       "query": "Prestonia quinquangularis",
@@ -2800,7 +2985,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Prestonia",
-      "resolved_at": "2026-05-21T03:59:14+00:00"
+      "resolved_at": "2026-05-23T21:09:15+00:00"
     },
     "species:schultesianthus leucanthus": {
       "query": "Schultesianthus leucanthus",
@@ -2817,7 +3002,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Schultesianthus",
-      "resolved_at": "2026-05-21T03:59:15+00:00"
+      "resolved_at": "2026-05-23T21:09:16+00:00"
     },
     "species:sessea corymbiflora": {
       "query": "Sessea corymbiflora",
@@ -2834,7 +3019,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Sessea",
-      "resolved_at": "2026-05-21T03:59:16+00:00"
+      "resolved_at": "2026-05-23T21:09:17+00:00"
     },
     "species:solandra grandiflora": {
       "query": "Solandra grandiflora",
@@ -2851,7 +3036,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solandra",
-      "resolved_at": "2026-05-21T03:59:17+00:00"
+      "resolved_at": "2026-05-23T21:09:18+00:00"
     },
     "species:solanum accrescens": {
       "query": "Solanum accrescens",
@@ -2868,7 +3053,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:18+00:00"
+      "resolved_at": "2026-05-23T21:09:19+00:00"
     },
     "species:solanum acerifolium": {
       "query": "Solanum acerifolium",
@@ -2885,7 +3070,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:18+00:00"
+      "resolved_at": "2026-05-23T21:09:20+00:00"
     },
     "species:solanum aculeatissimum": {
       "query": "Solanum aculeatissimum",
@@ -2902,7 +3087,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:19+00:00"
+      "resolved_at": "2026-05-23T21:09:20+00:00"
     },
     "species:solanum adenotrichum": {
       "query": "Solanum adenotrichum",
@@ -2919,7 +3104,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:20+00:00"
+      "resolved_at": "2026-05-23T21:09:21+00:00"
     },
     "species:solanum adhaerens": {
       "query": "Solanum adhaerens",
@@ -2936,7 +3121,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:21+00:00"
+      "resolved_at": "2026-05-23T21:09:22+00:00"
     },
     "species:solanum agrarium": {
       "query": "Solanum agrarium",
@@ -2953,7 +3138,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:22+00:00"
+      "resolved_at": "2026-05-23T21:09:23+00:00"
     },
     "species:solanum anceps": {
       "query": "Solanum anceps",
@@ -2970,7 +3155,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:23+00:00"
+      "resolved_at": "2026-05-23T21:09:24+00:00"
     },
     "species:solanum aphyodendron": {
       "query": "Solanum aphyodendron",
@@ -2987,7 +3172,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:23+00:00"
+      "resolved_at": "2026-05-23T21:09:25+00:00"
     },
     "species:solanum appressum": {
       "query": "Solanum appressum",
@@ -3004,7 +3189,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:24+00:00"
+      "resolved_at": "2026-05-23T21:09:25+00:00"
     },
     "species:solanum arboreum": {
       "query": "Solanum arboreum",
@@ -3021,7 +3206,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:25+00:00"
+      "resolved_at": "2026-05-23T21:09:26+00:00"
     },
     "species:solanum argenteum": {
       "query": "Solanum argenteum",
@@ -3038,7 +3223,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:26+00:00"
+      "resolved_at": "2026-05-23T21:09:27+00:00"
     },
     "species:solanum asperum": {
       "query": "Solanum asperum",
@@ -3055,7 +3240,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:27+00:00"
+      "resolved_at": "2026-05-23T21:09:28+00:00"
     },
     "species:solanum atropurpureum": {
       "query": "Solanum atropurpureum",
@@ -3072,7 +3257,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:28+00:00"
+      "resolved_at": "2026-05-23T21:09:29+00:00"
     },
     "species:solanum aturense": {
       "query": "Solanum aturense",
@@ -3089,7 +3274,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:30+00:00"
+      "resolved_at": "2026-05-23T21:09:30+00:00"
     },
     "species:solanum barbeyanum": {
       "query": "Solanum barbeyanum",
@@ -3106,7 +3291,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:31+00:00"
+      "resolved_at": "2026-05-23T21:09:31+00:00"
     },
     "species:solanum bicolor": {
       "query": "Solanum bicolor",
@@ -3123,7 +3308,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:32+00:00"
+      "resolved_at": "2026-05-23T21:09:32+00:00"
     },
     "species:solanum brusquense": {
       "query": "Solanum brusquense",
@@ -3140,7 +3325,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:33+00:00"
+      "resolved_at": "2026-05-23T21:09:33+00:00"
     },
     "species:solanum caavurana": {
       "query": "Solanum caavurana",
@@ -3157,7 +3342,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:34+00:00"
+      "resolved_at": "2026-05-23T21:09:33+00:00"
     },
     "species:solanum campaniforme": {
       "query": "Solanum campaniforme",
@@ -3174,7 +3359,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:34+00:00"
+      "resolved_at": "2026-05-23T21:09:34+00:00"
     },
     "species:solanum capsicoides": {
       "query": "Solanum capsicoides",
@@ -3191,7 +3376,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:35+00:00"
+      "resolved_at": "2026-05-23T21:09:35+00:00"
     },
     "species:solanum cernuum": {
       "query": "Solanum cernuum",
@@ -3208,7 +3393,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:36+00:00"
+      "resolved_at": "2026-05-23T21:09:36+00:00"
     },
     "species:solanum chlamydogynum": {
       "query": "Solanum chlamydogynum",
@@ -3225,7 +3410,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:37+00:00"
+      "resolved_at": "2026-05-23T21:09:37+00:00"
     },
     "species:solanum chrysotrichum": {
       "query": "Solanum chrysotrichum",
@@ -3242,7 +3427,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:38+00:00"
+      "resolved_at": "2026-05-23T21:09:38+00:00"
     },
     "species:solanum cinnamomeum": {
       "query": "Solanum cinnamomeum",
@@ -3259,7 +3444,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:39+00:00"
+      "resolved_at": "2026-05-23T21:09:39+00:00"
     },
     "species:solanum cordovense": {
       "query": "Solanum cordovense",
@@ -3276,7 +3461,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:39+00:00"
+      "resolved_at": "2026-05-23T21:09:39+00:00"
     },
     "species:solanum crinitum": {
       "query": "Solanum crinitum",
@@ -3293,7 +3478,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:41+00:00"
+      "resolved_at": "2026-05-23T21:09:40+00:00"
     },
     "species:solanum decorum": {
       "query": "Solanum decorum",
@@ -3310,7 +3495,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:42+00:00"
+      "resolved_at": "2026-05-23T21:09:41+00:00"
     },
     "species:solanum didymum": {
       "query": "Solanum didymum",
@@ -3327,7 +3512,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:42+00:00"
+      "resolved_at": "2026-05-23T21:09:43+00:00"
     },
     "species:solanum donianum": {
       "query": "Solanum donianum",
@@ -3344,7 +3529,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:45+00:00"
+      "resolved_at": "2026-05-23T21:09:44+00:00"
     },
     "species:solanum evolvulifolium": {
       "query": "Solanum evolvulifolium",
@@ -3361,7 +3546,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:46+00:00"
+      "resolved_at": "2026-05-23T21:09:46+00:00"
     },
     "species:solanum fastigiatum": {
       "query": "Solanum fastigiatum",
@@ -3378,7 +3563,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:46+00:00"
+      "resolved_at": "2026-05-23T21:09:46+00:00"
     },
     "species:solanum flaccidum": {
       "query": "Solanum flaccidum",
@@ -3395,7 +3580,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:47+00:00"
+      "resolved_at": "2026-05-23T21:09:47+00:00"
     },
     "species:solanum gilo": {
       "query": "Solanum gilo",
@@ -3412,7 +3597,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:48+00:00"
+      "resolved_at": "2026-05-23T21:09:48+00:00"
     },
     "species:solanum goodspeedii": {
       "query": "Solanum goodspeedii",
@@ -3429,7 +3614,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:49+00:00"
+      "resolved_at": "2026-05-23T21:09:49+00:00"
     },
     "species:solanum grandiflorum": {
       "query": "Solanum grandiflorum",
@@ -3446,7 +3631,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:50+00:00"
+      "resolved_at": "2026-05-23T21:09:50+00:00"
     },
     "species:solanum granuloso-leprosum": {
       "query": "Solanum granuloso-leprosum",
@@ -3463,7 +3648,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:51+00:00"
+      "resolved_at": "2026-05-23T21:09:51+00:00"
     },
     "species:solanum hayesii": {
       "query": "Solanum hayesii",
@@ -3480,7 +3665,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:51+00:00"
+      "resolved_at": "2026-05-23T21:09:52+00:00"
     },
     "species:solanum hazenii": {
       "query": "Solanum hazenii",
@@ -3497,7 +3682,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:52+00:00"
+      "resolved_at": "2026-05-23T21:09:53+00:00"
     },
     "species:solanum hexandrum": {
       "query": "Solanum hexandrum",
@@ -3514,31 +3699,284 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:53+00:00"
+      "resolved_at": "2026-05-23T21:09:54+00:00"
     },
     "species:solanum hirsutum": {
-      "query": "solanum hirsutum",
+      "query": "Solanum hirsutum",
       "rank": "species",
       "status": "not_resolved",
       "match_type": "HIGHERRANK",
-      "note": "GBIF matched solanum hirsutum to GENUS (Solanum L.); refusing higher-rank occurrence layer.",
       "gbif_response": {
-        "query": "Solanum hirsutum",
-        "rank": "species",
-        "status": "resolved",
-        "gbif_taxon_key": 2928997,
-        "accepted_usage_key": null,
-        "scientific_name": "Solanum L.",
-        "canonical_name": "Solanum",
-        "gbif_rank": "GENUS",
-        "taxonomic_status": "ACCEPTED",
-        "match_type": "HIGHERRANK",
+        "usageKey": 2928997,
+        "scientificName": "Solanum L.",
+        "canonicalName": "Solanum",
+        "rank": "GENUS",
+        "status": "ACCEPTED",
         "confidence": 99,
+        "note": "nextMatch=0",
+        "matchType": "HIGHERRANK",
+        "alternatives": [
+          {
+            "usageKey": 7883731,
+            "acceptedUsageKey": 2932691,
+            "scientificName": "Solanum hirsutum Roxb.",
+            "canonicalName": "Solanum hirsutum",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum lasiocarpum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2932691,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 10945711,
+            "acceptedUsageKey": 9150405,
+            "scientificName": "Solanum hirsutum Kit.",
+            "canonicalName": "Solanum hirsutum",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum nigrum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 9150405,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7937833,
+            "acceptedUsageKey": 2929039,
+            "scientificName": "Solanum hirsutum Nutt.",
+            "canonicalName": "Solanum hirsutum",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum pumilum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2929039,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 10851418,
+            "acceptedUsageKey": 9150405,
+            "scientificName": "Solanum hirsutum Kit. ex Kanitz",
+            "canonicalName": "Solanum hirsutum",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum nigrum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 9150405,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 8436288,
+            "scientificName": "Solanum hirsutum (Vahl) Dunal",
+            "canonicalName": "Solanum hirsutum",
+            "rank": "SPECIES",
+            "status": "HETEROTYPIC_SYNONYM",
+            "confidence": 98,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=-1; score=119",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum memphiticum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2930450,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7799122,
+            "scientificName": "Solanum hirtulum Steud. ex Dunal",
+            "canonicalName": "Solanum hirtulum",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 93,
+            "note": "Similarity: name=90; authorship=0; classification=4; rank=6; status=1; score=101",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum hirtulum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 7799122,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2929212,
+            "scientificName": "Solanum hirtum Vahl",
+            "canonicalName": "Solanum hirtum",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 93,
+            "note": "Similarity: name=90; authorship=0; classification=4; rank=6; status=1; score=101",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum hirtum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2929212,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 8049040,
+            "acceptedUsageKey": 2929295,
+            "scientificName": "Solanum hirtulum Krause",
+            "canonicalName": "Solanum hirtulum",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 93,
+            "note": "Similarity: name=90; authorship=0; classification=4; rank=6; status=0; score=100",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum hirtulum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2929295,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 8627018,
+            "acceptedUsageKey": 7799122,
+            "scientificName": "Solanum hirtulum Steud.",
+            "canonicalName": "Solanum hirtulum",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 93,
+            "note": "Similarity: name=90; authorship=0; classification=4; rank=6; status=0; score=100",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum hirtulum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 7799122,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2929295,
+            "scientificName": "Solanum hirtulum Steud. ex A.Rich.",
+            "canonicalName": "Solanum hirtulum",
+            "rank": "SPECIES",
+            "status": "DOUBTFUL",
+            "confidence": 91,
+            "note": "Similarity: name=90; authorship=0; classification=4; rank=6; status=-5; score=95",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum hirtulum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2929295,
+            "class": "Magnoliopsida"
+          }
+        ],
         "kingdom": "Plantae",
+        "phylum": "Tracheophyta",
+        "order": "Solanales",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-21T03:59:54+00:00"
-      }
+        "kingdomKey": 6,
+        "phylumKey": 7707728,
+        "classKey": 220,
+        "orderKey": 1176,
+        "familyKey": 7717,
+        "genusKey": 2928997,
+        "class": "Magnoliopsida"
+      },
+      "note": "GBIF matched Solanum hirsutum to GENUS (Solanum L.); refusing higher-rank occurrence layer."
     },
     "species:solanum hirtum": {
       "query": "Solanum hirtum",
@@ -3555,7 +3993,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:55+00:00"
+      "resolved_at": "2026-05-23T21:09:55+00:00"
     },
     "species:solanum hispidum": {
       "query": "Solanum hispidum",
@@ -3572,7 +4010,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:56+00:00"
+      "resolved_at": "2026-05-23T21:09:56+00:00"
     },
     "species:solanum incarceratum": {
       "query": "Solanum incarceratum",
@@ -3589,7 +4027,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:56+00:00"
+      "resolved_at": "2026-05-23T21:09:57+00:00"
     },
     "species:solanum insidiosum": {
       "query": "Solanum insidiosum",
@@ -3606,7 +4044,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:57+00:00"
+      "resolved_at": "2026-05-23T21:09:58+00:00"
     },
     "species:solanum jamaicense": {
       "query": "Solanum jamaicense",
@@ -3623,7 +4061,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:58+00:00"
+      "resolved_at": "2026-05-23T21:09:59+00:00"
     },
     "species:solanum jatrophaefolium": {
       "query": "Solanum jatrophaefolium",
@@ -3640,7 +4078,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T03:59:59+00:00"
+      "resolved_at": "2026-05-23T21:09:59+00:00"
     },
     "species:solanum lanceifolium": {
       "query": "Solanum lanceifolium",
@@ -3657,7 +4095,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:00+00:00"
+      "resolved_at": "2026-05-23T21:10:00+00:00"
     },
     "species:solanum lanceolatum": {
       "query": "Solanum lanceolatum",
@@ -3674,31 +4112,262 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:01+00:00"
+      "resolved_at": "2026-05-23T21:10:01+00:00"
     },
     "species:solanum laurifolium": {
-      "query": "solanum laurifolium",
+      "query": "Solanum laurifolium",
       "rank": "species",
       "status": "not_resolved",
       "match_type": "HIGHERRANK",
-      "note": "GBIF matched solanum laurifolium to GENUS (Solanum L.); refusing higher-rank occurrence layer.",
       "gbif_response": {
-        "query": "Solanum laurifolium",
-        "rank": "species",
-        "status": "resolved",
-        "gbif_taxon_key": 2928997,
-        "accepted_usage_key": null,
-        "scientific_name": "Solanum L.",
-        "canonical_name": "Solanum",
-        "gbif_rank": "GENUS",
-        "taxonomic_status": "ACCEPTED",
-        "match_type": "HIGHERRANK",
+        "usageKey": 2928997,
+        "scientificName": "Solanum L.",
+        "canonicalName": "Solanum",
+        "rank": "GENUS",
+        "status": "ACCEPTED",
         "confidence": 99,
+        "note": "nextMatch=0",
+        "matchType": "HIGHERRANK",
+        "alternatives": [
+          {
+            "usageKey": 7913856,
+            "acceptedUsageKey": 2932599,
+            "scientificName": "Solanum laurifolium Mill.",
+            "canonicalName": "Solanum laurifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum subinerme",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2932599,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7418324,
+            "acceptedUsageKey": 2932177,
+            "scientificName": "Solanum laurifolium L.fil.",
+            "canonicalName": "Solanum laurifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum hazenii",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2932177,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2932178,
+            "acceptedUsageKey": 2932177,
+            "scientificName": "Solanum laurifolium Dunal",
+            "canonicalName": "Solanum laurifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 99,
+            "note": "Similarity: name=110; authorship=0; classification=4; rank=6; status=0; score=120",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum hazenii",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2932177,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 8006791,
+            "scientificName": "Solanum latifolium Lam.",
+            "canonicalName": "Solanum latifolium",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 16,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=1; score=16",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum latifolium",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 8006791,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2932848,
+            "acceptedUsageKey": 2932847,
+            "scientificName": "Solanum aureifolium Rusby",
+            "canonicalName": "Solanum aureifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 15,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=0; score=15",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum maturecalvans",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2932847,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2932135,
+            "acceptedUsageKey": 2932389,
+            "scientificName": "Solanum daturifolium Dunal",
+            "canonicalName": "Solanum daturifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 15,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=0; score=15",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum torvum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2932389,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 3796984,
+            "acceptedUsageKey": 2929008,
+            "scientificName": "Solanum lancifolium Sessé & Moc.",
+            "canonicalName": "Solanum lancifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 15,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=0; score=15",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum umbellatum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2929008,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 8428608,
+            "acceptedUsageKey": 2929466,
+            "scientificName": "Solanum latifolium Dunal",
+            "canonicalName": "Solanum latifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 15,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=0; score=15",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum repandum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2929466,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2929469,
+            "acceptedUsageKey": 2932209,
+            "scientificName": "Solanum latifolium Poir.",
+            "canonicalName": "Solanum latifolium",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 15,
+            "note": "Similarity: name=5; authorship=0; classification=4; rank=6; status=0; score=15",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Solanum",
+            "species": "Solanum rigidum",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 2928997,
+            "speciesKey": 2932209,
+            "class": "Magnoliopsida"
+          }
+        ],
         "kingdom": "Plantae",
+        "phylum": "Tracheophyta",
+        "order": "Solanales",
         "family": "Solanaceae",
         "genus": "Solanum",
-        "resolved_at": "2026-05-21T04:00:01+00:00"
-      }
+        "kingdomKey": 6,
+        "phylumKey": 7707728,
+        "classKey": 220,
+        "orderKey": 1176,
+        "familyKey": 7717,
+        "genusKey": 2928997,
+        "class": "Magnoliopsida"
+      },
+      "note": "GBIF matched Solanum laurifolium to GENUS (Solanum L.); refusing higher-rank occurrence layer."
     },
     "species:solanum leucodendron": {
       "query": "Solanum leucodendron",
@@ -3715,7 +4384,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:02+00:00"
+      "resolved_at": "2026-05-23T21:10:03+00:00"
     },
     "species:solanum lucens": {
       "query": "Solanum lucens",
@@ -3732,7 +4401,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:03+00:00"
+      "resolved_at": "2026-05-23T21:10:04+00:00"
     },
     "species:solanum lycocarpum": {
       "query": "Solanum lycocarpum",
@@ -3749,7 +4418,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:04+00:00"
+      "resolved_at": "2026-05-23T21:10:04+00:00"
     },
     "species:solanum macrotonum": {
       "query": "Solanum macrotonum",
@@ -3766,7 +4435,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:05+00:00"
+      "resolved_at": "2026-05-23T21:10:05+00:00"
     },
     "species:solanum mammosum": {
       "query": "Solanum mammosum",
@@ -3783,7 +4452,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:05+00:00"
+      "resolved_at": "2026-05-23T21:10:06+00:00"
     },
     "species:solanum mauritianum": {
       "query": "Solanum mauritianum",
@@ -3800,7 +4469,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:06+00:00"
+      "resolved_at": "2026-05-23T21:10:07+00:00"
     },
     "species:solanum megalochiton": {
       "query": "Solanum megalochiton",
@@ -3817,7 +4486,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:07+00:00"
+      "resolved_at": "2026-05-23T21:10:08+00:00"
     },
     "species:solanum melongena": {
       "query": "Solanum melongena",
@@ -3834,7 +4503,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:08+00:00"
+      "resolved_at": "2026-05-23T21:10:09+00:00"
     },
     "species:solanum mite": {
       "query": "Solanum mite",
@@ -3851,7 +4520,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:09+00:00"
+      "resolved_at": "2026-05-23T21:10:10+00:00"
     },
     "species:solanum monarchostemon": {
       "query": "Solanum monarchostemon",
@@ -3868,7 +4537,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:10+00:00"
+      "resolved_at": "2026-05-23T21:10:11+00:00"
     },
     "species:solanum morellifolium": {
       "query": "Solanum morellifolium",
@@ -3885,7 +4554,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:11+00:00"
+      "resolved_at": "2026-05-23T21:10:11+00:00"
     },
     "species:solanum murinum": {
       "query": "Solanum murinum",
@@ -3902,7 +4571,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:12+00:00"
+      "resolved_at": "2026-05-23T21:10:12+00:00"
     },
     "species:solanum myriacanthum": {
       "query": "Solanum myriacanthum",
@@ -3919,7 +4588,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:12+00:00"
+      "resolved_at": "2026-05-23T21:10:13+00:00"
     },
     "species:solanum nr aculeatissimum": {
       "query": "Solanum nr aculeatissimum",
@@ -3936,7 +4605,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:13+00:00"
+      "resolved_at": "2026-05-23T21:10:14+00:00"
     },
     "species:solanum nr asperum": {
       "query": "Solanum nr asperum",
@@ -3953,7 +4622,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:14+00:00"
+      "resolved_at": "2026-05-23T21:10:15+00:00"
     },
     "species:solanum nr chacoense": {
       "query": "Solanum nr chacoense",
@@ -3970,7 +4639,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:15+00:00"
+      "resolved_at": "2026-05-23T21:10:16+00:00"
     },
     "species:solanum nr extensum": {
       "query": "Solanum nr extensum",
@@ -4004,7 +4673,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:17+00:00"
+      "resolved_at": "2026-05-23T21:10:17+00:00"
     },
     "species:solanum nr lancaeifolium": {
       "query": "Solanum nr lancaeifolium",
@@ -4021,7 +4690,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:18+00:00"
+      "resolved_at": "2026-05-23T21:10:18+00:00"
     },
     "species:solanum nr nudum": {
       "query": "Solanum nr nudum",
@@ -4038,7 +4707,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:19+00:00"
+      "resolved_at": "2026-05-23T21:10:19+00:00"
     },
     "species:solanum nr pensile": {
       "query": "Solanum nr pensile",
@@ -4055,7 +4724,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:20+00:00"
+      "resolved_at": "2026-05-23T21:10:20+00:00"
     },
     "species:solanum nr pseudoquina": {
       "query": "Solanum nr pseudoquina",
@@ -4089,7 +4758,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:21+00:00"
+      "resolved_at": "2026-05-23T21:10:20+00:00"
     },
     "species:solanum nr rugosum": {
       "query": "Solanum nr rugosum",
@@ -4106,7 +4775,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:22+00:00"
+      "resolved_at": "2026-05-23T21:10:21+00:00"
     },
     "species:solanum nr vaillantii": {
       "query": "Solanum nr vaillantii",
@@ -4140,7 +4809,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:24+00:00"
+      "resolved_at": "2026-05-23T21:10:22+00:00"
     },
     "species:solanum nudum": {
       "query": "Solanum nudum",
@@ -4157,7 +4826,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:25+00:00"
+      "resolved_at": "2026-05-23T21:10:23+00:00"
     },
     "species:solanum pabstii": {
       "query": "Solanum pabstii",
@@ -4174,7 +4843,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:26+00:00"
+      "resolved_at": "2026-05-23T21:10:24+00:00"
     },
     "species:solanum palinacanthum": {
       "query": "Solanum palinacanthum",
@@ -4191,7 +4860,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:28+00:00"
+      "resolved_at": "2026-05-23T21:10:25+00:00"
     },
     "species:solanum paniculatum": {
       "query": "Solanum paniculatum",
@@ -4208,7 +4877,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:29+00:00"
+      "resolved_at": "2026-05-23T21:10:26+00:00"
     },
     "species:solanum pastillum": {
       "query": "Solanum pastillum",
@@ -4225,7 +4894,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:29+00:00"
+      "resolved_at": "2026-05-23T21:10:27+00:00"
     },
     "species:solanum pectinatum": {
       "query": "Solanum pectinatum",
@@ -4242,7 +4911,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:30+00:00"
+      "resolved_at": "2026-05-23T21:10:27+00:00"
     },
     "species:solanum pensile": {
       "query": "Solanum pensile",
@@ -4259,7 +4928,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:31+00:00"
+      "resolved_at": "2026-05-23T21:10:28+00:00"
     },
     "species:solanum pertenue": {
       "query": "Solanum pertenue",
@@ -4276,7 +4945,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:32+00:00"
+      "resolved_at": "2026-05-23T21:10:29+00:00"
     },
     "species:solanum piluliferum": {
       "query": "Solanum piluliferum",
@@ -4293,7 +4962,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:33+00:00"
+      "resolved_at": "2026-05-23T21:10:30+00:00"
     },
     "species:solanum pittieri": {
       "query": "Solanum pittieri",
@@ -4310,7 +4979,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:33+00:00"
+      "resolved_at": "2026-05-23T21:10:31+00:00"
     },
     "species:solanum pseudocapsicum": {
       "query": "Solanum pseudocapsicum",
@@ -4327,7 +4996,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:34+00:00"
+      "resolved_at": "2026-05-23T21:10:32+00:00"
     },
     "species:solanum pseudoquina": {
       "query": "Solanum pseudoquina",
@@ -4344,7 +5013,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:35+00:00"
+      "resolved_at": "2026-05-23T21:10:33+00:00"
     },
     "species:solanum quitoense": {
       "query": "Solanum quitoense",
@@ -4361,7 +5030,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:36+00:00"
+      "resolved_at": "2026-05-23T21:10:33+00:00"
     },
     "species:solanum racemiflorum": {
       "query": "Solanum racemiflorum",
@@ -4378,7 +5047,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:37+00:00"
+      "resolved_at": "2026-05-23T21:10:34+00:00"
     },
     "species:solanum ramonense": {
       "query": "Solanum ramonense",
@@ -4395,7 +5064,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:38+00:00"
+      "resolved_at": "2026-05-23T21:10:35+00:00"
     },
     "species:solanum riparium": {
       "query": "Solanum riparium",
@@ -4412,7 +5081,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:39+00:00"
+      "resolved_at": "2026-05-23T21:10:36+00:00"
     },
     "species:solanum roblense": {
       "query": "Solanum roblense",
@@ -4429,7 +5098,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:40+00:00"
+      "resolved_at": "2026-05-23T21:10:37+00:00"
     },
     "species:solanum robustum": {
       "query": "Solanum robustum",
@@ -4446,7 +5115,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:40+00:00"
+      "resolved_at": "2026-05-23T21:10:38+00:00"
     },
     "species:solanum rovirosanum": {
       "query": "Solanum rovirosanum",
@@ -4463,7 +5132,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:41+00:00"
+      "resolved_at": "2026-05-23T21:10:39+00:00"
     },
     "species:solanum rudepannum": {
       "query": "Solanum rudepannum",
@@ -4480,7 +5149,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:42+00:00"
+      "resolved_at": "2026-05-23T21:10:39+00:00"
     },
     "species:solanum rugosum": {
       "query": "Solanum rugosum",
@@ -4497,7 +5166,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:43+00:00"
+      "resolved_at": "2026-05-23T21:10:40+00:00"
     },
     "species:solanum schlechtendalianum": {
       "query": "Solanum schlechtendalianum",
@@ -4514,7 +5183,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:44+00:00"
+      "resolved_at": "2026-05-23T21:10:41+00:00"
     },
     "species:solanum scuticum": {
       "query": "Solanum scuticum",
@@ -4531,7 +5200,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:45+00:00"
+      "resolved_at": "2026-05-23T21:10:42+00:00"
     },
     "species:solanum sessiliflorum": {
       "query": "Solanum sessiliflorum",
@@ -4548,7 +5217,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:45+00:00"
+      "resolved_at": "2026-05-23T21:10:43+00:00"
     },
     "species:solanum sieberi": {
       "query": "Solanum sieberi",
@@ -4565,7 +5234,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:46+00:00"
+      "resolved_at": "2026-05-23T21:10:44+00:00"
     },
     "species:solanum sisymbriifolium": {
       "query": "Solanum sisymbriifolium",
@@ -4582,7 +5251,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:47+00:00"
+      "resolved_at": "2026-05-23T21:10:45+00:00"
     },
     "species:solanum sp": {
       "query": "Solanum sp",
@@ -4599,7 +5268,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:48+00:00"
+      "resolved_at": "2026-05-23T21:10:46+00:00"
     },
     "species:solanum spinosissimum": {
       "query": "Solanum spinosissimum",
@@ -4616,7 +5285,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:49+00:00"
+      "resolved_at": "2026-05-23T21:10:46+00:00"
     },
     "species:solanum stagnale": {
       "query": "Solanum stagnale",
@@ -4633,7 +5302,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:50+00:00"
+      "resolved_at": "2026-05-23T21:10:47+00:00"
     },
     "species:solanum stramoniifolium": {
       "query": "solanum stramoniifolium",
@@ -4674,7 +5343,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:52+00:00"
+      "resolved_at": "2026-05-23T21:10:49+00:00"
     },
     "species:solanum thelopodium": {
       "query": "Solanum thelopodium",
@@ -4691,7 +5360,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:52+00:00"
+      "resolved_at": "2026-05-23T21:10:50+00:00"
     },
     "species:solanum torvum": {
       "query": "Solanum torvum",
@@ -4708,7 +5377,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:53+00:00"
+      "resolved_at": "2026-05-23T21:10:51+00:00"
     },
     "species:solanum triste": {
       "query": "Solanum triste",
@@ -4725,7 +5394,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:54+00:00"
+      "resolved_at": "2026-05-23T21:10:52+00:00"
     },
     "species:solanum trizygum": {
       "query": "Solanum trizygum",
@@ -4742,7 +5411,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:55+00:00"
+      "resolved_at": "2026-05-23T21:10:53+00:00"
     },
     "species:solanum tuberosum": {
       "query": "Solanum tuberosum",
@@ -4776,7 +5445,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:56+00:00"
+      "resolved_at": "2026-05-23T21:10:54+00:00"
     },
     "species:solanum umbellatum": {
       "query": "Solanum umbellatum",
@@ -4793,7 +5462,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:57+00:00"
+      "resolved_at": "2026-05-23T21:10:54+00:00"
     },
     "species:solanum vaillantii": {
       "query": "Solanum vaillantii",
@@ -4810,7 +5479,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:58+00:00"
+      "resolved_at": "2026-05-23T21:10:55+00:00"
     },
     "species:solanum variabile": {
       "query": "Solanum variabile",
@@ -4827,7 +5496,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:00:59+00:00"
+      "resolved_at": "2026-05-23T21:10:56+00:00"
     },
     "species:solanum velleum": {
       "query": "Solanum velleum",
@@ -4844,7 +5513,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:01:00+00:00"
+      "resolved_at": "2026-05-23T21:10:57+00:00"
     },
     "species:solanum viarum": {
       "query": "Solanum viarum",
@@ -4861,7 +5530,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:01:00+00:00"
+      "resolved_at": "2026-05-23T21:10:58+00:00"
     },
     "species:solanum wendlandii": {
       "query": "Solanum wendlandii",
@@ -4878,7 +5547,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T04:01:01+00:00"
+      "resolved_at": "2026-05-23T21:10:59+00:00"
     },
     "species:temnadenia violacea": {
       "query": "Temnadenia violacea",
@@ -4895,7 +5564,7 @@
       "kingdom": "Plantae",
       "family": "Apocynaceae",
       "genus": "Temnadenia",
-      "resolved_at": "2026-05-21T04:01:02+00:00"
+      "resolved_at": "2026-05-23T21:11:00+00:00"
     },
     "species:tetrastylis ovalis": {
       "query": "Tetrastylis ovalis",
@@ -4912,7 +5581,7 @@
       "kingdom": "Plantae",
       "family": "Passifloraceae",
       "genus": "Passiflora",
-      "resolved_at": "2026-05-21T04:01:03+00:00"
+      "resolved_at": "2026-05-23T21:11:00+00:00"
     },
     "species:vassobia breviflora": {
       "query": "Vassobia breviflora",
@@ -4929,7 +5598,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Vassobia",
-      "resolved_at": "2026-05-21T04:01:04+00:00"
+      "resolved_at": "2026-05-23T21:11:02+00:00"
     },
     "species:witheringia asterotricha": {
       "query": "Witheringia asterotricha",
@@ -4946,7 +5615,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Witheringia",
-      "resolved_at": "2026-05-21T04:01:04+00:00"
+      "resolved_at": "2026-05-23T21:11:03+00:00"
     },
     "species:witheringia cuneata": {
       "query": "Witheringia cuneata",
@@ -4963,7 +5632,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cuatresia",
-      "resolved_at": "2026-05-21T04:01:05+00:00"
+      "resolved_at": "2026-05-23T21:11:04+00:00"
     },
     "species:witheringia meiantha": {
       "query": "Witheringia meiantha",
@@ -4980,7 +5649,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Witheringia",
-      "resolved_at": "2026-05-21T04:01:06+00:00"
+      "resolved_at": "2026-05-23T21:11:05+00:00"
     },
     "species:witheringia morii": {
       "query": "Witheringia morii",
@@ -4997,7 +5666,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Cuatresia",
-      "resolved_at": "2026-05-21T04:01:07+00:00"
+      "resolved_at": "2026-05-23T21:11:05+00:00"
     },
     "species:witheringia solanacea": {
       "query": "Witheringia solanacea",
@@ -5014,7 +5683,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Witheringia",
-      "resolved_at": "2026-05-21T04:01:08+00:00"
+      "resolved_at": "2026-05-23T21:11:06+00:00"
     },
     "species:juanulloa parasitica": {
       "query": "Juanulloa parasitica",
@@ -5031,7 +5700,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Juanulloa",
-      "resolved_at": "2026-05-21T11:25:49+00:00"
+      "resolved_at": "2026-05-23T22:41:16+00:00"
     },
     "species:solanum deflexiflorum": {
       "query": "Solanum deflexiflorum",
@@ -5048,7 +5717,7 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Solanum",
-      "resolved_at": "2026-05-21T11:25:51+00:00"
+      "resolved_at": "2026-05-23T21:09:42+00:00"
     },
     "species:trianaea speciosa": {
       "query": "Trianaea speciosa",
@@ -5065,7 +5734,1548 @@
       "kingdom": "Plantae",
       "family": "Solanaceae",
       "genus": "Poortmannia",
-      "resolved_at": "2026-05-21T11:25:52+00:00"
+      "resolved_at": "2026-05-23T21:11:01+00:00"
+    },
+    "genus:acnistus": {
+      "query": "Acnistus",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2928875,
+      "accepted_usage_key": 6402978,
+      "scientific_name": "Acnistus Schott",
+      "canonical_name": "Acnistus",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 97,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Iochroma",
+      "resolved_at": "2026-05-23T22:40:12+00:00"
+    },
+    "genus:aureliana": {
+      "query": "Aureliana",
+      "rank": "genus",
+      "status": "not_resolved",
+      "match_type": "HIGHERRANK",
+      "gbif_response": {
+        "usageKey": 220,
+        "scientificName": "Magnoliopsida",
+        "canonicalName": "Magnoliopsida",
+        "rank": "CLASS",
+        "status": "ACCEPTED",
+        "confidence": 96,
+        "note": "nextMatch=0",
+        "matchType": "HIGHERRANK",
+        "alternatives": [
+          {
+            "usageKey": 3234417,
+            "acceptedUsageKey": 3234419,
+            "scientificName": "Aureliana Sendtn.",
+            "canonicalName": "Aureliana",
+            "rank": "GENUS",
+            "status": "SYNONYM",
+            "confidence": 96,
+            "note": "Similarity: name=100; authorship=0; classification=4; rank=6; status=0; score=110",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 8201305,
+            "acceptedUsageKey": 3037591,
+            "scientificName": "Aureliana Boehm.",
+            "canonicalName": "Aureliana",
+            "rank": "GENUS",
+            "status": "SYNONYM",
+            "confidence": 96,
+            "note": "Similarity: name=100; authorship=0; classification=4; rank=6; status=0; score=110",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Apiales",
+            "family": "Araliaceae",
+            "genus": "Panax",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1351,
+            "familyKey": 8800,
+            "genusKey": 3037591,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7506844,
+            "scientificName": "Aureliana Lafit. ex Catesby",
+            "canonicalName": "Aureliana",
+            "rank": "GENUS",
+            "status": "DOUBTFUL",
+            "confidence": 95,
+            "note": "Similarity: name=100; authorship=0; classification=4; rank=6; status=-5; score=105",
+            "matchType": "EXACT",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Apiales",
+            "family": "Araliaceae",
+            "genus": "Aureliana",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1351,
+            "familyKey": 8800,
+            "genusKey": 7506844,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2257178,
+            "acceptedUsageKey": 2257177,
+            "scientificName": "Aureliana",
+            "canonicalName": "Aureliana",
+            "rank": "GENUS",
+            "status": "SYNONYM",
+            "confidence": 54,
+            "note": "Similarity: name=100; authorship=0; classification=-52; rank=6; status=0; score=54",
+            "matchType": "EXACT",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Aureliania",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257177,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 7790217,
+            "acceptedUsageKey": 1843897,
+            "scientificName": "Aureliana Capuse, 1971",
+            "canonicalName": "Aureliana",
+            "rank": "GENUS",
+            "status": "SYNONYM",
+            "confidence": 54,
+            "note": "Similarity: name=100; authorship=0; classification=-52; rank=6; status=0; score=54",
+            "matchType": "EXACT",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Lepidoptera",
+            "family": "Coleophoridae",
+            "genus": "Coleophora",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 797,
+            "familyKey": 8838,
+            "genusKey": 1843897,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 2257177,
+            "scientificName": "Aureliania Gosse, 1860",
+            "canonicalName": "Aureliania",
+            "rank": "GENUS",
+            "status": "ACCEPTED",
+            "confidence": 30,
+            "note": "Similarity: name=75; authorship=0; classification=-52; rank=6; status=1; score=30",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Aureliania",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257177,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 3252745,
+            "scientificName": "Aureliania Fain, 1958",
+            "canonicalName": "Aureliania",
+            "rank": "GENUS",
+            "status": "DOUBTFUL",
+            "confidence": 24,
+            "note": "Similarity: name=75; authorship=0; classification=-52; rank=6; status=-5; score=24",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Trombidiformes",
+            "family": "Ereynetidae",
+            "genus": "Aureliania",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 367,
+            "orderKey": 543,
+            "familyKey": 2817,
+            "genusKey": 3252745,
+            "class": "Arachnida"
+          },
+          {
+            "usageKey": 3256527,
+            "scientificName": "Aureliania Capuse, 1971",
+            "canonicalName": "Aureliania",
+            "rank": "GENUS",
+            "status": "DOUBTFUL",
+            "confidence": 24,
+            "note": "Similarity: name=75; authorship=0; classification=-52; rank=6; status=-5; score=24",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Lepidoptera",
+            "family": "Coleophoridae",
+            "genus": "Aureliania",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 797,
+            "familyKey": 8838,
+            "genusKey": 3256527,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 5581476,
+            "acceptedUsageKey": 10121536,
+            "scientificName": "Aureliana angustifolia Alm.-Lafetá",
+            "canonicalName": "Aureliana angustifolia",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea angustifolia",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 10121536,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 5928094,
+            "acceptedUsageKey": 5372246,
+            "scientificName": "Aureliana canadensis Lafit.",
+            "canonicalName": "Aureliana canadensis",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Apiales",
+            "family": "Araliaceae",
+            "genus": "Panax",
+            "species": "Panax quinquefolius",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1351,
+            "familyKey": 8800,
+            "genusKey": 3037591,
+            "speciesKey": 5372246,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 5581472,
+            "acceptedUsageKey": 9922638,
+            "scientificName": "Aureliana darcyi Carvalho & Bovini",
+            "canonicalName": "Aureliana darcyi",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea fasciculata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9922638,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 11088812,
+            "acceptedUsageKey": 9922638,
+            "scientificName": "Aureliana fasciculata (Vell.) Seudtn.",
+            "canonicalName": "Aureliana fasciculata",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea fasciculata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9922638,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7300030,
+            "acceptedUsageKey": 9922638,
+            "scientificName": "Aureliana fasciculata (Vell.) Sendtn.",
+            "canonicalName": "Aureliana fasciculata",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea fasciculata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9922638,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7866305,
+            "acceptedUsageKey": 9922638,
+            "scientificName": "Aureliana fasciculata var. fasciculata",
+            "canonicalName": "Aureliana fasciculata fasciculata",
+            "rank": "VARIETY",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea fasciculata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9922638,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 11002569,
+            "acceptedUsageKey": 9922638,
+            "scientificName": "Aureliana glomeruliflora Sendtn.",
+            "canonicalName": "Aureliana glomeruliflora",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea fasciculata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9922638,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7300026,
+            "acceptedUsageKey": 9922638,
+            "scientificName": "Aureliana glomuliflora Sendtn.",
+            "canonicalName": "Aureliana glomuliflora",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea fasciculata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9922638,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7300024,
+            "acceptedUsageKey": 9922638,
+            "scientificName": "Aureliana lucida (Moric.) Sendtn.",
+            "canonicalName": "Aureliana lucida",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea fasciculata",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9922638,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 5581453,
+            "acceptedUsageKey": 9971135,
+            "scientificName": "Aureliana tomentosa Sendtn.",
+            "canonicalName": "Aureliana tomentosa",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea tomentosa",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 9971135,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 7300022,
+            "acceptedUsageKey": 8336163,
+            "scientificName": "Aureliana velutina Sendtn.",
+            "canonicalName": "Aureliana velutina",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea velutina",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 8336163,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 5581449,
+            "acceptedUsageKey": 8336163,
+            "scientificName": "Aureliana velutina var. obtusifolia Sendtn.",
+            "canonicalName": "Aureliana velutina obtusifolia",
+            "rank": "VARIETY",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=4; rank=-30; status=0; score=-26",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Solanales",
+            "family": "Solanaceae",
+            "genus": "Athenaea",
+            "species": "Athenaea velutina",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1176,
+            "familyKey": 7717,
+            "genusKey": 3234419,
+            "speciesKey": 8336163,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 2970277,
+            "scientificName": "Mimosa aureliana Barneby & Fortunato",
+            "canonicalName": "Mimosa aureliana",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=4; rank=-30; status=1; score=-40",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Fabales",
+            "family": "Fabaceae",
+            "genus": "Mimosa",
+            "species": "Mimosa aureliana",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1370,
+            "familyKey": 5386,
+            "genusKey": 2969235,
+            "speciesKey": 2970277,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 12354164,
+            "acceptedUsageKey": 7370780,
+            "scientificName": "Clematis × aureliana Briolay-Goiffon",
+            "canonicalName": "Clematis aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=4; rank=-30; status=0; score=-41",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Ranunculales",
+            "family": "Ranunculaceae",
+            "genus": "Clematis",
+            "species": "Clematis lawsoniana",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 399,
+            "familyKey": 2410,
+            "genusKey": 3033512,
+            "speciesKey": 7370780,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 5656342,
+            "acceptedUsageKey": 11563023,
+            "scientificName": "Dryopteris aureliana Riddell",
+            "canonicalName": "Dryopteris aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=4; rank=-30; status=0; score=-41",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Polypodiales",
+            "family": "Thelypteridaceae",
+            "genus": "Christella",
+            "species": "Christella hispidula",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 7228684,
+            "orderKey": 392,
+            "familyKey": 6618,
+            "genusKey": 7321094,
+            "speciesKey": 4083625,
+            "class": "Polypodiopsida"
+          },
+          {
+            "usageKey": 4194017,
+            "acceptedUsageKey": 4194029,
+            "scientificName": "Impatiens aureliana Hook.fil.",
+            "canonicalName": "Impatiens aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=4; rank=-30; status=0; score=-41",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Ericales",
+            "family": "Balsaminaceae",
+            "genus": "Impatiens",
+            "species": "Impatiens violiflora",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 1353,
+            "familyKey": 6699,
+            "genusKey": 2891766,
+            "speciesKey": 4194029,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 5671228,
+            "acceptedUsageKey": 7300845,
+            "scientificName": "Urtica aureliana Riddell",
+            "canonicalName": "Urtica aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=4; rank=-30; status=0; score=-41",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Rosales",
+            "family": "Urticaceae",
+            "genus": "Urtica",
+            "species": "Urtica chamaedryoides",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 691,
+            "familyKey": 6639,
+            "genusKey": 2984391,
+            "speciesKey": 5361812,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 3021082,
+            "scientificName": "Prunus aureliana Poir.",
+            "canonicalName": "Prunus aureliana",
+            "rank": "SPECIES",
+            "status": "DOUBTFUL",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=4; rank=-30; status=-5; score=-46",
+            "matchType": "FUZZY",
+            "kingdom": "Plantae",
+            "phylum": "Tracheophyta",
+            "order": "Rosales",
+            "family": "Rosaceae",
+            "genus": "Prunus",
+            "species": "Prunus aureliana",
+            "kingdomKey": 6,
+            "phylumKey": 7707728,
+            "classKey": 220,
+            "orderKey": 691,
+            "familyKey": 5015,
+            "genusKey": 3020559,
+            "speciesKey": 3021082,
+            "class": "Magnoliopsida"
+          },
+          {
+            "usageKey": 5510828,
+            "scientificName": "Pleospora aureliana Fairm.",
+            "canonicalName": "Pleospora aureliana",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-11; rank=-30; status=1; score=-55",
+            "matchType": "FUZZY",
+            "kingdom": "Fungi",
+            "phylum": "Ascomycota",
+            "order": "Pleosporales",
+            "family": "Pleosporaceae",
+            "genus": "Pleospora",
+            "species": "Pleospora aureliana",
+            "kingdomKey": 5,
+            "phylumKey": 95,
+            "classKey": 183,
+            "orderKey": 1047,
+            "familyKey": 8315,
+            "genusKey": 2575791,
+            "speciesKey": 5510828,
+            "class": "Dothideomycetes"
+          },
+          {
+            "usageKey": 9241349,
+            "scientificName": "? aureliana Cossmann, 1899",
+            "canonicalName": "? aureliana",
+            "rank": "UNRANKED",
+            "status": "DOUBTFUL",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=0; status=-5; score=-72",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Mollusca",
+            "family": "Acmaeadae",
+            "kingdomKey": 1,
+            "phylumKey": 52,
+            "classKey": 225,
+            "familyKey": 9598360,
+            "class": "Gastropoda"
+          },
+          {
+            "usageKey": 7634978,
+            "acceptedUsageKey": 2257182,
+            "scientificName": "Aureliana angusta",
+            "canonicalName": "Aureliana angusta",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea sanguinea",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 2257182,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 5184199,
+            "acceptedUsageKey": 2257182,
+            "scientificName": "Aureliana augusta",
+            "canonicalName": "Aureliana augusta",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea sanguinea",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 2257182,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 5720536,
+            "acceptedUsageKey": 4339034,
+            "scientificName": "Aureliana georgiana Carlgren, 1927",
+            "canonicalName": "Aureliana georgiana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea georgiana",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 4339034,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 9688898,
+            "acceptedUsageKey": 2257182,
+            "scientificName": "Aureliana heterocera (Thompson, 1853)",
+            "canonicalName": "Aureliana heterocera",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea sanguinea",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 2257182,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 8978730,
+            "acceptedUsageKey": 8828179,
+            "scientificName": "Aureliana immersa Falkovitsh, 1989",
+            "canonicalName": "Aureliana immersa",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Lepidoptera",
+            "family": "Coleophoridae",
+            "genus": "Coleophora",
+            "species": "Coleophora immersa",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 797,
+            "familyKey": 8838,
+            "genusKey": 1843897,
+            "speciesKey": 8828179,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 5720543,
+            "acceptedUsageKey": 6472115,
+            "scientificName": "Aureliana indica (Verrill, 1869)",
+            "canonicalName": "Aureliana indica",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea indica",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 6472115,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 5184197,
+            "acceptedUsageKey": 6472113,
+            "scientificName": "Aureliana japonica Carlgren, 1940",
+            "canonicalName": "Aureliana japonica",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea japonica",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 6472113,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 8260877,
+            "acceptedUsageKey": 4339034,
+            "scientificName": "Aureliana nymphaea",
+            "canonicalName": "Aureliana nymphaea",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea georgiana",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 4339034,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 5184203,
+            "acceptedUsageKey": 2257182,
+            "scientificName": "Aureliana regalis",
+            "canonicalName": "Aureliana regalis",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea sanguinea",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 2257182,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 6472118,
+            "acceptedUsageKey": 4339034,
+            "scientificName": "Aureliana tricirrata",
+            "canonicalName": "Aureliana tricirrata",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=0; score=-82",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Capnea",
+            "species": "Capnea georgiana",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257188,
+            "speciesKey": 4339034,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 5184198,
+            "scientificName": "Aureliana heterocera (Forbes, 1841)",
+            "canonicalName": "Aureliana heterocera",
+            "rank": "SPECIES",
+            "status": "DOUBTFUL",
+            "confidence": 0,
+            "note": "Similarity: name=0; authorship=0; classification=-52; rank=-30; status=-5; score=-87",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Cnidaria",
+            "order": "Actiniaria",
+            "family": "Capneidae",
+            "genus": "Aureliania",
+            "species": "Aureliana heterocera",
+            "kingdomKey": 1,
+            "phylumKey": 43,
+            "classKey": 206,
+            "orderKey": 705,
+            "familyKey": 4339033,
+            "genusKey": 2257177,
+            "speciesKey": 5184198,
+            "class": "Anthozoa"
+          },
+          {
+            "usageKey": 8472581,
+            "scientificName": "Amberleya aureliana Cossmann, 1899",
+            "canonicalName": "Amberleya aureliana",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=1; score=-96",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Mollusca",
+            "order": "Seguenziida",
+            "family": "Eucyclidae",
+            "genus": "Amberleya",
+            "species": "Amberleya aureliana",
+            "kingdomKey": 1,
+            "phylumKey": 52,
+            "classKey": 225,
+            "orderKey": 9759304,
+            "familyKey": 3244345,
+            "genusKey": 4616025,
+            "speciesKey": 8472581,
+            "class": "Gastropoda"
+          },
+          {
+            "usageKey": 5024189,
+            "scientificName": "Aspilota aureliana Fischer, 1976",
+            "canonicalName": "Aspilota aureliana",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=1; score=-96",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Hymenoptera",
+            "family": "Braconidae",
+            "genus": "Aspilota",
+            "species": "Aspilota aureliana",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 1457,
+            "familyKey": 6910,
+            "genusKey": 1258130,
+            "speciesKey": 5024189,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 1916715,
+            "scientificName": "Hypoleria aureliana (Bates, 1862)",
+            "canonicalName": "Hypoleria aureliana",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=1; score=-96",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Lepidoptera",
+            "family": "Nymphalidae",
+            "genus": "Hypoleria",
+            "species": "Hypoleria aureliana",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 797,
+            "familyKey": 7017,
+            "genusKey": 1916677,
+            "speciesKey": 1916715,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 9509579,
+            "scientificName": "Patella aureliana (Cossmann, 1899)",
+            "canonicalName": "Patella aureliana",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=1; score=-96",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Mollusca",
+            "family": "Acmaeadae",
+            "genus": "Scurriopsis",
+            "species": "Patella aureliana",
+            "kingdomKey": 1,
+            "phylumKey": 52,
+            "classKey": 225,
+            "familyKey": 9598360,
+            "genusKey": 4617387,
+            "speciesKey": 9509579,
+            "class": "Gastropoda"
+          },
+          {
+            "usageKey": 7847360,
+            "scientificName": "Pseudolucia aureliana",
+            "canonicalName": "Pseudolucia aureliana",
+            "rank": "SPECIES",
+            "status": "ACCEPTED",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=1; score=-96",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Lepidoptera",
+            "family": "Lycaenidae",
+            "genus": "Pseudolucia",
+            "species": "Pseudolucia aureliana",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 797,
+            "familyKey": 5473,
+            "genusKey": 1922735,
+            "speciesKey": 7847360,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 1848218,
+            "acceptedUsageKey": 1848219,
+            "scientificName": "Aproaerema aureliana Căpuşe, 1964",
+            "canonicalName": "Aproaerema aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=0; score=-97",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Lepidoptera",
+            "family": "Gelechiidae",
+            "genus": "Aproaerema",
+            "species": "Aproaerema anthyllidella",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 797,
+            "familyKey": 3553,
+            "genusKey": 1848217,
+            "speciesKey": 1848219,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 5160218,
+            "acceptedUsageKey": 5160217,
+            "scientificName": "Coccionella aureliana Lindinger, 1954",
+            "canonicalName": "Coccionella aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=0; score=-97",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Hemiptera",
+            "family": "Margarodidae",
+            "genus": "Margarodes",
+            "species": "Margarodes aurelianus",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 809,
+            "familyKey": 8651,
+            "genusKey": 2079941,
+            "speciesKey": 5160217,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 10939415,
+            "acceptedUsageKey": 9370020,
+            "scientificName": "Helix aureliana Deshayes, 1863",
+            "canonicalName": "Helix aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=0; score=-97",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Mollusca",
+            "order": "Stylommatophora",
+            "family": "Helicidae",
+            "genus": "Megalotachea",
+            "species": "Megalotachea turonensis",
+            "kingdomKey": 1,
+            "phylumKey": 52,
+            "classKey": 225,
+            "orderKey": 1456,
+            "familyKey": 6540,
+            "genusKey": 4585874,
+            "speciesKey": 9370020,
+            "class": "Gastropoda"
+          },
+          {
+            "usageKey": 12077275,
+            "acceptedUsageKey": 1916715,
+            "scientificName": "Ithomia aureliana Bates, 1862",
+            "canonicalName": "Ithomia aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=0; score=-97",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Arthropoda",
+            "order": "Lepidoptera",
+            "family": "Nymphalidae",
+            "genus": "Hypoleria",
+            "species": "Hypoleria aureliana",
+            "kingdomKey": 1,
+            "phylumKey": 54,
+            "classKey": 216,
+            "orderKey": 797,
+            "familyKey": 7017,
+            "genusKey": 1916677,
+            "speciesKey": 1916715,
+            "class": "Insecta"
+          },
+          {
+            "usageKey": 11285190,
+            "acceptedUsageKey": 11146567,
+            "scientificName": "Replidacna aureliana Jekelius, 1944",
+            "canonicalName": "Replidacna aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=0; score=-97",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Mollusca",
+            "order": "Cardiida",
+            "family": "Cardiidae",
+            "genus": "Replidacna",
+            "species": "Replidacna wiesenensis",
+            "kingdomKey": 1,
+            "phylumKey": 52,
+            "classKey": 137,
+            "orderKey": 9529005,
+            "familyKey": 6858,
+            "genusKey": 4585691,
+            "speciesKey": 11146567,
+            "class": "Bivalvia"
+          },
+          {
+            "usageKey": 8664988,
+            "acceptedUsageKey": 9509579,
+            "scientificName": "Scurriopsis aureliana (Cossmann, 1899)",
+            "canonicalName": "Scurriopsis aureliana",
+            "rank": "SPECIES",
+            "status": "SYNONYM",
+            "confidence": 0,
+            "note": "Similarity: name=-15; authorship=0; classification=-52; rank=-30; status=0; score=-97",
+            "matchType": "FUZZY",
+            "kingdom": "Animalia",
+            "phylum": "Mollusca",
+            "family": "Acmaeadae",
+            "genus": "Scurriopsis",
+            "species": "Patella aureliana",
+            "kingdomKey": 1,
+            "phylumKey": 52,
+            "classKey": 225,
+            "familyKey": 9598360,
+            "genusKey": 4617387,
+            "speciesKey": 9509579,
+            "class": "Gastropoda"
+          }
+        ],
+        "kingdom": "Plantae",
+        "phylum": "Tracheophyta",
+        "kingdomKey": 6,
+        "phylumKey": 7707728,
+        "classKey": 220,
+        "class": "Magnoliopsida"
+      },
+      "note": "GBIF matched Aureliana to CLASS (Magnoliopsida); refusing higher-rank occurrence layer."
+    },
+    "genus:brunfelsia": {
+      "query": "Brunfelsia",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2932910,
+      "accepted_usage_key": null,
+      "scientific_name": "Brunfelsia L.",
+      "canonical_name": "Brunfelsia",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Brunfelsia",
+      "resolved_at": "2026-05-23T22:40:14+00:00"
+    },
+    "genus:cestrum": {
+      "query": "Cestrum",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2928784,
+      "accepted_usage_key": null,
+      "scientific_name": "Cestrum L.",
+      "canonical_name": "Cestrum",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Cestrum",
+      "resolved_at": "2026-05-23T22:40:15+00:00"
+    },
+    "genus:cyphomandra": {
+      "query": "Cyphomandra",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2928849,
+      "accepted_usage_key": 2928997,
+      "scientific_name": "Cyphomandra Mart. ex Sendtn.",
+      "canonical_name": "Cyphomandra",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 97,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-23T22:40:16+00:00"
+    },
+    "genus:dilkea": {
+      "query": "Dilkea",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 7313332,
+      "accepted_usage_key": null,
+      "scientific_name": "Dilkea Mast.",
+      "canonical_name": "Dilkea",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Dilkea",
+      "resolved_at": "2026-05-23T22:40:17+00:00"
+    },
+    "genus:drymonia": {
+      "query": "Drymonia",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 3233484,
+      "accepted_usage_key": null,
+      "scientific_name": "Drymonia Mart.",
+      "canonical_name": "Drymonia",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 97,
+      "kingdom": "Plantae",
+      "family": "Gesneriaceae",
+      "genus": "Drymonia",
+      "resolved_at": "2026-05-23T22:40:18+00:00"
+    },
+    "genus:echites": {
+      "query": "Echites",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 3169766,
+      "accepted_usage_key": null,
+      "scientific_name": "Echites P.Browne",
+      "canonical_name": "Echites",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 96,
+      "kingdom": "Plantae",
+      "family": "Apocynaceae",
+      "genus": "Echites",
+      "resolved_at": "2026-05-23T22:40:20+00:00"
+    },
+    "genus:juanulloa": {
+      "query": "Juanulloa",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 7299873,
+      "accepted_usage_key": null,
+      "scientific_name": "Juanulloa Ruiz & Pav.",
+      "canonical_name": "Juanulloa",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Juanulloa",
+      "resolved_at": "2026-05-23T22:40:21+00:00"
+    },
+    "genus:lycianthes": {
+      "query": "Lycianthes",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2928971,
+      "accepted_usage_key": null,
+      "scientific_name": "Lycianthes (Dunal) Hassl.",
+      "canonical_name": "Lycianthes",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Lycianthes",
+      "resolved_at": "2026-05-23T22:40:22+00:00"
+    },
+    "genus:lycopersicon": {
+      "query": "Lycopersicon",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2932923,
+      "accepted_usage_key": 2928997,
+      "scientific_name": "Lycopersicon Mill.",
+      "canonical_name": "Lycopersicon",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "SYNONYM",
+      "match_type": "EXACT",
+      "confidence": 97,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-23T22:40:23+00:00"
+    },
+    "genus:markea": {
+      "query": "Markea",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 7299864,
+      "accepted_usage_key": null,
+      "scientific_name": "Markea Rich.",
+      "canonical_name": "Markea",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Markea",
+      "resolved_at": "2026-05-23T22:40:24+00:00"
+    },
+    "genus:passiflora": {
+      "query": "Passiflora",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2874172,
+      "accepted_usage_key": null,
+      "scientific_name": "Passiflora L.",
+      "canonical_name": "Passiflora",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 96,
+      "kingdom": "Plantae",
+      "family": "Passifloraceae",
+      "genus": "Passiflora",
+      "resolved_at": "2026-05-23T22:40:25+00:00"
+    },
+    "genus:prestonia": {
+      "query": "Prestonia",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 3169716,
+      "accepted_usage_key": null,
+      "scientific_name": "Prestonia R.Br.",
+      "canonical_name": "Prestonia",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 96,
+      "kingdom": "Plantae",
+      "family": "Apocynaceae",
+      "genus": "Prestonia",
+      "resolved_at": "2026-05-23T22:40:26+00:00"
+    },
+    "genus:sessea": {
+      "query": "Sessea",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 7299148,
+      "accepted_usage_key": null,
+      "scientific_name": "Sessea Ruiz & Pav.",
+      "canonical_name": "Sessea",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Sessea",
+      "resolved_at": "2026-05-23T22:40:27+00:00"
+    },
+    "genus:solandra": {
+      "query": "Solandra",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2928987,
+      "accepted_usage_key": null,
+      "scientific_name": "Solandra Sw.",
+      "canonical_name": "Solandra",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 96,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solandra",
+      "resolved_at": "2026-05-23T22:40:29+00:00"
+    },
+    "genus:solanum": {
+      "query": "Solanum",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 2928997,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum L.",
+      "canonical_name": "Solanum",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 98,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-23T22:40:30+00:00"
+    },
+    "genus:witheringia": {
+      "query": "Witheringia",
+      "rank": "genus",
+      "status": "resolved",
+      "gbif_taxon_key": 5341755,
+      "accepted_usage_key": null,
+      "scientific_name": "Witheringia L'Hér.",
+      "canonical_name": "Witheringia",
+      "gbif_rank": "GENUS",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 96,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Witheringia",
+      "resolved_at": "2026-05-23T22:40:31+00:00"
+    },
+    "species:solanum stramonifolium": {
+      "query": "Solanum stramonifolium",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2930283,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum stramonifolium Jacq.",
+      "canonical_name": "Solanum stramonifolium",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-23T21:10:48+00:00"
     }
   }
 }

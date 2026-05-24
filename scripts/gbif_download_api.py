@@ -472,30 +472,50 @@ def download_and_extract(download_info):
 
     # Create temp directory
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
+    extract_dir = TEMP_DIR / "extracted"
+    occurrence_file = extract_dir / "occurrence.txt"
+    if occurrence_file.exists():
+        print(f"  Reusing existing extracted download: {extract_dir}")
+        return extract_dir
+
     zip_path = TEMP_DIR / "gbif_download.zip"
 
-    # Download with progress
-    try:
-        response = requests.get(download_link, stream=True, timeout=600)
-        response.raise_for_status()
+    # Download with progress, reusing an already-complete local ZIP when available.
+    should_download = True
+    if zip_path.exists():
+        try:
+            with zipfile.ZipFile(zip_path, 'r') as zf:
+                bad_member = zf.testzip()
+            if bad_member is None:
+                print(f"  Reusing existing validated download: {zip_path}")
+                should_download = False
+            else:
+                print(f"  Existing ZIP failed validation at {bad_member}; downloading again")
+        except zipfile.BadZipFile:
+            print("  Existing ZIP is incomplete or invalid; downloading again")
 
-        total_size = int(response.headers.get('content-length', 0))
-        downloaded = 0
+    if should_download:
+        try:
+            response = requests.get(download_link, stream=True, timeout=600)
+            response.raise_for_status()
 
-        with open(zip_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-                downloaded += len(chunk)
-                if total_size > 0 and downloaded % (1024 * 1024) < 8192:
-                    pct = downloaded * 100 / total_size
-                    print(f"  Downloaded: {downloaded/1024/1024:.0f} MB / {total_size/1024/1024:.0f} MB ({pct:.0f}%)", flush=True)
+            total_size = int(response.headers.get('content-length', 0))
+            downloaded = 0
 
-        print(f"\n  Download complete: {zip_path}")
+            with open(zip_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+                    downloaded += len(chunk)
+                    if total_size > 0 and downloaded % (1024 * 1024) < 8192:
+                        pct = downloaded * 100 / total_size
+                        print(f"  Downloaded: {downloaded/1024/1024:.0f} MB / {total_size/1024/1024:.0f} MB ({pct:.0f}%)", flush=True)
 
-    except Exception as e:
-        print(f"\nERROR downloading: {e}")
-        # TODO: ideally raise an exception instead of sys.exit() in a utility function
-        sys.exit(1)
+            print(f"\n  Download complete: {zip_path}")
+
+        except Exception as e:
+            print(f"\nERROR downloading: {e}")
+            # TODO: ideally raise an exception instead of sys.exit() in a utility function
+            sys.exit(1)
 
     # Extract
     print("  Extracting...")
