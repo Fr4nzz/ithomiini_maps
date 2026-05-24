@@ -2366,16 +2366,40 @@ const conciseList = (items, limit = 3) => {
 .host-chip .accepted-name {
   color: inherit;
   font-size: 0.74rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .host-chip .accepted-name em {
   color: inherit;
 }
 
+:global([data-mode="light"]) .host-chip .reported-name {
+  color: #52606d;
+}
+
+:global([data-mode="light"]) .host-chip.species .accepted-name,
+:global([data-mode="light"]) .host-chip.high .accepted-name {
+  color: #15803d;
+}
+
+:global([data-mode="light"]) .host-chip.genus .accepted-name,
+:global([data-mode="light"]) .host-chip.medium .accepted-name {
+  color: #a16207;
+}
+
+:global([data-mode="light"]) .host-chip.family .accepted-name,
+:global([data-mode="light"]) .host-chip.low .accepted-name,
+:global([data-mode="light"]) .host-chip.needs-check .accepted-name {
+  color: #be123c;
+}
+
 .accepted-host-name {
   color: #b8bec8;
   font-size: 0.7rem;
+}
+
+:global([data-mode="light"]) .accepted-host-name {
+  color: #52606d;
 }
 
 .accepted-host-name {
