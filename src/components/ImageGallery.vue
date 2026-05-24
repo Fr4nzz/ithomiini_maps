@@ -1,36 +1,59 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useDataStore } from '../stores/data'
-import { getProxiedUrl, getThumbnailUrl, notifyTierFailed, getProxyState } from '../utils/imageProxy'
+import { useHostPlantStore } from '../stores/hostPlants'
+import { getThumbnailUrl, getImageUrlCandidates, notifyTierFailed, getProxyState, checkWsrvForUrl } from '../utils/imageProxy'
 import { useGalleryData } from '../composables/useGalleryData'
+import { useHostPlantGalleryData } from '../composables/useHostPlantGalleryData'
 import GallerySidebar from './GallerySidebar.vue'
+import GalleryThumbnailStrip from './GalleryThumbnailStrip.vue'
 import Panzoom from '@panzoom/panzoom'
 
 const store = useDataStore()
+const hostPlantStore = useHostPlantStore()
+const props = defineProps({
+  initialMode: {
+    type: String,
+    default: 'butterflies',
+  },
+})
 const emit = defineEmits(['close'])
 const proxyState = getProxyState()
+const galleryMode = ref(props.initialMode === 'host-plants' ? 'host-plants' : 'butterflies')
 
 // Gallery data from composable
-const {
-  allFilteredIndividuals,
-  specimensWithImages,
-  groupedBySpecies,
-  speciesList,
-  totalSpecies,
-  totalIndividuals,
-  allFilteredTotal,
-  allFilteredWithoutImages,
-  totalSubspeciesCount,
-  speciesColors,
-  getSubspeciesColor,
-  groupedThumbnails
-} = useGalleryData(store)
+const butterflyGallery = useGalleryData(store)
+const hostPlantGallery = useHostPlantGalleryData(hostPlantStore)
+const activeGallery = computed(() => galleryMode.value === 'host-plants' ? hostPlantGallery : butterflyGallery)
+const allFilteredIndividuals = computed(() => activeGallery.value.allFilteredIndividuals.value)
+const specimensWithImages = computed(() => activeGallery.value.specimensWithImages.value)
+const groupedBySpecies = computed(() => activeGallery.value.groupedBySpecies.value)
+const speciesList = computed(() => activeGallery.value.speciesList.value)
+const totalSpecies = computed(() => activeGallery.value.totalSpecies.value)
+const totalIndividuals = computed(() => activeGallery.value.totalIndividuals.value)
+const allFilteredTotal = computed(() => activeGallery.value.allFilteredTotal.value)
+const allFilteredWithoutImages = computed(() => activeGallery.value.allFilteredWithoutImages.value)
+const totalSubspeciesCount = computed(() => activeGallery.value.totalSubspeciesCount.value)
+const groupedThumbnails = computed(() => activeGallery.value.groupedThumbnails.value)
+const isUnfilteredHostGallery = computed(() =>
+  galleryMode.value === 'host-plants' && hostPlantStore.selectedTaxonSlugs.length === 0
+)
+const isHostGalleryLoading = computed(() =>
+  galleryMode.value === 'host-plants' &&
+  (
+    hostPlantStore.loading ||
+    hostPlantStore.galleryLoading ||
+    !hostPlantStore.galleryDataset
+  )
+)
 
 // Gallery state
 const currentIndex = ref(0)
 const isLoading = ref(true)
 const loadError = ref(false)
 const zoomLevel = ref(1)
+const isPanned = ref(false)
+const canResetView = computed(() => zoomLevel.value > 1.05 || isPanned.value)
 
 // Sidebar state
 const selectedSpecies = ref(null)
@@ -46,9 +69,88 @@ const skipAutoExpand = ref(false)
 // Refs
 const imageContainer = ref(null)
 const imageEl = ref(null)
+const displayedImageUrl = ref('')
 
 // Panzoom instance
 let panzoomInstance = null
+let panzoomElement = null
+let imageLoadAttempt = 0
+let directFallbackTimer = null
+let directFallbackProbes = []
+
+const updatePanState = (detail = null) => {
+  const pan = detail || panzoomInstance?.getPan?.() || {}
+  const x = Number(pan.x ?? 0)
+  const y = Number(pan.y ?? 0)
+  isPanned.value = Math.abs(x) > 1 || Math.abs(y) > 1
+}
+
+const handlePanzoomZoom = (e) => {
+  zoomLevel.value = e.detail.scale
+  updatePanState(e.detail)
+}
+
+const handlePanzoomPan = (e) => {
+  updatePanState(e.detail)
+}
+
+const handlePanzoomReset = () => {
+  zoomLevel.value = 1
+  isPanned.value = false
+}
+
+const destroyPanzoom = () => {
+  if (panzoomElement) {
+    panzoomElement.removeEventListener('panzoomzoom', handlePanzoomZoom)
+    panzoomElement.removeEventListener('panzoompan', handlePanzoomPan)
+    panzoomElement.removeEventListener('panzoomreset', handlePanzoomReset)
+    panzoomElement = null
+  }
+  if (panzoomInstance) {
+    panzoomInstance.destroy()
+    panzoomInstance = null
+  }
+}
+
+const clearDirectFallbackTimer = () => {
+  if (directFallbackTimer) {
+    clearTimeout(directFallbackTimer)
+    directFallbackTimer = null
+  }
+}
+
+const clearDirectFallbackProbes = () => {
+  directFallbackProbes.forEach(img => {
+    img.onload = null
+    img.onerror = null
+    img.src = ''
+  })
+  directFallbackProbes = []
+}
+
+const ensureHostPlantGalleryData = async () => {
+  if (galleryMode.value !== 'host-plants') return
+  await hostPlantStore.loadMetadata()
+  await hostPlantStore.loadGallery()
+  const sample = hostPlantGallery.specimensWithImages.value.find(item => item.image_url)
+  if (sample?.image_url) checkWsrvForUrl(sample.image_url)
+}
+
+const setGalleryMode = async (mode) => {
+  const nextMode = mode === 'host-plants' ? 'host-plants' : 'butterflies'
+  if (galleryMode.value === nextMode) return
+  galleryMode.value = nextMode
+  currentIndex.value = 0
+  selectedSpecies.value = null
+  selectedSubspecies.value = null
+  stripInitialized.value = false
+  await ensureHostPlantGalleryData()
+  resetView()
+  nextTick(() => {
+    initializeThumbnailStrip()
+    initializeSidebarFromCurrent({ expandCurrent: !isUnfilteredHostGallery.value })
+  })
+}
 
 // Get subspecies list for selected species
 const subspeciesList = computed(() => {
@@ -136,21 +238,26 @@ const selectIndividual = (id, autoExpand = true) => {
   }
   const idx = specimensWithImages.value.findIndex(s => s.id === id)
   if (idx >= 0) {
+    if (idx === currentIndex.value) {
+      if (!autoExpand) skipAutoExpand.value = false
+      return
+    }
     currentIndex.value = idx
     resetView()
   }
 }
 
 // Initialize sidebar selection from current specimen
-const initializeSidebarFromCurrent = () => {
+const initializeSidebarFromCurrent = ({ expandCurrent = true } = {}) => {
   const specimen = currentSpecimen.value
   if (!specimen) return
 
   selectedSpecies.value = specimen.scientific_name
   selectedSubspecies.value = specimen.subspecies
 
-  // Expand only the current species/subspecies group
-  expandOnly(specimen.scientific_name, specimen.subspecies)
+  if (expandCurrent) {
+    expandOnly(specimen.scientific_name, specimen.subspecies)
+  }
 }
 
 // Subspecies count for sidebar
@@ -198,6 +305,13 @@ const toggleSpeciesCollapse = (speciesName) => {
   const newSet = new Set(collapsedSpecies.value)
   if (newSet.has(speciesName)) {
     newSet.delete(speciesName)
+    const group = groupedThumbnails.value.find(item => item.name === speciesName)
+    if (group?.subspecies?.length === 1) {
+      const onlySubspecies = group.subspecies[0]
+      const subspSet = new Set(collapsedSubspecies.value)
+      subspSet.delete(`${speciesName}|${onlySubspecies.name}`)
+      collapsedSubspecies.value = subspSet
+    }
   } else {
     newSet.add(speciesName)
   }
@@ -215,35 +329,9 @@ const toggleSubspeciesCollapse = (key) => {
   collapsedSubspecies.value = newSet
 }
 
-// Scroll thumbnail strip with arrows
-const scrollThumbnails = (direction) => {
-  if (!thumbnailStripRef.value) return
-  const scrollAmount = 300
-  thumbnailStripRef.value.scrollBy({
-    left: direction * scrollAmount,
-    behavior: 'smooth'
-  })
-}
-
 // Position thumbnail strip to show active thumbnail (instant, no animation)
 const positionToActiveThumbnail = () => {
-  nextTick(() => {
-    const activeThumb = thumbnailStripRef.value?.querySelector('.thumbnail.active')
-    if (activeThumb && thumbnailStripRef.value) {
-      // Get positions
-      const stripRect = thumbnailStripRef.value.getBoundingClientRect()
-      const thumbRect = activeThumb.getBoundingClientRect()
-
-      // Calculate scroll position to center the thumbnail
-      const scrollLeft = thumbnailStripRef.value.scrollLeft +
-        (thumbRect.left - stripRect.left) -
-        (stripRect.width / 2) +
-        (thumbRect.width / 2)
-
-      // Set scroll position instantly (no smooth scroll to avoid loading intermediate images)
-      thumbnailStripRef.value.scrollLeft = Math.max(0, scrollLeft)
-    }
-  })
+  thumbnailStripRef.value?.positionToActiveThumbnail()
 }
 
 // Location name from current individual
@@ -269,15 +357,62 @@ const currentSpecimen = computed(() => {
   return specimensWithImages.value[currentIndex.value] || null
 })
 
-// Resolved image URL — reactive to proxy mode/tier changes
-const resolvedImageUrl = computed(() => {
-  // Touch reactive refs so Vue tracks the dependency
+const currentImageCandidates = computed(() => {
   void proxyState.mode.value
   void proxyState.tierStatus.value
   return currentSpecimen.value?.image_url
-    ? getProxiedUrl(currentSpecimen.value.image_url)
-    : ''
+    ? getImageUrlCandidates(currentSpecimen.value.image_url, { width: 2000 })
+    : []
 })
+
+const startDirectFallbackRace = (attemptId, primaryUrl, candidates) => {
+  clearDirectFallbackTimer()
+  clearDirectFallbackProbes()
+  const fallbacks = candidates.filter(url => url && url !== primaryUrl)
+  if (!primaryUrl || fallbacks.length === 0) return
+
+  directFallbackTimer = setTimeout(() => {
+    let settled = false
+    fallbacks.forEach(url => {
+      const probe = new Image()
+      directFallbackProbes.push(probe)
+      probe.referrerPolicy = 'no-referrer'
+      probe.onload = () => {
+        if (settled || attemptId !== imageLoadAttempt || !isLoading.value) return
+        settled = true
+        clearDirectFallbackProbes()
+        notifyTierFailed(primaryUrl)
+        displayedImageUrl.value = url
+      }
+      probe.onerror = () => {
+        if (attemptId !== imageLoadAttempt) return
+        notifyTierFailed(url)
+      }
+      probe.src = url
+    })
+  }, 3000)
+}
+
+const startImageLoad = () => {
+  const specimenUrl = currentSpecimen.value?.image_url || ''
+  const candidates = currentImageCandidates.value
+  const primaryUrl = candidates[0] || ''
+  imageLoadAttempt += 1
+  const attemptId = imageLoadAttempt
+  clearDirectFallbackTimer()
+  clearDirectFallbackProbes()
+  displayedImageUrl.value = primaryUrl
+
+  if (!specimenUrl || !primaryUrl) {
+    isLoading.value = false
+    loadError.value = Boolean(specimenUrl)
+    return
+  }
+
+  isLoading.value = true
+  loadError.value = false
+  startDirectFallbackRace(attemptId, primaryUrl, candidates)
+}
 
 // Proxy-version counter — forces re-evaluation of thumbnail URLs in v-for
 const proxyVersion = computed(() =>
@@ -288,6 +423,11 @@ const proxyVersion = computed(() =>
 const resolvedThumbUrl = (url) => {
   void proxyVersion.value
   return getThumbnailUrl(url)
+}
+
+const resolvedThumbCandidates = (url) => {
+  void proxyVersion.value
+  return getImageUrlCandidates(url, { width: 400 })
 }
 
 // Navigation
@@ -318,6 +458,8 @@ const resetView = () => {
   isLoading.value = true
   loadError.value = false
   zoomLevel.value = 1
+  isPanned.value = false
+  startImageLoad()
   // Reset panzoom if it exists
   if (panzoomInstance) {
     panzoomInstance.reset({ animate: false })
@@ -328,11 +470,7 @@ const resetView = () => {
 const initPanzoom = () => {
   if (!imageEl.value) return
 
-  // Destroy existing instance
-  if (panzoomInstance) {
-    panzoomInstance.destroy()
-    panzoomInstance = null
-  }
+  destroyPanzoom()
 
   panzoomInstance = Panzoom(imageEl.value, {
     maxScale: 5,
@@ -344,13 +482,11 @@ const initPanzoom = () => {
   imageContainer.value?.addEventListener('wheel', handleWheel, { passive: false })
 
   // Track zoom level changes
-  imageEl.value.addEventListener('panzoomzoom', (e) => {
-    zoomLevel.value = e.detail.scale
-  })
-
-  imageEl.value.addEventListener('panzoomreset', () => {
-    zoomLevel.value = 1
-  })
+  panzoomElement = imageEl.value
+  panzoomElement.addEventListener('panzoomzoom', handlePanzoomZoom)
+  panzoomElement.addEventListener('panzoompan', handlePanzoomPan)
+  panzoomElement.addEventListener('panzoomreset', handlePanzoomReset)
+  updatePanState()
 }
 
 const handleWheel = (e) => {
@@ -362,6 +498,8 @@ const handleWheel = (e) => {
 
 // Image loaded handler
 const onImageLoad = () => {
+  clearDirectFallbackTimer()
+  clearDirectFallbackProbes()
   isLoading.value = false
   loadError.value = false
   nextTick(() => {
@@ -371,7 +509,21 @@ const onImageLoad = () => {
 
 const onImageError = () => {
   // In auto mode, mark the current tier as blocked and retry with next tier
-  const currentUrl = resolvedImageUrl.value
+  const currentUrl = displayedImageUrl.value
+  const candidates = currentImageCandidates.value
+  const currentCandidateIndex = candidates.indexOf(currentUrl)
+  const nextUrl = candidates[currentCandidateIndex + 1]
+
+  if (currentUrl && nextUrl) {
+    notifyTierFailed(currentUrl)
+    clearDirectFallbackTimer()
+    clearDirectFallbackProbes()
+    displayedImageUrl.value = nextUrl
+    isLoading.value = true
+    loadError.value = false
+    return
+  }
+
   if (proxyState.mode.value === 'auto' && currentUrl) {
     const ts = proxyState.tierStatus.value
     // Only retry if there's a tier below that isn't blocked yet
@@ -380,8 +532,7 @@ const onImageError = () => {
       (currentUrl.includes('lh3.google') && ts.thumbnail !== 'blocked')
     if (hasLowerTier) {
       notifyTierFailed(currentUrl)
-      isLoading.value = true
-      loadError.value = false
+      startImageLoad()
       return
     }
   }
@@ -407,6 +558,8 @@ const zoomOut = () => {
 const resetZoom = () => {
   if (panzoomInstance) {
     panzoomInstance.reset({ animate: true })
+    isPanned.value = false
+    zoomLevel.value = 1
   }
 }
 
@@ -435,7 +588,7 @@ const onKeyDown = (e) => {
       goToNext()
       break
     case 'Escape':
-      if (zoomLevel.value > 1.05) {
+      if (canResetView.value) {
         resetZoom()
       } else {
         emit('close')
@@ -456,27 +609,35 @@ const handleGallerySelection = () => {
   const selection = store.gallerySelection
   if (!selection) return
 
+  if (selection.mode) {
+    galleryMode.value = selection.mode === 'host-plants' ? 'host-plants' : 'butterflies'
+  }
+
   // Set species and subspecies from selection
-  if (selection.species) {
-    selectedSpecies.value = selection.species
+  const targetSpecies = selection.hostTaxon || selection.species
+  if (targetSpecies) {
+    selectedSpecies.value = targetSpecies
   }
   if (selection.subspecies) {
     selectedSubspecies.value = selection.subspecies
   }
 
   // Find and select the individual by ID
-  if (selection.individualId) {
-    const idx = specimensWithImages.value.findIndex(s => s.id === selection.individualId)
+  const targetIndividual = selection.occurrenceId || selection.individualId
+  if (targetIndividual) {
+    const idx = specimensWithImages.value.findIndex(s => String(s.id) === String(targetIndividual))
     if (idx >= 0) {
       currentIndex.value = idx
+    } else if (targetSpecies) {
+      updateCurrentIndexFromSelection()
     }
-  } else if (selection.species) {
+  } else if (targetSpecies) {
     // If no individual ID, find first individual of the species/subspecies with image
     updateCurrentIndexFromSelection()
   }
 
   // Expand only the selected species/subspecies (others stay collapsed)
-  expandOnly(selection.species, selection.subspecies)
+  expandOnly(targetSpecies, selection.subspecies)
 
   // Clear the selection after handling
   store.gallerySelection = null
@@ -493,8 +654,9 @@ const initializeThumbnailStrip = () => {
 }
 
 // Setup/cleanup
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('keydown', onKeyDown)
+  await ensureHostPlantGalleryData()
 
   // Initialize thumbnail strip with all collapsed
   nextTick(() => {
@@ -505,20 +667,26 @@ onMounted(() => {
   if (store.gallerySelection) {
     handleGallerySelection()
   } else {
-    initializeSidebarFromCurrent()
+    initializeSidebarFromCurrent({ expandCurrent: !isUnfilteredHostGallery.value })
   }
 })
 
 onUnmounted(() => {
   document.removeEventListener('keydown', onKeyDown)
-  if (panzoomInstance) {
-    panzoomInstance.destroy()
-  }
+  imageLoadAttempt += 1
+  clearDirectFallbackTimer()
+  clearDirectFallbackProbes()
+  destroyPanzoom()
   imageContainer.value?.removeEventListener('wheel', handleWheel)
 })
 
+watch(currentImageCandidates, () => {
+  startImageLoad()
+}, { immediate: true })
+
 // Watch for filter changes
 watch(() => store.filteredGeoJSON, () => {
+  if (galleryMode.value !== 'butterflies') return
   currentIndex.value = 0
   resetView()
   // Reset strip initialization flag so it re-collapses
@@ -527,6 +695,21 @@ watch(() => store.filteredGeoJSON, () => {
     initializeThumbnailStrip()
     initializeSidebarFromCurrent()
   })
+})
+
+watch(() => hostPlantStore.galleryDataset, () => {
+  if (galleryMode.value !== 'host-plants') return
+  currentIndex.value = 0
+  resetView()
+  stripInitialized.value = false
+  nextTick(() => {
+    initializeThumbnailStrip()
+    initializeSidebarFromCurrent({ expandCurrent: !isUnfilteredHostGallery.value })
+  })
+})
+
+watch(() => props.initialMode, (mode) => {
+  setGalleryMode(mode)
 })
 
 // Watch for currentIndex changes to sync sidebar and expand current group
@@ -581,15 +764,43 @@ watch(currentIndex, () => {
       </svg>
     </button>
 
+    <div class="gallery-mode-toggle">
+      <button
+        class="mode-btn"
+        :class="{ active: galleryMode === 'butterflies' }"
+        @click="setGalleryMode('butterflies')"
+      >
+        Butterflies
+      </button>
+      <button
+        class="mode-btn"
+        :class="{ active: galleryMode === 'host-plants' }"
+        @click="setGalleryMode('host-plants')"
+      >
+        Host Plants
+      </button>
+    </div>
+
     <!-- Empty state -->
-    <div v-if="specimensWithImages.length === 0" class="empty-state">
+    <div v-if="isHostGalleryLoading" class="empty-state">
+      <div class="spinner"></div>
+      <h3>Loading Host Plant Images</h3>
+      <p>Preparing the host plant occurrence gallery.</p>
+    </div>
+
+    <!-- Empty state -->
+    <div v-else-if="specimensWithImages.length === 0" class="empty-state">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
         <circle cx="8.5" cy="8.5" r="1.5"/>
         <polyline points="21 15 16 10 5 21"/>
       </svg>
       <h3>No Images Available</h3>
-      <p>No specimens in the current filter have images attached.</p>
+      <p>
+        {{ galleryMode === 'host-plants'
+          ? 'No host plant occurrence images are available for the current plant filter.'
+          : 'No specimens in the current filter have images attached.' }}
+      </p>
       <button class="btn-back" @click="emit('close')">Back to Map</button>
     </div>
 
@@ -612,6 +823,7 @@ watch(currentIndex, () => {
           :all-filtered-without-images="allFilteredWithoutImages"
           :coordinates="coordinates"
           :location-name="locationName"
+          :mode="galleryMode"
           @select-species="selectSpecies"
           @select-subspecies="selectSubspecies"
           @select-individual="selectIndividual"
@@ -645,10 +857,11 @@ watch(currentIndex, () => {
               v-if="currentSpecimen?.image_url"
               v-show="!isLoading && !loadError"
               ref="imageEl"
-              :src="resolvedImageUrl"
+              :src="displayedImageUrl"
               referrerpolicy="no-referrer"
               :alt="currentSpecimen.scientific_name"
               class="gallery-image"
+              decoding="async"
               @load="onImageLoad"
               @error="onImageError"
               draggable="false"
@@ -694,7 +907,7 @@ watch(currentIndex, () => {
                 <line x1="8" y1="11" x2="14" y2="11"/>
               </svg>
             </button>
-            <button @click="resetZoom" :disabled="zoomLevel <= 1.05" class="reset-btn">
+            <button @click="resetZoom" :disabled="!canResetView" class="reset-btn">
               Reset
             </button>
           </div>
@@ -706,134 +919,19 @@ watch(currentIndex, () => {
         </div>
       </div>
 
-      <!-- Thumbnail strip with grouped layout -->
-      <div class="thumbnail-strip" v-if="specimensWithImages.length > 1">
-        <!-- Left scroll arrow -->
-        <button class="scroll-arrow scroll-arrow-left" @click="scrollThumbnails(-1)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m15 18-6-6 6-6"/>
-          </svg>
-        </button>
-
-        <!-- Thumbnail content area -->
-        <div ref="thumbnailStripRef" class="thumbnail-scroll">
-          <!-- Species groups -->
-          <template v-for="speciesGroup in groupedThumbnails" :key="speciesGroup.name">
-            <div
-              class="species-group"
-              :style="{ '--species-color': speciesGroup.color?.main, '--species-bg': speciesGroup.color?.bg, '--species-border': speciesGroup.color?.border }"
-            >
-              <!-- Species header -->
-              <button
-                class="species-header"
-                @click="toggleSpeciesCollapse(speciesGroup.name)"
-                :title="speciesGroup.name"
-              >
-                <svg class="collapse-icon" :class="{ collapsed: collapsedSpecies.has(speciesGroup.name) }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
-                <span class="species-name">{{ speciesGroup.name }}</span>
-                <span class="species-count">{{ speciesGroup.totalImages }}</span>
-              </button>
-
-              <!-- Preview thumbnail when species is collapsed -->
-              <div
-                v-if="collapsedSpecies.has(speciesGroup.name)"
-                class="preview-container"
-                @click="toggleSpeciesCollapse(speciesGroup.name)"
-              >
-                <button
-                  class="thumbnail preview-thumb"
-                  :class="{ active: speciesGroup.subspecies.some(s => s.individuals.some(i => i.id === currentSpecimen?.id)) }"
-                  @click.stop="selectIndividual(speciesGroup.subspecies[0]?.individuals[0]?.id, false)"
-                  :title="speciesGroup.subspecies[0]?.individuals[0]?.id || 'View'"
-                >
-                  <img
-                    v-if="speciesGroup.subspecies[0]?.individuals[0]?.image_url"
-                    :src="resolvedThumbUrl(speciesGroup.subspecies[0].individuals[0].image_url)"
-                    :alt="speciesGroup.name"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <span class="expand-badge" @click.stop="toggleSpeciesCollapse(speciesGroup.name)" title="Expand group">+</span>
-                </button>
-              </div>
-
-              <!-- Species content (subspecies groups) -->
-              <div class="species-content" v-show="!collapsedSpecies.has(speciesGroup.name)">
-                <template v-for="subspGroup in speciesGroup.subspecies" :key="`${speciesGroup.name}-${subspGroup.name}`">
-                  <div
-                    class="subspecies-group"
-                    :style="{ '--subsp-color': subspGroup.color?.main, '--subsp-bg': subspGroup.color?.bg, '--subsp-border': subspGroup.color?.border }"
-                  >
-                    <!-- Subspecies header -->
-                    <button
-                      class="subspecies-header"
-                      @click="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)"
-                      :title="subspGroup.name"
-                    >
-                      <svg class="collapse-icon" :class="{ collapsed: collapsedSubspecies.has(`${speciesGroup.name}|${subspGroup.name}`) }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="m6 9 6 6 6-6"/>
-                      </svg>
-                      <span class="subspecies-name">{{ subspGroup.name }}</span>
-                      <span class="subspecies-count">{{ subspGroup.individuals.length }}</span>
-                    </button>
-
-                    <!-- Preview thumbnail when subspecies is collapsed -->
-                    <div
-                      v-if="collapsedSubspecies.has(`${speciesGroup.name}|${subspGroup.name}`)"
-                      class="preview-container"
-                      @click="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)"
-                    >
-                      <button
-                        class="thumbnail preview-thumb"
-                        :class="{ active: subspGroup.individuals.some(i => i.id === currentSpecimen?.id) }"
-                        @click.stop="selectIndividual(subspGroup.individuals[0]?.id, false)"
-                        :title="subspGroup.individuals[0]?.id || 'View'"
-                      >
-                        <img
-                          v-if="subspGroup.individuals[0]?.image_url"
-                          :src="resolvedThumbUrl(subspGroup.individuals[0].image_url)"
-                          :alt="subspGroup.name"
-                          loading="lazy"
-                          referrerpolicy="no-referrer"
-                        />
-                        <span class="expand-badge" @click.stop="toggleSubspeciesCollapse(`${speciesGroup.name}|${subspGroup.name}`)" title="Expand group">+</span>
-                      </button>
-                    </div>
-
-                    <!-- Thumbnails -->
-                    <div class="thumbnails-container" v-show="!collapsedSubspecies.has(`${speciesGroup.name}|${subspGroup.name}`)">
-                      <button
-                        v-for="specimen in subspGroup.individuals"
-                        :key="specimen.id"
-                        class="thumbnail"
-                        :class="{ active: currentSpecimen?.id === specimen.id }"
-                        @click="selectIndividual(specimen.id)"
-                        :title="specimen.id"
-                      >
-                        <img
-                          :src="resolvedThumbUrl(specimen.image_url)"
-                          :alt="specimen.id"
-                          loading="lazy"
-                          referrerpolicy="no-referrer"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </div>
-          </template>
-        </div>
-
-        <!-- Right scroll arrow -->
-        <button class="scroll-arrow scroll-arrow-right" @click="scrollThumbnails(1)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
-        </button>
-      </div>
+      <GalleryThumbnailStrip
+        v-if="specimensWithImages.length > 1"
+        ref="thumbnailStripRef"
+        :grouped-thumbnails="groupedThumbnails"
+        :current-item="currentSpecimen"
+        :collapsed-species="collapsedSpecies"
+        :collapsed-subspecies="collapsedSubspecies"
+        :thumb-url="resolvedThumbUrl"
+        :thumb-candidates="resolvedThumbCandidates"
+        @toggle-species="toggleSpeciesCollapse"
+        @toggle-subspecies="toggleSubspeciesCollapse"
+        @select-individual="selectIndividual"
+      />
     </template>
   </div>
 </template>

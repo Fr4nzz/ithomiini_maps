@@ -235,15 +235,20 @@ def compute_file_sizes():
     }
 
 
-def format_report(source_stats, merged_stats, mimicry_table, curation_stats, file_sizes, gbif_citation):
+def format_report(source_stats, merged_stats, mimicry_table, curation_stats,
+                  file_sizes, gbif_citation, generated_at=None):
     """Format a human-readable report."""
     lines = []
     lines.append("=" * 80)
     lines.append("PAPER STATISTICS REPORT")
     lines.append("=" * 80)
+    if generated_at:
+        lines.append(f"Statistics calculated from app data generated at: {generated_at}")
 
     # ── Data Summary Table (for Results 3.1) ──
     lines.append("\n\n## TABLE 1: Data Summary by Source")
+    if generated_at:
+        lines.append(f"Data snapshot: {generated_at}")
     lines.append("-" * 80)
     lines.append(f"{'Source':<30} {'Records':>8} {'Species':>8} {'Subspecies':>10} {'Genera':>8} {'Countries':>10}")
     lines.append("-" * 80)
@@ -257,6 +262,8 @@ def format_report(source_stats, merged_stats, mimicry_table, curation_stats, fil
     sanger = next((s for s in source_stats if s["source"] == "Sanger Institute"), None)
     if sanger:
         lines.append("\n## Sanger Institute Sequencing Status Breakdown")
+        if generated_at:
+            lines.append(f"Data snapshot: {generated_at}")
         lines.append("-" * 50)
         for status, count in sanger["sequencing_statuses"].items():
             pct = count / sanger["total_records"] * 100
@@ -277,6 +284,8 @@ def format_report(source_stats, merged_stats, mimicry_table, curation_stats, fil
 
     # ── Curation Stats (Table S2) ──
     lines.append("\n\n## TABLE S2: Taxonomic Curation Pipeline Statistics")
+    if generated_at:
+        lines.append(f"Data snapshot: {generated_at}")
     lines.append("-" * 60)
     lines.append(f"Total records curated: {curation_stats['total_records']:,}")
     lines.append("\nCuration basis breakdown:")
@@ -326,6 +335,7 @@ def format_report(source_stats, merged_stats, mimicry_table, curation_stats, fil
 def main():
     print("Loading data manifest...")
     manifest = load_json(MANIFEST_FILE)
+    generated_at = manifest.get("generated_at")
 
     # Load all source files
     all_records = []
@@ -374,7 +384,10 @@ def main():
 
     # Generate report
     print("\nGenerating report...")
-    report = format_report(source_stats, merged_stats, mimicry_table, curation_stats, file_sizes, gbif_citation)
+    report = format_report(
+        source_stats, merged_stats, mimicry_table, curation_stats,
+        file_sizes, gbif_citation, generated_at=generated_at
+    )
 
     # Write human-readable report
     report_path = OUTPUT_DIR / "statistics_report.txt"
@@ -384,6 +397,7 @@ def main():
 
     # Write machine-readable JSON
     json_output = {
+        "data_snapshot_generated_at": generated_at,
         "source_stats": source_stats,
         "merged_stats": merged_stats,
         "mimicry_ring_table": mimicry_table,

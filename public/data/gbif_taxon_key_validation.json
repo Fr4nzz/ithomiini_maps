@@ -1,0 +1,1074 @@
+{
+  "generated": "2026-05-22T10:12:30.282528",
+  "source": "cache",
+  "validation": [
+    {
+      "query": "Aeria",
+      "usageKey": 1910782,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Athesis",
+      "usageKey": 1907726,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Athyrtis",
+      "usageKey": 1902418,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Brevioleria",
+      "usageKey": 9412945,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Callithomia",
+      "usageKey": 1902813,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Ceratinia",
+      "usageKey": 1893479,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Dircenna",
+      "usageKey": 1896605,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Elzunia",
+      "usageKey": 1892625,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Episcada",
+      "usageKey": 1896644,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Epityches",
+      "usageKey": 1896124,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Eutresis",
+      "usageKey": 1895849,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Forbestra",
+      "usageKey": 1918919,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Godyris",
+      "usageKey": 1918214,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Greta",
+      "usageKey": 1895168,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Haenschia",
+      "usageKey": 9546511,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Heterosais",
+      "usageKey": 1918599,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Hyalenna",
+      "usageKey": 1911048,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Hyalyris",
+      "usageKey": 1917963,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Hypoleria",
+      "usageKey": 1916677,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Hypomenitis",
+      "usageKey": 1903649,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Hyposcada",
+      "usageKey": 1903019,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Hypothyris",
+      "usageKey": 1912162,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Ithomia",
+      "usageKey": 1908109,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Mcclungia",
+      "usageKey": 1902795,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Mechanitis",
+      "usageKey": 1902433,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Megoleria",
+      "usageKey": 4705946,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Melinaea",
+      "usageKey": 3256512,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Methona",
+      "usageKey": 1898853,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Napeogenes",
+      "usageKey": 1894931,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Oleria",
+      "usageKey": 1902275,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Ollantaya",
+      "usageKey": 4689201,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Olyras",
+      "usageKey": 1918014,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Pachacutia",
+      "usageKey": 4578024,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Pagyris",
+      "usageKey": 1915513,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Paititia",
+      "usageKey": 1908398,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Patricia",
+      "usageKey": 1907990,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Placidina",
+      "usageKey": 10243768,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Pseudoscada",
+      "usageKey": 1905319,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Pteronymia",
+      "usageKey": 1902873,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Sais",
+      "usageKey": 1902587,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Scada",
+      "usageKey": 4704358,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Thyridia",
+      "usageKey": 1902206,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Tithorea",
+      "usageKey": 1899856,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Veladyris",
+      "usageKey": 1902136,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Velamysta",
+      "usageKey": 1901767,
+      "accepted": true,
+      "reason": "cached_configured_genus"
+    },
+    {
+      "query": "Abaeis",
+      "usageKey": 8213918,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Actinote",
+      "usageKey": 1900982,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Adelpha",
+      "usageKey": 9132139,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Amarynthis",
+      "usageKey": 1935072,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Amiga",
+      "usageKey": 10272567,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Anartia",
+      "usageKey": 1893282,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Ancyluris",
+      "usageKey": 1936396,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Anteros",
+      "usageKey": 1919127,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Anthanassa",
+      "usageKey": 1902644,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Antirrhea",
+      "usageKey": 1899991,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Aphrissa",
+      "usageKey": 1920570,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Arawacus",
+      "usageKey": 1924749,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Archaeoprepona",
+      "usageKey": 4704436,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Archonias",
+      "usageKey": 1919124,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Aremfoxia",
+      "usageKey": 1908295,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Batesia",
+      "usageKey": 1899063,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Bia",
+      "usageKey": 1918933,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Biblis",
+      "usageKey": 1904817,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Caligo",
+      "usageKey": 1918071,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Callicore",
+      "usageKey": 3257565,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Callicorina",
+      "usageKey": 4708308,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Calycopis",
+      "usageKey": 1922827,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Cartea",
+      "usageKey": 1934442,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Castilia",
+      "usageKey": 1892844,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Catoblepia",
+      "usageKey": 1895691,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Catonephele",
+      "usageKey": 1896755,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Charis",
+      "usageKey": 8416631,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Charonias",
+      "usageKey": 1919968,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Chetone",
+      "usageKey": 1806453,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Chloreuptychia",
+      "usageKey": 1895235,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Cithaerias",
+      "usageKey": 1908573,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Coenophlebia",
+      "usageKey": 1904387,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Colobura",
+      "usageKey": 1897636,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Consul",
+      "usageKey": 1915189,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Corades",
+      "usageKey": 11879268,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Corderopedaliodes",
+      "usageKey": 1907730,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Crocozona",
+      "usageKey": 1936309,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Cyrenia",
+      "usageKey": 1934041,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Danaus",
+      "usageKey": 5133087,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Diaethria",
+      "usageKey": 1908980,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Dione",
+      "usageKey": 1897643,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Dismorphia",
+      "usageKey": 1919243,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Doxocopa",
+      "usageKey": 1892707,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Dryadula",
+      "usageKey": 1896746,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Dryas",
+      "usageKey": 1893309,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Dulcedo",
+      "usageKey": 1896752,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Dynamine",
+      "usageKey": 1909124,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Echydna",
+      "usageKey": 4689751,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Emesis",
+      "usageKey": 1935852,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Erebia",
+      "usageKey": 1913456,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Eresia",
+      "usageKey": 1895732,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Eryphanis",
+      "usageKey": 1897974,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Erythia",
+      "usageKey": 7730843,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Eucyane",
+      "usageKey": 4695890,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Eueides",
+      "usageKey": 1904294,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Eunica",
+      "usageKey": 1896175,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Euptychia",
+      "usageKey": 9197007,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Euselasia",
+      "usageKey": 10527924,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Evenus",
+      "usageKey": 1931306,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Fountainea",
+      "usageKey": 1895258,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Haematera",
+      "usageKey": 1899924,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Haetera",
+      "usageKey": 1916665,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Hamadryas",
+      "usageKey": 1898587,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Harjesia",
+      "usageKey": 1914692,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Heliconius",
+      "usageKey": 1900140,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Helicopis",
+      "usageKey": 1934046,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Hermeuptychia",
+      "usageKey": 1900021,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Historis",
+      "usageKey": 1898683,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Hypanartia",
+      "usageKey": 1894073,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Hypna",
+      "usageKey": 1905450,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Itaballia",
+      "usageKey": 1920460,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Junonia",
+      "usageKey": 1901885,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Lasaia",
+      "usageKey": 9799427,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Lasiophila",
+      "usageKey": 1909217,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Leptophobia",
+      "usageKey": 1920425,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Leucochimona",
+      "usageKey": 1946521,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Lieinix",
+      "usageKey": 1919168,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Lycorea",
+      "usageKey": 1910384,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Lyropteryx",
+      "usageKey": 4687048,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Macrosoma",
+      "usageKey": 1992205,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Magneuptychia",
+      "usageKey": 1901739,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Marpesia",
+      "usageKey": 1911518,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Memphis",
+      "usageKey": 1912473,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Mesene",
+      "usageKey": 10484957,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Mesenopsis",
+      "usageKey": 10224638,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Mesosemia",
+      "usageKey": 1934740,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Metamorpha",
+      "usageKey": 1901337,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Methone",
+      "usageKey": 8352972,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Modestia",
+      "usageKey": 3256521,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Modica",
+      "usageKey": 12370458,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Morpho",
+      "usageKey": 1909888,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Moschoneura",
+      "usageKey": 1919956,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Myselasia",
+      "usageKey": 11963201,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Narope",
+      "usageKey": 1895215,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Necyria",
+      "usageKey": 10552471,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Nessaea",
+      "usageKey": 1908298,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Nica",
+      "usageKey": 7236069,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Opsiphanes",
+      "usageKey": 1915371,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Oressinoma",
+      "usageKey": 1896874,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Ourocnemis",
+      "usageKey": 1935552,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Panacea",
+      "usageKey": 1902993,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Parcella",
+      "usageKey": 1934713,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pareuptychia",
+      "usageKey": 1918262,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Patia",
+      "usageKey": 1920474,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pereute",
+      "usageKey": 1919227,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Perisama",
+      "usageKey": 1909462,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Perrhybris",
+      "usageKey": 1919238,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pheles",
+      "usageKey": 1934000,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Philaethria",
+      "usageKey": 1892505,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pierella",
+      "usageKey": 1898343,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Podotricha",
+      "usageKey": 1899832,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Posttaygetis",
+      "usageKey": 1914695,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Prepona",
+      "usageKey": 1911943,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pronophila",
+      "usageKey": 1914664,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pseudeuptychia",
+      "usageKey": 1902868,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pseudodebis",
+      "usageKey": 1910771,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pseudohaetera",
+      "usageKey": 1895837,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Pyrrhogyra",
+      "usageKey": 1901786,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Rhetus",
+      "usageKey": 1936370,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Riodina",
+      "usageKey": 1935340,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Sanguinea",
+      "usageKey": 9591161,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Siproeta",
+      "usageKey": 1899830,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Splendeuptychia",
+      "usageKey": 1904390,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Stalachtis",
+      "usageKey": 1921987,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Symmachia",
+      "usageKey": 3256054,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Taygetis",
+      "usageKey": 1908197,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Tegosa",
+      "usageKey": 1917818,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Temenis",
+      "usageKey": 1903601,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Tigridia",
+      "usageKey": 3257611,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Vanessa",
+      "usageKey": 1898261,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Vila",
+      "usageKey": 1905437,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Yphthimoides",
+      "usageKey": 1915337,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    },
+    {
+      "query": "Zaretis",
+      "usageKey": 1902399,
+      "accepted": false,
+      "reason": "not_in_configured_download_list"
+    }
+  ]
+}

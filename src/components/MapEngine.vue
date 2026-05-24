@@ -5,6 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
 import { useLegendStore } from '../stores/legend'
 import PointPopup from './PointPopup.vue'
+import PlantPopup from './PlantPopup.vue'
 import { Legend } from './Legend'
 import { ASPECT_RATIOS } from '../utils/constants'
 import {
@@ -20,6 +21,7 @@ import {
   useBoundingBoxSelection
 } from '../composables/useMapEngine'
 import { useSDMLayer } from '../composables/useSDMLayer'
+import { useHostPlantLayer } from '../composables/useHostPlantLayer'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
 import { Sun, Moon, Palette } from 'lucide-vue-next'
@@ -43,8 +45,11 @@ let mapContainerResizeObserver = null
 const showEnhancedPopup = ref(false)
 const popupDocked = ref(false)
 const enhancedPopupData = ref({
+  popupType: 'point',
   coordinates: { lat: 0, lng: 0 },
   points: [],
+  occurrence: null,
+  taxon: null,
   isCluster: false,
   clusterStats: null
 })
@@ -72,8 +77,11 @@ const handleShowPopup = (data) => {
   showEnhancedPopup.value = false
 
   enhancedPopupData.value = {
+    popupType: data.type === 'plant' ? 'plant' : 'point',
     coordinates: data.coordinates,
-    points: data.points,
+    points: data.points || [],
+    occurrence: data.occurrence || null,
+    taxon: data.taxon || null,
     initialSpecies: data.initialSpecies || null,
     initialSubspecies: data.initialSubspecies || null,
     isCluster: data.isCluster || false,
@@ -180,10 +188,12 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
       addBoundariesLayer({ fromStyleSwitch: true })
     }
     recreateBboxVisualization()
+    updateHostPlantLayer()
   }
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
 const { updateLayer: updateSDMLayer, cursorValue: sdmCursorValue, cursorPos: sdmCursorPos } = useSDMLayer(map)
+const { updateLayer: updateHostPlantLayer } = useHostPlantLayer(map, { onShowPopup: handleShowPopup })
 const {
   isDrawing: isBboxDrawing,
   enableDrawing: enableBboxDrawing,
@@ -442,9 +452,9 @@ let previousDataLength = 0
 let previousScatterState = false
 
 // Handle open gallery from popup
-const handleOpenGallery = () => {
+const handleOpenGallery = (mode = 'butterflies') => {
   closeEnhancedPopup()
-  emit('open-gallery')
+  emit('open-gallery', mode)
 }
 
 // Debounced addDataLayer to batch rapid successive calls
@@ -665,13 +675,22 @@ watch(
     <div v-show="!popupDocked">
       <div ref="pointPopupContainer">
         <PointPopup
-          v-if="showEnhancedPopup && !popupDocked"
+          v-if="showEnhancedPopup && !popupDocked && enhancedPopupData.popupType !== 'plant'"
           :coordinates="enhancedPopupData.coordinates"
           :points="enhancedPopupData.points"
           :initial-species="enhancedPopupData.initialSpecies"
           :initial-subspecies="enhancedPopupData.initialSubspecies"
           :is-cluster="enhancedPopupData.isCluster"
           :cluster-stats="enhancedPopupData.clusterStats"
+          @close="closeEnhancedPopup"
+          @open-gallery="handleOpenGallery"
+          @toggle-dock="toggleDock"
+        />
+        <PlantPopup
+          v-else-if="showEnhancedPopup && !popupDocked"
+          :coordinates="enhancedPopupData.coordinates"
+          :occurrence="enhancedPopupData.occurrence"
+          :taxon="enhancedPopupData.taxon"
           @close="closeEnhancedPopup"
           @open-gallery="handleOpenGallery"
           @toggle-dock="toggleDock"
@@ -700,12 +719,22 @@ watch(
         </div>
         <div class="detail-panel-body">
           <PointPopup
+            v-if="enhancedPopupData.popupType !== 'plant'"
             :coordinates="enhancedPopupData.coordinates"
             :points="enhancedPopupData.points"
             :initial-species="enhancedPopupData.initialSpecies"
             :initial-subspecies="enhancedPopupData.initialSubspecies"
             :is-cluster="enhancedPopupData.isCluster"
             :cluster-stats="enhancedPopupData.clusterStats"
+            @close="closeEnhancedPopup"
+            @open-gallery="handleOpenGallery"
+            @toggle-dock="toggleDock"
+          />
+          <PlantPopup
+            v-else
+            :coordinates="enhancedPopupData.coordinates"
+            :occurrence="enhancedPopupData.occurrence"
+            :taxon="enhancedPopupData.taxon"
             @close="closeEnhancedPopup"
             @open-gallery="handleOpenGallery"
             @toggle-dock="toggleDock"
@@ -801,7 +830,16 @@ watch(
       class="sdm-cursor-tooltip"
       :style="{ left: (sdmCursorPos.x + 15) + 'px', top: (sdmCursorPos.y - 10) + 'px' }"
     >
-      <span class="sdm-cursor-value">{{ (sdmCursorValue[0].value * 100).toFixed(0) }}%</span>
+      <div
+        v-for="(item, index) in sdmCursorValue"
+        :key="item.species"
+        class="sdm-cursor-row"
+        :class="index === 0 ? 'warm' : 'cool'"
+      >
+        <span class="sdm-cursor-dot"></span>
+        <span class="sdm-cursor-species">{{ item.species }}</span>
+        <span class="sdm-cursor-value">{{ (item.value * 100).toFixed(0) }}%</span>
+      </div>
     </div>
 
     <!-- Map Layer Controls -->

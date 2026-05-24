@@ -1,12 +1,14 @@
 /**
- * Image proxy utility — 3-tier image source system for Google Drive images.
+ * Image proxy utility — 3-tier image source system for Google Drive images,
+ * with wsrv.nl caching/resizing support for other HTTP image URLs.
  *
  * Tiers (in priority order):
  *   1. wsrv.nl proxy   — cached, WebP compressed, fastest
  *   2. Google CDN (lh3) — direct, highest quality
  *   3. Drive thumbnail  — direct, lower quality fallback
  *
- * Non-Drive images (iNaturalist, Zenodo, Harvard, etc.) always load directly.
+ * Non-Drive images (iNaturalist, IIIF/herbarium, Zenodo, Harvard, etc.) use
+ * wsrv.nl in auto/wsrv mode and fall back to their direct URL otherwise.
  */
 import { ref } from 'vue'
 
@@ -41,7 +43,7 @@ function readInitialMode() {
   return 'auto'
 }
 
-/** Mode: 'auto' | 'wsrv' | 'lh3' | 'thumbnail' */
+/** Mode: 'auto' | 'wsrv' | 'lh3' | 'thumbnail' | 'off' */
 const proxyMode = ref(readInitialMode())
 
 /** Per-tier reachability: 'ok' | 'blocked' | 'unknown' */
@@ -50,6 +52,12 @@ const tierStatus = ref({
   lh3: 'unknown',
   thumbnail: 'unknown',
 })
+
+const wsrvFailedUrls = new Set()
+const wsrvOversizedHosts = new Set([
+  // GBIF media CDN image observed at 8736 x 11648 px; wsrv rejects it before resizing.
+  'd2jcv3kl45hlgi.cloudfront.net',
+])
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PUBLIC STATE API
@@ -95,6 +103,30 @@ export function checkAllTiers(testFileId) {
   return Promise.all(probes)
 }
 
+export function checkWsrvForUrl(originalUrl) {
+  if (!originalUrl) return Promise.resolve(false)
+  const probeUrl = getThumbnailUrl(originalUrl)
+  if (!probeUrl.includes('wsrv.nl')) {
+    if (tierStatus.value.wsrv === 'blocked') tierStatus.value.wsrv = 'unknown'
+    return Promise.resolve(false)
+  }
+  return new Promise(resolve => {
+    const img = new Image()
+    img.referrerPolicy = 'no-referrer'
+    img.onload = () => {
+      tierStatus.value.wsrv = 'ok'
+      wsrvFailedUrls.delete(unwrapWsrvUrl(probeUrl))
+      resolve(true)
+    }
+    img.onerror = () => {
+      wsrvFailedUrls.add(unwrapWsrvUrl(probeUrl))
+      if (tierStatus.value.wsrv !== 'ok') tierStatus.value.wsrv = 'blocked'
+      resolve(false)
+    }
+    img.src = `${probeUrl}&probe=${Date.now()}`
+  })
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // RUNTIME FAILURE DETECTION
 // ═══════════════════════════════════════════════════════════════════════════
@@ -107,7 +139,10 @@ export function checkAllTiers(testFileId) {
  */
 export function notifyTierFailed(url) {
   if (!url) return
-  if (url.includes('wsrv.nl')) tierStatus.value.wsrv = 'blocked'
+  if (url.includes('wsrv.nl')) {
+    wsrvFailedUrls.add(unwrapWsrvUrl(url))
+    if (tierStatus.value.wsrv !== 'ok') tierStatus.value.wsrv = 'blocked'
+  }
   else if (url.includes('lh3.google')) tierStatus.value.lh3 = 'blocked'
   else if (url.includes('drive.google')) tierStatus.value.thumbnail = 'blocked'
 }
@@ -168,12 +203,78 @@ function buildWsrvUrl(fileId, width) {
   return `https://wsrv.nl/?url=${inner}&w=${width}&q=85&output=webp`
 }
 
+function buildWsrvExternalUrl(originalUrl, width) {
+  const cleanUrl = prepareExternalImageUrl(unwrapWsrvUrl(originalUrl), width)
+  const inner = encodeURIComponent(cleanUrl)
+  return `https://wsrv.nl/?url=${inner}&w=${width}&q=85&output=webp`
+}
+
+function shouldSkipWsrvExternalUrl(originalUrl) {
+  try {
+    return wsrvOversizedHosts.has(new URL(unwrapWsrvUrl(originalUrl)).hostname)
+  } catch {
+    return false
+  }
+}
+
+function prepareExternalImageUrl(url, width) {
+  return resizeIiifUrl(preferHttpsUrl(url), width)
+}
+
+function resizeIiifUrl(url, width) {
+  if (!url) return url
+  try {
+    const parsed = new URL(url)
+    const parts = parsed.pathname.split('/')
+    const iiifIndex = parts.findIndex(part => part === 'iiif')
+    if (iiifIndex < 0 || parts[iiifIndex + 1] !== '2') return url
+
+    const defaultIndex = parts.lastIndexOf('default.jpg')
+    if (defaultIndex < 0) return url
+
+    const sizeIndex = defaultIndex - 2
+    if (sizeIndex <= iiifIndex + 2) return url
+    if (!['full', 'max'].includes(parts[sizeIndex])) return url
+
+    const boundedWidth = Math.max(1, Math.round(Number(width) || 1600))
+    parts[sizeIndex] = `${boundedWidth},`
+    parsed.pathname = parts.join('/')
+    return parsed.toString()
+  } catch {
+    return url
+  }
+}
+
+function preferHttpsUrl(url) {
+  if (!url || !url.startsWith('http://')) return url
+  try {
+    const parsed = new URL(url)
+    const hostname = parsed.hostname
+    const isIpv4 = /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname)
+    const isLocal = hostname === 'localhost' || hostname.endsWith('.local')
+    if (isIpv4 || isLocal) return url
+    parsed.protocol = 'https:'
+    return parsed.toString()
+  } catch {
+    return url
+  }
+}
+
 function buildLh3Url(fileId, width) {
   return `https://lh3.googleusercontent.com/d/${fileId}=w${width}`
 }
 
 function buildThumbnailUrl(fileId, width) {
   return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${width}`
+}
+
+function uniqueUrls(urls) {
+  const seen = new Set()
+  return urls.filter(url => {
+    if (!url || seen.has(url)) return false
+    seen.add(url)
+    return true
+  })
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -183,20 +284,33 @@ function buildThumbnailUrl(fileId, width) {
 /**
  * Resolve an image URL to the best available source.
  * - Google Drive images → selected tier (or auto-cascade)
- * - Non-Drive images → direct URL (no proxy)
+ * - Non-Drive images → wsrv.nl in auto/wsrv mode, direct otherwise
  */
 function resolveUrl(originalUrl, width) {
   if (!originalUrl) return ''
 
   const fileId = extractGoogleDriveFileId(originalUrl) // unwraps wsrv.nl internally
-
-  if (!fileId) return unwrapWsrvUrl(originalUrl) // non-Drive → strip any wsrv.nl wrapper
+  const cleanOriginalUrl = unwrapWsrvUrl(originalUrl)
+  const wsrvFailedForUrl = wsrvFailedUrls.has(cleanOriginalUrl)
 
   const mode = proxyMode.value
 
+  if (mode === 'off') return resizeIiifUrl(cleanOriginalUrl, width)
+
+  if (!fileId) {
+    if (mode === 'auto' && shouldSkipWsrvExternalUrl(originalUrl)) {
+      return prepareExternalImageUrl(cleanOriginalUrl, width)
+    }
+    if (mode === 'auto' && !wsrvFailedForUrl) {
+      return buildWsrvExternalUrl(originalUrl, width)
+    }
+    if (mode === 'wsrv') return buildWsrvExternalUrl(originalUrl, width)
+    return resizeIiifUrl(unwrapWsrvUrl(originalUrl), width)
+  }
+
   if (mode === 'auto') {
     // Cascade: use best available tier
-    if (tierStatus.value.wsrv !== 'blocked') return buildWsrvUrl(fileId, width)
+    if (!wsrvFailedForUrl) return buildWsrvUrl(fileId, width)
     if (tierStatus.value.lh3 !== 'blocked') return buildLh3Url(fileId, width)
     return buildThumbnailUrl(fileId, width)
   }
@@ -206,7 +320,7 @@ function resolveUrl(originalUrl, width) {
   if (mode === 'lh3') return buildLh3Url(fileId, width)
   if (mode === 'thumbnail') return buildThumbnailUrl(fileId, width)
 
-  return cleanUrl
+  return unwrapWsrvUrl(originalUrl)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -218,6 +332,43 @@ function resolveUrl(originalUrl, width) {
  */
 export function getProxiedUrl(originalUrl, options = {}) {
   return resolveUrl(originalUrl, options.width || 2000)
+}
+
+/**
+ * Return the original/direct URL behind any selected proxy tier.
+ * Used as a last-mile fallback when a cache/proxy request stalls.
+ */
+export function getDirectImageUrl(originalUrl) {
+  return unwrapWsrvUrl(originalUrl)
+}
+
+/**
+ * Return all useful URLs for an image, ordered from preferred to fallback.
+ * The first candidate respects the current cache mode; later candidates are
+ * direct/provider alternatives used when the preferred candidate stalls.
+ */
+export function getImageUrlCandidates(originalUrl, options = {}) {
+  if (!originalUrl) return []
+  const width = options.width || 2000
+  const primary = resolveUrl(originalUrl, width)
+  const mode = proxyMode.value
+  if (mode !== 'auto') return primary ? [primary] : []
+
+  const cleanOriginalUrl = unwrapWsrvUrl(originalUrl)
+  const sizedOriginalUrl = resizeIiifUrl(cleanOriginalUrl, width)
+  const httpsOriginalUrl = prepareExternalImageUrl(cleanOriginalUrl, width)
+  const fileId = extractGoogleDriveFileId(originalUrl)
+
+  if (!fileId) {
+    return uniqueUrls([primary, httpsOriginalUrl, sizedOriginalUrl])
+  }
+
+  return uniqueUrls([
+    primary,
+    buildLh3Url(fileId, width),
+    buildThumbnailUrl(fileId, width),
+    cleanOriginalUrl,
+  ])
 }
 
 /**

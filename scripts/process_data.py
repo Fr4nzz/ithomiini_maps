@@ -48,23 +48,29 @@ GBIF_BULK_FILE = "public/data/gbif_occurrences.json"
 
 # Global lookup table: (scientific_name, subspecies) -> (male_mimicry, female_mimicry)
 MIMICRY_LOOKUP = {}
+MIMICRY_PROVENANCE = {}
 
 
 def build_mimicry_lookup(dore_df):
     """
     Build a lookup table from Dore database for mimicry rings.
-    Creates mappings at multiple levels of specificity:
+    Creates mappings at two levels of specificity:
     1. Full match: (scientific_name, subspecies) -> mimicry
-    2. Species-only fallback: (scientific_name, None) -> mimicry
-    
-    This allows matching even when subspecies data is missing.
+    2. Species-only fallback only when all known subspecies share a ring
     """
-    global MIMICRY_LOOKUP
+    global MIMICRY_LOOKUP, MIMICRY_PROVENANCE
     
     print(">> Building Mimicry Ring Lookup Table...")
+
+    MIMICRY_LOOKUP = {}
+    MIMICRY_PROVENANCE = {}
+    species_subspecies_rings = {}
+    species_display_names = {}
     
     for _, row in dore_df.iterrows():
         sci_name = f"{row['Genus']} {row['Species']}".strip()
+        sci_name_lower = sci_name.lower()
+        species_display_names.setdefault(sci_name_lower, sci_name)
         subspecies = row.get('Sub.species')
         male_mim = row.get('M.mimicry')
         female_mim = row.get('F.mimicry')
@@ -81,14 +87,29 @@ def build_mimicry_lookup(dore_df):
         
         # Store with full key (species + subspecies)
         if subspecies:
-            key = (sci_name.lower(), subspecies.lower())
+            key = (sci_name_lower, subspecies.lower())
             if key not in MIMICRY_LOOKUP:
                 MIMICRY_LOOKUP[key] = (male_mim, female_mim)
-        
-        # Also store species-only key (for fallback matching)
-        species_key = (sci_name.lower(), None)
-        if species_key not in MIMICRY_LOOKUP:
-            MIMICRY_LOOKUP[species_key] = (male_mim, female_mim)
+                MIMICRY_PROVENANCE[key] = {
+                    'assignment_level': 'exact_subspecies',
+                    'confidence': 'exact',
+                    'source_taxon': f"{sci_name} {subspecies}",
+                }
+            species_subspecies_rings.setdefault(sci_name_lower, []).append(
+                (subspecies, male_mim, female_mim)
+            )
+
+    for sci_name_lower, entries in species_subspecies_rings.items():
+        male_mim = get_unanimous_subspecies_ring(entries, ring_index=1)
+        female_mim = get_unanimous_subspecies_ring(entries, ring_index=2)
+        if male_mim != 'Unknown' or female_mim != 'Unknown':
+            key = (sci_name_lower, None)
+            MIMICRY_LOOKUP[key] = (male_mim, female_mim)
+            MIMICRY_PROVENANCE[key] = {
+                'assignment_level': 'species_unambiguous_subspecies',
+                'confidence': 'propagated_unambiguous',
+                'source_taxon': species_display_names.get(sci_name_lower, sci_name_lower),
+            }
     
     print(f"   Built lookup with {len(MIMICRY_LOOKUP)} unique entries")
     
@@ -96,6 +117,19 @@ def build_mimicry_lookup(dore_df):
     unique_species = len(set(k[0] for k in MIMICRY_LOOKUP.keys()))
     unique_mimicry = len(set(v[0] for v in MIMICRY_LOOKUP.values() if v[0] != 'Unknown'))
     print(f"   Covers {unique_species} species, {unique_mimicry} mimicry rings")
+
+
+def get_unanimous_subspecies_ring(entries, ring_index):
+    """Return a shared non-Unknown ring only if every known subspecies agrees."""
+    if not entries:
+        return 'Unknown'
+
+    rings = {entry[ring_index] for entry in entries}
+    if len(rings) == 1:
+        ring = next(iter(rings))
+        if ring != 'Unknown':
+            return ring
+    return 'Unknown'
 
 
 def lookup_mimicry(scientific_name, subspecies=None):
@@ -126,6 +160,56 @@ def lookup_mimicry(scientific_name, subspecies=None):
         return MIMICRY_LOOKUP[species_key]
     
     return ('Unknown', 'Unknown')
+
+
+def lookup_mimicry_assignment(scientific_name, subspecies=None, sex=None):
+    """Look up the ring plus provenance for a species/subspecies/sex assignment."""
+    if not scientific_name:
+        return {
+            'mimicry_ring': 'Unknown',
+            'assignment_level': 'unassigned',
+            'confidence': 'unknown',
+            'source_taxon': None,
+        }
+
+    sci_name_lower = scientific_name.lower().strip()
+    sex_normalized = normalize_sex(sex)
+    ring_index = 1 if sex_normalized == 'female' else 0
+
+    if subspecies:
+        ssp_lower = str(subspecies).lower().strip()
+        key = (sci_name_lower, ssp_lower)
+        if key in MIMICRY_LOOKUP:
+            ring = MIMICRY_LOOKUP[key][ring_index]
+            provenance = MIMICRY_PROVENANCE.get(key, {})
+            return {
+                'mimicry_ring': ring,
+                'assignment_level': provenance.get('assignment_level', 'exact_subspecies'),
+                'confidence': provenance.get('confidence', 'exact'),
+                'source_taxon': provenance.get('source_taxon'),
+            }
+
+    species_key = (sci_name_lower, None)
+    if species_key in MIMICRY_LOOKUP:
+        ring = MIMICRY_LOOKUP[species_key][ring_index]
+        if ring != 'Unknown':
+            provenance = MIMICRY_PROVENANCE.get(species_key, {})
+            return {
+                'mimicry_ring': ring,
+                'assignment_level': provenance.get(
+                    'assignment_level',
+                    'species_unambiguous_subspecies',
+                ),
+                'confidence': provenance.get('confidence', 'propagated_unambiguous'),
+                'source_taxon': provenance.get('source_taxon'),
+            }
+
+    return {
+        'mimicry_ring': 'Unknown',
+        'assignment_level': 'unassigned',
+        'confidence': 'unknown',
+        'source_taxon': None,
+    }
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -211,11 +295,19 @@ def determine_sequencing_status(row):
 
 
 def get_mimicry_for_row(row):
-    """Look up male mimicry ring for a DataFrame row using the Dore lookup table."""
+    """Look up the relevant mimicry ring for a DataFrame row using Dore data."""
     sci_name = row.get('scientific_name', '')
     subspecies = row.get('subspecies')
-    male_mim, _ = lookup_mimicry(sci_name, subspecies)
-    return male_mim
+    sex = row.get('sex')
+    return lookup_mimicry_assignment(sci_name, subspecies, sex)['mimicry_ring']
+
+
+def get_mimicry_assignment_for_row(row):
+    """Look up mimicry ring and assignment provenance for a DataFrame row."""
+    sci_name = row.get('scientific_name', '')
+    subspecies = row.get('subspecies')
+    sex = row.get('sex')
+    return lookup_mimicry_assignment(sci_name, subspecies, sex)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -250,6 +342,12 @@ def load_local_data():
         # Dore is the SOURCE of mimicry data
         df['mimicry_ring'] = df['M.mimicry'].apply(normalize_mimicry)
         df['mimicry_ring_female'] = df['F.mimicry'].apply(normalize_mimicry)
+        df['mimicry_assignment_level'] = 'dore_record'
+        df['mimicry_assignment_confidence'] = 'source'
+        df['mimicry_source_taxon'] = (
+            df['scientific_name']
+            + df['subspecies'].apply(lambda ssp: f" {ssp}" if ssp else "")
+        )
         
         # Metadata
         df['source'] = "Dore et al. (2022)"
@@ -293,6 +391,8 @@ def load_local_data():
         result = df[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
+            'mimicry_assignment_level', 'mimicry_assignment_confidence',
+            'mimicry_source_taxon',
             'sequencing_status', 'source', 'image_url', 'country',
             'collection_location', 'observation_date', 'sex',
             'coordinate_uncertainty'
@@ -379,6 +479,15 @@ def load_sanger_data():
         # Subspecies
         df_col['subspecies'] = df_col.get('Subspecies_Form', pd.Series([None] * len(df_col)))
         df_col['subspecies'] = df_col['subspecies'].apply(clean_str)
+
+        # Sex from Sanger data (normalize before mimicry lookup)
+        if 'Sex' in df_col.columns:
+            df_col['sex'] = df_col['Sex'].apply(normalize_sex)
+            sex_counts = df_col['sex'].value_counts(dropna=False)
+            print(f"   Sex distribution: {sex_counts.to_dict()}")
+        else:
+            df_col['sex'] = None
+            print("   No Sex column found in Sanger data")
         
         # Coordinates (try multiple column names)
         if 'DECIMAL_LATITUDE' in df_col.columns:
@@ -395,8 +504,15 @@ def load_sanger_data():
         # MIMICRY RING LOOKUP (from Dore database)
         # ═══════════════════════════════════════════════════════════════════
         print("   Applying mimicry ring lookup from Dore database...")
-        
-        df_col['mimicry_ring'] = df_col.apply(get_mimicry_for_row, axis=1)
+
+        mimicry_assignments = df_col.apply(
+            lambda row: pd.Series(get_mimicry_assignment_for_row(row)),
+            axis=1,
+        )
+        df_col['mimicry_ring'] = mimicry_assignments['mimicry_ring']
+        df_col['mimicry_assignment_level'] = mimicry_assignments['assignment_level']
+        df_col['mimicry_assignment_confidence'] = mimicry_assignments['confidence']
+        df_col['mimicry_source_taxon'] = mimicry_assignments['source_taxon']
         
         matched = (df_col['mimicry_ring'] != 'Unknown').sum()
         print(f"   Mimicry ring matched for {matched}/{len(df_col)} records")
@@ -422,15 +538,6 @@ def load_sanger_data():
         else:
             df_col['observation_date'] = None
 
-        # Sex from Sanger data (normalize to standard values)
-        if 'Sex' in df_col.columns:
-            df_col['sex'] = df_col['Sex'].apply(normalize_sex)
-            sex_counts = df_col['sex'].value_counts(dropna=False)
-            print(f"   Sex distribution: {sex_counts.to_dict()}")
-        else:
-            df_col['sex'] = None
-            print("   No Sex column found in Sanger data")
-
         # Sanger Google Sheets data has no coordinate uncertainty
         df_col['coordinate_uncertainty'] = None
 
@@ -438,6 +545,8 @@ def load_sanger_data():
         result = df_col[[
             'id', 'scientific_name', 'genus', 'species', 'subspecies',
             'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
+            'mimicry_assignment_level', 'mimicry_assignment_confidence',
+            'mimicry_source_taxon',
             'sequencing_status', 'source', 'image_url', 'country',
             'collection_location', 'observation_date', 'sex',
             'coordinate_uncertainty'
@@ -538,13 +647,15 @@ def load_gbif_bulk_download():
         # Ensure required columns exist
         required_cols = ['id', 'scientific_name', 'genus', 'species', 'subspecies',
                         'family', 'tribe', 'lat', 'lng', 'mimicry_ring',
+                        'mimicry_assignment_level', 'mimicry_assignment_confidence',
+                        'mimicry_source_taxon',
                         'sequencing_status', 'source', 'image_url', 'country',
                         'collection_location', 'observation_date', 'observation_url', 'sex',
                         'institution_code', 'coordinate_uncertainty']
 
         nullable_cols = {'subspecies', 'image_url', 'collection_location',
                          'observation_date', 'observation_url', 'sex', 'institution_code',
-                         'coordinate_uncertainty'}
+                         'coordinate_uncertainty', 'mimicry_source_taxon'}
         for col in required_cols:
             if col not in df.columns:
                 df[col] = None if col in nullable_cols else 'Unknown'
@@ -594,8 +705,15 @@ def load_gbif_bulk_download():
         # MIMICRY RING LOOKUP (from Dore database)
         # ═══════════════════════════════════════════════════════════════════
         print("   Applying mimicry ring lookup from Dore database...")
-        
-        df['mimicry_ring'] = df.apply(get_mimicry_for_row, axis=1)
+
+        mimicry_assignments = df.apply(
+            lambda row: pd.Series(get_mimicry_assignment_for_row(row)),
+            axis=1,
+        )
+        df['mimicry_ring'] = mimicry_assignments['mimicry_ring']
+        df['mimicry_assignment_level'] = mimicry_assignments['assignment_level']
+        df['mimicry_assignment_confidence'] = mimicry_assignments['confidence']
+        df['mimicry_source_taxon'] = mimicry_assignments['source_taxon']
         
         matched = (df['mimicry_ring'] != 'Unknown').sum()
         print(f"   Mimicry ring matched for {matched:,}/{len(df):,} records")

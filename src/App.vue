@@ -63,7 +63,11 @@ const closeExport = () => { showExportPanel.value = false }
 const openMimicrySelector = () => { showMimicrySelector.value = true }
 const closeMimicrySelector = () => { showMimicrySelector.value = false }
 
-const openImageGallery = () => { showImageGallery.value = true }
+const imageGalleryMode = ref('butterflies')
+const openImageGallery = (mode = 'butterflies') => {
+  imageGalleryMode.value = mode === 'host-plants' ? 'host-plants' : 'butterflies'
+  showImageGallery.value = true
+}
 const closeImageGallery = () => { showImageGallery.value = false }
 
 // Direct export function - captures the map container which is already sized to aspect ratio
@@ -361,6 +365,7 @@ onMounted(async () => {
       <Transition name="fade">
         <ImageGallery 
           v-if="showImageGallery" 
+          :initial-mode="imageGalleryMode"
           @close="closeImageGallery" 
         />
       </Transition>
@@ -455,6 +460,7 @@ html, body, #app {
 
 .main-content {
   flex: 1;
+  min-width: 0;
   position: relative;
   height: 100%;
   display: flex;
@@ -464,6 +470,7 @@ html, body, #app {
 
 .view-container {
   flex: 1;
+  min-width: 0;
   width: 100%;
   height: 100%;
 }
