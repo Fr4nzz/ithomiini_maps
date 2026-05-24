@@ -370,7 +370,15 @@ const canLoadMoreHostImages = computed(() =>
 )
 const loadMoreHostImages = async (slug = currentHostSlug.value) => {
   if (!slug) return
+  const speciesSnapshot = new Set(collapsedSpecies.value)
+  const subspeciesSnapshot = new Set(collapsedSubspecies.value)
+  const selectedSpeciesSnapshot = selectedSpecies.value
+  const selectedSubspeciesSnapshot = selectedSubspecies.value
   await hostPlantStore.loadMoreGalleryForSlug(slug, 10)
+  collapsedSpecies.value = speciesSnapshot
+  collapsedSubspecies.value = subspeciesSnapshot
+  selectedSpecies.value = selectedSpeciesSnapshot
+  selectedSubspecies.value = selectedSubspeciesSnapshot
 }
 
 // Current specimen

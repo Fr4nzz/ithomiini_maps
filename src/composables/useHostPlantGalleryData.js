@@ -7,9 +7,10 @@ function groupPlantItems(items) {
   for (const item of items) {
     if (!item.scientific_name) continue
     if (!grouped[item.scientific_name]) {
-      grouped[item.scientific_name] = { count: 0, subspecies: {}, butterflyTaxa: new Set(), hostTaxonSlugs: new Set() }
+      grouped[item.scientific_name] = { count: 0, subspecies: {}, butterflyTaxa: new Set(), hostTaxonSlugs: new Set(), hostTaxonRanks: new Set() }
     }
     if (item.host_taxon_slug) grouped[item.scientific_name].hostTaxonSlugs.add(item.host_taxon_slug)
+    if (item.host_taxon_rank) grouped[item.scientific_name].hostTaxonRanks.add(item.host_taxon_rank)
     grouped[item.scientific_name].count += 1
     for (const name of item.associated_butterflies || []) {
       grouped[item.scientific_name].butterflyTaxa.add(name)
@@ -80,7 +81,12 @@ export function useHostPlantGalleryData(hostPlantStore) {
           ...data.butterflyTaxa,
         ].join(' ').toLowerCase(),
       }))
-      .sort((a, b) => a.species.localeCompare(b.species))
+      .sort((a, b) => {
+        const order = { species: 0, genus: 1, family: 2 }
+        const rankA = groupedBySpecies.value[a.species]?.hostTaxonRanks?.has('species') ? 'species' : (groupedBySpecies.value[a.species]?.hostTaxonRanks?.has('genus') ? 'genus' : 'family')
+        const rankB = groupedBySpecies.value[b.species]?.hostTaxonRanks?.has('species') ? 'species' : (groupedBySpecies.value[b.species]?.hostTaxonRanks?.has('genus') ? 'genus' : 'family')
+        return (order[rankA] ?? 9) - (order[rankB] ?? 9) || a.species.localeCompare(b.species)
+      })
   )
 
   const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
@@ -115,6 +121,7 @@ export function useHostPlantGalleryData(hostPlantStore) {
         const individuals = Object.values(speciesData.subspecies)
           .flatMap(group => group.individuals)
         const hostTaxonSlugs = [...(speciesData.hostTaxonSlugs || [])]
+        const hostTaxonRank = speciesData.hostTaxonRanks?.has('species') ? 'species' : (speciesData.hostTaxonRanks?.has('genus') ? 'genus' : 'family')
         const primarySlug = hostTaxonSlugs.length === 1 ? hostTaxonSlugs[0] : null
         const index = primarySlug ? hostPlantStore.galleryIndexCache?.[primarySlug] : null
         const totalAvailable = index?.total_images || individuals.length
@@ -128,6 +135,7 @@ export function useHostPlantGalleryData(hostPlantStore) {
           loadedLimit,
           canLoadMore: Boolean(primarySlug && totalAvailable > loadedLimit),
           hostTaxonSlug: primarySlug,
+          hostTaxonRank,
           subspecies: Object.entries(speciesData.subspecies)
             .map(([subspeciesName, subspeciesData]) => ({
               type: 'subspecies',
@@ -139,6 +147,10 @@ export function useHostPlantGalleryData(hostPlantStore) {
         }
       })
       .filter(group => group.totalImages > 0)
+      .sort((a, b) => {
+        const order = { species: 0, genus: 1, family: 2 }
+        return (order[a.hostTaxonRank] ?? 9) - (order[b.hostTaxonRank] ?? 9) || a.name.localeCompare(b.name)
+      })
   )
 
   return {
