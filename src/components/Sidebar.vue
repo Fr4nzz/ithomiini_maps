@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useDataStore } from '../stores/data'
 import { usePersistenceStore } from '../stores/persistence'
 import { useLegendStore } from '../stores/legend'
@@ -207,6 +207,20 @@ const availableOtherFilters = computed(() =>
 )
 
 const enabledOtherFilters = ref(new Set(['camid', 'sdm', 'hostplants']))
+const syncStandaloneFilterStores = () => {
+  if (enabledOtherFilters.value.has('sdm') && !sdmStore.enabled) sdmStore.toggle()
+  if (enabledOtherFilters.value.has('hostplants') && !hostPlantStore.enabled) hostPlantStore.toggleEnabled()
+}
+
+onMounted(syncStandaloneFilterStores)
+
+watch(
+  () => [sdmStore.hasData, props.currentView],
+  () => {
+    if (props.currentView === 'map' && sdmStore.hasData) syncStandaloneFilterStores()
+  }
+)
+
 const toggleOtherFilter = (key) => {
   const next = new Set(enabledOtherFilters.value)
   if (next.has(key)) next.delete(key)
