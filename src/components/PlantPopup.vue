@@ -1,8 +1,12 @@
 <script setup>
 import { computed } from 'vue'
 import { useDataStore } from '../stores/data'
+import { useHostPlantStore } from '../stores/hostPlants'
+import FallbackImage from './FallbackImage.vue'
+import { getImageUrlCandidates } from '../utils/imageProxy'
 
 const store = useDataStore()
+const hostPlantStore = useHostPlantStore()
 const props = defineProps({
   coordinates: {
     type: Object,
@@ -25,35 +29,17 @@ const gbifUrl = computed(() => {
   return `https://www.gbif.org/occurrence/${props.occurrence.gbifID}`
 })
 
-const parseJsonProperty = (value, fallback) => {
-  if (typeof value !== 'string') return value || fallback
-  try {
-    return JSON.parse(value)
-  } catch {
-    return fallback
-  }
-}
-
 const displayName = computed(() =>
   props.occurrence.scientificName
   || props.occurrence.species
   || props.taxon.canonical_name
 )
 
-const plantImage = computed(() => {
-  if (props.occurrence.image_url) {
-    return {
-      url: props.occurrence.image_url,
-      fallback: Boolean(props.occurrence.image_is_fallback),
-    }
-  }
-  const media = parseJsonProperty(props.occurrence.media, [])
-  const direct = Array.isArray(media) ? media[0] : null
-  const fallback = parseJsonProperty(props.occurrence.fallback_media, null)
-  if (direct?.url) return { ...direct, fallback: false }
-  if (fallback?.url) return { ...fallback, fallback: true }
-  return null
-})
+const plantPhoto = computed(() => hostPlantStore.getPhotoForOccurrence(props.occurrence))
+
+const plantImageCandidates = computed(() =>
+  plantPhoto.value?.url ? getImageUrlCandidates(plantPhoto.value.url, { width: 400 }) : []
+)
 
 const rankLabel = computed(() => props.taxon.rank || 'host taxon')
 
@@ -87,13 +73,11 @@ const openGallery = () => {
     <div class="popup-layout">
       <div class="popup-left-section">
         <div class="plant-marker-card">
-          <img
-            v-if="plantImage?.url"
-            :src="plantImage.url"
+          <FallbackImage
+            v-if="plantPhoto?.url"
+            :candidates="plantImageCandidates"
             :alt="displayName"
             loading="lazy"
-            referrerpolicy="no-referrer"
-            @error="$event.target.style.display = 'none'"
           />
           <template v-else>
           <svg viewBox="0 0 64 64" aria-hidden="true">
@@ -101,8 +85,8 @@ const openGallery = () => {
           </svg>
           <span>Host plant occurrence</span>
           </template>
-          <div v-if="plantImage?.fallback" class="photo-indicator">
-            Same host species
+          <div v-if="plantPhoto?.url && !plantPhoto.sameOccurrence" class="photo-indicator">
+            Same host plant
           </div>
           <button
             class="open-gallery-btn"

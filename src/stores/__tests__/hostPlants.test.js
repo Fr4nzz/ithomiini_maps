@@ -431,6 +431,97 @@ describe('useHostPlantStore', () => {
     expect(fetchMock.mock.calls.some(call => String(call[0]).includes('host_plant_occurrences'))).toBe(false)
   })
 
+  it('prefers an exact host plant occurrence photo over same-taxon gallery fallbacks', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url) => ({
+      ok: true,
+      json: async () => String(url).includes('manifest') ? manifest : associations,
+    })))
+    const store = useHostPlantStore()
+    await store.loadMetadata()
+
+    const photo = store.getPhotoForOccurrence({
+      id: 'exact',
+      gbifID: 'exact',
+      host_taxon_slug: 'species_prestonia_coalita',
+      image_url: 'https://example.org/exact.jpg',
+    })
+
+    expect(photo).toEqual({
+      url: 'https://example.org/exact.jpg',
+      sameOccurrence: true,
+      fromId: 'exact',
+    })
+  })
+
+  it('uses the loaded host plant gallery as a representative popup photo fallback', async () => {
+    const galleryIndex = {
+      metadata: { host_taxon_slug: 'species_prestonia_coalita' },
+      stats_by_slug: {
+        species_prestonia_coalita: { total_records: 2, records_with_images: 1, records_without_images: 1 },
+      },
+      total_images: 1,
+      page_size: 100,
+      pages: ['gallery_taxa/species_prestonia_coalita/page_001.json'],
+    }
+    const galleryPage = {
+      items: [
+        {
+          id: 'gallery-1',
+          gbifID: 'gallery-1',
+          image_url: 'https://example.org/gallery.jpg',
+          scientific_name: 'Prestonia coalita',
+          host_taxon_slug: 'species_prestonia_coalita',
+        },
+      ],
+    }
+    const manifestWithPagedGallery = {
+      ...manifest,
+      metadata: {
+        ...manifest.metadata,
+        gallery_indexes_by_taxon: {
+          species_prestonia_coalita: 'gallery_taxa/species_prestonia_coalita/index.json',
+        },
+        gallery_initial_limit: 10,
+        gallery_page_size: 100,
+      },
+    }
+    const fetchMock = vi.fn(async (url) => ({
+      ok: true,
+      json: async () => {
+        const path = String(url)
+        if (path.includes('manifest')) return manifestWithPagedGallery
+        if (path.includes('associations')) return associations
+        if (path.includes('gallery_taxa/species_prestonia_coalita/index')) return galleryIndex
+        if (path.includes('gallery_taxa/species_prestonia_coalita/page_001')) return galleryPage
+        throw new Error(`unexpected fetch ${url}`)
+      },
+    }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const store = useHostPlantStore()
+    await store.loadMetadata()
+    expect(store.getPhotoForOccurrence({
+      id: 'no-image',
+      gbifID: 'no-image',
+      host_taxon_slug: 'species_prestonia_coalita',
+    })).toBeNull()
+
+    await store.loadGallery(['species_prestonia_coalita'])
+
+    expect(store.getPhotoForOccurrence({
+      id: 'no-image',
+      gbifID: 'no-image',
+      host_taxon_slug: 'species_prestonia_coalita',
+    })).toEqual({
+      url: 'https://example.org/gallery.jpg',
+      sameOccurrence: false,
+      fromId: 'gallery-1',
+    })
+    expect(fetchMock.mock.calls.filter(call => String(call[0]).includes('gallery_taxa/species_prestonia_coalita/page_001'))).toHaveLength(1)
+    await store.loadGallery(['species_prestonia_coalita'])
+    expect(fetchMock.mock.calls.filter(call => String(call[0]).includes('gallery_taxa/species_prestonia_coalita/page_001'))).toHaveLength(1)
+  })
+
   it('keeps genus-only rows out of species chip collections', async () => {
     const occurrenceCore = {
       records: [

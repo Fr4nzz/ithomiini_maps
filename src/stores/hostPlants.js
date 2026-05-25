@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
-import { hostPlantRecordToFeature } from '../utils/hostPlantGallery'
+import { getHostPlantImage, hostPlantRecordToFeature } from '../utils/hostPlantGallery'
 
 export const useHostPlantStore = defineStore('hostPlants', () => {
   const manifest = ref(null)
@@ -494,6 +494,7 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
         }
         loadedOccurrenceShards.value = [...neededChunks]
         rebuildOccurrenceDatasetFromV2(selected)
+        await preloadGalleryForSlugs(selected)
         return occurrenceDataset.value
       } catch (error) {
         occurrenceError.value = error instanceof Error ? error.message : String(error)
@@ -536,6 +537,7 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
       }
       loadedOccurrenceShards.value = Object.keys(occurrenceShardCache.value)
       rebuildOccurrenceDataset()
+      await preloadGalleryForSlugs(slugs)
       return occurrenceDataset.value
     } catch (error) {
       occurrenceError.value = error instanceof Error ? error.message : String(error)
@@ -543,6 +545,49 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     } finally {
       occurrenceLoading.value = false
     }
+  }
+
+  async function preloadGalleryForSlugs(slugs = selectedTaxonSlugs.value) {
+    const selected = [...new Set((slugs || []).filter(Boolean))]
+    if (selected.length === 0) return null
+    const galleryIndexes = manifest.value?.metadata?.gallery_indexes_by_taxon || {}
+    const galleryShards = manifest.value?.metadata?.gallery_shards_by_taxon || {}
+    const hasLazyGallery = selected.some(slug => galleryIndexes[slug] || galleryShards[slug])
+    if (!hasLazyGallery) return null
+    return loadGallery(selected)
+  }
+
+  function getGalleryPhotoForSlug(slug) {
+    if (!slug) return null
+    const item = (galleryDataset.value?.items || []).find(galleryItem =>
+      galleryItem?.host_taxon_slug === slug && galleryItem?.image_url
+    )
+    if (!item) return null
+    return {
+      url: item.image_url,
+      sameOccurrence: false,
+      fromId: item.gbifID || item.id || null,
+    }
+  }
+
+  function getPhotoForOccurrence(occurrence = {}) {
+    if (!occurrence) return null
+    if (occurrence.image_url) {
+      return {
+        url: occurrence.image_url,
+        sameOccurrence: !occurrence.image_is_fallback,
+        fromId: occurrence.gbifID || occurrence.id || null,
+      }
+    }
+    const image = getHostPlantImage(occurrence)
+    if (image?.url) {
+      return {
+        url: image.url,
+        sameOccurrence: !image.fallback,
+        fromId: occurrence.gbifID || occurrence.id || null,
+      }
+    }
+    return getGalleryPhotoForSlug(occurrence.host_taxon_slug)
   }
 
   function rebuildGalleryDatasetFromPages(slugs = selectedTaxonSlugs.value) {
@@ -774,6 +819,8 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     occurrenceShardNamesForSlugs,
     loadGallery,
     loadMoreGalleryForSlug,
+    preloadGalleryForSlugs,
+    getPhotoForOccurrence,
     getOccurrenceCollectionForTaxa,
     occurrenceCountForSlug,
   }
