@@ -16608,16 +16608,15 @@
         "Mechanitis polymnia"
       ],
       "confidence_counts": {
-        "high": 4,
-        "medium": 1,
-        "low": 1
+        "high": 5,
+        "medium": 1
       },
       "host_id_level_counts": {
         "species": 6
       },
       "evidence_counts": {
-        "needs_check": 5,
-        "direct": 1
+        "needs_check": 4,
+        "direct": 2
       },
       "occurrence_file": null,
       "gbif_resolution": {

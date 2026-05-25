@@ -362,16 +362,16 @@
       "host_plant_genus": "Solanum",
       "host_plant_family": "Solanaceae",
       "host_taxon_rank": "species",
-      "evidence_type": "outdoor insectary oviposition and larval rearing from wild-caught Ecuadorian stock; not a clean wild field-host record",
-      "evidence_level": "needs_check",
+      "evidence_type": "outdoor insectary oviposition and larval rearing from wild-caught Ecuadorian stock",
+      "evidence_level": "direct",
       "evidence_context": "lab_husbandry",
       "beccaloni_marker": null,
       "source_citation": "PLOS Biology 2026 Mechanitis mimicry study; outdoor insectary husbandry methods",
       "source_refs": "Wild Mechanitis messenoides messenoides and M. m. deceptus from Napo, Ecuador were used to establish outdoor insectary stocks; Solanum quitoense was used for oviposition and larval rearing.",
       "doi_or_url": "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3003742",
-      "confidence": "low",
-      "use_for_default_download": false,
-      "caveats": "Exact plant used in husbandry/rearing; retained as a host-use record with caveat, but not treated as default wild field-host overlay."
+      "confidence": "high",
+      "use_for_default_download": true,
+      "caveats": "Observed oviposition and larval rearing in outdoor insectary stocks from wild-caught Ecuadorian butterflies; not a clean wild field-host record."
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
