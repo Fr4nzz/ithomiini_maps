@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "generated_at": "2026-05-24T14:36:42+00:00",
+    "generated_at": "2026-05-25T20:28:55+00:00",
     "source_seed": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/ithomiini_hostplant_evidence_seed.json",
     "source_supplement": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/host_plant_literature_supplement.json",
     "source_confidence_audit": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/host_plant_confidence_reaudit_codex_20260521_taxon_level.csv",
-    "taxon_count": 329
+    "taxon_count": 333
   },
   "taxa": [
     {
@@ -178,8 +178,9 @@
       "gbif_taxon_key": 2928875,
       "gbif_status": "resolved",
       "occurrence_count": 719,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 719,
+      "gallery_total_records": 719
     },
     {
       "canonical_name": "Aureliana",
@@ -1498,8 +1499,9 @@
       "gbif_taxon_key": 2932910,
       "gbif_status": "resolved",
       "occurrence_count": 4433,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 4391,
+      "gallery_total_records": 4433
     },
     {
       "canonical_name": "Capsicum",
@@ -1587,8 +1589,9 @@
       "gbif_taxon_key": 2928784,
       "gbif_status": "resolved",
       "occurrence_count": 23160,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 22998,
+      "gallery_total_records": 23160
     },
     {
       "canonical_name": "Cyphomandra",
@@ -1638,8 +1641,9 @@
       "gbif_taxon_key": 2928849,
       "gbif_status": "resolved",
       "occurrence_count": 240481,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 239413,
+      "gallery_total_records": 240481
     },
     {
       "canonical_name": "Dilkea",
@@ -1685,8 +1689,9 @@
       "gbif_taxon_key": 7313332,
       "gbif_status": "resolved",
       "occurrence_count": 474,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 473,
+      "gallery_total_records": 474
     },
     {
       "canonical_name": "Drymonia",
@@ -1731,8 +1736,9 @@
       "gbif_taxon_key": 3233484,
       "gbif_status": "resolved",
       "occurrence_count": 9460,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 9434,
+      "gallery_total_records": 9460
     },
     {
       "canonical_name": "Echites",
@@ -1777,8 +1783,9 @@
       "gbif_taxon_key": 3169766,
       "gbif_status": "resolved",
       "occurrence_count": 2358,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2352,
+      "gallery_total_records": 2358
     },
     {
       "canonical_name": "Juanulloa",
@@ -1826,8 +1833,9 @@
       "gbif_taxon_key": 7299873,
       "gbif_status": "resolved",
       "occurrence_count": 766,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 765,
+      "gallery_total_records": 766
     },
     {
       "canonical_name": "Lycianthes",
@@ -1886,8 +1894,9 @@
       "gbif_taxon_key": 2928971,
       "gbif_status": "resolved",
       "occurrence_count": 11076,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 10960,
+      "gallery_total_records": 11076
     },
     {
       "canonical_name": "Lycopersicon",
@@ -1935,8 +1944,9 @@
       "gbif_taxon_key": 2932923,
       "gbif_status": "resolved",
       "occurrence_count": 240481,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 239413,
+      "gallery_total_records": 240481
     },
     {
       "canonical_name": "Markea",
@@ -1986,8 +1996,9 @@
       "gbif_taxon_key": 7299864,
       "gbif_status": "resolved",
       "occurrence_count": 877,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 868,
+      "gallery_total_records": 877
     },
     {
       "canonical_name": "Mesechites",
@@ -2070,8 +2081,9 @@
       "gbif_taxon_key": 2874172,
       "gbif_status": "resolved",
       "occurrence_count": 110442,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 110336,
+      "gallery_total_records": 110442
     },
     {
       "canonical_name": "Physalis",
@@ -2157,8 +2169,9 @@
       "gbif_taxon_key": 3169716,
       "gbif_status": "resolved",
       "occurrence_count": 5220,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 5206,
+      "gallery_total_records": 5220
     },
     {
       "canonical_name": "Sessea",
@@ -2203,8 +2216,9 @@
       "gbif_taxon_key": 7299148,
       "gbif_status": "resolved",
       "occurrence_count": 390,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 370,
+      "gallery_total_records": 390
     },
     {
       "canonical_name": "Solandra",
@@ -2249,8 +2263,9 @@
       "gbif_taxon_key": 2928987,
       "gbif_status": "resolved",
       "occurrence_count": 1210,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1208,
+      "gallery_total_records": 1210
     },
     {
       "canonical_name": "Solanum",
@@ -2261,7 +2276,7 @@
       "slug": "genus_solanum",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 58,
+      "association_count": 61,
       "butterfly_taxa": [
         "Callithomia alexirrhoe",
         "Callithomia lenea",
@@ -2285,6 +2300,7 @@
         "Hypothyris ninonia",
         "Mechanitis lysimnia",
         "Mechanitis mazaeus",
+        "Mechanitis messenoides",
         "Mechanitis polymnia",
         "Napeogenes tolosa",
         "Oleria aquata",
@@ -2299,16 +2315,16 @@
         "Scada zibia"
       ],
       "confidence_counts": {
-        "low": 5,
-        "medium": 45,
+        "low": 7,
+        "medium": 46,
         "needs_check": 8
       },
       "host_id_level_counts": {
-        "genus": 58
+        "genus": 61
       },
       "evidence_counts": {
-        "needs_check": 55,
-        "literature": 3
+        "needs_check": 57,
+        "literature": 4
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -2331,8 +2347,9 @@
       "gbif_taxon_key": 2928997,
       "gbif_status": "resolved",
       "occurrence_count": 240481,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 239413,
+      "gallery_total_records": 240481
     },
     {
       "canonical_name": "Vassobia",
@@ -2419,8 +2436,9 @@
       "gbif_taxon_key": 5341755,
       "gbif_status": "resolved",
       "occurrence_count": 3755,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 3750,
+      "gallery_total_records": 3755
     },
     {
       "canonical_name": "Acnistus arborescens",
@@ -2476,8 +2494,9 @@
       "gbif_taxon_key": 2928878,
       "gbif_status": "resolved",
       "occurrence_count": 695,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 695,
+      "gallery_total_records": 695
     },
     {
       "canonical_name": "Athenaea picta",
@@ -2526,8 +2545,9 @@
       "gbif_taxon_key": 5581507,
       "gbif_status": "resolved",
       "occurrence_count": 100,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 100,
+      "gallery_total_records": 100
     },
     {
       "canonical_name": "Aureliana lucida",
@@ -2580,8 +2600,9 @@
       "gbif_taxon_key": 7300024,
       "gbif_status": "resolved",
       "occurrence_count": 3,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 3,
+      "gallery_total_records": 3
     },
     {
       "canonical_name": "Besleria aggregata",
@@ -2626,8 +2647,9 @@
       "gbif_taxon_key": 6365263,
       "gbif_status": "resolved",
       "occurrence_count": 516,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 516,
+      "gallery_total_records": 516
     },
     {
       "canonical_name": "Brachistus stramoniifolius",
@@ -2672,8 +2694,9 @@
       "gbif_taxon_key": 3800778,
       "gbif_status": "resolved",
       "occurrence_count": 367,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 367,
+      "gallery_total_records": 367
     },
     {
       "canonical_name": "Brugmansia candida",
@@ -2721,8 +2744,9 @@
       "gbif_taxon_key": 9099468,
       "gbif_status": "resolved",
       "occurrence_count": 562,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 562,
+      "gallery_total_records": 562
     },
     {
       "canonical_name": "Brugmansia suaveolens",
@@ -2771,8 +2795,9 @@
       "gbif_taxon_key": 5341758,
       "gbif_status": "resolved",
       "occurrence_count": 980,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 980,
+      "gallery_total_records": 980
     },
     {
       "canonical_name": "Brunfelsia amazonica",
@@ -2817,9 +2842,9 @@
       "gbif_taxon_key": 3800222,
       "gbif_status": "resolved",
       "occurrence_count": 25,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 25,
+      "gallery_total_records": 25
     },
     {
       "canonical_name": "Brunfelsia americana",
@@ -2904,9 +2929,9 @@
       "gbif_taxon_key": 3800200,
       "gbif_status": "resolved",
       "occurrence_count": 228,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 228,
+      "gallery_total_records": 228
     },
     {
       "canonical_name": "Brunfelsia dwyeri",
@@ -2951,9 +2976,9 @@
       "gbif_taxon_key": 3800052,
       "gbif_status": "resolved",
       "occurrence_count": 24,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 0,
+      "gallery_total_records": 24
     },
     {
       "canonical_name": "Brunfelsia grandiflora",
@@ -3000,9 +3025,9 @@
       "gbif_taxon_key": 2932917,
       "gbif_status": "resolved",
       "occurrence_count": 567,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 567,
+      "gallery_total_records": 567
     },
     {
       "canonical_name": "Brunfelsia pauciflora",
@@ -3052,9 +3077,9 @@
       "gbif_taxon_key": 6402571,
       "gbif_status": "resolved",
       "occurrence_count": 473,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 473,
+      "gallery_total_records": 473
     },
     {
       "canonical_name": "Brunfelsia pilosa",
@@ -3099,9 +3124,9 @@
       "gbif_taxon_key": 3799755,
       "gbif_status": "resolved",
       "occurrence_count": 120,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 120,
+      "gallery_total_records": 120
     },
     {
       "canonical_name": "Brunfelsia uniflora",
@@ -3152,9 +3177,9 @@
       "gbif_taxon_key": 2932913,
       "gbif_status": "resolved",
       "occurrence_count": 693,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 693,
+      "gallery_total_records": 693
     },
     {
       "canonical_name": "Capsicum lycianthoides",
@@ -3199,8 +3224,9 @@
       "gbif_taxon_key": 3798461,
       "gbif_status": "resolved",
       "occurrence_count": 127,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 127,
+      "gallery_total_records": 127
     },
     {
       "canonical_name": "Capsicum rhomboideum",
@@ -3245,8 +3271,9 @@
       "gbif_taxon_key": 3798167,
       "gbif_status": "resolved",
       "occurrence_count": 1025,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1025,
+      "gallery_total_records": 1025
     },
     {
       "canonical_name": "Cestrum amictum",
@@ -3297,9 +3324,9 @@
       "gbif_taxon_key": 7299284,
       "gbif_status": "resolved",
       "occurrence_count": 468,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 468,
+      "gallery_total_records": 468
     },
     {
       "canonical_name": "Cestrum aurantiacum",
@@ -3378,9 +3405,9 @@
       "gbif_taxon_key": 3797081,
       "gbif_status": "resolved",
       "occurrence_count": 54,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 54,
+      "gallery_total_records": 54
     },
     {
       "canonical_name": "Cestrum elegans",
@@ -3459,9 +3486,9 @@
       "gbif_taxon_key": 7300153,
       "gbif_status": "resolved",
       "occurrence_count": 112,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 112,
+      "gallery_total_records": 112
     },
     {
       "canonical_name": "Cestrum glanduliferum",
@@ -3506,9 +3533,9 @@
       "gbif_taxon_key": 3803095,
       "gbif_status": "resolved",
       "occurrence_count": 250,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 250,
+      "gallery_total_records": 250
     },
     {
       "canonical_name": "Cestrum laevigatum",
@@ -3561,9 +3588,9 @@
       "gbif_taxon_key": 7300082,
       "gbif_status": "resolved",
       "occurrence_count": 705,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 705,
+      "gallery_total_records": 705
     },
     {
       "canonical_name": "Cestrum lanatum",
@@ -3642,9 +3669,9 @@
       "gbif_taxon_key": 8131064,
       "gbif_status": "resolved",
       "occurrence_count": 428,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 428,
+      "gallery_total_records": 428
     },
     {
       "canonical_name": "Cestrum megalophyllum",
@@ -3692,9 +3719,9 @@
       "gbif_taxon_key": 3802352,
       "gbif_status": "resolved",
       "occurrence_count": 450,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 450,
+      "gallery_total_records": 450
     },
     {
       "canonical_name": "Cestrum microcalyx",
@@ -3741,9 +3768,9 @@
       "gbif_taxon_key": 3802311,
       "gbif_status": "resolved",
       "occurrence_count": 729,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 729,
+      "gallery_total_records": 729
     },
     {
       "canonical_name": "Cestrum newelli",
@@ -3830,9 +3857,9 @@
       "gbif_taxon_key": 2928791,
       "gbif_status": "resolved",
       "occurrence_count": 2360,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2360,
+      "gallery_total_records": 2360
     },
     {
       "canonical_name": "Cestrum nr nocturnum",
@@ -3877,9 +3904,9 @@
       "gbif_taxon_key": 2928791,
       "gbif_status": "resolved",
       "occurrence_count": 2360,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2360,
+      "gallery_total_records": 2360
     },
     {
       "canonical_name": "Cestrum parqui",
@@ -3932,9 +3959,9 @@
       "gbif_taxon_key": 2928792,
       "gbif_status": "resolved",
       "occurrence_count": 2502,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2502,
+      "gallery_total_records": 2502
     },
     {
       "canonical_name": "Cestrum racemosum",
@@ -3980,9 +4007,9 @@
       "gbif_taxon_key": 7299919,
       "gbif_status": "resolved",
       "occurrence_count": 744,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 744,
+      "gallery_total_records": 744
     },
     {
       "canonical_name": "Cestrum rugulosum",
@@ -4027,9 +4054,9 @@
       "gbif_taxon_key": 3801408,
       "gbif_status": "resolved",
       "occurrence_count": 104,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 104,
+      "gallery_total_records": 104
     },
     {
       "canonical_name": "Cestrum schlechtendalii",
@@ -4078,9 +4105,9 @@
       "gbif_taxon_key": 3801334,
       "gbif_status": "resolved",
       "occurrence_count": 1467,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1467,
+      "gallery_total_records": 1467
     },
     {
       "canonical_name": "Cestrum sendtnerianum",
@@ -4131,9 +4158,9 @@
       "gbif_taxon_key": 3801287,
       "gbif_status": "resolved",
       "occurrence_count": 508,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 508,
+      "gallery_total_records": 508
     },
     {
       "canonical_name": "Cestrum standleyi",
@@ -4216,9 +4243,9 @@
       "gbif_taxon_key": 7972104,
       "gbif_status": "resolved",
       "occurrence_count": 1139,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1138,
+      "gallery_total_records": 1139
     },
     {
       "canonical_name": "Columnea consanguinea",
@@ -4263,8 +4290,9 @@
       "gbif_taxon_key": 6365487,
       "gbif_status": "resolved",
       "occurrence_count": 501,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 501,
+      "gallery_total_records": 501
     },
     {
       "canonical_name": "Columnea grata",
@@ -4309,8 +4337,9 @@
       "gbif_taxon_key": 5590069,
       "gbif_status": "resolved",
       "occurrence_count": 20,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 20,
+      "gallery_total_records": 20
     },
     {
       "canonical_name": "Cuatresia riparia",
@@ -4360,8 +4389,9 @@
       "gbif_taxon_key": 7299700,
       "gbif_status": "resolved",
       "occurrence_count": 279,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 279,
+      "gallery_total_records": 279
     },
     {
       "canonical_name": "Cyphomandra betacea",
@@ -4417,8 +4447,9 @@
       "gbif_taxon_key": 2928852,
       "gbif_status": "resolved",
       "occurrence_count": 1136,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1136,
+      "gallery_total_records": 1136
     },
     {
       "canonical_name": "Cyphomandra corymbiflora",
@@ -4467,8 +4498,9 @@
       "gbif_taxon_key": 2929608,
       "gbif_status": "resolved",
       "occurrence_count": 245,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 245,
+      "gallery_total_records": 245
     },
     {
       "canonical_name": "Cyphomandra diploconos",
@@ -4518,8 +4550,9 @@
       "gbif_taxon_key": 2930894,
       "gbif_status": "resolved",
       "occurrence_count": 166,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 166,
+      "gallery_total_records": 166
     },
     {
       "canonical_name": "Cyphomandra divaricata",
@@ -4570,8 +4603,9 @@
       "gbif_taxon_key": 2931388,
       "gbif_status": "resolved",
       "occurrence_count": 247,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 247,
+      "gallery_total_records": 247
     },
     {
       "canonical_name": "Cyphomandra diversifolia",
@@ -4619,8 +4653,9 @@
       "gbif_taxon_key": 2930189,
       "gbif_status": "resolved",
       "occurrence_count": 52,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 52,
+      "gallery_total_records": 52
     },
     {
       "canonical_name": "Cyphomandra hartwegii",
@@ -4669,8 +4704,9 @@
       "gbif_taxon_key": 2928850,
       "gbif_status": "resolved",
       "occurrence_count": 901,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 901,
+      "gallery_total_records": 901
     },
     {
       "canonical_name": "Cyphomandra pilosa",
@@ -4719,8 +4755,9 @@
       "gbif_taxon_key": 2932294,
       "gbif_status": "resolved",
       "occurrence_count": 115,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 115,
+      "gallery_total_records": 115
     },
     {
       "canonical_name": "Cyphomandra sciadostylis",
@@ -4770,8 +4807,9 @@
       "gbif_taxon_key": 2932350,
       "gbif_status": "resolved",
       "occurrence_count": 85,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 85,
+      "gallery_total_records": 85
     },
     {
       "canonical_name": "Cyphomandra velutina",
@@ -4821,8 +4859,9 @@
       "gbif_taxon_key": 2931475,
       "gbif_status": "resolved",
       "occurrence_count": 37,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 37,
+      "gallery_total_records": 37
     },
     {
       "canonical_name": "Datura metel",
@@ -4904,8 +4943,9 @@
       "gbif_taxon_key": 2928751,
       "gbif_status": "resolved",
       "occurrence_count": 4328,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 4328,
+      "gallery_total_records": 4328
     },
     {
       "canonical_name": "Dilkea parviflora",
@@ -4953,9 +4993,9 @@
       "gbif_taxon_key": 3588162,
       "gbif_status": "resolved",
       "occurrence_count": 201,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Dilkea"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 201,
+      "gallery_total_records": 201
     },
     {
       "canonical_name": "Dilkea retusa",
@@ -5000,9 +5040,9 @@
       "gbif_taxon_key": 3586537,
       "gbif_status": "resolved",
       "occurrence_count": 201,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Dilkea"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 201,
+      "gallery_total_records": 201
     },
     {
       "canonical_name": "Drymonia conchocalyx",
@@ -5047,9 +5087,9 @@
       "gbif_taxon_key": 5591172,
       "gbif_status": "resolved",
       "occurrence_count": 379,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Drymonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 379,
+      "gallery_total_records": 379
     },
     {
       "canonical_name": "Drymonia oxysepala",
@@ -5094,9 +5134,9 @@
       "gbif_taxon_key": 5590696,
       "gbif_status": "resolved",
       "occurrence_count": 26,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Drymonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 26,
+      "gallery_total_records": 26
     },
     {
       "canonical_name": "Dunalia solanacea",
@@ -5144,8 +5184,9 @@
       "gbif_taxon_key": 5580835,
       "gbif_status": "resolved",
       "occurrence_count": 152,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 152,
+      "gallery_total_records": 152
     },
     {
       "canonical_name": "Fernaldia pandurata",
@@ -5193,8 +5234,9 @@
       "gbif_taxon_key": 5414402,
       "gbif_status": "resolved",
       "occurrence_count": 356,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 356,
+      "gallery_total_records": 356
     },
     {
       "canonical_name": "Hawkesiophyton ulei",
@@ -5241,8 +5283,9 @@
       "gbif_taxon_key": 3803090,
       "gbif_status": "resolved",
       "occurrence_count": 342,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 342,
+      "gallery_total_records": 342
     },
     {
       "canonical_name": "Jaltomata procumbens",
@@ -5326,9 +5369,9 @@
       "gbif_taxon_key": 3801259,
       "gbif_status": "resolved",
       "occurrence_count": 384,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Juanulloa"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 384,
+      "gallery_total_records": 384
     },
     {
       "canonical_name": "Juanulloa parasitica",
@@ -5375,9 +5418,9 @@
       "gbif_taxon_key": 3801232,
       "gbif_status": "resolved",
       "occurrence_count": 170,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Juanulloa"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 170,
+      "gallery_total_records": 170
     },
     {
       "canonical_name": "Lycianthes heteroclita",
@@ -5424,9 +5467,9 @@
       "gbif_taxon_key": 7299631,
       "gbif_status": "resolved",
       "occurrence_count": 749,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 749,
+      "gallery_total_records": 749
     },
     {
       "canonical_name": "Lycianthes howardiana",
@@ -5471,9 +5514,9 @@
       "gbif_taxon_key": 3799651,
       "gbif_status": "resolved",
       "occurrence_count": 14,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 14,
+      "gallery_total_records": 14
     },
     {
       "canonical_name": "Lycianthes maxonii",
@@ -5518,9 +5561,9 @@
       "gbif_taxon_key": 7299566,
       "gbif_status": "resolved",
       "occurrence_count": 138,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 138,
+      "gallery_total_records": 138
     },
     {
       "canonical_name": "Lycianthes multiflora",
@@ -5569,9 +5612,9 @@
       "gbif_taxon_key": 7299547,
       "gbif_status": "resolved",
       "occurrence_count": 426,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 426,
+      "gallery_total_records": 426
     },
     {
       "canonical_name": "Lycianthes nr multiflora",
@@ -5616,9 +5659,9 @@
       "gbif_taxon_key": 7299547,
       "gbif_status": "resolved",
       "occurrence_count": 426,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 426,
+      "gallery_total_records": 426
     },
     {
       "canonical_name": "Lycianthes radiata",
@@ -5663,9 +5706,9 @@
       "gbif_taxon_key": 3799036,
       "gbif_status": "resolved",
       "occurrence_count": 331,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 331,
+      "gallery_total_records": 331
     },
     {
       "canonical_name": "Lycianthes sanctaeclarae",
@@ -5710,9 +5753,9 @@
       "gbif_taxon_key": 3798946,
       "gbif_status": "resolved",
       "occurrence_count": 319,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 319,
+      "gallery_total_records": 319
     },
     {
       "canonical_name": "Lycianthes synanthera",
@@ -5759,9 +5802,9 @@
       "gbif_taxon_key": 3798770,
       "gbif_status": "resolved",
       "occurrence_count": 411,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 411,
+      "gallery_total_records": 411
     },
     {
       "canonical_name": "Lycopersicon esculentum",
@@ -5976,8 +6019,9 @@
       "gbif_taxon_key": 3801338,
       "gbif_status": "resolved",
       "occurrence_count": 31,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 31,
+      "gallery_total_records": 31
     },
     {
       "canonical_name": "Markea viridiflora",
@@ -6029,8 +6073,9 @@
       "gbif_taxon_key": 3801155,
       "gbif_status": "resolved",
       "occurrence_count": 13,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 13,
+      "gallery_total_records": 13
     },
     {
       "canonical_name": "Mesechites trifida",
@@ -6076,8 +6121,9 @@
       "gbif_taxon_key": 7317257,
       "gbif_status": "resolved",
       "occurrence_count": 1158,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1158,
+      "gallery_total_records": 1158
     },
     {
       "canonical_name": "Nicandra physalodes",
@@ -6122,8 +6168,9 @@
       "gbif_taxon_key": 5341754,
       "gbif_status": "resolved",
       "occurrence_count": 3324,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 3324,
+      "gallery_total_records": 3324
     },
     {
       "canonical_name": "Passiflora actinia",
@@ -6172,9 +6219,9 @@
       "gbif_taxon_key": 3586769,
       "gbif_status": "resolved",
       "occurrence_count": 246,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 246,
+      "gallery_total_records": 246
     },
     {
       "canonical_name": "Passiflora acuminata",
@@ -6219,9 +6266,9 @@
       "gbif_taxon_key": 3588026,
       "gbif_status": "resolved",
       "occurrence_count": 141,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 141,
+      "gallery_total_records": 141
     },
     {
       "canonical_name": "Passiflora adenopoda",
@@ -6266,9 +6313,9 @@
       "gbif_taxon_key": 3588037,
       "gbif_status": "resolved",
       "occurrence_count": 671,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 671,
+      "gallery_total_records": 671
     },
     {
       "canonical_name": "Passiflora alata",
@@ -6314,9 +6361,9 @@
       "gbif_taxon_key": 2874181,
       "gbif_status": "resolved",
       "occurrence_count": 1122,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1122,
+      "gallery_total_records": 1122
     },
     {
       "canonical_name": "Passiflora ambigua",
@@ -6363,9 +6410,9 @@
       "gbif_taxon_key": 3586977,
       "gbif_status": "resolved",
       "occurrence_count": 459,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 459,
+      "gallery_total_records": 459
     },
     {
       "canonical_name": "Passiflora arborea",
@@ -6413,9 +6460,9 @@
       "gbif_taxon_key": 3587244,
       "gbif_status": "resolved",
       "occurrence_count": 248,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 248,
+      "gallery_total_records": 248
     },
     {
       "canonical_name": "Passiflora auriculata",
@@ -6466,9 +6513,9 @@
       "gbif_taxon_key": 3587589,
       "gbif_status": "resolved",
       "occurrence_count": 1269,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1269,
+      "gallery_total_records": 1269
     },
     {
       "canonical_name": "Passiflora bahiensis",
@@ -6548,9 +6595,9 @@
       "gbif_taxon_key": 2874214,
       "gbif_status": "resolved",
       "occurrence_count": 436,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 436,
+      "gallery_total_records": 436
     },
     {
       "canonical_name": "Passiflora biflora",
@@ -6599,9 +6646,9 @@
       "gbif_taxon_key": 2874204,
       "gbif_status": "resolved",
       "occurrence_count": 1958,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1958,
+      "gallery_total_records": 1958
     },
     {
       "canonical_name": "Passiflora caerulea",
@@ -6649,9 +6696,9 @@
       "gbif_taxon_key": 2874199,
       "gbif_status": "resolved",
       "occurrence_count": 5329,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 5329,
+      "gallery_total_records": 5329
     },
     {
       "canonical_name": "Passiflora candida",
@@ -6697,9 +6744,9 @@
       "gbif_taxon_key": 3587321,
       "gbif_status": "resolved",
       "occurrence_count": 93,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 93,
+      "gallery_total_records": 93
     },
     {
       "canonical_name": "Passiflora candollei",
@@ -6744,9 +6791,9 @@
       "gbif_taxon_key": 3586549,
       "gbif_status": "resolved",
       "occurrence_count": 172,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 172,
+      "gallery_total_records": 172
     },
     {
       "canonical_name": "Passiflora capsularis",
@@ -6793,9 +6840,9 @@
       "gbif_taxon_key": 7313548,
       "gbif_status": "resolved",
       "occurrence_count": 983,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 983,
+      "gallery_total_records": 983
     },
     {
       "canonical_name": "Passiflora chelidonea",
@@ -6840,9 +6887,9 @@
       "gbif_taxon_key": 3588144,
       "gbif_status": "resolved",
       "occurrence_count": 141,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 141,
+      "gallery_total_records": 141
     },
     {
       "canonical_name": "Passiflora cirrhiflora",
@@ -6888,9 +6935,9 @@
       "gbif_taxon_key": 3587803,
       "gbif_status": "resolved",
       "occurrence_count": 114,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 114,
+      "gallery_total_records": 114
     },
     {
       "canonical_name": "Passiflora citrifolia",
@@ -7094,9 +7141,9 @@
       "gbif_taxon_key": 3587617,
       "gbif_status": "resolved",
       "occurrence_count": 51,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 51,
+      "gallery_total_records": 51
     },
     {
       "canonical_name": "Passiflora coccinea",
@@ -7141,9 +7188,9 @@
       "gbif_taxon_key": 2874176,
       "gbif_status": "resolved",
       "occurrence_count": 881,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 881,
+      "gallery_total_records": 881
     },
     {
       "canonical_name": "Passiflora coriacea",
@@ -7191,9 +7238,9 @@
       "gbif_taxon_key": 7565198,
       "gbif_status": "resolved",
       "occurrence_count": 732,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 732,
+      "gallery_total_records": 732
     },
     {
       "canonical_name": "Passiflora costaricensis",
@@ -7239,9 +7286,9 @@
       "gbif_taxon_key": 3587320,
       "gbif_status": "resolved",
       "occurrence_count": 274,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 274,
+      "gallery_total_records": 274
     },
     {
       "canonical_name": "Passiflora costata",
@@ -7288,9 +7335,9 @@
       "gbif_taxon_key": 3587311,
       "gbif_status": "resolved",
       "occurrence_count": 132,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 132,
+      "gallery_total_records": 132
     },
     {
       "canonical_name": "Passiflora cubensis",
@@ -7335,9 +7382,9 @@
       "gbif_taxon_key": 7313409,
       "gbif_status": "resolved",
       "occurrence_count": 56,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 56,
+      "gallery_total_records": 56
     },
     {
       "canonical_name": "Passiflora cuspidifolia",
@@ -7382,9 +7429,9 @@
       "gbif_taxon_key": 3586758,
       "gbif_status": "resolved",
       "occurrence_count": 146,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 146,
+      "gallery_total_records": 146
     },
     {
       "canonical_name": "Passiflora edulis",
@@ -7432,9 +7479,9 @@
       "gbif_taxon_key": 2874190,
       "gbif_status": "resolved",
       "occurrence_count": 4650,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 4650,
+      "gallery_total_records": 4650
     },
     {
       "canonical_name": "Passiflora eichleriana",
@@ -7480,9 +7527,9 @@
       "gbif_taxon_key": 3588157,
       "gbif_status": "resolved",
       "occurrence_count": 72,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 72,
+      "gallery_total_records": 72
     },
     {
       "canonical_name": "Passiflora elegans",
@@ -7530,9 +7577,9 @@
       "gbif_taxon_key": 8022506,
       "gbif_status": "resolved",
       "occurrence_count": 92,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 92,
+      "gallery_total_records": 92
     },
     {
       "canonical_name": "Passiflora faroana",
@@ -7578,9 +7625,9 @@
       "gbif_taxon_key": 3587710,
       "gbif_status": "resolved",
       "occurrence_count": 17,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 17,
+      "gallery_total_records": 17
     },
     {
       "canonical_name": "Passiflora foetida",
@@ -7626,9 +7673,9 @@
       "gbif_taxon_key": 2874211,
       "gbif_status": "resolved",
       "occurrence_count": 7213,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 7213,
+      "gallery_total_records": 7213
     },
     {
       "canonical_name": "Passiflora glandulosa",
@@ -7674,9 +7721,9 @@
       "gbif_taxon_key": 7313343,
       "gbif_status": "resolved",
       "occurrence_count": 730,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 730,
+      "gallery_total_records": 730
     },
     {
       "canonical_name": "Passiflora glaucescens",
@@ -7725,9 +7772,9 @@
       "gbif_taxon_key": 3586635,
       "gbif_status": "resolved",
       "occurrence_count": 311,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 311,
+      "gallery_total_records": 311
     },
     {
       "canonical_name": "Passiflora hahnii",
@@ -7772,9 +7819,9 @@
       "gbif_taxon_key": 3588275,
       "gbif_status": "resolved",
       "occurrence_count": 276,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 276,
+      "gallery_total_records": 276
     },
     {
       "canonical_name": "Passiflora helleri",
@@ -7820,9 +7867,9 @@
       "gbif_taxon_key": 3588038,
       "gbif_status": "resolved",
       "occurrence_count": 236,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 236,
+      "gallery_total_records": 236
     },
     {
       "canonical_name": "Passiflora herbertiana",
@@ -7905,9 +7952,9 @@
       "gbif_taxon_key": 3587502,
       "gbif_status": "resolved",
       "occurrence_count": 204,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 204,
+      "gallery_total_records": 204
     },
     {
       "canonical_name": "Passiflora jileki",
@@ -7956,9 +8003,9 @@
       "gbif_taxon_key": 3587121,
       "gbif_status": "resolved",
       "occurrence_count": 221,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 221,
+      "gallery_total_records": 221
     },
     {
       "canonical_name": "Passiflora lancifolia",
@@ -8003,9 +8050,9 @@
       "gbif_taxon_key": 8228431,
       "gbif_status": "resolved",
       "occurrence_count": 12,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 12,
+      "gallery_total_records": 12
     },
     {
       "canonical_name": "Passiflora laurifolia",
@@ -8051,9 +8098,9 @@
       "gbif_taxon_key": 2874210,
       "gbif_status": "resolved",
       "occurrence_count": 434,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 434,
+      "gallery_total_records": 434
     },
     {
       "canonical_name": "Passiflora leptopoda",
@@ -8100,9 +8147,9 @@
       "gbif_taxon_key": 3586677,
       "gbif_status": "resolved",
       "occurrence_count": 13,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 13,
+      "gallery_total_records": 13
     },
     {
       "canonical_name": "Passiflora lonchophora",
@@ -8153,9 +8200,9 @@
       "gbif_taxon_key": 3588373,
       "gbif_status": "resolved",
       "occurrence_count": 28,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 28,
+      "gallery_total_records": 28
     },
     {
       "canonical_name": "Passiflora mansoi",
@@ -8200,9 +8247,9 @@
       "gbif_taxon_key": 7313471,
       "gbif_status": "resolved",
       "occurrence_count": 220,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 220,
+      "gallery_total_records": 220
     },
     {
       "canonical_name": "Passiflora miersii",
@@ -8248,9 +8295,9 @@
       "gbif_taxon_key": 3587090,
       "gbif_status": "resolved",
       "occurrence_count": 141,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 141,
+      "gallery_total_records": 141
     },
     {
       "canonical_name": "Passiflora misera",
@@ -8296,9 +8343,9 @@
       "gbif_taxon_key": 3587005,
       "gbif_status": "resolved",
       "occurrence_count": 1045,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1045,
+      "gallery_total_records": 1045
     },
     {
       "canonical_name": "Passiflora mollissima",
@@ -8346,9 +8393,9 @@
       "gbif_taxon_key": 2874196,
       "gbif_status": "resolved",
       "occurrence_count": 1165,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1165,
+      "gallery_total_records": 1165
     },
     {
       "canonical_name": "Passiflora morifolia",
@@ -8395,9 +8442,9 @@
       "gbif_taxon_key": 2874201,
       "gbif_status": "resolved",
       "occurrence_count": 528,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 528,
+      "gallery_total_records": 528
     },
     {
       "canonical_name": "Passiflora mucronata",
@@ -8444,9 +8491,9 @@
       "gbif_taxon_key": 3586669,
       "gbif_status": "resolved",
       "occurrence_count": 354,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 354,
+      "gallery_total_records": 354
     },
     {
       "canonical_name": "Passiflora nitida",
@@ -8491,9 +8538,9 @@
       "gbif_taxon_key": 3587301,
       "gbif_status": "resolved",
       "occurrence_count": 746,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 746,
+      "gallery_total_records": 746
     },
     {
       "canonical_name": "Passiflora nr acuminata",
@@ -8742,9 +8789,9 @@
       "gbif_taxon_key": 3588360,
       "gbif_status": "resolved",
       "occurrence_count": 206,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 206,
+      "gallery_total_records": 206
     },
     {
       "canonical_name": "Passiflora oerstedii",
@@ -8827,9 +8874,9 @@
       "gbif_taxon_key": 7313499,
       "gbif_status": "resolved",
       "occurrence_count": 311,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 311,
+      "gallery_total_records": 311
     },
     {
       "canonical_name": "Passiflora panamensis",
@@ -8874,9 +8921,9 @@
       "gbif_taxon_key": 3587558,
       "gbif_status": "resolved",
       "occurrence_count": 48,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 48,
+      "gallery_total_records": 48
     },
     {
       "canonical_name": "Passiflora pentagona",
@@ -8921,9 +8968,9 @@
       "gbif_taxon_key": 3587176,
       "gbif_status": "resolved",
       "occurrence_count": 117,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 117,
+      "gallery_total_records": 117
     },
     {
       "canonical_name": "Passiflora pittieri",
@@ -8969,9 +9016,9 @@
       "gbif_taxon_key": 3586772,
       "gbif_status": "resolved",
       "occurrence_count": 119,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 119,
+      "gallery_total_records": 119
     },
     {
       "canonical_name": "Passiflora platyloba",
@@ -9018,9 +9065,9 @@
       "gbif_taxon_key": 7313348,
       "gbif_status": "resolved",
       "occurrence_count": 227,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 227,
+      "gallery_total_records": 227
     },
     {
       "canonical_name": "Passiflora pohlii",
@@ -9066,9 +9113,9 @@
       "gbif_taxon_key": 3586594,
       "gbif_status": "resolved",
       "occurrence_count": 204,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 204,
+      "gallery_total_records": 204
     },
     {
       "canonical_name": "Passiflora punctata",
@@ -9116,9 +9163,9 @@
       "gbif_taxon_key": 3588119,
       "gbif_status": "resolved",
       "occurrence_count": 104,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 104,
+      "gallery_total_records": 104
     },
     {
       "canonical_name": "Passiflora quadrangularis",
@@ -9197,9 +9244,9 @@
       "gbif_taxon_key": 7313502,
       "gbif_status": "resolved",
       "occurrence_count": 268,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 268,
+      "gallery_total_records": 268
     },
     {
       "canonical_name": "Passiflora resticulata",
@@ -9244,9 +9291,9 @@
       "gbif_taxon_key": 3587668,
       "gbif_status": "resolved",
       "occurrence_count": 81,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 81,
+      "gallery_total_records": 81
     },
     {
       "canonical_name": "Passiflora rhamnifolia",
@@ -9294,9 +9341,9 @@
       "gbif_taxon_key": 3587596,
       "gbif_status": "resolved",
       "occurrence_count": 147,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 147,
+      "gallery_total_records": 147
     },
     {
       "canonical_name": "Passiflora rubra",
@@ -9345,9 +9392,9 @@
       "gbif_taxon_key": 2874212,
       "gbif_status": "resolved",
       "occurrence_count": 616,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 616,
+      "gallery_total_records": 616
     },
     {
       "canonical_name": "Passiflora sclerophylla",
@@ -9392,9 +9439,9 @@
       "gbif_taxon_key": 3586891,
       "gbif_status": "resolved",
       "occurrence_count": 29,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 29,
+      "gallery_total_records": 29
     },
     {
       "canonical_name": "Passiflora securiclata",
@@ -9439,9 +9486,9 @@
       "gbif_taxon_key": 3586874,
       "gbif_status": "resolved",
       "occurrence_count": 89,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 89,
+      "gallery_total_records": 89
     },
     {
       "canonical_name": "Passiflora setacea",
@@ -9486,9 +9533,9 @@
       "gbif_taxon_key": 3586726,
       "gbif_status": "resolved",
       "occurrence_count": 259,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 259,
+      "gallery_total_records": 259
     },
     {
       "canonical_name": "Passiflora sexflora",
@@ -9533,9 +9580,9 @@
       "gbif_taxon_key": 2874188,
       "gbif_status": "resolved",
       "occurrence_count": 1133,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1133,
+      "gallery_total_records": 1133
     },
     {
       "canonical_name": "Passiflora sidaefolia",
@@ -9586,9 +9633,9 @@
       "gbif_taxon_key": 7905861,
       "gbif_status": "resolved",
       "occurrence_count": 99,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 99,
+      "gallery_total_records": 99
     },
     {
       "canonical_name": "Passiflora spinosa",
@@ -9670,9 +9717,9 @@
       "gbif_taxon_key": 2874173,
       "gbif_status": "resolved",
       "occurrence_count": 2804,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2804,
+      "gallery_total_records": 2804
     },
     {
       "canonical_name": "Passiflora talamancensis",
@@ -9718,9 +9765,9 @@
       "gbif_taxon_key": 3587834,
       "gbif_status": "resolved",
       "occurrence_count": 117,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 117,
+      "gallery_total_records": 117
     },
     {
       "canonical_name": "Passiflora tricuspis",
@@ -9767,9 +9814,9 @@
       "gbif_taxon_key": 7313430,
       "gbif_status": "resolved",
       "occurrence_count": 333,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 333,
+      "gallery_total_records": 333
     },
     {
       "canonical_name": "Passiflora trifasciata",
@@ -9815,9 +9862,9 @@
       "gbif_taxon_key": 3587210,
       "gbif_status": "resolved",
       "occurrence_count": 47,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 47,
+      "gallery_total_records": 47
     },
     {
       "canonical_name": "Passiflora truncata",
@@ -9865,9 +9912,9 @@
       "gbif_taxon_key": 3586920,
       "gbif_status": "resolved",
       "occurrence_count": 24,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 24,
+      "gallery_total_records": 24
     },
     {
       "canonical_name": "Passiflora tryphostemmatoides",
@@ -9913,9 +9960,9 @@
       "gbif_taxon_key": 3586892,
       "gbif_status": "resolved",
       "occurrence_count": 59,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 59,
+      "gallery_total_records": 59
     },
     {
       "canonical_name": "Passiflora tuberosa",
@@ -9961,9 +10008,9 @@
       "gbif_taxon_key": 2874208,
       "gbif_status": "resolved",
       "occurrence_count": 37,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 37,
+      "gallery_total_records": 37
     },
     {
       "canonical_name": "Passiflora vellozii",
@@ -10008,9 +10055,9 @@
       "gbif_taxon_key": 3586536,
       "gbif_status": "resolved",
       "occurrence_count": 51,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 51,
+      "gallery_total_records": 51
     },
     {
       "canonical_name": "Passiflora vespertilio",
@@ -10056,9 +10103,9 @@
       "gbif_taxon_key": 7536050,
       "gbif_status": "resolved",
       "occurrence_count": 501,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 501,
+      "gallery_total_records": 501
     },
     {
       "canonical_name": "Passiflora vitifolia",
@@ -10108,9 +10155,9 @@
       "gbif_taxon_key": 2874186,
       "gbif_status": "resolved",
       "occurrence_count": 2404,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2404,
+      "gallery_total_records": 2404
     },
     {
       "canonical_name": "Passiflora xiikzodz",
@@ -10155,9 +10202,9 @@
       "gbif_taxon_key": 7313508,
       "gbif_status": "resolved",
       "occurrence_count": 144,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 144,
+      "gallery_total_records": 144
     },
     {
       "canonical_name": "Peltastes peltatus",
@@ -10205,8 +10252,9 @@
       "gbif_taxon_key": 5535920,
       "gbif_status": "resolved",
       "occurrence_count": 191,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 191,
+      "gallery_total_records": 191
     },
     {
       "canonical_name": "Physalis angulata",
@@ -10252,8 +10300,9 @@
       "gbif_taxon_key": 5341792,
       "gbif_status": "resolved",
       "occurrence_count": 5056,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 5056,
+      "gallery_total_records": 5056
     },
     {
       "canonical_name": "Physalis neesiana",
@@ -10298,8 +10347,9 @@
       "gbif_taxon_key": 5581231,
       "gbif_status": "resolved",
       "occurrence_count": 24,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 24,
+      "gallery_total_records": 24
     },
     {
       "canonical_name": "Physalis nr peruviana",
@@ -10378,8 +10428,9 @@
       "gbif_taxon_key": 5341819,
       "gbif_status": "resolved",
       "occurrence_count": 2410,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2410,
+      "gallery_total_records": 2410
     },
     {
       "canonical_name": "Prestonia acutifolia",
@@ -10429,9 +10480,9 @@
       "gbif_taxon_key": 9227341,
       "gbif_status": "resolved",
       "occurrence_count": 531,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 531,
+      "gallery_total_records": 531
     },
     {
       "canonical_name": "Prestonia coalita",
@@ -10479,9 +10530,9 @@
       "gbif_taxon_key": 5536637,
       "gbif_status": "resolved",
       "occurrence_count": 751,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 751,
+      "gallery_total_records": 751
     },
     {
       "canonical_name": "Prestonia dusenii",
@@ -10526,9 +10577,9 @@
       "gbif_taxon_key": 5536604,
       "gbif_status": "resolved",
       "occurrence_count": 26,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 26,
+      "gallery_total_records": 26
     },
     {
       "canonical_name": "Prestonia longifolia",
@@ -10573,9 +10624,9 @@
       "gbif_taxon_key": 5536458,
       "gbif_status": "resolved",
       "occurrence_count": 124,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 124,
+      "gallery_total_records": 124
     },
     {
       "canonical_name": "Prestonia nr portobellensis",
@@ -10623,9 +10674,9 @@
       "gbif_taxon_key": 5536313,
       "gbif_status": "resolved",
       "occurrence_count": 583,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 583,
+      "gallery_total_records": 583
     },
     {
       "canonical_name": "Prestonia portobellensis",
@@ -10672,9 +10723,9 @@
       "gbif_taxon_key": 5536313,
       "gbif_status": "resolved",
       "occurrence_count": 583,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 583,
+      "gallery_total_records": 583
     },
     {
       "canonical_name": "Prestonia quinquangularis",
@@ -10719,9 +10770,9 @@
       "gbif_taxon_key": 5414415,
       "gbif_status": "resolved",
       "occurrence_count": 531,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 531,
+      "gallery_total_records": 531
     },
     {
       "canonical_name": "Schultesianthus leucanthus",
@@ -10766,8 +10817,9 @@
       "gbif_taxon_key": 8521461,
       "gbif_status": "resolved",
       "occurrence_count": 161,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 161,
+      "gallery_total_records": 161
     },
     {
       "canonical_name": "Schultesianthus megalandrus",
@@ -10849,9 +10901,9 @@
       "gbif_taxon_key": 3797091,
       "gbif_status": "resolved",
       "occurrence_count": 57,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Sessea"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 57,
+      "gallery_total_records": 57
     },
     {
       "canonical_name": "Solandra grandiflora",
@@ -10899,9 +10951,9 @@
       "gbif_taxon_key": 5341822,
       "gbif_status": "resolved",
       "occurrence_count": 278,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solandra"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 278,
+      "gallery_total_records": 278
     },
     {
       "canonical_name": "Solanum accrescens",
@@ -10948,9 +11000,9 @@
       "gbif_taxon_key": 2930938,
       "gbif_status": "resolved",
       "occurrence_count": 137,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 137,
+      "gallery_total_records": 137
     },
     {
       "canonical_name": "Solanum acerifolium",
@@ -10997,9 +11049,9 @@
       "gbif_taxon_key": 2930878,
       "gbif_status": "resolved",
       "occurrence_count": 784,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 784,
+      "gallery_total_records": 784
     },
     {
       "canonical_name": "Solanum aculeatissimum",
@@ -11045,9 +11097,9 @@
       "gbif_taxon_key": 2929394,
       "gbif_status": "resolved",
       "occurrence_count": 236,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 236,
+      "gallery_total_records": 236
     },
     {
       "canonical_name": "Solanum adenotrichum",
@@ -11096,9 +11148,9 @@
       "gbif_taxon_key": 3802875,
       "gbif_status": "resolved",
       "occurrence_count": 247,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 247,
+      "gallery_total_records": 247
     },
     {
       "canonical_name": "Solanum adhaerens",
@@ -11146,9 +11198,9 @@
       "gbif_taxon_key": 2929035,
       "gbif_status": "resolved",
       "occurrence_count": 928,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 928,
+      "gallery_total_records": 928
     },
     {
       "canonical_name": "Solanum agrarium",
@@ -11193,9 +11245,9 @@
       "gbif_taxon_key": 2929182,
       "gbif_status": "resolved",
       "occurrence_count": 450,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 450,
+      "gallery_total_records": 450
     },
     {
       "canonical_name": "Solanum anceps",
@@ -11243,9 +11295,9 @@
       "gbif_taxon_key": 2929475,
       "gbif_status": "resolved",
       "occurrence_count": 668,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 668,
+      "gallery_total_records": 668
     },
     {
       "canonical_name": "Solanum aphyodendron",
@@ -11296,9 +11348,9 @@
       "gbif_taxon_key": 2929958,
       "gbif_status": "resolved",
       "occurrence_count": 1519,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1519,
+      "gallery_total_records": 1519
     },
     {
       "canonical_name": "Solanum appressum",
@@ -11343,9 +11395,9 @@
       "gbif_taxon_key": 2929904,
       "gbif_status": "resolved",
       "occurrence_count": 303,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 303,
+      "gallery_total_records": 303
     },
     {
       "canonical_name": "Solanum arboreum",
@@ -11392,9 +11444,9 @@
       "gbif_taxon_key": 2931033,
       "gbif_status": "resolved",
       "occurrence_count": 615,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 615,
+      "gallery_total_records": 615
     },
     {
       "canonical_name": "Solanum argenteum",
@@ -11440,9 +11492,9 @@
       "gbif_taxon_key": 8080790,
       "gbif_status": "resolved",
       "occurrence_count": 287,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 287,
+      "gallery_total_records": 287
     },
     {
       "canonical_name": "Solanum asperum",
@@ -11489,9 +11541,9 @@
       "gbif_taxon_key": 2930051,
       "gbif_status": "resolved",
       "occurrence_count": 1029,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1029,
+      "gallery_total_records": 1029
     },
     {
       "canonical_name": "Solanum atropurpureum",
@@ -11538,9 +11590,9 @@
       "gbif_taxon_key": 2930310,
       "gbif_status": "resolved",
       "occurrence_count": 431,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 431,
+      "gallery_total_records": 431
     },
     {
       "canonical_name": "Solanum aturense",
@@ -11592,9 +11644,9 @@
       "gbif_taxon_key": 2929121,
       "gbif_status": "resolved",
       "occurrence_count": 927,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 927,
+      "gallery_total_records": 927
     },
     {
       "canonical_name": "Solanum barbeyanum",
@@ -11639,9 +11691,9 @@
       "gbif_taxon_key": 2931769,
       "gbif_status": "resolved",
       "occurrence_count": 349,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 349,
+      "gallery_total_records": 349
     },
     {
       "canonical_name": "Solanum bicolor",
@@ -11688,9 +11740,9 @@
       "gbif_taxon_key": 2930048,
       "gbif_status": "resolved",
       "occurrence_count": 153,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 153,
+      "gallery_total_records": 153
     },
     {
       "canonical_name": "Solanum brusquense",
@@ -11739,9 +11791,9 @@
       "gbif_taxon_key": 2932626,
       "gbif_status": "resolved",
       "occurrence_count": 56,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 56,
+      "gallery_total_records": 56
     },
     {
       "canonical_name": "Solanum caavurana",
@@ -11788,9 +11840,9 @@
       "gbif_taxon_key": 2929091,
       "gbif_status": "resolved",
       "occurrence_count": 581,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 581,
+      "gallery_total_records": 581
     },
     {
       "canonical_name": "Solanum campaniforme",
@@ -11839,9 +11891,9 @@
       "gbif_taxon_key": 2931667,
       "gbif_status": "resolved",
       "occurrence_count": 631,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 631,
+      "gallery_total_records": 631
     },
     {
       "canonical_name": "Solanum capsicoides",
@@ -11887,9 +11939,9 @@
       "gbif_taxon_key": 2929362,
       "gbif_status": "resolved",
       "occurrence_count": 962,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 962,
+      "gallery_total_records": 962
     },
     {
       "canonical_name": "Solanum cernuum",
@@ -11936,9 +11988,77 @@
       "gbif_taxon_key": 2931263,
       "gbif_status": "resolved",
       "occurrence_count": 213,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 213,
+      "gallery_total_records": 213
+    },
+    {
+      "canonical_name": "Solanum cf. cacosmum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum cf. cacosmum",
+      "slug": "species_solanum_cf_cacosmum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": false,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis messenoides"
+      ],
+      "confidence_counts": {
+        "low": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "needs_check": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum cf. cacosmum",
+        "rank": "species",
+        "status": "not_queried",
+        "note": "Resolution deferred until this host taxon is selected for occurrence generation."
+      },
+      "gbif_taxon_key": null,
+      "gbif_status": "not_queried",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated"
+    },
+    {
+      "canonical_name": "Solanum cf. sessiliflorum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum cf. sessiliflorum",
+      "slug": "species_solanum_cf_sessiliflorum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": false,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis messenoides"
+      ],
+      "confidence_counts": {
+        "low": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "needs_check": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum cf. sessiliflorum",
+        "rank": "species",
+        "status": "not_queried",
+        "note": "Resolution deferred until this host taxon is selected for occurrence generation."
+      },
+      "gbif_taxon_key": null,
+      "gbif_status": "not_queried",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated"
     },
     {
       "canonical_name": "Solanum chlamydogynum",
@@ -11984,9 +12104,9 @@
       "gbif_taxon_key": 2932573,
       "gbif_status": "resolved",
       "occurrence_count": 9,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 9,
+      "gallery_total_records": 9
     },
     {
       "canonical_name": "Solanum chrysotrichum",
@@ -12033,9 +12153,9 @@
       "gbif_taxon_key": 2929617,
       "gbif_status": "resolved",
       "occurrence_count": 928,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 928,
+      "gallery_total_records": 928
     },
     {
       "canonical_name": "Solanum cinnamomeum",
@@ -12080,9 +12200,9 @@
       "gbif_taxon_key": 2931429,
       "gbif_status": "resolved",
       "occurrence_count": 213,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 213,
+      "gallery_total_records": 213
     },
     {
       "canonical_name": "Solanum cordovense",
@@ -12128,9 +12248,9 @@
       "gbif_taxon_key": 2929657,
       "gbif_status": "resolved",
       "occurrence_count": 306,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 306,
+      "gallery_total_records": 306
     },
     {
       "canonical_name": "Solanum crinitum",
@@ -12175,9 +12295,9 @@
       "gbif_taxon_key": 2932686,
       "gbif_status": "resolved",
       "occurrence_count": 1133,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1133,
+      "gallery_total_records": 1133
     },
     {
       "canonical_name": "Solanum decorum",
@@ -12223,9 +12343,9 @@
       "gbif_taxon_key": 2931180,
       "gbif_status": "resolved",
       "occurrence_count": 42,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 42,
+      "gallery_total_records": 42
     },
     {
       "canonical_name": "Solanum deflexiflorum",
@@ -12271,9 +12391,9 @@
       "gbif_taxon_key": 2931851,
       "gbif_status": "resolved",
       "occurrence_count": 143,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 143,
+      "gallery_total_records": 143
     },
     {
       "canonical_name": "Solanum didymum",
@@ -12318,9 +12438,9 @@
       "gbif_taxon_key": 2932006,
       "gbif_status": "resolved",
       "occurrence_count": 776,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 776,
+      "gallery_total_records": 776
     },
     {
       "canonical_name": "Solanum donianum",
@@ -12365,9 +12485,9 @@
       "gbif_taxon_key": 2929566,
       "gbif_status": "resolved",
       "occurrence_count": 1182,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1182,
+      "gallery_total_records": 1182
     },
     {
       "canonical_name": "Solanum evolvulifolium",
@@ -12413,9 +12533,9 @@
       "gbif_taxon_key": 2930055,
       "gbif_status": "resolved",
       "occurrence_count": 250,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 250,
+      "gallery_total_records": 250
     },
     {
       "canonical_name": "Solanum fastigiatum",
@@ -12463,9 +12583,9 @@
       "gbif_taxon_key": 2929634,
       "gbif_status": "resolved",
       "occurrence_count": 572,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 572,
+      "gallery_total_records": 572
     },
     {
       "canonical_name": "Solanum flaccidum",
@@ -12512,9 +12632,9 @@
       "gbif_taxon_key": 2931269,
       "gbif_status": "resolved",
       "occurrence_count": 167,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 167,
+      "gallery_total_records": 167
     },
     {
       "canonical_name": "Solanum gilo",
@@ -12562,9 +12682,9 @@
       "gbif_taxon_key": 2929852,
       "gbif_status": "resolved",
       "occurrence_count": 77,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 77,
+      "gallery_total_records": 77
     },
     {
       "canonical_name": "Solanum goodspeedii",
@@ -12609,9 +12729,9 @@
       "gbif_taxon_key": 2932210,
       "gbif_status": "resolved",
       "occurrence_count": 151,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 151,
+      "gallery_total_records": 151
     },
     {
       "canonical_name": "Solanum grandiflorum",
@@ -12658,9 +12778,9 @@
       "gbif_taxon_key": 2929153,
       "gbif_status": "resolved",
       "occurrence_count": 273,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 273,
+      "gallery_total_records": 273
     },
     {
       "canonical_name": "Solanum granuloso-leprosum",
@@ -12706,9 +12826,9 @@
       "gbif_taxon_key": 3799800,
       "gbif_status": "resolved",
       "occurrence_count": 1513,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1513,
+      "gallery_total_records": 1513
     },
     {
       "canonical_name": "Solanum hayesii",
@@ -12754,9 +12874,9 @@
       "gbif_taxon_key": 2932218,
       "gbif_status": "resolved",
       "occurrence_count": 319,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 319,
+      "gallery_total_records": 319
     },
     {
       "canonical_name": "Solanum hazenii",
@@ -12803,9 +12923,9 @@
       "gbif_taxon_key": 2932177,
       "gbif_status": "resolved",
       "occurrence_count": 629,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 629,
+      "gallery_total_records": 629
     },
     {
       "canonical_name": "Solanum hexandrum",
@@ -12852,9 +12972,9 @@
       "gbif_taxon_key": 2930461,
       "gbif_status": "resolved",
       "occurrence_count": 191,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 191,
+      "gallery_total_records": 191
     },
     {
       "canonical_name": "Solanum hirsutum",
@@ -13209,9 +13329,9 @@
       "gbif_taxon_key": 2929212,
       "gbif_status": "resolved",
       "occurrence_count": 1016,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1016,
+      "gallery_total_records": 1016
     },
     {
       "canonical_name": "Solanum hispidum",
@@ -13264,9 +13384,9 @@
       "gbif_taxon_key": 2931635,
       "gbif_status": "resolved",
       "occurrence_count": 1256,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1256,
+      "gallery_total_records": 1256
     },
     {
       "canonical_name": "Solanum incarceratum",
@@ -13313,9 +13433,9 @@
       "gbif_taxon_key": 2932628,
       "gbif_status": "resolved",
       "occurrence_count": 153,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 153,
+      "gallery_total_records": 153
     },
     {
       "canonical_name": "Solanum insidiosum",
@@ -13363,9 +13483,9 @@
       "gbif_taxon_key": 2929131,
       "gbif_status": "resolved",
       "occurrence_count": 143,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 143,
+      "gallery_total_records": 143
     },
     {
       "canonical_name": "Solanum jamaicense",
@@ -13411,9 +13531,9 @@
       "gbif_taxon_key": 2931492,
       "gbif_status": "resolved",
       "occurrence_count": 1353,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1353,
+      "gallery_total_records": 1353
     },
     {
       "canonical_name": "Solanum jatrophaefolium",
@@ -13458,9 +13578,9 @@
       "gbif_taxon_key": 8198858,
       "gbif_status": "resolved",
       "occurrence_count": 5,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 0,
+      "gallery_total_records": 5
     },
     {
       "canonical_name": "Solanum lanceifolium",
@@ -13509,9 +13629,9 @@
       "gbif_taxon_key": 2929009,
       "gbif_status": "resolved",
       "occurrence_count": 625,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 625,
+      "gallery_total_records": 625
     },
     {
       "canonical_name": "Solanum lanceolatum",
@@ -13556,9 +13676,9 @@
       "gbif_taxon_key": 2929230,
       "gbif_status": "resolved",
       "occurrence_count": 2169,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2169,
+      "gallery_total_records": 2169
     },
     {
       "canonical_name": "Solanum laurifolium",
@@ -13886,9 +14006,54 @@
       "gbif_taxon_key": 2930379,
       "gbif_status": "resolved",
       "occurrence_count": 89,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 89,
+      "gallery_total_records": 89
+    },
+    {
+      "canonical_name": "Solanum leucopogon",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum leucopogon",
+      "slug": "species_solanum_leucopogon",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis messenoides"
+      ],
+      "confidence_counts": {
+        "high": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "direct": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum leucopogon",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2930322,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum leucopogon Huber",
+        "canonical_name": "Solanum leucopogon",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-25T20:28:53+00:00"
+      },
+      "gbif_taxon_key": 2930322,
+      "gbif_status": "resolved",
+      "occurrence_count": 161,
+      "occurrence_mode": "chunked_refs"
     },
     {
       "canonical_name": "Solanum lucens",
@@ -13933,9 +14098,9 @@
       "gbif_taxon_key": 2931728,
       "gbif_status": "resolved",
       "occurrence_count": 19,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 19,
+      "gallery_total_records": 19
     },
     {
       "canonical_name": "Solanum lycocarpum",
@@ -13982,9 +14147,9 @@
       "gbif_taxon_key": 2930421,
       "gbif_status": "resolved",
       "occurrence_count": 1402,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1402,
+      "gallery_total_records": 1402
     },
     {
       "canonical_name": "Solanum macrotonum",
@@ -14029,9 +14194,9 @@
       "gbif_taxon_key": 2932050,
       "gbif_status": "resolved",
       "occurrence_count": 449,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 449,
+      "gallery_total_records": 449
     },
     {
       "canonical_name": "Solanum mammosum",
@@ -14078,9 +14243,9 @@
       "gbif_taxon_key": 2930569,
       "gbif_status": "resolved",
       "occurrence_count": 596,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 596,
+      "gallery_total_records": 596
     },
     {
       "canonical_name": "Solanum mauritianum",
@@ -14134,9 +14299,9 @@
       "gbif_taxon_key": 2931469,
       "gbif_status": "resolved",
       "occurrence_count": 1860,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1860,
+      "gallery_total_records": 1860
     },
     {
       "canonical_name": "Solanum megalochiton",
@@ -14183,9 +14348,9 @@
       "gbif_taxon_key": 2932021,
       "gbif_status": "resolved",
       "occurrence_count": 270,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 270,
+      "gallery_total_records": 270
     },
     {
       "canonical_name": "Solanum melongena",
@@ -14231,9 +14396,9 @@
       "gbif_taxon_key": 2930617,
       "gbif_status": "resolved",
       "occurrence_count": 218,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 218,
+      "gallery_total_records": 218
     },
     {
       "canonical_name": "Solanum mite",
@@ -14278,9 +14443,9 @@
       "gbif_taxon_key": 2931686,
       "gbif_status": "resolved",
       "occurrence_count": 384,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 384,
+      "gallery_total_records": 384
     },
     {
       "canonical_name": "Solanum monarchostemon",
@@ -14326,9 +14491,9 @@
       "gbif_taxon_key": 2931032,
       "gbif_status": "resolved",
       "occurrence_count": 82,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 82,
+      "gallery_total_records": 82
     },
     {
       "canonical_name": "Solanum morellifolium",
@@ -14339,18 +14504,21 @@
       "slug": "species_solanum_morellifolium",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 1,
+      "association_count": 2,
       "butterfly_taxa": [
+        "Mechanitis messenoides",
         "Thyridia psidii"
       ],
       "confidence_counts": {
-        "medium": 1
+        "medium": 1,
+        "high": 1
       },
       "host_id_level_counts": {
-        "species": 1
+        "species": 2
       },
       "evidence_counts": {
-        "needs_check": 1
+        "needs_check": 1,
+        "direct": 1
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -14373,9 +14541,9 @@
       "gbif_taxon_key": 2930523,
       "gbif_status": "resolved",
       "occurrence_count": 128,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 128,
+      "gallery_total_records": 128
     },
     {
       "canonical_name": "Solanum murinum",
@@ -14420,9 +14588,9 @@
       "gbif_taxon_key": 3800227,
       "gbif_status": "resolved",
       "occurrence_count": 5,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 5,
+      "gallery_total_records": 5
     },
     {
       "canonical_name": "Solanum myriacanthum",
@@ -14467,9 +14635,9 @@
       "gbif_taxon_key": 2932223,
       "gbif_status": "resolved",
       "occurrence_count": 535,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 535,
+      "gallery_total_records": 535
     },
     {
       "canonical_name": "Solanum nr aculeatissimum",
@@ -14514,9 +14682,9 @@
       "gbif_taxon_key": 2929394,
       "gbif_status": "resolved",
       "occurrence_count": 236,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 236,
+      "gallery_total_records": 236
     },
     {
       "canonical_name": "Solanum nr asperum",
@@ -14562,9 +14730,9 @@
       "gbif_taxon_key": 2930051,
       "gbif_status": "resolved",
       "occurrence_count": 1029,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1029,
+      "gallery_total_records": 1029
     },
     {
       "canonical_name": "Solanum nr chacoense",
@@ -14610,9 +14778,9 @@
       "gbif_taxon_key": 2932643,
       "gbif_status": "resolved",
       "occurrence_count": 1507,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1507,
+      "gallery_total_records": 1507
     },
     {
       "canonical_name": "Solanum nr extensum",
@@ -14691,9 +14859,9 @@
       "gbif_taxon_key": 2932177,
       "gbif_status": "resolved",
       "occurrence_count": 629,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 629,
+      "gallery_total_records": 629
     },
     {
       "canonical_name": "Solanum nr lancaeifolium",
@@ -14738,9 +14906,9 @@
       "gbif_taxon_key": 2929009,
       "gbif_status": "resolved",
       "occurrence_count": 625,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 625,
+      "gallery_total_records": 625
     },
     {
       "canonical_name": "Solanum nr nudum",
@@ -14785,9 +14953,9 @@
       "gbif_taxon_key": 2931480,
       "gbif_status": "resolved",
       "occurrence_count": 1886,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1886,
+      "gallery_total_records": 1886
     },
     {
       "canonical_name": "Solanum nr pensile",
@@ -14835,9 +15003,9 @@
       "gbif_taxon_key": 2932361,
       "gbif_status": "resolved",
       "occurrence_count": 673,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 673,
+      "gallery_total_records": 673
     },
     {
       "canonical_name": "Solanum nr pseudoquina",
@@ -14919,9 +15087,9 @@
       "gbif_taxon_key": 2931933,
       "gbif_status": "resolved",
       "occurrence_count": 49,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 49,
+      "gallery_total_records": 49
     },
     {
       "canonical_name": "Solanum nr rugosum",
@@ -14967,9 +15135,9 @@
       "gbif_taxon_key": 2929481,
       "gbif_status": "resolved",
       "occurrence_count": 1130,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1130,
+      "gallery_total_records": 1130
     },
     {
       "canonical_name": "Solanum nr vaillantii",
@@ -15048,9 +15216,9 @@
       "gbif_taxon_key": 2930207,
       "gbif_status": "resolved",
       "occurrence_count": 617,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 617,
+      "gallery_total_records": 617
     },
     {
       "canonical_name": "Solanum nudum",
@@ -15098,9 +15266,9 @@
       "gbif_taxon_key": 2931480,
       "gbif_status": "resolved",
       "occurrence_count": 1886,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1886,
+      "gallery_total_records": 1886
     },
     {
       "canonical_name": "Solanum pabstii",
@@ -15145,9 +15313,9 @@
       "gbif_taxon_key": 2930362,
       "gbif_status": "resolved",
       "occurrence_count": 57,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 57,
+      "gallery_total_records": 57
     },
     {
       "canonical_name": "Solanum palinacanthum",
@@ -15194,9 +15362,9 @@
       "gbif_taxon_key": 2929551,
       "gbif_status": "resolved",
       "occurrence_count": 1222,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1222,
+      "gallery_total_records": 1222
     },
     {
       "canonical_name": "Solanum paniculatum",
@@ -15245,9 +15413,9 @@
       "gbif_taxon_key": 2932547,
       "gbif_status": "resolved",
       "occurrence_count": 2021,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2021,
+      "gallery_total_records": 2021
     },
     {
       "canonical_name": "Solanum pastillum",
@@ -15295,9 +15463,9 @@
       "gbif_taxon_key": 2931693,
       "gbif_status": "resolved",
       "occurrence_count": 39,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 39,
+      "gallery_total_records": 39
     },
     {
       "canonical_name": "Solanum pectinatum",
@@ -15308,19 +15476,22 @@
       "slug": "species_solanum_pectinatum",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 2,
+      "association_count": 3,
       "butterfly_taxa": [
         "Mechanitis lysimnia",
-        "Mechanitis mazaeus"
+        "Mechanitis mazaeus",
+        "Mechanitis messenoides"
       ],
       "confidence_counts": {
-        "high": 2
+        "high": 2,
+        "medium": 1
       },
       "host_id_level_counts": {
-        "species": 2
+        "species": 3
       },
       "evidence_counts": {
-        "needs_check": 2
+        "needs_check": 2,
+        "literature": 1
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -15343,9 +15514,54 @@
       "gbif_taxon_key": 2931046,
       "gbif_status": "resolved",
       "occurrence_count": 135,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 135,
+      "gallery_total_records": 135
+    },
+    {
+      "canonical_name": "Solanum pedemontanum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum pedemontanum",
+      "slug": "species_solanum_pedemontanum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis mazaeus"
+      ],
+      "confidence_counts": {
+        "high": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "direct": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum pedemontanum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2932227,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum pedemontanum M.Nee",
+        "canonical_name": "Solanum pedemontanum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-25T20:28:55+00:00"
+      },
+      "gbif_taxon_key": 2932227,
+      "gbif_status": "resolved",
+      "occurrence_count": 111,
+      "occurrence_mode": "chunked_refs"
     },
     {
       "canonical_name": "Solanum pensile",
@@ -15393,9 +15609,9 @@
       "gbif_taxon_key": 2932361,
       "gbif_status": "resolved",
       "occurrence_count": 673,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 673,
+      "gallery_total_records": 673
     },
     {
       "canonical_name": "Solanum pertenue",
@@ -15443,9 +15659,9 @@
       "gbif_taxon_key": 2929419,
       "gbif_status": "resolved",
       "occurrence_count": 42,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 42,
+      "gallery_total_records": 42
     },
     {
       "canonical_name": "Solanum piluliferum",
@@ -15492,9 +15708,9 @@
       "gbif_taxon_key": 2931771,
       "gbif_status": "resolved",
       "occurrence_count": 75,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 75,
+      "gallery_total_records": 75
     },
     {
       "canonical_name": "Solanum pittieri",
@@ -15542,9 +15758,9 @@
       "gbif_taxon_key": 2930473,
       "gbif_status": "resolved",
       "occurrence_count": 307,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 307,
+      "gallery_total_records": 307
     },
     {
       "canonical_name": "Solanum pseudocapsicum",
@@ -15590,9 +15806,9 @@
       "gbif_taxon_key": 2931104,
       "gbif_status": "resolved",
       "occurrence_count": 3558,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 3558,
+      "gallery_total_records": 3558
     },
     {
       "canonical_name": "Solanum pseudoquina",
@@ -15642,9 +15858,9 @@
       "gbif_taxon_key": 2930597,
       "gbif_status": "resolved",
       "occurrence_count": 828,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 828,
+      "gallery_total_records": 828
     },
     {
       "canonical_name": "Solanum quitoense",
@@ -15655,22 +15871,24 @@
       "slug": "species_solanum_quitoense",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 5,
+      "association_count": 6,
       "butterfly_taxa": [
         "Hyalyris oulita",
         "Mechanitis mazaeus",
         "Mechanitis menapis",
+        "Mechanitis messenoides",
         "Mechanitis polymnia"
       ],
       "confidence_counts": {
         "high": 4,
-        "medium": 1
+        "medium": 1,
+        "low": 1
       },
       "host_id_level_counts": {
-        "species": 5
+        "species": 6
       },
       "evidence_counts": {
-        "needs_check": 4,
+        "needs_check": 5,
         "direct": 1
       },
       "occurrence_file": null,
@@ -15694,9 +15912,9 @@
       "gbif_taxon_key": 6403105,
       "gbif_status": "resolved",
       "occurrence_count": 1624,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1624,
+      "gallery_total_records": 1624
     },
     {
       "canonical_name": "Solanum racemiflorum",
@@ -15744,9 +15962,9 @@
       "gbif_taxon_key": 2929870,
       "gbif_status": "resolved",
       "occurrence_count": 77,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 77,
+      "gallery_total_records": 77
     },
     {
       "canonical_name": "Solanum ramonense",
@@ -15791,9 +16009,9 @@
       "gbif_taxon_key": 2930811,
       "gbif_status": "resolved",
       "occurrence_count": 131,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 131,
+      "gallery_total_records": 131
     },
     {
       "canonical_name": "Solanum riparium",
@@ -15838,9 +16056,9 @@
       "gbif_taxon_key": 2932018,
       "gbif_status": "resolved",
       "occurrence_count": 570,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 570,
+      "gallery_total_records": 570
     },
     {
       "canonical_name": "Solanum roblense",
@@ -15885,9 +16103,9 @@
       "gbif_taxon_key": 2931638,
       "gbif_status": "resolved",
       "occurrence_count": 69,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 69,
+      "gallery_total_records": 69
     },
     {
       "canonical_name": "Solanum robustum",
@@ -15936,9 +16154,9 @@
       "gbif_taxon_key": 2931442,
       "gbif_status": "resolved",
       "occurrence_count": 283,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 283,
+      "gallery_total_records": 283
     },
     {
       "canonical_name": "Solanum rovirosanum",
@@ -15989,9 +16207,9 @@
       "gbif_taxon_key": 2930678,
       "gbif_status": "resolved",
       "occurrence_count": 554,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 554,
+      "gallery_total_records": 554
     },
     {
       "canonical_name": "Solanum rudepannum",
@@ -16045,9 +16263,9 @@
       "gbif_taxon_key": 3802204,
       "gbif_status": "resolved",
       "occurrence_count": 1198,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1198,
+      "gallery_total_records": 1198
     },
     {
       "canonical_name": "Solanum rugosum",
@@ -16101,9 +16319,9 @@
       "gbif_taxon_key": 2929481,
       "gbif_status": "resolved",
       "occurrence_count": 1130,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1130,
+      "gallery_total_records": 1130
     },
     {
       "canonical_name": "Solanum schlechtendalianum",
@@ -16151,9 +16369,9 @@
       "gbif_taxon_key": 2932884,
       "gbif_status": "resolved",
       "occurrence_count": 1413,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1413,
+      "gallery_total_records": 1413
     },
     {
       "canonical_name": "Solanum scuticum",
@@ -16200,9 +16418,9 @@
       "gbif_taxon_key": 2932130,
       "gbif_status": "resolved",
       "occurrence_count": 289,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 289,
+      "gallery_total_records": 289
     },
     {
       "canonical_name": "Solanum sessiliflorum",
@@ -16213,21 +16431,24 @@
       "slug": "species_solanum_sessiliflorum",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 4,
+      "association_count": 5,
       "butterfly_taxa": [
         "Dircenna loreta",
         "Hypothyris ninonia",
         "Mechanitis mazaeus",
+        "Mechanitis messenoides",
         "Mechanitis polymnia"
       ],
       "confidence_counts": {
-        "high": 4
+        "high": 4,
+        "medium": 1
       },
       "host_id_level_counts": {
-        "species": 4
+        "species": 5
       },
       "evidence_counts": {
-        "needs_check": 4
+        "needs_check": 4,
+        "literature": 1
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -16250,9 +16471,9 @@
       "gbif_taxon_key": 2930435,
       "gbif_status": "resolved",
       "occurrence_count": 474,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 473,
+      "gallery_total_records": 474
     },
     {
       "canonical_name": "Solanum sieberi",
@@ -16297,9 +16518,9 @@
       "gbif_taxon_key": 2930015,
       "gbif_status": "resolved",
       "occurrence_count": 38,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 38,
+      "gallery_total_records": 38
     },
     {
       "canonical_name": "Solanum sisymbriifolium",
@@ -16351,9 +16572,9 @@
       "gbif_taxon_key": 2932184,
       "gbif_status": "resolved",
       "occurrence_count": 5135,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 5135,
+      "gallery_total_records": 5135
     },
     {
       "canonical_name": "Solanum sp",
@@ -16406,9 +16627,9 @@
       "gbif_taxon_key": 11656177,
       "gbif_status": "resolved",
       "occurrence_count": 265,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 265,
+      "gallery_total_records": 265
     },
     {
       "canonical_name": "Solanum spinosissimum",
@@ -16456,9 +16677,9 @@
       "gbif_taxon_key": 8451571,
       "gbif_status": "resolved",
       "occurrence_count": 2,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 0,
+      "gallery_total_records": 2
     },
     {
       "canonical_name": "Solanum stagnale",
@@ -16503,9 +16724,9 @@
       "gbif_taxon_key": 2930371,
       "gbif_status": "resolved",
       "occurrence_count": 44,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 44,
+      "gallery_total_records": 44
     },
     {
       "canonical_name": "Solanum stramonifolium",
@@ -16516,23 +16737,24 @@
       "slug": "species_solanum_stramonifolium",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 4,
+      "association_count": 5,
       "butterfly_taxa": [
         "Ceratinia neso",
         "Dircenna loreta",
         "Hypothyris euclea",
+        "Mechanitis lysimnia",
         "Mechanitis polymnia"
       ],
       "confidence_counts": {
-        "high": 3,
+        "high": 4,
         "needs_check": 1
       },
       "host_id_level_counts": {
-        "species": 4
+        "species": 5
       },
       "evidence_counts": {
         "needs_check": 3,
-        "direct": 1
+        "direct": 2
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -16555,9 +16777,9 @@
       "gbif_taxon_key": 2930283,
       "gbif_status": "resolved",
       "occurrence_count": 717,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 717,
+      "gallery_total_records": 717
     },
     {
       "canonical_name": "Solanum swartzianum",
@@ -16605,9 +16827,9 @@
       "gbif_taxon_key": 2931255,
       "gbif_status": "resolved",
       "occurrence_count": 671,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 671,
+      "gallery_total_records": 671
     },
     {
       "canonical_name": "Solanum thelopodium",
@@ -16652,9 +16874,9 @@
       "gbif_taxon_key": 2931531,
       "gbif_status": "resolved",
       "occurrence_count": 182,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 182,
+      "gallery_total_records": 182
     },
     {
       "canonical_name": "Solanum torvum",
@@ -16707,9 +16929,9 @@
       "gbif_taxon_key": 2932389,
       "gbif_status": "resolved",
       "occurrence_count": 4160,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 4160,
+      "gallery_total_records": 4160
     },
     {
       "canonical_name": "Solanum triste",
@@ -16755,9 +16977,9 @@
       "gbif_taxon_key": 2929094,
       "gbif_status": "resolved",
       "occurrence_count": 26,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 26,
+      "gallery_total_records": 26
     },
     {
       "canonical_name": "Solanum trizygum",
@@ -16803,9 +17025,9 @@
       "gbif_taxon_key": 2930471,
       "gbif_status": "resolved",
       "occurrence_count": 307,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 307,
+      "gallery_total_records": 307
     },
     {
       "canonical_name": "Solanum tuberosum",
@@ -16888,9 +17110,9 @@
       "gbif_taxon_key": 2930298,
       "gbif_status": "resolved",
       "occurrence_count": 83,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 83,
+      "gallery_total_records": 83
     },
     {
       "canonical_name": "Solanum umbellatum",
@@ -16941,9 +17163,9 @@
       "gbif_taxon_key": 2929008,
       "gbif_status": "resolved",
       "occurrence_count": 1373,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1373,
+      "gallery_total_records": 1373
     },
     {
       "canonical_name": "Solanum vaillantii",
@@ -16988,9 +17210,9 @@
       "gbif_taxon_key": 2930786,
       "gbif_status": "resolved",
       "occurrence_count": 138,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 138,
+      "gallery_total_records": 138
     },
     {
       "canonical_name": "Solanum variabile",
@@ -17039,9 +17261,9 @@
       "gbif_taxon_key": 2930207,
       "gbif_status": "resolved",
       "occurrence_count": 617,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 617,
+      "gallery_total_records": 617
     },
     {
       "canonical_name": "Solanum velleum",
@@ -17086,9 +17308,9 @@
       "gbif_taxon_key": 2929985,
       "gbif_status": "resolved",
       "occurrence_count": 71,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 71,
+      "gallery_total_records": 71
     },
     {
       "canonical_name": "Solanum viarum",
@@ -17133,9 +17355,9 @@
       "gbif_taxon_key": 2931914,
       "gbif_status": "resolved",
       "occurrence_count": 2607,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 2607,
+      "gallery_total_records": 2607
     },
     {
       "canonical_name": "Solanum wendlandii",
@@ -17180,9 +17402,9 @@
       "gbif_taxon_key": 2932035,
       "gbif_status": "resolved",
       "occurrence_count": 535,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 535,
+      "gallery_total_records": 535
     },
     {
       "canonical_name": "Temnadenia violacea",
@@ -17227,8 +17449,9 @@
       "gbif_taxon_key": 3620523,
       "gbif_status": "resolved",
       "occurrence_count": 482,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 482,
+      "gallery_total_records": 482
     },
     {
       "canonical_name": "Tetrastylis ovalis",
@@ -17278,8 +17501,9 @@
       "gbif_taxon_key": 3588191,
       "gbif_status": "resolved",
       "occurrence_count": 112,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 112,
+      "gallery_total_records": 112
     },
     {
       "canonical_name": "Trianaea speciosa",
@@ -17327,8 +17551,9 @@
       "gbif_taxon_key": 7949375,
       "gbif_status": "resolved",
       "occurrence_count": 42,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 42,
+      "gallery_total_records": 42
     },
     {
       "canonical_name": "Vassobia breviflora",
@@ -17374,8 +17599,9 @@
       "gbif_taxon_key": 3801366,
       "gbif_status": "resolved",
       "occurrence_count": 853,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 853,
+      "gallery_total_records": 853
     },
     {
       "canonical_name": "Witheringia asterotricha",
@@ -17420,9 +17646,9 @@
       "gbif_taxon_key": 5581205,
       "gbif_status": "resolved",
       "occurrence_count": 240,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Witheringia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 240,
+      "gallery_total_records": 240
     },
     {
       "canonical_name": "Witheringia cuneata",
@@ -17470,8 +17696,9 @@
       "gbif_taxon_key": 5581171,
       "gbif_status": "resolved",
       "occurrence_count": 157,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 157,
+      "gallery_total_records": 157
     },
     {
       "canonical_name": "Witheringia meiantha",
@@ -17517,9 +17744,9 @@
       "gbif_taxon_key": 8515625,
       "gbif_status": "resolved",
       "occurrence_count": 326,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Witheringia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 326,
+      "gallery_total_records": 326
     },
     {
       "canonical_name": "Witheringia morii",
@@ -17567,8 +17794,9 @@
       "gbif_taxon_key": 7691957,
       "gbif_status": "resolved",
       "occurrence_count": 1,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1,
+      "gallery_total_records": 1
     },
     {
       "canonical_name": "Witheringia solanacea",
@@ -17617,9 +17845,9 @@
       "gbif_taxon_key": 8625966,
       "gbif_status": "resolved",
       "occurrence_count": 1989,
-      "occurrence_mode": "unified_dataset",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Witheringia"
+      "occurrence_mode": "chunked_refs",
+      "gallery_count": 1989,
+      "gallery_total_records": 1989
     }
   ]
 }

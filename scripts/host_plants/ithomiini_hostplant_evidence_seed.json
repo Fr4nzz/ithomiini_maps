@@ -13567,11 +13567,13 @@
       "host_taxon_rank": "species",
       "evidence_type": "single direct rearing observation in Forbestra life-history paper",
       "beccaloni_marker": null,
-      "source_citation": "Hill 2006, Life history and biology of Forbestra olivencia",
-      "source_refs": "A group of six Mechanitis messenoides eggs was found on Solanum monarchostemon and reared to normal-sized adults.",
-      "doi_or_url": "https://images.peabody.yale.edu/lepsoc/jls/2000s/2006/2006(4)203-Hill.pdf",
+      "source_citation": "Hill 2006; Hill et al. 2012, Mechanitis host-plant use in eastern Ecuador",
+      "source_refs": "Hill 2006: six M. messenoides eggs found on Solanum monarchostemon and reared to adults. Hill et al. 2012 Table 3 also reports 2/50 M. messenoides host records on S. monarchostemon.",
+      "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "high",
-      "caveats": "Single observation; not a dedicated Mechanitis messenoides host study."
+      "caveats": "Single observation; not a dedicated Mechanitis messenoides host study.",
+      "evidence_level": "direct",
+      "evidence_context": "wild_field"
     }
   ],
   "target_species_without_species_level_records_in_seed": [

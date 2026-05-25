@@ -7414,6 +7414,40 @@
       "family": "Solanaceae",
       "genus": "Solanum",
       "resolved_at": "2026-05-23T21:10:48+00:00"
+    },
+    "species:solanum leucopogon": {
+      "query": "Solanum leucopogon",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2930322,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum leucopogon Huber",
+      "canonical_name": "Solanum leucopogon",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-25T20:28:53+00:00"
+    },
+    "species:solanum pedemontanum": {
+      "query": "Solanum pedemontanum",
+      "rank": "species",
+      "status": "resolved",
+      "gbif_taxon_key": 2932227,
+      "accepted_usage_key": null,
+      "scientific_name": "Solanum pedemontanum M.Nee",
+      "canonical_name": "Solanum pedemontanum",
+      "gbif_rank": "SPECIES",
+      "taxonomic_status": "ACCEPTED",
+      "match_type": "EXACT",
+      "confidence": 100,
+      "kingdom": "Plantae",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "resolved_at": "2026-05-25T20:28:55+00:00"
     }
   },
   "accepted_taxa": {

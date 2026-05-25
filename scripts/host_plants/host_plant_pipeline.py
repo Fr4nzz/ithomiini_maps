@@ -325,8 +325,13 @@ def build_association_outputs(records: list[dict[str, Any]]) -> tuple[list[dict[
             record.get("confidence"),
         )
         evidence_detail = evidence_detail_for_record(record)
+        default_download_override = record.get("use_for_default_download")
+        if isinstance(default_download_override, str):
+            default_download_override = default_download_override.strip().lower() in {"1", "true", "yes", "y"}
         use_for_default_download = (
-            taxon["resolvable_to_gbif"] and confidence_allows_default_download(confidence)
+            bool(default_download_override)
+            if default_download_override is not None
+            else (taxon["resolvable_to_gbif"] and confidence_allows_default_download(confidence))
         )
         taxon_key = (taxon["canonical_name"].lower(), taxon["rank"], taxon["family"])
 
@@ -351,6 +356,7 @@ def build_association_outputs(records: list[dict[str, Any]]) -> tuple[list[dict[
             "host_id_level": host_id_level,
             "evidence_level": evidence_level,
             "evidence_detail": evidence_detail,
+            "evidence_context": clean_text(record.get("evidence_context")),
             "curated_confidence": clean_text(record.get("curated_confidence")) or confidence,
             "curation_action": clean_text(record.get("curation_action")),
             "evidence_basis": clean_text(record.get("evidence_basis")),

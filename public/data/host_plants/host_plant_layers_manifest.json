@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-05-24T14:36:42+00:00",
+    "generated_at": "2026-05-25T20:28:55+00:00",
     "source_seed": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/ithomiini_hostplant_evidence_seed.json",
     "source_confidence_audit": "/home/franz/Documents/CodeProjs/ithomiini_maps/scripts/host_plants/host_plant_confidence_reaudit_codex_20260521_taxon_level.csv",
     "seed_metadata": {
@@ -30,11 +30,17 @@
         "created_at": "2026-05-20",
         "sources": [
           "Muriel, S. B., Montoya, J., Restrepo, A. & Munoz, J. 2011. Nuevos registros de plantas hospederas y disponibilidad de recursos para mariposas Ithomiini, en agroecosistemas de cafe colombianos. Actualidades Biologicas 33(95): 275-285. DOI: 10.17533/udea.acbi.14326.",
-          "McClure, M. & Elias, M. 2016. Unravelling the role of host plant expansion in the diversification of a Neotropical butterfly genus. BMC Evolutionary Biology 16:128. DOI: 10.1186/s12862-016-0701-5."
+          "McClure, M. & Elias, M. 2016. Unravelling the role of host plant expansion in the diversification of a Neotropical butterfly genus. BMC Evolutionary Biology 16:128. DOI: 10.1186/s12862-016-0701-5.",
+          "Hill, R. I., Elias, M., Dasmahapatra, K. K., Jiggins, C. D. et al. 2012. Host plant use and ecological differentiation in Mechanitis butterflies, with Table 3 host records for Mechanitis messenoides and M. mazaeus in eastern Ecuador.",
+          "Melo, D. H. A. & Freitas, A. V. L. 2023. Immature stages of Mechanitis lysimnia nesaea (Nymphalidae: Danainae: Ithomiini). Tropical Lepidoptera Research 33(2): 79-85.",
+          "PLOS Biology 2026 Mechanitis mimicry study; outdoor insectary stocks used Solanum quitoense for oviposition and larval rearing."
         ],
         "notes": [
           "Muriel et al. Table 3 records are field-collected eggs/larvae/pupae reared in the laboratory from coffee agroecosystems in Fredonia, Antioquia, Colombia.",
-          "McClure & Elias records summarize field host-use context reported for the four Melinaea species studied; experimental host-acceptance-only results are not added as default host associations here."
+          "McClure & Elias records summarize field host-use context reported for the four Melinaea species studied; experimental host-acceptance-only results are not added as default host associations here.",
+          "Mechanitis messenoides records added from Hill et al. 2012 are treated as species-level direct field records where plant identity was exact, and as needs-check records where Hill et al. used cf. or naranjilla-like unresolved plant categories.",
+          "Older catalogue rows under Mechanitis mazaeus that explicitly refer to ssp. messenoides or ssp. deceptus are duplicated as modern-taxonomy remap candidates for M. messenoides rather than used to copy all M. mazaeus or M. polymnia hosts.",
+          "Solanum quitoense is retained for M. messenoides with a husbandry caveat and needs-check/default-hidden support category because the strongest exact-species evidence is oviposition/rearing in outdoor insectary stocks, not a clean wild field-host record."
         ]
       }
     },
@@ -50,47 +56,13 @@
       "default_occurrence_downloads": "high and medium only; low and needs-check records are not default GBIF targets."
     },
     "scientific_caveat": "Host-plant GBIF layers are optional context overlays. They are not SDM predictors and do not demonstrate local host use.",
-    "gbif_download_doi": "10.15468/dl.3464gs",
+    "gbif_download_doi": null,
     "gbif_download_doi_note": "Host plant occurrences are generated through the same GBIF Download API method as the database update pipeline when GBIF credentials are available.",
     "occurrence_limit_per_taxon": null,
     "gbif_method": "download-api",
     "occurrence_dataset": "host_plant_occurrences.json",
     "occurrence_core_dataset": null,
     "gallery_dataset": null,
-    "occurrence_core_shards_by_taxon": {},
-    "occurrence_core_shard_strategy": "unique_occurrence_chunks_by_taxon_refs",
-    "occurrence_core_shard_count": 291,
-    "gallery_shards_by_taxon": {},
-    "gallery_shard_strategy": "paged_host_taxon_images",
-    "gallery_shard_count": 288,
-    "occurrence_core_aliases_by_taxon": {
-      "genus_cyphomandra": "genus_solanum",
-      "genus_lycopersicon": "genus_solanum",
-      "species_cestrum_nr_nocturnum": "species_cestrum_nocturnum",
-      "species_lycianthes_nr_multiflora": "species_lycianthes_multiflora",
-      "species_prestonia_nr_portobellensis": "species_prestonia_portobellensis",
-      "species_solanum_nr_aculeatissimum": "species_solanum_aculeatissimum",
-      "species_solanum_nr_asperum": "species_solanum_asperum",
-      "species_solanum_nr_hazenii": "species_solanum_hazenii",
-      "species_solanum_nr_lancaeifolium": "species_solanum_lanceifolium",
-      "species_solanum_nr_nudum": "species_solanum_nudum",
-      "species_solanum_nr_rugosum": "species_solanum_rugosum",
-      "species_solanum_nr_variabile": "species_solanum_variabile"
-    },
-    "gallery_aliases_by_taxon": {
-      "genus_cyphomandra": "genus_solanum",
-      "genus_lycopersicon": "genus_solanum",
-      "species_cestrum_nr_nocturnum": "species_cestrum_nocturnum",
-      "species_lycianthes_nr_multiflora": "species_lycianthes_multiflora",
-      "species_prestonia_nr_portobellensis": "species_prestonia_portobellensis",
-      "species_solanum_nr_aculeatissimum": "species_solanum_aculeatissimum",
-      "species_solanum_nr_asperum": "species_solanum_asperum",
-      "species_solanum_nr_hazenii": "species_solanum_hazenii",
-      "species_solanum_nr_lancaeifolium": "species_solanum_lanceifolium",
-      "species_solanum_nr_nudum": "species_solanum_nudum",
-      "species_solanum_nr_rugosum": "species_solanum_rugosum",
-      "species_solanum_nr_variabile": "species_solanum_variabile"
-    },
     "occurrence_store_version": 2,
     "occurrence_chunk_size": 20000,
     "occurrence_chunks": {
@@ -458,11 +430,14 @@
       "species_witheringia_cuneata": "taxon_occurrence_refs/species_witheringia_cuneata.json",
       "species_witheringia_meiantha": "taxon_occurrence_refs/species_witheringia_meiantha.json",
       "species_witheringia_morii": "taxon_occurrence_refs/species_witheringia_morii.json",
-      "species_witheringia_solanacea": "taxon_occurrence_refs/species_witheringia_solanacea.json"
+      "species_witheringia_solanacea": "taxon_occurrence_refs/species_witheringia_solanacea.json",
+      "species_solanum_leucopogon": "taxon_occurrence_refs/species_solanum_leucopogon.json",
+      "species_solanum_pedemontanum": "taxon_occurrence_refs/species_solanum_pedemontanum.json"
     },
-    "occurrence_ref_count": 291,
+    "occurrence_ref_count": 293,
     "unique_occurrence_count": 465757,
     "gallery_page_size": 100,
+    "gallery_initial_limit": 10,
     "gallery_indexes_by_taxon": {
       "genus_acnistus": "gallery_taxa/genus_acnistus/index.json",
       "genus_brunfelsia": "gallery_taxa/genus_brunfelsia/index.json",
@@ -754,7 +729,10 @@
       "species_witheringia_solanacea": "gallery_taxa/species_witheringia_solanacea/index.json"
     },
     "gallery_index_count": 288,
-    "gallery_initial_limit": 10
+    "occurrence_core_shards_by_taxon": {},
+    "occurrence_core_shard_strategy": "unique_occurrence_chunks_by_taxon_refs",
+    "gallery_shards_by_taxon": {},
+    "gallery_shard_strategy": "paged_host_taxon_images"
   },
   "taxa": [
     {
@@ -929,7 +907,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 719,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 719,
       "gallery_total_records": 719
     },
@@ -2251,7 +2228,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 4433,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 4391,
       "gallery_total_records": 4433
     },
@@ -2342,7 +2318,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 23160,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 22998,
       "gallery_total_records": 23160
     },
@@ -2395,7 +2370,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 240481,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 239413,
       "gallery_total_records": 240481
     },
@@ -2444,7 +2418,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 474,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 473,
       "gallery_total_records": 474
     },
@@ -2492,7 +2465,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 9460,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 9434,
       "gallery_total_records": 9460
     },
@@ -2540,7 +2512,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2358,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 2352,
       "gallery_total_records": 2358
     },
@@ -2591,7 +2562,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 766,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 765,
       "gallery_total_records": 766
     },
@@ -2653,7 +2623,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 11076,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 10960,
       "gallery_total_records": 11076
     },
@@ -2704,7 +2673,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 240481,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 239413,
       "gallery_total_records": 240481
     },
@@ -2757,7 +2725,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 877,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 868,
       "gallery_total_records": 877
     },
@@ -2843,7 +2810,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 110442,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 110336,
       "gallery_total_records": 110442
     },
@@ -2932,7 +2898,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 5220,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 5206,
       "gallery_total_records": 5220
     },
@@ -2980,7 +2945,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 390,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 370,
       "gallery_total_records": 390
     },
@@ -3028,7 +2992,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1210,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 1208,
       "gallery_total_records": 1210
     },
@@ -3041,7 +3004,7 @@
       "slug": "genus_solanum",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 58,
+      "association_count": 61,
       "butterfly_taxa": [
         "Callithomia alexirrhoe",
         "Callithomia lenea",
@@ -3065,6 +3028,7 @@
         "Hypothyris ninonia",
         "Mechanitis lysimnia",
         "Mechanitis mazaeus",
+        "Mechanitis messenoides",
         "Mechanitis polymnia",
         "Napeogenes tolosa",
         "Oleria aquata",
@@ -3079,16 +3043,16 @@
         "Scada zibia"
       ],
       "confidence_counts": {
-        "low": 5,
-        "medium": 45,
+        "low": 7,
+        "medium": 46,
         "needs_check": 8
       },
       "host_id_level_counts": {
-        "genus": 58
+        "genus": 61
       },
       "evidence_counts": {
-        "needs_check": 55,
-        "literature": 3
+        "needs_check": 57,
+        "literature": 4
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -3112,7 +3076,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 240481,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 239413,
       "gallery_total_records": 240481
     },
@@ -3202,7 +3165,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 3755,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 3750,
       "gallery_total_records": 3755
     },
@@ -3261,7 +3223,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 695,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 695,
       "gallery_total_records": 695
     },
@@ -3313,7 +3274,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 100,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 100,
       "gallery_total_records": 100
     },
@@ -3369,7 +3329,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 3,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 3,
       "gallery_total_records": 3
     },
@@ -3417,7 +3376,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 516,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 516,
       "gallery_total_records": 516
     },
@@ -3465,7 +3423,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 367,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 367,
       "gallery_total_records": 367
     },
@@ -3516,7 +3473,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 562,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 562,
       "gallery_total_records": 562
     },
@@ -3568,7 +3524,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 980,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 980,
       "gallery_total_records": 980
     },
@@ -3616,8 +3571,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 25,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia",
       "gallery_count": 25,
       "gallery_total_records": 25
     },
@@ -3705,8 +3658,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 228,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia",
       "gallery_count": 228,
       "gallery_total_records": 228
     },
@@ -3754,8 +3705,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 24,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia",
       "gallery_count": 0,
       "gallery_total_records": 24
     },
@@ -3805,8 +3754,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 567,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia",
       "gallery_count": 567,
       "gallery_total_records": 567
     },
@@ -3859,8 +3806,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 473,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia",
       "gallery_count": 473,
       "gallery_total_records": 473
     },
@@ -3908,8 +3853,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 120,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia",
       "gallery_count": 120,
       "gallery_total_records": 120
     },
@@ -3963,8 +3906,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 693,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Brunfelsia",
       "gallery_count": 693,
       "gallery_total_records": 693
     },
@@ -4012,7 +3953,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 127,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 127,
       "gallery_total_records": 127
     },
@@ -4060,7 +4000,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1025,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 1025,
       "gallery_total_records": 1025
     },
@@ -4114,8 +4053,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 468,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 468,
       "gallery_total_records": 468
     },
@@ -4197,8 +4134,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 54,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 54,
       "gallery_total_records": 54
     },
@@ -4280,8 +4215,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 112,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 112,
       "gallery_total_records": 112
     },
@@ -4329,8 +4262,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 250,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 250,
       "gallery_total_records": 250
     },
@@ -4386,8 +4317,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 705,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 705,
       "gallery_total_records": 705
     },
@@ -4469,8 +4398,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 428,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 428,
       "gallery_total_records": 428
     },
@@ -4521,8 +4448,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 450,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 450,
       "gallery_total_records": 450
     },
@@ -4572,8 +4497,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 729,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 729,
       "gallery_total_records": 729
     },
@@ -4663,8 +4586,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2360,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 2360,
       "gallery_total_records": 2360
     },
@@ -4712,8 +4633,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2360,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 2360,
       "gallery_total_records": 2360
     },
@@ -4769,8 +4688,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2502,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 2502,
       "gallery_total_records": 2502
     },
@@ -4819,8 +4736,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 744,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 744,
       "gallery_total_records": 744
     },
@@ -4868,8 +4783,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 104,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 104,
       "gallery_total_records": 104
     },
@@ -4921,8 +4834,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1467,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 1467,
       "gallery_total_records": 1467
     },
@@ -4976,8 +4887,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 508,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 508,
       "gallery_total_records": 508
     },
@@ -5063,8 +4972,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1139,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Cestrum",
       "gallery_count": 1138,
       "gallery_total_records": 1139
     },
@@ -5112,7 +5019,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 501,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 501,
       "gallery_total_records": 501
     },
@@ -5160,7 +5066,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 20,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 20,
       "gallery_total_records": 20
     },
@@ -5213,7 +5118,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 279,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 279,
       "gallery_total_records": 279
     },
@@ -5272,7 +5176,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1136,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 1136,
       "gallery_total_records": 1136
     },
@@ -5324,7 +5227,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 245,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 245,
       "gallery_total_records": 245
     },
@@ -5377,7 +5279,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 166,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 166,
       "gallery_total_records": 166
     },
@@ -5431,7 +5332,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 247,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 247,
       "gallery_total_records": 247
     },
@@ -5482,7 +5382,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 52,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 52,
       "gallery_total_records": 52
     },
@@ -5534,7 +5433,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 901,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 901,
       "gallery_total_records": 901
     },
@@ -5586,7 +5484,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 115,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 115,
       "gallery_total_records": 115
     },
@@ -5639,7 +5536,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 85,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 85,
       "gallery_total_records": 85
     },
@@ -5692,7 +5588,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 37,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 37,
       "gallery_total_records": 37
     },
@@ -5777,7 +5672,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 4328,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 4328,
       "gallery_total_records": 4328
     },
@@ -5828,8 +5722,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 201,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Dilkea",
       "gallery_count": 201,
       "gallery_total_records": 201
     },
@@ -5877,8 +5769,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 201,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Dilkea",
       "gallery_count": 201,
       "gallery_total_records": 201
     },
@@ -5926,8 +5816,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 379,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Drymonia",
       "gallery_count": 379,
       "gallery_total_records": 379
     },
@@ -5975,8 +5863,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 26,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Drymonia",
       "gallery_count": 26,
       "gallery_total_records": 26
     },
@@ -6027,7 +5913,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 152,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 152,
       "gallery_total_records": 152
     },
@@ -6078,7 +5963,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 356,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 356,
       "gallery_total_records": 356
     },
@@ -6128,7 +6012,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 342,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 342,
       "gallery_total_records": 342
     },
@@ -6215,8 +6098,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 384,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Juanulloa",
       "gallery_count": 384,
       "gallery_total_records": 384
     },
@@ -6266,8 +6147,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 170,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Juanulloa",
       "gallery_count": 170,
       "gallery_total_records": 170
     },
@@ -6317,8 +6196,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 749,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 749,
       "gallery_total_records": 749
     },
@@ -6366,8 +6243,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 14,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 14,
       "gallery_total_records": 14
     },
@@ -6415,8 +6290,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 138,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 138,
       "gallery_total_records": 138
     },
@@ -6468,8 +6341,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 426,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 426,
       "gallery_total_records": 426
     },
@@ -6517,8 +6388,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 426,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 426,
       "gallery_total_records": 426
     },
@@ -6566,8 +6435,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 331,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 331,
       "gallery_total_records": 331
     },
@@ -6615,8 +6482,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 319,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 319,
       "gallery_total_records": 319
     },
@@ -6666,8 +6531,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 411,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Lycianthes",
       "gallery_count": 411,
       "gallery_total_records": 411
     },
@@ -6885,7 +6748,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 31,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 31,
       "gallery_total_records": 31
     },
@@ -6940,7 +6802,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 13,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 13,
       "gallery_total_records": 13
     },
@@ -6989,7 +6850,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1158,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 1158,
       "gallery_total_records": 1158
     },
@@ -7037,7 +6897,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 3324,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 3324,
       "gallery_total_records": 3324
     },
@@ -7089,8 +6948,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 246,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 246,
       "gallery_total_records": 246
     },
@@ -7138,8 +6995,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 141,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 141,
       "gallery_total_records": 141
     },
@@ -7187,8 +7042,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 671,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 671,
       "gallery_total_records": 671
     },
@@ -7237,8 +7090,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1122,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 1122,
       "gallery_total_records": 1122
     },
@@ -7288,8 +7139,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 459,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 459,
       "gallery_total_records": 459
     },
@@ -7340,8 +7189,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 248,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 248,
       "gallery_total_records": 248
     },
@@ -7395,8 +7242,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1269,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 1269,
       "gallery_total_records": 1269
     },
@@ -7479,8 +7324,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 436,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 436,
       "gallery_total_records": 436
     },
@@ -7532,8 +7375,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1958,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 1958,
       "gallery_total_records": 1958
     },
@@ -7584,8 +7425,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 5329,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 5329,
       "gallery_total_records": 5329
     },
@@ -7634,8 +7473,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 93,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 93,
       "gallery_total_records": 93
     },
@@ -7683,8 +7520,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 172,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 172,
       "gallery_total_records": 172
     },
@@ -7734,8 +7569,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 983,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 983,
       "gallery_total_records": 983
     },
@@ -7783,8 +7616,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 141,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 141,
       "gallery_total_records": 141
     },
@@ -7833,8 +7664,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 114,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 114,
       "gallery_total_records": 114
     },
@@ -8041,8 +7870,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 51,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 51,
       "gallery_total_records": 51
     },
@@ -8090,8 +7917,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 881,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 881,
       "gallery_total_records": 881
     },
@@ -8142,8 +7967,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 732,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 732,
       "gallery_total_records": 732
     },
@@ -8192,8 +8015,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 274,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 274,
       "gallery_total_records": 274
     },
@@ -8243,8 +8064,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 132,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 132,
       "gallery_total_records": 132
     },
@@ -8292,8 +8111,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 56,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 56,
       "gallery_total_records": 56
     },
@@ -8341,8 +8158,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 146,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 146,
       "gallery_total_records": 146
     },
@@ -8393,8 +8208,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 4650,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 4650,
       "gallery_total_records": 4650
     },
@@ -8443,8 +8256,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 72,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 72,
       "gallery_total_records": 72
     },
@@ -8495,8 +8306,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 92,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 92,
       "gallery_total_records": 92
     },
@@ -8545,8 +8354,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 17,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 17,
       "gallery_total_records": 17
     },
@@ -8595,8 +8402,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 7213,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 7213,
       "gallery_total_records": 7213
     },
@@ -8645,8 +8450,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 730,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 730,
       "gallery_total_records": 730
     },
@@ -8698,8 +8501,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 311,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 311,
       "gallery_total_records": 311
     },
@@ -8747,8 +8548,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 276,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 276,
       "gallery_total_records": 276
     },
@@ -8797,8 +8596,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 236,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 236,
       "gallery_total_records": 236
     },
@@ -8884,8 +8681,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 204,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 204,
       "gallery_total_records": 204
     },
@@ -8937,8 +8732,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 221,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 221,
       "gallery_total_records": 221
     },
@@ -8986,8 +8779,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 12,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 12,
       "gallery_total_records": 12
     },
@@ -9036,8 +8827,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 434,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 434,
       "gallery_total_records": 434
     },
@@ -9087,8 +8876,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 13,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 13,
       "gallery_total_records": 13
     },
@@ -9142,8 +8929,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 28,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 28,
       "gallery_total_records": 28
     },
@@ -9191,8 +8976,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 220,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 220,
       "gallery_total_records": 220
     },
@@ -9241,8 +9024,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 141,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 141,
       "gallery_total_records": 141
     },
@@ -9291,8 +9072,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1045,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 1045,
       "gallery_total_records": 1045
     },
@@ -9343,8 +9122,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1165,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 1165,
       "gallery_total_records": 1165
     },
@@ -9394,8 +9171,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 528,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 528,
       "gallery_total_records": 528
     },
@@ -9445,8 +9220,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 354,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 354,
       "gallery_total_records": 354
     },
@@ -9494,8 +9267,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 746,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 746,
       "gallery_total_records": 746
     },
@@ -9747,8 +9518,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 206,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 206,
       "gallery_total_records": 206
     },
@@ -9834,8 +9603,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 311,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 311,
       "gallery_total_records": 311
     },
@@ -9883,8 +9650,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 48,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 48,
       "gallery_total_records": 48
     },
@@ -9932,8 +9697,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 117,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 117,
       "gallery_total_records": 117
     },
@@ -9982,8 +9745,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 119,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 119,
       "gallery_total_records": 119
     },
@@ -10033,8 +9794,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 227,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 227,
       "gallery_total_records": 227
     },
@@ -10083,8 +9842,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 204,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 204,
       "gallery_total_records": 204
     },
@@ -10135,8 +9892,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 104,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 104,
       "gallery_total_records": 104
     },
@@ -10218,8 +9973,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 268,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 268,
       "gallery_total_records": 268
     },
@@ -10267,8 +10020,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 81,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 81,
       "gallery_total_records": 81
     },
@@ -10319,8 +10070,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 147,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 147,
       "gallery_total_records": 147
     },
@@ -10372,8 +10121,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 616,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 616,
       "gallery_total_records": 616
     },
@@ -10421,8 +10168,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 29,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 29,
       "gallery_total_records": 29
     },
@@ -10470,8 +10215,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 89,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 89,
       "gallery_total_records": 89
     },
@@ -10519,8 +10262,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 259,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 259,
       "gallery_total_records": 259
     },
@@ -10568,8 +10309,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1133,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 1133,
       "gallery_total_records": 1133
     },
@@ -10623,8 +10362,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 99,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 99,
       "gallery_total_records": 99
     },
@@ -10709,8 +10446,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2804,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 2804,
       "gallery_total_records": 2804
     },
@@ -10759,8 +10494,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 117,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 117,
       "gallery_total_records": 117
     },
@@ -10810,8 +10543,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 333,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 333,
       "gallery_total_records": 333
     },
@@ -10860,8 +10591,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 47,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 47,
       "gallery_total_records": 47
     },
@@ -10912,8 +10641,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 24,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 24,
       "gallery_total_records": 24
     },
@@ -10962,8 +10689,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 59,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 59,
       "gallery_total_records": 59
     },
@@ -11012,8 +10737,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 37,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 37,
       "gallery_total_records": 37
     },
@@ -11061,8 +10784,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 51,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 51,
       "gallery_total_records": 51
     },
@@ -11111,8 +10832,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 501,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 501,
       "gallery_total_records": 501
     },
@@ -11165,8 +10884,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2404,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 2404,
       "gallery_total_records": 2404
     },
@@ -11214,8 +10931,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 144,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Passiflora",
       "gallery_count": 144,
       "gallery_total_records": 144
     },
@@ -11266,7 +10981,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 191,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 191,
       "gallery_total_records": 191
     },
@@ -11315,7 +11029,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 5056,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 5056,
       "gallery_total_records": 5056
     },
@@ -11363,7 +11076,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 24,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 24,
       "gallery_total_records": 24
     },
@@ -11445,7 +11157,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2410,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 2410,
       "gallery_total_records": 2410
     },
@@ -11498,8 +11209,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 531,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia",
       "gallery_count": 531,
       "gallery_total_records": 531
     },
@@ -11550,8 +11259,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 751,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia",
       "gallery_count": 751,
       "gallery_total_records": 751
     },
@@ -11599,8 +11306,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 26,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia",
       "gallery_count": 26,
       "gallery_total_records": 26
     },
@@ -11648,8 +11353,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 124,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia",
       "gallery_count": 124,
       "gallery_total_records": 124
     },
@@ -11700,8 +11403,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 583,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia",
       "gallery_count": 583,
       "gallery_total_records": 583
     },
@@ -11751,8 +11452,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 583,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia",
       "gallery_count": 583,
       "gallery_total_records": 583
     },
@@ -11800,8 +11499,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 531,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Prestonia",
       "gallery_count": 531,
       "gallery_total_records": 531
     },
@@ -11849,7 +11546,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 161,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 161,
       "gallery_total_records": 161
     },
@@ -11934,8 +11630,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 57,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Sessea",
       "gallery_count": 57,
       "gallery_total_records": 57
     },
@@ -11986,8 +11680,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 278,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solandra",
       "gallery_count": 278,
       "gallery_total_records": 278
     },
@@ -12037,8 +11729,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 137,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 137,
       "gallery_total_records": 137
     },
@@ -12088,8 +11778,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 784,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 784,
       "gallery_total_records": 784
     },
@@ -12138,8 +11826,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 236,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 236,
       "gallery_total_records": 236
     },
@@ -12191,8 +11877,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 247,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 247,
       "gallery_total_records": 247
     },
@@ -12243,8 +11927,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 928,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 928,
       "gallery_total_records": 928
     },
@@ -12292,8 +11974,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 450,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 450,
       "gallery_total_records": 450
     },
@@ -12344,8 +12024,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 668,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 668,
       "gallery_total_records": 668
     },
@@ -12399,8 +12077,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1519,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1519,
       "gallery_total_records": 1519
     },
@@ -12448,8 +12124,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 303,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 303,
       "gallery_total_records": 303
     },
@@ -12499,8 +12173,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 615,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 615,
       "gallery_total_records": 615
     },
@@ -12549,8 +12221,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 287,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 287,
       "gallery_total_records": 287
     },
@@ -12600,8 +12270,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1029,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1029,
       "gallery_total_records": 1029
     },
@@ -12651,8 +12319,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 431,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 431,
       "gallery_total_records": 431
     },
@@ -12707,8 +12373,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 927,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 927,
       "gallery_total_records": 927
     },
@@ -12756,8 +12420,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 349,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 349,
       "gallery_total_records": 349
     },
@@ -12807,8 +12469,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 153,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 153,
       "gallery_total_records": 153
     },
@@ -12860,8 +12520,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 56,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 56,
       "gallery_total_records": 56
     },
@@ -12911,8 +12569,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 581,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 581,
       "gallery_total_records": 581
     },
@@ -12964,8 +12620,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 631,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 631,
       "gallery_total_records": 631
     },
@@ -13014,8 +12668,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 962,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 962,
       "gallery_total_records": 962
     },
@@ -13065,10 +12717,76 @@
       "gbif_status": "resolved",
       "occurrence_count": 213,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 213,
       "gallery_total_records": 213
+    },
+    {
+      "canonical_name": "Solanum cf. cacosmum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum cf. cacosmum",
+      "slug": "species_solanum_cf_cacosmum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": false,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis messenoides"
+      ],
+      "confidence_counts": {
+        "low": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "needs_check": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum cf. cacosmum",
+        "rank": "species",
+        "status": "not_queried",
+        "note": "Resolution deferred until this host taxon is selected for occurrence generation."
+      },
+      "gbif_taxon_key": null,
+      "gbif_status": "not_queried",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated"
+    },
+    {
+      "canonical_name": "Solanum cf. sessiliflorum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum cf. sessiliflorum",
+      "slug": "species_solanum_cf_sessiliflorum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": false,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis messenoides"
+      ],
+      "confidence_counts": {
+        "low": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "needs_check": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum cf. sessiliflorum",
+        "rank": "species",
+        "status": "not_queried",
+        "note": "Resolution deferred until this host taxon is selected for occurrence generation."
+      },
+      "gbif_taxon_key": null,
+      "gbif_status": "not_queried",
+      "occurrence_count": 0,
+      "occurrence_mode": "not_generated"
     },
     {
       "canonical_name": "Solanum chlamydogynum",
@@ -13115,8 +12833,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 9,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 9,
       "gallery_total_records": 9
     },
@@ -13166,8 +12882,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 928,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 928,
       "gallery_total_records": 928
     },
@@ -13215,8 +12929,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 213,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 213,
       "gallery_total_records": 213
     },
@@ -13265,8 +12977,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 306,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 306,
       "gallery_total_records": 306
     },
@@ -13314,8 +13024,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1133,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1133,
       "gallery_total_records": 1133
     },
@@ -13364,8 +13072,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 42,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 42,
       "gallery_total_records": 42
     },
@@ -13414,8 +13120,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 143,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 143,
       "gallery_total_records": 143
     },
@@ -13463,8 +13167,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 776,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 776,
       "gallery_total_records": 776
     },
@@ -13512,8 +13214,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1182,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1182,
       "gallery_total_records": 1182
     },
@@ -13562,8 +13262,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 250,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 250,
       "gallery_total_records": 250
     },
@@ -13614,8 +13312,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 572,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 572,
       "gallery_total_records": 572
     },
@@ -13665,8 +13361,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 167,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 167,
       "gallery_total_records": 167
     },
@@ -13717,8 +13411,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 77,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 77,
       "gallery_total_records": 77
     },
@@ -13766,8 +13458,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 151,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 151,
       "gallery_total_records": 151
     },
@@ -13817,8 +13507,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 273,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 273,
       "gallery_total_records": 273
     },
@@ -13867,8 +13555,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1513,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1513,
       "gallery_total_records": 1513
     },
@@ -13917,8 +13603,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 319,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 319,
       "gallery_total_records": 319
     },
@@ -13968,8 +13652,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 629,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 629,
       "gallery_total_records": 629
     },
@@ -14019,8 +13701,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 191,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 191,
       "gallery_total_records": 191
     },
@@ -14378,8 +14058,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1016,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1016,
       "gallery_total_records": 1016
     },
@@ -14435,8 +14113,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1256,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1256,
       "gallery_total_records": 1256
     },
@@ -14486,8 +14162,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 153,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 153,
       "gallery_total_records": 153
     },
@@ -14538,8 +14212,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 143,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 143,
       "gallery_total_records": 143
     },
@@ -14588,8 +14260,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1353,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1353,
       "gallery_total_records": 1353
     },
@@ -14637,8 +14307,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 5,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 0,
       "gallery_total_records": 5
     },
@@ -14690,8 +14358,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 625,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 625,
       "gallery_total_records": 625
     },
@@ -14739,8 +14405,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2169,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 2169,
       "gallery_total_records": 2169
     },
@@ -15071,10 +14735,53 @@
       "gbif_status": "resolved",
       "occurrence_count": 89,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 89,
       "gallery_total_records": 89
+    },
+    {
+      "canonical_name": "Solanum leucopogon",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum leucopogon",
+      "slug": "species_solanum_leucopogon",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis messenoides"
+      ],
+      "confidence_counts": {
+        "high": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "direct": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum leucopogon",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2930322,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum leucopogon Huber",
+        "canonical_name": "Solanum leucopogon",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-25T20:28:53+00:00"
+      },
+      "gbif_taxon_key": 2930322,
+      "gbif_status": "resolved",
+      "occurrence_count": 161,
+      "occurrence_mode": "chunked_refs"
     },
     {
       "canonical_name": "Solanum lucens",
@@ -15120,8 +14827,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 19,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 19,
       "gallery_total_records": 19
     },
@@ -15171,8 +14876,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1402,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1402,
       "gallery_total_records": 1402
     },
@@ -15220,8 +14923,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 449,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 449,
       "gallery_total_records": 449
     },
@@ -15271,8 +14972,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 596,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 596,
       "gallery_total_records": 596
     },
@@ -15329,8 +15028,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1860,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1860,
       "gallery_total_records": 1860
     },
@@ -15380,8 +15077,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 270,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 270,
       "gallery_total_records": 270
     },
@@ -15430,8 +15125,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 218,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 218,
       "gallery_total_records": 218
     },
@@ -15479,8 +15172,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 384,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 384,
       "gallery_total_records": 384
     },
@@ -15529,8 +15220,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 82,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 82,
       "gallery_total_records": 82
     },
@@ -15543,18 +15232,21 @@
       "slug": "species_solanum_morellifolium",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 1,
+      "association_count": 2,
       "butterfly_taxa": [
+        "Mechanitis messenoides",
         "Thyridia psidii"
       ],
       "confidence_counts": {
-        "medium": 1
+        "medium": 1,
+        "high": 1
       },
       "host_id_level_counts": {
-        "species": 1
+        "species": 2
       },
       "evidence_counts": {
-        "needs_check": 1
+        "needs_check": 1,
+        "direct": 1
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -15578,8 +15270,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 128,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 128,
       "gallery_total_records": 128
     },
@@ -15627,8 +15317,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 5,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 5,
       "gallery_total_records": 5
     },
@@ -15676,8 +15364,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 535,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 535,
       "gallery_total_records": 535
     },
@@ -15725,8 +15411,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 236,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 236,
       "gallery_total_records": 236
     },
@@ -15775,8 +15459,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1029,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1029,
       "gallery_total_records": 1029
     },
@@ -15825,8 +15507,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1507,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1507,
       "gallery_total_records": 1507
     },
@@ -15908,8 +15588,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 629,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 629,
       "gallery_total_records": 629
     },
@@ -15957,8 +15635,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 625,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 625,
       "gallery_total_records": 625
     },
@@ -16006,8 +15682,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1886,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1886,
       "gallery_total_records": 1886
     },
@@ -16058,8 +15732,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 673,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 673,
       "gallery_total_records": 673
     },
@@ -16144,8 +15816,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 49,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 49,
       "gallery_total_records": 49
     },
@@ -16194,8 +15864,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1130,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1130,
       "gallery_total_records": 1130
     },
@@ -16277,8 +15945,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 617,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 617,
       "gallery_total_records": 617
     },
@@ -16329,8 +15995,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1886,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1886,
       "gallery_total_records": 1886
     },
@@ -16378,8 +16042,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 57,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 57,
       "gallery_total_records": 57
     },
@@ -16429,8 +16091,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1222,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1222,
       "gallery_total_records": 1222
     },
@@ -16482,8 +16142,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2021,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 2021,
       "gallery_total_records": 2021
     },
@@ -16534,8 +16192,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 39,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 39,
       "gallery_total_records": 39
     },
@@ -16548,19 +16204,22 @@
       "slug": "species_solanum_pectinatum",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 2,
+      "association_count": 3,
       "butterfly_taxa": [
         "Mechanitis lysimnia",
-        "Mechanitis mazaeus"
+        "Mechanitis mazaeus",
+        "Mechanitis messenoides"
       ],
       "confidence_counts": {
-        "high": 2
+        "high": 2,
+        "medium": 1
       },
       "host_id_level_counts": {
-        "species": 2
+        "species": 3
       },
       "evidence_counts": {
-        "needs_check": 2
+        "needs_check": 2,
+        "literature": 1
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -16584,10 +16243,53 @@
       "gbif_status": "resolved",
       "occurrence_count": 135,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 135,
       "gallery_total_records": 135
+    },
+    {
+      "canonical_name": "Solanum pedemontanum",
+      "rank": "species",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "species": "Solanum pedemontanum",
+      "slug": "species_solanum_pedemontanum",
+      "resolvable_to_gbif": true,
+      "use_for_default_download": true,
+      "association_count": 1,
+      "butterfly_taxa": [
+        "Mechanitis mazaeus"
+      ],
+      "confidence_counts": {
+        "high": 1
+      },
+      "host_id_level_counts": {
+        "species": 1
+      },
+      "evidence_counts": {
+        "direct": 1
+      },
+      "occurrence_file": null,
+      "gbif_resolution": {
+        "query": "Solanum pedemontanum",
+        "rank": "species",
+        "status": "resolved",
+        "gbif_taxon_key": 2932227,
+        "accepted_usage_key": null,
+        "scientific_name": "Solanum pedemontanum M.Nee",
+        "canonical_name": "Solanum pedemontanum",
+        "gbif_rank": "SPECIES",
+        "taxonomic_status": "ACCEPTED",
+        "match_type": "EXACT",
+        "confidence": 100,
+        "kingdom": "Plantae",
+        "family": "Solanaceae",
+        "genus": "Solanum",
+        "resolved_at": "2026-05-25T20:28:55+00:00"
+      },
+      "gbif_taxon_key": 2932227,
+      "gbif_status": "resolved",
+      "occurrence_count": 111,
+      "occurrence_mode": "chunked_refs"
     },
     {
       "canonical_name": "Solanum pensile",
@@ -16636,8 +16338,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 673,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 673,
       "gallery_total_records": 673
     },
@@ -16688,8 +16388,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 42,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 42,
       "gallery_total_records": 42
     },
@@ -16739,8 +16437,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 75,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 75,
       "gallery_total_records": 75
     },
@@ -16791,8 +16487,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 307,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 307,
       "gallery_total_records": 307
     },
@@ -16841,8 +16535,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 3558,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 3558,
       "gallery_total_records": 3558
     },
@@ -16895,8 +16587,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 828,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 828,
       "gallery_total_records": 828
     },
@@ -16909,22 +16599,24 @@
       "slug": "species_solanum_quitoense",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 5,
+      "association_count": 6,
       "butterfly_taxa": [
         "Hyalyris oulita",
         "Mechanitis mazaeus",
         "Mechanitis menapis",
+        "Mechanitis messenoides",
         "Mechanitis polymnia"
       ],
       "confidence_counts": {
         "high": 4,
-        "medium": 1
+        "medium": 1,
+        "low": 1
       },
       "host_id_level_counts": {
-        "species": 5
+        "species": 6
       },
       "evidence_counts": {
-        "needs_check": 4,
+        "needs_check": 5,
         "direct": 1
       },
       "occurrence_file": null,
@@ -16949,8 +16641,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1624,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1624,
       "gallery_total_records": 1624
     },
@@ -17001,8 +16691,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 77,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 77,
       "gallery_total_records": 77
     },
@@ -17050,8 +16738,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 131,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 131,
       "gallery_total_records": 131
     },
@@ -17099,8 +16785,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 570,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 570,
       "gallery_total_records": 570
     },
@@ -17148,8 +16832,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 69,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 69,
       "gallery_total_records": 69
     },
@@ -17201,8 +16883,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 283,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 283,
       "gallery_total_records": 283
     },
@@ -17256,8 +16936,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 554,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 554,
       "gallery_total_records": 554
     },
@@ -17314,8 +16992,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1198,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1198,
       "gallery_total_records": 1198
     },
@@ -17372,8 +17048,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1130,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1130,
       "gallery_total_records": 1130
     },
@@ -17424,8 +17098,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1413,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1413,
       "gallery_total_records": 1413
     },
@@ -17475,8 +17147,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 289,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 289,
       "gallery_total_records": 289
     },
@@ -17489,21 +17159,24 @@
       "slug": "species_solanum_sessiliflorum",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 4,
+      "association_count": 5,
       "butterfly_taxa": [
         "Dircenna loreta",
         "Hypothyris ninonia",
         "Mechanitis mazaeus",
+        "Mechanitis messenoides",
         "Mechanitis polymnia"
       ],
       "confidence_counts": {
-        "high": 4
+        "high": 4,
+        "medium": 1
       },
       "host_id_level_counts": {
-        "species": 4
+        "species": 5
       },
       "evidence_counts": {
-        "needs_check": 4
+        "needs_check": 4,
+        "literature": 1
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -17527,8 +17200,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 474,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 473,
       "gallery_total_records": 474
     },
@@ -17576,8 +17247,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 38,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 38,
       "gallery_total_records": 38
     },
@@ -17632,8 +17301,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 5135,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 5135,
       "gallery_total_records": 5135
     },
@@ -17689,8 +17356,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 265,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 265,
       "gallery_total_records": 265
     },
@@ -17741,8 +17406,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 0,
       "gallery_total_records": 2
     },
@@ -17790,8 +17453,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 44,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 44,
       "gallery_total_records": 44
     },
@@ -17804,23 +17465,24 @@
       "slug": "species_solanum_stramonifolium",
       "resolvable_to_gbif": true,
       "use_for_default_download": true,
-      "association_count": 4,
+      "association_count": 5,
       "butterfly_taxa": [
         "Ceratinia neso",
         "Dircenna loreta",
         "Hypothyris euclea",
+        "Mechanitis lysimnia",
         "Mechanitis polymnia"
       ],
       "confidence_counts": {
-        "high": 3,
+        "high": 4,
         "needs_check": 1
       },
       "host_id_level_counts": {
-        "species": 4
+        "species": 5
       },
       "evidence_counts": {
         "needs_check": 3,
-        "direct": 1
+        "direct": 2
       },
       "occurrence_file": null,
       "gbif_resolution": {
@@ -17844,8 +17506,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 717,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 717,
       "gallery_total_records": 717
     },
@@ -17896,8 +17556,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 671,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 671,
       "gallery_total_records": 671
     },
@@ -17945,8 +17603,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 182,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 182,
       "gallery_total_records": 182
     },
@@ -18002,8 +17658,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 4160,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 4160,
       "gallery_total_records": 4160
     },
@@ -18052,8 +17706,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 26,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 26,
       "gallery_total_records": 26
     },
@@ -18102,8 +17754,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 307,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 307,
       "gallery_total_records": 307
     },
@@ -18189,8 +17839,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 83,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 83,
       "gallery_total_records": 83
     },
@@ -18244,8 +17892,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1373,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 1373,
       "gallery_total_records": 1373
     },
@@ -18293,8 +17939,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 138,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 138,
       "gallery_total_records": 138
     },
@@ -18346,8 +17990,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 617,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 617,
       "gallery_total_records": 617
     },
@@ -18395,8 +18037,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 71,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 71,
       "gallery_total_records": 71
     },
@@ -18444,8 +18084,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 2607,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 2607,
       "gallery_total_records": 2607
     },
@@ -18493,8 +18131,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 535,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Solanum",
       "gallery_count": 535,
       "gallery_total_records": 535
     },
@@ -18542,7 +18178,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 482,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 482,
       "gallery_total_records": 482
     },
@@ -18595,7 +18230,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 112,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 112,
       "gallery_total_records": 112
     },
@@ -18646,7 +18280,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 42,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 42,
       "gallery_total_records": 42
     },
@@ -18695,7 +18328,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 853,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 853,
       "gallery_total_records": 853
     },
@@ -18743,8 +18375,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 240,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Witheringia",
       "gallery_count": 240,
       "gallery_total_records": 240
     },
@@ -18795,7 +18425,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 157,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 157,
       "gallery_total_records": 157
     },
@@ -18844,8 +18473,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 326,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Witheringia",
       "gallery_count": 326,
       "gallery_total_records": 326
     },
@@ -18896,7 +18523,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
       "gallery_count": 1,
       "gallery_total_records": 1
     },
@@ -18948,8 +18574,6 @@
       "gbif_status": "resolved",
       "occurrence_count": 1989,
       "occurrence_mode": "chunked_refs",
-      "occurrence_cap": null,
-      "download_request": "covered_by_genus:Witheringia",
       "gallery_count": 1989,
       "gallery_total_records": 1989
     }
