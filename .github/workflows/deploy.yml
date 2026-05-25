@@ -15,10 +15,11 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
+# Keep GitHub Pages deployment requests from racing when commits are pushed
+# close together. New pushes should supersede any older in-flight Pages deploy.
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
