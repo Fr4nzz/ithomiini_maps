@@ -414,6 +414,8 @@ const initMap = () => {
   map.value.on('load', async () => {
     // Shape images are generated on-demand in addDataLayer
     addDataLayer()
+    updateHostPlantLayer()
+    updateSDMLayer()
     emit('map-ready', map.value)
   })
 

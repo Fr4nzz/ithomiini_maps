@@ -319,7 +319,7 @@ onMounted(async () => {
 
       <!-- Map View -->
       <MapEngine
-        v-else-if="currentView === 'map'"
+        v-show="!store.loading && currentView === 'map'"
         class="view-container"
         @map-ready="onMapReady"
         @open-gallery="openImageGallery"
@@ -327,7 +327,7 @@ onMounted(async () => {
 
       <!-- Table View -->
       <DataTable 
-        v-else-if="currentView === 'table'"
+        v-if="!store.loading && currentView === 'table'"
         class="view-container"
       />
     </main>

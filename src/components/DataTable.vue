@@ -500,6 +500,7 @@ const hostPlantEvidenceRows = computed(() => {
       id: association.id,
       butterfly: association.butterfly_taxon,
       host: association.host_taxon_name,
+      reported_as: association.host_plant_name_verbatim,
       accepted_host: acceptedHostName(taxon),
       host_rank: association.host_taxon_rank,
       family: association.host_plant_family || taxon?.family || '—',
@@ -518,6 +519,7 @@ const hostPlantEvidenceRows = computed(() => {
       searchText: [
         association.butterfly_taxon,
         association.host_taxon_name,
+        association.host_plant_name_verbatim,
         acceptedHostName(taxon),
         association.host_taxon_rank,
         association.host_plant_family,
@@ -717,6 +719,7 @@ const hostPlantButterflyColumns = [
 const hostPlantEvidenceColumns = [
   { key: 'butterfly', label: 'Butterfly species', width: '210px' },
   { key: 'host', label: 'Host plant', width: '220px' },
+  { key: 'reported_as', label: 'Reported as', width: '220px' },
   { key: 'host_rank', label: 'Host rank / ID level', width: '120px' },
   { key: 'family', label: 'Family', width: '130px' },
   { key: 'evidence_level', label: 'Evidence', width: '110px' },
@@ -1619,6 +1622,7 @@ const conciseList = (items, limit = 3) => {
               <input type="text" class="column-filter-input" placeholder="Host..." v-model="columnFilters.host" />
             </th>
             <th class="filter-cell"></th>
+            <th class="filter-cell"></th>
             <th class="filter-cell">
               <input type="text" class="column-filter-input" placeholder="Family..." v-model="columnFilters.family" />
             </th>
@@ -1651,6 +1655,10 @@ const conciseList = (items, limit = 3) => {
             <td class="cell-host" :class="{ 'has-accepted-host': row.accepted_host }">
               <em class="reported-host-name">{{ row.host }}</em>
               <span v-if="row.accepted_host" class="accepted-host-name">→ <em>{{ row.accepted_host }}</em></span>
+            </td>
+            <td class="cell-long-text">
+              <em v-if="row.reported_as">{{ row.reported_as }}</em>
+              <span v-else class="text-muted">—</span>
             </td>
             <td>{{ row.host_rank }} / {{ row.host_id_level }}</td>
             <td>{{ row.family }}</td>
