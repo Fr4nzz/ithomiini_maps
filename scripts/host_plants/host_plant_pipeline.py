@@ -144,6 +144,11 @@ def normalize_host_id_level(value: Any) -> str:
 
 
 def normalize_evidence_level(*values: Any) -> str:
+    explicit = (clean_text(values[0]) if values else None)
+    if explicit:
+        explicit_normalized = explicit.lower().replace("-", "_").replace(" ", "_")
+        if explicit_normalized in {"direct", "literature", "needs_check"}:
+            return explicit_normalized
     haystack = " ".join(str(value or "") for value in values).lower()
     if any(term in haystack for term in ("exclude", "erroneous", "unresolved", "needs check", "needs_check", "dubious", "audit")):
         return "needs_check"

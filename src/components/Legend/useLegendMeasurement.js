@@ -285,6 +285,20 @@ export function useLegendMeasurement({
     const contentEl = contentRef.value
     if (!contentEl || isResizing.value) return
 
+    // MapEngine is hidden with v-show while the table is open. ResizeObserver
+    // callbacks can still leave a queued measurement behind; measuring while
+    // the map/legend has zero layout height makes every item look like it
+    // overflows, so the legend gets trimmed to a single item when returning
+    // from Table → Map. Keep the last valid measurement until the map is
+    // visible again instead of recording a collapsed hidden-state result.
+    const bounds = containerBounds.value
+    const isHiddenLayout =
+      contentEl.clientHeight <= 0 ||
+      contentEl.getClientRects().length === 0 ||
+      !bounds.width ||
+      !bounds.height
+    if (isHiddenLayout) return
+
     const itemsEl = contentEl.querySelector('.legend-items')
     if (!itemsEl || !itemsEl.children.length) return
 

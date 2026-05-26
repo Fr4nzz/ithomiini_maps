@@ -174,9 +174,15 @@ export function useLegendPosition({
     const maxAllowedHeight = newBounds.height - margin - bottomMargin
 
     if (legendHeight > maxAllowedHeight && maxAllowedHeight >= minHeight) {
-      currentHeight.value = maxAllowedHeight
+      // Auto-sized legends are already constrained by CSS max-height. Do not
+      // persist a temporary viewport clamp as a manual legend-size preference;
+      // otherwise a Table/Map transition can leave future map views stuck with
+      // a short, scrollable legend. Only user/manual sizes should be stored.
+      if (currentHeight.value !== null) {
+        currentHeight.value = maxAllowedHeight
+        legendStore.updateSize(currentWidth.value ?? 'auto', maxAllowedHeight)
+      }
       legendHeight = maxAllowedHeight
-      legendStore.updateSize(currentWidth.value, maxAllowedHeight)
     }
 
     let newX = posX.value
@@ -245,6 +251,7 @@ export function useLegendPosition({
 
     const bounds = prevContainerBounds.value.width > 0 ? prevContainerBounds.value : containerBounds.value
     const legendHeight = legendRef.value.offsetHeight
+    if (legendHeight <= 0 || !bounds.width || !bounds.height) return
     const margin = STICKY_MARGIN
     const bottomMargin = margin + bottomAttributionMargin.value
     const targetY = bounds.height - legendHeight - bottomMargin

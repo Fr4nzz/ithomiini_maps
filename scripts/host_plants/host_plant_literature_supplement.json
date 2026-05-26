@@ -15,7 +15,8 @@
       "Mechanitis messenoides records added from Hill et al. 2012 are treated as species-level direct field records where plant identity was exact, and as needs-check records where Hill et al. used cf. or naranjilla-like unresolved plant categories.",
       "Older catalogue rows under Mechanitis mazaeus that explicitly refer to ssp. messenoides or ssp. deceptus are duplicated as modern-taxonomy remap candidates for M. messenoides rather than used to copy all M. mazaeus or M. polymnia hosts.",
       "Solanum quitoense is retained for M. messenoides with a husbandry caveat and needs-check/default-hidden support category because the strongest exact-species evidence is oviposition/rearing in outdoor insectary stocks, not a clean wild field-host record."
-    ]
+    ],
+    "gpt_pro_missing_records_audit_20260526": "Applied targeted additions from hostplant_missing_and_updated_records_patch_20260526.csv."
   },
   "records": [
     {
@@ -32,7 +33,11 @@
       "source_refs": "Fredonia, Antioquia, Colombia: Finca Santa Isabel, 1830 m; marked XX = new host-plant record for the Lepidoptera species in Colombia.",
       "doi_or_url": "https://doi.org/10.17533/udea.acbi.14326",
       "confidence": "high",
-      "caveats": "Local Colombian agroecosystem record; occurrence of the plant does not imply host use outside the sampled context."
+      "caveats": "Local Colombian agroecosystem record; occurrence of the plant does not imply host use outside the sampled context.",
+      "evidence_level": "direct",
+      "evidence_detail": "Subspecies/locality should be retained in notes.",
+      "source_checked": "Santacruz-Endara et al. 2019; Muriel et al. 2011",
+      "use_for_default_download": true
     },
     {
       "butterfly_taxon": "Mechanitis menapis",
@@ -159,8 +164,11 @@
       "source_citation": "Muriel et al. 2011, Actualidades Biologicas 33(95): 275-285, Table 3",
       "source_refs": "Recorded as Mechanitis polymnia caucaensis; Fredonia, Antioquia, Colombia: Finca Santa Isabel, 1830 m.",
       "doi_or_url": "https://doi.org/10.17533/udea.acbi.14326",
-      "confidence": "high",
-      "caveats": "Plant was identified only as Solanum sp. with cf. S. hayesii in the source; retained as genus-level association."
+      "confidence": "medium",
+      "caveats": "Plant was identified only as Solanum sp. with cf. S. hayesii in the source; retained as genus-level association.",
+      "evidence_level": "needs_check",
+      "evidence_detail": "Broad Lamas-only Neotropics source trail lacks actionable row-level evidence.",
+      "use_for_default_download": true
     },
     {
       "butterfly_taxon": "Hypoleria ocalea",
@@ -258,7 +266,10 @@
       "source_refs": "Hill et al. 2012 Table 3 reports 17/50 Mechanitis messenoides host records on Solanum leucopogon.",
       "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "high",
-      "caveats": "Field host record from eastern Ecuador; GBIF plant occurrences are context records and do not prove local host use elsewhere."
+      "caveats": "Field host record from eastern Ecuador; GBIF plant occurrences are context records and do not prove local host use elsewhere.",
+      "evidence_detail": "Wild eastern Ecuador field host; GBIF overlay is context only.",
+      "use_for_default_download": true,
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560"
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -276,7 +287,10 @@
       "source_refs": "Hill et al. 2012 Table 3 reports 3/50 Mechanitis messenoides host records on Solanum morellifolium.",
       "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "high",
-      "caveats": "Field host record from eastern Ecuador; GBIF plant occurrences are context records and do not prove local host use elsewhere."
+      "caveats": "Field host record from eastern Ecuador; GBIF plant occurrences are context records and do not prove local host use elsewhere.",
+      "evidence_detail": "Wild eastern Ecuador field host; fewer records than S. leucopogon.",
+      "use_for_default_download": true,
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560"
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -295,7 +309,9 @@
       "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "low",
       "use_for_default_download": false,
-      "caveats": "Plant identified with cf.; retain as unresolved species-level host record and do not treat as exact Solanum sessiliflorum overlay."
+      "caveats": "Plant identified with cf.; retain as unresolved species-level host record and do not treat as exact Solanum sessiliflorum overlay.",
+      "evidence_detail": "Plant name is cf./nr./aff./sp./spp.; avoid exact species overlay.",
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560"
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -314,7 +330,9 @@
       "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "low",
       "use_for_default_download": false,
-      "caveats": "Plant identified with cf.; retain as unresolved species-level host record and do not treat as exact Solanum cacosmum overlay."
+      "caveats": "Plant identified with cf.; retain as unresolved species-level host record and do not treat as exact Solanum cacosmum overlay.",
+      "evidence_detail": "Plant name is cf./nr./aff./sp./spp.; avoid exact species overlay.",
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560"
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -333,7 +351,9 @@
       "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "low",
       "use_for_default_download": false,
-      "caveats": "Unresolved naranjilla-like Solanum category; do not convert to an exact Solanum quitoense, S. candidum, or S. sessiliflorum overlay."
+      "caveats": "Unresolved naranjilla-like Solanum category; do not convert to an exact Solanum quitoense, S. candidum, or S. sessiliflorum overlay.",
+      "evidence_detail": "Unresolved common-name category; never convert to exact S. quitoense/sessiliflorum/candidum overlay.",
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560"
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -352,7 +372,9 @@
       "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "low",
       "use_for_default_download": false,
-      "caveats": "Unresolved naranjilla-like Solanum category; do not convert to an exact Solanum quitoense, S. candidum, or S. sessiliflorum overlay."
+      "caveats": "Unresolved naranjilla-like Solanum category; do not convert to an exact Solanum quitoense, S. candidum, or S. sessiliflorum overlay.",
+      "evidence_detail": "Unresolved common-name category; never convert to exact S. quitoense/sessiliflorum/candidum overlay.",
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560"
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -364,14 +386,16 @@
       "host_taxon_rank": "species",
       "evidence_type": "outdoor insectary oviposition and larval rearing from wild-caught Ecuadorian stock",
       "evidence_level": "direct",
-      "evidence_context": "lab_husbandry",
+      "evidence_context": "wild_field_and_insectary",
       "beccaloni_marker": null,
       "source_citation": "PLOS Biology 2026 Mechanitis mimicry study; outdoor insectary husbandry methods",
       "source_refs": "Wild Mechanitis messenoides messenoides and M. m. deceptus from Napo, Ecuador were used to establish outdoor insectary stocks; Solanum quitoense was used for oviposition and larval rearing.",
-      "doi_or_url": "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3003742",
+      "doi_or_url": "https://doi.org/10.1371/journal.pbio.3003742",
       "confidence": "high",
       "use_for_default_download": true,
-      "caveats": "Observed oviposition and larval rearing in outdoor insectary stocks from wild-caught Ecuadorian butterflies; not a clean wild field-host record."
+      "caveats": "Observed host-use record; GBIF plant occurrence overlay is context only and does not prove local butterfly host use at every plant occurrence.",
+      "evidence_detail": "Observed host use from field and insectary work; butterflies were found growing on Solanum quitoense plants in nature and reared/oviposited on this host in outdoor insectary conditions.",
+      "source_checked": "Ben Chehida et al. 2026, PLOS Biology"
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -382,14 +406,17 @@
       "host_plant_family": "Solanaceae",
       "host_taxon_rank": "genus_sp",
       "evidence_type": "catalogue source trail remapped under current Mechanitis taxonomy",
-      "evidence_level": "literature",
+      "evidence_level": "needs_check",
       "evidence_context": "catalogue_taxonomic_remap",
       "beccaloni_marker": "●",
       "source_citation": "Beccaloni et al. 2008; taxonomic remap from source trail subspecies to Mechanitis messenoides",
       "source_refs": "Colombia: [Fassl, 1912 (Ovip.) (ssp. messenoides)]",
       "doi_or_url": "https://www.cabidigitallibrary.org/doi/full/10.5555/20093181648",
-      "confidence": "medium",
-      "caveats": "Catalogue row originally under Mechanitis mazaeus but source trail refers to ssp. messenoides/deceptus, treated here as a modern-taxonomy M. messenoides candidate. Check primary source before using as direct field evidence."
+      "confidence": "low",
+      "caveats": "Catalogue row originally under Mechanitis mazaeus but source trail refers to ssp. messenoides/deceptus, treated here as a modern-taxonomy M. messenoides candidate. Check primary source before using as direct field evidence.",
+      "evidence_detail": "Unresolved common-name category; never convert to exact S. quitoense/sessiliflorum/candidum overlay.",
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560",
+      "use_for_default_download": false
     },
     {
       "butterfly_taxon": "Mechanitis messenoides",
@@ -443,7 +470,10 @@
       "source_refs": "Hill et al. 2012 reports Solanum pedemontanum as the common M. mazaeus host in eastern Ecuador and notes it was not used by M. messenoides in their wild records.",
       "doi_or_url": "https://dash.harvard.edu/server/api/core/bitstreams/3f60bee7-be2f-486a-8a86-102bfdfa1244/content",
       "confidence": "high",
-      "caveats": "Field host record from eastern Ecuador; do not transfer this host to M. messenoides without direct evidence."
+      "caveats": "Field host record from eastern Ecuador; do not transfer this host to M. messenoides without direct evidence.",
+      "evidence_detail": "Wild eastern Ecuador field host; not used by M. messenoides in Hill study.",
+      "use_for_default_download": true,
+      "source_checked": "Hill et al. 2012, Biological Journal of the Linnean Society 106:540-560"
     },
     {
       "butterfly_taxon": "Mechanitis lysimnia",
@@ -461,7 +491,105 @@
       "source_refs": "Source describes immature stages, oviposition, and solanaceous host plant for M. lysimnia nesaea; GPT Pro literature audit identified Fig. 1 host as Solanum stramonifolium.",
       "doi_or_url": "https://agris.fao.org/search/en/providers/125814/records/694275ddf2f3b9724406953e",
       "confidence": "high",
-      "caveats": "Stored at species level with subspecies retained in source_refs; spelling follows GBIF accepted Solanum stramonifolium used by the app."
+      "caveats": "Stored at species level with subspecies retained in source_refs; spelling follows GBIF accepted Solanum stramonifolium used by the app.",
+      "evidence_detail": "Correct spelling is S. stramoniifolium; update slug/GBIF key and avoid duplicate misspelling.",
+      "use_for_default_download": true,
+      "source_checked": "Melo & Freitas 2023, Tropical Lepidoptera Research 33(2):79-85"
+    },
+    {
+      "butterfly_taxon": "Mechanitis menapis",
+      "butterfly_rank_used": "species",
+      "host_plant_name_verbatim": "Solanum pseudolulo",
+      "host_plant_species": "Solanum pseudolulo",
+      "host_plant_genus": "Solanum",
+      "host_plant_family": "Solanaceae",
+      "host_taxon_rank": "species",
+      "evidence_type": "eggs and larvae collected/reared on host plant in Colombia",
+      "beccaloni_marker": null,
+      "source_citation": "Giraldo & Uribe 2012, Revista Colombiana de Entomología",
+      "source_refs": "Solanum pseudolulo reported as a host plant for Mechanitis menapis in Colombia.",
+      "doi_or_url": "https://revistacolombianaentomologia.univalle.edu.co/index.php/SOCOLEN/article/view/9137",
+      "confidence": "high",
+      "evidence_level": "direct",
+      "evidence_context": "wild_field",
+      "caveats": "Observed host record; GBIF plant occurrence overlay is context only.",
+      "use_for_default_download": true
+    },
+    {
+      "butterfly_taxon": "Mechanitis menapis",
+      "butterfly_rank_used": "species",
+      "host_plant_name_verbatim": "Solanum viarum",
+      "host_plant_species": "Solanum viarum",
+      "host_plant_genus": "Solanum",
+      "host_plant_family": "Solanaceae",
+      "host_taxon_rank": "species",
+      "evidence_type": "eggs and larvae collected/reared on host plant in Colombia",
+      "beccaloni_marker": null,
+      "source_citation": "Giraldo & Uribe 2012, Revista Colombiana de Entomología",
+      "source_refs": "Solanum viarum reported as a host plant for Mechanitis menapis in Colombia.",
+      "doi_or_url": "https://revistacolombianaentomologia.univalle.edu.co/index.php/SOCOLEN/article/view/9137",
+      "confidence": "high",
+      "evidence_level": "direct",
+      "evidence_context": "wild_field",
+      "caveats": "Observed host record; GBIF plant occurrence overlay is context only.",
+      "use_for_default_download": true
+    },
+    {
+      "butterfly_taxon": "Methona curvifascia",
+      "butterfly_rank_used": "species",
+      "host_plant_name_verbatim": "Brunfelsia grandiflora schultesii",
+      "host_plant_species": "Brunfelsia grandiflora",
+      "host_plant_genus": "Brunfelsia",
+      "host_plant_family": "Solanaceae",
+      "host_taxon_rank": "species",
+      "evidence_type": "complete immature-stage description and rearing on host plant",
+      "beccaloni_marker": null,
+      "source_citation": "Hill & Tipan 2008, Description of immature stages of Methona confusa confusa and Methona curvifascia",
+      "source_refs": "Methona curvifascia immature stages described from eastern Ecuador; verbatim plant Brunfelsia grandiflora schultesii.",
+      "doi_or_url": "https://www.researchgate.net/publication/280978291_Description_of_the_immature_stages_of_Methona_confusa_confusa_Butler_1873_and_Methona_curvifascia_Weymer_1883_Nymphalidae_Ithomiinae_from_eastern_Ecuador",
+      "confidence": "high",
+      "evidence_level": "direct",
+      "evidence_context": "wild_field",
+      "caveats": "Verbatim plant treated as Brunfelsia grandiflora for the app; occurrence overlay is context only.",
+      "use_for_default_download": true
+    },
+    {
+      "butterfly_taxon": "Pagyris cymothoe",
+      "butterfly_rank_used": "species",
+      "host_plant_name_verbatim": "Brugmansia candida",
+      "host_plant_species": "Brugmansia candida",
+      "host_plant_genus": "Brugmansia",
+      "host_plant_family": "Solanaceae",
+      "host_taxon_rank": "species",
+      "evidence_type": "eggs collected on host plant; immature stages described",
+      "beccaloni_marker": null,
+      "source_citation": "Giraldo et al. 2013, Immature stages of Pagyris cymothoe cymothoe",
+      "source_refs": "Eggs collected on Brugmansia candida.",
+      "doi_or_url": "https://www.researchgate.net/publication/259285716_Immature_stages_of_Pagyris_cymothoe_cymothoe_Hewitson_1855_Lepidoptera_Danainae_Ithomiini",
+      "confidence": "high",
+      "evidence_level": "direct",
+      "evidence_context": "wild_field",
+      "caveats": "Observed host record; GBIF plant occurrence overlay is context only.",
+      "use_for_default_download": true
+    },
+    {
+      "butterfly_taxon": "Ithomia lichyi",
+      "butterfly_rank_used": "species",
+      "host_plant_name_verbatim": "Solanum granuloso-leprosum",
+      "host_plant_species": "Solanum granuloso-leprosum",
+      "host_plant_genus": "Solanum",
+      "host_plant_family": "Solanaceae",
+      "host_taxon_rank": "species",
+      "evidence_type": "caterpillars reared to adult emergence on host plant",
+      "beccaloni_marker": null,
+      "source_citation": "Tavares et al. 2014, immature stages/host record for Ithomia lichyi",
+      "source_refs": "Caterpillars reared to adult emergence on Solanum granuloso-leprosum.",
+      "doi_or_url": "https://www.scielo.br/j/cerne/a/gGHSPj5c58sVGLn4hGxDR7s/?lang=en",
+      "confidence": "high",
+      "evidence_level": "direct",
+      "evidence_context": "wild_field",
+      "caveats": "Observed host record; GBIF plant occurrence overlay is context only.",
+      "use_for_default_download": true
     }
   ]
 }

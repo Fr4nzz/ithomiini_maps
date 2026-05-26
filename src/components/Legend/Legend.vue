@@ -423,6 +423,10 @@ function setupContainerResizeObserver() {
   containerResizeObserver = new ResizeObserver((entries) => {
     for (const entry of entries) {
       const newBounds = { width: entry.contentRect.width, height: entry.contentRect.height }
+      // The map is temporarily display:none while the table view is active.
+      // Ignore that zero-sized transition so auto-fit measurements and sticky
+      // bottom positioning are not recalculated against a hidden container.
+      if (newBounds.width <= 0 || newBounds.height <= 0) return
       if (isDragging.value) return
       if (newBounds.width === prevContainerBounds.value.width &&
           newBounds.height === prevContainerBounds.value.height) return
