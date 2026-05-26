@@ -35,6 +35,10 @@ const emit = defineEmits([
 
 const thumbnailStripRef = ref(null)
 
+function itemKey(item) {
+  return item?.gallery_id || `${item?.id || ''}|${item?.image_url || ''}`
+}
+
 function scrollThumbnails(direction) {
   if (!thumbnailStripRef.value) return
   thumbnailStripRef.value.scrollBy({
@@ -60,8 +64,9 @@ function positionToActiveThumbnail() {
 }
 
 function groupHasCurrentItem(speciesGroup) {
+  const currentKey = itemKey(props.currentItem)
   return speciesGroup.subspecies.some(group =>
-    group.individuals.some(item => item.id === props.currentItem?.id)
+    group.individuals.some(item => itemKey(item) === currentKey)
   )
 }
 
@@ -111,7 +116,7 @@ defineExpose({
               :title="speciesGroup.subspecies[0]?.individuals[0]?.id || 'View'"
               @click.stop="groupHasCurrentItem(speciesGroup)
                 ? emit('toggle-species', speciesGroup.name)
-                : emit('select-individual', speciesGroup.subspecies[0]?.individuals[0]?.id, false)"
+                : emit('select-individual', itemKey(speciesGroup.subspecies[0]?.individuals[0]), false)"
             >
               <FallbackImage
                 v-if="speciesGroup.subspecies[0]?.individuals[0]?.image_url"
@@ -148,11 +153,11 @@ defineExpose({
                 >
                   <button
                     class="thumbnail preview-thumb"
-                    :class="{ active: subspGroup.individuals.some(item => item.id === currentItem?.id) }"
+                    :class="{ active: subspGroup.individuals.some(item => itemKey(item) === itemKey(currentItem)) }"
                     :title="subspGroup.individuals[0]?.id || 'View'"
-                    @click.stop="subspGroup.individuals.some(item => item.id === currentItem?.id)
+                    @click.stop="subspGroup.individuals.some(item => itemKey(item) === itemKey(currentItem))
                       ? emit('toggle-subspecies', subgroupKey(speciesGroup.name, subspGroup.name))
-                      : emit('select-individual', subspGroup.individuals[0]?.id, false)"
+                      : emit('select-individual', itemKey(subspGroup.individuals[0]), false)"
                   >
                     <FallbackImage
                       v-if="subspGroup.individuals[0]?.image_url"
@@ -176,11 +181,11 @@ defineExpose({
                 <div class="thumbnails-container" v-if="!collapsedSubspecies.has(subgroupKey(speciesGroup.name, subspGroup.name))">
                   <button
                     v-for="specimen in subspGroup.individuals"
-                    :key="specimen.id"
+                    :key="itemKey(specimen)"
                     class="thumbnail"
-                    :class="{ active: currentItem?.id === specimen.id }"
+                    :class="{ active: itemKey(currentItem) === itemKey(specimen) }"
                     :title="specimen.id"
-                    @click="emit('select-individual', specimen.id)"
+                    @click="emit('select-individual', itemKey(specimen))"
                   >
                     <FallbackImage
                       :candidates="thumbCandidates(specimen.image_url)"

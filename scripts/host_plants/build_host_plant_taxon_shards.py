@@ -31,6 +31,23 @@ HOST_PLANT_DIR = PROJECT_ROOT / "public" / "data" / "host_plants"
 OCCURRENCE_CHUNK_SIZE = 20_000
 GALLERY_PAGE_SIZE = 100
 MAX_GALLERY_ITEMS_PER_TAXON = 1000
+GALLERY_PREVIEW_PER_CATEGORY = 10
+
+PHOTO_CONTEXTS = {
+    "field": {
+        "label": "Field observation",
+        "basis": {"HUMAN_OBSERVATION", "MACHINE_OBSERVATION", "OBSERVATION"},
+    },
+    "ambiguous": {
+        "label": "Ambiguous",
+        "basis": {"OCCURRENCE"},
+    },
+    "preserved": {
+        "label": "Preserved specimen",
+        "basis": {"PRESERVED_SPECIMEN", "MATERIAL_SAMPLE", "MATERIAL_CITATION"},
+    },
+}
+PHOTO_CONTEXT_ORDER = ["field", "ambiguous", "preserved"]
 
 
 def utc_now() -> str:
@@ -53,6 +70,29 @@ def clean_dir(path: Path) -> None:
 
 def decimal_to_float(value: Any) -> Any:
     return float(value) if isinstance(value, Decimal) else value
+
+
+def photo_context_for_basis(basis: Any) -> str:
+    normalized = str(basis or "").upper()
+    for key, config in PHOTO_CONTEXTS.items():
+        if normalized in config["basis"]:
+            return key
+    return "ambiguous"
+
+
+def sort_date_value(value: Any) -> int:
+    # Convert ISO-ish dates to an integer prefix so recent records sort first.
+    digits = re.sub(r"\D+", "", str(value or ""))[:8]
+    return int(digits.ljust(8, "0")) if digits else 0
+
+
+def gallery_sort_key(item: dict[str, Any]) -> tuple[int, int, str]:
+    context_order = {key: index for index, key in enumerate(PHOTO_CONTEXT_ORDER)}
+    return (
+        context_order.get(item.get("photo_context"), len(context_order)),
+        -sort_date_value(item.get("observation_date")),
+        str(item.get("gbifID") or item.get("id") or ""),
+    )
 
 
 def media_urls(properties: dict[str, Any]) -> list[tuple[str, bool]]:
@@ -109,9 +149,11 @@ def compact_occurrence(properties: dict[str, Any], lat: float, lon: float) -> di
 
 def gallery_item(properties: dict[str, Any], taxon: dict[str, Any], slug: str, lat: float, lon: float, url: str, is_fallback: bool) -> dict[str, Any]:
     gbif_id = properties.get("gbifID")
+    item_id = gbif_id or f"{slug}-{lat},{lon}"
     occurrence_group = properties.get("species") or properties.get("scientificName") or properties.get("taxonRank") or taxon.get("rank") or "GBIF occurrences"
     return clean({
-        "id": gbif_id or f"{slug}-{lat},{lon}",
+        "id": item_id,
+        "gallery_id": f"{item_id}|{url}",
         "gbifID": gbif_id,
         "image_url": url,
         "image_is_fallback": is_fallback,
@@ -119,6 +161,8 @@ def gallery_item(properties: dict[str, Any], taxon: dict[str, Any], slug: str, l
         "accepted_name": taxon.get("accepted_name") or taxon.get("canonical_name"),
         "subspecies": occurrence_group,
         "observation_date": properties.get("eventDate"),
+        "basisOfRecord": properties.get("basisOfRecord"),
+        "photo_context": photo_context_for_basis(properties.get("basisOfRecord")),
         "source": properties.get("datasetName") or properties.get("publisher") or "GBIF",
         "country": properties.get("country"),
         "lat": lat,
@@ -193,11 +237,7 @@ def build_taxon_shards(output_dir: Path = HOST_PLANT_DIR) -> dict[str, Any]:
             taxon = taxa_by_slug[slug]
             occurrence_group = properties.get("species") or properties.get("scientificName") or properties.get("taxonRank") or taxon.get("rank") or "GBIF occurrences"
             gbif_id = properties.get("gbifID")
-            if len(gallery_by_slug[slug]) >= MAX_GALLERY_ITEMS_PER_TAXON:
-                continue
             for url, is_fallback in images:
-                if len(gallery_by_slug[slug]) >= MAX_GALLERY_ITEMS_PER_TAXON:
-                    break
                 image_key = "|".join([slug, str(occurrence_group), url])
                 if image_key in gallery_by_slug[slug]:
                     item = gallery_by_slug[slug][image_key]
@@ -229,8 +269,10 @@ def build_taxon_shards(output_dir: Path = HOST_PLANT_DIR) -> dict[str, Any]:
         occurrence_refs_by_taxon[slug] = rel
 
     gallery_indexes_by_taxon: dict[str, str] = {}
+    preview_items: list[dict[str, Any]] = []
+    preview_stats_by_slug: dict[str, dict[str, int]] = {}
     for slug, item_map in gallery_by_slug.items():
-        items = list(item_map.values())
+        items = sorted(item_map.values(), key=gallery_sort_key)[:MAX_GALLERY_ITEMS_PER_TAXON]
         taxon_dir = gallery_dir / file_slug(slug)
         taxon_dir.mkdir(parents=True, exist_ok=True)
         page_paths: list[str] = []
@@ -251,6 +293,34 @@ def build_taxon_shards(output_dir: Path = HOST_PLANT_DIR) -> dict[str, Any]:
             "pages": page_paths,
         })
         gallery_indexes_by_taxon[slug] = index_rel
+        preview_by_context: dict[str, int] = defaultdict(int)
+        for item in items:
+            context = item.get("photo_context", "ambiguous")
+            if preview_by_context[context] >= GALLERY_PREVIEW_PER_CATEGORY:
+                continue
+            preview_items.append(item)
+            preview_by_context[context] += 1
+        preview_stats_by_slug[slug] = {
+            **gallery_stats[slug],
+            "preview_records": sum(preview_by_context.values()),
+            "preview_field": preview_by_context["field"],
+            "preview_ambiguous": preview_by_context["ambiguous"],
+            "preview_preserved": preview_by_context["preserved"],
+        }
+
+    gallery_preview_dataset = "host_plant_gallery_preview.json"
+    write_json(output_dir / gallery_preview_dataset, {
+        "metadata": {
+            "generated_at": utc_now(),
+            "purpose": "Fast host-plant gallery preview: up to 10 images per photo context per host taxon.",
+            "preview_per_category": GALLERY_PREVIEW_PER_CATEGORY,
+            "photo_context_order": PHOTO_CONTEXT_ORDER,
+            "photo_contexts": {key: {"label": value["label"]} for key, value in PHOTO_CONTEXTS.items()},
+            "item_count": len(preview_items),
+        },
+        "stats_by_slug": preview_stats_by_slug,
+        "items": sorted(preview_items, key=lambda item: (item.get("scientific_name", ""), gallery_sort_key(item))),
+    })
 
     metadata = manifest.setdefault("metadata", {})
     # v2 compact lazy-loading fields.
@@ -262,6 +332,10 @@ def build_taxon_shards(output_dir: Path = HOST_PLANT_DIR) -> dict[str, Any]:
     metadata["unique_occurrence_count"] = len(occurrence_records)
     metadata["gallery_page_size"] = GALLERY_PAGE_SIZE
     metadata["gallery_initial_limit"] = 10
+    metadata["gallery_preview_dataset"] = gallery_preview_dataset
+    metadata["gallery_preview_per_category"] = GALLERY_PREVIEW_PER_CATEGORY
+    metadata["gallery_photo_context_order"] = PHOTO_CONTEXT_ORDER
+    metadata["gallery_photo_contexts"] = {key: {"label": value["label"]} for key, value in PHOTO_CONTEXTS.items()}
     metadata["gallery_indexes_by_taxon"] = gallery_indexes_by_taxon
     metadata["gallery_index_count"] = len(gallery_indexes_by_taxon)
     # Disable old monolithic/current shard fields for v2 consumers; runtime keeps fallback support.

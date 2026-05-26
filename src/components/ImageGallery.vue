@@ -21,6 +21,8 @@ const emit = defineEmits(['close'])
 const proxyState = getProxyState()
 const galleryMode = ref(props.initialMode === 'host-plants' ? 'host-plants' : 'butterflies')
 
+const galleryItemKey = (item) => item?.gallery_id || `${item?.id || ''}|${item?.image_url || ''}`
+
 // Gallery data from composable
 const butterflyGallery = useGalleryData(store)
 const hostPlantGallery = useHostPlantGalleryData(hostPlantStore)
@@ -222,7 +224,7 @@ const updateCurrentIndexFromSelection = () => {
   const list = individualsList.value
   if (list.length > 0) {
     const firstIndividual = list[0]
-    const idx = specimensWithImages.value.findIndex(s => s.id === firstIndividual.id)
+    const idx = specimensWithImages.value.findIndex(s => galleryItemKey(s) === galleryItemKey(firstIndividual))
     if (idx >= 0) {
       currentIndex.value = idx
       resetView()
@@ -230,13 +232,13 @@ const updateCurrentIndexFromSelection = () => {
   }
 }
 
-// Handle individual selection (by specimen ID)
+// Handle individual selection (by per-photo gallery key)
 // When autoExpand is false, the group won't auto-expand when selecting
-const selectIndividual = (id, autoExpand = true) => {
+const selectIndividual = (key, autoExpand = true) => {
   if (!autoExpand) {
     skipAutoExpand.value = true
   }
-  const idx = specimensWithImages.value.findIndex(s => s.id === id)
+  const idx = specimensWithImages.value.findIndex(s => galleryItemKey(s) === key)
   if (idx >= 0) {
     if (idx === currentIndex.value) {
       if (!autoExpand) skipAutoExpand.value = false
@@ -379,6 +381,20 @@ const loadMoreHostImages = async (slug = currentHostSlug.value) => {
   collapsedSubspecies.value = subspeciesSnapshot
   selectedSpecies.value = selectedSpeciesSnapshot
   selectedSubspecies.value = selectedSubspeciesSnapshot
+}
+
+const hostPhotoOrderOptions = computed(() =>
+  hostPlantStore.galleryPhotoContextOrder
+    .map(key => hostPlantStore.galleryPhotoContextOptions.find(option => option.key === key))
+    .filter(Boolean)
+)
+
+const moveHostPhotoOrder = (key, direction) => {
+  hostPlantStore.moveGalleryPhotoContext(key, direction)
+  nextTick(() => {
+    initializeThumbnailStrip()
+    initializeSidebarFromCurrent({ expandCurrent: !isUnfilteredHostGallery.value })
+  })
 }
 
 // Current specimen
@@ -659,7 +675,7 @@ const handleGallerySelection = () => {
   // Find and select the individual by ID
   const targetIndividual = selection.occurrenceId || selection.individualId
   if (targetIndividual) {
-    const idx = specimensWithImages.value.findIndex(s => String(s.id) === String(targetIndividual))
+    const idx = specimensWithImages.value.findIndex(s => String(s.id) === String(targetIndividual) || galleryItemKey(s) === String(targetIndividual))
     if (idx >= 0) {
       currentIndex.value = idx
     } else if (targetSpecies) {
@@ -798,23 +814,6 @@ watch(currentIndex, () => {
       </svg>
     </button>
 
-    <div class="gallery-mode-toggle">
-      <button
-        class="mode-btn"
-        :class="{ active: galleryMode === 'butterflies' }"
-        @click="setGalleryMode('butterflies')"
-      >
-        Butterflies
-      </button>
-      <button
-        class="mode-btn"
-        :class="{ active: galleryMode === 'host-plants' }"
-        @click="setGalleryMode('host-plants')"
-      >
-        Host Plants
-      </button>
-    </div>
-
     <!-- Empty state -->
     <div v-if="isHostGalleryLoading" class="empty-state">
       <div class="spinner"></div>
@@ -845,6 +844,7 @@ watch(currentIndex, () => {
         <!-- Sidebar -->
         <GallerySidebar
           :current-specimen="currentSpecimen"
+          :current-specimen-key="galleryItemKey(currentSpecimen)"
           :selected-species="selectedSpecies"
           :selected-subspecies="selectedSubspecies"
           :species-list="speciesList"
@@ -858,10 +858,15 @@ watch(currentIndex, () => {
           :coordinates="coordinates"
           :location-name="locationName"
           :mode="galleryMode"
+          :photo-order-options="hostPhotoOrderOptions"
+          :date-order="hostPlantStore.galleryDateOrder"
           @select-species="selectSpecies"
           @select-subspecies="selectSubspecies"
           @select-individual="selectIndividual"
           @view-on-map="viewOnMap"
+          @move-photo-order="moveHostPhotoOrder"
+          @set-date-order="hostPlantStore.setGalleryDateOrder"
+          @set-gallery-mode="setGalleryMode"
         />
 
         <!-- Image viewer wrapper (for positioning nav buttons) -->

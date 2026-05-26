@@ -214,6 +214,29 @@ describe('useHostPlantStore', () => {
     expect(store.getTaxaForButterflies(['Callithomia alexirrhoe'])).toEqual([])
   })
 
+  it('enables the host plant overlay while host taxa are selected', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url) => ({
+      ok: true,
+      json: async () => String(url).includes('manifest') ? manifest : associations,
+    })))
+    const store = useHostPlantStore()
+    await store.loadMetadata()
+
+    expect(store.enabled).toBe(false)
+
+    store.setSelectedTaxa(['species_prestonia_coalita'])
+    expect(store.enabled).toBe(true)
+
+    store.setSelectedTaxa([])
+    expect(store.enabled).toBe(false)
+
+    store.toggleTaxon('genus_solanum')
+    expect(store.enabled).toBe(true)
+
+    store.toggleTaxon('genus_solanum')
+    expect(store.enabled).toBe(false)
+  })
+
   it('supports genus and needs-check opt-in without showing family map targets by default', async () => {
     vi.stubGlobal('fetch', vi.fn(async (url) => ({
       ok: true,
@@ -360,6 +383,81 @@ describe('useHostPlantStore', () => {
     expect(fetchMock.mock.calls.filter(call => String(call[0]).includes('host_plant_gallery'))).toHaveLength(1)
     expect(fetchMock.mock.calls.some(call => String(call[0]).includes('host_plant_occurrence_core'))).toBe(false)
     expect(fetchMock.mock.calls.some(call => String(call[0]).includes('host_plant_occurrences'))).toBe(false)
+  })
+
+  it('uses the host plant gallery preview before loading a selected taxon page', async () => {
+    const preview = {
+      metadata: { preview: true, item_count: 1 },
+      stats_by_slug: {
+        species_prestonia_coalita: { total_records: 4, records_with_images: 4, records_without_images: 0 },
+      },
+      items: [
+        {
+          id: 'preview-1',
+          image_url: 'https://example.org/preview.jpg',
+          scientific_name: 'Prestonia coalita',
+          host_taxon_slug: 'species_prestonia_coalita',
+          photo_context: 'field',
+        },
+      ],
+    }
+    const galleryIndex = {
+      metadata: { host_taxon_slug: 'species_prestonia_coalita' },
+      stats_by_slug: preview.stats_by_slug,
+      total_images: 4,
+      page_size: 100,
+      pages: ['gallery_taxa/species_prestonia_coalita/page_001.json'],
+    }
+    const galleryPage = {
+      items: [
+        ...preview.items,
+        {
+          id: 'page-2',
+          image_url: 'https://example.org/page-2.jpg',
+          scientific_name: 'Prestonia coalita',
+          host_taxon_slug: 'species_prestonia_coalita',
+          photo_context: 'preserved',
+        },
+      ],
+    }
+    const manifestWithPreview = {
+      ...manifest,
+      metadata: {
+        ...manifest.metadata,
+        gallery_preview_dataset: 'host_plant_gallery_preview.json',
+        gallery_indexes_by_taxon: {
+          species_prestonia_coalita: 'gallery_taxa/species_prestonia_coalita/index.json',
+        },
+        gallery_initial_limit: 1,
+        gallery_page_size: 100,
+      },
+    }
+    const fetchMock = vi.fn(async (url) => ({
+      ok: true,
+      json: async () => {
+        const path = String(url)
+        if (path.includes('manifest')) return manifestWithPreview
+        if (path.includes('associations')) return associations
+        if (path.includes('host_plant_gallery_preview')) return preview
+        if (path.includes('gallery_taxa/species_prestonia_coalita/index')) return galleryIndex
+        if (path.includes('gallery_taxa/species_prestonia_coalita/page_001')) return galleryPage
+        throw new Error(`unexpected fetch ${url}`)
+      },
+    }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const store = useHostPlantStore()
+    await store.loadMetadata()
+    await store.loadGallery()
+
+    expect(store.galleryDataset.metadata.preview).toBe(true)
+    expect(store.galleryDataset.items).toHaveLength(1)
+    expect(fetchMock.mock.calls.some(call => String(call[0]).includes('gallery_taxa/species_prestonia_coalita/page_001'))).toBe(false)
+
+    await store.loadMoreGalleryForSlug('species_prestonia_coalita', 1)
+
+    expect(store.galleryDataset.items.filter(item => item.host_taxon_slug === 'species_prestonia_coalita')).toHaveLength(2)
+    expect(fetchMock.mock.calls.some(call => String(call[0]).includes('gallery_taxa/species_prestonia_coalita/page_001'))).toBe(true)
   })
 
   it('loads compact gallery and occurrence core without fetching the full occurrence GeoJSON', async () => {
@@ -520,6 +618,59 @@ describe('useHostPlantStore', () => {
     expect(fetchMock.mock.calls.filter(call => String(call[0]).includes('gallery_taxa/species_prestonia_coalita/page_001'))).toHaveLength(1)
     await store.loadGallery(['species_prestonia_coalita'])
     expect(fetchMock.mock.calls.filter(call => String(call[0]).includes('gallery_taxa/species_prestonia_coalita/page_001'))).toHaveLength(1)
+  })
+
+  it('loads v2 occurrence chunks after fetching selected taxon refs', async () => {
+    const manifestWithV2Refs = {
+      ...manifest,
+      metadata: {
+        ...manifest.metadata,
+        occurrence_store_version: 2,
+        occurrence_refs_by_taxon: {
+          species_prestonia_coalita: 'taxon_occurrence_refs/species_prestonia_coalita.json',
+        },
+        gallery_indexes_by_taxon: {},
+      },
+    }
+    const ref = {
+      metadata: { host_taxon_slug: 'species_prestonia_coalita', total_records: 1 },
+      stats_by_slug: {
+        species_prestonia_coalita: { total_records: 1 },
+      },
+      chunks: {
+        'occurrence_chunks/chunk_001.json': [0],
+      },
+    }
+    const chunk = {
+      records: [
+        {
+          id: 'plant-1',
+          gbifID: 'plant-1',
+          lat: -1,
+          lng: -78,
+          scientific_name: 'Prestonia coalita',
+        },
+      ],
+    }
+    const fetchMock = vi.fn(async (url) => ({
+      ok: true,
+      json: async () => {
+        const path = String(url)
+        if (path.includes('manifest')) return manifestWithV2Refs
+        if (path.includes('associations')) return associations
+        if (path.includes('taxon_occurrence_refs/species_prestonia_coalita')) return ref
+        if (path.includes('occurrence_chunks/chunk_001')) return chunk
+        throw new Error(`unexpected fetch ${url}`)
+      },
+    }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const store = useHostPlantStore()
+    await store.loadOccurrences(['species_prestonia_coalita'])
+
+    expect(fetchMock.mock.calls.some(call => String(call[0]).includes('taxon_occurrence_refs/species_prestonia_coalita'))).toBe(true)
+    expect(fetchMock.mock.calls.some(call => String(call[0]).includes('occurrence_chunks/chunk_001'))).toBe(true)
+    expect(store.getOccurrenceCollectionForTaxa(['species_prestonia_coalita']).features).toHaveLength(1)
   })
 
   it('keeps genus-only rows out of species chip collections', async () => {

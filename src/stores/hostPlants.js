@@ -23,6 +23,8 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
   const galleryLoading = ref(false)
   const galleryError = ref(null)
   const galleryVisibleLimitBySlug = ref({})
+  const galleryPhotoContextOrder = ref(['field', 'ambiguous', 'preserved'])
+  const galleryDateOrder = ref('desc')
 
   const hostIdLevels = [
     { key: 'species', label: 'Species', description: 'Exact host plant species reported.' },
@@ -40,6 +42,12 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     { key: 'high', label: 'Confirmed', description: 'Direct or checked host-use evidence.' },
     { key: 'medium', label: 'Provisional', description: 'Credible catalogue, literature, or expert record; source trail not fully checked.' },
     { key: 'low', label: 'Tentative', description: 'Weak, broad, uncertain, captive-only, or audit-level records.' },
+  ]
+
+  const galleryPhotoContextOptions = [
+    { key: 'field', label: 'Field observation' },
+    { key: 'ambiguous', label: 'Ambiguous' },
+    { key: 'preserved', label: 'Preserved specimen' },
   ]
 
   const taxaBySlug = computed(() => {
@@ -346,7 +354,9 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
   }
 
   function setSelectedTaxa(slugs) {
-    selectedTaxonSlugs.value = Array.from(new Set(slugs || []))
+    const selected = Array.from(new Set(slugs || []))
+    selectedTaxonSlugs.value = selected
+    enabled.value = selected.length > 0
   }
 
   function toggleTaxon(slug) {
@@ -355,6 +365,7 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     } else {
       selectedTaxonSlugs.value = [...selectedTaxonSlugs.value, slug]
     }
+    enabled.value = selectedTaxonSlugs.value.length > 0
   }
 
   function occurrenceShardNameForFamily(family) {
@@ -590,11 +601,16 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     return getGalleryPhotoForSlug(occurrence.host_taxon_slug)
   }
 
-  function rebuildGalleryDatasetFromPages(slugs = selectedTaxonSlugs.value) {
+  function rebuildGalleryDatasetFromPages(slugs = selectedTaxonSlugs.value, options = {}) {
     const selected = [...new Set((slugs || []).filter(Boolean))]
     const statsBySlug = {}
-    const items = []
+    const selectedSet = new Set(selected)
+    const preserveExisting = Boolean(options.preserveExisting)
+    const items = preserveExisting
+      ? (galleryDataset.value?.items || []).filter(item => !selectedSet.has(item?.host_taxon_slug))
+      : []
     const indexesBySlug = manifest.value?.metadata?.gallery_indexes_by_taxon || {}
+    if (preserveExisting) Object.assign(statsBySlug, galleryDataset.value?.stats_by_slug || {})
     for (const slug of selected) {
       const index = galleryIndexCache.value[slug]
       if (!index) continue
@@ -620,9 +636,12 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     galleryDataset.value = {
       metadata: {
         ...(manifest.value?.metadata || {}),
-        loaded_slugs: selected,
+        loaded_slugs: preserveExisting
+          ? [...new Set([...(galleryDataset.value?.metadata?.loaded_slugs || []), ...selected])]
+          : selected,
         item_count: items.length,
         gallery_store_version: 2,
+        preview: Boolean(preserveExisting && galleryDataset.value?.metadata?.preview),
       },
       stats_by_slug: statsBySlug,
       items,
@@ -649,6 +668,32 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     const galleryIndexes = manifest.value?.metadata?.gallery_indexes_by_taxon || {}
 
     if (Object.keys(galleryIndexes).length > 0) {
+      const previewDataset = manifest.value?.metadata?.gallery_preview_dataset
+      if (selected.length === 0 && previewDataset) {
+        if (galleryDataset.value?.metadata?.preview) return galleryDataset.value
+        galleryLoading.value = true
+        galleryError.value = null
+        try {
+          const preview = await fetchJson(previewDataset)
+          galleryDataset.value = {
+            metadata: {
+              ...(manifest.value?.metadata || {}),
+              ...(preview.metadata || {}),
+              preview: true,
+              gallery_store_version: 2,
+              loaded_slugs: [],
+            },
+            stats_by_slug: preview.stats_by_slug || {},
+            items: preview.items || [],
+          }
+          return galleryDataset.value
+        } catch (error) {
+          galleryError.value = error instanceof Error ? error.message : String(error)
+          return null
+        } finally {
+          galleryLoading.value = false
+        }
+      }
       const sourceSlugs = selected.length > 0 ? selected : Object.keys(galleryIndexes)
       galleryLoading.value = true
       galleryError.value = null
@@ -735,15 +780,24 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
 
   async function loadMoreGalleryForSlug(slug, increment = 10) {
     await loadMetadata()
-    const current = galleryVisibleLimitBySlug.value[slug] || 0
+    const galleryIndexes = manifest.value?.metadata?.gallery_indexes_by_taxon || {}
+    if (galleryIndexes[slug] && !galleryIndexCache.value[slug]) {
+      galleryIndexCache.value = {
+        ...galleryIndexCache.value,
+        [slug]: await fetchJson(galleryIndexes[slug]),
+      }
+    }
+    const currentLoadedForSlug = (galleryDataset.value?.items || [])
+      .filter(item => item?.host_taxon_slug === slug)
+      .length
+    const current = galleryVisibleLimitBySlug.value[slug] || currentLoadedForSlug || 0
     const next = current + increment
     galleryVisibleLimitBySlug.value = { ...galleryVisibleLimitBySlug.value, [slug]: next }
     galleryLoading.value = true
     galleryError.value = null
     try {
       await ensureGalleryPagesForLimit(slug, next)
-      const loadedSlugs = galleryDataset.value?.metadata?.loaded_slugs || selectedTaxonSlugs.value || [slug]
-      rebuildGalleryDatasetFromPages(loadedSlugs.includes(slug) ? loadedSlugs : [...loadedSlugs, slug])
+      rebuildGalleryDatasetFromPages([slug], { preserveExisting: Boolean(galleryDataset.value?.metadata?.preview) })
       return galleryDataset.value
     } catch (error) {
       galleryError.value = error instanceof Error ? error.message : String(error)
@@ -751,6 +805,20 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     } finally {
       galleryLoading.value = false
     }
+  }
+
+  function moveGalleryPhotoContext(key, direction) {
+    const order = [...galleryPhotoContextOrder.value]
+    const index = order.indexOf(key)
+    const nextIndex = index + direction
+    if (index < 0 || nextIndex < 0 || nextIndex >= order.length) return
+    const [item] = order.splice(index, 1)
+    order.splice(nextIndex, 0, item)
+    galleryPhotoContextOrder.value = order
+  }
+
+  function setGalleryDateOrder(order) {
+    galleryDateOrder.value = order === 'asc' ? 'asc' : 'desc'
   }
 
   function getOccurrenceCollectionForTaxa(slugs = selectedTaxonSlugs.value) {
@@ -792,9 +860,12 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     galleryIndexCache,
     galleryPageCache,
     galleryVisibleLimitBySlug,
+    galleryPhotoContextOrder,
+    galleryDateOrder,
     confidenceLevels,
     hostIdLevels,
     evidenceLevels,
+    galleryPhotoContextOptions,
     taxaBySlug,
     activeTaxa,
     caveat,
@@ -821,6 +892,8 @@ export const useHostPlantStore = defineStore('hostPlants', () => {
     loadMoreGalleryForSlug,
     preloadGalleryForSlugs,
     getPhotoForOccurrence,
+    moveGalleryPhotoContext,
+    setGalleryDateOrder,
     getOccurrenceCollectionForTaxa,
     occurrenceCountForSlug,
   }

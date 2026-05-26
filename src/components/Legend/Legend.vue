@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useLegendStore } from '../../stores/legend'
 import { useDataStore } from '../../stores/data'
 import { useElementResize } from '../../composables/useElementResize'
@@ -192,6 +192,13 @@ watch(sortedAllItems, (newItems, oldItems) => {
 watch(isResizing, (resizing) => {
   if (!resizing) scheduleMeasurement(true, 'resizeEnd', true)
 })
+
+watch(
+  [effectiveHeight, bottomAttributionMargin],
+  () => {
+    nextTick(() => repositionIfBottomSticky())
+  }
+)
 
 watch(() => legendStore.maxItemsMode, (newMode) => {
   log.legend.info(`[Legend] items mode → ${newMode}${newMode === 'manual' ? ` (${legendStore.maxItemsManual})` : ''}`)
@@ -482,7 +489,10 @@ onMounted(() => {
     }
   }, 150)
 
-  setTimeout(() => { setupLegendResizeObserver() }, 300)
+  setTimeout(() => {
+    setupLegendResizeObserver()
+    nextTick(() => repositionIfBottomSticky())
+  }, 300)
   window.addEventListener('resize', handleWindowResize)
 })
 

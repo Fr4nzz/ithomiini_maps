@@ -2,6 +2,11 @@ import { computed } from 'vue'
 
 const baseHues = [145, 198, 38, 270, 12, 170, 310, 220, 92, 335]
 
+function dateSortValue(value) {
+  const digits = String(value || '').replace(/\D+/g, '').slice(0, 8)
+  return digits ? Number(digits.padEnd(8, '0')) : 0
+}
+
 function groupPlantItems(items) {
   const grouped = {}
   for (const item of items) {
@@ -52,10 +57,21 @@ export function useHostPlantGalleryData(hostPlantStore) {
       : Object.values(statsBySlug)
     const totalRecords = selectedStats.reduce((sum, stats) => sum + (stats.total_records || 0), 0)
     const recordsWithoutImages = selectedStats.reduce((sum, stats) => sum + (stats.records_without_images || 0), 0)
-    const enrichedItems = items.map(item => ({
-      ...item,
-      associated_butterflies: butterflyTaxaByHostSlug.value.get(item.host_taxon_slug) || [],
-    }))
+    const contextOrder = new Map((hostPlantStore.galleryPhotoContextOrder || ['field', 'ambiguous', 'preserved'])
+      .map((key, index) => [key, index]))
+    const dateMultiplier = hostPlantStore.galleryDateOrder === 'asc' ? 1 : -1
+    const enrichedItems = items
+      .map(item => ({
+        ...item,
+        associated_butterflies: butterflyTaxaByHostSlug.value.get(item.host_taxon_slug) || [],
+      }))
+      .sort((a, b) => {
+        const contextDiff = (contextOrder.get(a.photo_context) ?? 99) - (contextOrder.get(b.photo_context) ?? 99)
+        if (contextDiff) return contextDiff
+        const dateDiff = (dateSortValue(a.observation_date) - dateSortValue(b.observation_date)) * dateMultiplier
+        if (dateDiff) return dateDiff
+        return String(a.id || '').localeCompare(String(b.id || ''))
+      })
 
     return {
       items: enrichedItems,
@@ -125,15 +141,17 @@ export function useHostPlantGalleryData(hostPlantStore) {
         const primarySlug = hostTaxonSlugs.length === 1 ? hostTaxonSlugs[0] : null
         const index = primarySlug ? hostPlantStore.galleryIndexCache?.[primarySlug] : null
         const totalAvailable = index?.total_images || individuals.length
+        const stats = primarySlug ? hostPlantStore.galleryDataset?.stats_by_slug?.[primarySlug] : null
+        const availableImages = stats?.records_with_images || totalAvailable
         const loadedLimit = primarySlug ? (hostPlantStore.galleryVisibleLimitBySlug?.[primarySlug] || individuals.length) : individuals.length
         return {
           type: 'species',
           name: speciesName,
           color: speciesColors.value[speciesName],
           totalImages: individuals.length,
-          totalAvailableImages: totalAvailable,
+          totalAvailableImages: availableImages,
           loadedLimit,
-          canLoadMore: Boolean(primarySlug && totalAvailable > loadedLimit),
+          canLoadMore: Boolean(primarySlug && availableImages > loadedLimit),
           hostTaxonSlug: primarySlug,
           hostTaxonRank,
           subspecies: Object.entries(speciesData.subspecies)

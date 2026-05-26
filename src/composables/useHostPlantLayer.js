@@ -10,6 +10,10 @@ const SOURCE_ID = 'host-plant-source'
 const LAYER_ID = 'host-plant-layer'
 const COLORS = ['#16a34a', '#f59e0b', '#06b6d4', '#ef4444', '#8b5cf6']
 
+export function getHostPlantActiveTaxa(hostPlantStore) {
+  return hostPlantStore.activeTaxa.filter(taxon => taxon.occurrence_count > 0)
+}
+
 export function useHostPlantLayer(map, options = {}) {
   const hostPlantStore = useHostPlantStore()
   const { onShowPopup } = options
@@ -101,7 +105,8 @@ export function useHostPlantLayer(map, options = {}) {
   }
 
   async function addUnifiedLayer() {
-    const taxa = hostPlantStore.activeTaxa.filter(taxon => taxon.occurrence_count > 0)
+    await hostPlantStore.loadMetadata()
+    const taxa = getHostPlantActiveTaxa(hostPlantStore)
     await hostPlantStore.loadOccurrences(taxa.map(taxon => taxon.slug))
     if (!map.value) return
     const collection = hostPlantStore.getOccurrenceCollectionForTaxa(taxa.map(taxon => taxon.slug))
@@ -110,7 +115,6 @@ export function useHostPlantLayer(map, options = {}) {
     try { removeLayerAndSource(map.value, LAYER_ID, SOURCE_ID) } catch { /* */ }
 
     map.value.addSource(SOURCE_ID, { type: 'geojson', data: collection })
-    const beforeLayer = map.value.getLayer('points-layer') ? 'points-layer' : undefined
     const imageExpression = ['match', ['get', 'host_taxon_slug']]
     taxa.forEach((taxon, index) => {
       const color = COLORS[index % COLORS.length]
@@ -135,7 +139,7 @@ export function useHostPlantLayer(map, options = {}) {
       paint: {
         'icon-opacity': hostPlantStore.opacity,
       },
-    }, beforeLayer)
+    })
     registerLayerHandlers(LAYER_ID)
   }
 
@@ -147,7 +151,11 @@ export function useHostPlantLayer(map, options = {}) {
   }
 
   watch(
-    () => [hostPlantStore.enabled, hostPlantStore.selectedTaxonSlugs.slice().join('|')],
+    () => [
+      hostPlantStore.enabled,
+      hostPlantStore.selectedTaxonSlugs.slice().join('|'),
+      hostPlantStore.taxa.length,
+    ],
     () => { updateLayer().catch(error => log.map.error('Host plants: layer update failed', error)) }
   )
 

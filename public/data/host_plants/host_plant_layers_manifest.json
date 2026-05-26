@@ -732,7 +732,25 @@
     "occurrence_core_shards_by_taxon": {},
     "occurrence_core_shard_strategy": "unique_occurrence_chunks_by_taxon_refs",
     "gallery_shards_by_taxon": {},
-    "gallery_shard_strategy": "paged_host_taxon_images"
+    "gallery_shard_strategy": "paged_host_taxon_images",
+    "gallery_preview_dataset": "host_plant_gallery_preview.json",
+    "gallery_preview_per_category": 10,
+    "gallery_photo_context_order": [
+      "field",
+      "ambiguous",
+      "preserved"
+    ],
+    "gallery_photo_contexts": {
+      "field": {
+        "label": "Field observation"
+      },
+      "ambiguous": {
+        "label": "Ambiguous"
+      },
+      "preserved": {
+        "label": "Preserved specimen"
+      }
+    }
   },
   "taxa": [
     {

@@ -6,6 +6,7 @@ import GallerySearchSelect from './GallerySearchSelect.vue'
 
 const props = defineProps({
   currentSpecimen: Object,
+  currentSpecimenKey: String,
   selectedSpecies: String,
   selectedSubspecies: String,
   speciesList: Array,
@@ -22,13 +23,24 @@ const props = defineProps({
     type: String,
     default: 'butterflies',
   },
+  photoOrderOptions: {
+    type: Array,
+    default: () => [],
+  },
+  dateOrder: {
+    type: String,
+    default: 'desc',
+  },
 })
 
 const emit = defineEmits([
   'select-species',
   'select-subspecies',
   'select-individual',
-  'view-on-map'
+  'view-on-map',
+  'move-photo-order',
+  'set-date-order',
+  'set-gallery-mode',
 ])
 
 const subspeciesCount = computed(() => props.subspeciesList?.length || 0)
@@ -53,7 +65,7 @@ const subspeciesOptions = computed(() =>
 )
 const individualOptions = computed(() =>
   (props.individualsList || []).map(ind => ({
-    value: ind.id,
+    value: ind.gallery_id || `${ind.id || ''}|${ind.image_url || ''}`,
     label: ind.id,
     meta: ind.observation_date || ind.country || '',
     searchText: [ind.id, ind.observation_date, ind.country, ind.source].filter(Boolean).join(' '),
@@ -84,6 +96,23 @@ function statusClass(tier) {
 
 <template>
   <div class="gallery-sidebar">
+    <div class="gallery-mode-toggle">
+      <button
+        class="mode-btn"
+        :class="{ active: mode === 'butterflies' }"
+        @click="emit('set-gallery-mode', 'butterflies')"
+      >
+        Butterflies
+      </button>
+      <button
+        class="mode-btn"
+        :class="{ active: mode === 'host-plants' }"
+        @click="emit('set-gallery-mode', 'host-plants')"
+      >
+        Host Plants
+      </button>
+    </div>
+
     <!-- Species Section -->
     <div class="sidebar-section">
       <div class="section-header">
@@ -120,7 +149,7 @@ function statusClass(tier) {
       </div>
       <GallerySearchSelect
         v-if="individualsList?.length > 1"
-        :model-value="currentSpecimen?.id || ''"
+        :model-value="currentSpecimenKey || ''"
         :options="individualOptions"
         :placeholder="isHostPlants ? 'Search occurrences...' : 'Search individuals...'"
         monospace
@@ -132,6 +161,50 @@ function statusClass(tier) {
     </div>
 
     <div class="sidebar-divider"></div>
+
+    <div v-if="isHostPlants" class="sidebar-section photo-order-section">
+      <div class="section-header">
+        <span class="section-label">Photo order</span>
+      </div>
+      <div class="photo-order-list">
+        <div
+          v-for="(option, index) in photoOrderOptions"
+          :key="option.key"
+          class="photo-order-row"
+          :class="`context-${option.key}`"
+        >
+          <span class="photo-order-name">{{ option.label }}</span>
+          <div class="photo-order-actions">
+            <button
+              class="order-move-btn"
+              :disabled="index === 0"
+              title="Move earlier"
+              @click="emit('move-photo-order', option.key, -1)"
+            >
+              ↑
+            </button>
+            <button
+              class="order-move-btn"
+              :disabled="index === photoOrderOptions.length - 1"
+              title="Move later"
+              @click="emit('move-photo-order', option.key, 1)"
+            >
+              ↓
+            </button>
+          </div>
+        </div>
+      </div>
+      <select
+        class="date-order-select"
+        :value="dateOrder"
+        @change="emit('set-date-order', $event.target.value)"
+      >
+        <option value="desc">Newest first</option>
+        <option value="asc">Oldest first</option>
+      </select>
+    </div>
+
+    <div v-if="isHostPlants" class="sidebar-divider"></div>
 
     <!-- Details Section -->
     <div class="sidebar-details">
@@ -295,7 +368,8 @@ function statusClass(tier) {
 
 <style scoped>
 .gallery-sidebar {
-  width: 220px;
+  width: 340px;
+  min-width: 340px;
   flex-shrink: 0;
   background: #1a1a2e;
   border-right: 1px solid #3d3d5c;
@@ -306,9 +380,116 @@ function statusClass(tier) {
   overflow-y: auto;
 }
 
+.photo-order-section {
+  gap: 8px;
+}
+
+.photo-order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.photo-order-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 34px;
+  padding: 6px 8px;
+  background: #252540;
+  border: 1px solid #3d3d5c;
+  border-left-width: 3px;
+  border-radius: 6px;
+}
+
+.photo-order-row.context-field {
+  border-left-color: #4ade80;
+}
+
+.photo-order-row.context-ambiguous {
+  border-left-color: #60a5fa;
+}
+
+.photo-order-row.context-preserved {
+  border-left-color: #facc15;
+}
+
+.photo-order-name {
+  color: #e0e0e0;
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.photo-order-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.order-move-btn {
+  width: 26px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  cursor: pointer;
+}
+
+.order-move-btn:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.order-move-btn:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.date-order-select {
+  width: 100%;
+  min-height: 34px;
+  padding: 7px 9px;
+  background: #252540;
+  border: 1px solid #3d3d5c;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 0.78rem;
+}
+
 .sidebar-section {
   display: flex;
   flex-direction: column;
+}
+
+.gallery-mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(10, 10, 24, 0.35);
+  border: 1px solid #3d3d5c;
+  border-radius: 8px;
+}
+
+.mode-btn {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #aaa;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.mode-btn.active {
+  background: #4ade80;
+  color: #111827;
 }
 
 .section-header {
