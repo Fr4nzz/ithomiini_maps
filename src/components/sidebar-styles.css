@@ -1637,11 +1637,13 @@
   align-items: center;
   padding: 0 4px;
 }
+/* Colourblind-safe sequential ramps (match useSDMLayer.js): orange (species 1)
+   and blue (species 2), the canonical colourblind-safe contrast pair. */
 .sdm-gradient-bar.warm {
-  background: linear-gradient(to right, transparent, #ffcc00, #ff8800, #cc2200);
+  background: linear-gradient(to right, rgba(255, 245, 224, 0), #fdc086 30%, #e68c00 60%, #8c3c00);
 }
 .sdm-gradient-bar.cool {
-  background: linear-gradient(to right, transparent, #00b4ff, #4040ff, #9030cc);
+  background: linear-gradient(to right, rgba(222, 235, 247, 0), #8cbee0 30%, #0072b2 60%, #08306b);
 }
 .sdm-gradient-label-low,
 .sdm-gradient-label-high {
