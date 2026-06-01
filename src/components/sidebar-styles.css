@@ -1658,13 +1658,13 @@
   text-align: right;
 }
 /* Colourblind-safe sequential ramps (match useSDMLayer.js): orange (species 1)
-   and blue (species 2), the canonical colourblind-safe contrast pair. The
-   legend key shows the ramp fully opaque (the map overlay fades the low end). */
+   and blue (species 2), the canonical colourblind-safe contrast pair. The low
+   end fades to transparent, mirroring how the map overlay fades faint values. */
 .sdm-gradient-bar.warm {
-  background: linear-gradient(to right, #fff5e0, #fdc086 30%, #e68c00 60%, #8c3c00);
+  background: linear-gradient(to right, rgba(255, 245, 224, 0), #fdc086 30%, #e68c00 60%, #8c3c00);
 }
 .sdm-gradient-bar.cool {
-  background: linear-gradient(to right, #deebf7, #8cbee0 30%, #0072b2 60%, #08306b);
+  background: linear-gradient(to right, rgba(222, 235, 247, 0), #8cbee0 30%, #0072b2 60%, #08306b);
 }
 .sdm-confidence-badge {
   display: inline-block;
