@@ -1621,50 +1621,59 @@
 .sdm-legend-item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--color-bg-secondary, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+}
+.sdm-legend-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .sdm-legend-species {
-  font-size: 11px;
+  font-size: 13px;
   font-style: italic;
   color: var(--text-primary, #e0e0e0);
 }
 .sdm-gradient-bar {
-  height: 10px;
-  border-radius: 3px;
+  height: 14px;
+  border-radius: 999px;
   position: relative;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.sdm-gradient-scale {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 4px;
-}
-/* Colourblind-safe sequential ramps (match useSDMLayer.js): orange (species 1)
-   and blue (species 2), the canonical colourblind-safe contrast pair. */
-.sdm-gradient-bar.warm {
-  background: linear-gradient(to right, rgba(255, 245, 224, 0), #fdc086 30%, #e68c00 60%, #8c3c00);
-}
-.sdm-gradient-bar.cool {
-  background: linear-gradient(to right, rgba(222, 235, 247, 0), #8cbee0 30%, #0072b2 60%, #08306b);
-}
-.sdm-gradient-label-low,
-.sdm-gradient-label-high {
-  font-size: 9px;
-  color: rgba(255,255,255,0.7);
-  text-shadow: 0 0 3px rgba(0,0,0,0.8);
-}
-.sdm-legend-caption {
   font-size: 10px;
   color: var(--text-secondary, #888);
+}
+.sdm-gradient-scale span:nth-child(2) {
+  flex: 1;
   text-align: center;
+}
+.sdm-gradient-scale span:last-child {
+  text-align: right;
+}
+/* Colourblind-safe sequential ramps (match useSDMLayer.js): orange (species 1)
+   and blue (species 2), the canonical colourblind-safe contrast pair. The
+   legend key shows the ramp fully opaque (the map overlay fades the low end). */
+.sdm-gradient-bar.warm {
+  background: linear-gradient(to right, #fff5e0, #fdc086 30%, #e68c00 60%, #8c3c00);
+}
+.sdm-gradient-bar.cool {
+  background: linear-gradient(to right, #deebf7, #8cbee0 30%, #0072b2 60%, #08306b);
 }
 .sdm-confidence-badge {
   display: inline-block;
-  font-size: 9px;
-  padding: 1px 6px;
-  border-radius: 3px;
-  margin-left: 6px;
-  font-weight: 600;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
 }
 .sdm-confidence-badge.high { background: rgba(34,197,94,0.2); color: #4ade80; }
 .sdm-confidence-badge.medium { background: rgba(250,204,21,0.2); color: #facc15; }
