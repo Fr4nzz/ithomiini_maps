@@ -51,16 +51,17 @@
 
 .logo-text .title {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-text-primary, #e0e0e0);
   letter-spacing: -0.5px;
 }
 
 .logo-text .subtitle {
-  font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--color-accent, #4ade80);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
 }
 
 /* Scrollable Content */
@@ -114,25 +115,27 @@
 
 /* Record Count */
 .record-count {
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
-  border: 1px solid rgba(74, 222, 128, 0.2);
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: 13px 16px;
   margin-bottom: 16px;
-  text-align: center;
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
 }
 
 .record-count .count {
-  font-size: 1.5rem;
+  font-size: 1.65rem;
   font-weight: 700;
   color: var(--color-accent, #4ade80);
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .record-count .label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--color-text-secondary, #aaa);
-  margin-left: 6px;
 }
 
 /* Bounding Box Indicator */
@@ -252,8 +255,8 @@
 
 /* Export Settings Panel */
 .export-settings-panel {
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(74, 222, 128, 0.03) 100%);
-  border: 1px solid rgba(74, 222, 128, 0.2);
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
   border-radius: 8px;
   padding: 14px;
 }
