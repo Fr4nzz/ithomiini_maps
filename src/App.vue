@@ -377,19 +377,26 @@ onMounted(async () => {
     <!-- Mobile: floating menu button + quick action pills -->
     <template v-if="isMobile">
       <button
+        v-show="!showMobileSidebar"
         class="mobile-menu-btn"
-        :class="{ 'mobile-menu-btn--open': showMobileSidebar }"
-        @click="showMobileSidebar = !showMobileSidebar"
+        @click="showMobileSidebar = true"
       >
-        <svg v-if="!showMobileSidebar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        <span>{{ showMobileSidebar ? 'Close' : 'Menu' }}</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <span>Menu</span>
       </button>
 
       <!-- Mobile sidebar overlay (reuses desktop Sidebar) -->
       <Transition name="mobile-sidebar">
         <div v-if="showMobileSidebar" class="mobile-sidebar-overlay" @click.self="showMobileSidebar = false">
           <aside class="mobile-sidebar-panel">
+            <!-- Dedicated close bar so the control is part of the panel and
+                 never overlaps the logo or Smart Search in the header. -->
+            <div class="mobile-sidebar-closebar">
+              <button class="mobile-sidebar-close" @click="showMobileSidebar = false" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Close</span>
+              </button>
+            </div>
             <Sidebar
               :current-view="currentView"
               @set-view="(v) => { setView(v); showMobileSidebar = false }"
@@ -704,13 +711,40 @@ html, body, #app {
   transform: scale(0.96);
 }
 
-.mobile-menu-btn--open {
-  background: rgba(74, 222, 128, 0.15);
-  border-color: rgba(74, 222, 128, 0.3);
-  /* When the sidebar is open, move the close button to the panel's top-right
-     so it no longer sits on top of the logo in the sidebar header. */
-  left: auto;
-  right: calc(100vw - min(85vw, 400px) + 8px);
+/* Close bar pinned to the top of the mobile sidebar panel */
+.mobile-sidebar-closebar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 10px;
+  background: var(--color-bg-secondary, #252540);
+  border-bottom: 1px solid var(--color-border, #3d3d5c);
+}
+
+.mobile-sidebar-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(26, 26, 46, 0.6);
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mobile-sidebar-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.mobile-sidebar-close:active {
+  transform: scale(0.96);
 }
 
 /* Mobile sidebar overlay */
