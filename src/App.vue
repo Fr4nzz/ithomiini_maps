@@ -668,6 +668,7 @@ html, body, #app {
   display: flex;
   align-items: center;
   gap: 6px;
+  min-height: 40px;
   padding: 8px 14px 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
