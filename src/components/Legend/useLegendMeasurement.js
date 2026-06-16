@@ -106,12 +106,20 @@ export function useLegendMeasurement({
     return w > 0 && w <= LEGEND_LAYOUT.MOBILE_CONTAINER_WIDTH
   })
 
+  const isExportMode = computed(() => dataStore.exportSettings.enabled)
+
   const maxLegendHeight = computed(() => {
+    if (isExportMode.value) {
+      return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.EXPORT_MAX_HEIGHT_RATIO)
+    }
     const h = Math.floor(containerBounds.value.height * LEGEND_LAYOUT.MAX_HEIGHT_RATIO)
     return isMobileContainer.value ? Math.min(h, LEGEND_LAYOUT.MOBILE_MAX_HEIGHT_PX) : h
   })
 
   const targetLegendHeight = computed(() => {
+    if (isExportMode.value) {
+      return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.EXPORT_TARGET_HEIGHT_RATIO)
+    }
     const h = Math.floor(containerBounds.value.height * LEGEND_LAYOUT.TARGET_HEIGHT_RATIO)
     return isMobileContainer.value ? Math.min(h, LEGEND_LAYOUT.MOBILE_TARGET_HEIGHT_PX) : h
   })

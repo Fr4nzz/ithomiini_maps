@@ -13,6 +13,10 @@ export const LEGEND_LAYOUT = {
   MOBILE_CONTAINER_WIDTH: 768,
   MOBILE_MAX_HEIGHT_PX: 320,
   MOBILE_TARGET_HEIGHT_PX: 280,
+  // In export mode the legend is measured against the export frame; keep it to
+  // a smaller fraction of that frame so it does not dominate the exported map.
+  EXPORT_TARGET_HEIGHT_RATIO: 0.45,
+  EXPORT_MAX_HEIGHT_RATIO: 0.55,
   MIN_ITEM_HEIGHT_PX: 22,
   FALLBACK_LEGEND_HEIGHT: 200,
   FALLBACK_CONTAINER_HEIGHT: 600,
