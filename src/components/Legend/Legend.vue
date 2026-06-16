@@ -290,7 +290,11 @@ const positionStyle = computed(() => {
   if (posY.value !== null) {
     style.top = posY.value + 'px'
   } else {
-    style.bottom = '30px'
+    // On mobile the bottom quick-action bar sits at the bottom of the screen;
+    // lift the default legend position above it so it is not hidden behind the
+    // Search/Gallery/Export buttons. (768px matches MOBILE_CONTAINER_WIDTH.)
+    const isMobile = containerBounds.value.width > 0 && containerBounds.value.width <= 768
+    style.bottom = isMobile ? 'calc(84px + env(safe-area-inset-bottom))' : '30px'
   }
 
   style.left = posX.value + 'px'
