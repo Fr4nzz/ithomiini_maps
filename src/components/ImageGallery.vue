@@ -61,6 +61,9 @@ const canResetView = computed(() => zoomLevel.value > 1.05 || isPanned.value)
 const selectedSpecies = ref(null)
 const selectedSubspecies = ref(null)
 
+// Mobile: the filter/info sidebar opens as a slide-in drawer.
+const showMobileGallerySidebar = ref(false)
+
 // Thumbnail strip state - all collapsed by default (populated on mount)
 const collapsedSpecies = ref(new Set())
 const collapsedSubspecies = ref(new Set())
@@ -814,6 +817,15 @@ watch(currentIndex, () => {
       </svg>
     </button>
 
+    <!-- Mobile: open the filters/info drawer -->
+    <button class="btn-gallery-filters" @click="showMobileGallerySidebar = true" aria-label="Filters and details">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+      <span>Filters</span>
+    </button>
+
+    <!-- Mobile drawer backdrop -->
+    <div v-if="showMobileGallerySidebar" class="gallery-sidebar-backdrop" @click="showMobileGallerySidebar = false"></div>
+
     <!-- Empty state -->
     <div v-if="isHostGalleryLoading" class="empty-state">
       <div class="spinner"></div>
@@ -860,6 +872,7 @@ watch(currentIndex, () => {
           :mode="galleryMode"
           :photo-order-options="hostPhotoOrderOptions"
           :date-order="hostPlantStore.galleryDateOrder"
+          :mobile-open="showMobileGallerySidebar"
           @select-species="selectSpecies"
           @select-subspecies="selectSubspecies"
           @select-individual="selectIndividual"
@@ -867,6 +880,7 @@ watch(currentIndex, () => {
           @move-photo-order="moveHostPhotoOrder"
           @set-date-order="hostPlantStore.setGalleryDateOrder"
           @set-gallery-mode="setGalleryMode"
+          @close-mobile="showMobileGallerySidebar = false"
         />
 
         <!-- Image viewer wrapper (for positioning nav buttons) -->
