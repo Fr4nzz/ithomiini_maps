@@ -139,8 +139,19 @@ const {
   legendStore, dataStore
 })
 
-const display = useLegendDisplayData(base, dataStore, legendStore, () => effectiveMaxItems.value, isExportMode)
+// When expanded, render every item and let .legend-content scroll instead of
+// truncating to the measured fit count. Tapping "+ N more" toggles this.
+const legendExpanded = ref(false)
+const display = useLegendDisplayData(
+  base, dataStore, legendStore,
+  () => (legendExpanded.value ? sortedAllItems.value.length : effectiveMaxItems.value),
+  isExportMode
+)
 const { legendItems, groupedLegendData, moreCount, morePointCount } = display
+
+// True when the legend is truncating items (so a "show less" affordance makes
+// sense once expanded).
+const hasOverflowItems = computed(() => sortedAllItems.value.length > effectiveMaxItems.value)
 
 const groupList = computed(() => Object.keys(itemGroupMap.value).sort())
 
@@ -681,16 +692,31 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- More indicator (overflow items appear grey on the map) -->
-      <div
-        v-if="moreCount > 0"
-        class="legend-more"
+      <!-- More indicator: tap to expand the full list (it scrolls). Overflow
+           items appear grey on the map until expanded. -->
+      <button
+        v-if="moreCount > 0 && !legendExpanded"
+        type="button"
+        class="legend-more legend-more--button"
         :style="{ fontSize: fontSize + 'px' }"
+        title="Show all items"
+        @click.stop="legendExpanded = true"
       >
         <span class="more-dot" />
         + {{ moreCount }} more
         <span v-if="morePointCount !== null" class="more-count">{{ morePointCount.toLocaleString() }}</span>
-      </div>
+      </button>
+
+      <!-- Collapse back to the fitted list once expanded. -->
+      <button
+        v-else-if="legendExpanded && hasOverflowItems"
+        type="button"
+        class="legend-more legend-more--button"
+        :style="{ fontSize: fontSize + 'px' }"
+        @click.stop="legendExpanded = false"
+      >
+        Show less
+      </button>
     </div>
 
     <!-- Multi-directional resize zones (shown on hover) -->
