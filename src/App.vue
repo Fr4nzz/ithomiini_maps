@@ -695,6 +695,10 @@ html, body, #app {
 .mobile-menu-btn--open {
   background: rgba(74, 222, 128, 0.15);
   border-color: rgba(74, 222, 128, 0.3);
+  /* When the sidebar is open, move the close button to the panel's top-right
+     so it no longer sits on top of the logo in the sidebar header. */
+  left: auto;
+  right: calc(100vw - min(85vw, 400px) + 8px);
 }
 
 /* Mobile sidebar overlay */
