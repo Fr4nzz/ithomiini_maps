@@ -32,8 +32,8 @@ export function useLegendPosition({
   const posY = ref(legendStore.position.y)
 
   // On mobile, reserve extra space below the legend's resting position so it
-  // clears the floating bottom quick-action bar (Search/Gallery/Export).
-  const MOBILE_BOTTOM_RESERVE = 72
+  // clears the bottom scale bar and attribution.
+  const MOBILE_BOTTOM_RESERVE = 44
   const mobileBottomReserve = () =>
     (containerBounds.value.width > 0 && containerBounds.value.width <= LEGEND_LAYOUT.MOBILE_CONTAINER_WIDTH)
       ? MOBILE_BOTTOM_RESERVE
