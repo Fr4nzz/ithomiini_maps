@@ -693,6 +693,23 @@
     height: 40px;
   }
 
+  /* Collapse the basemap/theme selectors to icon-only buttons on mobile so the
+     top bar stays uncluttered. The selected name still shows inside the
+     dropdown when it is opened. */
+  .dropdown-trigger {
+    padding: 0;
+    width: 40px;
+    justify-content: center;
+  }
+
+  .dropdown-trigger > span {
+    display: none;
+  }
+
+  .dropdown-trigger .chevron {
+    display: none;
+  }
+
   .dropdown-trigger .layer-icon {
     width: 14px;
     height: 14px;
