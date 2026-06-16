@@ -389,14 +389,11 @@ onMounted(async () => {
       <Transition name="mobile-sidebar">
         <div v-if="showMobileSidebar" class="mobile-sidebar-overlay" @click.self="showMobileSidebar = false">
           <aside class="mobile-sidebar-panel">
-            <!-- Dedicated close bar so the control is part of the panel and
-                 never overlaps the logo or Smart Search in the header. -->
-            <div class="mobile-sidebar-closebar">
-              <button class="mobile-sidebar-close" @click="showMobileSidebar = false" aria-label="Close menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                <span>Close</span>
-              </button>
-            </div>
+            <!-- Close sits in the top-right corner, above the Smart Search
+                 tile; the header is padded so nothing is covered. -->
+            <button class="mobile-sidebar-close" @click="showMobileSidebar = false" aria-label="Close menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
             <Sidebar
               :current-view="currentView"
               @set-view="(v) => { setView(v); showMobileSidebar = false }"
@@ -412,7 +409,7 @@ onMounted(async () => {
       </Transition>
 
       <!-- Mobile quick actions (top bar; replaces the location search row) -->
-      <div class="mobile-quick-bar" :class="{ 'mobile-quick-bar--hidden': showMobileSidebar }">
+      <div class="mobile-quick-bar" :class="{ 'mobile-quick-bar--hidden': showMobileSidebar || showImageGallery }">
         <template v-if="!store.exportSettings.enabled">
           <button class="mobile-pill" :class="{ 'mobile-pill--active': currentView === 'map' }" @click="setView('map')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
@@ -711,40 +708,38 @@ html, body, #app {
   transform: scale(0.96);
 }
 
-/* Close bar pinned to the top of the mobile sidebar panel */
-.mobile-sidebar-closebar {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  display: flex;
-  justify-content: flex-end;
-  padding: 8px 10px;
-  background: var(--color-bg-secondary, #252540);
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
-}
-
+/* Close button in the panel's top-right corner, above the Smart Search tile */
 .mobile-sidebar-close {
-  display: inline-flex;
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 10;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  min-height: 40px;
-  padding: 6px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 10px;
-  background: rgba(26, 26, 46, 0.6);
+  background: rgba(26, 26, 46, 0.7);
   color: #e0e0e0;
-  font-size: 0.85rem;
-  font-weight: 600;
   cursor: pointer;
 }
 
 .mobile-sidebar-close svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
 .mobile-sidebar-close:active {
   transform: scale(0.96);
+}
+
+/* Pad the sidebar header on mobile so the logo and Smart Search sit below the
+   close button rather than under it. */
+.mobile-sidebar-panel .sidebar-header {
+  padding-top: 56px;
 }
 
 /* Mobile sidebar overlay */

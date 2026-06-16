@@ -833,6 +833,12 @@ function statusClass(tier) {
     transform: translateX(0);
   }
 
+  /* The mode toggle is surfaced outside the drawer on mobile, so hide the
+     in-drawer copy to avoid duplication. */
+  .gallery-sidebar .gallery-mode-toggle {
+    display: none;
+  }
+
   .gallery-sidebar-close {
     display: flex;
     align-items: center;
