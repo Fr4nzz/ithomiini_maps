@@ -694,6 +694,18 @@
   .dropdown-menu {
     min-width: 160px;
   }
+
+  /* The custom theme/basemap row (with the light-dark toggle at its right end)
+     shares the top band with the map's own top-right controls. Drop the native
+     zoom/fullscreen controls and the bbox button below the top row and the
+     full-width search bar so nothing overlaps. */
+  :deep(.maplibregl-ctrl-top-right) {
+    top: 104px;
+  }
+
+  .bbox-controls {
+    top: 104px;
+  }
 }
 
 /* Enhanced Popup */
