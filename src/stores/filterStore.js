@@ -132,6 +132,40 @@ export const useFilterStore = defineStore('filters', () => {
   const uniqueSubspecies = computed(() => uniqueValuesOf(getFilteredSubset(4), 'subspecies'))
   const uniqueMimicry = computed(() => uniqueValuesOf(datasetStore.allFeatures, 'mimicry_ring'))
 
+  const speciesFilterOptions = computed(() => {
+    return uniqueSpecies.value.map(species => ({
+      label: species,
+      value: species,
+      searchText: species.toLowerCase(),
+    }))
+  })
+
+  const filterSpeciesOptions = (options, search) => {
+    const query = (search || '').trim().toLowerCase()
+    if (!query) return options
+    const acceptedSet = new Set(options.map(option => option.value))
+    const direct = options.filter(option => option.label.toLowerCase().includes(query))
+    const directValues = new Set()
+    for (const option of direct) directValues.add(option.value)
+    const synonym = []
+    for (const entry of datasetStore.taxonomySynonyms || []) {
+      if (!acceptedSet.has(entry.accepted)) continue
+      if (directValues.has(entry.accepted)) continue
+      if (!entry.synonym?.toLowerCase().includes(query)) continue
+      synonym.push({
+        label: entry.accepted,
+        value: entry.accepted,
+        synonym: entry.synonym,
+        synonymMeta: `synonym: ${entry.synonym}`,
+        searchText: `${entry.accepted} ${entry.synonym}`.toLowerCase(),
+      })
+    }
+    return [
+      ...direct,
+      ...synonym.sort((a, b) => a.label.localeCompare(b.label) || a.synonym.localeCompare(b.synonym)),
+    ]
+  }
+
   const availableMimicryRings = computed(() => {
     let data = datasetStore.allFeatures
 
@@ -372,6 +406,8 @@ export const useFilterStore = defineStore('filters', () => {
     uniqueTribes,
     uniqueGenera,
     uniqueSpecies,
+    speciesFilterOptions,
+    filterSpeciesOptions,
     uniqueSubspecies,
     uniqueMimicry,
     availableMimicryRings,

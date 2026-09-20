@@ -1,18 +1,53 @@
 <script setup>
 import { ref, computed, watch, inject } from 'vue'
 import { useDataStore } from '../stores/data'
+import { useHostPlantStore } from '../stores/hostPlants'
 import { parseDate } from '../utils/dateHelpers'
 import { getStatusColor } from '../utils/constants'
 import { getTableThumbnailUrl } from '../utils/imageProxy'
 import { getCorrectionInfo, getGoatUrl } from '../utils/goatHelpers'
 import { useTableSort } from '../composables/useTableSort'
+import { useColumnResize } from '../composables/useColumnResize'
+import { rowsToCsv, downloadCsv } from '../utils/tableExport'
+import { useThemeStore } from '../stores/theme'
+import { getThemeOptions } from '../themes/presets'
+import { Sun, Moon, Palette } from 'lucide-vue-next'
 
 const store = useDataStore()
+const hostPlantStore = useHostPlantStore()
+const themeStore = useThemeStore()
 const openImageGallery = inject('openImageGallery')
 
 // Pagination
 const pageSize = ref(50)
 const currentPage = ref(1)
+const tableView = ref('records')
+const hostPlantTableMode = ref('butterflies')
+const expandedHostButterflies = ref(new Set())
+const showThemeDropdown = ref(false)
+const themeOptions = getThemeOptions()
+
+const selectTheme = (themeKey) => {
+  themeStore.setTheme(themeKey)
+  showThemeDropdown.value = false
+}
+
+const currentThemeName = computed(() => {
+  return themeStore.availableThemes[themeStore.currentTheme]?.name || 'Emerald'
+})
+
+// Drag-to-resize column widths (shared across all table views, namespaced).
+const { getWidth: getColWidth, startResize: startColResize } = useColumnResize()
+const colStyle = (ns, col) => {
+  const resized = getColWidth(ns, col.key, null)
+  if (resized) return { width: resized, minWidth: resized, maxWidth: resized }
+  return { width: col.width }
+}
+
+const toggleThemeMode = () => {
+  themeStore.toggleMode()
+}
+
 
 // Column visibility
 const visibleColumns = ref({
@@ -26,6 +61,7 @@ const visibleColumns = ref({
   mimicry_ring: true,
   sequencing_status: true,
   source: true,
+  spatial_check: true,
   curated: true,
   observation_date: true,
   country: true,
@@ -45,6 +81,7 @@ const columns = [
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
   { key: 'source', label: 'Source', width: '130px' },
+  { key: 'spatial_check', label: 'Spatial check', width: '145px' },
   { key: 'curated', label: 'Curated', width: '130px' },
   { key: 'observation_date', label: 'Date', width: '130px' },
   { key: 'country', label: 'Country', width: '100px' },
@@ -59,6 +96,8 @@ const rawData = computed(() => {
   if (!geo || !geo.features) return []
   return geo.features.map(f => f.properties)
 })
+
+const getSpatialCheck = (row) => row.spatial_check || 'OK'
 
 const columnFilteredData = computed(() => {
   const data = rawData.value
@@ -113,6 +152,10 @@ const columnFilteredData = computed(() => {
         const info = getCorrectionInfo(row)
         const type = info ? info.type.toLowerCase() : ''
         return type.includes(val)
+      }
+
+      if (col === 'spatial_check') {
+        return getSpatialCheck(row).toLowerCase() === val
       }
 
       const cellVal = String(row[col] || '').toLowerCase()
@@ -179,10 +222,7 @@ const paginatedData = computed(() => {
 })
 
 // Total pages
-const totalPages = computed(() => {
-  const count = tableView.value === 'species' ? filteredSpeciesData.value.length : sortedData.value.length
-  return Math.ceil(count / pageSize.value)
-})
+const totalPages = computed(() => Math.ceil(activeTableCount.value / pageSize.value))
 
 // Page numbers to display
 const visiblePages = computed(() => {
@@ -215,6 +255,15 @@ watch(rawData, () => {
   currentPage.value = 1
 })
 
+watch(tableView, (view) => {
+  currentPage.value = 1
+  if (view === 'hostplants') hostPlantStore.loadMetadata().catch(() => {})
+})
+
+watch(hostPlantTableMode, () => {
+  currentPage.value = 1
+})
+
 // Sort handler
 const toggleSort = (column) => {
   if (!toggleTableSort(column)) return
@@ -225,7 +274,6 @@ const toggleSort = (column) => {
 const showColumnSettings = ref(false)
 const showColumnFilters = ref(false)
 const columnFilters = ref({})
-const tableView = ref('records')
 
 const clearColumnFilters = () => {
   columnFilters.value = {}
@@ -247,6 +295,7 @@ const getFilterPlaceholder = (key) => {
     mimicry_ring: 'Filter...',
     sequencing_status: 'Filter...',
     source: 'Filter...',
+    spatial_check: 'Filter...',
     curated: 'Filter...',
     observation_date: 'e.g. 2023',
     country: 'Filter...',
@@ -259,7 +308,7 @@ const getFilterPlaceholder = (key) => {
 const uniqueValues = (key) => {
   const vals = new Set()
   for (const row of rawData.value) {
-    const v = row[key]
+    const v = key === 'spatial_check' ? getSpatialCheck(row) : row[key]
     if (v && v !== 'Unknown') vals.add(v)
   }
   return [...vals].sort()
@@ -418,6 +467,309 @@ const speciesColumns = [
   { key: 'bioproject', label: 'BioProject', width: '130px' },
 ]
 
+const activeButterflySpecies = computed(() => new Set(
+  rawData.value.map(row => row.scientific_name).filter(Boolean)
+))
+
+const normalizeHostName = (name) => String(name || '').trim().replace(/\s+/g, ' ').toLowerCase()
+
+const acceptedHostName = (taxon) => {
+  const resolution = taxon?.gbif_resolution || {}
+  const originalName = taxon?.canonical_name
+  const resolvedName = resolution.accepted_canonical_name
+    || resolution.accepted_scientific_name
+    || resolution.canonical_name
+    || resolution.genus
+    || resolution.scientific_name
+  const status = String(resolution.taxonomic_status || '').toUpperCase()
+  const isSynonym = status === 'SYNONYM' || Boolean(resolution.accepted_usage_key)
+  const isCorrectedName = originalName && resolvedName && normalizeHostName(resolvedName) !== normalizeHostName(originalName)
+  return (isSynonym || isCorrectedName) && isCorrectedName && resolvedName ? resolvedName : null
+}
+
+const hostDisplayTitle = (plant) => [
+  `${plant.rank} / ${plant.host_id_level}`,
+  plant.accepted_name ? `Accepted: ${plant.accepted_name}` : null,
+  plant.family,
+  plant.evidence_display,
+  plant.evidence_detail,
+  `${Number(plant.gbif_records || 0).toLocaleString()} GBIF records`,
+].filter(Boolean).join('; ')
+
+const hostPlantEvidenceRows = computed(() => {
+  const activeSpecies = activeButterflySpecies.value
+  const rows = []
+  for (const association of hostPlantStore.associations) {
+    if (!association.butterfly_taxon || !activeSpecies.has(association.butterfly_taxon)) continue
+    const taxon = hostPlantStore.taxaBySlug.get(association.host_taxon_slug)
+    const source = association.citation_for_ui
+      || association.source_citation
+      || association.source_refs
+      || '—'
+    rows.push({
+      id: association.id,
+      butterfly: association.butterfly_taxon,
+      host: association.host_taxon_name,
+      reported_as: association.host_plant_name_verbatim,
+      accepted_host: acceptedHostName(taxon),
+      host_rank: association.host_taxon_rank,
+      family: association.host_plant_family || taxon?.family || '—',
+      evidence_level: association.evidence_level || 'needs_check',
+      evidence_display: hostPlantStore.evidenceLevels.find(level => level.key === association.evidence_level)?.label || 'Needs check',
+      host_id_level: association.host_id_level || association.host_taxon_rank,
+      confidence: association.confidence === 'needs_check' ? 'needs check' : association.confidence,
+      confidence_display: hostPlantStore.confidenceDisplayLabel(association.confidence),
+      confidence_bucket: association.confidence_bucket || hostPlantStore.confidenceBucket(association.confidence),
+      evidence: association.evidence_detail || association.evidence_basis || association.evidence_type || '—',
+      source,
+      source_url: association.doi_or_url,
+      gbif_records: taxon?.occurrence_count || 0,
+      mapped: (taxon?.occurrence_count || 0) > 0,
+      notes: association.notes_for_web_app || association.caveats || '',
+      searchText: [
+        association.butterfly_taxon,
+        association.host_taxon_name,
+        association.host_plant_name_verbatim,
+        acceptedHostName(taxon),
+        association.host_taxon_rank,
+        association.host_plant_family,
+        association.evidence_level,
+        association.host_id_level,
+        association.evidence_detail,
+        association.confidence,
+        association.evidence_basis,
+        association.evidence_type,
+        source,
+        association.notes_for_web_app,
+        association.caveats,
+      ].filter(Boolean).join(' ').toLowerCase(),
+    })
+  }
+  return rows
+})
+
+const evidenceRank = { direct: 3, literature: 2, needs_check: 1, unknown: 0 }
+
+const compactSourceLabel = (source) => {
+  if (!source || source === '—') return null
+  return source
+    .replace(/\s+/g, ' ')
+    .replace(/Catalogue row\.\s*/i, '')
+    .split(/[.;|]/)[0]
+    .trim()
+}
+
+const hostPlantButterflyRows = computed(() => {
+  const byButterfly = new Map()
+  for (const row of hostPlantEvidenceRows.value) {
+    const entry = byButterfly.get(row.butterfly) || {
+      butterfly: row.butterfly,
+      hostPlants: new Map(),
+      counts: { species: 0, genus: 0, family: 0 },
+      families: new Set(),
+      sources: new Map(),
+      occurrenceBacked: new Set(),
+    }
+    const existing = entry.hostPlants.get(row.host)
+    if (!existing || evidenceRank[row.evidence_level] > evidenceRank[existing.evidence_level]) {
+      entry.hostPlants.set(row.host, {
+        name: row.host,
+        accepted_name: row.accepted_host,
+        confidence: row.confidence,
+        confidence_bucket: row.confidence_bucket,
+        evidence_level: row.evidence_level,
+        evidence_display: row.evidence_display,
+        evidence_detail: row.evidence,
+        host_id_level: row.host_id_level,
+        rank: row.host_rank,
+        family: row.family,
+        gbif_records: row.gbif_records,
+      })
+    }
+    if (entry.counts[row.host_id_level] != null) entry.counts[row.host_id_level] += 1
+    if (row.family && row.family !== '—') entry.families.add(row.family)
+    const source = compactSourceLabel(row.source)
+    if (source && !entry.sources.has(source)) {
+      entry.sources.set(source, { label: source, url: row.source_url })
+    } else if (source && row.source_url && !entry.sources.get(source)?.url) {
+      entry.sources.set(source, { label: source, url: row.source_url })
+    }
+    if (row.mapped) entry.occurrenceBacked.add(row.host)
+    byButterfly.set(row.butterfly, entry)
+  }
+
+  return [...byButterfly.values()].map(entry => {
+    const hosts = [...entry.hostPlants.values()].sort((a, b) => {
+      const rankDiff = evidenceRank[b.evidence_level] - evidenceRank[a.evidence_level]
+      if (rankDiff) return rankDiff
+      return a.name.localeCompare(b.name)
+    })
+    return {
+      butterfly: entry.butterfly,
+      hostPlants: hosts,
+      host_count: hosts.length,
+      counts: entry.counts,
+      families: [...entry.families].sort(),
+      sources: [...entry.sources.keys()].sort(),
+      sourceLinks: [...entry.sources.values()].sort((a, b) => a.label.localeCompare(b.label)),
+      occurrence_backed_count: entry.occurrenceBacked.size,
+      searchText: [
+        entry.butterfly,
+        ...hosts.map(host => host.name),
+        // Include corrected/accepted names so the filter matches either the
+        // originally reported name or the GBIF-resolved one.
+        ...hosts.map(host => host.accepted_name).filter(Boolean),
+        ...entry.families,
+        ...entry.sources.keys(),
+      ].join(' ').toLowerCase(),
+    }
+  })
+})
+
+const filteredHostPlantButterflyRows = computed(() => {
+  const data = hostPlantButterflyRows.value
+  const query = String(columnFilters.value.hostplants || columnFilters.value.scientific_name || '').trim().toLowerCase()
+  if (!query) return data
+  return data.filter(row => row.searchText.includes(query))
+})
+
+const filteredHostPlantEvidenceRows = computed(() => {
+  const filters = columnFilters.value
+  return hostPlantEvidenceRows.value.filter(row => {
+    const butterfly = String(filters.butterfly || filters.scientific_name || '').trim().toLowerCase()
+    const host = String(filters.host || '').trim().toLowerCase()
+    const confidence = String(filters.confidence || '').trim().toLowerCase()
+    const family = String(filters.family || '').trim().toLowerCase()
+    const source = String(filters.source || '').trim().toLowerCase()
+    const mapped = String(filters.mapped || '').trim().toLowerCase()
+    if (butterfly && !row.butterfly.toLowerCase().includes(butterfly)) return false
+    // Match either the originally reported host name or the corrected/accepted one.
+    if (host && !`${row.host} ${row.accepted_host || ''}`.toLowerCase().includes(host)) return false
+    if (confidence && row.evidence_level.toLowerCase() !== confidence) return false
+    if (family && row.family.toLowerCase() !== family) return false
+    if (source && !row.source.toLowerCase().includes(source)) return false
+    if (mapped === 'yes' && !row.mapped) return false
+    if (mapped === 'no' && row.mapped) return false
+    return true
+  })
+})
+
+const sortedHostPlantButterflyRows = computed(() => {
+  const data = [...filteredHostPlantButterflyRows.value]
+  data.sort((a, b) => {
+    const col = sortColumn.value
+    let valA = a[col]
+    let valB = b[col]
+    if (col === 'host_count') {
+      valA = a.host_count
+      valB = b.host_count
+    } else if (col === 'occurrence_backed_count') {
+      valA = a.occurrence_backed_count
+      valB = b.occurrence_backed_count
+    } else if (col === 'species') {
+      valA = a.counts.species
+      valB = b.counts.species
+    } else if (col === 'genus') {
+      valA = a.counts.genus
+      valB = b.counts.genus
+    } else if (col === 'family') {
+      valA = a.counts.family
+      valB = b.counts.family
+    } else {
+      valA = String(valA || '').toLowerCase()
+      valB = String(valB || '').toLowerCase()
+    }
+    if (valA < valB) return sortDirection.value === 'asc' ? -1 : 1
+    if (valA > valB) return sortDirection.value === 'asc' ? 1 : -1
+    return 0
+  })
+  return data
+})
+
+const sortedHostPlantEvidenceRows = computed(() => {
+  const data = [...filteredHostPlantEvidenceRows.value]
+  data.sort((a, b) => {
+    const col = sortColumn.value
+    let valA = a[col]
+    let valB = b[col]
+    if (col === 'gbif_records') {
+      valA = a.gbif_records
+      valB = b.gbif_records
+    } else if (col === 'evidence_level') {
+      valA = evidenceRank[a.evidence_level] || 0
+      valB = evidenceRank[b.evidence_level] || 0
+    } else {
+      valA = String(valA || '').toLowerCase()
+      valB = String(valB || '').toLowerCase()
+    }
+    if (valA < valB) return sortDirection.value === 'asc' ? -1 : 1
+    if (valA > valB) return sortDirection.value === 'asc' ? 1 : -1
+    return 0
+  })
+  return data
+})
+
+const paginatedHostPlantButterflyRows = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value
+  return sortedHostPlantButterflyRows.value.slice(start, start + pageSize.value)
+})
+
+const paginatedHostPlantEvidenceRows = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value
+  return sortedHostPlantEvidenceRows.value.slice(start, start + pageSize.value)
+})
+
+const hostPlantButterflyColumns = [
+  { key: 'butterfly', label: 'Butterfly species', width: '220px' },
+  { key: 'host_count', label: 'Host plants', width: '420px' },
+  { key: 'species', label: 'Species', width: '95px' },
+  { key: 'genus', label: 'Genus', width: '95px' },
+  { key: 'family', label: 'Family', width: '95px' },
+  { key: 'families', label: 'Families', width: '180px' },
+  { key: 'occurrence_backed_count', label: 'Mapped taxa', width: '105px' },
+  { key: 'sources', label: 'Sources', width: '260px' },
+]
+
+const hostPlantEvidenceColumns = [
+  { key: 'butterfly', label: 'Butterfly species', width: '210px' },
+  { key: 'host', label: 'Host plant', width: '220px' },
+  { key: 'reported_as', label: 'Reported as', width: '220px' },
+  { key: 'host_rank', label: 'Host rank / ID level', width: '120px' },
+  { key: 'family', label: 'Family', width: '130px' },
+  { key: 'evidence_level', label: 'Evidence', width: '110px' },
+  { key: 'evidence', label: 'Evidence basis', width: '280px' },
+  { key: 'source', label: 'Source', width: '280px' },
+  { key: 'gbif_records', label: 'GBIF records', width: '110px' },
+  { key: 'mapped', label: 'Mapped', width: '80px' },
+  { key: 'notes', label: 'Notes', width: '320px' },
+]
+
+// Column visibility for the host-plant tables (the records table has its own
+// visibleColumns above; the species table shows all columns).
+const HOST_BUTTERFLY_ANCHOR = 'butterfly'
+const visibleHostButterflyColumns = ref(Object.fromEntries(hostPlantButterflyColumns.map(c => [c.key, true])))
+const visibleHostEvidenceColumns = ref(Object.fromEntries(hostPlantEvidenceColumns.map(c => [c.key, true])))
+const activeHostButterflyColumns = computed(() => hostPlantButterflyColumns.filter(c => visibleHostButterflyColumns.value[c.key]))
+const activeHostEvidenceColumns = computed(() => hostPlantEvidenceColumns.filter(c => visibleHostEvidenceColumns.value[c.key]))
+
+// Descriptor consumed by the column-settings dropdown for the host-plant views.
+const hostColumnToggle = computed(() => {
+  if (tableView.value !== 'hostplants') return null
+  return hostPlantTableMode.value === 'butterflies'
+    ? { columns: hostPlantButterflyColumns, visible: visibleHostButterflyColumns.value, lockedKey: HOST_BUTTERFLY_ANCHOR }
+    : { columns: hostPlantEvidenceColumns, visible: visibleHostEvidenceColumns.value, lockedKey: null }
+})
+
+const activeTableCount = computed(() => {
+  if (tableView.value === 'species') return filteredSpeciesData.value.length
+  if (tableView.value === 'hostplants') {
+    return hostPlantTableMode.value === 'butterflies'
+      ? filteredHostPlantButterflyRows.value.length
+      : filteredHostPlantEvidenceRows.value.length
+  }
+  return sortedData.value.length
+})
+
 // Visible columns array for v-for
 const activeColumns = computed(() => {
   return columns.filter(col => visibleColumns.value[col.key])
@@ -530,6 +882,110 @@ const getGenomeSummary = (scientificName) => {
     detail: parts.join(' · '),
   }
 }
+
+const toggleHostButterflyExpanded = (butterfly) => {
+  const next = new Set(expandedHostButterflies.value)
+  if (next.has(butterfly)) next.delete(butterfly)
+  else next.add(butterfly)
+  expandedHostButterflies.value = next
+}
+
+const hostPlantsByHostIdLevel = (plants) => ({
+  species: plants.filter(plant => plant.host_id_level === 'species' || plant.rank === 'species'),
+  genus: plants.filter(plant => plant.host_id_level === 'genus' || plant.rank === 'genus'),
+  family: plants.filter(plant => plant.host_id_level === 'family' || plant.rank === 'family'),
+})
+
+const confidenceClass = (confidence) => {
+  const normalized = String(confidence || '').toLowerCase().replace(/\s+/g, '-')
+  if (normalized === 'needs-check') return 'low'
+  return normalized || 'unknown'
+}
+
+const hostLevelClass = (level) => {
+  const normalized = String(level || '').toLowerCase().replace(/\s+/g, '-')
+  return ['species', 'genus', 'family'].includes(normalized) ? normalized : 'unknown'
+}
+
+const conciseList = (items, limit = 3) => {
+  if (!items?.length) return '—'
+  const visible = items.slice(0, limit).join(', ')
+  const extra = items.length > limit ? ` +${items.length - limit} more` : ''
+  return `${visible}${extra}`
+}
+
+// ---- CSV export (respects active filters, sort, and visible columns) ----
+const recordCsvValue = (row, key) => {
+  switch (key) {
+    case 'goat_chromosome': return store.getChromosomeNumber(row.scientific_name)?.value ?? ''
+    case 'goat_genome': return getGenomeSummary(row.scientific_name)?.label ?? ''
+    case 'spatial_check': return getSpatialCheck(row)
+    case 'curated': return getCorrectionInfo(row)?.type ?? ''
+    case 'lat': return row.lat ?? ''
+    case 'lng': return row.lng ?? ''
+    default: return row[key] ?? ''
+  }
+}
+
+const speciesCsvValue = (sp, key) => {
+  if (key === 'genome_size') return sp.genome_size != null ? store.formatGenomeSize(sp.genome_size) : ''
+  return sp[key] ?? ''
+}
+
+const hostButterflyCsvValue = (row, key) => {
+  switch (key) {
+    case 'butterfly': return row.butterfly
+    case 'host_count': return row.hostPlants
+      .map(p => (p.accepted_name ? `${p.name} -> ${p.accepted_name}` : p.name))
+      .join('; ')
+    case 'species': return row.counts.species
+    case 'genus': return row.counts.genus
+    case 'family': return row.counts.family
+    case 'families': return row.families.join('; ')
+    case 'occurrence_backed_count': return row.occurrence_backed_count
+    case 'sources': return row.sources.join('; ')
+    default: return row[key] ?? ''
+  }
+}
+
+const hostEvidenceCsvValue = (row, key) => {
+  switch (key) {
+    case 'host': return row.accepted_host ? `${row.host} -> ${row.accepted_host}` : row.host
+    case 'host_rank': return `${row.host_rank} / ${row.host_id_level}`
+    case 'evidence_level': return row.evidence_display
+    case 'mapped': return row.mapped ? 'Yes' : 'No'
+    default: return row[key] ?? ''
+  }
+}
+
+const exportTableCsv = () => {
+  let cols, rows, valueFn, name
+  if (tableView.value === 'species') {
+    cols = speciesColumns
+    rows = sortedSpeciesData.value
+    valueFn = speciesCsvValue
+    name = 'species_goat'
+  } else if (tableView.value === 'hostplants' && hostPlantTableMode.value === 'butterflies') {
+    cols = activeHostButterflyColumns.value
+    rows = sortedHostPlantButterflyRows.value
+    valueFn = hostButterflyCsvValue
+    name = 'host_plants_by_butterfly'
+  } else if (tableView.value === 'hostplants') {
+    cols = activeHostEvidenceColumns.value
+    rows = sortedHostPlantEvidenceRows.value
+    valueFn = hostEvidenceCsvValue
+    name = 'host_plants_evidence'
+  } else {
+    cols = activeColumns.value.filter(c => c.key !== 'photo')
+    rows = sortedData.value
+    valueFn = recordCsvValue
+    name = 'records'
+  }
+  const headers = cols.map(c => ({ label: c.label, value: r => valueFn(r, c.key) }))
+  const csv = rowsToCsv(headers, rows)
+  const stamp = new Date().toISOString().slice(0, 10)
+  downloadCsv(`ithomiini_${name}_${stamp}.csv`, csv)
+}
 </script>
 
 <template>
@@ -538,8 +994,14 @@ const getGenomeSummary = (scientificName) => {
     <div class="table-header">
       <div class="header-left">
         <span class="record-count">
-          <strong>{{ tableView === 'species' ? filteredSpeciesData.length.toLocaleString() : sortedData.length.toLocaleString() }}</strong>
-          {{ tableView === 'species' ? 'species' : 'records' }}
+          <strong>{{ activeTableCount.toLocaleString() }}</strong>
+          {{
+            tableView === 'species'
+              ? 'species'
+              : tableView === 'hostplants'
+                ? (hostPlantTableMode === 'butterflies' ? 'butterflies' : 'host records')
+                : 'records'
+          }}
           <span v-if="activeFilterCount > 0" class="filter-indicator">(filtered)</span>
         </span>
         <span class="page-info">
@@ -548,6 +1010,56 @@ const getGenomeSummary = (scientificName) => {
       </div>
       
       <div class="header-right">
+        <div class="table-theme-controls">
+          <div class="table-theme-dropdown">
+            <button
+              type="button"
+              class="table-theme-trigger"
+              @click.stop="showThemeDropdown = !showThemeDropdown"
+            >
+              <Palette class="layer-icon" />
+              <span>{{ currentThemeName }}</span>
+              <svg class="chevron" :class="{ open: showThemeDropdown }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+
+            <Transition name="fade">
+              <div v-if="showThemeDropdown" class="table-theme-menu">
+                <button
+                  v-for="option in themeOptions"
+                  :key="option.value"
+                  type="button"
+                  :class="{ active: themeStore.currentTheme === option.value }"
+                  @click="selectTheme(option.value)"
+                >
+                  <div
+                    class="theme-swatch"
+                    :style="{ backgroundColor: themeStore.isDarkMode ? option.previewBgDark : option.previewBgLight }"
+                  >
+                    <div
+                      class="theme-swatch-accent"
+                      :style="{ backgroundColor: option.accentColor }"
+                    />
+                  </div>
+                  <span>{{ option.label }}</span>
+                </button>
+              </div>
+            </Transition>
+          </div>
+
+          <button
+            type="button"
+            class="table-mode-toggle"
+            :class="{ 'is-light': !themeStore.isDarkMode }"
+            @click="toggleThemeMode"
+            :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+          >
+            <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
+            <Moon v-else class="mode-icon" />
+          </button>
+        </div>
+
         <div class="view-mode-toggle">
           <button
             :class="{ active: tableView === 'records' }"
@@ -557,6 +1069,21 @@ const getGenomeSummary = (scientificName) => {
             :class="{ active: tableView === 'species' }"
             @click="tableView = 'species'; currentPage = 1"
           >Species (GoaT)</button>
+          <button
+            :class="{ active: tableView === 'hostplants' }"
+            @click="tableView = 'hostplants'; currentPage = 1"
+          >Host Plants</button>
+        </div>
+
+        <div v-if="tableView === 'hostplants'" class="view-mode-toggle sub-toggle">
+          <button
+            :class="{ active: hostPlantTableMode === 'butterflies' }"
+            @click="hostPlantTableMode = 'butterflies'"
+          >By butterfly</button>
+          <button
+            :class="{ active: hostPlantTableMode === 'evidence' }"
+            @click="hostPlantTableMode = 'evidence'"
+          >Evidence rows</button>
         </div>
 
         <!-- Page Size -->
@@ -580,9 +1107,23 @@ const getGenomeSummary = (scientificName) => {
           <span v-if="activeFilterCount > 0" class="filter-count">{{ activeFilterCount }}</span>
         </button>
 
+        <!-- Export current table (filters + sort + visible columns applied) -->
+        <button
+          class="column-filter-toggle"
+          @click="exportTableCsv"
+          title="Download the current table as CSV (filters applied)"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export CSV
+        </button>
+
         <!-- Column Settings -->
-        <button 
-          v-if="tableView === 'records'"
+        <button
+          v-if="tableView === 'records' || tableView === 'hostplants'"
           class="btn-columns"
           @click="showColumnSettings = !showColumnSettings"
           :class="{ active: showColumnSettings }"
@@ -595,18 +1136,38 @@ const getGenomeSummary = (scientificName) => {
           </svg>
           Columns
         </button>
-        
-        <!-- Column Settings Dropdown -->
+
+        <!-- Column Settings Dropdown (records) -->
         <Transition name="fade">
           <div v-if="tableView === 'records' && showColumnSettings" class="column-dropdown">
-            <label 
-              v-for="col in columns" 
+            <label
+              v-for="col in columns"
               :key="col.key"
               class="column-toggle"
             >
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 v-model="visibleColumns[col.key]"
+              />
+              <span>{{ col.label }}</span>
+            </label>
+          </div>
+        </Transition>
+
+        <!-- Column Settings Dropdown (host plants) -->
+        <Transition name="fade">
+          <div v-if="tableView === 'hostplants' && showColumnSettings && hostColumnToggle" class="column-dropdown">
+            <label
+              v-for="col in hostColumnToggle.columns"
+              :key="col.key"
+              class="column-toggle"
+              :class="{ locked: col.key === hostColumnToggle.lockedKey }"
+            >
+              <input
+                type="checkbox"
+                :checked="hostColumnToggle.visible[col.key]"
+                :disabled="col.key === hostColumnToggle.lockedKey"
+                @change="hostColumnToggle.visible[col.key] = $event.target.checked"
               />
               <span>{{ col.label }}</span>
             </label>
@@ -620,21 +1181,21 @@ const getGenomeSummary = (scientificName) => {
       <table v-if="tableView === 'records'" class="data-table">
         <thead>
           <tr>
-            <th 
+            <th
               v-for="col in activeColumns"
               :key="col.key"
-              :style="{ width: col.width }"
+              :style="colStyle('records', col)"
               @click="toggleSort(col.key)"
               class="sortable"
               :class="{ sorted: sortColumn === col.key, 'no-sort': col.key === 'photo' }"
             >
               <div class="th-content">
                 <span>{{ col.label }}</span>
-                <svg 
+                <svg
                   v-if="sortColumn === col.key && col.key !== 'photo'"
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
                   stroke-width="2"
                   class="sort-icon"
                   :class="{ desc: sortDirection === 'desc' }"
@@ -642,6 +1203,7 @@ const getGenomeSummary = (scientificName) => {
                   <path d="m18 15-6-6-6 6"/>
                 </svg>
               </div>
+              <span class="col-resize-handle" @mousedown.stop.prevent="startColResize($event, 'records', col.key)" @click.stop></span>
             </th>
           </tr>
           <tr v-if="showColumnFilters" class="filter-row">
@@ -707,6 +1269,15 @@ const getGenomeSummary = (scientificName) => {
               >
                 <option value="">All</option>
                 <option v-for="val in uniqueValues('source')" :key="val" :value="val">{{ val }}</option>
+              </select>
+
+              <select
+                v-else-if="col.key === 'spatial_check'"
+                class="column-filter-select"
+                v-model="columnFilters[col.key]"
+              >
+                <option value="">All</option>
+                <option v-for="val in uniqueValues('spatial_check')" :key="val" :value="val">{{ val }}</option>
               </select>
 
               <select
@@ -842,6 +1413,9 @@ const getGenomeSummary = (scientificName) => {
             <td v-if="visibleColumns.source" class="cell-source">
               {{ row.source }}
             </td>
+            <td v-if="visibleColumns.spatial_check" class="cell-spatial-check">
+              {{ getSpatialCheck(row) }}
+            </td>
             <td v-if="visibleColumns.curated" class="cell-curated">
               <template v-if="getCorrectionInfo(row)">
                 <span
@@ -892,7 +1466,7 @@ const getGenomeSummary = (scientificName) => {
             <th
               v-for="col in speciesColumns"
               :key="col.key"
-              :style="{ width: col.width, minWidth: col.width }"
+              :style="colStyle('species', col)"
               class="sortable"
               :class="{ sorted: sortColumn === col.key }"
               @click="toggleSort(col.key)"
@@ -907,6 +1481,7 @@ const getGenomeSummary = (scientificName) => {
                   <path d="m18 15-6-6-6 6"/>
                 </svg>
               </div>
+              <span class="col-resize-handle" @mousedown.stop.prevent="startColResize($event, 'species', col.key)" @click.stop></span>
             </th>
           </tr>
           <tr v-if="showColumnFilters" class="filter-row">
@@ -1006,6 +1581,252 @@ const getGenomeSummary = (scientificName) => {
           </tr>
         </tbody>
       </table>
+
+      <table v-if="tableView === 'hostplants' && hostPlantTableMode === 'butterflies'" class="data-table host-plant-table">
+        <thead>
+          <tr>
+            <th
+              v-for="col in activeHostButterflyColumns"
+              :key="col.key"
+              :style="colStyle('hostButterfly', col)"
+              class="sortable"
+              :class="{ sorted: sortColumn === col.key }"
+              @click="toggleSort(col.key)"
+            >
+              <div class="th-content">
+                <span>{{ col.label }}</span>
+                <svg
+                  v-if="sortColumn === col.key"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  class="sort-icon" :class="{ desc: sortDirection === 'desc' }"
+                >
+                  <path d="m18 15-6-6-6 6"/>
+                </svg>
+              </div>
+              <span class="col-resize-handle" @mousedown.stop.prevent="startColResize($event, 'hostButterfly', col.key)" @click.stop></span>
+            </th>
+          </tr>
+          <tr v-if="showColumnFilters" class="filter-row">
+            <th v-for="col in activeHostButterflyColumns" :key="'f-' + col.key" class="filter-cell">
+              <input
+                v-if="col.key === 'butterfly'"
+                type="text"
+                class="column-filter-input"
+                placeholder="Filter butterfly, host, family, source..."
+                v-model="columnFilters.hostplants"
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="row in paginatedHostPlantButterflyRows" :key="row.butterfly">
+            <tr class="host-butterfly-row">
+              <td class="cell-species">
+                <button
+                  type="button"
+                  class="row-expand-btn"
+                  :class="{ active: expandedHostButterflies.has(row.butterfly) }"
+                  @click="toggleHostButterflyExpanded(row.butterfly)"
+                  :title="expandedHostButterflies.has(row.butterfly) ? 'Collapse host plants' : 'Show all host plants'"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+                <em>{{ row.butterfly }}</em>
+              </td>
+              <td v-if="visibleHostButterflyColumns.host_count" class="cell-host-plants">
+                <div class="host-chip-list compact">
+                  <span
+                    v-for="plant in row.hostPlants.slice(0, 8)"
+                    :key="plant.name"
+                    class="host-chip"
+                    :class="hostLevelClass(plant.host_id_level || plant.rank)"
+                    :title="hostDisplayTitle(plant)"
+                  >
+                    <span class="host-chip-names" :class="{ 'has-accepted-name': plant.accepted_name }">
+                      <em class="reported-name">{{ plant.name }}</em>
+                      <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
+                    </span>
+                    <span v-if="plant.gbif_records > 0" class="chip-count">{{ plant.gbif_records.toLocaleString() }}</span>
+                  </span>
+                  <button
+                    v-if="row.hostPlants.length > 8"
+                    type="button"
+                    class="host-chip more"
+                    @click="toggleHostButterflyExpanded(row.butterfly)"
+                  >
+                    +{{ row.hostPlants.length - 8 }} more
+                  </button>
+                </div>
+              </td>
+              <td v-if="visibleHostButterflyColumns.species" class="cell-records"><span class="confidence-pill species">{{ row.counts.species }}</span></td>
+              <td v-if="visibleHostButterflyColumns.genus" class="cell-records"><span class="confidence-pill genus">{{ row.counts.genus }}</span></td>
+              <td v-if="visibleHostButterflyColumns.family" class="cell-records"><span class="confidence-pill family">{{ row.counts.family }}</span></td>
+              <td v-if="visibleHostButterflyColumns.families">{{ conciseList(row.families, 3) }}</td>
+              <td v-if="visibleHostButterflyColumns.occurrence_backed_count" class="cell-records">{{ row.occurrence_backed_count }}</td>
+              <td v-if="visibleHostButterflyColumns.sources">
+                <span class="source-list compact-source-list">
+                  <template v-for="source in row.sourceLinks.slice(0, 2)" :key="source.label">
+                    <a
+                      v-if="source.url"
+                      :href="source.url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="source-link"
+                    >{{ source.label }}</a>
+                    <span v-else>{{ source.label }}</span>
+                  </template>
+                  <span v-if="row.sourceLinks.length > 2" class="text-muted">+{{ row.sourceLinks.length - 2 }} more</span>
+                </span>
+              </td>
+            </tr>
+            <tr v-if="expandedHostButterflies.has(row.butterfly)" class="host-expanded-row">
+              <td class="host-expanded-spacer" aria-hidden="true"></td>
+              <td :colspan="Math.max(1, activeHostButterflyColumns.length - 1)">
+                <div class="host-expanded-panel">
+                  <div
+                    v-for="level in hostPlantStore.hostIdLevels"
+                    :key="level.key"
+                    class="host-confidence-block"
+                  >
+                    <div class="host-confidence-heading">
+                      <span class="confidence-pill" :class="level.key">
+                        {{ level.label }}
+                      </span>
+                      <span>{{ hostPlantsByHostIdLevel(row.hostPlants)[level.key].length }} taxa</span>
+                    </div>
+                    <div class="host-chip-list expanded">
+                      <span
+                        v-for="plant in hostPlantsByHostIdLevel(row.hostPlants)[level.key]"
+                        :key="plant.name"
+                        class="host-chip"
+                        :class="hostLevelClass(plant.host_id_level || plant.rank)"
+                        :title="hostDisplayTitle(plant)"
+                      >
+                        <span class="host-chip-names" :class="{ 'has-accepted-name': plant.accepted_name }">
+                          <em class="reported-name">{{ plant.name }}</em>
+                          <span v-if="plant.accepted_name" class="accepted-name">→ <em>{{ plant.accepted_name }}</em></span>
+                        </span>
+                        <span v-if="plant.gbif_records > 0" class="chip-count">{{ plant.gbif_records.toLocaleString() }}</span>
+                      </span>
+                      <span v-if="hostPlantsByHostIdLevel(row.hostPlants)[level.key].length === 0" class="text-muted">—</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </template>
+          <tr v-if="paginatedHostPlantButterflyRows.length === 0">
+            <td :colspan="activeHostButterflyColumns.length" class="empty-state">
+              <div class="empty-content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <p>No host-plant records match the current selection</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table v-if="tableView === 'hostplants' && hostPlantTableMode === 'evidence'" class="data-table host-plant-table evidence-table">
+        <thead>
+          <tr>
+            <th
+              v-for="col in activeHostEvidenceColumns"
+              :key="col.key"
+              :style="colStyle('hostEvidence', col)"
+              class="sortable"
+              :class="{ sorted: sortColumn === col.key }"
+              @click="toggleSort(col.key)"
+            >
+              <div class="th-content">
+                <span>{{ col.label }}</span>
+                <svg
+                  v-if="sortColumn === col.key"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  class="sort-icon" :class="{ desc: sortDirection === 'desc' }"
+                >
+                  <path d="m18 15-6-6-6 6"/>
+                </svg>
+              </div>
+              <span class="col-resize-handle" @mousedown.stop.prevent="startColResize($event, 'hostEvidence', col.key)" @click.stop></span>
+            </th>
+          </tr>
+          <tr v-if="showColumnFilters" class="filter-row">
+            <th v-for="col in activeHostEvidenceColumns" :key="'f-' + col.key" class="filter-cell">
+              <input v-if="col.key === 'butterfly'" type="text" class="column-filter-input" placeholder="Butterfly..." v-model="columnFilters.butterfly" />
+              <input v-else-if="col.key === 'host'" type="text" class="column-filter-input" placeholder="Host (reported or accepted)..." v-model="columnFilters.host" />
+              <input v-else-if="col.key === 'family'" type="text" class="column-filter-input" placeholder="Family..." v-model="columnFilters.family" />
+              <select v-else-if="col.key === 'evidence_level'" class="column-filter-select" v-model="columnFilters.confidence">
+                <option value="">All</option>
+                <option value="direct">Observed</option>
+                <option value="literature">Reported</option>
+                <option value="needs_check">Needs check</option>
+              </select>
+              <input v-else-if="col.key === 'source'" type="text" class="column-filter-input" placeholder="Source..." v-model="columnFilters.source" />
+              <select v-else-if="col.key === 'mapped'" class="column-filter-select" v-model="columnFilters.mapped">
+                <option value="">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in paginatedHostPlantEvidenceRows" :key="row.id">
+            <td v-if="visibleHostEvidenceColumns.butterfly" class="cell-species"><em>{{ row.butterfly }}</em></td>
+            <td v-if="visibleHostEvidenceColumns.host" class="cell-host" :class="{ 'has-accepted-host': row.accepted_host }">
+              <em class="reported-host-name">{{ row.host }}</em>
+              <span v-if="row.accepted_host" class="accepted-host-name">→ <em>{{ row.accepted_host }}</em></span>
+            </td>
+            <td v-if="visibleHostEvidenceColumns.reported_as" class="cell-long-text">
+              <em v-if="row.reported_as">{{ row.reported_as }}</em>
+              <span v-else class="text-muted">—</span>
+            </td>
+            <td v-if="visibleHostEvidenceColumns.host_rank">{{ row.host_rank }} / {{ row.host_id_level }}</td>
+            <td v-if="visibleHostEvidenceColumns.family">{{ row.family }}</td>
+            <td v-if="visibleHostEvidenceColumns.evidence_level">
+              <span class="confidence-pill" :class="confidenceClass(row.evidence_level)">
+                {{ row.evidence_display }}
+              </span>
+            </td>
+            <td v-if="visibleHostEvidenceColumns.evidence" class="cell-long-text">{{ row.evidence }}</td>
+            <td v-if="visibleHostEvidenceColumns.source" class="cell-long-text">
+              <a
+                v-if="row.source_url"
+                :href="row.source_url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="source-link"
+              >
+                {{ row.source }}
+              </a>
+              <span v-else>{{ row.source }}</span>
+            </td>
+            <td v-if="visibleHostEvidenceColumns.gbif_records" class="cell-records">{{ row.gbif_records.toLocaleString() }}</td>
+            <td v-if="visibleHostEvidenceColumns.mapped">
+              <span class="mapped-badge" :class="{ mapped: row.mapped }">
+                {{ row.mapped ? 'Yes' : 'No' }}
+              </span>
+            </td>
+            <td v-if="visibleHostEvidenceColumns.notes" class="cell-long-text">{{ row.notes || '—' }}</td>
+          </tr>
+          <tr v-if="paginatedHostPlantEvidenceRows.length === 0">
+            <td :colspan="activeHostEvidenceColumns.length" class="empty-state">
+              <div class="empty-content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <p>No host-plant evidence rows match your filters</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Pagination -->
@@ -1072,6 +1893,7 @@ const getGenomeSummary = (scientificName) => {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-width: 0;
   background: var(--color-bg-secondary, #252540);
   border-radius: 8px;
   overflow: hidden;
@@ -1114,6 +1936,123 @@ const getGenomeSummary = (scientificName) => {
   position: relative;
 }
 
+.table-theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-theme-trigger,
+.table-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 10px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 6px;
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.table-theme-trigger,
+.table-mode-toggle {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.table-theme-trigger:hover,
+.table-mode-toggle:hover {
+  background: var(--color-bg-secondary, #353558);
+  border-color: var(--color-border-light, #4d4d6c);
+}
+
+.table-theme-trigger .layer-icon,
+.table-mode-toggle .mode-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent, #4ade80);
+}
+
+.table-mode-toggle {
+  width: 34px;
+  justify-content: center;
+  padding: 0;
+}
+
+.table-mode-toggle.is-light .mode-icon {
+  color: #f59e0b;
+}
+
+.table-theme-trigger .chevron {
+  width: 13px;
+  height: 13px;
+  color: var(--color-text-muted, #888);
+  transition: transform 0.2s;
+}
+
+.table-theme-trigger .chevron.open {
+  transform: rotate(180deg);
+}
+
+.table-theme-dropdown {
+  position: relative;
+}
+
+.table-theme-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 160px;
+  padding: 4px;
+  background: var(--color-bg-overlay, var(--color-bg-primary, #1a1a2e));
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px var(--color-shadow-color, rgba(0, 0, 0, 0.25));
+  z-index: 20;
+}
+
+.table-theme-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.table-theme-menu button:hover,
+.table-theme-menu button.active {
+  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  color: var(--color-accent, #4ade80);
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border, #3d3d5c);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.theme-swatch-accent {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
 .page-size-select {
   padding: 6px 10px;
   background: var(--color-bg-tertiary, #2d2d4a);
@@ -1154,6 +2093,11 @@ const getGenomeSummary = (scientificName) => {
 .view-mode-toggle button.active {
   background: rgba(59, 130, 246, 0.15);
   color: #60a5fa;
+}
+
+.view-mode-toggle.sub-toggle button {
+  font-size: 0.72rem;
+  padding: 6px 10px;
 }
 
 .btn-columns {
@@ -1253,16 +2197,35 @@ const getGenomeSummary = (scientificName) => {
   accent-color: var(--color-accent, #4ade80);
 }
 
+.column-toggle.locked {
+  cursor: default;
+  opacity: 0.55;
+}
+
 /* Table */
 .table-wrapper {
   flex: 1;
   overflow: auto;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
+}
+
+/* Fit the host-plant tables to the available width (like the other tables) so
+   they don't force a horizontal scrollbar. Fixed layout distributes the column
+   widths proportionally; drag-to-resize then redistributes within the table. */
+.host-plant-table {
+  width: 100%;
+  table-layout: fixed;
+}
+.host-plant-table th,
+.host-plant-table td {
+  overflow-wrap: anywhere;
 }
 
 .data-table th {
@@ -1293,6 +2256,23 @@ const getGenomeSummary = (scientificName) => {
 
 .data-table th.sorted {
   color: var(--color-accent, #4ade80);
+}
+
+/* Drag-to-resize handle on the trailing edge of each header cell. */
+.col-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+  z-index: 11;
+}
+.col-resize-handle:hover {
+  background: var(--color-accent, #4ade80);
+  opacity: 0.5;
 }
 
 .th-content {
@@ -1654,6 +2634,370 @@ const getGenomeSummary = (scientificName) => {
 .cell-records {
   text-align: center;
   font-variant-numeric: tabular-nums;
+}
+
+.host-plant-table .cell-species {
+  min-width: 190px;
+}
+
+.host-butterfly-row .cell-species {
+  white-space: nowrap;
+}
+
+.host-butterfly-row .cell-species .row-expand-btn {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.host-butterfly-row .cell-species em {
+  vertical-align: middle;
+}
+
+.row-expand-btn {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border, #3d3d5c);
+  border-radius: 5px;
+  background: var(--color-bg-tertiary, #2d2d4a);
+  color: var(--color-text-secondary, #aaa);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 0 0 auto;
+}
+
+.row-expand-btn:hover,
+.row-expand-btn.active {
+  border-color: var(--color-accent, #4ade80);
+  color: var(--color-accent, #4ade80);
+}
+
+.row-expand-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+}
+
+.row-expand-btn.active svg {
+  transform: rotate(90deg);
+}
+
+.cell-host-plants {
+  min-width: 360px;
+}
+
+.host-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.host-chip-list.compact {
+  max-width: 520px;
+}
+
+.host-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary, #e0e0e0);
+  font-size: 0.74rem;
+  line-height: 1.2;
+  max-width: 280px;
+  vertical-align: top;
+}
+
+.host-chip-names {
+  display: grid;
+  min-width: 0;
+  row-gap: 1px;
+}
+
+.host-chip em,
+.host-chip .reported-name,
+.host-chip .accepted-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.host-chip .chip-count {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.host-chip .reported-name {
+  color: inherit;
+}
+
+.host-chip-names.has-accepted-name .reported-name {
+  color: #b8bec8;
+}
+
+.host-chip .accepted-name {
+  color: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.host-chip .accepted-name em {
+  color: inherit;
+}
+
+:global([data-mode="light"]) .host-chip-names.has-accepted-name .reported-name {
+  color: #52606d;
+}
+
+:global([data-mode="light"]) .host-chip.species .accepted-name,
+:global([data-mode="light"]) .host-chip.high .accepted-name {
+  color: #15803d;
+}
+
+:global([data-mode="light"]) .host-chip.genus .accepted-name,
+:global([data-mode="light"]) .host-chip.medium .accepted-name {
+  color: #a16207;
+}
+
+:global([data-mode="light"]) .host-chip.family .accepted-name,
+:global([data-mode="light"]) .host-chip.low .accepted-name,
+:global([data-mode="light"]) .host-chip.needs-check .accepted-name {
+  color: #be123c;
+}
+
+.cell-host.has-accepted-host .reported-host-name {
+  color: #b8bec8;
+}
+
+.accepted-host-name {
+  color: var(--color-text-primary, #e0e0e0);
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+:global([data-mode="light"]) .cell-host.has-accepted-host .reported-host-name {
+  color: #52606d;
+}
+
+:global([data-mode="light"]) .accepted-host-name {
+  color: #111827;
+}
+
+.host-chip.species,
+.host-chip.high {
+  background: rgba(74, 222, 128, 0.14);
+  border-color: rgba(74, 222, 128, 0.28);
+  color: #86efac;
+}
+
+.host-chip.genus,
+.host-chip.medium {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.25);
+  color: #fcd34d;
+}
+
+.host-chip.family,
+.host-chip.low,
+.host-chip.needs-check {
+  background: rgba(251, 113, 133, 0.12);
+  border-color: rgba(251, 113, 133, 0.25);
+  color: #fda4af;
+}
+
+
+:global([data-mode="light"]) .host-chip.species,
+:global([data-mode="light"]) .host-chip.high {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(22, 163, 74, 0.34);
+  color: #15803d;
+}
+
+:global([data-mode="light"]) .host-chip.genus,
+:global([data-mode="light"]) .host-chip.medium {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(217, 119, 6, 0.38);
+  color: #92400e;
+}
+
+:global([data-mode="light"]) .host-chip.family,
+:global([data-mode="light"]) .host-chip.low,
+:global([data-mode="light"]) .host-chip.needs-check {
+  background: rgba(244, 63, 94, 0.13);
+  border-color: rgba(225, 29, 72, 0.34);
+  color: #be123c;
+}
+
+.host-chip.more {
+  cursor: pointer;
+  color: #60a5fa;
+}
+
+.chip-count {
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.18);
+  color: inherit;
+  font-size: 0.64rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+:global([data-mode="light"]) .chip-count {
+  background: rgba(15, 23, 42, 0.16);
+  color: inherit;
+}
+
+.confidence-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.confidence-pill.species,
+.confidence-pill.high,
+.confidence-pill.direct {
+  background: rgba(74, 222, 128, 0.16);
+  color: #4ade80;
+}
+
+.confidence-pill.genus,
+.confidence-pill.medium,
+.confidence-pill.literature {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+}
+
+.confidence-pill.family,
+.confidence-pill.low,
+.confidence-pill.needs-check {
+  background: rgba(251, 113, 133, 0.15);
+  color: #fb7185;
+}
+
+.host-expanded-row td {
+  background: rgba(0, 0, 0, 0.12);
+  padding: 8px 14px;
+}
+
+.host-expanded-row .host-expanded-spacer {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0;
+}
+
+.host-expanded-panel {
+  display: grid;
+  gap: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.host-confidence-block {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.host-confidence-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--color-text-muted, #888);
+  font-size: 0.72rem;
+}
+
+.cell-long-text {
+  max-width: 360px;
+  color: var(--color-text-secondary, #aaa);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.source-link {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.source-link:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+.compact-source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+
+.mapped-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-muted, #888);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.mapped-badge.mapped {
+  background: rgba(74, 222, 128, 0.14);
+  color: #4ade80;
+}
+
+
+/* Light-mode host chip contrast: keep fully global so scoped CSS cannot miss the html theme class. */
+:global(html.light .host-chip.species),
+:global(html.light .host-chip.high) {
+  background: rgba(34, 197, 94, 0.18) !important;
+  border-color: rgba(22, 163, 74, 0.42) !important;
+  color: #166534 !important;
+}
+
+:global(html.light .host-chip.genus),
+:global(html.light .host-chip.medium) {
+  background: rgba(245, 158, 11, 0.18) !important;
+  border-color: rgba(217, 119, 6, 0.46) !important;
+  color: #92400e !important;
+}
+
+:global(html.light .host-chip.family),
+:global(html.light .host-chip.low),
+:global(html.light .host-chip.needs-check) {
+  background: rgba(244, 63, 94, 0.16) !important;
+  border-color: rgba(225, 29, 72, 0.42) !important;
+  color: #9f1239 !important;
+}
+
+:global(html.light .host-chip .reported-name),
+:global(html.light .host-chip .accepted-name),
+:global(html.light .host-chip .accepted-name em),
+:global(html.light .host-chip .chip-count) {
+  color: inherit !important;
+}
+
+:global(html.light .host-chip-names.has-accepted-name .reported-name) {
+  color: #64748b !important;
 }
 
 /* Empty State */

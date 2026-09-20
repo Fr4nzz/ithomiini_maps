@@ -1,52 +1,58 @@
 ================================================================================
 PAPER STATISTICS REPORT
 ================================================================================
+Statistics calculated from app data generated at: 2026-05-09T13:14:47Z
 
 
 ## TABLE 1: Data Summary by Source
+Data snapshot: 2026-05-09T13:14:47Z
 --------------------------------------------------------------------------------
 Source                          Records  Species Subspecies   Genera  Countries
 --------------------------------------------------------------------------------
-Sanger Institute                  7,265      494        597      173          8
-GBIF (UNAM)                      21,586       34         25       19          1
-GBIF (Other Institutions)        28,182      417        469       43         32
+Sanger Institute                  6,428      505        612      179          8
+GBIF (UNAM)                      21,562       34         25       19          1
+GBIF (Other Institutions)        26,956      416        454       43         24
 Dore et al. (2022)               28,927      374        999       48         23
-iNaturalist                      19,901      252        175       41         25
+iNaturalist                      20,424      255        177       41         25
 --------------------------------------------------------------------------------
-TOTAL (merged, all sources)     105,861      782       1380      182         33
+TOTAL (merged, all sources)     104,297      786       1383      188         26
 
 
 ## Sanger Institute Sequencing Status Breakdown
+Data snapshot: 2026-05-09T13:14:47Z
 --------------------------------------------------
-  Sequenced                  4,600 (63.3%)
-  Preserved Specimen         1,428 (19.7%)
-  Tissue Available           1,237 (17.0%)
+  Tissue at Sanger           2,659 (41.4%)
+  Sequenced                  2,074 (32.3%)
+  Tissue Available           1,225 (19.1%)
+  Preserved Specimen           470 (7.3%)
 
 ## GBIF Basis of Record (all GBIF sub-sources combined)
 --------------------------------------------------
 
 
 ## TABLE S2: Taxonomic Curation Pipeline Statistics
+Data snapshot: 2026-05-09T13:14:47Z
 ------------------------------------------------------------
-Total records curated: 105,861
+Total records curated: 104,297
 
 Curation basis breakdown:
-  GBIF                             99,920 (94.4%)
-  Ref. Taxonomy                     3,818 (3.6%)
-  GBIF API                            895 (0.8%)
-  GBIF Synonym                        284 (0.3%)
-  Typo Detection                      212 (0.2%)
+  GBIF                             98,884 (94.8%)
+  Ref. Taxonomy                     3,338 (3.2%)
+  GBIF API                            881 (0.8%)
+  GBIF Synonym                        251 (0.2%)
+  Typo Detection                      190 (0.2%)
+  Literature                            4 (0.0%)
 
 Curation status breakdown:
-  verified                         75,434 (71.3%)
-  verified_nominotypical           12,503 (11.8%)
-  subspecies_unresolved             9,954 (9.4%)
-  synonym_resolved                  2,225 (2.1%)
+  verified                         74,445 (71.4%)
+  verified_nominotypical           12,444 (11.9%)
+  subspecies_unresolved             9,927 (9.5%)
   undescribed                       2,225 (2.1%)
-  verified_literature               1,874 (1.8%)
-  not_curated                         730 (0.7%)
+  verified_literature               1,823 (1.7%)
+  synonym_resolved                  1,766 (1.7%)
+  not_curated                         747 (0.7%)
   higher_rank_only                    615 (0.6%)
-  non_standard_subspecies             245 (0.2%)
+  non_standard_subspecies             249 (0.2%)
   subspecies_synonym                   48 (0.0%)
   corrected_literature                  6 (0.0%)
   not_found                             2 (0.0%)
@@ -56,48 +62,48 @@ Curation status breakdown:
 ----------------------------------------------------------------------------------------------------
 Ring                  Records  Species Subspecies  Representative Species
 ----------------------------------------------------------------------------------------------------
-Acrisione                  48        1          1  Athesis acrisione
-Agnosia                15,021       83        132  Brevioleria arzalia, Brevioleria seba, Dircenna adina
-Amalda                  2,531        9         15  Hypoleria lavinia, Hyposcada schausi, Ithomia diasia
-Aureliana                 745       12         25  Brevioleria aelia, Brevioleria arzalia, Brevioleria seba
-Banjana-M               2,013       43         65  Episcada salvinia, Genus1 nsp1, Godyris lauta
-Confusa                 6,191       20         51  Aremfoxia ferra, Athesis acrisione, Callithomia lenea
-Dercyllidas               188        1          2  Patricia dercyllidas
-Dilucida                6,675       40         81  Athesis clearista, Callithomia lenea, Ceratinia neso
-Doto                      781       15         35  Callithomia lenea, Ceratinia neso, Dircenna dero
-Duessa                    142        4         12  Hyalyris oulita, Hypothyris leprieuri, Hypothyris thea
-Duillia                   240        3          2  Godyris duillia, Hypomenitis alphesiboea, Pachacutia baroni
-Egra                      114       11         13  Hypoleria alema, Hypoleria mulviana, Hypoleria sarepta
-Eurimedia               6,733       35        113  Aeria elara, Aeria eurimedia, Aeria olena
-Excelsa                 3,079       17         49  Callithomia hezia, Callithomia hydra, Dircenna olyras
-Hemixanthe                395        7          7  Episcada hemixanthe, Episcada zajciwi, Hyalyris leptalina
-Hermias                12,521       50        209  Athyrtis mechanitis, Callithomia alexirrhoe, Callithomia lenea
-Hewitsoni                 938       27         40  Athesis vitrala, Episcada apuleia, Godyris hewitsoni
+Acrisione                  35        1          1  Athesis acrisione
+Agnosia                 9,331       83        125  Brevioleria arzalia, Brevioleria seba, Dircenna adina
+Amalda                    178        9         14  Hypoleria lavinia, Hyposcada schausi, Ithomia diasia
+Aureliana                 514       12         20  Brevioleria aelia, Brevioleria arzalia, Brevioleria seba
+Banjana-M               1,402       43         65  Episcada salvinia, Genus1 nsp1, Godyris lauta
+Confusa                 5,039       20         48  Aremfoxia ferra, Athesis acrisione, Callithomia lenea
+Dercyllidas               100        1          2  Patricia dercyllidas
+Dilucida                5,145       40         73  Athesis clearista, Callithomia lenea, Ceratinia neso
+Doto                      537       15         33  Callithomia lenea, Ceratinia neso, Dircenna dero
+Duessa                     85        4         12  Hyalyris oulita, Hypothyris leprieuri, Hypothyris thea
+Duillia                   112        3          0  Godyris duillia, Hypomenitis alphesiboea, Pachacutia baroni
+Egra                      105       11         13  Hypoleria alema, Hypoleria mulviana, Hypoleria sarepta
+Eurimedia               5,454       35        103  Aeria elara, Aeria eurimedia, Aeria olena
+Excelsa                 1,990       17         49  Callithomia hezia, Callithomia hydra, Dircenna olyras
+Hemixanthe                320        7          6  Episcada hemixanthe, Episcada zajciwi, Hyalyris leptalina
+Hermias                 7,621       51        176  Athyrtis mechanitis, Callithomia alexirrhoe, Callithomia lenea
+Hewitsoni                 721       27         40  Athesis vitrala, Episcada apuleia, Godyris hewitsoni
 Humboldt                   34        1          3  Elzunia humboldt
-Illinissa                 166        6          8  Brevioleria aelia, Hyposcada anchiala, Hyposcada illinissa
-Lerida                 12,343       65        158  Brevioleria aelia, Brevioleria nsp1, Brevioleria plisthenes
-Libethris                 534       21         26  Dircenna adina, Episcada clausina, Episcada hymenaea
-Lysimnia                2,407        5         13  Hyalyris fiammetta, Hypothyris ninonia, Mechanitis lysimnia
-Maelus                  4,594       16         59  Callithomia alexirrhoe, Ceratinia neso, Ceratinia poecila
-Mamercus               11,552       58        178  Callithomia alexirrhoe, Callithomia hezia, Callithomia hydra
-Mantineus                 359        5          5  Ceratinia tutia, Ithomia cleora, Mechanitis menapis
-Mestra                    416       13         27  Aremfoxia ferra, Dircenna adina, Hyalyris antea
-Mothone                 1,550       14         26  Ceratinia poecila, Hyposcada anchiala, Hypothyris anastasia
-Ocna                      525       13         33  Callithomia hezia, Dircenna adina, Hyalyris antea
-Orestes                 1,348       15         29  Athyrtis mechanitis, Ceratinia poecila, Forbestra olivencia
-Ozia                      735       19         16  Brevioleria coenina, Dircenna adina, Episcada nsp1
-Panthyale                 612       39         71  Episcada apuleia, Episcada nsp1, Episcada ticidella
-Parallelis                605        7         14  Hyposcada anchiala, Hyposcada illinissa, Hyposcada virginiana
-Pavonii                   227        2          6  Elzunia humboldt, Elzunia pavonii
-Polita                  1,082       10         12  Dircenna jemina, Episcada hymenaea, Episcada polita
+Illinissa                  22        6          6  Brevioleria aelia, Hyposcada anchiala, Hyposcada illinissa
+Lerida                  7,645       65        138  Brevioleria aelia, Brevioleria nsp1, Brevioleria plisthenes
+Libethris                 420       21         24  Dircenna adina, Episcada clausina, Episcada hymenaea
+Lysimnia                  816        5          5  Hyalyris fiammetta, Hypothyris ninonia, Mechanitis lysimnia
+Maelus                  1,005       16         39  Callithomia alexirrhoe, Ceratinia neso, Ceratinia poecila
+Mamercus                9,918       62        170  Callithomia alexirrhoe, Callithomia hezia, Callithomia hydra
+Mantineus                 342        5          3  Ceratinia tutia, Ithomia cleora, Mechanitis menapis
+Mestra                    406       13         27  Aremfoxia ferra, Dircenna adina, Hyalyris antea
+Mothone                   745       14         19  Ceratinia poecila, Hyposcada anchiala, Hypothyris anastasia
+Ocna                      365       13         26  Callithomia hezia, Dircenna adina, Hyalyris antea
+Orestes                   340       15         22  Athyrtis mechanitis, Ceratinia poecila, Forbestra olivencia
+Ozia                      701       19         16  Brevioleria coenina, Dircenna adina, Episcada nsp1
+Panthyale                 468       39         70  Episcada apuleia, Episcada nsp1, Episcada ticidella
+Parallelis                224        7         11  Hyposcada anchiala, Hyposcada illinissa, Hyposcada virginiana
+Pavonii                    81        2          6  Elzunia humboldt, Elzunia pavonii
+Polita                    169       10         11  Dircenna jemina, Episcada hymenaea, Episcada polita
 Praestans                  11        1          1  Olyras insignis
-Praxilla                  208        9         17  Hyalyris antea, Hyalyris lactea, Hyalyris mestra
-Quintina                  188        6          6  Hyposcada illinissa, Hyposcada kena, Oleria estella
-Sinilia                   101        9         14  Brevioleria aelia, Hyposcada illinissa, Hyposcada kena
-Susiana                   335       12         18  Hyposcada attilodes, Hyposcada taliata, Megoleria orestilla
-Thabena-F                  89        6          7  Oleria deronda, Oleria derondina, Ollantaya aegineta
-Theudelinda               187        8         14  Hypomenitis hermana, Hypomenitis oneidodes, Hypomenitis theudelinda
-Ticidam                   251        8          7  Episcada ticidella, Hyalenna sulmona, Ithomia avella
+Praxilla                  124        9         17  Hyalyris antea, Hyalyris lactea, Hyalyris mestra
+Quintina                  103        6          6  Hyposcada illinissa, Hyposcada kena, Oleria estella
+Sinilia                    98        9         14  Brevioleria aelia, Hyposcada illinissa, Hyposcada kena
+Susiana                   244       14         19  Hyposcada attilodes, Hyposcada taliata, Megoleria orestilla
+Thabena-F                  77        7          7  Oleria deronda, Oleria derondina, Ollantaya aegineta
+Theudelinda               125        8         14  Hypomenitis hermana, Hypomenitis oneidodes, Hypomenitis theudelinda
+Ticidam                   248        8          7  Episcada ticidella, Hyalenna sulmona, Ithomia avella
 Umbrosa                    42        3          5  Godyris lauta, Hypomenitis depauperata, Hypomenitis ochretis
 Vestilla                   20        1          1  Pteronymia vestilla
 
@@ -106,56 +112,48 @@ Total mimicry rings: 44
 
 ## Data File Sizes (for data efficiency section)
 ------------------------------------------------------------
-  map_points_dore.json                        14.49 MB
-  map_points_gbif.json                        27.64 MB
-  map_points_gbif_other.json                  17.63 MB
-  map_points_gbif_unam.json                   12.57 MB
-  map_points_images.json                       0.00 MB
-  map_points_inaturalist.json                 13.40 MB
-  map_points_sanger.json                       4.24 MB
-  TOTAL DATA                                  89.97 MB
-  App bundle (JS + CSS):  N/A (run npm build first)
+  map_points_dore.json                        20.19 MB
+  map_points_gbif_other.json                  21.45 MB
+  map_points_gbif_unam.json                   16.37 MB
+  map_points_images.json                       0.06 MB
+  map_points_inaturalist.json                 17.29 MB
+  map_points_sanger.json                       5.00 MB
+  TOTAL DATA                                  80.37 MB
+  App bundle (JS + CSS):  2705.6
 
 
 ## GBIF Download Citation
 ------------------------------------------------------------
-  DOI: 10.15468/dl.9mzws4
-  Download date: 2026-03-12
-  Total records downloaded: 69,669
+  DOI: 10.15468/dl.bjrqhj
+  Download date: 2026-04-26
+  Total records downloaded: 70,399
   Filters: Ithomiini genera, coordinates present, no geospatial issues, present occurrences, excludes fossils/living specimens
 
 
 ## Geographic Coverage (all sources merged)
 ------------------------------------------------------------
-Countries represented: 33
+Countries represented: 26
   - Argentina
   - Belize
   - Bolivia
   - Brazil
-  - Canada
-  - China
   - Colombia
   - Costa Rica
   - Cuba
-  - Denmark
   - Dominican Republic
   - Ecuador
   - El Salvador
   - French Guiana
-  - Germany
   - Guatemala
   - Guyana
   - Haiti
   - Honduras
   - Jamaica
   - Mexico
-  - Mongolia
   - Nicaragua
-  - Norway
   - Panama
   - Paraguay
   - Peru
-  - Russian Federation
   - Suriname
   - Trinidad and Tobago
   - United States

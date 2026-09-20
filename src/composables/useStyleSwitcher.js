@@ -10,6 +10,25 @@ export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
   // the streets style.load fires).
   let switchGeneration = 0
 
+  const whenStyleReady = (gen, callback, startedAt = Date.now()) => {
+    if (!map.value || gen !== switchGeneration) return
+    try {
+      if (map.value.isStyleLoaded?.()) {
+        callback()
+        return
+      }
+    } catch {
+      // Keep waiting; MapLibre can briefly reject readiness checks while
+      // swapping style objects.
+    }
+
+    if (Date.now() - startedAt > 5000) {
+      callback()
+      return
+    }
+    setTimeout(() => whenStyleReady(gen, callback, startedAt), 50)
+  }
+
   const switchStyle = async (styleName) => {
     if (!map.value || !MAP_STYLES[styleName]) return
 
@@ -29,7 +48,7 @@ export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
     map.value.setStyle(styleConfig.style)
 
     let handled = false
-    const handleStyleReady = () => {
+    const rebuildOverlays = () => {
       // Guard: skip if already handled or a newer switch has occurred
       if (handled || gen !== switchGeneration) return
       handled = true
@@ -56,7 +75,10 @@ export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
       })
     }
 
+    const handleStyleReady = () => whenStyleReady(gen, rebuildOverlays)
+
     map.value.once('style.load', handleStyleReady)
+    map.value.once('styledata', handleStyleReady)
 
     // Fallback: for inline raster styles (streets, satellite, terrain),
     // style.load may not fire promptly because the style object is parsed

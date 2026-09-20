@@ -684,6 +684,30 @@
   .dropdown-trigger {
     padding: 6px 10px;
     font-size: 0.75rem;
+    min-height: 40px;
+  }
+
+  /* Match the comfortable touch-target height across the top controls. */
+  .mode-toggle-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Collapse the basemap/theme selectors to icon-only buttons on mobile so the
+     top bar stays uncluttered. The selected name still shows inside the
+     dropdown when it is opened. */
+  .dropdown-trigger {
+    padding: 0;
+    width: 40px;
+    justify-content: center;
+  }
+
+  .dropdown-trigger > span {
+    display: none;
+  }
+
+  .dropdown-trigger .chevron {
+    display: none;
   }
 
   .dropdown-trigger .layer-icon {
@@ -693,6 +717,18 @@
 
   .dropdown-menu {
     min-width: 160px;
+  }
+
+  /* The custom theme/basemap row (with the light-dark toggle at its right end)
+     shares the top band with the map's own top-right controls. Drop the native
+     zoom/fullscreen controls and the bbox button below the top row and the
+     full-width search bar so nothing overlaps. */
+  :deep(.maplibregl-ctrl-top-right) {
+    top: 104px;
+  }
+
+  .bbox-controls {
+    top: 104px;
   }
 }
 
@@ -911,17 +947,51 @@
   position: absolute;
   background: var(--color-bg-primary, rgba(26, 26, 46, 0.92));
   border: 1px solid var(--color-border, #3d3d5c);
-  border-radius: 4px;
-  padding: 2px 6px;
+  border-radius: 6px;
+  padding: 5px 7px;
   pointer-events: none;
   z-index: 15;
   white-space: nowrap;
+  box-shadow: 0 4px 14px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+}
+.sdm-cursor-row {
+  display: grid;
+  grid-template-columns: 8px minmax(0, auto) auto;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.25;
+}
+.sdm-cursor-row + .sdm-cursor-row {
+  margin-top: 3px;
+}
+.sdm-cursor-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.sdm-cursor-row.warm .sdm-cursor-dot {
+  background: #e68c00;
+}
+.sdm-cursor-row.cool .sdm-cursor-dot {
+  background: #0072b2;
+}
+.sdm-cursor-species {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text-secondary, #cbd5e1);
+  font-style: italic;
 }
 .sdm-cursor-value {
-  font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  color: var(--color-accent, #4ade80);
+}
+.sdm-cursor-row.warm .sdm-cursor-value {
+  color: #f0a23a;
+}
+.sdm-cursor-row.cool .sdm-cursor-value {
+  color: #4a9fd4;
 }
 .panel-docked :deep(.maplibregl-ctrl-top-right) {
   right: 350px;

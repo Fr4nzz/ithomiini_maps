@@ -36,6 +36,7 @@ export const useDataStore = defineStore('data', () => {
     hasDirectGoatData: dataset.hasDirectGoatData,
     getChromosomeNumber: dataset.getChromosomeNumber,
     formatGenomeSize: dataset.formatGenomeSize,
+    filterSpeciesOptions: filters.filterSpeciesOptions,
     getPointsAtCoordinates: view.getPointsAtCoordinates,
     groupPointsBySpecies: view.groupPointsBySpecies,
     getSpeciesWithPhotos: view.getSpeciesWithPhotos,

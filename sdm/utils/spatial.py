@@ -95,24 +95,28 @@ def generate_background_points(
     bias_weights=None,
     bias_grid_coords=None,
     min_distance_km=1.0,
+    accessible_polygon=None,
 ):
     """
     Generate pseudo-absence / background points.
+
     If bias_weights provided, sample proportional to bias surface.
+    If accessible_polygon provided (shapely Polygon/MultiPolygon in lon/lat),
+    candidates falling outside the polygon are discarded so background
+    sampling respects spatially disjunct accessible-area shapes (e.g. a union
+    of per-cluster buffered hulls). The function still falls back to the
+    rectangular extent for the legacy single-hull strategy when polygon is None.
     """
     min_distance_deg = min_distance_km / 111.0
 
     if bias_weights is not None and bias_grid_coords is not None:
-        # Sample grid cells proportional to bias weights
         indices = np.random.choice(
             len(bias_grid_coords), size=n_points * 3, replace=True, p=bias_weights
         )
         candidates = bias_grid_coords[indices].copy()
-        # Add sub-cell jitter
         jitter = np.random.uniform(-0.05, 0.05, candidates.shape)
         candidates += jitter
     elif target_group_coords is not None and len(target_group_coords) > 0:
-        # Target-group background with jitter
         indices = np.random.choice(
             len(target_group_coords), size=n_points * 3, replace=True
         )
@@ -120,12 +124,10 @@ def generate_background_points(
         candidates[:, 0] += np.random.normal(0, 0.05, len(candidates))
         candidates[:, 1] += np.random.normal(0, 0.05, len(candidates))
     else:
-        # Random background
         lons = np.random.uniform(extent["west"], extent["east"], n_points * 3)
         lats = np.random.uniform(extent["south"], extent["north"], n_points * 3)
         candidates = np.column_stack([lons, lats])
 
-    # Clip to extent
     mask = (
         (candidates[:, 0] >= extent["west"])
         & (candidates[:, 0] <= extent["east"])
@@ -134,7 +136,14 @@ def generate_background_points(
     )
     candidates = candidates[mask]
 
-    # Remove points too close to occurrences
+    if accessible_polygon is not None and len(candidates) > 0:
+        from shapely.prepared import prep
+        prepared = prep(accessible_polygon)
+        keep = np.array(
+            [prepared.contains(Point(c[0], c[1])) for c in candidates], dtype=bool
+        )
+        candidates = candidates[keep]
+
     if occurrence_coords is not None and len(occurrence_coords) > 0:
         occ_tree = cKDTree(occurrence_coords)
         distances, _ = occ_tree.query(candidates)

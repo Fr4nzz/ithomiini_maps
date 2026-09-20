@@ -17,39 +17,61 @@ const SDM_SOURCE_PREFIX = 'sdm-source'
 // Minimum visible threshold: values below this are transparent.
 const SUITABILITY_MIN = 0.05
 
+// Colourblind-safe sequential ramps. Each ramp is single-hue and increases
+// monotonically in darkness/saturation, so the low and high ends stay clearly
+// distinguishable under all common colour-vision deficiencies (the previous
+// yellow→red / cyan→purple ramps were hard to read at the extremes). For the
+// two-species overlay we pair orange (species 1) with blue (species 2): the
+// canonical colourblind-safe contrast pair (Wong 2011, Nature Methods).
+const RAMP_STOPS = {
+  warm: [ // orange
+    [0.0, [255, 245, 224]],
+    [0.3, [253, 192, 134]],
+    [0.6, [230, 140, 0]],
+    [1.0, [140, 60, 0]],
+  ],
+  cool: [ // blue
+    [0.0, [222, 235, 247]],
+    [0.3, [140, 190, 224]],
+    [0.6, [0, 114, 178]],
+    [1.0, [8, 48, 107]],
+  ],
+}
+
+// Linear interpolation across the ramp stops for a normalised value v ∈ [0,1].
+function interpolateRamp(stops, v) {
+  for (let i = 1; i < stops.length; i++) {
+    if (v <= stops[i][0]) {
+      const [t0, c0] = stops[i - 1]
+      const [t1, c1] = stops[i]
+      const t = t1 === t0 ? 0 : (v - t0) / (t1 - t0)
+      return [
+        Math.round(c0[0] + (c1[0] - c0[0]) * t),
+        Math.round(c0[1] + (c1[1] - c0[1]) * t),
+        Math.round(c0[2] + (c1[2] - c0[2]) * t),
+      ]
+    }
+  }
+  return stops[stops.length - 1][1].slice()
+}
+
+function makeRamp(stops) {
+  return (value, alpha) => {
+    if (value < SUITABILITY_MIN || value <= -9990 || isNaN(value)) return [0, 0, 0, 0]
+    const v = Math.min(1, Math.max(0, value))
+    const [r, g, b] = interpolateRamp(stops, v)
+    // Fade alpha in near the low-suitability threshold so faint predictions
+    // don't form a hard edge against the basemap.
+    const fade = v < 0.3
+      ? 0.35 + 0.65 * (v - SUITABILITY_MIN) / (0.3 - SUITABILITY_MIN)
+      : 1
+    return [r, g, b, Math.round(alpha * 255 * fade)]
+  }
+}
+
 const COLOR_RAMPS = {
-  warm: (value, alpha) => {
-    if (value < SUITABILITY_MIN || value <= -9990 || isNaN(value)) return [0, 0, 0, 0]
-    const v = Math.min(1, Math.max(0, value))
-    const a = Math.round(alpha * 255)
-    // Low: pale yellow (visible!) → Mid: orange → High: deep red
-    if (v < 0.3) {
-      const t = (v - SUITABILITY_MIN) / (0.3 - SUITABILITY_MIN)
-      return [255, Math.round(230 - 30 * t), Math.round(100 - 100 * t), Math.round(a * (0.3 + 0.7 * t))]
-    } else if (v < 0.6) {
-      const t = (v - 0.3) / 0.3
-      return [255, Math.round(200 - 130 * t), 0, a]
-    } else {
-      const t = (v - 0.6) / 0.4
-      return [Math.round(255 - 40 * t), Math.round(70 - 40 * t), 0, a]
-    }
-  },
-  cool: (value, alpha) => {
-    if (value < SUITABILITY_MIN || value <= -9990 || isNaN(value)) return [0, 0, 0, 0]
-    const v = Math.min(1, Math.max(0, value))
-    const a = Math.round(alpha * 255)
-    // Low: pale cyan (visible!) → Mid: blue → High: deep purple
-    if (v < 0.3) {
-      const t = (v - SUITABILITY_MIN) / (0.3 - SUITABILITY_MIN)
-      return [Math.round(100 - 100 * t), Math.round(220 - 40 * t), 255, Math.round(a * (0.3 + 0.7 * t))]
-    } else if (v < 0.6) {
-      const t = (v - 0.3) / 0.3
-      return [Math.round(80 * t), Math.round(180 - 100 * t), 255, a]
-    } else {
-      const t = (v - 0.6) / 0.4
-      return [Math.round(80 + 80 * t), Math.round(80 - 50 * t), Math.round(255 - 30 * t), a]
-    }
-  },
+  warm: makeRamp(RAMP_STOPS.warm),
+  cool: makeRamp(RAMP_STOPS.cool),
 }
 
 export function useSDMLayer(map) {
@@ -71,6 +93,27 @@ export function useSDMLayer(map) {
     }
   }
 
+  async function fetchTiffValues(url) {
+    const response = await fetch(url)
+    if (!response.ok) return null
+    const GeoTIFF = await import('geotiff')
+    const arrayBuffer = await response.arrayBuffer()
+    const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer)
+    const image = await tiff.getImage()
+    const data = await image.readRasters()
+    const width = image.getWidth()
+    const height = image.getHeight()
+    const origin = image.getOrigin()
+    const resolution = image.getResolution()
+    const bbox = [
+      origin[0],
+      origin[1] + resolution[1] * height,
+      origin[0] + resolution[0] * width,
+      origin[1],
+    ]
+    return { values: data[0], width, height, bbox }
+  }
+
   async function loadAndRenderGeoTIFF(speciesName, index, colorRamp) {
     const layerId = `${SDM_LAYER_PREFIX}-${index}`
     const sourceId = `${SDM_SOURCE_PREFIX}-${index}`
@@ -78,29 +121,40 @@ export function useSDMLayer(map) {
     if (!map.value) return
 
     try {
-      const GeoTIFF = await import('geotiff')
       const basePath = import.meta.env.BASE_URL || '/'
       const safeName = speciesName.replace(/ /g, '_').toLowerCase()
-      const url = `${basePath}data/sdm/species/${safeName}_ensemble.tif`
+      const coreUrl = `${basePath}data/sdm/species/${safeName}_ensemble_core.tif`
+      const extUrl = `${basePath}data/sdm/species/${safeName}_ensemble_extension.tif`
+      const fallbackUrl = `${basePath}data/sdm/species/${safeName}_ensemble.tif`
 
-      const response = await fetch(url)
-      if (!response.ok) { log.map.warn(`SDM: Could not load ${url}`); return }
+      // Try core/extension split first (new pipeline). Fall back to the
+      // single full-ensemble raster if the split files aren't available
+      // (legacy data, partial deploys).
+      let coreData = await fetchTiffValues(coreUrl)
+      let extData = sdmStore.showFullExtent ? await fetchTiffValues(extUrl) : null
+      let usingSplit = !!coreData
 
-      const arrayBuffer = await response.arrayBuffer()
-      const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer)
-      const image = await tiff.getImage()
-      const data = await image.readRasters()
-      const values = data[0]
-      const width = image.getWidth()
-      const height = image.getHeight()
-      const origin = image.getOrigin()
-      const resolution = image.getResolution()
-      const bbox = [
-        origin[0],
-        origin[1] + resolution[1] * height,
-        origin[0] + resolution[0] * width,
-        origin[1],
-      ]
+      if (!usingSplit) {
+        coreData = await fetchTiffValues(fallbackUrl)
+        if (!coreData) { log.map.warn(`SDM: Could not load ${fallbackUrl}`); return }
+      }
+
+      const { width, height, bbox } = coreData
+      // Merge core + extension into a single value buffer. Core wins where
+      // it has data; extension fills the rest. Both rasters share the same
+      // grid (they're co-registered by construction in step 5).
+      const values = new Float32Array(coreData.values.length)
+      for (let i = 0; i < values.length; i++) {
+        const c = coreData.values[i]
+        if (c > -9990 && !isNaN(c)) {
+          values[i] = c
+        } else if (extData) {
+          const e = extData.values[i]
+          values[i] = (e > -9990 && !isNaN(e)) ? e : -9999
+        } else {
+          values[i] = -9999
+        }
+      }
 
       // Reproject from equirectangular (EPSG:4326) to Web Mercator (EPSG:3857)
       // so the raster aligns with MapLibre's basemap. Without this, the canvas is
@@ -222,6 +276,7 @@ export function useSDMLayer(map) {
     }
   })
   watch(() => sdmStore.opacity, () => { if (activeSpecies.value.length > 0) updateLayer() })
+  watch(() => sdmStore.showFullExtent, () => { if (activeSpecies.value.length > 0) updateLayer() })
 
   sdmStore.loadMetadata()
 

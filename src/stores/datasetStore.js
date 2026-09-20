@@ -9,6 +9,7 @@ export const useDatasetStore = defineStore('dataset', () => {
   // shallowRef prevents Vue from deep-proxying 155k+ records (saves ~200MB RAM)
   const allFeatures = shallowRef([])
   const imageSupplement = shallowRef([])
+  const taxonomySynonyms = shallowRef([])
   const loadedSources = reactive(new Set())
   const sourceLoading = reactive(new Set())
   const sourceProgress = reactive({})
@@ -92,9 +93,10 @@ export const useDatasetStore = defineStore('dataset', () => {
         ?? Object.keys(config)[0]
       const defaultFile = config[defaultSource]?.file
 
-      const [defaultRes, imgRes] = await Promise.all([
+      const [defaultRes, imgRes, synonymsRes] = await Promise.all([
         fetch(`${basePath}data/${defaultFile}`),
         fetch(`${basePath}data/${imageSupplementFile.value}`),
+        fetch(`${basePath}data/taxonomy_synonyms.json`).catch(() => null),
       ])
 
       if (!defaultRes.ok) {
@@ -103,6 +105,7 @@ export const useDatasetStore = defineStore('dataset', () => {
 
       const defaultData = await defaultRes.json()
       const imgData = imgRes.ok ? await imgRes.json() : []
+      const synonymsData = synonymsRes?.ok ? await synonymsRes.json() : { synonyms: [] }
 
       for (const item of defaultData) normalizeLoadedItem(item, defaultSource)
 
@@ -112,6 +115,8 @@ export const useDatasetStore = defineStore('dataset', () => {
       for (const item of imgData) markRaw(item)
       imageSupplement.value = imgData
       triggerRef(imageSupplement)
+      taxonomySynonyms.value = synonymsData.synonyms || []
+      triggerRef(taxonomySynonyms)
 
       loadedSources.add(defaultSource)
       log.data.info(`✓ Loaded ${defaultData.length} ${defaultSource} records + ${imgData.length} image supplement`)
@@ -203,6 +208,7 @@ export const useDatasetStore = defineStore('dataset', () => {
     loading,
     allFeatures,
     imageSupplement,
+    taxonomySynonyms,
     loadedSources,
     sourceLoading,
     sourceProgress,

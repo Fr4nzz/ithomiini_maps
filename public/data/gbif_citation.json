@@ -1,12 +1,12 @@
 {
-  "doi": "10.15468/dl.9mzws4",
-  "doi_url": "https://doi.org/10.15468/dl.9mzws4",
-  "download_key": "0033034-260226173443078",
-  "download_date": "2026-03-12",
-  "total_records": 69669,
-  "citation_text": "GBIF Occurrence Download https://doi.org/10.15468/dl.9mzws4 accessed via GBIF.org on 2026-03-12",
+  "doi": "10.15468/dl.bjrqhj",
+  "doi_url": "https://doi.org/10.15468/dl.bjrqhj",
+  "download_key": "0008934-260423192947929",
+  "download_date": "2026-04-26",
+  "total_records": 70399,
+  "citation_text": "GBIF Occurrence Download https://doi.org/10.15468/dl.bjrqhj accessed via GBIF.org on 2026-04-26",
   "dataset_breakdown": {
-    "iNaturalist": 19901,
+    "iNaturalist": 20528,
     "Other GBIF": 0
   },
   "filters_applied": "Ithomiini genera, coordinates present, no geospatial issues, present occurrences, excludes fossils/living specimens"

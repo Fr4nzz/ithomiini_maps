@@ -5,6 +5,7 @@ import { getThumbnailUrl } from '../utils/imageProxy'
 import { STATUS_COLORS } from '../utils/constants'
 import { getGoatUrl } from '../utils/goatHelpers'
 import { usePopupSelection } from '../composables/usePopupSelection'
+import { countUniqueIndividuals } from '../utils/clusterStats'
 
 const props = defineProps({
   coordinates: {
@@ -85,7 +86,9 @@ const selectIndividual = (index) => {
 
 // Total counts
 const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
-const totalIndividuals = computed(() => props.points.length)
+const totalRecords = computed(() => props.clusterStats?.recordCount ?? props.points.length)
+const totalIndividuals = computed(() => props.clusterStats?.individualCount ?? countUniqueIndividuals(props.points))
+const hasDuplicateRecords = computed(() => totalRecords.value !== totalIndividuals.value)
 
 // Format radius similar to scale bar (round to nice numbers)
 const formattedRadius = computed(() => {
@@ -128,6 +131,10 @@ const subspeciesCount = computed(() => {
 
 // Individual count for current species+subspecies
 const individualsCount = computed(() => individualsList.value.length)
+const recordSelectorLabel = computed(() => {
+  if (!props.isCluster) return 'Individuals'
+  return selectedSubspecies.value ? 'Subspecies Records' : 'Species Records'
+})
 
 // Open gallery with current selection
 const openGallery = () => {
@@ -228,7 +235,7 @@ const bioprojectUrl = computed(() => {
         <div class="individuals-section">
           <div class="section-header">
             <span class="count-badge">{{ individualsCount }}</span>
-            <span class="section-label">Individuals</span>
+            <span class="section-label">{{ recordSelectorLabel }}</span>
           </div>
           <select
             v-if="individualsList.length > 1"
@@ -354,8 +361,19 @@ const bioprojectUrl = computed(() => {
 
           <!-- Cluster-specific: Location count -->
           <div v-if="isCluster && clusterStats" class="detail-row">
-            <span class="detail-label">Locations:</span>
+            <span
+              class="detail-label"
+              title="Unique coordinate sites rounded to four decimal places"
+            >Sites:</span>
             <span class="detail-value">{{ clusterStats.locationCount }}</span>
+          </div>
+
+          <div v-if="isCluster && clusterStats?.individualCount" class="detail-row">
+            <span
+              class="detail-label"
+              title="Unique specimen identifiers where record IDs are available"
+            >Individuals:</span>
+            <span class="detail-value">{{ clusterStats.individualCount }}</span>
           </div>
 
           <!-- Regular location: Location name -->
@@ -398,14 +416,18 @@ const bioprojectUrl = computed(() => {
               <span class="stat-value">{{ totalIndividuals }}</span>
               <span class="stat-label">individuals</span>
             </div>
+            <div v-if="hasDuplicateRecords" class="stat">
+              <span class="stat-value">{{ totalRecords }}</span>
+              <span class="stat-label">{{ isCluster ? 'cluster records' : 'records' }}</span>
+            </div>
           </div>
 
           <!-- Sex counts (only show if we have sex data) -->
           <div v-if="maleCount > 0 || femaleCount > 0" class="sex-stats">
             <span v-if="maleCount > 0" class="sex-count male">♂ {{ maleCount }}</span>
             <span v-if="femaleCount > 0" class="sex-count female">♀ {{ femaleCount }}</span>
-            <span v-if="totalIndividuals - maleCount - femaleCount > 0" class="sex-count unknown">
-              ? {{ totalIndividuals - maleCount - femaleCount }}
+            <span v-if="totalRecords - maleCount - femaleCount > 0" class="sex-count unknown">
+              ? {{ totalRecords - maleCount - femaleCount }}
             </span>
           </div>
         </div>
