@@ -13,110 +13,103 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Prepare verification tools
+      - name: Prepare browser
         run: |
-          python -m pip install --quiet torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cpu
-          python -m pip install --quiet ultralytics==8.4.72 playwright requests
+          python -m pip install --quiet playwright requests
           python -m playwright install --with-deps chromium
-      - name: Read artifacts and historical state
+      - name: Verify sources and references
         shell: bash
         run: |
-          mkdir -p /tmp/manuscript-verification
+          mkdir -p /tmp/manuscript-final-assets/references /tmp/manuscript-final-assets/figures
+          git clone --depth=1 https://github.com/Fr4nzz/rename_photos_AI.git /tmp/processor
+          git -C /tmp/processor rev-parse HEAD > /tmp/manuscript-final-assets/processor-head.txt
+          git -C /tmp/processor log -1 --format=fuller > /tmp/manuscript-final-assets/processor-commit.txt
           python - <<'PY'
-          import pathlib,json,subprocess,urllib.request,urllib.parse,hashlib,torch,collections,requests
-          from ultralytics import YOLO
-          out=pathlib.Path('/tmp/manuscript-verification')
-          def get(url,path):
+          import pathlib, json, re, requests, urllib.parse, subprocess, shutil, hashlib
+          out=pathlib.Path('/tmp/manuscript-final-assets')
+          for name in subprocess.check_output(['git','-C','/tmp/processor','ls-files'],text=True).splitlines():
+              p=pathlib.Path('/tmp/processor')/name
+              if p.suffix.lower() in {'.py','.js','.ts','.vue','.html','.json','.md','.txt','.yml','.yaml'} and p.is_file() and p.stat().st_size<5_000_000:
+                  d=out/'processor'/name; d.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,d)
+          text=pathlib.Path('paper/manuscript.md').read_text()
+          dois=set(re.findall(r'10\.\d{4,9}/[A-Za-z0-9_.()/-]+',text))
+          dois.update(['10.1098/rspb.2018.2769','10.1111/1755-0998.13749','10.1073/pnas.2410939122','10.1371/journal.pbio.3003742','10.1111/mec.13773','10.1038/sdata.2017.122','10.1371/journal.pbio.1002415','10.1371/journal.pbio.0060300','10.1016/j.tree.2011.11.007','10.1111/j.1096-0031.2006.00123.x'])
+          summary=[]
+          for doi in sorted(dois):
+              doi=doi.rstrip('.')
               try:
-                  with urllib.request.urlopen(url,timeout=120) as r: b=r.read()
-                  path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(b)
-                  return b
-              except Exception as e:
-                  (out/'errors.txt').open('a').write(url+' '+str(e)+'\n');return None
-          model='https://huggingface.co/fr4nzzch/butterfly-id-classifier/resolve/61c8fb58578a2ea64c6972e17b5101697729eaa8/'
-          for name in ['head_hier.pt','wing_seg.pt']:
-              p=out/name; get(model+name,p)
-              if p.exists(): (out/(name+'.sha256')).write_text(hashlib.sha256(p.read_bytes()).hexdigest())
-          def compact(v):
-              if isinstance(v,torch.Tensor): return {'shape':list(v.shape),'dtype':str(v.dtype)}
-              if isinstance(v,dict): return {str(k):compact(x) for k,x in v.items()}
-              if isinstance(v,(list,tuple)): return [compact(x) for x in v]
-              if isinstance(v,(int,float,str,bool)) or v is None:return v
-              return str(v)
-          try:
-              ck=torch.load(out/'head_hier.pt',map_location='cpu',weights_only=True)
-              (out/'head_checkpoint_metadata.json').write_text(json.dumps(compact(ck),indent=2))
-              counts={k:len(v) for k,v in ck.get('rank_vocab',{}).items()}
-              print('HEAD',list(ck),len(ck['leaves']),counts,ck.get('K'),ck.get('feat_dim'))
-          except Exception as e:(out/'head-error.txt').write_text(str(e))
-          try:
-              y=YOLO(str(out/'wing_seg.pt'))
-              ck=y.ckpt
-              data={k:compact(v) for k,v in ck.items() if k not in ['model','ema','optimizer','scaler','train_results']}
-              data['model_yaml']=y.model.yaml;data['model_type']=str(type(y.model));data['model_names']=y.names
-              data['model_modules']=[str(type(m)) for m in y.model.model]
-              (out/'segmenter_checkpoint_metadata.json').write_text(json.dumps(data,indent=2,default=str))
-          except Exception as e:(out/'segmenter-error.txt').write_text(str(e))
-          refs=['1cdde9bc8d5f4375def888b5796e71493ee60d68','457a2170e60b6ad207a2c94a6440212da7525f18','83ff94499ec0283962366bf75fe4ca14441ded05','935cc42740aefbe70640eb15d79bf4f6c21e1089']
-          for ref in refs:
-              d=out/'sdm-history'/ref;d.mkdir(parents=True)
-              for cmd,name in [(['git','show','--stat',ref],'commit-stat.txt'),(['git','show',ref+':public/data/sdm/sdm_metadata.json'],'sdm_metadata.json'),(['git','ls-tree','-r',ref,'public/data/sdm/species'],'file-tree.txt')]:
-                  r=subprocess.run(cmd,capture_output=True,text=True);(d/name).write_text(r.stdout+r.stderr)
-          (out/'sdm-metadata-history.txt').write_text(subprocess.check_output(['git','log','--all','--date=iso-strict','--format=%H %ad %s','--','public/data/sdm/sdm_metadata.json'],text=True))
-          (out/'sdm-split-commit.patch').write_text(subprocess.check_output(['git','show','1cdde9bc8d5f4375def888b5796e71493ee60d68','--','sdm','public/data/sdm/sdm_metadata.json'],text=True))
-          urls={
-            'atlas_manifest.json':'https://rapidspeciation.github.io/ithomiini_maps/data/data_manifest.json',
-            'atlas_sdm_metadata.json':'https://rapidspeciation.github.io/ithomiini_maps/data/sdm/sdm_metadata.json',
-            'space_runtime_metadata.json':'https://fr4nzzch-butterfly-id.hf.space/metadata',
-            'space_health.json':'https://fr4nzzch-butterfly-id.hf.space/health',
-            'gallery_coverage_receipt.json':'https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/data/prediction_coverage_receipt.json',
-            'bioclip_README.md':'https://huggingface.co/imageomics/bioclip-2.5-vith14/raw/6e3d04e3d6522012c88181085c5ae666e14c45cd/README.md'}
-          for name,url in urls.items():get(url,out/'deployed'/name)
-          for slug in ['Napeogenes_peridia','Heliconius_erato','Mcclungia_cymo']:
-              url=f'https://rapidspeciation.github.io/ithomiini_maps/data/sdm/species/{slug}_ensemble.tif'
-              try:
-                  r=requests.get(url,timeout=90);(out/'sdm-http.txt').open('a').write(f'{url} {r.status_code} {len(r.content)}\n')
-              except Exception as e:(out/'sdm-http.txt').open('a').write(str(e)+'\n')
-          queries=['McClure 2019 Ithomiini butterflies mimicry','Gauthier 2023 Ithomiini chromosomes','van der Heijden 2025 Ithomiini butterflies','Ben Chehida 2026 Ithomiini mimicry','BioCLIP 2 Emergent Properties Scaling Hierarchical Contrastive Learning','SAM 3 segment anything concepts','Rosser Mallet 2024 interactive maps heliconius','Into the Andes multiple independent colonizations Godyridina Chazot']
-          for i,q in enumerate(queries):
-              get('https://api.crossref.org/works?rows=5&query.bibliographic='+urllib.parse.quote(q),out/'references'/f'query_{i}.json')
-          (out/'references/queries.json').write_text(json.dumps(queries,indent=2))
+                  r=requests.get('https://api.crossref.org/works/'+urllib.parse.quote(doi,safe=''),timeout=40)
+                  if r.ok:
+                      a=r.json()['message']; (out/'references'/(doi.replace('/','_')+'.json')).write_text(json.dumps(a,indent=2));summary.append({'doi':doi,'title':a.get('title'),'year':a.get('published'),'journal':a.get('container-title'),'volume':a.get('volume'),'issue':a.get('issue'),'page':a.get('page'),'article-number':a.get('article-number')})
+                  else:summary.append({'doi':doi,'status':r.status_code})
+              except Exception as e:summary.append({'doi':doi,'error':str(e)})
+          (out/'references/summary.json').write_text(json.dumps(summary,indent=2))
+          checks=[]
+          for slug in ['mechanitis_polymnia','mcclungia_cymo','napeogenes_peridia']:
+              for suffix in ['ensemble','ensemble_core','ensemble_extension']:
+                  url=f'https://rapidspeciation.github.io/ithomiini_maps/data/sdm/species/{slug}_{suffix}.tif'
+                  try:
+                      r=requests.get(url,timeout=90); checks.append({'url':url,'status':r.status_code,'size':len(r.content),'sha256':hashlib.sha256(r.content).hexdigest()})
+                  except Exception as e:checks.append({'url':url,'error':str(e)})
+          (out/'sdm-http-verified.json').write_text(json.dumps(checks,indent=2))
           PY
-      - name: Capture actual deployed interfaces
+      - name: Capture real interfaces
         continue-on-error: true
+        shell: bash
         run: |
-          python - <<'PY'
-          import pathlib,json,time
+          cat > /tmp/manuscript-final-assets/capture_interfaces.py <<'PY'
+          from pathlib import Path
+          import json,urllib.parse,datetime
           from playwright.sync_api import sync_playwright
-          out=pathlib.Path('/tmp/manuscript-verification/interfaces');out.mkdir()
+          out=Path('/tmp/manuscript-final-assets');fig=out/'figures';logs=[]
+          sources='Sanger Institute,Dore et al. 2022,iNaturalist,UNAM,GBIF Other'
+          base='https://rapidspeciation.github.io/ithomiini_maps/'
           with sync_playwright() as p:
               browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader'])
-              context=browser.new_context(viewport={'width':1600,'height':1000},device_scale_factor=1)
-              for name,url in [('atlas','https://rapidspeciation.github.io/ithomiini_maps/'),('gallery','https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/')]:
-                  page=context.new_page(); errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-                  try:
-                      page.goto(url,wait_until='domcontentloaded',timeout=120000);page.wait_for_timeout(30000)
-                      page.screenshot(path=str(out/(name+'.png')),full_page=False)
-                      (out/(name+'.html')).write_text(page.content())
-                      (out/(name+'.txt')).write_text(page.locator('body').inner_text())
-                      (out/(name+'-controls.json')).write_text(json.dumps(page.locator('button,select,input,a').evaluate_all('(els)=>els.map(e=>({tag:e.tagName,text:e.innerText,placeholder:e.placeholder,aria:e.getAttribute("aria-label"),href:e.getAttribute("href")}))'),indent=2))
-                      if name=='gallery':
-                          candidate=page.get_by_text('AI Identifier',exact=True)
-                          if candidate.count():
-                              candidate.first.click();page.wait_for_timeout(12000);page.screenshot(path=str(out/'ai-identifier.png'));(out/'ai-identifier.txt').write_text(page.locator('body').inner_text())
-                  except Exception as e:errors.append(str(e))
-                  (out/(name+'-errors.json')).write_text(json.dumps(errors,indent=2));page.close()
+              ctx=browser.new_context(viewport={'width':1800,'height':1100},device_scale_factor=1.5)
+              page=ctx.new_page()
+              def save(name):
+                  page.screenshot(path=str(fig/(name+'.png')),full_page=False)
+                  (out/(name+'.txt')).write_text(page.locator('body').inner_text())
+                  (out/(name+'.html')).write_text(page.content())
+              try:
+                  page.goto(base,wait_until='domcontentloaded',timeout=120000);page.wait_for_timeout(12000)
+                  keys=page.evaluate("() => {const p=document.querySelector('#app').__vue_app__.config.globalProperties.$pinia;window._paperPinia=p;return [...p._s.entries()].map(([k,s])=>({k,keys:Object.keys(s)}))}")
+                  (out/'atlas-store-keys.json').write_text(json.dumps(keys,indent=2))
+                  page.evaluate("async()=>{const p=window._paperPinia;const f=p._s.get('filters');const ds=p._s.get('dataset'); if(ds){f.filters.source=Object.keys(ds.sourceConfig);await Promise.all(f.filters.source.map(s=>ds.loadSource(s)));} const t=p._s.get('theme');if(t){if(t.setMode)t.setMode('light');else if('mode'in t)t.mode='light';} const v=p._s.get('view');if(v){v.colorBy='source';}}")
+                  page.wait_for_timeout(15000);save('figure2_atlas_interface')
+                  (out/'atlas-state-overview.json').write_text(json.dumps(page.evaluate("()=>Object.fromEntries([...window._paperPinia._s.entries()].map(([k,s])=>[k,JSON.parse(JSON.stringify(s.$state, (key,v)=>key==='allFeatures'||key==='data'||key==='features'?undefined:v))]))"),indent=2))
+                  page.evaluate("async()=>{const p=window._paperPinia;const f=p._s.get('filters'); f.filters.species=['Mechanitis polymnia'];const s=p._s.get('sdm');await s.loadMetadata();s.selectedSpecies=['Mechanitis polymnia'];s.enabled=true; s.opacity=0.65;const h=p._s.get('hostPlants');await h.loadMetadata();const v=p._s.get('view');if(v)v.colorBy='subspecies';}")
+                  page.wait_for_timeout(15000)
+                  (out/'host-state-keys.json').write_text(json.dumps(page.evaluate("()=>{const h=window._paperPinia._s.get('hostPlants');return {keys:Object.keys(h),taxa:JSON.parse(JSON.stringify(h.taxa||h.manifest?.taxa||[])).slice(0,3)}}"),indent=2))
+                  page.evaluate("async()=>{const h=window._paperPinia._s.get('hostPlants');if(h.setSelectedTaxa)await h.setSelectedTaxa(['solanum-candidum']);else if('selectedTaxonSlugs'in h){h.selectedTaxonSlugs=['solanum-candidum'];h.enabled=true;}}")
+                  page.wait_for_timeout(18000);save('figure3_mechanitis_context')
+              except Exception as e:logs.append({'atlas':str(e)});save('atlas_capture_diagnostic')
+              page.close()
+              page=ctx.new_page()
+              try:
+                  page.goto('https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/',wait_until='domcontentloaded',timeout=120000);page.wait_for_timeout(18000)
+                  save('gallery_interface')
+                  images=page.locator('img').evaluate_all('(els)=>els.map(e=>({src:e.currentSrc||e.src,alt:e.alt,width:e.naturalWidth,height:e.naturalHeight}))')
+                  (out/'gallery-image-sources.json').write_text(json.dumps(images,indent=2))
+                  page.get_by_text('AI Identifier',exact=True).first.click();page.wait_for_timeout(5000)
+                  save('ai_identifier_interface')
+                  (out/'ai-controls.json').write_text(json.dumps(page.locator('input,button').evaluate_all('(els)=>els.map(e=>({tag:e.tagName,type:e.type,text:e.innerText,placeholder:e.placeholder}))'),indent=2))
+              except Exception as e:logs.append({'gallery':str(e)})
               browser.close()
+          (out/'capture-errors.json').write_text(json.dumps(logs,indent=2))
+          (out/'capture-date.txt').write_text(datetime.datetime.now(datetime.timezone.utc).isoformat())
           PY
-      - name: Package verification
+          python /tmp/manuscript-final-assets/capture_interfaces.py
+      - name: Package
         if: always()
         run: |
-          cd /tmp/manuscript-verification
+          cd /tmp/manuscript-final-assets
           find . -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt
-          tar -czf /tmp/manuscript-verification.tar.gz .
+          tar -czf /tmp/manuscript-final-assets.tar.gz .
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: manuscript-verification
-          path: /tmp/manuscript-verification.tar.gz
+          name: manuscript-final-assets
+          path: /tmp/manuscript-final-assets.tar.gz
           retention-days: 7
