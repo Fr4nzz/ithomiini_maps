@@ -4,112 +4,57 @@ on:
     branches: [manuscript/final-gpt6-20260921]
     paths: [.github/workflows/manuscript-evidence-temporary.yml]
 permissions:
-  contents: read
+  contents: write
 jobs:
   evidence:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: manuscript/final-gpt6-20260921
           fetch-depth: 0
-          persist-credentials: false
       - name: Prepare browser
         run: |
           python -m pip install --quiet playwright requests
           python -m playwright install --with-deps chromium
-      - name: Verify sources and references
+      - name: Capture real manuscript figures
+        run: python paper/capture_interfaces_20260921.py
+      - name: Check Gallery release tests and missing bibliography metadata
         shell: bash
         run: |
-          mkdir -p /tmp/manuscript-final-assets/references /tmp/manuscript-final-assets/figures
-          git clone --depth=1 https://github.com/Fr4nzz/rename_photos_AI.git /tmp/processor
-          git -C /tmp/processor rev-parse HEAD > /tmp/manuscript-final-assets/processor-head.txt
-          git -C /tmp/processor log -1 --format=fuller > /tmp/manuscript-final-assets/processor-commit.txt
+          mkdir -p /tmp/final-verification/references
+          git clone --depth=1 https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery.git /tmp/gallery
+          (cd /tmp/gallery; node --test tests/*.test.mjs) > /tmp/final-verification/gallery-tests.txt 2>&1
+          (cd /tmp/gallery; node scripts/validate-curation-data.mjs) > /tmp/final-verification/gallery-curation-validation.txt 2>&1
           python - <<'PY'
-          import pathlib, json, re, requests, urllib.parse, subprocess, shutil, hashlib
-          out=pathlib.Path('/tmp/manuscript-final-assets')
-          for name in subprocess.check_output(['git','-C','/tmp/processor','ls-files'],text=True).splitlines():
-              p=pathlib.Path('/tmp/processor')/name
-              if p.suffix.lower() in {'.py','.js','.ts','.vue','.html','.json','.md','.txt','.yml','.yaml'} and p.is_file() and p.stat().st_size<5_000_000:
-                  d=out/'processor'/name; d.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,d)
-          text=pathlib.Path('paper/manuscript.md').read_text()
-          dois=set(re.findall(r'10\.\d{4,9}/[A-Za-z0-9_.()/-]+',text))
-          dois.update(['10.1098/rspb.2018.2769','10.1111/1755-0998.13749','10.1073/pnas.2410939122','10.1371/journal.pbio.3003742','10.1111/mec.13773','10.1038/sdata.2017.122','10.1371/journal.pbio.1002415','10.1371/journal.pbio.0060300','10.1016/j.tree.2011.11.007','10.1111/j.1096-0031.2006.00123.x'])
-          summary=[]
-          for doi in sorted(dois):
-              doi=doi.rstrip('.')
-              try:
-                  r=requests.get('https://api.crossref.org/works/'+urllib.parse.quote(doi,safe=''),timeout=40)
-                  if r.ok:
-                      a=r.json()['message']; (out/'references'/(doi.replace('/','_')+'.json')).write_text(json.dumps(a,indent=2));summary.append({'doi':doi,'title':a.get('title'),'year':a.get('published'),'journal':a.get('container-title'),'volume':a.get('volume'),'issue':a.get('issue'),'page':a.get('page'),'article-number':a.get('article-number')})
-                  else:summary.append({'doi':doi,'status':r.status_code})
-              except Exception as e:summary.append({'doi':doi,'error':str(e)})
-          (out/'references/summary.json').write_text(json.dumps(summary,indent=2))
-          checks=[]
-          for slug in ['mechanitis_polymnia','mcclungia_cymo','napeogenes_peridia']:
-              for suffix in ['ensemble','ensemble_core','ensemble_extension']:
-                  url=f'https://rapidspeciation.github.io/ithomiini_maps/data/sdm/species/{slug}_{suffix}.tif'
-                  try:
-                      r=requests.get(url,timeout=90); checks.append({'url':url,'status':r.status_code,'size':len(r.content),'sha256':hashlib.sha256(r.content).hexdigest()})
-                  except Exception as e:checks.append({'url':url,'error':str(e)})
-          (out/'sdm-http-verified.json').write_text(json.dumps(checks,indent=2))
+          import requests,pathlib,json
+          out=pathlib.Path('/tmp/final-verification/references')
+          for doi in ['10.1111/j.1096-0031.2006.00108.x','10.1590/S0034-71081999000300010','10.1016/j.tree.2011.09.007']:
+              r=requests.get('https://api.crossref.org/works/'+doi,timeout=60)
+              if r.ok:(out/(doi.replace('/','_')+'.json')).write_text(json.dumps(r.json()['message'],indent=2))
           PY
-      - name: Capture real interfaces
-        continue-on-error: true
-        shell: bash
+      - name: Commit only paper figure outputs
         run: |
-          cat > /tmp/manuscript-final-assets/capture_interfaces.py <<'PY'
-          from pathlib import Path
-          import json,urllib.parse,datetime
-          from playwright.sync_api import sync_playwright
-          out=Path('/tmp/manuscript-final-assets');fig=out/'figures';logs=[]
-          sources='Sanger Institute,Dore et al. 2022,iNaturalist,UNAM,GBIF Other'
-          base='https://rapidspeciation.github.io/ithomiini_maps/'
-          with sync_playwright() as p:
-              browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader'])
-              ctx=browser.new_context(viewport={'width':1800,'height':1100},device_scale_factor=1.5)
-              page=ctx.new_page()
-              def save(name):
-                  page.screenshot(path=str(fig/(name+'.png')),full_page=False)
-                  (out/(name+'.txt')).write_text(page.locator('body').inner_text())
-                  (out/(name+'.html')).write_text(page.content())
-              try:
-                  page.goto(base,wait_until='domcontentloaded',timeout=120000);page.wait_for_timeout(12000)
-                  keys=page.evaluate("() => {const p=document.querySelector('#app').__vue_app__.config.globalProperties.$pinia;window._paperPinia=p;return [...p._s.entries()].map(([k,s])=>({k,keys:Object.keys(s)}))}")
-                  (out/'atlas-store-keys.json').write_text(json.dumps(keys,indent=2))
-                  page.evaluate("async()=>{const p=window._paperPinia;const f=p._s.get('filters');const ds=p._s.get('dataset'); if(ds){f.filters.source=Object.keys(ds.sourceConfig);await Promise.all(f.filters.source.map(s=>ds.loadSource(s)));} const t=p._s.get('theme');if(t){if(t.setMode)t.setMode('light');else if('mode'in t)t.mode='light';} const v=p._s.get('view');if(v){v.colorBy='source';}}")
-                  page.wait_for_timeout(15000);save('figure2_atlas_interface')
-                  (out/'atlas-state-overview.json').write_text(json.dumps(page.evaluate("()=>Object.fromEntries([...window._paperPinia._s.entries()].map(([k,s])=>[k,JSON.parse(JSON.stringify(s.$state, (key,v)=>key==='allFeatures'||key==='data'||key==='features'?undefined:v))]))"),indent=2))
-                  page.evaluate("async()=>{const p=window._paperPinia;const f=p._s.get('filters'); f.filters.species=['Mechanitis polymnia'];const s=p._s.get('sdm');await s.loadMetadata();s.selectedSpecies=['Mechanitis polymnia'];s.enabled=true; s.opacity=0.65;const h=p._s.get('hostPlants');await h.loadMetadata();const v=p._s.get('view');if(v)v.colorBy='subspecies';}")
-                  page.wait_for_timeout(15000)
-                  (out/'host-state-keys.json').write_text(json.dumps(page.evaluate("()=>{const h=window._paperPinia._s.get('hostPlants');return {keys:Object.keys(h),taxa:JSON.parse(JSON.stringify(h.taxa||h.manifest?.taxa||[])).slice(0,3)}}"),indent=2))
-                  page.evaluate("async()=>{const h=window._paperPinia._s.get('hostPlants');if(h.setSelectedTaxa)await h.setSelectedTaxa(['solanum-candidum']);else if('selectedTaxonSlugs'in h){h.selectedTaxonSlugs=['solanum-candidum'];h.enabled=true;}}")
-                  page.wait_for_timeout(18000);save('figure3_mechanitis_context')
-              except Exception as e:logs.append({'atlas':str(e)});save('atlas_capture_diagnostic')
-              page.close()
-              page=ctx.new_page()
-              try:
-                  page.goto('https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/',wait_until='domcontentloaded',timeout=120000);page.wait_for_timeout(18000)
-                  save('gallery_interface')
-                  images=page.locator('img').evaluate_all('(els)=>els.map(e=>({src:e.currentSrc||e.src,alt:e.alt,width:e.naturalWidth,height:e.naturalHeight}))')
-                  (out/'gallery-image-sources.json').write_text(json.dumps(images,indent=2))
-                  page.get_by_text('AI Identifier',exact=True).first.click();page.wait_for_timeout(5000)
-                  save('ai_identifier_interface')
-                  (out/'ai-controls.json').write_text(json.dumps(page.locator('input,button').evaluate_all('(els)=>els.map(e=>({tag:e.tagName,type:e.type,text:e.innerText,placeholder:e.placeholder}))'),indent=2))
-              except Exception as e:logs.append({'gallery':str(e)})
-              browser.close()
-          (out/'capture-errors.json').write_text(json.dumps(logs,indent=2))
-          (out/'capture-date.txt').write_text(datetime.datetime.now(datetime.timezone.utc).isoformat())
-          PY
-          python /tmp/manuscript-final-assets/capture_interfaces.py
-      - name: Package
+          test "$GITHUB_REF_NAME" = manuscript/final-gpt6-20260921
+          git config user.name 'Franz Chandi'
+          git config user.email 'fchandi@estud.usfq.edu.ec'
+          git add paper/figures
+          git diff --cached --check
+          git commit -m 'Add actual Atlas and Identifier interface figures with capture receipt'
+          git push origin HEAD:manuscript/final-gpt6-20260921
+          git rev-parse HEAD > /tmp/final-verification/figure-commit.txt
+      - name: Package evidence
         if: always()
         run: |
-          cd /tmp/manuscript-final-assets
+          mkdir -p /tmp/final-verification
+          cp -r paper/figures /tmp/final-verification/
+          cp paper/capture_interfaces_20260921.py /tmp/final-verification/
+          cd /tmp/final-verification
           find . -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt
-          tar -czf /tmp/manuscript-final-assets.tar.gz .
+          tar -czf /tmp/final-verification.tar.gz .
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: manuscript-final-assets
-          path: /tmp/manuscript-final-assets.tar.gz
+          name: final-verification
+          path: /tmp/final-verification.tar.gz
           retention-days: 7
