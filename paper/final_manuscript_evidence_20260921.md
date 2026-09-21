@@ -1,450 +1,461 @@
 # Final manuscript evidence ledger — 21 September 2026
 
-**Phase 1 factual handoff. This is not a revised manuscript.**
+**Phase 1 factual handoff, not a revised manuscript. Read the status and scope qualifications with every number.**
 
-The purpose of this ledger is to separate facts supported by the inspected source state from historical claims, published-but-not-recomputed benchmark results, and missing evidence. It must not be read as a certificate that every requested verification was completed. Several important provenance and recomputation tasks remain open in section 16. In particular, the training manifest and checkpoint internals were not fully inspected, and the 145-species SDM performance summaries were not recomputed.
+This ledger separates executable-source facts, generated-artifact metadata, published evaluation results, and unresolved provenance. It does not certify that all requested checks were completed. In particular, this audit did not deserialize the model checkpoints, rerun model evaluation, execute the Gallery tests, attest the files loaded by a running Hugging Face container, or recompute SDM performance for the final raster population. Those limitations are material, not merely editorial.
 
-## Evidence conventions and pinned repositories
+This corrected version supersedes the initial ledger commit. Use the latest audit-branch version; the initial version contained transcription and snapshot errors identified during source validation. No changes to `paper/manuscript.md` are intended or required by this audit.
 
-| Alias | Repository / resource | Inspected revision |
+## Evidence conventions and source register
+
+| Alias | Repository | Pinned source revision |
 |---|---|---|
 | IM | `Fr4nzz/ithomiini_maps` | `935cc42740aefbe70640eb15d79bf4f6c21e1089` |
 | WG | `rapidspeciation/Shiny_Ikiam_Wings_Gallery` | `f5cb03f17f3ba639090b32fbedde6d6645ff847b` |
 | IA | `Fr4nzz/insect-ai-thesis-ml` | `e80ac06a27329f7b01e10aecba1d0c1133251958` |
-| WC | `Fr4nzz/WingsClassificator` | `f5db5de8212c36997e0220a1d2542f082fe9abdb` |
-| HF-M | `https://huggingface.co/fr4nzzch/butterfly-id-classifier` | repository revision `61c8fb58578a2ea64c6972e17b5101697729eaa8` |
-| HF-S | `https://huggingface.co/spaces/fr4nzzch/butterfly-id` | repository revision `3aa72a33946f2da661d1ed96f0929e92cd9413e6` |
+| HF-S | `https://huggingface.co/spaces/fr4nzzch/butterfly-id` | Source inspected on 21 September 2026; repository commit `3aa72a36c37ce8b383f8f5a5f9ec5763f52e5e42` |
+| HF-M | `https://huggingface.co/fr4nzzch/butterfly-id-classifier` | Repository head displayed as `61c8fb5`; individual weight objects identified below by their published LFS SHA-256 |
 
-All IM, WG, IA, and WC paths below mean the exact revision in this table, not a floating `main`. Unless a row supplies a different date, the verification date is 21 September 2026; a verification date is not a data-collection or model-training date. The three branch heads supplied in the phase-1 request matched the expected commits when checked. WC was located separately as a provenance lead; its September 7 state does not automatically contain the September 10–14 collection release.
+The three supplied GitHub branch heads matched their expected commits when checked. Every IM, WG or IA path below refers to the corresponding pinned revision, not a floating branch. Unless a different date is specified, 21 September 2026 is the inspection date, not a training date or dataset snapshot date. Repository files can themselves describe different, older snapshots.
 
-Statuses:
+For GitHub sources, immutable links can be formed as `https://github.com/<repository>/blob/<revision>/<path>`. For Hugging Face, distinguish the Space source revision, model repository revision, published weight-object hash and actual runtime-loaded bytes. These are not interchangeable.
 
-- **VERIFIED—CODE/ARTIFACT:** the inspected implementation, generated payload, Git object, or release receipt supports the stated fact. Metadata counts are identified as metadata counts, not represented as independent row enumerations.
-- **VERIFIED—PUBLISHED RESULT:** the value is present in the current application/report and, where indicated, protected by source tests. This does not mean this audit reran the experiment or regenerated its out-of-fold predictions.
-- **SUPERSEDED / INAPPLICABLE:** not an appropriate description of the specified current pipeline or snapshot. Historical values can still be correct for their original scope.
-- **UNRESOLVED:** insufficient evidence inspected to settle the claim.
-- **AUTHOR CONFIRMATION:** a scientific interpretation, naming decision, or missing project artifact needs explicit confirmation.
+Status vocabulary:
 
-Priority is executable code, artifacts and Git history; then verifiable deployment evidence; then traceable reports; then user messages in archives. Assistant archive responses are leads only. A test that asserts an About-page number proves consistency of the application with that number, not validity of the experiment that produced it.
+- **VERIFIED—CODE:** supported by inspected implementation; not necessarily exercised live.
+- **VERIFIED—ARTIFACT:** supported by a generated file, receipt or Git history. Metadata values are not represented as a fresh row-level recount.
+- **VERIFIED—PUBLISHED RESULT:** present in the current application/report; not independently regenerated here. A source test asserting the same value is a consistency check, not a rerun of the underlying experiment.
+- **SUPERSEDED / DIFFERENT SCOPE:** not appropriate for the specified current population or pipeline; it may remain valid historically.
+- **UNRESOLVED:** insufficient inspected evidence to settle the claim.
+- **AUTHOR CONFIRMATION:** requires a scientific interpretation, terminology decision or unavailable project record.
 
-**Operational limits:** this audit used repository/API and public Hugging Face source inspection. It did not obtain a complete executable local checkout, run the Gallery test suite, run inference against a confirmed live container, deserialize all model checkpoints, or reconstruct the raw evaluation cohorts. No test-passing, retraining, calibration, or deployment claim should be inferred from this ledger. No scientific prose in `paper/manuscript.md` is intentionally changed by this audit.
+Use executable code, artifacts and Git history before reports, archived user messages, assistant responses, old documentation or inference. Assistant archive responses were used as search leads, not evidence that training, validation or deployment actually happened.
 
 ## 1. Manuscript baseline and snapshot policy
 
-**Source:** IM `paper/manuscript.md`; branch `manuscript/chat-archive-20260920`; commit `935cc42740aefbe70640eb15d79bf4f6c21e1089`.
+**Source:** IM `paper/manuscript.md`; baseline branch `manuscript/chat-archive-20260920`; revision in the register above. **Status: VERIFIED—ARTIFACT.**
 
-The manuscript is the already recovered July 8 version. Reconstructing that version is not a pending task. The audit branch starts from that commit; `main` is not the editing target.
+The baseline is the recovered July 8 manuscript. Reconstructing the July version is not a pending prerequisite. The audit branch is `manuscript/fact-lock-20260921`; `main` and the manuscript source are not editing targets in this phase.
 
-### Snapshot decision
+**Recommendation: retain the frozen 9 May 2026 occurrence snapshot with 104,297 records.** Reconcile or regenerate every occurrence-derived statistic against that snapshot before writing final results. Do not substitute isolated values from `paper/statistics.json` or `paper/statistics_report.txt`: the latter describes a different state, including a different total and mixed country names/codes.
 
-**Recommendation: retain the explicitly frozen 9 May 2026 occurrence snapshot, with 104,297 records, for the manuscript's core occurrence inventory.** Do not replace only that total with a value from `paper/statistics.json` or `paper/statistics_report.txt`. Those files describe a different generated state, even though their timestamp is also May 9. Every occurrence-derived table, country total, map-density summary, source contribution, taxonomic count, and sequencing summary must either be reconciled to the selected snapshot or withheld.
+A newer occurrence snapshot would be defensible only with a complete regeneration of dependent totals, source contributions, taxonomic summaries, country normalization, sequencing-status summaries and figures, accompanied by input hashes. That regeneration was not performed here.
 
-This recommendation is not a claim that every current JSON file belongs to that snapshot. The repository contains internally different manifests, especially for host plants. The September classifier and collection results may be reported as separately dated modules, not silently described as part of a single May dataset.
+Classifier, host-plant and SDM releases must be separately dated. A September classifier does not turn an April host-plant file or May occurrence table into a September dataset. In particular, the host-plant files are not internally a single synchronized snapshot; section 11 records the conflicting scopes.
 
-**Safe wording:** “Occurrence summaries refer to the 9 May 2026 snapshot. Classifier and collection-prediction results refer to the separately identified September 2026 releases.”
-
-A newer single-snapshot analysis remains an alternative, but requires regeneration of *all* dependent statistics, a record-level input hash, corrected country normalization, and an explicit manuscript-wide date change. That regeneration was not performed in phase 1.
+**Manuscript-safe wording:** “Occurrence summaries refer to the 9 May 2026 snapshot. Classifier and collection-prediction results refer to separately identified September releases.” Host-plant and SDM dates should likewise be explicit where their quantities are given.
 
 ## 2. Wings taxonomic classifier
 
-### 2.1 Uploaded-photo inference: supported implementation
+### Uploaded photographs: verified inference architecture
 
-**Primary sources:** HF-S `inference.py`; WG `src/utils/aiPredict.js`, `src/components/AIIdTab.vue`. HF-S revision is pinned above. The following describes the inspected source path, not a cryptographically attested running container.
+**Primary sources:** HF-S `inference.py`; WG `src/utils/aiPredict.js`, `src/components/AIIdTab.vue`. **Status: VERIFIED—CODE, with checkpoint/runtime limitations below.**
 
-| Component | Finding | Status / manuscript constraint |
+| Component | Finding | Scope limitation |
 |---|---|---|
-| Image backbone | Frozen BioCLIP 2.5-H image encoder, loaded through `hf-hub:imageomics/bioclip-2.5-vith14`; image encoding runs in evaluation/no-gradient mode | VERIFIED—CODE. Do not call the complete supervised system “zero-shot BioCLIP.” |
-| Single-image feature size | The backbone is described as providing 1,024-dimensional features. The head loader obtains its actual input size from checkpoint `feat_dim` | Supported by backbone/report descriptions; checkpoint tensor-shape confirmation remains open. |
-| Residual adapter | No residual adapter in the inspected uploaded-photo `CosineHead` path | VERIFIED—CODE. The Insect AI residual head must not be substituted into this description. |
-| Layer normalization | `LayerNorm` before cosine classification | VERIFIED—CODE |
-| L2 normalization | Features and classifier weights are normalized before their dot product | VERIFIED—CODE |
-| Classifier | Cosine-similarity classifier with a directly predicted finest-rank label space | VERIFIED—CODE |
-| Scale | Cosine logits use scale 30 in the inspected inference implementation | VERIFIED—CODE. This is not evidence of a separately fitted calibration temperature. |
-| Subcentres | Code supports K subcentres and takes the maximum per class when K > 1; loader uses checkpoint K, defaulting to 1 | VERIFIED—CODE for support/default; **UNRESOLVED** actual released K without checkpoint inspection. |
-| Angular margin | No training-time angular margin is applied by this inference path | VERIFIED—CODE for inference only. Whether ArcFace or another margin was used during training is UNRESOLVED. |
-| Calibration | No additional fitted temperature is read/applied in this path; effective additional temperature is 1 | VERIFIED—CODE. Do not import Insect AI's T = 0.8. |
-| Output hierarchy | Finest-rank leaf probabilities are produced first; the Gallery derives coarser ranks downstream | VERIFIED—CODE. Not a demonstrated cascade of independently trained family/genus/species heads. |
-| Truncation | The API returns the top 64 leaf probabilities, rounded to five decimals | VERIFIED—CODE. Browser aggregation is over these returned candidates, not necessarily the complete leaf posterior. |
+| Encoder | Frozen BioCLIP 2.5-H image encoder, loaded using `hf-hub:imageomics/bioclip-2.5-vitH14` | The complete system has a supervised head and is not zero-shot inference. |
+| Image representation | 1,024-dimensional single-image features; the checkpoint loader reads `feat_dim`, defaulting to 1024 | Backbone dimensionality is supported by code and current Gallery description; the checkpoint tensor shapes were not independently deserialized. |
+| Residual adapter | No residual adapter in the inspected uploaded-image `CosineHead` path | Do not import the Insect AI adapter into Wings methods. |
+| LayerNorm | Applied before cosine classification | Confirmed in the head implementation. |
+| L2 normalization | Normalizes the features after LayerNorm and normalizes classifier weights | Encoder outputs are also normalized in the inference path. |
+| Classification | Cosine dot products followed by a finest-rank softmax | Direct leaf prediction, not a demonstrated cascade of independently trained rank classifiers. |
+| Cosine scale | 30 in the inspected implementation | Not a fitted calibration temperature. |
+| Subcentres | Code supports K subcentres, takes the per-class maximum, and reads K from checkpoint with default 1 | Actual released K remains unconfirmed without checkpoint inspection; a default is not proof of the stored value. |
+| ArcFace/angular margin | No margin applied during inference | Training-time margin remains unverified for the matching release. Old scripts/model-card prose do not close this gap. |
+| Calibration | No additional fitted temperature is applied in this inference path | Effective additional temperature is 1; do not copy IA's T = 0.8. |
+| Hierarchical aggregation | Coarser taxonomic candidates are constructed downstream from leaf scores | The API returns only the top 64 leaf probabilities, rounded to five decimals. Browser aggregation is therefore truncated, not necessarily a full-taxonomy posterior. |
 
-The browser normalizes the returned/reweighted candidate scores and aggregates them for species/genus and named-subspecies displays. Consequently, displayed coarser-rank scores should be called candidate scores or aggregated probabilities with a truncation qualification; this audit does not establish calibrated probabilities over the full taxonomy.
+**Safe wording:** “For uploaded photographs, a frozen BioCLIP 2.5-H image encoder supplies features to a supervised head comprising layer normalization and an L2-normalized cosine classifier. The inspected inference implementation uses a cosine scale of 30 and no residual adapter. It predicts finest-rank labels directly, with coarser candidates obtained by downstream aggregation of returned leaf scores.”
 
-**Manuscript-safe architectural description:** “For uploaded photographs, a frozen BioCLIP 2.5-H image encoder supplies features to a supervised taxonomic head consisting of layer normalization and an L2-normalized cosine classifier. The inspected inference implementation uses a cosine scale of 30 and contains no residual adapter. It predicts finest-rank labels directly; coarser taxonomic candidates are obtained by downstream aggregation of the returned leaf scores.”
+Do not add exact K, ArcFace margin, optimizer, epochs or calibration fitting to the final methods until the release-specific checkpoint and training configuration are inspected.
 
-Do not add an exact subcentre count, ArcFace margin, optimizer, training epoch count, or fitted temperature until the matching checkpoint and training receipt are inspected.
+### Weight identity and deployment boundary
 
-### 2.2 Model identity and deployment caveat
+HF-M `head_hier.pt` has published LFS SHA-256:
 
-HF-M `head_hier.pt` is identified by the published LFS object SHA-256:
+`e461eb4eda24c919711d7497833916305259a712753323ff9431aad9b9e07d6f6`
 
-`e461eb4eda24c179b9ae450c86ee38547aa89b689627bcd5ba5551d0f1d2e1f1`
+The inspected object page reports an approximately 33 MB file, associated with upload commit `d6f8cbb`. This is the repository's published object identity, not a fresh local checksum or proof that a particular running container loaded those bytes.
 
-Reported file size: 32,992,738 bytes. These are repository artifact identifiers, not a fresh hash of bytes downloaded and deserialized in this audit.
+The Space checks local assets first, then can download from its configured weights repository without an explicit revision pin in the fallback call. Environment overrides and bundled files can therefore matter. **UNRESOLVED:** a runtime receipt tying together Space revision, encoder revision, resolved model paths, actual weight hashes and environment settings. The code-and-artifact audit is stronger than a model-card-only description, but is not runtime attestation.
 
-The Space asset helper checks local assets before falling back to the configured Hugging Face weights repository. The fallback does not pin an explicit revision in the inspected path. Therefore, the source commit, model-repository head, and the actual files loaded by a running Space must not be treated as interchangeable identifiers. **UNRESOLVED:** a runtime receipt tying the loaded `head_hier.pt`, `wing_seg.pt`, encoder revision, environment overrides and Space commit together.
+### Insect AI is a related but different classifier
 
-### 2.3 Why the Insect AI architecture is not transferable wholesale
+**Sources:** IA `reports/eda_insect_ai_pipeline.html`, classifier-method passages; IA `docs/chat-transcripts/t3-code/update-full-frame-ecology-tab-2d8166ec.md`.
 
-**Source:** IA `reports/eda_insect_ai_pipeline.html`, blob `ad8d124a298b4c4cdafc5127a52572692ff7f79d`, particularly its classifier methodology near source lines 1850–1950; IA `docs/chat-transcripts/t3-code/update-full-frame-ecology-tab-2d8166ec.md`, blob `1cb05ee0b5d1ae0f6d45fd70b10bcae55ce02257`.
+The IA report describes a custom residual adapter `1024 → 64 → 1024`, GELU, `x + 0.2 Δx`, LayerNorm, L2 normalization, a cosine classifier and separate calibration at T = 0.8. Those are IA report parameters, not verified Wings parameters. Its discussion of zero-shot image/text matching versus a supervised taxonomic head is conceptually useful, but its class counts, training data, crop protocol, calibration and benchmarks must not be copied into Wings methods.
 
-The report explicitly describes a different supervised classifier: a custom residual `1024 → 64 → 1024` adapter with GELU and `x + 0.2 Δx`, followed by LayerNorm, L2 normalization and a cosine classifier over 47,560 species. It reports separate calibration at T = 0.8 and checkpoint SHA-256 `2a560e837b4cf6b07aca94154902b0ef34bcd773a5121b0aaa09868c3d573995`. These are **IA report claims, not Wings model parameters**.
-
-The report also distinguishes genuine image/text zero-shot BioCLIP inference from a trained supervised head. Its conceptual explanation is useful, but its architecture, training sample size, epoch, calibration, crop protocol and test scores must not be copied into the Wings methods. The archived user instructions explicitly require distinguishing historical benchmarks from the exact production configuration.
+**Resolved distinction:** the inspected Wings uploaded-image head has LayerNorm plus cosine classification without a residual adapter. The paired collection head is a separate release and needs its own architectural verification.
 
 ## 3. Training data and label coverage
 
-**Sources:** HF-M model release metadata and class/head assets; WG `src/components/AIIdTab.vue`, `tests/aboutTool.test.mjs`; IM Wings archives listed in the source inventory below.
+**Sources:** WG `public/data/prediction_coverage_receipt.json`, `src/components/AIIdTab.vue`; HF-M class/head descriptions. The receipt and application are authoritative for their stated release metadata, not substitutes for training manifests.
 
-| Quantity / claim | Supported state | Status |
-|---|---|---|
-| Finest-rank classes | Current release metadata reports **7,933** | VERIFIED—ARTIFACT METADATA; independent enumeration of the complete class map not completed. |
-| Species represented | Current release reports **4,478** | VERIFIED—ARTIFACT METADATA / application description; complete taxonomic-normalization recount remains open. |
-| Named subspecies | Gallery description reports **4,958** | VERIFIED—PUBLISHED COVERAGE; independent named-trinomial/alias count remains open. |
-| Genera represented | No final independently checked count established | UNRESOLVED |
-| Broader corpus rows | **63,307** is a hypothesis supplied for checking, not established by an inspected release-bound manifest in this audit | UNRESOLVED; do not present as independently verified. |
-| Exact-label eligible images | **58,165** is likewise not established here from the matching training manifest | UNRESOLVED |
-| Number of images actually used by the final released training run | A complete row-level manifest tied to the deployed checkpoint was not inspected | UNRESOLVED |
-| Major source contributions | Archived discussions contain changing corpora; a source-count table tied to the final checkpoint was not recovered | UNRESOLVED |
-| Rare classes / class weighting / minimum support | Must be read from the matching training config, not inferred from the existence of rare labels in the vocabulary | UNRESOLVED |
-| Excluded labels or photographs | No complete checkpoint-bound exclusion ledger inspected | UNRESOLVED |
-| Contradictory labels, aliases and spelling splits | Archives describe curation work, but this does not prove all contradictions were removed before the released training run | UNRESOLVED |
-| Adult/immature/background filtering | No complete executed filter receipt tied to the head | UNRESOLVED |
+| Quantity | Supported value | Status and limitation |
+|---|---:|---|
+| Finest-rank classes | 7,933 | VERIFIED—ARTIFACT: explicitly in the current paired coverage receipt; also reported by HF-M. Complete class-map enumeration was not rerun. |
+| Species represented | 4,478 | VERIFIED—PUBLISHED COVERAGE in the current Gallery and model description; not a fresh accepted-name/alias audit. |
+| Named subspecies | 4,958 | VERIFIED—PUBLISHED COVERAGE in the current Gallery; independent class-map normalization remains open. |
+| Genera | Not established | UNRESOLVED. |
+| Broader corpus rows | Proposed 63,307 not confirmed | UNRESOLVED against a checkpoint-bound manifest. |
+| Exact-label training images | Proposed 58,165 not confirmed | UNRESOLVED against the matching eligibility/filter output. |
+| Final training-run image count | Not established | Do not equate a vocabulary count, embedding-cache size and final supervised sample count. |
+| Major sources and source contributions | Not established for the final checkpoint | Requires source-labelled training manifest. |
+| Rare-class treatment | Final policy not established | The collection benchmark's supported-class criterion is not automatically the full training eligibility rule. |
+| Exclusions, contradictions, aliases | No complete release-bound exclusion ledger inspected | Curation discussions do not prove all duplicate contradictions were resolved before the released run. |
+| Adult/immature/background filtering | No executed filter receipt tied to the checkpoint inspected | Do not assert comprehensive adult filtering. |
 
-Species coverage and named-subspecies coverage are not disjoint additive categories. A species can be represented through one or more subspecies leaves; adding 4,478 and 4,958 is not a valid way to recover the number of finest-rank classes. The paper should also distinguish “labels in the model vocabulary” from biologically or taxonomically validated accepted taxa.
+Species and named-subspecies counts are not additive disjoint categories. Multiple subspecies leaves can share a species parent. Model labels must also be distinguished from independently validated accepted biological taxa.
 
-WC `dataset.csv` and `tools/train_finetune_arcface.py` / `tools/train_finetune_arcface_ensemble.py` are provenance leads, not proof of the September release's precise dataset or loss function. WC's inspected head predates later collection-release receipts. Do not infer that an ArcFace-named historical script trained the uploaded checkpoint.
+HF-M model-card training descriptions and archived discussions describe changing corpora and model versions. They are not sufficient to confirm the proposed 58,165/63,307 figures for the actual uploaded checkpoint. A historical ArcFace-named training script likewise does not prove that it trained the inspected release.
 
-**Safe wording pending the training-manifest check:** “The released label vocabulary is reported to contain 7,933 finest-rank classes spanning 4,478 species; the Gallery reports 4,958 named subspecies. Training-set size, filtering, and rare-class treatment require confirmation against the release-specific training manifest.” For submission, either close that gap or omit unsupported sample-size and training-procedure claims.
+**Safe interim wording:** “The released classifier vocabulary is reported to comprise 7,933 finest-rank classes spanning 4,478 species, with 4,958 named subspecies reported in the Gallery.” Before submission, reconcile these numbers by enumerating the exact class map and identify the training manifest by hash. Omit unsupported image-count and filtering claims until that is done.
 
 ## 4. Image preprocessing and segmentation
 
-**Primary source:** HF-S `inference.py`; HF-M `wing_seg.pt` artifact history.
+**Primary sources:** HF-S `inference.py`; HF-M `wing_seg.pt` object and upload history; WG descriptive text. **Status: VERIFIED—CODE / ARTIFACT for loading and crop logic; provenance partly unresolved.**
 
-The uploaded-photo path loads `wing_seg.pt`, optionally overridden by `WING_SEG_WEIGHTS`, through `ultralytics.YOLO`. Segmentation/detection boxes are used to construct rectangular RGB crops; the inspected classifier path is not a pixel-mask-on-black classification pipeline. The crop routine uses a 6% margin, detection confidence 0.05, a maximum of 32 detections and containment/overlap deduplication with an intersection-over-minimum-area criterion of 0.5. The default combined target is the union of selected boxes. Missing segmentation weights or no usable detections can lead to full-image fallback. These are code-path facts, not measured segmentation quality.
+The uploaded-image inference path loads `wing_seg.pt` through `ultralytics.YOLO`, with an optional `WING_SEG_WEIGHTS` override. The inspected code uses detection/segmentation boxes to define padded RGB crops, rather than necessarily passing a pixel mask on a black background to the classifier. It includes a 6% rectangular margin, confidence threshold 0.05, maximum 32 detections and containment/overlap deduplication using intersection over minimum area 0.5. The combined target uses the union of selected boxes. Missing usable detections can lead to full-image fallback.
 
-HF-M `wing_seg.pt`:
+HF-M `wing_seg.pt` has published LFS SHA-256:
 
-- published object SHA-256: `012e95bb092d075d816e480414edbb30512c9812ccf5e8601ed9620fedcf03e1`;
-- reported size: 23,357,526 bytes;
-- relevant upload commit: `45992a486a9f38b729297f86febdc51cbcaeb02e`, June 29;
-- the release history labels this the corrected **wings_v3** artifact.
+`012e95bb092d01936a8a0cd1897b4e073bf49447ea6f7cc36f97f7fef0c9f0eba`
 
-**VERIFIED:** Ultralytics loading, artifact identity and crop logic in the inspected uploaded-photo source/repository. **UNRESOLVED:** runtime hash attestation, checkpoint architecture deserialization, exact training images/masks and a teacher-mask receipt.
+The approximately 23.4 MB object is associated with June 29 upload commit `45992a4`, labelled “Replace wing_seg.pt with corrected wings_v3 YOLO model.” That release history is evidence about this artifact. It is not proof that later Wings-v6/v7 experiments replaced the uploaded-image segmenter.
 
-The Gallery's descriptive material associates its wing segmenter with YOLO26s-seg and SAM 3-derived training masks. That is weaker evidence than a checkpoint/config/data receipt. **Do not state that SAM 3 teacher masks definitively trained this exact uploaded `wing_seg.pt` until the provenance chain is closed.** Similarly, later Wings-v6/v7 development is not evidence that v6/v7 is deployed in the uploaded-image Space. Collection segmentation and uploaded-image segmentation can have different histories.
+The current Gallery describes YOLO26s-seg trained on wing masks generated with SAM 3. **VERIFIED—PUBLISHED DESCRIPTION only:** this audit did not close the chain from the exact `wing_seg.pt` hash to a training configuration and SAM 3 teacher-mask receipt. The framework is independently confirmed by loading code; the exact checkpoint architecture and teacher provenance remain unresolved.
 
-**Publication-level wording supported now:** “An Ultralytics-based wing-localization model is used to define padded rectangular image regions for classification, with a full-image fallback when no usable region is available.” Add the exact YOLO model family and SAM 3 teacher-mask procedure only after the matching training receipt is verified. Internal v3/v6/v7 labels belong in provenance, not as unexplained model names in the main paper.
+**Safe wording supported without that missing receipt:** “An Ultralytics-based wing-localization model defines padded image regions for classification, with a full-image fallback when no usable region is available.” Add YOLO26s-seg and SAM 3 training details once the matching checkpoint/config/mask receipt is verified. Internal v3/v6/v7 labels belong in technical provenance, not unexplained publication-level names.
 
 ## 5. Paired dorsal/ventral collection workflow
 
-**Sources:** WG `public/data/prediction_coverage_receipt.json`, `tests/paired-release.test.mjs`, `scripts/validate-curation-data.mjs` and the collection prediction assets they validate.
+**Primary sources:** WG `public/data/prediction_coverage_receipt.json`, `tests/paired-release.test.mjs`, `scripts/validate-curation-data.mjs`, current prediction assets and About section.
 
-The collection release is separate from the uploaded-photo head. Its receipt identifies a paired representation as **CONCAT_DV**, with **2,048-dimensional** dorsal/ventral concatenated features. The explicit paired population is **3,829 verified pairs**. This is not the total number of arbitrary uploads and is not a count of individual photographs.
+The current coverage receipt, generated **2026-09-14T15:39:58.647516+00:00**, identifies a **CONCAT_DV** head with **2,048-dimensional** features and **7,933 classes**. Its recorded head SHA-256 is:
 
-The expanded collection payload contains **3,849 specimens: 3,829 paired specimens and 20 uploaded-head fallbacks**. The coverage receipt additionally distinguishes a 269-record live payload, their 4,118-record union, and a 402-record coverage addition reaching 4,520 active specimens. The receipt's photographic coverage fields include 4,388 photographed CAMIDs and zero missing visible predictions. These refer to different sets; none should be substituted for the 3,829 paired benchmark population.
+`9cdcd7209c0a831b1043468998501841d8e469681f6f577a8060c3651e91afe93e`
 
-The coverage addition records 799 input images and five single-view fallbacks represented by a duplicated feature vector. Such fallback representations are not genuinely observed two-view pairs and must not be counted as verified pairs in the benchmark.
+This differs from the uploaded `head_hier.pt` identity. Do not describe the 2,048-dimensional paired head as if every verified architectural detail of the 1,024-dimensional upload head necessarily applies. Its exact normalization, residual components, loss, subcentres and calibration still require its own checkpoint/config inspection.
 
-The paired release head is identified in the receipt/tests by SHA-256:
+The receipt records the following distinct populations:
 
-`34ecd53f64b3f9dc600710af5ca8df7cd94845653a9ce9f916dcd08adc520167`
+| Receipt field / population | Count |
+|---|---:|
+| Paired-expanded prediction payload | 3,849 |
+| Updated live rerun payload | 269 |
+| Union before coverage fill-in | 4,118 |
+| Missing before fill-in / fill-in specimens | 402 |
+| Model-visible active specimens | 4,520 |
+| Model-visible photographic CAMIDs | 4,388 |
+| Missing after fill-in | 0 |
+| Fill-in input rows | 799 |
+| Unpaired-vector rows in fill-in | 5 |
 
-The paired release tests pin an expanded-prediction asset SHA-256:
+These are payload/coverage quantities, not accuracy denominators. The reported benchmark comprises **3,829 verified paired specimens**, not all 3,849 expanded predictions or all 4,520 active specimens. The 20-record difference between expanded payload size and verified benchmark pairs requires an explicit record-level scope join before naming its composition.
 
-`2f75987de896889ee8ed9c09a77a4c97551a5f1934708bf8f63424d8a073fe70`
+The fill-in receipt identifies `predictions_sanger_head_hier.npz` with SHA-256 `c632de90d36cfa597f5d6a4cfe26607fca04f8799866a1277e43d42095a89d420ba`. An integrity hash proves which output is referenced; it does not turn final-fit predictions into held-out predictions.
 
-These identities differ from the uploaded `head_hier.pt` identity. **Do not describe the 2,048-dimensional collection head as merely the verified 1,024-dimensional uploaded head with an extra photograph.** Its exact layer structure, margin, subcentre count and calibration remain to be traced to its own checkpoint and training/evaluation config.
+The About text describes a combination of simple feature averaging and learned dorsal/ventral combination. Treat this as a published workflow description until the precise evaluated ensemble and its component checkpoints are tied to the evaluation receipt. It does not justify presenting only the uploaded head as the complete collection method.
 
-The published final-fit collection predictions are not themselves an out-of-fold evaluation table. Population coverage and prediction-file integrity are distinct from held-out accuracy.
+### Leakage boundary
 
-### Leakage qualification
-
-Pairing must be grouped by specimen/CAMID before assignment to folds; dorsal and ventral images of the same specimen cannot be independent train/test examples. The current paired benchmark is described as specimen-based, but this audit did not inspect the complete taxonomic fold-assignment table and all cross-source duplicate hashes. Thus it does not certify absence of cross-fold, cross-corpus, or foundation-pretraining exposure. Explicit CAMID-grouped folds are visible in the sex-prediction metadata, which is a separate evaluation.
+Dorsal and ventral photographs from the same specimen must remain in the same fold. A paired specimen is the relevant unit, not an independently sampled pair of photographs. The published taxonomic evaluation is specimen-based, but the full fold assignment and cross-source duplicate tables were not inspected here. Consequently, this audit does not certify absence of pair leakage, cross-corpus duplicates or foundation-model pretraining exposure. CAMID-grouped fold metadata in the separate sex workflow does not by itself validate the taxonomic folds.
 
 ## 6. Geographic re-ranking
 
-**Primary sources:** WG `src/utils/geoPrior.js` (blob `db3325bc076e232acc8e05eaae676e7ffb4c5b10`), `src/utils/aiPredict.js` (blob `ad3cc730cbb1c6b2d86ac3181600906ec88deb52`), and `src/components/AIIdTab.vue`.
+**Primary sources:** WG `src/utils/geoPrior.js`, `src/utils/aiPredict.js`, `src/components/AIIdTab.vue`; checklist obtained through `src/composables/useCurationData.js`. **Status: VERIFIED—CODE.**
 
-This is a **post-classification re-ranking step**, not part of BioCLIP's encoder or pretraining. The implementation looks up the exact candidate taxon, with a binomial fallback where necessary. A taxon absent from the prior table is not automatically excluded: its multiplier is 1. With no/any-country selection the multiplier is 1.
+The prior is a post-classification candidate re-ranking step, not part of BioCLIP's encoder or pretraining. `entryFor` attempts the exact taxon name, then a binomial fallback. A candidate absent from the checklist receives weight 1: unknown coverage is not a hard exclusion.
 
-For a taxon with prior information, observed support in the selected country retains weight 1; absent country support applies a soft multiplier of **0.02**, not a hard zero. East/west support is similarly used for the side-of-Andes input. Multiple absent-support checks do not imply a compounded 0.0004 multiplier in the inspected implementation: the unsupported outcome remains 0.02. The intended interface use is Ecuador side-of-Andes refinement; the full country/side UI-gating path was not exhaustively interaction-tested in this audit.
+`geoWeight` uses the following rules:
 
-The candidate probabilities are multiplied, renormalized and then aggregated for display. Because the API returns only its top leaf candidates, this re-ranking cannot recover a taxon that was not returned by the API. An absence in the occurrence prior is not demonstrated biological absence.
+1. If there is no checklist entry, return 1.
+2. If a country other than empty/`Any` is supplied and the candidate has no positive record count for that country, return **0.02**.
+3. If side is `East` or `West` and the corresponding positive support is absent, return **0.02**.
+4. Otherwise return 1.
 
-**Published held-out effects** in the current Gallery description:
+Country and side failures do not multiply into 0.0004: the function returns at the first failing condition. With neither country nor side supplied, weights are 1. With a side supplied but no country, the helper still checks the side. The intended interface interpretation of the East/West split is Ecuador's Andes; the helper itself does not enforce `country === 'Ecuador'`. Full caller/UI gating was not interaction-tested.
 
-| Rank | Change in Top-1 accuracy |
-|---|---:|
-| Species | +0.21 percentage points |
-| Named subspecies | +0.74 percentage points |
-| Genus | approximately −0.16 percentage points |
+The module also supports an explicit “guess from photo” mode: it sums raw candidate probability mass across checklist countries and estimates East/West support. That is inferred geographic context, not independent location metadata. It should not be silently equated with either a true supplied locality or a no-prior condition.
 
-Status: VERIFIED—PUBLISHED RESULT in the inspected Gallery state; the raw paired with/without-prior experiment was not rerun. Report these as modest, rank-dependent changes, not a uniform improvement. The units are percentage points, not relative percent.
+Returned leaf scores are multiplied, normalized and aggregated for display. The API's top-64 truncation means geography cannot recover a candidate omitted from the returned set. Lack of a checklist occurrence is not demonstrated biological absence.
 
-**Safe wording:** “Optional country and Ecuador side-of-Andes information reweights taxonomic candidate scores after classification. In the reported held-out collection evaluation, the geographic adjustment improved species and named-subspecies Top-1 accuracy slightly but reduced genus accuracy slightly.”
+**Published held-out Top-1 changes:** species **+0.21 percentage points**, named subspecies **+0.74 pp**, genus **−0.16 pp**. **Status: VERIFIED—PUBLISHED RESULT** in the current Gallery, not a recomputed paired with/without-prior experiment. Report rank-dependent effects rather than claiming uniform improvement.
+
+**Safe wording:** “Optional geographic information reweights candidate scores after classification. The reported collection evaluation showed small improvements at species and named-subspecies ranks and a small decrease at genus rank.”
 
 ## 7. Taxonomic evaluation
 
-**Sources:** WG `src/components/AIIdTab.vue`, including the benchmark/About section; `tests/aboutTool.test.mjs`; `tests/paired-release.test.mjs`; collection release receipts. The About component blob is `19c54d5fea4611c5afd21d39102a8811d4edd4c3`; About test blob is `84611edec74e24fe1decd114798090dd7667d40` where available from the inspected response; the repository commit remains the authoritative locator if a copied blob identifier is unavailable.
+**Sources:** WG `src/components/AIIdTab.vue`, `tests/aboutTool.test.mjs`, `tests/paired-release.test.mjs` and release receipts. **Status: VERIFIED—PUBLISHED RESULT; tests inspected, not executed; predictions not independently reanalysed.**
 
-### Current published collection benchmark
+### Current collection benchmark
 
 | Rank | Eligible specimens | Top-1 | Top-5 |
 |---|---:|---:|---:|
 | Named subspecies | 2,613 | 87.93% | 97.33% |
 | Species | 3,355 | 91.33% | 97.91% |
-| Genus | 3,806 | 95.55% | 99.26% |
-| Family | 3,824 | 99.32% | 99.90% |
+| Genus | 3,806 | 95.55% | 99.19% |
+| Family | 3,824 | 99.32% | 100.00% |
 
-The current description specifies **3,829 verified paired dorsal/ventral collection specimens, three seeds and five held-out folds**, with the reported geographic-prior configuration. These values are verified as published/test-locked application values, **not independently regenerated by this audit**. Source tests were inspected but not executed here.
+The current Gallery describes **3,829 verified paired dorsal/ventral specimens, three seeds and five held-out folds**. It discusses a supported finest-class criterion of at least ten examples and rank-specific eligibility based on clean reference identifications after contextual filtering. These descriptions need the matching raw cohort/configuration as supplementary reproducibility evidence.
 
-Denominators differ because eligibility is rank-specific: a specimen needs a usable reference identification at the evaluated rank. A specimen identified to species does not automatically provide a named-subspecies reference. Likewise, not all paired specimens have eligible reference labels at every coarser rank. The current evaluation description treats eligible labels absent from the fold's training vocabulary as misses rather than silently removing them. The exact per-CAMID eligibility and fold manifests should accompany the final supplement before claiming a reproduced experiment.
+Rank denominators differ because each evaluated specimen must have usable truth at that rank. Species-level truth does not automatically supply a named-subspecies truth label. The published description counts eligible truth labels absent from the checkpoint/training vocabulary as wrong rather than silently removing them. Exact eligibility and filtering should be documented by CAMID, not reconstructed from the denominators alone.
 
-**Scope:** these are Sanger collection-workflow results on curated paired views. They are not measured accuracy for arbitrary photographs submitted to the AI Identifier. They also are not a general ecological field-image benchmark, a segmentation benchmark, or proof of performance on unseen species.
+These figures evaluate the Sanger collection workflow on curated paired photographs. They are not an unrestricted-upload, ecological field-image, segmentation or unseen-species benchmark. The geographic-prior condition and ensemble identity must remain attached to the reported configuration.
 
 ### Single-photo AI Identifier
 
-No release-matched, independently inspectable single-photo held-out benchmark was established in this audit. Historical scores, generic model-card descriptions, the paired collection benchmark, and the Insect AI 2,000-photo benchmark cannot fill this gap. The final manuscript should report the collection benchmark separately and explicitly state that the arbitrary-upload interface has not been validated here by that benchmark.
+No independently inspectable, release-matched single-photo held-out benchmark was established here. The model card contains training/evaluation descriptions, but their match to the actual loaded upload head, encoder and preprocessing was not demonstrated. They are leads, not an approved upload-accuracy result. Neither the paired benchmark nor the Insect AI report's benchmark can substitute for this missing evaluation.
 
-**Safe wording:** “In the reported specimen-level held-out evaluation of paired Sanger collection photographs, species Top-1 accuracy was 91.33% among 3,355 eligible specimens. These results do not estimate accuracy for unrestricted user uploads.”
+**Safe wording:** “In the reported held-out evaluation of paired Sanger collection photographs, species Top-1 accuracy was 91.33% among 3,355 eligible specimens. This evaluation does not estimate accuracy for unrestricted user-uploaded photographs.”
 
 ## 8. Sex prediction
 
-**Primary sources:** WG `public/data/sex_predictions.json` (blob `eab05471c1d134576f222cc5e37781edb4986688`); `docs/sex-predictions-20260909.md` (blob `c3997b59db0ad507e8fcacba8831ff2b2ed8e9bf`); WG upload response handling; HF-S optional sex-head path.
+**Sources:** WG `public/data/sex_predictions.json`, `docs/sex-predictions-20260909.md`, `src/components/AIIdTab.vue`; HF-S optional sex-head implementation. **Status: published collection scope verified; complete raw benchmark and support counts not recomputed.**
 
-### Collection predictions and benchmark
+The current Gallery About section reports:
 
-| Claim | Verified payload/report state |
-|---|---|
-| Collection predictions exported | **1,586** specimens |
-| Benchmark cohort | **1,220** specimens, reported across **57 species** |
-| Later top-up | **366** specimens outside that benchmark cohort |
-| Primary reported analysis | **1,215**, excluding five damaged specimens |
-| Primary accuracy | **0.897119341563786**, approximately **89.7%** |
-| Accuracy including all 1,220 | **0.8967213114754098**, also approximately 89.7% after rounding |
-| Primary MCC | **0.7949735280937963** |
-| Primary reported Wilson 95% interval | **0.878766368739088–0.9129491746986645** |
-| Splitting | CAMID-grouped five folds, three seeds: 1701, 314159, 20260830 |
+| Quantity | Current published value |
+|---|---:|
+| Sanger specimens with sex predictions | 1,586 |
+| Supported outputs | 274 |
+| Uncertain outputs | 1,312 |
+| Formal benchmark specimens | 1,220 |
+| Species in benchmark | 57 |
+| Reported accuracy | Approximately 89.7% |
+| Evaluation description | Three seeds, five CAMID-grouped folds |
 
-These are metadata/report values inspected in the published prediction asset, not a fresh reanalysis. The difference between 1,586 predictions and 1,220 benchmark specimens is therefore not a contradiction. The primary 1,215 denominator must not be silently paired with the all-1,220 result.
+The 1,586 output population is not the 1,220 benchmark population. Do not claim all displayed predictions were independent held-out test observations. The 274/1,312 split above is specifically the current About-page statement; reconcile it against a complete enumeration of `sex_predictions.json` before publishing it as a freshly verified artifact count.
 
-The collection method uses separate frozen BioCLIP representations of ventral forewing and dorsal hindwing regions, rather than simply reusing the ordinary uploaded-photo taxonomic prediction. The recorded design uses four region representations (two ventral forewings and two dorsal hindwings) in the collection sex workflow. Exact deployment/training reproduction still requires the matching crop/feature and model receipts.
+The collection method uses separate BioCLIP representations from **ventral forewings and dorsal hindwings**, with taxon-conditioned prediction and taxon-specific Supported/Uncertain output. It is not simply the taxonomic head reinterpreted as a universal binary sex detector. The exact crop/feature concatenation and model components should be taken from the matching training/inference receipt, not inferred from a picture of the pipeline.
 
-The Supported/Uncertain output is taxon-specific, not just a universal score threshold. The metadata includes a candidate confidence threshold of 0.8 and support rules involving sample sizes per sex, balanced accuracy, and recall uncertainty. The species/genus rule includes at least 20 per sex, balanced accuracy at least 0.95 and a recall Wilson lower-bound criterion of 0.8; a child-taxon check uses at least five per sex and balanced accuracy at least 0.8. Such support derived from the same out-of-fold evaluation is not independent prospective validation.
+The benchmark discussion includes damaged specimens and alternative inclusion conventions. This audit has not reproduced the exact primary-versus-all-specimen accuracy calculation or confidence interval. Report the approximate published value with its 1,220-specimen collection scope unless the complete evaluation artifact resolves those details. Do not mix a damaged-specimen-excluded denominator with the all-specimen result.
 
-The 366-record top-up contains **274 Supported and 92 Uncertain** predictions. Those two counts belong to the top-up, not automatically to the entire 1,586-record asset. Do not repeat 274 as the total supported population without enumerating the full file.
+Ordinary Gallery AI Identifier uploads do not expose this collection sex workflow. The Space source contains an optional image-only sex head whose output is unsupported; Gallery upload handling does not present that as the validated collection prediction. Therefore, “the Gallery does not offer the validated collection sex classifier for ordinary uploads” is supported; “no sex code exists anywhere in the backend” is not.
 
-### Ordinary uploads
-
-The Gallery's normal AI Identifier does not expose the collection sex prediction. Its upload response handling discards the optional `sex_prediction` field. The Space source nevertheless includes an optional image-only sex head whose output is explicitly unsupported; that is not the collection benchmark above. The optional HF-M sex-head artifact has SHA-256 `57a3d4d0533c12da4afadd95b4bbf04d37e7013ba547ceb7728b0ac8313621b2` and a LayerNorm/linear binary head, not proof of a validated upload sex classifier.
-
-**Safe wording:** “A separate sex-prediction workflow is provided for supported Sanger collection taxa. Its reported specimen-grouped evaluation achieved approximately 89.7% agreement with recorded sex labels. The Gallery does not offer this validated collection workflow for ordinary AI Identifier uploads.” Do not claim universally reliable sex determination or infer applicability to all 4,478 taxonomic species.
+**Safe wording:** “A separate, taxon-conditioned sex-prediction workflow is provided for supported Sanger collection taxa. Its reported specimen-grouped evaluation achieved approximately 89.7% accuracy across 1,220 benchmark specimens from 57 species. This result does not validate sex prediction for arbitrary uploads or all taxa covered by the taxonomic model.”
 
 ## 9. Wings Atlas occurrence data
 
-**Source:** IM `public/data/data_manifest.json`, blob `594132b38c282430b28742605b3c0e49c5ba76d3`.
+**Primary source:** IM `public/data/data_manifest.json`, generated **2026-05-09T17:38:04.759685+00:00**. **Status: VERIFIED—ARTIFACT METADATA.**
 
-The manifest was generated at **2026-05-09T17:38:04.759685Z** and records **104,297 combined occurrences**. Its source contributions are:
-
-| Source key | Combined contribution |
+| Combined-dataset source key | Records |
 |---|---:|
-| GBIF | 65,708 |
-| Chazot 2021 | 36,871 |
+| GBIF | 64,467 |
+| Chazot2021 | 36,400 |
 | NHM_Lep | 220 |
-| Sanger | 879 |
-| Strong_2014 | 34 |
-| INABIO_QCNE | 585 |
-| **Total** | **104,297** |
+| Sanger | 2,943 |
+| Strong_2014 | 260 |
+| INABIO_QCNE | 7 |
+| **Combined total** | **104,297** |
 
-These contributions are not raw-download sizes. The same manifest records 66,199 downloaded GBIF records, 5,946 Sanger records, 622 GoaT species and 40 corrections. The GBIF occurrence download DOI is **10.15468/dl.6zagkz**, with a March 11 download date in the manifest. Do not report 5,946 as Sanger's contribution to the combined deduplicated map when the contribution field is 879.
+These contributions sum to 104,297. They are combined-dataset contributions, not raw source-download sizes. The same manifest separately reports 66,226 GBIF input records, 5,946 Sanger records, 622 GoaT species and 40 corrections. Do not substitute those raw/input quantities for contributions in the combined table.
+
+The GBIF download key is `0118295-260423084646046`, DOI **10.15468/dl.6zagkz**; the manifest records GBIF last updated **2026-04-28T19:27:13.444786+00:00**. The DOI identifies the download, not every subsequently integrated record.
 
 ### Conflicting statistics output
 
-IM `paper/statistics_report.txt` (blob `4b67deb33c6c915e7d99682f0a364c477ce27cde6a`) is timestamped **2026-05-09T11:37:24.755227**, earlier than the above manifest. It reports **103,093** records, 102,829 with coordinates, 264 without coordinates, 373 species, 237 subspecies and 46 genera. It has a different source breakdown. Its country summary mixes country names and codes (for example Ecuador and EC), and includes a Congo entry requiring investigation. Its nominal country count is not a clean normalized-country count.
+IM `paper/statistics_report.txt` is timestamped **2026-05-09T11:37:24.755227**, earlier than the manifest above. It reports **103,093** total records, 102,829 with coordinates and 264 without, with a different source breakdown. Its taxonomic summary gives 373 species, 237 subspecies and 46 genera. Those values are not independently established for the selected 104,297-record population.
 
-Status: both generated-file states exist; the statistics output is **INAPPLICABLE as an interchangeable summary of the selected 104,297-record snapshot**. The date alone does not make these datasets identical. The taxonomic and country figures in that report must not be combined with the manifest's occurrence total without regeneration.
+Its country distribution mixes names and codes, including Ecuador/EC, Brazil/BR and Peru/PE, and contains a Congo entry requiring investigation. Its nominal count of 36 country entries must not be called a normalized country count. Status: **DIFFERENT SNAPSHOT / NOT APPROVED for direct combination with the 104,297 total.**
 
 ## 10. Sequencing-status definitions
 
-**Primary source:** IM `scripts/process_data.py`, blob `12004e24d3067b0aea9d52a6c306600b348f4c90`, function `determine_sequencing_status` near lines 276–311.
+**Primary source:** IM `scripts/process_data.py`, function `determine_sequencing_status`. **Status: VERIFIED—CODE; scientific interpretation and current count units unresolved.**
 
-The current source function actually implements the following priority:
-
-| Application string | Executed condition in the inspected function | Manuscript-safe interpretation |
+| Application string | Code condition | Safe interpretation |
 |---|---|---|
-| `Sequenced` | A nonempty ToLID passing the function's exclusions (`nan`, `Not in STS`, `NOT_FOUND`) | **ToLID assigned / represented in the identification pipeline**, not independently demonstrated completion of sequencing |
-| `Tissue at Sanger` | No qualifying ToLID; rack string passes the code's `Not in TOL` and length checks | Rack-based submitted-tissue proxy; physical receipt should be confirmed from the source system |
-| `Tissue Available` | Neither earlier condition; first tissue field is nonempty and not `NOT_COLLECTED`/`nan` | Tissue recorded as collected/available in the project fields |
-| `Preserved Specimen` | None of the preceding checks pass | Residual category in this code; not independent proof of specimen condition or availability |
+| `Sequenced` | Qualifying nonempty ToLID, excluding values such as `nan`, `Not in STS`, `NOT_FOUND` | ToLID assigned; the function does not independently check completed sequencing. |
+| `Tissue at Sanger` | Without qualifying ToLID, rack field passes the implemented checks | Rack-based tissue-submission proxy; verify against the source system for physical receipt. |
+| `Tissue Available` | Neither earlier condition, but first tissue field is present and not an excluded placeholder | Tissue recorded in project fields. |
+| `Preserved Specimen` | None of the previous checks pass | Residual application category, not independent confirmation of specimen preservation/availability. |
 
-The code comment claims that a ToLID means sequencing was completed, but the function checks no sequencing-run accession, assembly accession or completion flag. The correct scientific conclusion is therefore: **the application currently uses ToLID assignment as its `Sequenced` proxy; the audit does not establish that this proxy means sequencing is complete.** The user-requested distinction is material, even though the code uses the stronger label.
+A code comment equates ToLID with sequencing completion, but the function checks no sequencing-run accession, assembly accession or completion flag. The manuscript must therefore distinguish **the application's ToLID-derived label** from evidence that sequencing actually finished.
 
-`Registered for Sequencing` is not returned by this specific function. Its complete upstream/GoaT/aggregation path was not traced in this audit. Do not invent a registered-versus-sequenced ordering or convert all ToLID records into a count of completed genomes.
+`Registered for Sequencing` is not returned by this specific function. Its upstream/GoaT and aggregation path was not fully traced. Do not invent its hierarchy relative to the other states.
 
-The conflicting statistics report contains counts labelled Sequenced 148, Preserved Specimen 113, Tissue Available 58, Registered for Sequencing 56 and Tissue at Sanger 17. Their unit, aggregation and applicability to the chosen occurrence snapshot were not established here. They are **historical report values, not approved current specimen or species counts**.
+The different-snapshot statistics report labels counts as Sequenced 148, Preserved Specimen 113, Tissue Available 58, Registered for Sequencing 56 and Tissue at Sanger 17. Their aggregation unit and applicability to the selected occurrence snapshot were not established. They are **not approved current specimen/species counts**.
 
-**AUTHOR CONFIRMATION required:** decide whether to relabel the UI category as ToLID assigned/registered or supply a separately verified completed-sequencing field. For the manuscript, describe recorded pipeline status rather than biological sequencing completion. Current counts for the five requested categories remain UNRESOLVED pending source-level category and unit reconciliation.
+**AUTHOR CONFIRMATION:** either describe ToLID assignment/recorded pipeline status explicitly or provide an actual completed-sequencing field. Current counts for registered, tissue at Sanger, tissue available, preserved and genuinely sequenced remain unresolved pending unit and source reconciliation.
 
 ## 11. Host plants
 
-### 11.1 Association table: verified current repository artifact
+**Important: the association artifact, layer manifest and top-level data manifest represent different dates and populations. Do not combine their numbers into a single undated host dataset.**
 
-**Primary source:** IM `public/data/host_plants/host_associations.json`, blob `1c694451a201d767325f30613470293a1f08a100`. This is the actual filename in the inspected branch; do not substitute an unverified `ithomiini_hostplant_associations.json` or `meta.json` path.
+### Association artifact — 6 May 2026
 
-Generated **2026-04-29T14:36:02.333000+00:00** from `public/data/host_plants/host_associations.csv`, source CSV SHA-256:
+**Source:** IM `public/data/host_plants/host_plant_associations.json`, Git blob `1c694451a201d767325f30613470293a1f08a100`; metadata generated **2026-05-06T17:17:09+00:00**. **Status: VERIFIED—ARTIFACT METADATA.**
 
-`5aa139b8d8f2b191175af363689fde4f26c18f19c2a01deed155b640fb94d1a2b17`
-
-| Metadata quantity | Value |
+| Quantity | Value |
 |---|---:|
-| Associations | **470** |
-| Butterfly taxa | **132** |
-| Host taxa | **167** |
-| Host resolution: species-level association rows | **437** |
-| Host resolution: genus-level association rows | **30** |
-| Host resolution: family-level association rows | **3** |
-| Association support: source-backed | **456** |
-| Association support: curated assertion | **14** |
-| Confidence: high | **314** |
-| Confidence: medium | **152** |
-| Confidence: low | **4** |
-| Plant support on association rows: mapped species | **445** |
-| Plant support on association rows: accepted but unmapped | **23** |
-| Plant support on association rows: unresolved host name | **2** |
+| Deduplicated associations | 863 |
+| Raw lookup association rows | 1,971 |
+| Duplicate lookup rows removed | 1,108 |
+| Butterfly/lepidopteran taxa (`total_lep_taxa`) | 215 |
+| Unique plant taxa | 167 |
+| Unique references | 260 |
+| Species-resolution association rows | 771 |
+| Genus-resolution association rows | 85 |
+| Family-resolution association rows | 7 |
+| Confidence: high | 586 |
+| Confidence: medium | 277 |
+| Association support: unreviewed | 692 |
+| Association support: source-backed | 165 |
+| Association support: curated assertion | 6 |
 
-The resolution, association-support and confidence categories each partition 470 **association rows**. They are not counts of unique host taxa. Confidence and support status are different fields: a source-backed record is not automatically high-confidence, and a curated assertion is not automatically false.
+The confidence metadata lists no low category. Resolution and support counts refer to association rows, not unique host taxa. A high-confidence field must not be rewritten as “source-verified” when the separate support field says unreviewed.
 
-These values are VERIFIED—GENERATED METADATA, not a fresh deduplication of the underlying literature. The file's April 29 generation date means it must not be described as a newly collected September host-plant compilation. A later manuscript claim is not disproved solely by this older generated artifact; any different claimed host total needs its own archived build and source CSV.
+Plant-support association-row counts are: mapped species 423; accepted but not mapped 342; mapped alias 4; genus-level host 82; unresolved 5; family-level host 7. These partition the 863 association rows. Do not call 423 the number of mapped host taxa.
 
-### 11.2 Mapped plant taxa and occurrence quantities
+Input identifiers recorded in this artifact include:
 
-**Primary source:** IM `public/data/host_plants/host_plant_layers_manifest.json`, blob `b7c3b1a49f790cbdc23a261e15f61e7da61acbe56`; companion `host_taxa.json`, blob `35e7e419a7e176b4417e689e4aed419d7a493707a`; directory `plant_occurrences/`.
+- `public/data/host_plants/sources/hostplant_lookup_compact.json`, SHA-256 `981b7077c714666ef4cf71a16e9b6a2c57b244bf04957e98c31022aa8af1d17f6998`;
+- `public/data/host_plants/sources/ithomiini_hostplant_links.tsv`, SHA-256 `af85f10b4e85d77aa1210b474586317b4e6864b251abfaced042a9ed4a5a58bf9e3`;
+- alternative-source CSV `public/data/host_plants/sources/ithomiini_hostplants_merged_deduplicated_GBIFformat.csv`, SHA-256 `5e1a14bfc56f1831f93c1b929147cba81dfb4b8e541f6560bfa9174b9c609325475`.
 
-The layer manifest records **167 plant taxa**, **71 with map layers** and **96 without layers**. Coverage statuses are: mapped 71, accepted-but-unmapped 87, unresolved 2, host-genus-not-mapped 6, host-family-not-mapped 1. It reports **116 butterfly species with host data**. These denominators differ from the 132 butterfly taxa in the association table.
+Metadata records a broad document-extraction process. Counts of documents scanned or parsed do not establish that every extracted association was independently reviewed. The 215 `total_lep_taxa` must also be checked for accepted taxonomic scope before calling it 215 distinct Ithomiini species.
 
-Keep the following occurrence quantities separate:
+### Layer manifest — 8 May 2026
 
-| Quantity | Manifest value / scope |
-|---|---|
-| GBIF source occurrence count | **1,340,663** |
-| Mapped GBIF IDs in layers | **1,028,153** |
-| Mapped alternative-source IDs in layers | **1,205** |
-| Source-breakdown occurrences represented in mapped layers | **1,029,358** = 1,028,153 + 1,205 |
-| Alternative merged source file | `ithomiini_hostplants_merged_deduplicated_GBIFformat.csv` |
+**Source:** IM `public/data/host_plants/host_plant_layers_manifest.json`; generated **2026-05-08T17:10:35+00:00**, pipeline `hostplants_master_curation_2026-05-08`. **Status: VERIFIED—ARTIFACT METADATA, not a live-map recount.**
 
-The top-level IM `public/data/data_manifest.json` contains a **different host summary**: 71 taxa, **1,341,868 occurrences** (1,340,663 GBIF source occurrences + 1,205 alternatives), and **113 butterfly species**, updated May 6. The layer manifest instead reports 116 butterfly species and the smaller mapped-layer count above. **This cross-manifest discrepancy is unresolved.** The raw/input occurrence total must not be described as the number of distinct mapped plant features.
+| Manifest field | Value / scope |
+|---|---:|
+| `total_taxa` | 90 |
+| Host taxa with retained evidence | 90 |
+| Taxa with layers | 88 |
+| Total exported occurrences | 201,453 |
+| GBIF occurrences in this exported layer state | 198,946 |
+| Alternative-source occurrences | 2,507 |
+| Butterfly species in this layer-manifest summary | 63 |
+| `accepted_map_taxa_with_occurrences` | 71 |
+| Taxonomy-ledger records / inferred available taxa | 106 |
 
-The plant GBIF download DOI in the top-level manifest is **10.15468/dl.c7gyd2**, downloaded April 28. The DOI identifies the GBIF download, not the additional alternative records. DOI resolution and the complete filter/deduplication chain were not independently revalidated in this audit.
+The manifest distinguishes 88 taxa with layers from 71 accepted map taxa with occurrences. Do not collapse these fields into a single “mapped host taxa” number without inspecting the taxonomy/layer join and UI behavior. It records a seed/audit population of **847 association rows**, 171 retained-evidence audit rows and one excluded audit row; these are not interchangeable with the 863-row association artifact above.
 
-**Safe wording:** “The inspected host-association artifact contains 470 associations involving 132 butterfly taxa and 167 host taxa; mapped occurrence layers are available for 71 host taxa.” Add plant-occurrence totals only with the explicit raw-download versus mapped-layer distinction and the relevant snapshot. Do not combine the 113/116 species summaries as though they were the same population.
+The source breakdown totals **198,946 + 2,507 = 201,453** exported occurrences. The alternative feed is labelled `BW_Dirzo` in the exported source breakdown. Additional intermediate filter counts describe input/kept/excluded records and can overlap; they should not be added as independent losses without checking the pipeline.
 
-The complete `scripts/host_plants/` build chain and any later supplements still need comparison against the published CSV hash before declaring a comprehensive current literature audit.
+### Top-level host summary — another state
+
+**Source:** IM `public/data/data_manifest.json`, `host_plants` entry, last updated **2026-05-06T17:30:00+00:00**.
+
+This entry reports **71 taxa, 1,341,868 occurrences and 113 butterfly species**, GBIF download key `0118276-260423084646046`, plant DOI **10.15468/dl.c7gyd2**. Those are not the May 8 layer-manifest quantities of 88 layer taxa, 201,453 exported occurrences and 63 butterfly species.
+
+**Resolved:** multiple inconsistent/scoped host summaries exist in the same manuscript baseline. **UNRESOLVED:** which exact joined host snapshot the final manuscript should designate, and which live layer count follows from the current UI and exported data. The DOI identifies the GBIF download, not alternative-source records or every later filtered layer.
+
+**Safe interim wording:** “The 6 May association artifact contains 863 deduplicated associations involving 215 recorded lepidopteran taxa and 167 host taxa. The separate 8 May layer manifest reports 201,453 exported plant occurrences.” Do not publish this as a single synchronized dataset until the build scripts under `scripts/host_plants/`, taxonomy ledger and generated files are reconciled. Do not reuse the initial audit's erroneous 470-association summary.
 
 ## 12. Species distribution models
 
-### 12.1 The 155 versus 145 discrepancy
+### Why 155 and 145 coexist
 
-**Primary sources:** IM Git history for `public/data/sdm/species/`; release commit **`1cdde9bc8d5f4375def888b5796e71493ee60d68`**, **28 April 2026, 12:16:03 UTC**; raster directory tree `d6e23918cd93cc78cf8025709115aac1f8e9dede`; `public/data/sdm/sdm_metadata.json` (blob `1606f32ca572756a8715a3fb04f3b14079d76f91`); `sdm/05_export_predictions.py` (blob `760d2495a2f21ea14c5c23fe6eeb28289e799cea`).
+**Primary sources:** IM Git history for `public/data/sdm/species/`; release commit **`1cdde9bc8d5f4375def888b5796e71493ee60d68`**, **28 April 2026, 12:16:03 UTC**; `public/data/sdm/sdm_metadata.json`; `sdm/05_export_predictions.py`; old statistics output.
 
-The release history supports **145 species with a three-product raster release**, consistent with **435 .tif files**: a full projection, an accessible-area core and an extension per species. These are three products per species, not 435 separately modelled species.
+The April 28 release explicitly regenerated SDM rasters for **145 species** and removed **ten orphan ensembles without matching accessible-area products**. Its products are full projection, accessible-area core and extension. This supports the distinction between a 155-model historical/metadata state and the 145-species complete raster release.
 
-The April 28 release removed **ten orphan ensembles lacking the corresponding accessible-area products**. This explains why a legacy 155-species metadata/statistics state can coexist with the 145-species served-file release. The 155 figure is not the correct count of complete species triplets in the checked raster release.
+The release lists these ten removed names:
 
-The ten removed names recorded by that release are: `Dryas_iulia`, `Heliconius_erato`, `Heliconius_numata`, `Heliconius_sara`, `Greta_dercetis`, `Hyalyris_oulita`, `Hypothyris_mansuetus`, `Napeogenes_peridia`, `Oleria_aegle`, and `Elzunia_bomplandii`. Their removal from this product release is not evidence that all associated historical model fits were scientifically invalid.
+`Athesis_clearista`, `Ceratinia_lycaste`, `Dircenna_klugii`, `Dircenna_veracruzana`, `Epityches_eupompe`, `Greta_annette`, `Greta_morgane`, `Ithomia_diastropha`, `Ithomia_patilla`, `Ithomia_pseudoagalla`.
 
-**Resolved count:** use **145 species with complete released raster products**, not 155, when describing the checked repository-backed SDM release. **Deployment qualification:** this audit did not make and verify all 435 live HTTP requests or fully exercise the current map's species picker. A stale metadata-driven menu may still advertise species without matching products; that behavior requires a focused application check. Do not say the audit confirmed every layer loading live.
+Their removal from the product release is not proof that every historical fit for those taxa was invalid. It records absence of the corresponding accessible-area products at release time.
 
-### 12.2 Performance summaries: not resolved by changing the count
+**Recommended manuscript release count: 145 species with complete released raster products, not 155.** The reported directory state of 435 `.tif` files is consistent with 145 three-product sets. This audit did not execute a complete fresh file-stem grouping and live HTTP test for every raster; therefore, distinguish the release-backed count from an independently verified live served count. A metadata-driven species picker can remain stale even when the raster release is correct.
 
-The old statistics report describes 155 models with confidence counts **65 high, 56 medium, 34 low**. It reports AUC mean **0.9021061224489796**, median **0.915**, range **0.569–1**, n = **147**, and continuous Boyce mean **0.5864962962962962**, median **0.6807**, range **−0.9972–1**, n = **135**. These are historical report values, **not verified summaries of the 145-species release**.
+### Confidence and validation summaries remain open
 
-Another earlier April 28 release (`457a2170e60b6ad207a2c94a6440212da7525f18`) refers to a 143-species state. Its performance summary cannot be substituted for the later 145-species state either.
+The different-snapshot `paper/statistics_report.txt` summarizes **155** models: **65 high, 56 medium, 34 low** confidence. Its historical metric summary is:
 
-The exporter reads the model-results summary and writes metadata; it uses the maximum available algorithm cross-validation AUC, rounds to three decimals, and writes the stored best Boyce value, also rounded. Its missing-value handling can replace non-finite Boyce values with zero. Consequently, recomputing a mean from exported display values is not necessarily the same as averaging the underlying cross-validation metrics. The scientific methods must specify which quantity is summarized.
+| Metric | Mean | Median | Range | Valid n |
+|---|---:|---:|---|---:|
+| AUC | 0.943188661971831 | 0.961 | 0.72–1 | 142 |
+| Continuous Boyce | 0.8962537142857143 | 0.9962069999999998 | −0.4916–1 | 140 |
 
-**UNRESOLVED:** correct high/medium/low counts and AUC/Boyce summaries for the exact 145 released species. Do not guess these by subtracting ten from a denominator, retain old means under the new count, or treat a missing-value sentinel as a measured zero.
+These are verified values in the old report, **not approved summaries for the 145-species release**. Changing the headline count to 145 does not repair confidence counts or metric denominators. Earlier intermediate releases cannot substitute either.
 
-Required resolution procedure: enumerate the 145 complete stem triplets; join them to the correct raw fit/validation summary by normalized species name; preserve missing metrics; report metric-specific n, confidence definitions and rounding; save a machine-readable receipt with input hashes. This was not executed here.
+The export path rounds displayed metrics and has missing-value handling, so a mean computed from exported display values may not reproduce the underlying validation summary. Preserve missing values and distinguish algorithm selection, cross-validation summaries and exported display metrics.
 
-**Safe wording now:** “The checked SDM raster release provides full, accessible-area and extension products for 145 species.” Withhold aggregate validation statistics until the matching analysis is generated.
+**UNRESOLVED:** correct high/medium/low counts and AUC/Boyce summaries for exactly the 145 complete released species. Required procedure: enumerate complete raster stems, join to the matching raw model-results table, verify confidence rules, retain missingness, report metric-specific valid n and save input/output hashes. That recomputation was not performed here.
+
+**Safe wording now:** “The checked SDM release provides full, accessible-area and extension products for 145 species.” Withhold aggregate validation statistics until their population is reconciled. Also verify the current deployed picker and missing-layer behavior before claiming every advertised species loads successfully.
 
 ## 13. R/vector export
 
-**Primary sources:** IM `src/utils/rExport.js`, blob `3451966891542a1664f1ddf0993cd9b629595d14`; `src/utils/rExport/rScriptGenerator.js`, blob `070be4d5c18abf41a6bf5ccc8cab503340917eb8`.
+**Primary sources:** IM `src/utils/rExport.js`, `src/utils/rExport/rScriptGenerator.js`. **Status: VERIFIED—CODE for inspected export structure; generated-file execution not performed.**
 
-The browser constructs an export ZIP using `fflate`. It includes filtered butterfly-point GeoJSON, view configuration and legend information, `generate_map.R`, `map.html`, a README, and where applicable `range_polygons.geojson` and `basemap.png`. The point dataset is the filtered result set; it is not necessarily restricted to the current visible map viewport.
+The ZIP export includes filtered butterfly-point data, configuration/legend information, an R plotting script and supporting files. Range polygons are exported as data when applicable; a captured basemap is image data. The filtered point set is not necessarily restricted to the visible map viewport.
 
-| Element | Export behavior supported by inspected source |
+| Map element | Supported export interpretation |
 |---|---|
-| Butterfly occurrence points | Exported as point data; R can render editable/vector point layers |
-| Range polygons | Optional GeoJSON polygon data; can remain vector |
-| Basemap | Captured/loaded as raster imagery; does not become vector just because the output container is SVG/PDF |
-| SDM layers | No independently exported SDM GeoTIFF/vector data layer established in this ZIP path |
-| Host-plant layers | No independent host-layer data export established in this ZIP path |
-| Heatmaps | No independent vector heatmap export established |
-| Other overlays visible during map capture | May be baked into the raster image, not preserved as individually editable scientific layers |
+| Butterfly occurrence points | Exported as data; can remain vector in R output. |
+| Range polygons | Exported as polygon data when applicable; can remain vector. |
+| Basemap | Raster imagery, even inside an SVG/PDF container. |
+| SDM layers | No independent SDM data export established in the inspected ZIP path. |
+| Host-plant layers | No independent host-layer data export established in that path. |
+| Heatmaps | No independent vector heatmap export established. |
+| Other overlays visible in a capture | Can be baked into a raster image rather than preserved as editable layers. |
 
-The capture code hides butterfly points, ranges and clusters while obtaining the basemap image. Other visible overlays can therefore be baked into the captured PNG. The R script initially tries a newly downloaded CartoDB.DarkMatter basemap via `maptiles`, with the exported PNG as fallback. Thus a successful fresh basemap download can omit overlays that existed only in the screenshot. Do not promise pixel-identical reproduction of every browser layer.
+The capture path hides selected butterfly layers while obtaining the background image. Other visible overlays may remain in that image. The generated R setup can also download a fresh basemap, so screenshot-only overlays are not guaranteed to survive that alternative path. Do not promise pixel-identical reproduction of every interactive map layer.
 
-The inspected generated-script setup lists R dependencies including `sf`, `ggplot2`, `dplyr`, `tidyr`, `jsonlite`, `maptiles`, `tidyterra`, `ggspatial`, `grid`, `png`, and `stringr`, with installation logic. Network/package/system-library requirements remain relevant; the ZIP is not proven fully offline or dependency-free.
+The browser uses `fflate`; generated R setup includes packages for spatial data, plotting, tiles and image handling, including `sf`, `ggplot2`, `dplyr`, `tidyr`, `jsonlite`, `maptiles`, `tidyterra`, `ggspatial`, `grid`, `png` and `stringr`. Package installation, network access and system libraries are relevant dependencies. The export is not proven fully offline or dependency-free.
 
-The script advertises PDF, SVG and PNG products. The complete final device/export section and a generated-file round trip were not verified in this audit. **UNRESOLVED:** exact device-level SVG/PDF behavior, fonts, transparency and portability for the generated script. The supported distinction is mixed vector/raster export, not a fully vector map.
+PDF/SVG output can contain both vector objects and raster images. The final device calls, fonts, transparency, portability and a complete generated-R run were not verified here. **Do not describe this as a fully vector export of all map layers.**
 
-**Safe wording:** “The export supplies occurrence and range data together with an R plotting script. Point and polygon layers can remain vector in suitable output formats, whereas basemaps and image-based overlays remain raster. Not all interactive map layers are exported as separate editable data.”
+**Safe wording:** “The export supplies occurrence and range data with an R plotting script. Points and polygons can remain vector in suitable output formats, whereas basemaps and image-based overlays remain raster. Not all interactive layers are exported as separate editable data.”
 
 ## 14. Figures and interface state
 
-The current Gallery component and source tests explicitly distinguish paired collection evaluation from upload inference. Manuscript figures must preserve that distinction. A pipeline diagram must not put the 91.33% paired-collection benchmark beside an arbitrary uploaded photograph in a way that implies the latter was the evaluated input.
+**Sources:** IM manuscript and archived figure discussions; WG current component/tests. **Status: source-state review, not a completed figure or visual QA pass.**
 
-The July manuscript and archived figure-review discussions are historical baselines, not proof that proposed figures were generated, reviewed against current artifacts, or deployed. No new screenshots or figures were produced in this phase, and interface behavior was not tested across desktop/mobile.
+No new figures, screenshots or figure package were generated in this phase. Proposed or discussed figures in archives are not proof of their final implementation or validation. The manuscript is already the recovered July draft; missing figure work is not a reason to reconstruct it.
 
-For phase 2/3, bind every quantitative figure to one of: the frozen occurrence snapshot; the dated host artifact; the 145-species raster release; the September paired taxonomic evaluation; or the separate sex evaluation. Captions need the population, rank eligibility, geographic-prior condition and whether numbers are published results or regenerated analysis. Do not reuse old source-coverage bars, sequencing funnels or SDM confidence bars without checking their input hashes.
+The critical figure distinction is between uploaded-photo inference and the paired collection evaluation. Do not place the 91.33% paired-species benchmark beside an arbitrary photograph in a way that implies uploads were the evaluated population. Likewise, a sex-prediction panel must identify its narrower taxonomic and specimen scope.
 
-The archived July review mentions an updated Figure 1 placeholder and additional acknowledgments. Treat these as author/figure checks, not reasons to reconstruct the already recovered manuscript. Public-repository and deployment URLs should also be reconciled deliberately; a private working repository, a public mirror and a live app are different resources.
+Every quantitative caption should name the relevant module snapshot: frozen occurrence inventory, reconciled host build, 145-species raster release, paired taxonomic evaluation or separate sex evaluation. Old country/source bars, sequencing funnels and SDM confidence plots need regenerated or reconciled inputs. Public mirrors, private working repositories and live application URLs should be checked separately.
 
 ## 15. References needing verification
 
-This phase did not complete a bibliographic audit. Do not turn assistant archive warnings into verified missing-reference claims.
+A complete bibliography/DOI audit was not performed. The writing phase must verify primary sources rather than copy citations from assistant archives.
 
-| Reference / attribution | Required check before submission |
+| Topic | Required verification |
 |---|---|
-| BioCLIP 2.5-H | Cite the exact model release and appropriate primary paper; distinguish the checkpoint version from the title/version of the underlying BioCLIP publication. Preserve the model revision/hash separately from the citation. |
-| Ultralytics segmenter | Confirm the actual checkpoint model family and matching software/version citation. Historical assistant unfamiliarity with YOLO26 is not evidence it is an internal or nonexistent model. |
-| SAM 3 | Verify the actual mask-generation provenance first; then cite the matching primary method/version. Do not cite it merely because a later development chat mentions teacher masks. |
-| CLIP-Adapter | Relevant as contextual inspiration for the IA custom residual adapter, not evidence that the Wings upload head contains that adapter. Do not label the Wings head CLIP-Adapter. |
-| ArcFace / subcentre methods | Include only if the release-bound training config establishes their use. An old script filename is insufficient. |
-| GBIF occurrence download | Preserve DOI `10.15468/dl.6zagkz` with the correct download/snapshot scope. |
-| GBIF plant download | Preserve DOI `10.15468/dl.c7gyd2`; do not attribute alternative-source records to this DOI. |
-| SDM methods and validation | Reconcile algorithm/CV/accessible-area/Boyce definitions to the exact served release before citing performance claims. |
-| Manuscript citation completeness | The archived review flags McClure, Gauthier, van der Heijden and Ben Chehida as leads; verify against the actual recovered manuscript and bibliography rather than accepting that old assistant audit as fact. |
-| Author names / dates / institutional tools | Check Doré spelling/year and the primary references/URLs for GoaT, Sanger/ToL, photography tools and Earthcape against original sources. |
+| BioCLIP 2.5-H | Appropriate primary publication and exact model release/revision; a paper citation does not identify the loaded weights. |
+| Supervised versus zero-shot | Describe the Wings head as supervised. Do not call all frozen-encoder inference zero-shot. |
+| Ultralytics / YOLO26s-seg | Confirm exact checkpoint architecture and software version before using the specific family in methods. |
+| SAM 3 | Confirm teacher-mask provenance for the actual segmenter, then cite the matching primary method. |
+| CLIP-Adapter | Context for IA's residual adapter, not evidence that the Wings upload head uses it. |
+| ArcFace / subcentres | Cite as implemented training methods only after a release-matched config verifies them. |
+| Butterfly GBIF download | DOI `10.15468/dl.6zagkz`, with correct download and combined-snapshot scope. |
+| Plant GBIF download | DOI `10.15468/dl.c7gyd2`, excluding attribution of alternative-source rows to that DOI. |
+| SDM methods and validation | Match algorithms, accessible-area procedure, cross-validation and Boyce definition to the exact released products and metric population. |
+| Host-plant references | Separate extracted references, unreviewed associations and source-backed records; do not imply literature validation from extraction counts. |
+| Bibliography completeness | Recheck the recovered manuscript's citations against its actual bibliography. Archived warnings are leads, not proof of current omissions. |
 
-## 16. Unresolved author-confirmation and evidence items
+## 16. Unresolved evidence and author-confirmation items
 
-These items are not permission to invent fluent missing methods. They delimit what the writing phase may safely state.
-
-| Priority | Open item | Evidence needed / decision |
+| Priority | Open item | What closes it |
 |---|---|---|
-| Blocking for complete classifier methods | Actual upload and paired checkpoint internals | Deserialize trusted checkpoints safely; record tensor shapes, input dimension, K, normalization, margin configuration, scale and calibration; tie each to SHA-256. |
-| Blocking for deployment identity | Files actually loaded by the Space | Runtime/startup receipt with Space commit, resolved asset paths/hashes, encoder revision and environment overrides. |
-| Blocking for training sample sizes | 58,165 eligible / 63,307 broader rows; source contributions | Release-bound training manifest, labels/exclusions and row/file/specimen counts. Reconcile duplicates and ambiguous labels. |
-| Blocking for full taxonomic coverage statement | Exact named-subspecies/genus counts | Enumerate the released class map; separate species parents, species leaves, named subspecies, abbreviations and aliases. |
-| Blocking for reproducible paired benchmark | Fold and eligibility manifests | CAMID-grouped split table, seeds, train-vocabulary handling, geography condition and per-rank OOF outputs; reproduce the published numbers. |
-| Blocking for an upload-accuracy claim | Single-photo evaluation | A benchmark of the exact upload checkpoint and preprocessing, distinct from collection pairs and Insect AI. Otherwise omit upload accuracy. |
-| Blocking for precise segmentation methods | YOLO family and SAM 3 provenance | Matching training config, mask-generation receipt and final artifact hash. Do not substitute v7 development for v3 upload history. |
-| Blocking for SDM results | 145-species confidence/AUC/Boyce summaries | Exact released-stem join and metric-specific valid n, using raw metrics rather than missing-value sentinels. |
-| Blocking for sequencing results | Category meaning, count units and current counts | Trace registered status, specimen/species aggregation and actual sequencing-completion evidence; author decision on misleading ToLID-derived label. |
-| Important snapshot consistency | Occurrence tables | Rebuild tables from the 104,297-record frozen snapshot, or explicitly regenerate every dependent result from a new snapshot. |
-| Important host consistency | 113 versus 116 butterfly species; raw versus mapped occurrence totals | Reconcile top-level and layer manifests against their CSV hash/build scripts; establish which host snapshot the manuscript describes. |
-| Important sex qualification | Full support distribution and external validity | Enumerate all 1,586 outputs; do not reuse the 274/92 top-up counts as global counts; keep exploratory support separate from independent prospective validation. |
-| Important export validation | SVG/PDF and omitted overlays | Run an actual export with SDM/host/heatmap toggled; inspect ZIP contents, generated R devices and rendered outputs. |
-| Submission preparation | Figures, references and acknowledgments | Update against the selected module snapshots; verify primary references and resolve author placeholders. |
+| Classifier methods | Exact uploaded and paired checkpoint architecture, K, training margin, calibration | Safe checkpoint/config inspection tied to weight hashes; separate the two model lineages. |
+| Deployment identity | Files actually loaded by running Space | Runtime receipt with source revision, encoder revision, resolved asset paths and byte hashes. |
+| Training data | 58,165 / 63,307 hypotheses; source counts; exclusions; rare classes; contradictory labels; adult filtering | Release-bound row-level training/eligibility manifest and executed filter/config receipts. |
+| Coverage | Exact accepted species/subspecies/genus counts | Enumerate and normalize the actual released label map; retain aliases and ambiguous labels explicitly. |
+| Evaluation | Reproduction of paired taxonomic results and leakage checks | CAMID/fold/seed/eligibility manifest, duplicate audit and rank-specific out-of-fold predictions. |
+| Uploaded-image accuracy | Release-matched single-photo benchmark | Exact upload pipeline evaluated separately; otherwise omit an upload-accuracy claim. |
+| Segmentation | Exact model family and SAM 3 teacher-mask chain | Checkpoint metadata plus matching training/mask-generation receipts; no inference from v6/v7 development alone. |
+| Geographic evaluation | Exact collection before/after prior run | Same eligible population and folds with raw paired results; verify caller gating and inferred-location mode. |
+| Sex prediction | Exact primary cohort, full support count, crop/head receipt | Enumerate the asset and reconcile damaged-specimen handling, current About totals and model provenance. |
+| Occurrence inventory | Dependent statistics for 104,297 frozen records | Regenerate normalized-country, taxonomy and source tables from the selected data bytes. |
+| Host plants | One coherent association/layer/UI snapshot | Reconcile May 6 association data, May 8 layer build and top-level summary through scripts and input hashes. |
+| Sequencing | Definitions, unit of counts and genuine completion state | Trace registered/GoaT aggregation and inspect sequencing evidence; author decision on ToLID-derived naming. |
+| SDM | Actual live served population and 145-species metrics | Raster-stem enumeration, live layer/picker checks, joined raw metrics and confidence rules. |
+| Export | Actual SVG/PDF results and missing overlay behavior | Run representative exports with SDM, hosts and heatmap enabled; inspect data contents and rendered output. |
+| Submission | Figures, bibliography, acknowledgments | Review against the selected module snapshots and primary sources. |
 
-### Archive inspection and remaining context
+### Context read and provenance limits
 
-The archive README and index were used to orient the audit. Targeted passages were read from the following IM sources: `docs/chat-transcripts/t3-code-ithomiini/search-ithomiini-maps-chat-history-eb7fad5d.md`; `docs/chat-transcripts/codex-ithomiini/summarize-ithomiini-maps-chats-019f3cdd.md`; `docs/chat-transcripts/claude-code-ithomiini/review-ithomiini-manuscript-and-figures-1d1ffc5c.md`; `docs/chat-transcripts/t3-code-wings/reconcile-gallery-taxonomy-corrections-9692496f.md`; `docs/chat-transcripts/t3-code-wings/plan-overnight-butterfly-classifier-work-a81155d1.md`; and `docs/chat-transcripts/t3-code-wings/update-wings-classifier-context-195a1f49.md`. These were not all exhaustively read. The IA report's classifier-method passages and the opening user instructions of its requested full-frame ecology transcript were also read.
+The archive README/index were used for orientation. Targeted passages were consulted from the requested Ithomiini search/summarization/review transcripts and the Wings reconciliation, overnight-work and `update-wings-classifier-context-195a1f49.md` transcripts. The IA report's classifier-method passages and requested ecology transcript were also consulted. These archives were not all read exhaustively.
 
-Remaining targeted context includes IM `docs/chat-transcripts/t3-code-wings/update-wings-classifier-context-1afb5240.md`, `docs/chat-transcripts/t3-code-wings/audit-subspecies-image-datasets-5d7e3dd7.md`, and, where needed, the long `docs/chat-transcripts/codex-ithomiini/ithomiini-maps-manuscript-019dd1d3.md`. Use them to locate missing artifacts, not as substitutes for those artifacts. No assertion in this ledger that training/deployment occurred rests solely on an assistant transcript response.
+Remaining targeted archive context includes `docs/chat-transcripts/t3-code-wings/update-wings-classifier-context-1afb5240.md`, `docs/chat-transcripts/t3-code-wings/audit-subspecies-image-datasets-5d7e3dd7.md` and, where necessary, the long manuscript transcript. Use them to locate missing executable artifacts, not as substitutes for those artifacts. The separately located `Fr4nzz/WingsClassificator` repository is another provenance lead; its older state should not automatically be treated as the September collection release.
 
-### Handoff rule for the writing phase
+### Rule for phase 2
 
-Use VERIFIED code/artifact facts with their stated scope. Attribute published evaluation numbers to their precise collection protocol. Preserve UNRESOLVED items as explicit author checks or omit the unsupported detail. Do not collapse the single-photo head, paired collection head, sex head, Insect AI residual head, occurrence snapshot and SDM release into one supposedly uniform model/data state.
+Use verified code/artifact facts only with their stated scope. Attribute published benchmark values to the paired collection or sex workflow they evaluate. Resolve blocking items or omit the unsupported details; do not invent methods to make the manuscript read smoothly. In particular, keep separate the uploaded taxonomic head, paired collection head, collection sex workflow, IA residual classifier, frozen occurrence dataset, host-plant build and SDM product release.
