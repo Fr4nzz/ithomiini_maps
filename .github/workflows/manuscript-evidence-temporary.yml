@@ -1,0 +1,72 @@
+name: Manuscript evidence preparation
+on:
+  push:
+    branches: [manuscript/final-gpt6-20260921]
+    paths: [.github/workflows/manuscript-evidence-temporary.yml]
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Assemble read-only evidence
+        shell: bash
+        run: |
+          mkdir -p /tmp/manuscript-evidence/atlas /tmp/manuscript-evidence/history /tmp/manuscript-evidence/huggingface
+          git ls-tree -r -l 935cc42740aefbe70640eb15d79bf4f6c21e1089 > /tmp/manuscript-evidence/history/atlas-tree.txt
+          git log --all --date=iso-strict --format='%H %ad %s' -- public/data/sdm scripts paper > /tmp/manuscript-evidence/history/atlas-history.txt
+          python - <<'PY'
+          import pathlib, shutil, subprocess
+          root=pathlib.Path('/tmp/manuscript-evidence/atlas')
+          for name in subprocess.check_output(['git','ls-tree','-r','--name-only','935cc42740aefbe70640eb15d79bf4f6c21e1089'],text=True).splitlines():
+              p=pathlib.Path(name)
+              if p.suffix.lower() in {'.md','.json','.txt','.py','.js','.mjs','.ts','.vue','.yml','.yaml','.r','.html','.csv','.bib','.svg'} or name.startswith('paper/'):
+                  if p.is_file() and p.stat().st_size < 100_000_000:
+                      dest=root/p; dest.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(p,dest)
+          PY
+          git clone --filter=blob:none https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery.git /tmp/gallery
+          git -C /tmp/gallery rev-parse HEAD > /tmp/manuscript-evidence/history/gallery-head.txt
+          git -C /tmp/gallery log -80 --date=iso-strict --format='%H %ad %s' > /tmp/manuscript-evidence/history/gallery-history.txt
+          mkdir /tmp/manuscript-evidence/gallery
+          python - <<'PY'
+          import pathlib, shutil, subprocess, json, urllib.request
+          root=pathlib.Path('/tmp/manuscript-evidence/gallery')
+          for name in subprocess.check_output(['git','-C','/tmp/gallery','ls-files'],text=True).splitlines():
+              p=pathlib.Path('/tmp/gallery')/name
+              if p.suffix.lower() in {'.md','.json','.txt','.py','.js','.mjs','.ts','.vue','.yml','.yaml','.r','.html','.csv','.bib','.svg'} and p.is_file() and p.stat().st_size < 100_000_000:
+                  dest=root/name; dest.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(p,dest)
+          out=pathlib.Path('/tmp/manuscript-evidence/huggingface')
+          for kind,repo,label in [('models','fr4nzzch/butterfly-id-classifier','classifier'),('spaces','fr4nzzch/butterfly-id','space'),('models','imageomics/bioclip-2.5-vith14','backbone')]:
+              d=out/label; d.mkdir()
+              try:
+                  data=json.load(urllib.request.urlopen(f'https://huggingface.co/api/{kind}/{repo}?blobs=true'))
+                  (d/'api-metadata.json').write_text(json.dumps(data,indent=2))
+                  sha=data['sha']
+                  tree=json.load(urllib.request.urlopen(f'https://huggingface.co/api/{kind}/{repo}/tree/{sha}?recursive=true&expand=false&limit=1000'))
+                  (d/'api-tree.json').write_text(json.dumps(tree,indent=2))
+                  try:
+                      history=json.load(urllib.request.urlopen(f'https://huggingface.co/api/{kind}/{repo}/commits/{sha}'))
+                      (d/'api-history.json').write_text(json.dumps(history,indent=2))
+                  except Exception as e: (d/'history-error.txt').write_text(str(e))
+                  if label=='backbone': continue
+                  prefix='spaces/' if kind=='spaces' else ''
+                  for f in tree:
+                      name=f['path']
+                      if f.get('type')=='file' and pathlib.Path(name).suffix.lower() in {'.py','.json','.md','.txt','.yaml','.yml','.toml'} and f.get('size',0)<30_000_000:
+                          p=d/name; p.parent.mkdir(parents=True,exist_ok=True)
+                          try: urllib.request.urlretrieve(f'https://huggingface.co/{prefix}{repo}/resolve/{sha}/{name}',p)
+                          except Exception as e: (d/'download-errors.txt').open('a').write(name+': '+str(e)+'\n')
+              except Exception as e: (d/'api-error.txt').write_text(str(e))
+          PY
+          cd /tmp/manuscript-evidence
+          find . -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt
+          tar -czf /tmp/manuscript-evidence.tar.gz .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manuscript-evidence
+          path: /tmp/manuscript-evidence.tar.gz
+          retention-days: 7
