@@ -1,0 +1,38 @@
+{
+  "captured_utc": "2026-09-21T17:53:15.190109+00:00",
+  "errors": [
+    {
+      "identifier": "403 Client Error: Forbidden for url: https://wsrv.nl/?url=https://drive.google.com/uc?id=1mh05Ncf5ALi9YDErTKiMo2KZUP4ONv7c&w=1200&output=webp"
+    }
+  ],
+  "atlas_overview": {
+    "url": "https://rapidspeciation.github.io/ithomiini_maps/",
+    "sources": "all five occurrence sources",
+    "body_text": "Wings Atlas\nNEOTROPICAL BUTTERFLY DISTRIBUTIONS\nSmart Search\n⌘K\nMap\nTable\n104,297of 104,297 records\nGallery\n27563\nMimicry\nPreview Export\nFILTERS\nTAXONOMY\nFamily\nTribe\nGenus\nSpecies\nSubsp.\nSex\nSpecies\n(864)\nSearch species...\nSubsp.\n(2084)\nSearch subspecies...\nOTHER FILTERS\nCAMID\nSequencing Status\nCountry\nTime Range\nGoaT\nCAMID\n\nEnter or paste IDs (comma/space/newline separated)\n\nSPECIES DISTRIBUTION MODELS\nModel Species\n(155)\nSelect up to 2 species...\n\n155 species modelled · Tiered ensemble\n\nHOST PLANT FILTERS\nHost ID level\nSpecies\nExact host plant species reported.\nGenus\nHost reported only to genus; useful clue, not exact plant.\nFamily\nBroad host family only; mainly context/table use.\nEvidence\nObserved\nObserved host use: eggs, larvae, feeding, oviposition, or rearing.\nReported\nHost use reported by a catalogue, paper, expert source, or captive/lab record without checked direct-use details.\nNeeds check\nUnresolved or audit-level records.\nButterfly species\n(112)\nSearch butterfly species...\nHost plant taxa\n(276)\nSearch host plants...\n\nHost plant occurrences are generated through the same GBIF Download API method as the database update pipeline when GBIF credentials are available.\n\nDATA SOURCE\n− All GBIF\nSanger\n6.4k\nUNAM\n21.6k\nGBIF Other\n27.0k\nDoré 2022\n28.9k\niNat\n20.4k\nVISUALIZATION\nPoints\nClusters\nHeatmap\nRanges\nScatter overlapping points\n\nEvenly distribute overlapping points within 2.5km radius with connecting lines\n\nShow Legend\nON\n\nHover over legend on map for customization options (colors, labels, position, point styles)\n\nRemember Settings\nOFF\n\nSettings reset on refresh\n\nUpdate Database\nReset\nShare\nExport\nDATA SOURCE\nAeria elara\n(1)\nDore et al. (2022)\n55\n+ 4 more\n75,370\n© CARTO, © OpenStreetMap contributors\n1000 km\nDark\nEmerald"
+  },
+  "mechanitis_context": {
+    "url": "https://rapidspeciation.github.io/ithomiini_maps/",
+    "butterfly": "Mechanitis polymnia",
+    "host": "Solanum stramonifolium",
+    "host_state": {
+      "selected": [
+        "species_solanum_stramonifolium"
+      ],
+      "enabled": true,
+      "error": null,
+      "datasetType": null,
+      "features": null,
+      "activeTaxa": [
+        {
+          "name": "Solanum stramonifolium",
+          "count": 717
+        }
+      ]
+    },
+    "body_text": "Wings Atlas\nNEOTROPICAL BUTTERFLY DISTRIBUTIONS\nSmart Search\n⌘K\nMap\nTable\n7,767of 104,297 records\nGallery\n2194\nMimicry\nPreview Export\nFILTERS\nTAXONOMY\nFamily\nTribe\nGenus\nSpecies\n1\nSubsp.\nSex\nSpecies\n(864)\nMechanitis polymnia\nSubsp.\n(26)\nSearch subspecies...\nOTHER FILTERS\nCAMID\nSequencing Status\nCountry\nTime Range\nGoaT\nCAMID\n\nEnter or paste IDs (comma/space/newline separated)\n\nSPECIES DISTRIBUTION MODELS\nModel Species\n(155)\nMechanitis polymnia\nMechanitis polymnia\nHIGH\nLow\nHabitat suitability\nHigh\nRecords\n1285\nAUC\n0.656\nBoyce\n0.731\nTier\nlarge\nAlgorithms\nmaxent, random_forest, gbm\nSuitability response plots\n7 variables\nOpacity\n55%\nShow full Neotropics\n\n155 species modelled · Tiered ensemble\n\nHOST PLANT FILTERS\nHost ID level\nSpecies\nExact host plant species reported.\nGenus\nHost reported only to genus; useful clue, not exact plant.\nFamily\nBroad host family only; mainly context/table use.\nEvidence\nObserved\nObserved host use: eggs, larvae, feeding, oviposition, or rearing.\nReported\nHost use reported by a catalogue, paper, expert source, or captive/lab record without checked direct-use details.\nNeeds check\nUnresolved or audit-level records.\nButterfly species\n(112)\nSearch butterfly species...\nHost plant taxa\n(276)\nSolanum stramonifolium717\nOpacity\n85%\n\nHost plant occurrences are generated through the same GBIF Download API method as the database update pipeline when GBIF credentials are available.\n\nDATA SOURCE\n− All GBIF\nSanger\n6.4k\nUNAM\n21.6k\nGBIF Other\n27.0k\nDoré 2022\n28.9k\niNat\n20.4k\nVISUALIZATION\nPoints\nClusters\nHeatmap\nRanges\nScatter overlapping points\n\nEvenly distribute overlapping points within 2.5km radius with connecting lines\n\nShow Legend\nON\n\nHover over legend on map for customization options (colors, labels, position, point styles)\n\nRemember Settings\nOFF\n\nSettings reset on refresh\n\nUpdate Database\nReset\nShare\nExport\nSUBSPECIES\nMechanitis polymnia\n(22)\nangustifascia\n105\napicenotata\n2\nbolivarensis\n22\ncasabranca\n424\ncaucaensis\n51\nchimborazona\n122\ndorissides\n67\ndoryssa\n45\negaensis\n6\neurydice\n55\nintermediate\n8\nisthmia\n893\nkayei\n127\nlimnaea\n2\nlycidice\n3235\nmauensis\n24\nMechanitis polymnia\n2094\nn. ssp. [6]\n6\npannifera?\n1\npannifera??\n1\npolymnia\n61\npolymnia?\n2\n+ 4 more\n414\n© CARTO, © OpenStreetMap contributors\n1000 km\nDark\nEmerald"
+  },
+  "files": {
+    "figure2_atlas_interface.png": "b3d246a4e0e8b0a00691ed30e28d7c850100334c78d9f429356e7ec84c12e07c",
+    "figure3_mechanitis_context.png": "5658108146f97f98e42ff50415b05d727aa1f0fb3764cad8e69c464c1a64273f"
+  }
+}
