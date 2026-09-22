@@ -1,0 +1,76 @@
+name: Phase 3 reference verification
+on:
+  push:
+    branches: [manuscript/submission-ready-20260922]
+    paths: [.github/workflows/phase3-reference-check.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 3b2fee94d15c891952494f4a9074576febc12a00
+          persist-credentials: false
+      - name: Fetch publisher metadata and public resource receipts
+        run: |
+          python - <<'PY'
+          import concurrent.futures, json, re, urllib.request, urllib.parse
+          from pathlib import Path
+          out=Path('reference-verification'); out.mkdir()
+          headers={'User-Agent':'Ithomiini manuscript bibliographic verification/1.0 (academic reference check)'}
+          def get(url):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=35) as r:
+                      b=r.read(4000000)
+                      try: data=json.loads(b)
+                      except Exception: data=b.decode('utf-8',errors='replace')
+                      return {'requested_url':url,'resolved_url':r.url,'status':r.status,'data':data}
+              except Exception as e: return {'requested_url':url,'error':str(e)}
+          text=Path('paper/manuscript.md').read_text()
+          dois=set(re.findall(r'10\.\d{4,9}/[A-Za-z0-9._/()-]+',text))
+          dois={d.rstrip(').') for d in dois}
+          dois.update(['10.1111/j.1096-0031.2006.00108.x','10.1371/journal.pbio.0060300','10.1371/journal.pbio.1002415','10.1002/joc.5086','10.1023/A:1010933404324','10.1145/2939672.2939785','10.1590/S0034-71081999000300010','10.1186/s12862-016-0701-5'])
+          jobs={f'doi_{i}': 'https://api.crossref.org/works/'+urllib.parse.quote(d,safe='') for i,d in enumerate(sorted(dois)) if not d.startswith(('10.15468','10.48550'))}
+          titles=['Into the Andes multiple independent colonizations drive montane diversity Godyridina','Genomes on a Tree GoaT versatile scalable search engine','Catalogue of the Hostplants of the Neotropical Butterflies']
+          for i,t in enumerate(titles): jobs[f'query_{i}']='https://api.crossref.org/works?'+urllib.parse.urlencode({'query.title':t,'rows':3})
+          jobs.update({
+           'gbif_doi':'https://api.datacite.org/dois/10.15468/dl.6zagkz',
+           'chelsa_doi':'https://api.datacite.org/dois/10.16904/envidat.228',
+           'rosser_doi':'https://api.datacite.org/dois/10.5281/zenodo.13920055',
+           'bioclip_paper':'https://export.arxiv.org/api/query?id_list=2505.23883',
+           'bioclip_model':'https://huggingface.co/api/models/imageomics/bioclip-2.5-vith14',
+           'bioclip_readme':'https://huggingface.co/imageomics/bioclip-2.5-vith14/raw/main/README.md',
+           'head_model':'https://huggingface.co/api/models/fr4nzzch/butterfly-id-classifier',
+           'space':'https://huggingface.co/api/spaces/fr4nzzch/butterfly-id',
+           'worldclim':'https://www.worldclim.org/data/worldclim21.html',
+           'cloud':'https://www.earthenv.org/cloud',
+           'elapid':'https://earth-chris.github.io/elapid/',
+           'ultralytics_citation':'https://raw.githubusercontent.com/ultralytics/ultralytics/main/CITATION.cff',
+           'butterflies_america':'https://www.butterfliesofamerica.com/intro.htm',
+           'gallery_site':'https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/',
+           'gallery_ai':'https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/ai_identifier',
+           'atlas_site':'https://rapidspeciation.github.io/ithomiini_maps/',
+           'processor_repo':'https://api.github.com/repos/Fr4nzz/rename_photos_AI',
+           'processor_head':'https://api.github.com/repos/Fr4nzz/rename_photos_AI/commits/main',
+           'processor_readme':'https://raw.githubusercontent.com/Fr4nzz/rename_photos_AI/main/README.md',
+           'gallery_repo':'https://api.github.com/repos/rapidspeciation/Shiny_Ikiam_Wings_Gallery',
+           'gallery_tree':'https://api.github.com/repos/rapidspeciation/Shiny_Ikiam_Wings_Gallery/git/trees/f5cb03f17f3ba639090b32fbedde6d6645ff847b?recursive=1',
+           'gallery_readme':'https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/README.md',
+           'atlas_public_repo':'https://api.github.com/repos/rapidspeciation/ithomiini_maps',
+           'atlas_working_repo':'https://api.github.com/repos/Fr4nzz/ithomiini_maps'
+          })
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+              futures={pool.submit(get,u):k for k,u in jobs.items()}
+              for future in concurrent.futures.as_completed(futures):
+                  k=futures[future]; result=future.result()
+                  (out/(k+'.json')).write_text(json.dumps(result,ensure_ascii=False,indent=2))
+                  print(k,result.get('status',result.get('error')))
+          (out/'request_index.json').write_text(json.dumps(jobs,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manuscript-reference-verification
+          path: reference-verification/
+          retention-days: 3
