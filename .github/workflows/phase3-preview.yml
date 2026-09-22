@@ -1,0 +1,61 @@
+name: Final manuscript figure preview
+on:
+  push:
+    branches: [manuscript/submission-ready-20260922]
+    paths: [.github/workflows/phase3-preview.yml]
+permissions:
+  contents: write
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BRANCH: manuscript/submission-ready-20260922
+      BASE: 3b2fee94d15c891952494f4a9074576febc12a00
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Add the generated high-resolution preview despite the image ignore rule
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin "refs/heads/$BRANCH" | cut -f1)" = "$GITHUB_SHA"
+          git fetch --no-tags --depth=1 origin "$BASE"
+          python -m pip install --quiet cairosvg
+          python paper/figures/make_figure1.py --png
+          python paper/tools/validate_submission.py
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          assert hashlib.sha256(Path('paper/manuscript.md').read_bytes()).hexdigest()=='d6435bc526a950454e05bc0de97ce66b14ca7e3fd4e9b5814731aa258472e724'
+          assert hashlib.sha256(Path('paper/phase3_submission_handoff_20260922.md').read_bytes()).hexdigest()=='30f63fc3d62b6a9a8eed4ac1a6a39018cce2740b03c538f9d282fcc97638605a'
+          PY
+          git add -f paper/figures/figure1_workflow.png
+          rm .github/workflows/phase3-preview.yml
+          git add .github/workflows/phase3-preview.yml
+          git diff --cached --check
+          git diff --check "$BASE"
+          python - <<'PY'
+          import os,subprocess
+          changed=subprocess.check_output(['git','diff','--cached','--name-only',os.environ['BASE']],text=True).splitlines()
+          assert all(p.startswith('paper/') for p in changed),changed
+          assert 'paper/figures/figure1_workflow.png' in changed
+          assert 'paper/phase3_submission_handoff_20260922.md' in changed
+          print('\n'.join(changed))
+          PY
+          test "$(git ls-remote origin "refs/heads/$BRANCH" | cut -f1)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Add high-resolution manuscript workflow preview'
+          git push origin "HEAD:refs/heads/$BRANCH"
+          mkdir -p preview-result
+          git rev-parse HEAD > preview-result/final-branch-head.txt
+          git diff --stat "$BASE" HEAD > preview-result/change-summary.txt
+          git diff --check "$BASE" HEAD
+          cp paper/figures/figure1_workflow.png paper/phase3_submission_handoff_20260922.md preview-result/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase3-final-preview
+          path: preview-result/
+          retention-days: 7
